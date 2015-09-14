@@ -1,8 +1,7 @@
 // Load Grunt Tasks
 
 module.exports = function(grunt) {
-    grunt.loadNpmTasks('grunt-sass');
-    grunt.loadNpmTasks('grunt-contrib-concat');
+    require('load-grunt-tasks')(grunt);
 
     // Configure tasks
 

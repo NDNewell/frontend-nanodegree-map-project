@@ -1,0 +1,26 @@
+{
+  "name": "surfatical",
+  "version": "1.0.0",
+  "description": "Paid or volunteer surfing escapes",
+  "main": "gruntfile.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NDNewell/frontend-nanodegree-neighborhood-map-project.git"
+  },
+  "keywords": [
+    "surf",
+    "work",
+    "volunteer"
+  ],
+  "author": "NDNewell",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/NDNewell/frontend-nanodegree-neighborhood-map-project/issues"
+  },
+  "homepage": "https://github.com/NDNewell/frontend-nanodegree-neighborhood-map-project#readme"
+}

@@ -5,6 +5,7 @@
   "main": "gruntfile.js",
   "dependencies": {},
   "devDependencies": {
+    "grunt-contrib-concat": "^0.5.1",
     "grunt-sass": "^1.0.0"
   },
   "scripts": {

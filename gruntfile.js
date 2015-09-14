@@ -1,6 +1,13 @@
-// Load Grunt Tasks
+
 
 module.exports = function(grunt) {
+
+    // Load config file
+
+    var config = grunt.file.readYAML('Gruntconfig.yml');
+
+    // Load Grunt Tasks
+
     require('load-grunt-tasks')(grunt);
 
     // Configure tasks
@@ -8,14 +15,14 @@ module.exports = function(grunt) {
     grunt.initConfig({
         sass: {
                   dist: {
-                          src: 'src/sass/style.scss',
-                          dest: 'dist/css/style.css'
+                          src: config.scssDir + 'style.scss',
+                          dest: config.cssDir + 'style.css'
                   }
         },
         concat: {
                   dist: {
-                          src: 'src/js/*.js',
-                          dest: 'dist/js/scripts.js'
+                          src: config.jsSrcDir + '*.js',
+                          dest: config.jsConcatDir + 'scripts.js'
                   }
         }
     });

@@ -12,32 +12,8 @@ module.exports = function(grunt) {
 
     // Configure tasks
 
-    grunt.initConfig({
-        sass: {
-                  dist: {
-                          src: config.scssDir + 'style.scss',
-                          dest: config.cssDir + 'style.css'
-                  }
-        },
-        concat: {
-                  dist: {
-                          src: config.jsSrcDir + '*.js',
-                          dest: config.jsConcatDir + 'scripts.js'
-                  }
-        },
-        jshint: {
-                  all: [
-                          'Gruntfile.js',
-                          config.jsSrcDir + '*.js'
-                ]
-        },
-        watch: {
-                  sass: {
-                          files: config.scssDir + '**/*.scss',
-                          tasks: ["sass"]
-                  }
-        }
-    });
+    require('./grunt_tasks/sass.js')(grunt, config);
+    require('./grunt_tasks/javascript.js')(grunt, config);
 
     // Register tasks
 
@@ -45,6 +21,7 @@ module.exports = function(grunt) {
         'sass',
         'concat',
         'jshint',
+        'csslint',
         'watch'
     ]);
 };

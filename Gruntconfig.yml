@@ -4,7 +4,10 @@ imgSrcDir: src/img/
 jsCcDir: src/js/deploy/
 cssSrcDir: src/css/
 
+
+
 cssDir: dist/css/
 jsConcatDir: src/js/deploy/
 imgResDir: dist/img/
 jsMinDir: dist/js/
+

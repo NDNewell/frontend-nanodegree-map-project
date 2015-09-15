@@ -13,6 +13,7 @@ module.exports = function(grunt) {
     require('./grunt_tasks/css.js')(grunt, config);
     require('./grunt_tasks/javascript.js')(grunt, config);
     require('./grunt_tasks/image.js')(grunt, config);
+    require('./grunt_tasks/html.js')(grunt, config);
 
     // Register tasks
 
@@ -22,6 +23,7 @@ module.exports = function(grunt) {
         'jshint',
         'concat',
         'uglify',
+        'htmlmin',
         //'respimg',
         'watch'
     ]);

@@ -1,5 +1,3 @@
-
-
 module.exports = function(grunt) {
 
     // Load config file
@@ -14,6 +12,7 @@ module.exports = function(grunt) {
 
     require('./grunt_tasks/sass.js')(grunt, config);
     require('./grunt_tasks/javascript.js')(grunt, config);
+    require('./grunt_tasks/image.js')(grunt, config);
 
     // Register tasks
 
@@ -22,7 +21,7 @@ module.exports = function(grunt) {
         'concat',
         'jshint',
         'csslint',
+        //'respimg',
         'watch'
     ]);
 };
-

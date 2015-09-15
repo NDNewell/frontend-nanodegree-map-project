@@ -12,6 +12,18 @@ module.exports = function (grunt, config) {
                               config.jsSrcDir + '*.js'
                     ]
             },
+            uglify: {
+                      dist: {
+                              files: [{
+                                      expand: true,
+                                      cwd: config.jsCcDir,
+                                      src: ['*.js'],
+                                      dest: config.jsMinDir,
+                                      ext: '-min.js',
+                                      extDot: 'first'
+                              }]
+                      }
+            },
             watch: {
                       js: {
                               files: '<%= concat.dist.src %>',

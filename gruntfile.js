@@ -21,6 +21,7 @@ module.exports = function(grunt) {
         'concat',
         'jshint',
         'csslint',
+        'uglify',
         //'respimg',
         'watch'
     ]);

@@ -1,7 +1,9 @@
-scssDir: src/sass/
-jsSrcDir: src/js/
+scssDir: src/scss/
+jsSrcDir: src/js/build/
 imgSrcDir: src/img/
+jsCcDir: src/js/deploy/
 
 cssDir: dist/css/
-jsConcatDir: dist/js/
+jsConcatDir: src/js/deploy/
 imgResDir: dist/img/
+jsMinDir: dist/js/

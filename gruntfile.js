@@ -10,18 +10,17 @@ module.exports = function(grunt) {
 
     // Configure tasks
 
-    require('./grunt_tasks/sass.js')(grunt, config);
+    require('./grunt_tasks/css.js')(grunt, config);
     require('./grunt_tasks/javascript.js')(grunt, config);
     require('./grunt_tasks/image.js')(grunt, config);
 
     // Register tasks
 
     grunt.registerTask('default', [
-        'sass',
-        'cssmin',
-        'concat',
-        'jshint',
         'csslint',
+        'cssmin',
+        'jshint',
+        'concat',
         'uglify',
         //'respimg',
         'watch'

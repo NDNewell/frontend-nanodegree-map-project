@@ -1,11 +1,5 @@
 module.exports = function (grunt, config) {
       grunt.config.merge({
-            sass: {
-                      dist: {
-                              src: config.scssDir + 'style.scss',
-                              dest: config.cssDir + 'style.css'
-                      }
-            },
             cssmin: {
                       dist: {
                         src: config.cssSrcDir + '*.css',
@@ -17,15 +11,15 @@ module.exports = function (grunt, config) {
                               options: {
                                       important: 2
                               },
-                              src: "<%= sass.dist.dest %>"
+                              src: [config.cssSrcDir + '*.css']
                       }
             },
             watch: {
-                      sass: {
-                              files: config.scssDir + '**/*.scss',
+                      cssmin: {
+                              files: config.cssSrcDir + '*.css',
                               tasks: [
-                                    'sass',
-                                    'csslint'
+                                    'csslint',
+                                    'cssmin'
                               ]
                       }
             }

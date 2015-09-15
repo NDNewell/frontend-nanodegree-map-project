@@ -26,10 +26,11 @@ module.exports = function (grunt, config) {
             },
             watch: {
                       js: {
-                              files: '<%= concat.dist.src %>',
+                              files: config.jsSrcDir + '*.js',
                               tasks: [
                                       'jshint',
-                                      'concat'
+                                      'concat',
+                                      'uglify'
                               ]
                       }
             }

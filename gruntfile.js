@@ -18,6 +18,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('default', [
         'sass',
+        'cssmin',
         'concat',
         'jshint',
         'csslint',

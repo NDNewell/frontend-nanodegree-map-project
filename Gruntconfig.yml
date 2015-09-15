@@ -2,6 +2,7 @@ scssDir: src/scss/
 jsSrcDir: src/js/build/
 imgSrcDir: src/img/
 jsCcDir: src/js/deploy/
+cssSrcDir: src/css/
 
 cssDir: dist/css/
 jsConcatDir: src/js/deploy/

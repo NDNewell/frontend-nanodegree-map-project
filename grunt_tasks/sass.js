@@ -6,6 +6,12 @@ module.exports = function (grunt, config) {
                               dest: config.cssDir + 'style.css'
                       }
             },
+            cssmin: {
+                      dist: {
+                        src: config.cssSrcDir + '*.css',
+                        dest: config.cssDir + 'style.min.css'
+                      }
+            },
             csslint: {
                       strict: {
                               options: {

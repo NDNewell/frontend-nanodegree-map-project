@@ -19,7 +19,7 @@ module.exports = function (grunt, config) {
                                       cwd: config.jsCcDir,
                                       src: ['*.js'],
                                       dest: config.jsMinDir,
-                                      ext: '-min.js',
+                                      ext: '.min.js',
                                       extDot: 'first'
                               }]
                       }

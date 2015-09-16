@@ -1,13 +1,10 @@
-
+// Source folders
 jsSrcDir: src/js/
 imgSrcDir: src/img/
-jsCcDir: foo/js/
 cssSrcDir: foo/css/
 
-
-
+// Destination folders
 cssDir: dist/css/
-jsConcatDir: foo/js/
 imgResDir: dist/img/
-jsMinDir: dist/js/
+jsDir: dist/js/
 

@@ -1,5 +1,12 @@
 module.exports = function (grunt, config) {
     grunt.config.merge({
+        processhtml: {
+            dist: {
+                files: {
+                    'foo/bar.html': 'src/index.html'
+                }
+            }
+        },
         htmlmin: {
             dist: {
                 options: {
@@ -7,13 +14,17 @@ module.exports = function (grunt, config) {
                     collapseWhitespace: true
                 },
                 files: {
-                    'dist/index.html' : 'src/index.html',
+                    'dist/index.html' : 'foo/bar.html',
                 }
             }
         },
         watch: {
-            htmlmin: {
+            processhtml: {
                 files: 'src/index.html',
+                tasks: 'processhtml'
+            },
+            htmlmin: {
+                files: 'foo/bar.html',
                 tasks: 'htmlmin'
             }
         }

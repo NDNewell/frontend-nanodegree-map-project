@@ -1,11 +1,5 @@
 module.exports = function (grunt, config) {
       grunt.config.merge({
-            concat: {
-                      dist: {
-                              src: config.jsSrcDir + '*.js',
-                              dest: config.jsConcatDir + 'scripts.js'
-                      }
-            },
             jshint: {
                       all: [
                               'Gruntfile.js',
@@ -16,10 +10,10 @@ module.exports = function (grunt, config) {
                       dist: {
                               files: [{
                                       expand: true,
-                                      cwd: config.jsCcDir,
+                                      cwd: config.jsSrcDir,
                                       src: ['*.js'],
-                                      dest: config.jsMinDir,
-                                      ext: '.js',
+                                      dest: config.jsDir,
+                                      ext: '.min.js',
                                       extDot: 'first'
                               }]
                       }
@@ -29,7 +23,6 @@ module.exports = function (grunt, config) {
                               files: config.jsSrcDir + '*.js',
                               tasks: [
                                       'jshint',
-                                      'concat',
                                       'uglify'
                               ]
                       }

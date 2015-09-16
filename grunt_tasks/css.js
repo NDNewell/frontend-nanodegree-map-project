@@ -3,7 +3,7 @@ module.exports = function (grunt, config) {
         cssmin: {
             dist: {
                 src: config.cssSrcDir + '*.css',
-                dest: config.cssDir + 'style.css'
+                dest: config.cssDir + 'style.min.css'
             }
         },
         csslint: {

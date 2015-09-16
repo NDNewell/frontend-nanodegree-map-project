@@ -1,13 +1,13 @@
 
-jsSrcDir: src/js/build/
+jsSrcDir: src/js/
 imgSrcDir: src/img/
-jsCcDir: src/js/deploy/
-cssSrcDir: src/css/
+jsCcDir: foo/js/
+cssSrcDir: foo/css/
 
 
 
 cssDir: dist/css/
-jsConcatDir: src/js/deploy/
+jsConcatDir: foo/js/
 imgResDir: dist/img/
 jsMinDir: dist/js/
 

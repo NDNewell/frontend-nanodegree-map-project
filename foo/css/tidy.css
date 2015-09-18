@@ -48,6 +48,11 @@ input::-moz-focus-inner {
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
   }
+
+  p {
+    orphans: 3;
+    widows: 3;
+  }
 }
 
 @font-face {
@@ -82,6 +87,10 @@ body {
   background-color: #fff;
 }
 
+p {
+  margin: 0 0 10px;
+}
+
 .container-fluid {
   padding-right: 15px;
   padding-left: 15px;
@@ -94,7 +103,7 @@ body {
   margin-left: -15px;
 }
 
-.col-md-6,
+.col-xs-6,
 .col-md-12 {
   position: relative;
   min-height: 1px;
@@ -102,18 +111,21 @@ body {
   padding-left: 15px;
 }
 
+.col-xs-6 {
+  float: left;
+}
+
+.col-xs-6 {
+  width: 50%;
+}
+
 @media (min-width: 992px) {
-  .col-md-6,
   .col-md-12 {
     float: left;
   }
 
   .col-md-12 {
     width: 100%;
-  }
-
-  .col-md-6 {
-    width: 50%;
   }
 }
 

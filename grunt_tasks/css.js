@@ -30,7 +30,7 @@ module.exports = function (grunt, config) {
                 ]
             },
             uncss: {
-                files: 'src/css/*.css',
+                files: 'src/index.html',
                 tasks: [
                     'uncss'
                 ]

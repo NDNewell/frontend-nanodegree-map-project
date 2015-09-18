@@ -21,7 +21,7 @@ module.exports = function(grunt) {
         'uncss',
         //'csslint',
         'cssmin',
-        'jshint',
+        //'jshint',
         'uglify',
         'processhtml',
         'htmlmin',

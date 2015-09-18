@@ -30,6 +30,10 @@ section {
   display: block;
 }
 
+img {
+  border: 0;
+}
+
 button::-moz-focus-inner,
 input::-moz-focus-inner {
   padding: 0;
@@ -47,6 +51,14 @@ input::-moz-focus-inner {
     background: transparent !important;
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
+  }
+
+  img {
+    page-break-inside: avoid;
+  }
+
+  img {
+    max-width: 100% !important;
   }
 
   p {
@@ -87,6 +99,18 @@ body {
   background-color: #fff;
 }
 
+img {
+  vertical-align: middle;
+}
+
+.img-rounded {
+  border-radius: 6px;
+}
+
+.img-circle {
+  border-radius: 50%;
+}
+
 p {
   margin: 0 0 10px;
 }
@@ -104,29 +128,24 @@ p {
 }
 
 .col-xs-6,
-.col-md-12 {
+.col-xs-12 {
   position: relative;
   min-height: 1px;
   padding-right: 15px;
   padding-left: 15px;
 }
 
-.col-xs-6 {
+.col-xs-6,
+.col-xs-12 {
   float: left;
+}
+
+.col-xs-12 {
+  width: 100%;
 }
 
 .col-xs-6 {
   width: 50%;
-}
-
-@media (min-width: 992px) {
-  .col-md-12 {
-    float: left;
-  }
-
-  .col-md-12 {
-    width: 100%;
-  }
 }
 
 .form-control::-moz-placeholder {

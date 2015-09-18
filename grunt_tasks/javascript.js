@@ -22,7 +22,7 @@ module.exports = function (grunt, config) {
             js: {
                 files: config.jsSrcDir + '*.js',
                 tasks: [
-                    'jshint',
+                    //'jshint',
                     'uglify'
                 ]
             }

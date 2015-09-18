@@ -1,9 +1,9 @@
-// Source folders
+
 jsSrcDir: src/js/
 imgSrcDir: src/img/
 cssSrcDir: foo/css/
 
-// Destination folders
+
 cssDir: dist/css/
 imgResDir: dist/img/
 jsDir: dist/js/

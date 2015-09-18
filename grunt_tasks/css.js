@@ -25,8 +25,14 @@ module.exports = function (grunt, config) {
             cssmin: {
                 files: config.cssSrcDir + '*.css',
                 tasks: [
-                    'csslint',
+                    //'csslint',
                     'cssmin'
+                ]
+            },
+            uncss: {
+                files: 'src/css/*.css',
+                tasks: [
+                    'uncss'
                 ]
             }
         }

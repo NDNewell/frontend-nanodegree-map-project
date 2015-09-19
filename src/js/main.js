@@ -13,6 +13,20 @@ function ViewModel() {
         { place: 'Haliewa',
           wetsuit: 'boardshorts',
           skillLevel: 'expert'
+        },
+        {
+          place: 'Bali',
+          wetsuit: 'naked',
+          skillLevel: 'expert'
+        },
+        {
+          place: 'Chile',
+          wetsuit: '5mm',
+          skillLevel: 'expert'
+        },
+        { place: 'New Zealand',
+          wetsuit: '4mm',
+          skillLevel: 'intermediate'
         }]
 }
 

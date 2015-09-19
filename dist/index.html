@@ -36,19 +36,16 @@
             </section>
             <section>
                 <div class="row">
-                    <div class="col-xs-12">
-                        <ul data-bind="template: { name: 'location-template', foreach: locations, as: 'location' }"></ul>
+                    <div class="col-xs-12 col-sm-6 col-md-4" data-bind="template: { name: 'location-template', foreach: locations, as: 'location' }"></div>
 
                         <script type="text/html" id="location-template">
-                            <li>
+                            <ul>
                                 <strong data-bind="text: place"></strong> -
                                 <span data-bind="text: wetsuit"></span> -
                                 <span data-bind="text: skillLevel"></span>
-                            </li>
+                            </ul>
                         </script>
-
                     </div>
-                </div>
             </section>
             <section>
                 <div class="row">

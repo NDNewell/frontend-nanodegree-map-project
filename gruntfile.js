@@ -24,7 +24,7 @@ module.exports = function(grunt) {
         //'jshint',
         'uglify',
         'processhtml',
-        'htmlmin',
+        //'htmlmin',
         //'respimg',
         'watch'
     ]);

@@ -3,7 +3,7 @@ module.exports = function (grunt, config) {
         processhtml: {
             dist: {
                 files: {
-                    'foo/bar.html': 'src/index.html'
+                    'dist/index.html': 'src/index.html'
                 }
             }
         },
@@ -23,10 +23,10 @@ module.exports = function (grunt, config) {
                 files: 'src/index.html',
                 tasks: 'processhtml'
             },
-            htmlmin: {
+            /*htmlmin: {
                 files: 'foo/bar.html',
                 tasks: 'htmlmin'
-            }
+            }*/
         }
     });
 };

@@ -1,8 +1,8 @@
 /*** uncss> filename: src/css/style.css ***/
 
-* {
+/* * {
   border: 1px solid red;
-}
+}*/
 
 /*** uncss> filename: src/css/bootstrap.css ***/
 
@@ -113,6 +113,11 @@ img {
 
 p {
   margin: 0 0 10px;
+}
+
+ul {
+  margin-top: 0;
+  margin-bottom: 10px;
 }
 
 .container-fluid {

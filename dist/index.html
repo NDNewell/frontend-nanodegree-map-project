@@ -1,1 +1,65 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"><title>Surfatical</title><link rel="stylesheet" href="css/style.min.css"></head><body><div class="container-fluid"><section><div class="row"><div class="col-xs-6"><img src="https://api.fnkr.net/testimg/100x100/0eafff/FFF/?text=img" class="img-circle" alt="Surfatical Logo"></div><div class="col-xs-6"><header><p>Search</p></header></div></div></section><section><div class="row"><div class="col-xs-12"><img src="https://api.fnkr.net/testimg/350x200/0eafff/FFF/?text=img" class="img-rounded" alt="Man surfing"></div></div></section><section><div class="row"><div class="col-xs-12"></div></div></section><section><div class="row"><div class="col-xs-12"></div></div></section><section><div class="row"><div class="col-xs-12"><footer></footer></div></div></section></div></body><script src="js/knockout-3.min.js"></script></html>
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <title>Surfatical</title>
+        <link rel="stylesheet" href="css/style.min.css">    </head>
+    <body>
+        <div class="container-fluid">
+            <section>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <img src="https://api.fnkr.net/testimg/100x100/0eafff/FFF/?text=img" class="img-circle" alt="Surfatical Logo">
+                    </div>
+                    <div class="col-xs-6">
+                        <header>
+                        <p>Search</p>
+                        </header>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <img src="https://api.fnkr.net/testimg/350x200/0eafff/FFF/?text=img" class="img-rounded" alt="Man surfing">
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="row">
+                    <div class="col-xs-12">
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <ul data-bind="template: { name: 'location-template', foreach: locations, as: 'location' }"></ul>
+
+                        <script type="text/html" id="location-template">
+                            <li>
+                                <strong data-bind="text: place"></strong> -
+                                <span data-bind="text: wetsuit"></span> -
+                                <span data-bind="text: skillLevel"></span>
+                            </li>
+                        </script>
+
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <footer>
+                        </footer>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </body>
+        <script src="js/knockout-3.min.js"></script>
+        <script src="js/main.min.js"></script>
+</html>

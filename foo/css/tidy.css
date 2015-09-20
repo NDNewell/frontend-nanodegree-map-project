@@ -145,6 +145,8 @@ ul {
   margin-left: -15px;
 }
 
+.col-md-4,
+.col-sm-6,
 .col-xs-12 {
   position: relative;
   min-height: 1px;
@@ -158,6 +160,26 @@ ul {
 
 .col-xs-12 {
   width: 100%;
+}
+
+@media (min-width: 768px) {
+  .col-sm-6 {
+    float: left;
+  }
+
+  .col-sm-6 {
+    width: 50%;
+  }
+}
+
+@media (min-width: 992px) {
+  .col-md-4 {
+    float: left;
+  }
+
+  .col-md-4 {
+    width: 33.33333333%;
+  }
 }
 
 input[type="search"] {

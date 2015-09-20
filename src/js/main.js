@@ -2,30 +2,36 @@ var viewModel = {
     locations: [{
           place: 'Manly',
           wetsuit: '2mm',
-          skillLevel: 'beginner'
+          skillLevel: 'beginner',
+          picture: '<img src="https://api.fnkr.net/testimg/500x250/0eafff/FFF/?text=img">'
         },
         {
           place: 'Santa Monica',
           wetsuit: '3mm',
-          skillLevel: 'intermediate'
+          skillLevel: 'intermediate',
+          picture: '<img src="https://api.fnkr.net/testimg/500x250/0eafff/FFF/?text=img">'
         },
         { place: 'Haliewa',
           wetsuit: 'boardshorts',
-          skillLevel: 'expert'
+          skillLevel: 'expert',
+          picture: '<img src="https://api.fnkr.net/testimg/500x250/0eafff/FFF/?text=img">'
         },
         {
           place: 'Bali',
           wetsuit: 'naked',
-          skillLevel: 'expert'
+          skillLevel: 'expert',
+          picture: '<img src="https://api.fnkr.net/testimg/500x250/0eafff/FFF/?text=img">'
         },
         {
           place: 'Chile',
           wetsuit: '5mm',
-          skillLevel: 'expert'
+          skillLevel: 'expert',
+          picture: '<img src="https://api.fnkr.net/testimg/500x250/0eafff/FFF/?text=img">'
         },
         { place: 'New Zealand',
           wetsuit: '4mm',
-          skillLevel: 'intermediate'
+          skillLevel: 'intermediate',
+          picture: '<img src="https://api.fnkr.net/testimg/500x250/0eafff/FFF/?text=img">'
         }]
 };
 

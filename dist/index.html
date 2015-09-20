@@ -24,23 +24,22 @@
                 </div>
             </section>
             <section>
-                <div class="row" data-bind="foreach: locationList">
-                    <div class="col-xs-12 col-sm-6 col-md-4">
-                        <ul>
-                                <li>
-                                    <strong data-bind="text: place"></strong> -
-                                    <span data-bind="text: wetsuit"></span> -
-                                    <span data-bind="text: skillLevel"></span>
-                                </li>
-                        </ul>
+                <div class="row">
+                    <div>
                     </div>
                 </div>
             </section>
             <section>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <footer>
-                        </footer>
+                <div class="row" data-bind="foreach: locationList">
+                    <div class="col-xs-12 col-sm-6 col-md-4">
+                        <ul>
+                            <li>
+                                <strong data-bind="text: place"></strong> -
+                                <span data-bind="text: wetsuit"></span> -
+                                <span data-bind="text: skillLevel"></span>
+                            </li>
+                        </ul>
+                        <span data-bind="html: picture"></span>
                     </div>
                 </div>
             </section>

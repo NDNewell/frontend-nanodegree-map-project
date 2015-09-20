@@ -37,15 +37,11 @@
             </section>
             <section>
                 <div class="row" data-bind="foreach: locationList">
-                    <div class="col-xs-12 col-sm-6 col-md-4">
-                        <ul>
-                            <li>
-                                <strong data-bind="text: place"></strong> -
-                                <span data-bind="text: wetsuit"></span> -
-                                <span data-bind="text: skillLevel"></span>
-                            </li>
-                        </ul>
+                    <div class="col-xs-12 col-sm-6 col-md-4 location-frame">
                         <span data-bind="html: picture"></span>
+                            <div class="caption picture-title">
+                                <h3><strong data-bind="text: place"></strong></h3>
+                            </div>
                     </div>
                 </div>
             </section>

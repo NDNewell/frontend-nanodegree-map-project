@@ -3,35 +3,35 @@ var viewModel = {
           place: 'Manly',
           wetsuit: '2mm',
           skillLevel: 'beginner',
-          picture: '<img src="https://api.fnkr.net/testimg/500x250/0eafff/FFF/?text=img">'
+          picture: '<img src="https://api.fnkr.net/testimg/500x250/0eafff/FFF/?text=img" class="location-image  img-responsive img-rounded">'
         },
         {
           place: 'Santa Monica',
           wetsuit: '3mm',
           skillLevel: 'intermediate',
-          picture: '<img src="https://api.fnkr.net/testimg/500x250/0eafff/FFF/?text=img">'
+          picture: '<img src="https://api.fnkr.net/testimg/500x250/0eafff/FFF/?text=img" class="location-image img-responsive img-rounded">'
         },
         { place: 'Haliewa',
           wetsuit: 'boardshorts',
           skillLevel: 'expert',
-          picture: '<img src="https://api.fnkr.net/testimg/500x250/0eafff/FFF/?text=img">'
+          picture: '<img src="https://api.fnkr.net/testimg/500x250/0eafff/FFF/?text=img" class="location-image img-responsive img-rounded">'
         },
         {
           place: 'Bali',
           wetsuit: 'naked',
           skillLevel: 'expert',
-          picture: '<img src="https://api.fnkr.net/testimg/500x250/0eafff/FFF/?text=img">'
+          picture: '<img src="https://api.fnkr.net/testimg/500x250/0eafff/FFF/?text=img" class="location-image img-responsive img-rounded">'
         },
         {
           place: 'Chile',
           wetsuit: '5mm',
           skillLevel: 'expert',
-          picture: '<img src="https://api.fnkr.net/testimg/500x250/0eafff/FFF/?text=img">'
+          picture: '<img src="https://api.fnkr.net/testimg/500x250/0eafff/FFF/?text=img" class="location-image img-responsive img-rounded">'
         },
         { place: 'New Zealand',
           wetsuit: '4mm',
           skillLevel: 'intermediate',
-          picture: '<img src="https://api.fnkr.net/testimg/500x250/0eafff/FFF/?text=img">'
+          picture: '<img src="https://api.fnkr.net/testimg/500x250/0eafff/FFF/?text=img" class="location-image img-responsive img-rounded">'
         }]
 };
 

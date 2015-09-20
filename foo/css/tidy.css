@@ -1,7 +1,22 @@
 /*** uncss> filename: src/css/style.css ***/
 
-* {
+/* {
   border: 1px solid red;
+} */
+
+.picture-title {
+  background: none repeat scroll 0 0 #FFffff;
+  opacity: 0.5;
+  margin: 0 auto;
+  margin-top: -54px;
+  text-align: center;
+  width: 250px;
+  border-radius: 12.5px;
+}
+
+.location-frame {
+  text-align: center;
+  padding: 10px 10px 10px 10px;
 }
 
 /*** uncss> filename: src/css/bootstrap.css ***/
@@ -79,6 +94,15 @@ input[type="search"] {
   img {
     max-width: 100% !important;
   }
+
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  h3 {
+    page-break-after: avoid;
+  }
 }
 
 @font-face {
@@ -127,9 +151,20 @@ img {
   border-radius: 50%;
 }
 
-ul {
-  margin-top: 0;
+h3 {
+  font-family: inherit;
+  font-weight: 500;
+  line-height: 1.1;
+  color: inherit;
+}
+
+h3 {
+  margin-top: 20px;
   margin-bottom: 10px;
+}
+
+h3 {
+  font-size: 24px;
 }
 
 .container-fluid {

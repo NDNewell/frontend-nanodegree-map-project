@@ -24,13 +24,6 @@
             <section>
                 <div class="row">
                     <div class="col-xs-12">
-                        <img src="https://api.fnkr.net/testimg/350x200/0eafff/FFF/?text=img" class="img-rounded" alt="Man surfing">
-                    </div>
-                </div>
-            </section>
-            <section>
-                <div class="row">
-                    <div class="col-xs-12">
                     </div>
                 </div>
             </section>
@@ -39,10 +32,15 @@
                     <div class="col-xs-12 col-sm-6 col-md-4" data-bind="template: { name: 'location-template', foreach: locations, as: 'location' }"></div>
 
                         <script type="text/html" id="location-template">
+
+                            <strong data-bind="text: place"></strong>
                             <ul>
-                                <strong data-bind="text: place"></strong> -
-                                <span data-bind="text: wetsuit"></span> -
-                                <span data-bind="text: skillLevel"></span>
+                                <li>
+                                    <span data-bind="text: wetsuit"></span>
+                                </li>
+                                <li>
+                                    <span data-bind="text: skillLevel"></span>
+                                </li>
                             </ul>
                         </script>
                     </div>

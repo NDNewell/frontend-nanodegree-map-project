@@ -103,10 +103,6 @@ img {
   vertical-align: middle;
 }
 
-.img-rounded {
-  border-radius: 6px;
-}
-
 .img-circle {
   border-radius: 50%;
 }

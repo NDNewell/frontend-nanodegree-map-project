@@ -1,6 +1,5 @@
-function ViewModel() {
-    this.locations =
-        [{
+var viewModel = {
+    locations: [{
           place: 'Manly',
           wetsuit: '2mm',
           skillLevel: 'beginner'
@@ -28,9 +27,17 @@ function ViewModel() {
           wetsuit: '4mm',
           skillLevel: 'intermediate'
         }]
-}
+};
+
+viewModel.Query = ko.observable('');
+
+viewModel.locationList = ko.computed(
+    function() {
+        var q = viewModel.Query();
+        return viewModel.locations.filter(function(i) {
+        return i.place.toLowerCase().indexOf(q.toLowerCase()) >= 0;
+    });
+});
 
 // Activates knockout.js
-ko.applyBindings(new ViewModel());
-
-
+ko.applyBindings(viewModel);

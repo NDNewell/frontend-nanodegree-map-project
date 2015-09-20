@@ -28,13 +28,13 @@ module.exports = function (grunt, config) {
                     //'csslint',
                     'cssmin'
                 ]
-            },
+            }/*,
             uncss: {
                 files: 'src/index.html',
                 tasks: [
                     'uncss'
                 ]
-            }
+            }*/
         }
     })
 };

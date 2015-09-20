@@ -18,7 +18,7 @@ module.exports = function(grunt) {
     // Register tasks
 
     grunt.registerTask('default', [
-        'uncss',
+        //'uncss',
         //'csslint',
         'cssmin',
         //'jshint',

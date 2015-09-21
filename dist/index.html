@@ -33,7 +33,10 @@
                 <div class="row" data-bind="foreach: locationList">
                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 location-frame">
                         <span data-bind="html: picture"></span>
-                            <div class="caption picture-title">
+                            <div class="caption break-name">
+                                <h2><strong data-bind="text: breakName"></strong></h2>
+                            </div>
+                            <div class="caption location-name">
                                 <h3><strong data-bind="text: place"></strong></h3>
                             </div>
                     </div>

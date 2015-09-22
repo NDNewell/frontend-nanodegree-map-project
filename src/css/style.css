@@ -1,0 +1,64 @@
+/* {
+  border: 1px solid red;
+} */
+
+#map {
+    height: 100%;
+}
+
+#horizontal-rule {
+    border-bottom-style: solid;
+    border-bottom-color: #E8E8E8;
+    border-bottom-width: 1px;
+}
+
+#logo {
+    text-align: left;
+    color:;
+    font-family: Arial, Verdana;
+    vertical-align: middle;
+}
+
+#logo p {
+    border-style: ;
+    font-size: .9em;
+    margin-top: -10px;
+}
+
+#search-form {
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+.location-name {
+    background: none repeat 0 0 #FFffff;
+    opacity: 0.5;
+    margin: 0 auto;
+    margin-top: -54px;
+    text-align: center;
+    width: 250px;
+    border-radius: 12.5px;
+}
+
+.break-name {
+    color: white;
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 250px;
+    border-radius: 12.5px;
+}
+
+.location-frame {
+    text-align:center;
+    padding: 10px 10px;
+}
+
+.location-image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

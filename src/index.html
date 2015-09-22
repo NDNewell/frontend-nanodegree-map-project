@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <title>SurfSearch</title>
+        <!-- build:css css/style.min.css -->
+        <link rel="stylesheet" href="css/style.css">
+        <!-- /build -->
+        <!-- build:remove -->
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <!-- /build -->
+    </head>
+    <body>
+        <div class="container-fluid">
+            <section>
+                <div class="row">
+                    <div class="col-xs-12" id="horizontal-rule">
+                            <div id="logo">
+                                <h3>SURF<span style="color:red">SEARCH</span></h3>
+                                <p>Find the perfect wave</p>
+                            </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="row" id="search-form">
+                    <div class="col-xs-12">
+                        <input placeholder="Search..." type="search" data-bind="value: Query, valueUpdate: 'keyup'" autocomplete="off">
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="row">
+                    <div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="row" data-bind="foreach: locationList">
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 location-frame">
+                        <span data-bind="html: picture"></span>
+                            <div class="caption break-name">
+                                <h2><strong data-bind="text: breakName"></strong></h2>
+                            </div>
+                            <div class="caption location-name">
+                                <h3><strong data-bind="text: place"></strong></h3>
+                            </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </body>
+        <!-- build:js js/knockout-3.min.js -->
+        <script type="text/javascript" src="js/knockout-3.3.0.js"></script>
+        <!-- /build -->
+        <!-- build:js js/main.min.js -->
+        <script src="js/main.js"></script>
+        <!-- /build -->
+        <!-- build:js js/jquery-1.min.js -->
+        <script src="js/jquery-1.11.3.min.js"></script>
+        <!-- /build -->
+</html>

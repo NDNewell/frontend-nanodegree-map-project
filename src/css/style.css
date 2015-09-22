@@ -31,16 +31,18 @@
 }
 
 .location-name {
+    font-size: 1.5em;
     background: none repeat 0 0 #FFffff;
     opacity: 0.5;
     margin: 0 auto;
-    margin-top: -54px;
+    margin-top: -40px;
     text-align: center;
     width: 250px;
     border-radius: 12.5px;
 }
 
 .break-name {
+    font-size: 2em;
     color: white;
     position: absolute;
     top: 15%;

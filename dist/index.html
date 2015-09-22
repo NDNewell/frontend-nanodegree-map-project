@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-        <title>SurfSearch</title>
+        <title>SurfList</title>
         <link rel="stylesheet" href="css/style.min.css">    </head>
     <body>
         <div class="container-fluid">
@@ -13,7 +13,7 @@
                 <div class="row">
                     <div class="col-xs-12" id="horizontal-rule">
                             <div id="logo">
-                                <h3>SURF<span style="color:red">SEARCH</span></h3>
+                                <h3>SURF<span style="color:red">LIST</span></h3>
                                 <p>Find the perfect wave</p>
                             </div>
                     </div>
@@ -22,7 +22,6 @@
             <section>
                 <div class="row" id="search-form">
                     <div class="col-xs-12">
-                        <input placeholder="Search..." type="search" data-bind="value: Query, valueUpdate: 'keyup'" autocomplete="off">
                     </div>
                 </div>
             </section>
@@ -33,15 +32,11 @@
                 </div>
             </section>
             <section>
-                <div class="row" data-bind="foreach: locationList">
+                <div class="row" data-bind="foreach: surfSpot">
                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 location-frame">
                         <span data-bind="html: picture"></span>
-                            <div class="caption break-name">
-                                <h2><strong data-bind="text: breakName"></strong></h2>
-                            </div>
-                            <div class="caption location-name">
-                                <h3><strong data-bind="text: place"></strong></h3>
-                            </div>
+                        <p class="break-name"><strong data-bind="text: breakName"></strong></p>
+                        <p class="location-name"><strong data-bind="text: location"></strong></h3>
                     </div>
                 </div>
             </section>

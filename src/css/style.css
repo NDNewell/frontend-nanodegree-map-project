@@ -71,3 +71,25 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+@media (max-width: 767px) {
+    .location-frame {
+        text-align:center;
+        padding: 0px 0px 0px 0px;
+        border-bottom: solid black;
+        border-bottom-width: 1px;
+        border-top: solid black;
+        border-top-width: 1px;
+    }
+
+    .map-container {
+        margin-bottom: -1px;
+        padding: 0px 0px;
+    }
+
+    .location-image {
+        border-radius: 0px;
+        width: 100%;
+        height: 100%;
+    }
+}

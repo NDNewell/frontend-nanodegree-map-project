@@ -108,10 +108,23 @@ function AppViewModel() {
 
 var map;
 function initMap() {
+
+    var myLatLng = {lat: -25.363, lng: 131.044};
+
     map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: -34.397, lng: 150.644},
-        zoom: 8
+        center: {lat: 20.67, lng: -157.505},
+        zoom: 7
     });
+
+    // Create a marker and set its position.
+    var marker = new google.maps.Marker({
+      map: map,
+      position: myLatLng,
+      title: 'Hello World!'
+    });
+
 }
+
+
 
 ko.applyBindings(new AppViewModel());

@@ -11,8 +11,8 @@
         <div class="container-fluid">
             <section>
                 <div class="row">
-                    <div class="col-xs-12" id="horizontal-rule">
-                            <div id="logo">
+                    <div class="col-xs-12 horizontal-rule">
+                            <div class="logo">
                                 <h3>SURF<span style="color:red">LIST</span></h3>
                                 <p>Find the perfect wave</p>
                             </div>
@@ -20,15 +20,17 @@
                 </div>
             </section>
             <section>
-                <div class="row" id="search-form">
+                <div class="row search-form">
                     <div class="col-xs-12">
                     </div>
                 </div>
             </section>
             <section>
                 <div class="row">
-                    <div>
+                    <div class="col-xs-12 col-md-6 map-container">
+                        <div id="map"></div>
                     </div>
+                    <div class="col-xs-12 col-md-6 filter-buttons">
                 </div>
             </section>
             <section>
@@ -42,7 +44,10 @@
             </section>
         </div>
     </body>
-        <script src="js/knockout-3.min.js"></script>
-        <script src="js/main.min.js"></script>
-        <script src="js/jquery-1.min.js"></script>
+    <script src="js/knockout-3.min.js"></script>
+    <script src="js/main.min.js"></script>
+    <script src="js/jquery-1.min.js"></script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBs44mAw5IWKX0j-WwCwt4A2rbbrbyc-Rg&callback=initMap">
+    </script>
 </html>

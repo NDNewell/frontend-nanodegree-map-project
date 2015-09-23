@@ -58,7 +58,9 @@ function AppViewModel() {
         picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
       },
       {
-        breakName: 'Honolua Bay', location: 'Maui, Hawaii', picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
+        breakName: 'Honolua Bay',
+        location: 'Maui, Hawaii',
+        picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
       },
       {
         breakName: 'Jaws/Peahi',
@@ -101,7 +103,15 @@ function AppViewModel() {
         picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
       }
     ]
+
 }
 
+var map;
+function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: -34.397, lng: 150.644},
+        zoom: 8
+    });
+}
 
 ko.applyBindings(new AppViewModel());

@@ -169,7 +169,9 @@ function initMap() {
 
         // Filter out the lat/lng and break name info to the empty array
         breaksAndGeos.push([AppViewModel.surfSpot[i].breakName, AppViewModel.surfSpot[i].lat, AppViewModel.surfSpot[i].lng]);
-      }
+    }
+
+    console.log(breaksAndGeos);
 
 
     var map = new google.maps.Map(document.getElementById('map'), {
@@ -180,17 +182,19 @@ function initMap() {
     // Loop through the newly created array and filter out the lng/lat values
     for(var i = 0; i < breaksAndGeos.length; i++) {
 
+        var beach = breaksAndGeos[i];
         // Create a variable to hold each array object's coordinates
-        breakLocation = ({lat: breaksAndGeos[i][1], lng: breaksAndGeos[i][2]});
+        var breakLocation = ({lat: beach[1], lng: beach[2]});
 
         // Create a marker and set its position.
         var marker = new google.maps.Marker({
-          map: map,
-          // Set poistion using the newly created variable
+          // Set position using the newly created variable
           position: breakLocation,
-          title: 'Hello World!'
+          map: map,
+          // Set title
+          title: beach[0]
         });
-      }
+    }
 }
 
 

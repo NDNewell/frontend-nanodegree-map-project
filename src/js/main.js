@@ -150,23 +150,11 @@ AppViewModel.locationGrid = ko.computed(function() {
       var q = AppViewModel.Query();
       return AppViewModel.surfSpot.filter(function(e) {
             return e.breakName.toLowerCase().indexOf(q.toLowerCase()) >= 0
-            }
-        )
-    }
-)
+      })
+})
 
 
 function initMap() {
-
-    /* Create an empty array that will be filled with arrays representing each break's name and coordinates e.g. [[break name, lat, lng],[break name, lat, lng], etc.]*/
-    var arrayOfBreakLocationArrays = [];
-
-    // Loop through the surfspot array from model
-    for(var i = 0; i < AppViewModel.surfSpot.length; i++) {
-
-        // Filter out coordinates and break name info into arrayOfBreakLocationArrays
-        arrayOfBreakLocationArrays.push([AppViewModel.surfSpot[i].breakName, AppViewModel.surfSpot[i].lat, AppViewModel.surfSpot[i].lng]);
-    }
 
     // Create a new Google map centered on the Hawaiian Islands
     var map = new google.maps.Map(document.getElementById('map'), {
@@ -174,21 +162,17 @@ function initMap() {
         zoom: 6
     });
 
-    /* Loop through arrayOfBreakLocationArrays and filter out the coordinates
+    /* Loop through AppViewModel.surfSpot and filter out the coordinates
     & break name for each break, then extract the array they're in and
     save it in a variable. Save the break's coordinates and name
     in their own variables for easy referencing*/
-    for(var i = 0; i < arrayOfBreakLocationArrays.length; i++) {
-
-        // Create a variable to hold each individual array extracted from
-        // arrayOfBreakLocationArrays e.g. [break name, lat, lng]
-        var breakLocationArray = arrayOfBreakLocationArrays[i];
+    for(var i = 0; i < AppViewModel.surfSpot.length; i++) {
 
         // Create a variable to hold each break's coordinates
-        var breakCoordinates = ({lat: breakLocationArray[1], lng: breakLocationArray[2]});
+        var breakCoordinates = ({lat: AppViewModel.surfSpot[i].lat, lng: AppViewModel.surfSpot[i].lng});
 
         // Create a variable to hold the name of the break
-        var waveName = breakLocationArray[0];
+        var waveName = AppViewModel.surfSpot[i].breakName;
 
         // Create a marker and set its position.
         var marker = new google.maps.Marker({
@@ -227,7 +211,7 @@ function initMap() {
                 infoWindow.open(map, marker);
 
                 // Zoom  in on location upon clicking the marker
-                map.setZoom(16);
+                map.setZoom(15);
                 map.setCenter(marker.getPosition());
             }
         // Pass the relevant marker and break name (waveName) for the current

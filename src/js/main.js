@@ -158,42 +158,77 @@ AppViewModel.locationGrid = ko.computed(function() {
 
 function initMap() {
 
-    /* Create a new array that will be filled with lat/lng info from objective
-    array*/
-    var breaksAndGeos = [];
+    /* Create an empty array that will be filled with arrays representing each break's name and coordinates e.g. [[break name, lat, lng],[break name, lat, lng], etc.]*/
+    var arrayOfBreakLocationArrays = [];
 
-    // Loop through the array
+    // Loop through the surfspot array from model
     for(var i = 0; i < AppViewModel.surfSpot.length; i++) {
 
-        console.log('filtering info and pushing it into the breaksAndGeos array');
-
-        // Filter out the lat/lng and break name info to the empty array
-        breaksAndGeos.push([AppViewModel.surfSpot[i].breakName, AppViewModel.surfSpot[i].lat, AppViewModel.surfSpot[i].lng]);
+        // Filter out coordinates and break name info into arrayOfBreakLocationArrays
+        arrayOfBreakLocationArrays.push([AppViewModel.surfSpot[i].breakName, AppViewModel.surfSpot[i].lat, AppViewModel.surfSpot[i].lng]);
     }
 
-    console.log(breaksAndGeos);
-
-
+    // Create a new Google map centered on the Hawaiian Islands
     var map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 20.67, lng: -157.505},
         zoom: 6
     });
 
-    // Loop through the newly created array and filter out the lng/lat values
-    for(var i = 0; i < breaksAndGeos.length; i++) {
+    /* Loop through arrayOfBreakLocationArrays and filter out the coordinates
+    & break name for each break, then extract the array they're in and
+    save it in a variable. Save the break's coordinates and name
+    in their own variables for easy referencing*/
+    for(var i = 0; i < arrayOfBreakLocationArrays.length; i++) {
 
-        var beach = breaksAndGeos[i];
-        // Create a variable to hold each array object's coordinates
-        var breakLocation = ({lat: beach[1], lng: beach[2]});
+        // Create a variable to hold each individual array extracted from
+        // arrayOfBreakLocationArrays e.g. [break name, lat, lng]
+        var breakLocationArray = arrayOfBreakLocationArrays[i];
+
+        // Create a variable to hold each break's coordinates
+        var breakCoordinates = ({lat: breakLocationArray[1], lng: breakLocationArray[2]});
+
+        // Create a variable to hold the name of the break
+        var waveName = breakLocationArray[0];
 
         // Create a marker and set its position.
         var marker = new google.maps.Marker({
-          // Set position using the newly created variable
-          position: breakLocation,
-          map: map,
-          // Set title
-          title: beach[0]
+
+            // Set position using the newly created variable
+            position: breakCoordinates,
+            map: map,
+
+            // Set the title for the break marker as name of the wave/location
+            // of the break
+            title: waveName
         });
+
+        /*Create an infoWindow displaying the break's name, which appears upon
+        clicking the marker*/
+        /* This is implemented using an event listener and a closure to ensure
+        each infoWindow (and its content) is assigned to the appropriate marker
+        . Without the closure the content for the infoWindow would be the last
+        iterated location in the loop. The closure saves the environment
+        attached to the inner function at the time of iteration, so when it's
+        later clicked, it references the saved infoWindow content for that
+        specific iteration*/
+        google.maps.event.addListener(marker, 'click', (function(marker, waveName) {
+
+            /* Create an inner function what will at the time of iteration save
+            the individual break's name (waveName) within the infoWindow and
+            attach it to the relevant marker*/
+            return function() {
+
+                // Create an info window that displays the break's name
+                var infoWindow = new google.maps.InfoWindow({
+                content: waveName
+                })
+
+                // Assign the info window the appropriate marker
+                infoWindow.open(map, marker);
+            }
+        // Pass the relevant marker and break name (waveName) for the current
+        // iteration as an argument into the function
+        })(marker, waveName));
     }
 }
 

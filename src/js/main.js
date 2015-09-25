@@ -199,7 +199,7 @@ function initMap() {
 
             // Set the title for the break marker as name of the wave/location
             // of the break
-            title: waveName
+            title: waveName + ' ' + ' (Click to zoom)'
         });
 
         /*Create an infoWindow displaying the break's name, which appears upon
@@ -225,6 +225,10 @@ function initMap() {
 
                 // Assign the info window the appropriate marker
                 infoWindow.open(map, marker);
+
+                // Zoom  in on location upon clicking the marker
+                map.setZoom(16);
+                map.setCenter(marker.getPosition());
             }
         // Pass the relevant marker and break name (waveName) for the current
         // iteration as an argument into the function

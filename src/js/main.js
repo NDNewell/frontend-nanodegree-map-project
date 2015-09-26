@@ -199,6 +199,16 @@ function AppViewModel () {
               marker.setVisible(false);
 
             }
+/*
+            if (marker.location.toLowerCase().indexOf(search) >= 0) {
+
+              marker.setVisible(true);
+
+            } else {
+
+              marker.setVisible(false);
+
+            }*/
 
         });
     }
@@ -232,8 +242,11 @@ function generateMarkers () {
         // Create a variable to hold the name of the break
         var breakName = locationData[i].breakName;
 
+        // Create a variable to hold the name of the break location
+        var breakLocation = locationData[i].location;
+
         // Create a marker and set its position.
-        addMarker(breakName,breakCoordinates);
+        addMarker(breakName, breakCoordinates, breakLocation);
 
     }
 
@@ -241,7 +254,7 @@ function generateMarkers () {
 
 }
 
-function addMarker(breakName, breakCoordinates) {
+function addMarker(breakName, breakCoordinates, breakLocation) {
     var marker = new google.maps.Marker({
 
         // Set position using the newly created variable
@@ -249,7 +262,7 @@ function addMarker(breakName, breakCoordinates) {
         map: map,
         // Set the title for the break marker as name of the wave/location
         // of the break
-        title: breakName + ' ' + ' (Click to zoom)'
+        title: breakName + ' ' + '(' + breakLocation + ')'
     });
 
     addListener(marker, breakName);

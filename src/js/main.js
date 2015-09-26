@@ -190,19 +190,20 @@ function AppViewModel () {
     };
 };
 
+var map;
+var markers = [];
 
 function initMap() {
 
-    var markers = [];
-
     // Create a new Google map centered on the Hawaiian Islands
-    var map = new google.maps.Map(document.getElementById('map'), {
+    map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 20.67, lng: -157.505},
         zoom: 6,
         mapTypeId: google.maps.MapTypeId.TERRAIN
     });
 
     generateMarkers();
+}
 
     function generateMarkers () {
         /* Loop through locationData and filter out the coordinates
@@ -222,9 +223,8 @@ function initMap() {
 
         }
 
-        console.log(markers);
-
         showMarkers();
+
     }
 
     function addMarker(breakName, breakCoordinates) {
@@ -287,7 +287,7 @@ function initMap() {
         clearMarkers();
         markers = [];
     }
-}
+
 
 
 ko.applyBindings(new AppViewModel);

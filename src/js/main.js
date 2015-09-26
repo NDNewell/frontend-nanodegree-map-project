@@ -187,7 +187,21 @@ function AppViewModel () {
               self.locationGrid.push(obj);
             }
         });
-    };
+
+        markers.forEach(function(marker) {
+
+            if (marker.title.toLowerCase().indexOf(search) >= 0) {
+
+              marker.setVisible(true);
+
+            } else {
+
+              marker.setVisible(false);
+
+            }
+
+        });
+    }
 };
 
 var map;
@@ -205,89 +219,82 @@ function initMap() {
     generateMarkers();
 }
 
-    function generateMarkers () {
-        /* Loop through locationData and filter out the coordinates
-        & break name for each break, then extract the array they're in and
-        save it in a variable. Save the break's coordinates and name
-        in their own variables for easy referencing*/
-        for(var i = 0; i < locationData.length; i++) {
+function generateMarkers () {
+    /* Loop through locationData and filter out the coordinates
+    & break name for each break, then extract the array they're in and
+    save it in a variable. Save the break's coordinates and name
+    in their own variables for easy referencing*/
+    for(var i = 0; i < locationData.length; i++) {
 
-            // Create a variable to hold each break's coordinates
-            var breakCoordinates = ({lat: locationData[i].lat, lng: locationData[i].lng});
+        // Create a variable to hold each break's coordinates
+        var breakCoordinates = ({lat: locationData[i].lat, lng: locationData[i].lng});
 
-            // Create a variable to hold the name of the break
-            var breakName = locationData[i].breakName;
+        // Create a variable to hold the name of the break
+        var breakName = locationData[i].breakName;
 
-            // Create a marker and set its position.
-            addMarker(breakName,breakCoordinates);
+        // Create a marker and set its position.
+        addMarker(breakName,breakCoordinates);
 
+    }
+
+    showMarkers();
+
+}
+
+function addMarker(breakName, breakCoordinates) {
+    var marker = new google.maps.Marker({
+
+        // Set position using the newly created variable
+        position: breakCoordinates,
+        map: map,
+        // Set the title for the break marker as name of the wave/location
+        // of the break
+        title: breakName + ' ' + ' (Click to zoom)'
+    });
+
+    addListener(marker, breakName);
+}
+
+function addListener(marker, breakName) {
+
+    google.maps.event.addListener(marker, 'click', (function(marker, breakName) {
+
+        /* Create an inner function what will at the time of iteration save
+        the individual break's name (breakName) within the infoWindow and
+        attach it to the relevant marker*/
+        return function() {
+
+            // Create an info window that displays the break's name
+            var infoWindow = new google.maps.InfoWindow({
+            content: breakName
+            })
+
+            // Assign the info window the appropriate marker
+            infoWindow.open(map, marker);
+
+            // Zoom  in on location upon clicking the marker
+            map.setZoom(15);
+            map.setCenter(marker.getPosition());
         }
+    // Pass the relevant marker and break name (breakName) for the current
+    // iteration as an argument into the function
+    })(marker, breakName));
 
-        showMarkers();
+    markers.push(marker);
+}
 
+function setMapOnAll(map) {
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(map);
     }
+}
 
-    function addMarker(breakName, breakCoordinates) {
-        var marker = new google.maps.Marker({
+function clearMarkers() {
+    setMapOnAll(null);
+}
 
-            // Set position using the newly created variable
-            position: breakCoordinates,
-            map: map,
-            // Set the title for the break marker as name of the wave/location
-            // of the break
-            title: breakName + ' ' + ' (Click to zoom)'
-        });
-
-        addListener(marker, breakName);
-    }
-
-    function addListener(marker, breakName) {
-
-        google.maps.event.addListener(marker, 'click', (function(marker, breakName) {
-
-            /* Create an inner function what will at the time of iteration save
-            the individual break's name (breakName) within the infoWindow and
-            attach it to the relevant marker*/
-            return function() {
-
-                // Create an info window that displays the break's name
-                var infoWindow = new google.maps.InfoWindow({
-                content: breakName
-                })
-
-                // Assign the info window the appropriate marker
-                infoWindow.open(map, marker);
-
-                // Zoom  in on location upon clicking the marker
-                map.setZoom(15);
-                map.setCenter(marker.getPosition());
-            }
-        // Pass the relevant marker and break name (breakName) for the current
-        // iteration as an argument into the function
-        })(marker, breakName));
-
-        markers.push(marker);
-    }
-
-    function setMapOnAll(map) {
-        for (var i = 0; i < markers.length; i++) {
-            markers[i].setMap(map);
-        }
-    }
-
-    function clearMarkers() {
-        setMapOnAll(null);
-    }
-
-    function showMarkers() {
-        setMapOnAll(map);
-    }
-
-    function deleteMarkers() {
-        clearMarkers();
-        markers = [];
-    }
-
-
+function showMarkers() {
+    setMapOnAll(map);
+}
 
 ko.applyBindings(new AppViewModel);

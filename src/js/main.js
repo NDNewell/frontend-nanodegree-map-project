@@ -150,27 +150,44 @@ function AppViewModel () {
 
     self.LocationArray = [];
 
-    locationData.forEach(function(locationElem) {
-    self.LocationArray.push(new beachLocation(locationElem));
+    locationData.forEach(function(obj) {
+    self.LocationArray.push(new beachLocation(obj));
     });
 
-    function beachLocation(locationElem) {
-        this.breakName = locationElem.breakName;
-        this.location = locationElem.location;
-        this.lat = locationElem.lat;
-        this.lng = locationElem.lng;
-        this.picture = locationElem.picture;
+    function beachLocation(obj) {
+        this.breakName = obj.breakName;
+        this.location = obj.location;
+        this.lat = obj.lat;
+        this.lng = obj.lng;
+        this.picture = obj.picture;
     };
+
+    self.locationGrid = ko.observableArray("");
+
+    self.LocationArray.forEach(function(obj) {
+        self.locationGrid.push(obj);
+    });
 
     self.Query = ko.observable("");
 
-    self.locationGrid = ko.computed(function() {
-          var search = self.Query().toLowerCase();
-          return self.LocationArray.filter(function(elem) {
-                return elem.breakName.toLowerCase().indexOf(search) >= 0
-          })
-    })
+    self.searchLocations = function () {
 
+        var search = self.Query().toLowerCase();
+
+        self.locationGrid.removeAll();
+
+        self.LocationArray.forEach(function(obj) {
+
+            if (obj.breakName.toLowerCase().indexOf(search) >= 0) {
+
+              self.locationGrid.push(obj);
+
+            } else if (obj.location.toLowerCase().indexOf(search) >= 0) {
+
+              self.locationGrid.push(obj);
+            }
+        });
+    };
 };
 
 

@@ -22,7 +22,7 @@
             <section>
                 <div class="row" id="search-form">
                     <div class="col-xs-12">
-                        <input class="search-form" placeholder="Search for a specific break..." type="search" data-bind="value: Query, valueUpdate: 'keyup'" autocomplete="off">
+                        <input class="search-form" placeholder="Search for a specific break or location..." type="search" data-bind="textInput: Query, event: {keyup: searchLocations}" autocomplete="off">
                     </div>
                 </div>
             </section>

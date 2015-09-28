@@ -148,12 +148,18 @@ function AppViewModel () {
 
     this.self = this;
 
+    /* This array holds the location objects from model that have been created
+    from the beachLocation constructor*/
     self.LocationArray = [];
 
+    /* Iterate through the location data from the model and push each object to
+    the location array above*/
     locationData.forEach(function(obj) {
     self.LocationArray.push(new beachLocation(obj));
     });
 
+    /* Using a constructor, location objects are built here via the forEach
+    method above*/
     function beachLocation(obj) {
         this.breakName = obj.breakName;
         this.location = obj.location;
@@ -162,20 +168,38 @@ function AppViewModel () {
         this.picture = obj.picture;
     };
 
+    /* This obervable array holds filtered location objects from search
+    queries. It is automatically updated/rendered in the View*/
     self.locationGrid = ko.observableArray("");
 
+    /* Iterate through the array of location objects and push them to the
+    observable array above*/
     self.LocationArray.forEach(function(obj) {
         self.locationGrid.push(obj);
     });
 
+    /* self.Query is bound to the input on the View. Because it is an
+     observable variable, it's value will be updated whenver the input on the
+     View is altered*/
     self.Query = ko.observable("");
 
+    /* Filter through the location objects and compare each one to the
+    search terms (value of self.Query). If there is a match, the matching
+    object is re-added to the locationGrid (observ. array bound to the View). */
     self.searchLocations = function () {
 
+        /* Convert search input to lowercase in order to compare like
+        characters in each break and location name & store in a new var*/
         var search = self.Query().toLowerCase();
 
+        /* Remove all location objects from obs. array, so that only objects
+        which match the search can be re-added to the array and subsequently
+        rendered in the View*/
         self.locationGrid.removeAll();
 
+        /* Compare each object's break name and location to the search terms.
+         If it matches, re-add it to the obs. array and render in the View.
+         If it doesn't match, then it isnt re-added*/
         self.LocationArray.forEach(function(obj) {
 
             if (obj.breakName.toLowerCase().indexOf(search) >= 0) {
@@ -188,6 +212,8 @@ function AppViewModel () {
             }
         });
 
+        /* Compare each marker's title, which holds the break and location name, to the search terms. If it matches, set the marker as visible.
+        If it doesn't match, make setVisible false*/
         markers.forEach(function(marker) {
 
             if (marker.title.toLowerCase().indexOf(search) >= 0) {
@@ -199,22 +225,16 @@ function AppViewModel () {
               marker.setVisible(false);
 
             }
-/*
-            if (marker.location.toLowerCase().indexOf(search) >= 0) {
-
-              marker.setVisible(true);
-
-            } else {
-
-              marker.setVisible(false);
-
-            }*/
 
         });
     }
 };
 
+// Declare global variable map
 var map;
+
+/* Create array of map markers that is globally accessible, particularly by
+the ViewModel*/
 var markers = [];
 
 function initMap() {
@@ -230,9 +250,9 @@ function initMap() {
 }
 
 function generateMarkers () {
+
     /* Loop through locationData and filter out the coordinates
-    & break name for each break, then extract the array they're in and
-    save it in a variable. Save the break's coordinates and name
+    & break name for each break. Save the break's coordinates and name
     in their own variables for easy referencing*/
     for(var i = 0; i < locationData.length; i++) {
 
@@ -245,26 +265,31 @@ function generateMarkers () {
         // Create a variable to hold the name of the break location
         var breakLocation = locationData[i].location;
 
-        // Create a marker and set its position.
+        /* Create a marker and set its position. Pass the variables
+        created above as arguments*/
         addMarker(breakName, breakCoordinates, breakLocation);
 
     }
 
-    showMarkers();
+    // Display markers found in the markers array on the map
+    showMarkers(map);
 
 }
 
 function addMarker(breakName, breakCoordinates, breakLocation) {
+
     var marker = new google.maps.Marker({
 
         // Set position using the newly created variable
         position: breakCoordinates,
         map: map,
-        // Set the title for the break marker as name of the wave/location
-        // of the break
+
+        /* Set the title for the break marker as the name of the wave/location
+        of the break. This way it can be searched/filtered in the ViewModel*/
         title: breakName + ' ' + '(' + breakLocation + ')'
     });
 
+    // Add a text box that displays the break name and location when clicked
     addListener(marker, breakName);
 }
 
@@ -289,25 +314,22 @@ function addListener(marker, breakName) {
             map.setZoom(15);
             map.setCenter(marker.getPosition());
         }
-    // Pass the relevant marker and break name (breakName) for the current
-    // iteration as an argument into the function
+
+    /* Pass the relevant marker and break name (breakName) for the current
+    iteration as an argument into the function*/
     })(marker, breakName));
 
+    // Add each marker to the markers array
     markers.push(marker);
 }
 
-function setMapOnAll(map) {
+function showMarkers(map) {
+
+    // Loop through the markers array and display on the map
     for (var i = 0; i < markers.length; i++) {
         markers[i].setMap(map);
     }
 }
 
-function clearMarkers() {
-    setMapOnAll(null);
-}
-
-function showMarkers() {
-    setMapOnAll(map);
-}
 
 ko.applyBindings(new AppViewModel);

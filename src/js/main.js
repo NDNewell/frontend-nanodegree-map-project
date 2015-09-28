@@ -212,6 +212,9 @@ function AppViewModel () {
             }
         });
 
+        // Set the map bounds & map position for every search
+        setMapBounds();
+
         /* Compare each marker's title, which holds the break and location name, to the search terms. If it matches, set the marker as visible.
         If it doesn't match, make setVisible false*/
         markers.forEach(function(marker) {
@@ -329,6 +332,40 @@ function showMarkers(map) {
     for (var i = 0; i < markers.length; i++) {
         markers[i].setMap(map);
     }
+}
+
+function setMapBounds () {
+
+    /* Create map bounds rectangle using the most SW / NE locations
+    to calculate the size*/
+    var bounds = new google.maps.LatLngBounds();
+
+    /* Loop through markers and extend bounds to only those markers
+    that are visible*/
+    for (var i = 0; i < markers.length; i++) {
+        if(markers[i].visible) {
+            bounds.extend(markers[i].getPosition());
+        }
+    }
+
+    // Fit the map to the bounds calcuated above
+    map.fitBounds(bounds);
+
+    /* Always zoom out one level from calculated level for original bounds
+    to ensure that markers along the edges aren't cut off*/
+    map.setZoom(map.getZoom()-1);
+
+    /* If there's only one marker (i.e. zoom is very high/too close), reset
+    zoom to lower level*/
+    if(map.getZoom() > 13) {
+        map.setZoom(13);
+    };
+
+}
+
+function resetMapPosition () {
+    map.setZoom(6);
+    map.setCenter({lat: 20.67, lng: -157.505});
 }
 
 

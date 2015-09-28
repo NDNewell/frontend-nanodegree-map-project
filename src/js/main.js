@@ -296,10 +296,31 @@ function addMarker(breakName, breakCoordinates, breakLocation) {
     });
 
     // Add a text box that displays the break name and location when clicked
-    addListener(marker, breakName);
+    addListeners(marker, breakName);
 }
 
-function addListener(marker, breakName) {
+function addListeners(marker, breakName) {
+
+    google.maps.event.addListener(marker, 'dblclick', (function(marker) {
+
+        /* Create an inner function what will at the time of iteration save
+        a double-click event to the relevant marker. When the user double-
+        clicks, the map will zoom in on the marker*/
+        return function() {
+
+            // Center the map
+            map.setCenter(marker.getPosition());
+
+            /* Set zoom if marker is clicked and not already zoomed in at 14
+            or above*/
+            if(map.getZoom() < 14) {
+                map.setZoom(14);
+            };
+        }
+
+    /* Pass the relevant marker for the current iteration as an argument
+    into the function*/
+    })(marker));
 
     google.maps.event.addListener(marker, 'click', (function(marker, breakName) {
 
@@ -314,14 +335,6 @@ function addListener(marker, breakName) {
             // Assign the InfoWindow object the appropriate marker
             infoWindow.open(map, marker);
 
-            // Center the map
-            map.setCenter(marker.getPosition());
-
-            /* Set zoom if marker is clicked and not already zoomed in at 14
-            or above*/
-            if(map.getZoom() < 14) {
-                map.setZoom(14);
-            };
         }
 
     /* Pass the relevant marker and break name (breakName) for the current

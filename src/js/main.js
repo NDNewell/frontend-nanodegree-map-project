@@ -233,8 +233,8 @@ function AppViewModel () {
     }
 };
 
-// Declare global variable map
-var map;
+// Declare global variables map and infoWindow
+var map, infoWindow;
 
 /* Create array of map markers that is globally accessible, particularly by
 the ViewModel*/
@@ -248,6 +248,9 @@ function initMap() {
         zoom: 6,
         mapTypeId: google.maps.MapTypeId.TERRAIN
     });
+
+    // Create an info window object for displaying the break name
+    infoWindow = new google.maps.InfoWindow();
 
     generateMarkers();
 }
@@ -305,17 +308,20 @@ function addListener(marker, breakName) {
         attach it to the relevant marker*/
         return function() {
 
-            // Create an info window that displays the break's name
-            var infoWindow = new google.maps.InfoWindow({
-            content: breakName
-            })
+            // Assign content to InfoWindow object
+            infoWindow.setContent(breakName);
 
-            // Assign the info window the appropriate marker
+            // Assign the InfoWindow object the appropriate marker
             infoWindow.open(map, marker);
 
-            // Zoom  in on location upon clicking the marker
-            map.setZoom(15);
+            // Center the map
             map.setCenter(marker.getPosition());
+
+            /* Set zoom if marker is clicked and not already zoomed in at 14
+            or above*/
+            if(map.getZoom() < 14) {
+                map.setZoom(14);
+            };
         }
 
     /* Pass the relevant marker and break name (breakName) for the current
@@ -351,14 +357,10 @@ function setMapBounds () {
     // Fit the map to the bounds calcuated above
     map.fitBounds(bounds);
 
-    /* Always zoom out one level from calculated level for original bounds
-    to ensure that markers along the edges aren't cut off*/
-    map.setZoom(map.getZoom()-1);
-
     /* If there's only one marker (i.e. zoom is very high/too close), reset
     zoom to lower level*/
-    if(map.getZoom() > 13) {
-        map.setZoom(13);
+    if(map.getZoom() > 12) {
+        map.setZoom(12);
     };
 
 }

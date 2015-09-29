@@ -244,6 +244,7 @@ function AppViewModel () {
             found, zoom in and display the relevant info window*/
             if (marker.title.indexOf(obj.breakName) >= 0) {
 
+                // Open info window
                 getInfoWindow(marker, obj.breakName);
 
                 // Center the map
@@ -251,6 +252,9 @@ function AppViewModel () {
 
                 // Zoom in on marker
                 map.setZoom(10);
+
+                // Animate marker
+                animateMarker(marker);
 
             }
 
@@ -315,6 +319,9 @@ function addMarker(breakName, breakCoordinates, breakLocation) {
 
         // Set position using the newly created variable
         position: breakCoordinates,
+
+        // Animate markers by dropping them onto the map at page load
+        animation: google.maps.Animation.DROP,
         map: map,
 
         /* Set the title for the break marker as the name of the wave/location
@@ -355,6 +362,9 @@ function addListeners(marker, breakName) {
         attach it to the relevant marker*/
         return function() {
             getInfoWindow(marker, breakName);
+
+            // Bounce marker upon clicking
+            animateMarker(marker);
         }
 
     /* Pass the relevant marker and break name (breakName) for the current
@@ -403,6 +413,13 @@ function getInfoWindow (marker, breakName) {
 
     // Assign the InfoWindow object the appropriate marker
     infoWindow.open(map, marker);
+}
+
+function animateMarker (marker) {
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+    window.setTimeout(function() {
+        marker.setAnimation(null);
+    }, 1400);
 }
 
 function resetMapPosition () {

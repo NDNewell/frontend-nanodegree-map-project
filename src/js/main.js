@@ -230,7 +230,34 @@ function AppViewModel () {
             }
 
         });
+
     }
+
+    /* Select and zoom in on each marker related to a location object from
+    the View. This is accomplished using ko's click binding*/
+    self.goToMarker = function(obj) {
+
+        // Iterate through the markers array
+        markers.forEach(function(marker) {
+
+            /* Filter markers that match the location object. When a match is
+            found, zoom in and display the relevant info window*/
+            if (marker.title.indexOf(obj.breakName) >= 0) {
+
+                getInfoWindow(marker, obj.breakName);
+
+                // Center the map
+                map.setCenter(marker.getPosition());;
+
+                // Zoom in on marker
+                map.setZoom(10);
+
+            }
+
+        });
+
+    }
+
 };
 
 // Declare global variables map and infoWindow
@@ -307,7 +334,6 @@ function addListeners(marker, breakName) {
         a double-click event to the relevant marker. When the user double-
         clicks, the map will zoom in on the marker*/
         return function() {
-
             // Center the map
             map.setCenter(marker.getPosition());
 
@@ -315,7 +341,7 @@ function addListeners(marker, breakName) {
             or above*/
             if(map.getZoom() < 14) {
                 map.setZoom(14);
-            };
+            }
         }
 
     /* Pass the relevant marker for the current iteration as an argument
@@ -328,13 +354,7 @@ function addListeners(marker, breakName) {
         the individual break's name (breakName) within the infoWindow and
         attach it to the relevant marker*/
         return function() {
-
-            // Assign content to InfoWindow object
-            infoWindow.setContent(breakName);
-
-            // Assign the InfoWindow object the appropriate marker
-            infoWindow.open(map, marker);
-
+            getInfoWindow(marker, breakName);
         }
 
     /* Pass the relevant marker and break name (breakName) for the current
@@ -375,7 +395,14 @@ function setMapBounds () {
     if(map.getZoom() > 12) {
         map.setZoom(12);
     };
+}
 
+function getInfoWindow (marker, breakName) {
+    // Assign content to InfoWindow object
+    infoWindow.setContent(breakName);
+
+    // Assign the InfoWindow object the appropriate marker
+    infoWindow.open(map, marker);
 }
 
 function resetMapPosition () {

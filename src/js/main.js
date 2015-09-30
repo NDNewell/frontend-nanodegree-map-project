@@ -429,10 +429,14 @@ var $surfReportElem = $('#surf-report');
 // clear old data before new request
 $surfReportElem.text("");
 
-var $spotID = 657;
+var $spotID = 297;
 
 // load World Weather Online
-var msUrl = 'http://magicseaweed.com/api/d2983e394d07724e96404fba11c10485/forecast/?spot_id=' + $spotID + '&units=us&fields=localTimestamp,fadedRating,solidRating,swell.minBreakingHeight,swell.maxBreakingHeight,swell.unit,swell.components.combined.*,wind.direction,wind.speed,wind.compassDirection,wind.unit,condition.temperature,condition.weather,condition.unit';
+var msUrl = 'http://magicseaweed.com/api/d2983e394d07724e96404fba11c10485/forecast/?spot_id=' + $spotID + '&units=us&fields=timestamp,fadedRating,solidRating,swell.minBreakingHeight,swell.maxBreakingHeight,swell.unit,swell.components.primary.*,wind.*,condition.*';
+
+/*
+http://magicseaweed.com/api/d2983e394d07724e96404fba11c10485/forecast/?spot_id=297&units=us&fields=timestamp,fadedRating,solidRating,swell.minBreakingHeight,swell.maxBreakingHeight,swell.unit,swell.components.primary.*,wind.*,condition.*
+*/
 
 var msRequestTimeout = setTimeout (function() {
     $surfReportElem.text("Failed to Get Magic Seaweed Resources");
@@ -444,17 +448,21 @@ $.ajax({
     // jsonp: "callback",
     success: function(response) {
 
+        // Get current time and current time minus three hours
         var getTime = Date.now();
         var currentTimeSecs = getTime / 1000;
         var backThreeHours = currentTimeSecs - 10800;
 
-
+        /* Iterate through forecast objects to get the last forcast (i.e. within the last 3 hours)*/
         for (var i = 0; i < response.length; i++) {
 
-            var forecastTime = response[i].localTimestamp;
+            var forecastTime = response[i].timestamp;
 
             if (forecastTime < currentTimeSecs && forecastTime > backThreeHours) {
+
+                // Save forecast for parsing other information below
                 var forcastData = response[i];
+                console.log(forcastData);
             }
         }
 
@@ -471,10 +479,10 @@ $.ajax({
         swellUnit = forcastData.swell.unit;
 
         // Swell height, direction, period
-        swellHeight = forcastData.swell.components.combined.height;
-        swellPeriod = forcastData.swell.components.combined.period;
-        swellDirection = forcastData.swell.components.combined.direction;
-        swellCompassDirection = forcastData.swell.components.combined.compassDirection;
+        swellHeight = forcastData.swell.components.primary.height;
+        swellPeriod = forcastData.swell.components.primary.period;
+        swellDirection = forcastData.swell.components.primary.direction;
+        swellCompassDirection = forcastData.swell.components.primary.compassDirection;
 
         // Wind speed
         windSpeed = forcastData.wind.speed;
@@ -503,7 +511,7 @@ $.ajax({
         document.getElementById("surf-report").innerHTML = rating.join("");
 
         // UI render
-        $surfReportElem.append('<p>' + waveHeight + ' ' + swellUnit + '</p>' + '<p>' + swellCompassDirection + ' ' + swellHeight + ' ' + swellUnit + ' ' + 'swell at' + ' ' + swellPeriod + ' ' + 'seconds' + '<p>' + '<p>' + windSpeed + ' ' + windUnit + ' ' + compassDirection + ' ' + 'winds' + '<p>' + '<p>' + temperature + ' ' + tempUnit + ' ' + '<img src="' + weatherImg + '">');
+        $surfReportElem.append('<p>' + waveHeight + ' ' + swellUnit + '</p>' + '<p>' + swellCompassDirection + ' ' + swellHeight + swellUnit + ' ' + 'swell at' + ' ' + swellPeriod + ' ' + 'seconds' + '<p>' + '<p>' + windSpeed + ' ' + windUnit + ' ' + compassDirection + ' ' + 'winds' + '<p>' + '<p>' + temperature + ' ' + tempUnit + ' ' + '<img src="' + weatherImg + '">');
 
         clearTimeout(msRequestTimeout);
     }

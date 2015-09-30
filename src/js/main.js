@@ -248,7 +248,7 @@ function AppViewModel () {
                 getInfoWindow(marker, obj.breakName);
 
                 // Center the map
-                map.setCenter(marker.getPosition());;
+                map.setCenter(marker.getPosition());
 
                 // Zoom in on marker
                 map.setZoom(10);
@@ -422,10 +422,92 @@ function animateMarker (marker) {
     }, 1400);
 }
 
-function resetMapPosition () {
-    map.setZoom(6);
-    map.setCenter({lat: 20.67, lng: -157.505});
-}
+
+
+var $surfReportElem = $('#surf-report');
+
+// clear old data before new request
+$surfReportElem.text("");
+
+var $spotID = 657;
+
+// load World Weather Online
+var msUrl = 'http://magicseaweed.com/api/d2983e394d07724e96404fba11c10485/forecast/?spot_id=' + $spotID + '&units=us&fields=localTimestamp,fadedRating,solidRating,swell.minBreakingHeight,swell.maxBreakingHeight,swell.unit,swell.components.combined.*,wind.direction,wind.speed,wind.compassDirection,wind.unit,condition.temperature,condition.weather,condition.unit';
+
+var msRequestTimeout = setTimeout (function() {
+    $surfReportElem.text("Failed to Get Magic Seaweed Resources");
+}, 8000);
+
+$.ajax({
+    url: msUrl,
+    dataType: 'jsonp',
+    // jsonp: "callback",
+    success: function(response) {
+
+        var getTime = Date.now();
+        var currentTimeSecs = getTime / 1000;
+        var backThreeHours = currentTimeSecs - 10800;
+
+
+        for (var i = 0; i < response.length; i++) {
+
+            var forecastTime = response[i].localTimestamp;
+
+            if (forecastTime < currentTimeSecs && forecastTime > backThreeHours) {
+                var forcastData = response[i];
+            }
+        }
+
+        // Wave break height max -  min
+        minBreakHeight = forcastData.swell.minBreakingHeight;
+        maxBreakHeight = forcastData.swell.maxBreakingHeight;
+
+          if (minBreakHeight === maxBreakHeight) {
+              waveHeight = minBreakHeight;
+          } else {
+              waveHeight = minBreakHeight + ' ' + '-' + ' ' + maxBreakHeight;
+          }
+
+        swellUnit = forcastData.swell.unit;
+
+        // Swell height, direction, period
+        swellHeight = forcastData.swell.components.combined.height;
+        swellPeriod = forcastData.swell.components.combined.period;
+        swellDirection = forcastData.swell.components.combined.direction;
+        swellCompassDirection = forcastData.swell.components.combined.compassDirection;
+
+        // Wind speed
+        windSpeed = forcastData.wind.speed;
+        windDirection = forcastData.wind.direction;
+        compassDirection = forcastData.wind.compassDirection;
+        windUnit = windDirection = forcastData.wind.unit;
+
+        // Temp and weather
+        temperature = forcastData.condition.temperature;
+        weather = forcastData.condition.weather;
+        tempUnit = forcastData.condition.unit;
+        weatherImg = 'http://cdnimages.magicseaweed.com/30x30/' + weather + '.png'
+
+        // Rating
+
+        rating = [];
+
+        for (var i = 0; i < forcastData.solidRating; i++) {
+            rating.push('<img src="http://cdnimages.magicseaweed.com/star_filled.png" />');
+        }
+
+        for (var i = 0; i < forcastData.fadedRating; i++) {
+            rating.push('<img src="http://cdnimages.magicseaweed.com/star_empty.png" />');
+        }
+
+        document.getElementById("surf-report").innerHTML = rating.join("");
+
+        // UI render
+        $surfReportElem.append('<p>' + waveHeight + ' ' + swellUnit + '</p>' + '<p>' + swellCompassDirection + ' ' + swellHeight + ' ' + swellUnit + ' ' + 'swell at' + ' ' + swellPeriod + ' ' + 'seconds' + '<p>' + '<p>' + windSpeed + ' ' + windUnit + ' ' + compassDirection + ' ' + 'winds' + '<p>' + '<p>' + temperature + ' ' + tempUnit + ' ' + '<img src="' + weatherImg + '">');
+
+        clearTimeout(msRequestTimeout);
+    }
+});
 
 
 ko.applyBindings(new AppViewModel);

@@ -11,11 +11,9 @@
         <div class="container-fluid">
             <section>
                 <div class="row">
-                    <div class="col-xs-12 horizontal-rule">
-                            <div class="logo">
-                                <h3>SURF<span style="color:red">LIST</span></h3>
-                                <p>Find the perfect wave</p>
-                            </div>
+                    <div class="col-xs-12 horizontal-rule logo">
+                        <h3>SURF<span style="color:#00B8E6">LIST</span></h3>
+                        <p>Find the perfect wave</p>
                     </div>
                 </div>
             </section>
@@ -28,7 +26,7 @@
             </section>
             <section>
                 <div class="row">
-                    <div class="col-xs-12 col-md-6 map-container">
+                    <div class="col-xs-12 col-sm-6 map-container">
                         <div id="map"></div>
                     </div>
                     <div class="col-xs-12 col-md-6" id="surf-report">
@@ -37,7 +35,7 @@
             </section>
             <section>
                 <div class="row" data-bind="foreach: locationGrid">
-                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 location-frame" data-bind="click: goToMarker">
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 location-frame" data-bind="click: goToMarker, displaySurf">
                         <span data-bind="html: picture"></span>
                         <p class="break-name"><strong data-bind="text: breakName"></strong></p>
                         <p class="location-name"><strong data-bind="text: location"></strong></h3>

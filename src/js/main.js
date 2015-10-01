@@ -6,6 +6,7 @@ var locationData = [
       location: 'Oahu, Hawaii',
       lat: 21.679011,
       lng: -158.041277,
+      spotID: 657,
       picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
     },
     {
@@ -13,6 +14,7 @@ var locationData = [
       location: 'Oahu, Hawaii',
       lat: 21.665244,
       lng: -158.053408,
+      spotID: 616,
       picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
     },
     {
@@ -20,6 +22,7 @@ var locationData = [
       location: 'Kauai, Hawaii',
       lat: 22.224744,
       lng: -159.566712,
+      spotID: 'none',
       picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
     },
     {
@@ -27,6 +30,7 @@ var locationData = [
       location: 'Kauai, Hawaii',
       lat: 22.224744,
       lng: -159.566712,
+      spotID: 'none',
       picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
     },
     {
@@ -34,6 +38,7 @@ var locationData = [
       location: 'Kauai, Hawaii',
       lat: 22.148311,
       lng: -159.300331,
+      spotID: 'none',
       picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
     },
     {
@@ -41,13 +46,15 @@ var locationData = [
       location: 'Kauai, Hawaii',
       lat: 22.218315,
       lng: -159.502265,
+      spotID: 3051,
       picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
     },
     {
-      breakName: 'Haleiwa',
+      breakName: "Hale'iwa",
       location: 'Oahu, Hawaii',
       lat: 21.596416,
       lng: -158.109121,
+      spotID: 660,
       picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
     },
     {
@@ -55,6 +62,7 @@ var locationData = [
       location: 'Oahu, Hawaii',
       lat: 21.642987,
       lng: -158.066743,
+      spotID: 549,
       picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
     },
     {
@@ -62,6 +70,7 @@ var locationData = [
       location: 'Oahu, Hawaii',
       lat: 21.670862,
       lng: -158.049157,
+      spotID: 658,
       picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
     },
     {
@@ -69,6 +78,7 @@ var locationData = [
       location: 'Oahu, Hawaii',
       lat: 21.708047,
       lng: -158.002275,
+      spotID: 'none',
       picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
     },
     {
@@ -76,6 +86,7 @@ var locationData = [
       location: 'Molokai, Hawaii',
       lat: 21.159132,
       lng: -156.735906,
+      spotID: 'none',
       picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
     },
     {
@@ -83,6 +94,7 @@ var locationData = [
       location: 'Maui, Hawaii',
       lat: 21.024350,
       lng: -156.641890,
+      spotID: 697,
       picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
     },
     {
@@ -90,6 +102,7 @@ var locationData = [
       location: 'Maui, Hawaii',
       lat: 20.946401,
       lng: -156.297389,
+      spotID: 617,
       picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
     },
     {
@@ -97,13 +110,15 @@ var locationData = [
       location: 'Maui, Hawaii',
       lat: 20.728298,
       lng: -156.452353,
+      spotID: 'none',
       picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
     },
     {
-      breakName: 'Maalaea',
+      breakName: "Ma'alaea",
       location: 'Maui, Hawaii',
       lat: 20.791860,
       lng: -156.508960,
+      spotID: 618,
       picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
     },
     {
@@ -111,6 +126,7 @@ var locationData = [
       location: 'Maui, Hawaii',
       lat: 20.869326,
       lng: -156.679025,
+      spotID: 4287,
       picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
     },
     {
@@ -118,13 +134,15 @@ var locationData = [
       location: 'Big Island, Hawaii',
       lat: 19.606206,
       lng: -155.978016,
+      spotID: 2784,
       picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
     },
     {
-      breakName: 'Pinetrees',
+      breakName: 'Pine Trees',
       location: 'Big Island, Hawaii',
       lat: 19.695131,
       lng: -156.045926,
+      spotID: 3958,
       picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
     },
     {
@@ -132,13 +150,15 @@ var locationData = [
       location: 'Big Island, Hawaii',
       lat: 19.854416,
       lng: -155.931340,
+      spotID: 'none',
       picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
     },
     {
-      breakName: 'Honolii',
+      breakName: "Honoli'i",
       location: 'Big Island, Hawaii',
       lat: 19.756298,
       lng: -155.089960,
+      spotID: 3815,
       picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
     }
 ];
@@ -165,6 +185,7 @@ function AppViewModel () {
         this.location = obj.location;
         this.lat = obj.lat;
         this.lng = obj.lng;
+        this.spotID = obj.spotID;
         this.picture = obj.picture;
     };
 
@@ -429,14 +450,10 @@ var $surfReportElem = $('#surf-report');
 // clear old data before new request
 $surfReportElem.text("");
 
-var $spotID = 297;
+var $spotID = 566;
 
 // load World Weather Online
 var msUrl = 'http://magicseaweed.com/api/d2983e394d07724e96404fba11c10485/forecast/?spot_id=' + $spotID + '&units=us&fields=timestamp,fadedRating,solidRating,swell.minBreakingHeight,swell.maxBreakingHeight,swell.unit,swell.components.primary.*,wind.*,condition.*';
-
-/*
-http://magicseaweed.com/api/d2983e394d07724e96404fba11c10485/forecast/?spot_id=297&units=us&fields=timestamp,fadedRating,solidRating,swell.minBreakingHeight,swell.maxBreakingHeight,swell.unit,swell.components.primary.*,wind.*,condition.*
-*/
 
 var msRequestTimeout = setTimeout (function() {
     $surfReportElem.text("Failed to Get Magic Seaweed Resources");
@@ -462,7 +479,6 @@ $.ajax({
 
                 // Save forecast for parsing other information below
                 var forcastData = response[i];
-                console.log(forcastData);
             }
         }
 
@@ -508,10 +524,14 @@ $.ajax({
             rating.push('<img src="http://cdnimages.magicseaweed.com/star_empty.png" />');
         }
 
-        document.getElementById("surf-report").innerHTML = rating.join("");
+        waveRating = rating.join("");
 
         // UI render
-        $surfReportElem.append('<p>' + waveHeight + ' ' + swellUnit + '</p>' + '<p>' + swellCompassDirection + ' ' + swellHeight + swellUnit + ' ' + 'swell at' + ' ' + swellPeriod + ' ' + 'seconds' + '<p>' + '<p>' + windSpeed + ' ' + windUnit + ' ' + compassDirection + ' ' + 'winds' + '<p>' + '<p>' + temperature + ' ' + tempUnit + ' ' + '<img src="' + weatherImg + '">');
+        $surfReportElem.append('<p>' + waveRating + '</p>');
+        $surfReportElem.append('<p>' + waveHeight + ' ' + swellUnit + '</p>');
+        $surfReportElem.append('<p>' + swellCompassDirection + ' ' + swellHeight + swellUnit + ' ' + 'swell at' + ' ' + swellPeriod + ' ' + 'seconds' + '</p>')
+        $surfReportElem.append('<p>' + windSpeed + ' ' + windUnit + ' ' + compassDirection + ' ' + 'winds' + '</p>');
+        $surfReportElem.append('<p>' + '<img src="' + weatherImg + '">' + temperature + ' ' + tempUnit + '</p>');
 
         clearTimeout(msRequestTimeout);
     }

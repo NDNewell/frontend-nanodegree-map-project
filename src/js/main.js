@@ -281,6 +281,11 @@ function AppViewModel () {
 
         });
 
+        self.displaySurf(obj);
+    }
+
+    self.displaySurf = function(obj) {
+        console.log(obj)
     }
 
 };
@@ -450,7 +455,7 @@ var $surfReportElem = $('#surf-report');
 // clear old data before new request
 $surfReportElem.text("");
 
-var $spotID = 566;
+var $spotID = 657;
 
 // load World Weather Online
 var msUrl = 'http://magicseaweed.com/api/d2983e394d07724e96404fba11c10485/forecast/?spot_id=' + $spotID + '&units=us&fields=timestamp,fadedRating,solidRating,swell.minBreakingHeight,swell.maxBreakingHeight,swell.unit,swell.components.primary.*,wind.*,condition.*';
@@ -469,6 +474,7 @@ $.ajax({
         var getTime = Date.now();
         var currentTimeSecs = getTime / 1000;
         var backThreeHours = currentTimeSecs - 10800;
+        var forwardThreeHours = currentTimeSecs + 10800;
 
         /* Iterate through forecast objects to get the last forcast (i.e. within the last 3 hours)*/
         for (var i = 0; i < response.length; i++) {
@@ -477,7 +483,13 @@ $.ajax({
 
             if (forecastTime < currentTimeSecs && forecastTime > backThreeHours) {
 
-                // Save forecast for parsing other information below
+                // Save forecast for parsing other information in a variable
+                var forcastData = response[i];
+
+            /* if data is not available from within the previous three hours, get the nearest forecast up to 3 hours in the future*/
+            } else if (forecastTime > currentTimeSecs && forecastTime < forwardThreeHours) {
+
+                // Save forecast for parsing other information in a variable
                 var forcastData = response[i];
             }
         }

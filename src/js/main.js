@@ -461,8 +461,8 @@ function getMagicSeaweed (spotID) {
     var msUrl = 'http://magicseaweed.com/api/d2983e394d07724e96404fba11c10485/forecast/?spot_id=' + $spotID + '&units=us&fields=timestamp,fadedRating,solidRating,swell.minBreakingHeight,swell.maxBreakingHeight,swell.unit,swell.components.primary.*,wind.*,condition.*';
 
     var msRequestTimeout = setTimeout (function() {
-        $surfReportElem.text("Failed to Get Magic Seaweed Resources");
-    }, 8000);
+        $surfReportElem.text("Sorry, conditions for this location are unavailable at the moment.");
+    }, 1000);
 
     $.ajax({
         url: msUrl,
@@ -495,8 +495,8 @@ function getMagicSeaweed (spotID) {
             }
 
             // Wave break height max -  min
-            minBreakHeight = forcastData.swell.minBreakingHeight;
-            maxBreakHeight = forcastData.swell.maxBreakingHeight;
+            var minBreakHeight = forcastData.swell.minBreakingHeight;
+            var maxBreakHeight = forcastData.swell.maxBreakingHeight;
 
               if (minBreakHeight === maxBreakHeight) {
                   waveHeight = minBreakHeight;
@@ -504,29 +504,29 @@ function getMagicSeaweed (spotID) {
                   waveHeight = minBreakHeight + ' ' + '-' + ' ' + maxBreakHeight;
               }
 
-            swellUnit = forcastData.swell.unit;
+            var swellUnit = forcastData.swell.unit;
 
             // Swell height, direction, period
-            swellHeight = forcastData.swell.components.primary.height;
-            swellPeriod = forcastData.swell.components.primary.period;
-            swellDirection = forcastData.swell.components.primary.direction;
-            swellCompassDirection = forcastData.swell.components.primary.compassDirection;
+            var swellHeight = forcastData.swell.components.primary.height;
+            var swellPeriod = forcastData.swell.components.primary.period;
+            var swellDirection = forcastData.swell.components.primary.direction;
+            var swellCompassDirection = forcastData.swell.components.primary.compassDirection;
 
             // Wind speed
-            windSpeed = forcastData.wind.speed;
-            windDirection = forcastData.wind.direction;
-            compassDirection = forcastData.wind.compassDirection;
-            windUnit = windDirection = forcastData.wind.unit;
+            var windSpeed = forcastData.wind.speed;
+            var windDirection = forcastData.wind.direction;
+            var compassDirection = forcastData.wind.compassDirection;
+            var windUnit = windDirection = forcastData.wind.unit;
 
             // Temp and weather
-            temperature = forcastData.condition.temperature;
-            weather = forcastData.condition.weather;
-            tempUnit = forcastData.condition.unit;
-            weatherImg = 'http://cdnimages.magicseaweed.com/30x30/' + weather + '.png'
+            var temperature = forcastData.condition.temperature;
+            var weather = forcastData.condition.weather;
+            var tempUnit = forcastData.condition.unit;
+            var weatherImg = 'http://cdnimages.magicseaweed.com/30x30/' + weather + '.png'
 
             // Rating
 
-            rating = [];
+            var rating = [];
 
             for (var i = 0; i < forcastData.solidRating; i++) {
                 rating.push('<img src="http://cdnimages.magicseaweed.com/star_filled.png" />');
@@ -536,7 +536,7 @@ function getMagicSeaweed (spotID) {
                 rating.push('<img src="http://cdnimages.magicseaweed.com/star_empty.png" />');
             }
 
-            waveRating = rating.join("");
+            var waveRating = rating.join("");
 
             // UI render
             $surfReportElem.append('<p>' + waveRating + '</p>');

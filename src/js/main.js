@@ -254,19 +254,24 @@ function AppViewModel () {
 
     }
 
+    self.clickLocationFrame = function(obj) {
+        self.goToMarker(obj.breakName);
+        getMagicSeaweed(obj.spotID);
+    };
+
     /* Select and zoom in on each marker related to a location object from
     the View. This is accomplished using ko's click binding*/
-    self.goToMarker = function(obj) {
+    self.goToMarker = function(breakName) {
 
         // Iterate through the markers array
         markers.forEach(function(marker) {
 
             /* Filter markers that match the location object. When a match is
             found, zoom in and display the relevant info window*/
-            if (marker.title.indexOf(obj.breakName) >= 0) {
+            if (marker.title.indexOf(breakName) >= 0) {
 
                 // Open info window
-                getInfoWindow(marker, obj.breakName);
+                getInfoWindow(marker, breakName);
 
                 // Center the map
                 map.setCenter(marker.getPosition());
@@ -281,11 +286,6 @@ function AppViewModel () {
 
         });
 
-        self.displaySurf(obj);
-    }
-
-    self.displaySurf = function(obj) {
-        console.log(obj)
     }
 
 };
@@ -448,106 +448,107 @@ function animateMarker (marker) {
     }, 1400);
 }
 
+function getMagicSeaweed (spotID) {
 
+    var $surfReportElem = $('#surf-report');
 
-var $surfReportElem = $('#surf-report');
+    // clear old data before new request
+    $surfReportElem.text("");
 
-// clear old data before new request
-$surfReportElem.text("");
+    var $spotID = spotID;
 
-var $spotID = 657;
+    // load World Weather Online
+    var msUrl = 'http://magicseaweed.com/api/d2983e394d07724e96404fba11c10485/forecast/?spot_id=' + $spotID + '&units=us&fields=timestamp,fadedRating,solidRating,swell.minBreakingHeight,swell.maxBreakingHeight,swell.unit,swell.components.primary.*,wind.*,condition.*';
 
-// load World Weather Online
-var msUrl = 'http://magicseaweed.com/api/d2983e394d07724e96404fba11c10485/forecast/?spot_id=' + $spotID + '&units=us&fields=timestamp,fadedRating,solidRating,swell.minBreakingHeight,swell.maxBreakingHeight,swell.unit,swell.components.primary.*,wind.*,condition.*';
+    var msRequestTimeout = setTimeout (function() {
+        $surfReportElem.text("Failed to Get Magic Seaweed Resources");
+    }, 8000);
 
-var msRequestTimeout = setTimeout (function() {
-    $surfReportElem.text("Failed to Get Magic Seaweed Resources");
-}, 8000);
+    $.ajax({
+        url: msUrl,
+        dataType: 'jsonp',
+        // jsonp: "callback",
+        success: function(response) {
 
-$.ajax({
-    url: msUrl,
-    dataType: 'jsonp',
-    // jsonp: "callback",
-    success: function(response) {
+            // Get current time and current time minus three hours
+            var getTime = Date.now();
+            var currentTimeSecs = getTime / 1000;
+            var backThreeHours = currentTimeSecs - 10800;
+            var forwardThreeHours = currentTimeSecs + 10800;
 
-        // Get current time and current time minus three hours
-        var getTime = Date.now();
-        var currentTimeSecs = getTime / 1000;
-        var backThreeHours = currentTimeSecs - 10800;
-        var forwardThreeHours = currentTimeSecs + 10800;
+            /* Iterate through forecast objects to get the last forcast (i.e. within the last 3 hours)*/
+            for (var i = 0; i < response.length; i++) {
 
-        /* Iterate through forecast objects to get the last forcast (i.e. within the last 3 hours)*/
-        for (var i = 0; i < response.length; i++) {
+                var forecastTime = response[i].timestamp;
 
-            var forecastTime = response[i].timestamp;
+                if (forecastTime < currentTimeSecs && forecastTime > backThreeHours) {
 
-            if (forecastTime < currentTimeSecs && forecastTime > backThreeHours) {
+                    // Save forecast for parsing other information in a variable
+                    var forcastData = response[i];
 
-                // Save forecast for parsing other information in a variable
-                var forcastData = response[i];
+                /* if data is not available from within the previous three hours, get the nearest forecast up to 3 hours in the future*/
+                } else if (forecastTime > currentTimeSecs && forecastTime < forwardThreeHours) {
 
-            /* if data is not available from within the previous three hours, get the nearest forecast up to 3 hours in the future*/
-            } else if (forecastTime > currentTimeSecs && forecastTime < forwardThreeHours) {
-
-                // Save forecast for parsing other information in a variable
-                var forcastData = response[i];
+                    // Save forecast for parsing other information in a variable
+                    var forcastData = response[i];
+                }
             }
+
+            // Wave break height max -  min
+            minBreakHeight = forcastData.swell.minBreakingHeight;
+            maxBreakHeight = forcastData.swell.maxBreakingHeight;
+
+              if (minBreakHeight === maxBreakHeight) {
+                  waveHeight = minBreakHeight;
+              } else {
+                  waveHeight = minBreakHeight + ' ' + '-' + ' ' + maxBreakHeight;
+              }
+
+            swellUnit = forcastData.swell.unit;
+
+            // Swell height, direction, period
+            swellHeight = forcastData.swell.components.primary.height;
+            swellPeriod = forcastData.swell.components.primary.period;
+            swellDirection = forcastData.swell.components.primary.direction;
+            swellCompassDirection = forcastData.swell.components.primary.compassDirection;
+
+            // Wind speed
+            windSpeed = forcastData.wind.speed;
+            windDirection = forcastData.wind.direction;
+            compassDirection = forcastData.wind.compassDirection;
+            windUnit = windDirection = forcastData.wind.unit;
+
+            // Temp and weather
+            temperature = forcastData.condition.temperature;
+            weather = forcastData.condition.weather;
+            tempUnit = forcastData.condition.unit;
+            weatherImg = 'http://cdnimages.magicseaweed.com/30x30/' + weather + '.png'
+
+            // Rating
+
+            rating = [];
+
+            for (var i = 0; i < forcastData.solidRating; i++) {
+                rating.push('<img src="http://cdnimages.magicseaweed.com/star_filled.png" />');
+            }
+
+            for (var i = 0; i < forcastData.fadedRating; i++) {
+                rating.push('<img src="http://cdnimages.magicseaweed.com/star_empty.png" />');
+            }
+
+            waveRating = rating.join("");
+
+            // UI render
+            $surfReportElem.append('<p>' + waveRating + '</p>');
+            $surfReportElem.append('<p>' + waveHeight + ' ' + swellUnit + '</p>');
+            $surfReportElem.append('<p>' + swellCompassDirection + ' ' + swellHeight + swellUnit + ' ' + 'swell at' + ' ' + swellPeriod + ' ' + 'seconds' + '</p>')
+            $surfReportElem.append('<p>' + windSpeed + ' ' + windUnit + ' ' + compassDirection + ' ' + 'winds' + '</p>');
+            $surfReportElem.append('<p>' + '<img src="' + weatherImg + '">' + temperature + ' ' + tempUnit + '</p>');
+
+            clearTimeout(msRequestTimeout);
         }
-
-        // Wave break height max -  min
-        minBreakHeight = forcastData.swell.minBreakingHeight;
-        maxBreakHeight = forcastData.swell.maxBreakingHeight;
-
-          if (minBreakHeight === maxBreakHeight) {
-              waveHeight = minBreakHeight;
-          } else {
-              waveHeight = minBreakHeight + ' ' + '-' + ' ' + maxBreakHeight;
-          }
-
-        swellUnit = forcastData.swell.unit;
-
-        // Swell height, direction, period
-        swellHeight = forcastData.swell.components.primary.height;
-        swellPeriod = forcastData.swell.components.primary.period;
-        swellDirection = forcastData.swell.components.primary.direction;
-        swellCompassDirection = forcastData.swell.components.primary.compassDirection;
-
-        // Wind speed
-        windSpeed = forcastData.wind.speed;
-        windDirection = forcastData.wind.direction;
-        compassDirection = forcastData.wind.compassDirection;
-        windUnit = windDirection = forcastData.wind.unit;
-
-        // Temp and weather
-        temperature = forcastData.condition.temperature;
-        weather = forcastData.condition.weather;
-        tempUnit = forcastData.condition.unit;
-        weatherImg = 'http://cdnimages.magicseaweed.com/30x30/' + weather + '.png'
-
-        // Rating
-
-        rating = [];
-
-        for (var i = 0; i < forcastData.solidRating; i++) {
-            rating.push('<img src="http://cdnimages.magicseaweed.com/star_filled.png" />');
-        }
-
-        for (var i = 0; i < forcastData.fadedRating; i++) {
-            rating.push('<img src="http://cdnimages.magicseaweed.com/star_empty.png" />');
-        }
-
-        waveRating = rating.join("");
-
-        // UI render
-        $surfReportElem.append('<p>' + waveRating + '</p>');
-        $surfReportElem.append('<p>' + waveHeight + ' ' + swellUnit + '</p>');
-        $surfReportElem.append('<p>' + swellCompassDirection + ' ' + swellHeight + swellUnit + ' ' + 'swell at' + ' ' + swellPeriod + ' ' + 'seconds' + '</p>')
-        $surfReportElem.append('<p>' + windSpeed + ' ' + windUnit + ' ' + compassDirection + ' ' + 'winds' + '</p>');
-        $surfReportElem.append('<p>' + '<img src="' + weatherImg + '">' + temperature + ' ' + tempUnit + '</p>');
-
-        clearTimeout(msRequestTimeout);
-    }
-});
+    });
+}
 
 
 ko.applyBindings(new AppViewModel);

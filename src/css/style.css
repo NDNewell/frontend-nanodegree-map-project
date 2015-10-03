@@ -94,12 +94,17 @@ body {
     }
 
     .location-frame {
+        height: 82px;
         text-align:center;
         padding: 0px 0px 0px 0px;
-        border-bottom: solid black;
-        border-bottom-width: 1px;
         border-top: solid black;
         border-top-width: 1px;
+        border-bottom: solid black;
+        border-bottom-width: 1px;
+    }
+
+    .break-name {
+        top: 25%;
     }
 
     .map-container {
@@ -107,7 +112,7 @@ body {
         right: 0;
         left: 0;
         z-index: 1030;
-        margin-top: -180px;
+        margin-top: -178px;
         padding: 0px 0px;
     }
 
@@ -141,7 +146,7 @@ body {
     .surf-conditions-left p {
         text-align: center;
         font-size: 2em;
-        margin-top: 35px;
+        margin-top: 42px;
         margin-bottom: 0px;
     }
 
@@ -159,9 +164,15 @@ body {
         margin-top: 5px;
     }
 
-    .surf-conditions-middle > p:first-child + p {
+    .surf-conditions-middle > p:first-child + p{
+        font-size: 1em;
+        color: #A9A9A9;
+        margin-top: -13px;
+    }
+
+    .surf-conditions-middle > p:first-child + p + p {
         font-size: 2em;
-        margin-top: -1px;
+        margin-top: -10px;
         margin-bottom: 3px;
     }
 
@@ -172,12 +183,12 @@ body {
     .surf-conditions-right > p:first-child {
         font-size: 1em;
         color: #A9A9A9;
-        margin-top: 5px;
+        margin-top: 13px;
     }
 
     .surf-conditions-right > p:first-child + p {
         font-size: 2em;
-        margin-top: -2px;
+        margin-top: -1px;
         margin-bottom: 0px;
     }
 
@@ -197,6 +208,6 @@ body {
     }
 
     body {
-        padding-top: 311px;
+        padding-top: 309px;
     }
 }

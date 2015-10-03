@@ -390,12 +390,13 @@ function getMagicSeaweed (spotID) {
             $surfConditionsLeft.append('<img class="img-responsive" src="' + weatherImg + '" alt="Symbol for current weather">');
 
             // UI render middle
-            $surfConditionsMiddle.append('<p>' + "(" + swellHeight + "ft" + ' ' + "at" + ' ' + swellPeriod + 's' + ' ' + swellCompassDirection + ")" + '</p>');
+            $surfConditionsMiddle.append('<p>' + swellHeight + "ft" + ' ' + "primary" + '</p>');
+            $surfConditionsMiddle.append('<p>' + "@" + ' ' + swellPeriod + 's' + ' ' + swellCompassDirection + '</p>');
             $surfConditionsMiddle.append('<p>' + waveHeight + "ft" + '</p>');
             $surfConditionsMiddle.append('<p>' + waveRating + '</p>');
 
             // UI render right
-            $surfConditionsRight.append('<p>' + "(" + windSpeed + "mph" + ")" + '</p>');
+            $surfConditionsRight.append('<p>' + windSpeed + "mph" + '</p>');
             $surfConditionsRight.append('<p>' + compassDirection + '</p>');
             $surfConditionsRight.append('<img class="img-responsive" src="' + windImg + '" alt="Symbol for wind">');
 

@@ -375,11 +375,11 @@ function getMagicSeaweed (spotID) {
             var rating = [];
 
             for (var i = 0; i < forcastData.solidRating; i++) {
-                rating.push('<img src="http://cdnimages.magicseaweed.com/star_filled.png" />');
+                rating.push('<img src="img/star_filled.png" />');
             }
 
             for (var i = 0; i < forcastData.fadedRating; i++) {
-                rating.push('<img src="http://cdnimages.magicseaweed.com/star_empty.png" />');
+                rating.push('<img src="img/star_empty.png" />');
             }
 
             var waveRating = rating.join("");
@@ -391,7 +391,7 @@ function getMagicSeaweed (spotID) {
 
             // UI render middle
             $surfConditionsMiddle.append('<p>' + "(" + swellHeight + "ft" + ' ' + "at" + ' ' + swellPeriod + 's' + ' ' + swellCompassDirection + ")" + '</p>');
-            $surfConditionsMiddle.append('<p>' + waveHeight + ' ' + "ft" + '</p>');
+            $surfConditionsMiddle.append('<p>' + waveHeight + "ft" + '</p>');
             $surfConditionsMiddle.append('<p>' + waveRating + '</p>');
 
             // UI render right
@@ -417,7 +417,6 @@ function initMap() {
     // Create a new Google map centered on the Hawaiian Islands
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 20.67, lng: -157.505},
-        zoom: 6,
         mapTypeId: google.maps.MapTypeId.TERRAIN
     });
 
@@ -451,6 +450,9 @@ function generateMarkers () {
 
     // Display markers found in the markers array on the map
     showMarkers(map);
+
+    // Set initial map bounds based on location of markers
+    setMapBounds();
 
 }
 

@@ -89,7 +89,7 @@ body {
 @media (max-width: 767px) {
 
     #map {
-        height: 260px;
+        height: 180px;
         width: 100%;
     }
 
@@ -107,7 +107,7 @@ body {
         right: 0;
         left: 0;
         z-index: 1030;
-        margin-top: -259px;
+        margin-top: -180px;
         padding: 0px 0px;
     }
 
@@ -134,6 +134,10 @@ body {
         width: 100%;
     }
 
+    .conditions-frame {
+
+    }
+
     .surf-conditions-left p {
         text-align: center;
         font-size: 2em;
@@ -147,21 +151,17 @@ body {
 
     .surf-conditions-middle  {
         text-align: center;
-        border-right-style: solid;
-        border-right-color: #E8E8E8;
-        border-right-width: 1px;
-        border-left-style: solid;
-        border-left-color: #E8E8E8;
-        border-left-width: 1px;
     }
 
     .surf-conditions-middle > p:first-child {
         font-size: 1em;
+        color: #A9A9A9;
         margin-top: 5px;
     }
 
     .surf-conditions-middle > p:first-child + p {
         font-size: 2em;
+        margin-top: -1px;
         margin-bottom: 3px;
     }
 
@@ -171,12 +171,13 @@ body {
 
     .surf-conditions-right > p:first-child {
         font-size: 1em;
+        color: #A9A9A9;
         margin-top: 5px;
     }
 
     .surf-conditions-right > p:first-child + p {
         font-size: 2em;
-        margin-top: 0px;
+        margin-top: -2px;
         margin-bottom: 0px;
     }
 
@@ -196,6 +197,6 @@ body {
     }
 
     body {
-        padding-top: 389px;
+        padding-top: 311px;
     }
 }

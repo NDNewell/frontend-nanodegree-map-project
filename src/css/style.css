@@ -8,8 +8,25 @@
     width: 100%;
 }
 
+body {
+    padding-top: 90px;
+    font-family: Arial, Verdana;
+}
+
+.header {
+    background-color: white;
+}
+
 .search-form {
-    width: 25%;
+    font-size: 1.35em;
+    width: 365px;
+    float: right;
+    margin-top: 14px;
+    margin-right: 15px;
+    padding-top: 7.5px;
+    padding-bottom: 7.5px;
+    padding-left: 5px;
+    border-radius: 5px;
 }
 
 .map-container {
@@ -25,21 +42,13 @@
 
 .logo {
     text-align: left;
-    color:;
-    font-family: Arial, Verdana;
     vertical-align: middle;
+    padding-left: 30px;
 }
 
 .logo p {
-    border-style: ;
     font-size: .9em;
     margin-top: -10px;
-}
-
-.search-form {
-    margin-top: 15px;
-    margin-bottom: 20px;
-    width: 400px;
 }
 
 .location-name {
@@ -94,7 +103,11 @@
     }
 
     .map-container {
-        margin-bottom: -1px;
+        position: fixed;
+        right: 0;
+        left: 0;
+        z-index: 1030;
+        margin-top: -259px;
         padding: 0px 0px;
     }
 
@@ -105,6 +118,84 @@
     }
 
     .search-form {
+        font-size: 1.4em;
+        margin-top: 0px;
+        margin-bottom: 5px;
+        margin-right: 0px;
+        padding-top: 12.5px;
+        padding-bottom: 10px;
+        border-top-style: solid;
+        border-top-color: #E8E8E8;
+        border-top-width: 1px;
+        border-bottom: none;
+        border-left: none;
+        border-right: none;
+        border-radius: 0px;
         width: 100%;
+    }
+
+    .surf-conditions-left p {
+        text-align: center;
+        font-size: 2em;
+        margin-top: 35px;
+        margin-bottom: 0px;
+    }
+
+    .surf-conditions-left img {
+        margin: auto;
+    }
+
+    .surf-conditions-middle  {
+        text-align: center;
+        border-right-style: solid;
+        border-right-color: #E8E8E8;
+        border-right-width: 1px;
+        border-left-style: solid;
+        border-left-color: #E8E8E8;
+        border-left-width: 1px;
+    }
+
+    .surf-conditions-middle > p:first-child {
+        font-size: 1em;
+        margin-top: 5px;
+    }
+
+    .surf-conditions-middle > p:first-child + p {
+        font-size: 2em;
+        margin-bottom: 3px;
+    }
+
+    .surf-conditions-right {
+        text-align: center;
+    }
+
+    .surf-conditions-right > p:first-child {
+        font-size: 1em;
+        margin-top: 5px;
+    }
+
+    .surf-conditions-right > p:first-child + p {
+        font-size: 2em;
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .surf-conditions-right img {
+        font-size: 2em;
+        margin: auto;
+        margin-bottom: 10px;
+    }
+
+    .conditions-error p {
+        font-size: 1.2em;
+        margin-top: 6px;
+    }
+
+    .horizontal-rule {
+        border-bottom: none;
+    }
+
+    body {
+        padding-top: 389px;
     }
 }

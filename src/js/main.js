@@ -292,24 +292,34 @@ function AppViewModel () {
 
 function getMagicSeaweed (spotID) {
 
-    var $surfConditionsError = $('div.conditions-error');
+    var $spotID = spotID;
+
+    var $surfConditionsFrame = $('div.conditions-frame');
+    var $surfConditionsError = $('p.conditions-error');
     var $surfConditionsLeft = $('div.surf-conditions-left');
     var $surfConditionsMiddle = $('div.surf-conditions-middle');
     var $surfConditionsRight = $('div.surf-conditions-right');
 
-    // clear old data before new request
-    $surfConditionsError.text("");
+    // clear old conditions data before new request
     $surfConditionsLeft.text("");
     $surfConditionsMiddle.text("");
     $surfConditionsRight.text("");
 
-    var $spotID = spotID;
+    // remove last error
+    $surfConditionsError.remove();
+
+    // reset conditions pop-up dimensions if previously open
+    $('.map-container').css("margin-top","-178px");
+    $('.conditions-frame').css("margin-top","0px");
+    $('body').css("padding-top","309px");
+    $('.location-grid').css("margin-top", "0px");
 
     // load Magic Seaweed
     var msUrl = 'http://magicseaweed.com/api/d2983e394d07724e96404fba11c10485/forecast/?spot_id=' + $spotID + '&units=us&fields=timestamp,fadedRating,solidRating,swell.minBreakingHeight,swell.maxBreakingHeight,swell.components.primary.*,wind.*,condition.*';
 
     var msRequestTimeout = setTimeout (function() {
-        $surfConditionsError.append('<p>' + "Sorry dude! Conditions for this location are unavailable right now. Total bummer =(" + '</p>');
+        $('.location-grid').css("margin-top", "65px");
+        $surfConditionsFrame.append('<p class="conditions-error">' + "Sorry dude! Conditions for this location are unavailable right now. Total bummer =(" + '</p>');
     }, 8000);
 
     $.ajax({
@@ -400,6 +410,9 @@ function getMagicSeaweed (spotID) {
             $surfConditionsRight.append('<p>' + compassDirection + '</p>');
             $surfConditionsRight.append('<img class="img-responsive" src="' + windImg + '" alt="Symbol for wind">');
 
+            $('.map-container').css("margin-top","-305px");
+            $('.conditions-frame').css("margin-top","-125px");
+            $('body').css("padding-top","436px");
 
             clearTimeout(msRequestTimeout);
         }

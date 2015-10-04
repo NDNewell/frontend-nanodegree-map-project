@@ -15,7 +15,7 @@
                         <h3>SURF<span style="color:#00B8E6">LIST</span></h3>
                         <p>Find the perfect wave</p>
                     </div>
-                    <div class="col-xs-12 col-sm-6" id="search-form">
+                    <div class="col-xs-12 col-sm-6 search-container" id="search-form">
                         <input class="search-form" placeholder="Search for a specific break or location..." type="search" data-bind="textInput: Query, event: {keyup: searchLocations}" autocomplete="off">
                     </div>
                 </div>
@@ -27,7 +27,6 @@
                     </div>
                     <div class="col-xs-12 col-sm-6 conditions-frame">
                         <div class="row">
-                            <div class="col-xs-12 conditions-error"></div>
                             <div class="col-xs-4 surf-conditions-left"></div>
                             <div class="col-xs-4 surf-conditions-middle"></div>
                             <div class="col-xs-4 surf-conditions-right"></div>
@@ -36,7 +35,7 @@
                 </div>
             </section>
             <section>
-                <div class="row" data-bind="foreach: locationGrid">
+                <div class="row location-grid" data-bind="foreach: locationGrid">
                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 location-frame" data-bind="click: clickLocationFrame">
                         <span data-bind="html: picture"></span>
                         <p class="break-name"><strong data-bind="text: breakName"></strong></p>

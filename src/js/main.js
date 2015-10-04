@@ -292,33 +292,29 @@ function AppViewModel () {
 
 function getMagicSeaweed (spotID) {
 
-    var $spotID = spotID;
-
     var $surfConditionsFrame = $('div.conditions-frame');
     var $surfConditionsError = $('p.conditions-error');
     var $surfConditionsLeft = $('div.surf-conditions-left');
     var $surfConditionsMiddle = $('div.surf-conditions-middle');
     var $surfConditionsRight = $('div.surf-conditions-right');
 
-    // clear old conditions data before new request
-    $surfConditionsLeft.text("");
-    $surfConditionsMiddle.text("");
-    $surfConditionsRight.text("");
+    // Clear old conditions data before new request
+    clearSurfConditions();
 
-    // remove last error
-    $surfConditionsError.remove();
+    // Reset conditions pop-up dimensions if previously open
+    setInitialDimensions();
 
-    // reset conditions pop-up dimensions if previously open
-    $('.map-container').css("margin-top","-178px");
-    $('.conditions-frame').css("margin-top","0px");
-    $('body').css("padding-top","309px");
-    $('.location-grid').css("margin-top", "0px");
+    // Load Magic Seaweed API data
+    var msUrl = 'http://magicseaweed.com/api/d2983e394d07724e96404fba11c10485/forecast/?spot_id=' + spotID + '&units=us&fields=timestamp,fadedRating,solidRating,swell.minBreakingHeight,swell.maxBreakingHeight,swell.components.primary.*,wind.*,condition.*';
 
-    // load Magic Seaweed
-    var msUrl = 'http://magicseaweed.com/api/d2983e394d07724e96404fba11c10485/forecast/?spot_id=' + $spotID + '&units=us&fields=timestamp,fadedRating,solidRating,swell.minBreakingHeight,swell.maxBreakingHeight,swell.components.primary.*,wind.*,condition.*';
-
+    // If no api data is returned, show an error message
     var msRequestTimeout = setTimeout (function() {
+
+        // Reset position of locations to accommodate a new div
         $('.location-grid').css("margin-top", "65px");
+
+        /* Add a text element to display an error if not data is returned
+        8 seconds*/
         $surfConditionsFrame.append('<p class="conditions-error">' + "Sorry dude! Conditions for this location are unavailable right now. Total bummer =(" + '</p>');
     }, 8000);
 
@@ -328,7 +324,7 @@ function getMagicSeaweed (spotID) {
         // jsonp: "callback",
         success: function(response) {
 
-            // Get current time and current time minus three hours
+            // Get current time & current time minus three hours
             var getTime = Date.now();
             var currentTimeSecs = getTime / 1000;
             var backThreeHours = currentTimeSecs - 10800;
@@ -353,70 +349,101 @@ function getMagicSeaweed (spotID) {
                 }
             }
 
-            // Wave break height max -  min
+            // Save wave break height
             var minBreakHeight = forcastData.swell.minBreakingHeight;
             var maxBreakHeight = forcastData.swell.maxBreakingHeight;
 
-              if (minBreakHeight === maxBreakHeight) {
-                  var waveHeight = minBreakHeight;
-              } else {
-                  var waveHeight = minBreakHeight + ' ' + '-' + ' ' + maxBreakHeight;
-              }
+            // If the min and max are the same, just save the min height
+            if (minBreakHeight === maxBreakHeight) {
+                var waveHeight = minBreakHeight;
 
-            // Swell height, direction, period
+            // If the min and max are different, save both as a range
+            } else {
+                var waveHeight = minBreakHeight + ' ' + '-' + ' ' + maxBreakHeight;
+            }
+
+            // Get and save swell height, direction, period
             var swellHeight = forcastData.swell.components.primary.height;
             var swellPeriod = forcastData.swell.components.primary.period;
             var swellDirection = forcastData.swell.components.primary.direction;
             var swellCompassDirection = forcastData.swell.components.primary.compassDirection;
 
-            // Wind speed
+            // Get and sav wind speed and direction
             var windSpeed = forcastData.wind.speed;
             var windDirection = forcastData.wind.direction;
             var compassDirection = forcastData.wind.compassDirection;
 
-            // Temp and weather
+            // Get and save current temperature and weather
             var temperature = forcastData.condition.temperature;
             var weather = forcastData.condition.weather;
             var weatherImg = 'http://cdnimages.magicseaweed.com/30x30/' + weather + '.png'
             var windImg = 'img/cloudy-&-wind.png'
 
-            // Rating
-
+            /* Get wave and conditions ratings */
             var rating = [];
 
+            /* Add solid stars to the array equal to number value retrieved
+            from MSW*/
             for (var i = 0; i < forcastData.solidRating; i++) {
                 rating.push('<img src="img/star_filled.png" />');
             }
 
+            /* Add faded stars to the array equal to number value retrieved
+            from MSW*/
             for (var i = 0; i < forcastData.fadedRating; i++) {
                 rating.push('<img src="img/star_empty.png" />');
             }
 
+            /* Combine the array into one line of stars to form the overall
+            rating of both the surfing conditions and wave quality*/
             var waveRating = rating.join("");
 
-            // UI render left
-            $surfConditionsLeft.append('<p>' + temperature + "℉" + '</p>');
+            /* Render the temperature and weather image in the left side of the
+            conditions 'pop-up' window*/
+            $surfConditionsLeft.append('<p>' + temperature + " ℉ " + '</p>');
 
             $surfConditionsLeft.append('<img class="img-responsive" src="' + weatherImg + '" alt="Symbol for current weather">');
 
-            // UI render middle
+            /* Render the swell height, period, breaking wave height, and wave
+            rating from above in the center of the conditions 'pop-up' window*/
             $surfConditionsMiddle.append('<p>' + swellHeight + "ft" + ' ' + "primary" + '</p>');
             $surfConditionsMiddle.append('<p>' + "@" + ' ' + swellPeriod + 's' + ' ' + swellCompassDirection + '</p>');
             $surfConditionsMiddle.append('<p>' + waveHeight + "ft" + '</p>');
             $surfConditionsMiddle.append('<p>' + waveRating + '</p>');
 
-            // UI render right
+            /* Render the wind speed, direction, and wind image in the right
+            side of the conditions 'pop-up' window*/
             $surfConditionsRight.append('<p>' + windSpeed + "mph" + '</p>');
             $surfConditionsRight.append('<p>' + compassDirection + '</p>');
             $surfConditionsRight.append('<img class="img-responsive" src="' + windImg + '" alt="Symbol for wind">');
 
+            /* Set dimensions to make room for a new div holding surf
+            conditions*/
             $('.map-container').css("margin-top","-305px");
             $('.conditions-frame').css("margin-top","-125px");
             $('body').css("padding-top","436px");
 
+            // Disable error message
             clearTimeout(msRequestTimeout);
         }
     });
+
+    function clearSurfConditions () {
+        $surfConditionsLeft.text("");
+        $surfConditionsMiddle.text("");
+        $surfConditionsRight.text("");
+    }
+
+    function setInitialDimensions () {
+
+        // remove last error
+        $surfConditionsError.remove();
+
+        $('.map-container').css("margin-top","-178px");
+        $('.conditions-frame').css("margin-top","0px");
+        $('body').css("padding-top","309px");
+        $('.location-grid').css("margin-top", "0px");
+    }
 }
 
 // Declare global variables map and infoWindow

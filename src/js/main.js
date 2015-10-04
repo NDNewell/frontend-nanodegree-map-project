@@ -292,17 +292,21 @@ function AppViewModel () {
 
 function getMagicSeaweed (spotID) {
 
+    // Get attributes from the DOM and save in variables for later use
     var $surfConditionsFrame = $('div.conditions-frame');
-    var $surfConditionsError = $('p.conditions-error');
     var $surfConditionsLeft = $('div.surf-conditions-left');
     var $surfConditionsMiddle = $('div.surf-conditions-middle');
     var $surfConditionsRight = $('div.surf-conditions-right');
 
-    // Clear old conditions data before new request
+    // Clear old conditions data if open from previous click
     clearSurfConditions();
 
-    // Reset conditions pop-up dimensions if previously open
+    /* Reset margins for other elements to accommodate lack of conditions
+    window if it was already open from a previous click*/
     setInitialDimensions();
+
+    // Remove last error window if open from a previous click
+    $('p.conditions-error').remove();
 
     // Load Magic Seaweed API data
     var msUrl = 'http://magicseaweed.com/api/d2983e394d07724e96404fba11c10485/forecast/?spot_id=' + spotID + '&units=us&fields=timestamp,fadedRating,solidRating,swell.minBreakingHeight,swell.maxBreakingHeight,swell.components.primary.*,wind.*,condition.*';
@@ -310,7 +314,13 @@ function getMagicSeaweed (spotID) {
     // If no api data is returned, show an error message
     var msRequestTimeout = setTimeout (function() {
 
-        // Reset position of locations to accommodate a new div
+        /* In case of multiple requests, clear old data/reset dimensions and
+        remove any old error messages to ensure multiple conditions windows to not open*/
+        clearSurfConditions();
+        setInitialDimensions();
+        $('p.conditions-error').remove();
+
+        // Reset position of locations grid to accommodate a new div
         $('.location-grid').css("margin-top", "65px");
 
         /* Add a text element to display an error if not data is returned
@@ -324,7 +334,7 @@ function getMagicSeaweed (spotID) {
         // jsonp: "callback",
         success: function(response) {
 
-            // Get current time & current time minus three hours
+            // Get current time & current time plus/minus three hours
             var getTime = Date.now();
             var currentTimeSecs = getTime / 1000;
             var backThreeHours = currentTimeSecs - 10800;
@@ -398,26 +408,31 @@ function getMagicSeaweed (spotID) {
             rating of both the surfing conditions and wave quality*/
             var waveRating = rating.join("");
 
-            /* Render the temperature and weather image in the left side of the
-            conditions 'pop-up' window*/
-            $surfConditionsLeft.append('<p>' + temperature + " ℉ " + '</p>');
+            /* In case of multiple data requests, clear old data and error
+            messages one last time to ensure multiple conditions windows to
+            not open*/
+            clearSurfConditions();
+            $('p.conditions-error').remove();
 
+            /* Render the temperature and weather image in the left side of the
+            newly created conditions window*/
+            $surfConditionsLeft.append('<p>' + temperature + " ℉ " + '</p>');
             $surfConditionsLeft.append('<img class="img-responsive" src="' + weatherImg + '" alt="Symbol for current weather">');
 
             /* Render the swell height, period, breaking wave height, and wave
-            rating from above in the center of the conditions 'pop-up' window*/
+            rating from above in the center of the conditions window*/
             $surfConditionsMiddle.append('<p>' + swellHeight + "ft" + ' ' + "primary" + '</p>');
             $surfConditionsMiddle.append('<p>' + "@" + ' ' + swellPeriod + 's' + ' ' + swellCompassDirection + '</p>');
             $surfConditionsMiddle.append('<p>' + waveHeight + "ft" + '</p>');
             $surfConditionsMiddle.append('<p>' + waveRating + '</p>');
 
             /* Render the wind speed, direction, and wind image in the right
-            side of the conditions 'pop-up' window*/
+            side of the conditions window*/
             $surfConditionsRight.append('<p>' + windSpeed + "mph" + '</p>');
             $surfConditionsRight.append('<p>' + compassDirection + '</p>');
             $surfConditionsRight.append('<img class="img-responsive" src="' + windImg + '" alt="Symbol for wind">');
 
-            /* Set dimensions to make room for a new div holding surf
+            /* Set dimensions to make room for a new window holding surf
             conditions*/
             $('.map-container').css("margin-top","-305px");
             $('.conditions-frame').css("margin-top","-125px");
@@ -435,9 +450,6 @@ function getMagicSeaweed (spotID) {
     }
 
     function setInitialDimensions () {
-
-        // remove last error
-        $surfConditionsError.remove();
 
         $('.map-container').css("margin-top","-178px");
         $('.conditions-frame').css("margin-top","0px");

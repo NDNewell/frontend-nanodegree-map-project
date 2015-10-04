@@ -256,7 +256,7 @@ function AppViewModel () {
 
     self.clickLocationFrame = function(obj) {
         self.goToMarker(obj.breakName);
-        getMagicSeaweed(obj.spotID);
+        getMagicSeaweed(obj.spotID, obj.breakName);
     };
 
     /* Select and zoom in on each marker related to a location object from
@@ -290,7 +290,7 @@ function AppViewModel () {
 };
 
 
-function getMagicSeaweed (spotID) {
+function getMagicSeaweed (spotID, breakName) {
 
     // Get attributes from the DOM and save in variables for later use
     var $surfConditionsFrame = $('div.conditions-frame');
@@ -325,7 +325,7 @@ function getMagicSeaweed (spotID) {
 
         /* Add a text element to display an error if not data is returned
         8 seconds*/
-        $surfConditionsFrame.append('<p class="conditions-error">' + "Sorry dude! Conditions for this location are unavailable right now. Total bummer =(" + '</p>');
+        $surfConditionsFrame.append('<p class="conditions-error">' + "Sorry dude! Conditions for" + ' ' + breakName + ' ' + "are unavailable right now. Total bummer =(" + '</p>');
     }, 8000);
 
     $.ajax({

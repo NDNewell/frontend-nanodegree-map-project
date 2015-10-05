@@ -369,7 +369,7 @@ function getMagicSeaweed (spotID, breakName) {
                 /* Sometimes a request takes longer than 8 seconds (see set
                 timeout above). When this happens there's a tendency for
                 the location to suddently appear after the error message has
-                already been display via set timeout. This checks if set time-
+                already been displayed via set timeout. This checks if set time
                 out has been executed and if true ends the function (api
                 request). If it is false (hasn't been executed) the api
                 request may continue */
@@ -471,8 +471,7 @@ function getMagicSeaweed (spotID, breakName) {
                     $surfConditionsRight.append('<p>' + compassDirection + '</p>');
                     $surfConditionsRight.append('<img class="img-responsive" src="' + windImg + '" alt="Symbol for wind">');
 
-                    /* Set dimensions to make room for a new window holding surf
-                    conditions*/
+                    /* Set dimensions to make room for a new window holding surf conditions*/
                     $('.map-container').css("margin-top","-305px");
                     $('.conditions-frame').css("margin-top","-125px");
                     $('body').css("padding-top","436px");
@@ -512,6 +511,14 @@ function getMagicSeaweed (spotID, breakName) {
         8 seconds*/
         $surfConditionsFrame.append('<p class="conditions-error">' + breakName + ' ' + "conditions unavailable =(" + '</p>');
     }
+
+    // Close surf conditions or error window when either is clicked
+    $('.conditions-frame').on('click', function(e) {
+        console.log('clicked!');
+        clearSurfConditions();
+        setInitialDimensions();
+        $('p.conditions-error').remove();
+    })
 }
 
 // Declare global variables map and infoWindow

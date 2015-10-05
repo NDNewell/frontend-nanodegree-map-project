@@ -309,7 +309,7 @@ var getApi = false;
 
 function getMagicSeaweed (spotID, breakName) {
 
-    // Get attributes from the DOM and save in variables for later use
+    // Get attributes from DOM elements and save in variables for later use
     var $surfConditionsFrame = $('div.conditions-frame');
     var $surfConditionsLeft = $('div.surf-conditions-left');
     var $surfConditionsMiddle = $('div.surf-conditions-middle');
@@ -328,8 +328,8 @@ function getMagicSeaweed (spotID, breakName) {
     // Load Magic Seaweed API data
     var msUrl = 'http://magicseaweed.com/api/d2983e394d07724e96404fba11c10485/forecast/?spot_id=' + spotID + '&units=us&fields=timestamp,fadedRating,solidRating,swell.minBreakingHeight,swell.maxBreakingHeight,swell.components.primary.*,wind.*,condition.*';
 
-    /* Check the location's spot ID for the API. If there is no spot ID,
-    immediately disply an error message. This also prevents an API request
+    /* Check for the location's spot ID. If there is no spot ID,
+    immediately display an error message. This also prevents an API request
     from going through for a non-existing location*/
     if(spotID === 'none') {
 
@@ -341,6 +341,10 @@ function getMagicSeaweed (spotID, breakName) {
 
     } else {
 
+        /* Set timeout hasn't been executed yet, so set to false (A more
+          thorough explanation is found in the ajax request below) */
+        var ranSetTimeout = false;
+
         /* If the location object passes the above filter (has a location ID),
         but times out (no api data is returned), show an error message */
         var msRequestTimeout = setTimeout (function() {
@@ -351,6 +355,9 @@ function getMagicSeaweed (spotID, breakName) {
             allow other locations to be clicked*/
             getApi = false;
 
+            /* Set timeout was just executed, so set to true */
+            ranSetTimeout = true;
+
         }, 8000);
 
         $.ajax({
@@ -359,111 +366,124 @@ function getMagicSeaweed (spotID, breakName) {
             // jsonp: "callback",
             success: function(response) {
 
-                // Get current time & current time plus/minus three hours
-                var getTime = Date.now();
-                var currentTimeSecs = getTime / 1000;
-                var backThreeHours = currentTimeSecs - 10800;
-                var forwardThreeHours = currentTimeSecs + 10800;
+                /* Sometimes a request takes longer than 8 seconds (see set
+                timeout above). When this happens there's a tendency for
+                the location to suddently appear after the error message has
+                already been display via set timeout. This checks if set time-
+                out has been executed and if true ends the function (api
+                request). If it is false (hasn't been executed) the api
+                request may continue */
+                if(ranSetTimeout) {
 
-                /* Iterate through forecast objects to get the last forcast (i.e. within the last 3 hours)*/
-                for (var i = 0; i < response.length; i++) {
+                    return;
 
-                    var forecastTime = response[i].timestamp;
-
-                    if (forecastTime < currentTimeSecs && forecastTime > backThreeHours) {
-
-                        // Save forecast for parsing other information in a variable
-                        var forcastData = response[i];
-
-                    /* if data is not available from within the previous three hours, get the nearest forecast up to 3 hours in the future*/
-                    } else if (forecastTime > currentTimeSecs && forecastTime < forwardThreeHours) {
-
-                        // Save forecast for parsing other information in a variable
-                        var forcastData = response[i];
-
-                    }
-                }
-
-                // Save wave break height
-                var minBreakHeight = forcastData.swell.minBreakingHeight;
-                var maxBreakHeight = forcastData.swell.maxBreakingHeight;
-
-                // If the min and max are the same, just save the min height
-                if (minBreakHeight === maxBreakHeight) {
-                    var waveHeight = minBreakHeight;
-
-                // If the min and max are different, save both as a range
                 } else {
-                    var waveHeight = minBreakHeight + ' ' + '-' + ' ' + maxBreakHeight;
+
+                    // Get current time & current time plus/minus three hours
+                    var getTime = Date.now();
+                    var currentTimeSecs = getTime / 1000;
+                    var backThreeHours = currentTimeSecs - 10800;
+                    var forwardThreeHours = currentTimeSecs + 10800;
+
+                    /* Iterate through forecast objects to get the last forcast (i.e. within the last 3 hours)*/
+                    for (var i = 0; i < response.length; i++) {
+
+                        var forecastTime = response[i].timestamp;
+
+                        if (forecastTime < currentTimeSecs && forecastTime > backThreeHours) {
+
+                            // Save forecast for parsing other information in a variable
+                            var forcastData = response[i];
+
+                        /* if data is not available from within the previous three hours, get the nearest forecast up to 3 hours in the future*/
+                        } else if (forecastTime > currentTimeSecs && forecastTime < forwardThreeHours) {
+
+                            // Save forecast for parsing other information in a variable
+                            var forcastData = response[i];
+
+                        }
+                    }
+
+                    // Save wave break height
+                    var minBreakHeight = forcastData.swell.minBreakingHeight;
+                    var maxBreakHeight = forcastData.swell.maxBreakingHeight;
+
+                    // If the min and max are the same, just save the min height
+                    if (minBreakHeight === maxBreakHeight) {
+                        var waveHeight = minBreakHeight;
+
+                    // If the min and max are different, save both as a range
+                    } else {
+                        var waveHeight = minBreakHeight + ' ' + '-' + ' ' + maxBreakHeight;
+                    }
+
+                    // Get and save swell height, direction, period
+                    var swellHeight = forcastData.swell.components.primary.height;
+                    var swellPeriod = forcastData.swell.components.primary.period;
+                    var swellDirection = forcastData.swell.components.primary.direction;
+                    var swellCompassDirection = forcastData.swell.components.primary.compassDirection;
+
+                    // Get and sav wind speed and direction
+                    var windSpeed = forcastData.wind.speed;
+                    var windDirection = forcastData.wind.direction;
+                    var compassDirection = forcastData.wind.compassDirection;
+
+                    // Get and save current temperature and weather
+                    var temperature = forcastData.condition.temperature;
+                    var weather = forcastData.condition.weather;
+                    var weatherImg = 'http://cdnimages.magicseaweed.com/30x30/' + weather + '.png'
+                    var windImg = 'img/cloudy-&-wind.png'
+
+                    /* Get wave and conditions ratings */
+                    var rating = [];
+
+                    /* Add solid stars to the array equal to number value retrieved
+                    from MSW*/
+                    for (var i = 0; i < forcastData.solidRating; i++) {
+                        rating.push('<img src="img/star_filled.png" />');
+                    }
+
+                    /* Add faded stars to the array equal to number value retrieved
+                    from MSW*/
+                    for (var i = 0; i < forcastData.fadedRating; i++) {
+                        rating.push('<img src="img/star_empty.png" />');
+                    }
+
+                    /* Combine the array into one line of stars to form the overall
+                    rating of both the surfing conditions and wave quality*/
+                    var waveRating = rating.join("");
+
+                    /* Render the temperature and weather image in the left side of the
+                    newly created conditions window*/
+                    $surfConditionsLeft.append('<p>' + temperature + " ℉ " + '</p>');
+                    $surfConditionsLeft.append('<img class="img-responsive" src="' + weatherImg + '" alt="Symbol for current weather">');
+
+                    /* Render the swell height, period, breaking wave height, and wave
+                    rating from above in the center of the conditions window*/
+                    $surfConditionsMiddle.append('<p>' + swellHeight + "ft" + ' ' + "primary" + '</p>');
+                    $surfConditionsMiddle.append('<p>' + "@" + ' ' + swellPeriod + 's' + ' ' + swellCompassDirection + '</p>');
+                    $surfConditionsMiddle.append('<p>' + waveHeight + "ft" + '</p>');
+                    $surfConditionsMiddle.append('<p>' + waveRating + '</p>');
+
+                    /* Render the wind speed, direction, and wind image in the right
+                    side of the conditions window*/
+                    $surfConditionsRight.append('<p>' + windSpeed + "mph" + '</p>');
+                    $surfConditionsRight.append('<p>' + compassDirection + '</p>');
+                    $surfConditionsRight.append('<img class="img-responsive" src="' + windImg + '" alt="Symbol for wind">');
+
+                    /* Set dimensions to make room for a new window holding surf
+                    conditions*/
+                    $('.map-container').css("margin-top","-305px");
+                    $('.conditions-frame').css("margin-top","-125px");
+                    $('body').css("padding-top","436px");
+
+                    // Disable error message
+                    clearTimeout(msRequestTimeout);
+
+                    /* API request has ended, set variable back to false in order
+                    to allow other locations to be clicked*/
+                    getApi = false;
                 }
-
-                // Get and save swell height, direction, period
-                var swellHeight = forcastData.swell.components.primary.height;
-                var swellPeriod = forcastData.swell.components.primary.period;
-                var swellDirection = forcastData.swell.components.primary.direction;
-                var swellCompassDirection = forcastData.swell.components.primary.compassDirection;
-
-                // Get and sav wind speed and direction
-                var windSpeed = forcastData.wind.speed;
-                var windDirection = forcastData.wind.direction;
-                var compassDirection = forcastData.wind.compassDirection;
-
-                // Get and save current temperature and weather
-                var temperature = forcastData.condition.temperature;
-                var weather = forcastData.condition.weather;
-                var weatherImg = 'http://cdnimages.magicseaweed.com/30x30/' + weather + '.png'
-                var windImg = 'img/cloudy-&-wind.png'
-
-                /* Get wave and conditions ratings */
-                var rating = [];
-
-                /* Add solid stars to the array equal to number value retrieved
-                from MSW*/
-                for (var i = 0; i < forcastData.solidRating; i++) {
-                    rating.push('<img src="img/star_filled.png" />');
-                }
-
-                /* Add faded stars to the array equal to number value retrieved
-                from MSW*/
-                for (var i = 0; i < forcastData.fadedRating; i++) {
-                    rating.push('<img src="img/star_empty.png" />');
-                }
-
-                /* Combine the array into one line of stars to form the overall
-                rating of both the surfing conditions and wave quality*/
-                var waveRating = rating.join("");
-
-                /* Render the temperature and weather image in the left side of the
-                newly created conditions window*/
-                $surfConditionsLeft.append('<p>' + temperature + " ℉ " + '</p>');
-                $surfConditionsLeft.append('<img class="img-responsive" src="' + weatherImg + '" alt="Symbol for current weather">');
-
-                /* Render the swell height, period, breaking wave height, and wave
-                rating from above in the center of the conditions window*/
-                $surfConditionsMiddle.append('<p>' + swellHeight + "ft" + ' ' + "primary" + '</p>');
-                $surfConditionsMiddle.append('<p>' + "@" + ' ' + swellPeriod + 's' + ' ' + swellCompassDirection + '</p>');
-                $surfConditionsMiddle.append('<p>' + waveHeight + "ft" + '</p>');
-                $surfConditionsMiddle.append('<p>' + waveRating + '</p>');
-
-                /* Render the wind speed, direction, and wind image in the right
-                side of the conditions window*/
-                $surfConditionsRight.append('<p>' + windSpeed + "mph" + '</p>');
-                $surfConditionsRight.append('<p>' + compassDirection + '</p>');
-                $surfConditionsRight.append('<img class="img-responsive" src="' + windImg + '" alt="Symbol for wind">');
-
-                /* Set dimensions to make room for a new window holding surf
-                conditions*/
-                $('.map-container').css("margin-top","-305px");
-                $('.conditions-frame').css("margin-top","-125px");
-                $('body').css("padding-top","436px");
-
-                // Disable error message
-                clearTimeout(msRequestTimeout);
-
-                /* API request has ended, set variable back to false in order
-                to allow other locations to be clicked*/
-                getApi = false;
-
             }
         });
 

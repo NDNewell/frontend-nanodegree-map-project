@@ -4,6 +4,19 @@ var locationData = [
     {
       breakName: 'Sunset Beach',
       location: 'Oahu, Hawaii',
+      bigWave: true,
+      worldFamous: false,
+      cost: '$10',
+      skillLevel: 'Beginner',
+      waveType: 'left',
+      breakType: 'reef',
+      waveSize: '10 - 12ft',
+      bestSwell: 'NE',
+      bestWind: 'ESE',
+      bestTime: 'March',
+      climate: 'hot and dry',
+      attire: 'boardshorts',
+      hazards: 'localism',
       lat: 21.679011,
       lng: -158.041277,
       spotID: 657,
@@ -12,6 +25,19 @@ var locationData = [
     {
       breakName: 'Pipeline/Backdoor',
       location: 'Oahu, Hawaii',
+      bigWave: true,
+      worldFamous: false,
+      cost: '$10',
+      skillLevel: 'Beginner',
+      waveType: 'left',
+      breakType: 'reef',
+      waveSize: '10 - 12ft',
+      bestSwell: 'NE',
+      bestWind: 'ESE',
+      bestTime: 'March',
+      climate: 'hot and dry',
+      attire: 'boardshorts',
+      hazards: 'localism',
       lat: 21.665244,
       lng: -158.053408,
       spotID: 616,
@@ -20,6 +46,19 @@ var locationData = [
     {
       breakName: 'Cannons',
       location: 'Kauai, Hawaii',
+      bigWave: true,
+      worldFamous: false,
+      cost: '$10',
+      skillLevel: 'Beginner',
+      waveType: 'left',
+      breakType: 'reef',
+      waveSize: '10 - 12ft',
+      bestSwell: 'NE',
+      bestWind: 'ESE',
+      bestTime: 'March',
+      climate: 'hot and dry',
+      attire: 'boardshorts',
+      hazards: 'localism',
       lat: 22.224744,
       lng: -159.566712,
       spotID: 'none',
@@ -28,6 +67,19 @@ var locationData = [
     {
       breakName: 'Tunnels',
       location: 'Kauai, Hawaii',
+      bigWave: true,
+      worldFamous: false,
+      cost: '$10',
+      skillLevel: 'Beginner',
+      waveType: 'left',
+      breakType: 'reef',
+      waveSize: '10 - 12ft',
+      bestSwell: 'NE',
+      bestWind: 'ESE',
+      bestTime: 'March',
+      climate: 'hot and dry',
+      attire: 'boardshorts',
+      hazards: 'localism',
       lat: 22.224744,
       lng: -159.566712,
       spotID: 'none',
@@ -36,6 +88,19 @@ var locationData = [
     {
       breakName: 'Anahola',
       location: 'Kauai, Hawaii',
+      bigWave: true,
+      worldFamous: false,
+      cost: '$10',
+      skillLevel: 'Beginner',
+      waveType: 'left',
+      breakType: 'reef',
+      waveSize: '10 - 12ft',
+      bestSwell: 'NE',
+      bestWind: 'ESE',
+      bestTime: 'March',
+      climate: 'hot and dry',
+      attire: 'boardshorts',
+      hazards: 'localism',
       lat: 22.148311,
       lng: -159.300331,
       spotID: 'none',
@@ -44,6 +109,19 @@ var locationData = [
     {
       breakName: 'Hanalei',
       location: 'Kauai, Hawaii',
+      bigWave: true,
+      worldFamous: false,
+      cost: '$10',
+      skillLevel: 'Beginner',
+      waveType: 'left',
+      breakType: 'reef',
+      waveSize: '10 - 12ft',
+      bestSwell: 'NE',
+      bestWind: 'ESE',
+      bestTime: 'March',
+      climate: 'hot and dry',
+      attire: 'boardshorts',
+      hazards: 'localism',
       lat: 22.218315,
       lng: -159.502265,
       spotID: 3051,
@@ -52,6 +130,19 @@ var locationData = [
     {
       breakName: "Hale'iwa",
       location: 'Oahu, Hawaii',
+      bigWave: true,
+      worldFamous: false,
+      cost: '$10',
+      skillLevel: 'Beginner',
+      waveType: 'left',
+      breakType: 'reef',
+      waveSize: '10 - 12ft',
+      bestSwell: 'NE',
+      bestWind: 'ESE',
+      bestTime: 'March',
+      climate: 'hot and dry',
+      attire: 'boardshorts',
+      hazards: 'localism',
       lat: 21.596416,
       lng: -158.109121,
       spotID: 660,
@@ -60,6 +151,19 @@ var locationData = [
     {
       breakName: 'Waimea Bay',
       location: 'Oahu, Hawaii',
+      bigWave: true,
+      worldFamous: false,
+      cost: '$10',
+      skillLevel: 'Beginner',
+      waveType: 'left',
+      breakType: 'reef',
+      waveSize: '10 - 12ft',
+      bestSwell: 'NE',
+      bestWind: 'ESE',
+      bestTime: 'March',
+      climate: 'hot and dry',
+      attire: 'boardshorts',
+      hazards: 'localism',
       lat: 21.642987,
       lng: -158.066743,
       spotID: 549,
@@ -68,6 +172,19 @@ var locationData = [
     {
       breakName: 'Rocky Point',
       location: 'Oahu, Hawaii',
+      bigWave: true,
+      worldFamous: false,
+      cost: '$10',
+      skillLevel: 'Beginner',
+      waveType: 'left',
+      breakType: 'reef',
+      waveSize: '10 - 12ft',
+      bestSwell: 'NE',
+      bestWind: 'ESE',
+      bestTime: 'March',
+      climate: 'hot and dry',
+      attire: 'boardshorts',
+      hazards: 'localism',
       lat: 21.670862,
       lng: -158.049157,
       spotID: 658,
@@ -76,6 +193,19 @@ var locationData = [
     {
       breakName: 'Turtle Bay',
       location: 'Oahu, Hawaii',
+      bigWave: true,
+      worldFamous: false,
+      cost: '$10',
+      skillLevel: 'Beginner',
+      waveType: 'left',
+      breakType: 'reef',
+      waveSize: '10 - 12ft',
+      bestSwell: 'NE',
+      bestWind: 'ESE',
+      bestTime: 'March',
+      climate: 'hot and dry',
+      attire: 'boardshorts',
+      hazards: 'localism',
       lat: 21.708047,
       lng: -158.002275,
       spotID: 'none',
@@ -84,6 +214,19 @@ var locationData = [
     {
       breakName: 'Halawa Bay',
       location: 'Molokai, Hawaii',
+      bigWave: true,
+      worldFamous: false,
+      cost: '$10',
+      skillLevel: 'Beginner',
+      waveType: 'left',
+      breakType: 'reef',
+      waveSize: '10 - 12ft',
+      bestSwell: 'NE',
+      bestWind: 'ESE',
+      bestTime: 'March',
+      climate: 'hot and dry',
+      attire: 'boardshorts',
+      hazards: 'localism',
       lat: 21.159132,
       lng: -156.735906,
       spotID: 'none',
@@ -92,6 +235,19 @@ var locationData = [
     {
       breakName: 'Honolua Bay',
       location: 'Maui, Hawaii',
+      bigWave: true,
+      worldFamous: false,
+      cost: '$10',
+      skillLevel: 'Beginner',
+      waveType: 'left',
+      breakType: 'reef',
+      waveSize: '10 - 12ft',
+      bestSwell: 'NE',
+      bestWind: 'ESE',
+      bestTime: 'March',
+      climate: 'hot and dry',
+      attire: 'boardshorts',
+      hazards: 'localism',
       lat: 21.024350,
       lng: -156.641890,
       spotID: 697,
@@ -100,6 +256,19 @@ var locationData = [
     {
       breakName: 'Jaws/Peahi',
       location: 'Maui, Hawaii',
+      bigWave: true,
+      worldFamous: false,
+      cost: '$10',
+      skillLevel: 'Beginner',
+      waveType: 'left',
+      breakType: 'reef',
+      waveSize: '10 - 12ft',
+      bestSwell: 'NE',
+      bestWind: 'ESE',
+      bestTime: 'March',
+      climate: 'hot and dry',
+      attire: 'boardshorts',
+      hazards: 'localism',
       lat: 20.946401,
       lng: -156.297389,
       spotID: 617,
@@ -108,6 +277,19 @@ var locationData = [
     {
       breakName: 'The Cove',
       location: 'Maui, Hawaii',
+      bigWave: true,
+      worldFamous: false,
+      cost: '$10',
+      skillLevel: 'Beginner',
+      waveType: 'left',
+      breakType: 'reef',
+      waveSize: '10 - 12ft',
+      bestSwell: 'NE',
+      bestWind: 'ESE',
+      bestTime: 'March',
+      climate: 'hot and dry',
+      attire: 'boardshorts',
+      hazards: 'localism',
       lat: 20.728298,
       lng: -156.452353,
       spotID: 'none',
@@ -116,6 +298,19 @@ var locationData = [
     {
       breakName: "Ma'alaea",
       location: 'Maui, Hawaii',
+      bigWave: true,
+      worldFamous: false,
+      cost: '$10',
+      skillLevel: 'Beginner',
+      waveType: 'left',
+      breakType: 'reef',
+      waveSize: '10 - 12ft',
+      bestSwell: 'NE',
+      bestWind: 'ESE',
+      bestTime: 'March',
+      climate: 'hot and dry',
+      attire: 'boardshorts',
+      hazards: 'localism',
       lat: 20.791860,
       lng: -156.508960,
       spotID: 618,
@@ -124,6 +319,19 @@ var locationData = [
     {
       breakName: 'Lahaina',
       location: 'Maui, Hawaii',
+      bigWave: true,
+      worldFamous: false,
+      cost: '$10',
+      skillLevel: 'Beginner',
+      waveType: 'left',
+      breakType: 'reef',
+      waveSize: '10 - 12ft',
+      bestSwell: 'NE',
+      bestWind: 'ESE',
+      bestTime: 'March',
+      climate: 'hot and dry',
+      attire: 'boardshorts',
+      hazards: 'localism',
       lat: 20.869326,
       lng: -156.679025,
       spotID: 4287,
@@ -132,6 +340,19 @@ var locationData = [
     {
       breakName: 'Lymans/Banyans',
       location: 'Big Island, Hawaii',
+      bigWave: true,
+      worldFamous: false,
+      cost: '$10',
+      skillLevel: 'Beginner',
+      waveType: 'left',
+      breakType: 'reef',
+      waveSize: '10 - 12ft',
+      bestSwell: 'NE',
+      bestWind: 'ESE',
+      bestTime: 'March',
+      climate: 'hot and dry',
+      attire: 'boardshorts',
+      hazards: 'localism',
       lat: 19.606206,
       lng: -155.978016,
       spotID: 2784,
@@ -140,6 +361,19 @@ var locationData = [
     {
       breakName: 'Pine Trees',
       location: 'Big Island, Hawaii',
+      bigWave: true,
+      worldFamous: false,
+      cost: '$10',
+      skillLevel: 'Beginner',
+      waveType: 'left',
+      breakType: 'reef',
+      waveSize: '10 - 12ft',
+      bestSwell: 'NE',
+      bestWind: 'ESE',
+      bestTime: 'March',
+      climate: 'hot and dry',
+      attire: 'boardshorts',
+      hazards: 'localism',
       lat: 19.695131,
       lng: -156.045926,
       spotID: 3958,
@@ -148,6 +382,19 @@ var locationData = [
     {
       breakName: 'Kiholo Bay',
       location: 'Big Island, Hawaii',
+      bigWave: true,
+      worldFamous: false,
+      cost: '$10',
+      skillLevel: 'Beginner',
+      waveType: 'left',
+      breakType: 'reef',
+      waveSize: '10 - 12ft',
+      bestSwell: 'NE',
+      bestWind: 'ESE',
+      bestTime: 'March',
+      climate: 'hot and dry',
+      attire: 'boardshorts',
+      hazards: 'localism',
       lat: 19.854416,
       lng: -155.931340,
       spotID: 'none',
@@ -156,6 +403,19 @@ var locationData = [
     {
       breakName: "Honoli'i",
       location: 'Big Island, Hawaii',
+      bigWave: true,
+      worldFamous: false,
+      cost: '$10',
+      skillLevel: 'Beginner',
+      waveType: 'left',
+      breakType: 'reef',
+      waveSize: '10 - 12ft',
+      bestSwell: 'NE',
+      bestWind: 'ESE',
+      bestTime: 'March',
+      climate: 'hot and dry',
+      attire: 'boardshorts',
+      hazards: 'localism',
       lat: 19.756298,
       lng: -155.089960,
       spotID: 3815,
@@ -183,6 +443,19 @@ function AppViewModel () {
     function beachLocation(obj) {
         this.breakName = obj.breakName;
         this.location = obj.location;
+        this.bigWave = obj.bigWave;
+        this.worldFamous = obj.worldFamous;
+        this.cost = obj.cost;
+        this.skillLevel = obj.skillLevel;
+        this.waveType = obj.waveType;
+        this.breakType = obj.breakType;
+        this.waveSize = obj.waveSize;
+        this.bestSwell = obj.bestSwell;
+        this.bestWind = obj.bestWind;
+        this.bestTime = obj.bestTime;
+        this.climate = obj.climate;
+        this.attire = obj.attire;
+        this.hazards = obj.hazards;
         this.lat = obj.lat;
         this.lng = obj.lng;
         this.spotID = obj.spotID;
@@ -263,10 +536,13 @@ function AppViewModel () {
         frame and its resulting actions is disabled. This is to prevent the api function and UI from being overloaded with multiple requests*/
         if (!getApi) {
 
-        getApi = true;
+            getApi = true;
 
-        self.goToMarker(obj.breakName);
-        getMagicSeaweed(obj.spotID, obj.breakName);
+            self.goToMarker(obj.breakName);
+
+            getMagicSeaweed(obj.spotID, obj.breakName);
+
+            surfLocationGuide(obj);
 
         };
 
@@ -514,12 +790,37 @@ function getMagicSeaweed (spotID, breakName) {
 
     // Close surf conditions or error window when either is clicked
     $('.conditions-frame').on('click', function(e) {
-        console.log('clicked!');
+
         clearSurfConditions();
         setInitialDimensions();
         $('p.conditions-error').remove();
+
     })
 }
+
+
+function surfLocationGuide (obj) {
+
+    $('.surf-conditions-right').after('<div class="col-xs-12 surf-guide"></div>');
+
+    var $surfGuide = $('.surf-guide');
+
+    $surfGuide.append('<p>' + obj.breakName  + ',' + ' ' + obj.location + '</p>');
+    $surfGuide.append('<p>' + obj.bigWave + ' ' + obj.worldFamous + '</p>');
+    $surfGuide.append('<p>' + "Cost/Day:" + ' ' + obj.cost + '</p>');
+    $surfGuide.append('<p>' + "Skill Level:" + ' ' + obj.skillLevel + '</p>');
+    $surfGuide.append('<p>' + "Wave Type:" + ' ' + obj.waveType + '</p>');
+    $surfGuide.append('<p>' + "Break Type:" + ' ' + obj.breakType + '</p>');
+    $surfGuide.append('<p>' + "Wave Size:" + ' ' + obj.waveSize + '</p>');
+    $surfGuide.append('<p>' + "Best Swell:" + ' ' + obj.bestSwell + '</p>');
+    $surfGuide.append('<p>' + "Best Wind:" + ' ' + obj.bestWind+ '</p>');
+    $surfGuide.append('<p>' + "Best Time:" + ' ' + obj.bestTime + '</p>');
+    $surfGuide.append('<p>' + "Climate:" + ' ' + obj.climate + '</p>');
+    $surfGuide.append('<p>' + "Attire:" + ' ' + obj.attire + '</p>');
+    $surfGuide.append('<p>' + "Hazards:" + ' ' + obj.hazards + '</p>');
+
+};
+
 
 // Declare global variables map and infoWindow
 var map, infoWindow;

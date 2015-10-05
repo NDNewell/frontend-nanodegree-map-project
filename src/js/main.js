@@ -486,11 +486,11 @@ function getMagicSeaweed (spotID, breakName) {
     function showError () {
 
         // Reset position of locations grid to accommodate a new div
-        $('.location-grid').css("margin-top", "65px");
+        $('.location-grid').css("margin-top", "41px");
 
         /* Add a text element to display an error if not data is returned
         8 seconds*/
-        $surfConditionsFrame.append('<p class="conditions-error">' + "Sorry dude! Conditions for" + ' ' + breakName + ' ' + "are unavailable right now. Total bummer =(" + '</p>');
+        $surfConditionsFrame.append('<p class="conditions-error">' + breakName + ' ' + "conditions unavailable =(" + '</p>');
     }
 }
 

@@ -192,6 +192,7 @@ body {
     }
 
     .conditions-error {
+        text-align: center;
         font-size: 1.2em;
         margin-top: 6px;
     }

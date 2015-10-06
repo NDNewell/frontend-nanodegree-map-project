@@ -527,26 +527,14 @@ function AppViewModel () {
 
     }
 
-    /* Go to specific marker and activate the MSW api function. Also pass the
-    location spot id (for MSW api to work) and location break name to the api
-    function*/
+    /* Go to specific marker and open the surf guide */
     self.clickLocationFrame = function(obj) {
-
-        /* If a click is already processing, clicking the location
-        frame and its resulting actions is disabled. This is to prevent
-        overloading other functions with multiple requests*/
-        if (!clickInProgress) {
-
-            // Disable clicking of other locations
-            clickInProgress = true;
 
             // Pass object to match the appropriate marker with the obj
             self.goToMarker(obj.breakName);
 
             // Pass obj to the location guide
             surfLocationGuide(obj);
-
-        };
 
     };
 
@@ -616,8 +604,24 @@ function AppViewModel () {
         $surfGuideTableBody.append('<tr>' + '<td>' + "Climate:"+ '</td>' + '<td>' + obj.climate + '</td>' + '<td>' + "Wear:" + '</td>' + '<td>' + obj.attire + '</td>' + '</tr>');
         $surfGuideTableBody.append('<tr>' + '<td>' + "Hazards:"+ '</td>' + '<td colspan="3">' + obj.hazards + '</td>' + '</tr>');
 
-        // Pass info to API function and initiate request
-        getMagicSeaweed(obj.spotID, obj.breakName);
+        /* Open surf conditions (error window if bad request) when table is clicked */
+        $('.surf-guide').on('click', function(e) {
+
+            /* If a click is already processing, clicking the surf guide
+             and its resulting actions is disabled. This is to prevent
+            overloading other functions with multiple requests*/
+            if (!clickInProgress) {
+
+                // Disable clicking
+                clickInProgress = true;
+
+                // Pass info to API function and initiate request
+                getMagicSeaweed(obj.spotID, obj.breakName);
+
+            };
+
+        });
+
     }
 
 };
@@ -647,10 +651,6 @@ function getMagicSeaweed (spotID, breakName) {
     var $surfConditionsLeft = $('.surf-conditions-left');
     var $surfConditionsMiddle = $('.surf-conditions-middle');
     var $surfConditionsRight = $('.surf-conditions-right');
-
-    /* Reset margins for other elements to accommodate lack of conditions
-    window if it was already open from a previous click*/
-    setInitialDimensions();
 
     // Remove last error window if open from a previous click
     $('p.conditions-error').remove();
@@ -802,11 +802,6 @@ function getMagicSeaweed (spotID, breakName) {
                     $surfConditionsRight.append('<p>' + compassDirection + '</p>');
                     $surfConditionsRight.append('<img class="img-responsive" src="' + windImg + '" alt="Symbol for wind">');
 
-                    /* Set dimensions to make room for a new window holding surf conditions*/
-                    $('.map-container').css("margin-top","-305px");
-                    $('.surf-conditions-row').css("margin-top","-125px");
-                    $('body').css("padding-top","436px");
-
                     // Disable error message
                     clearTimeout(msRequestTimeout);
 
@@ -819,21 +814,10 @@ function getMagicSeaweed (spotID, breakName) {
 
     };
 
-    function setInitialDimensions () {
-
-        $('.map-container').css("margin-top","-178px");
-        $('.surf-conditions-row').css("margin-top","0px");
-        $('body').css("padding-top","309px");
-        $('.location-grid').css("margin-top", "0px");
-    }
-
     function showError () {
 
         // Remove current conditions if any from a previous click
         $('.surf-conditions-left, .surf-conditions-middle, .surf-conditions-right').remove();
-
-        // Reset position of locations grid to accommodate a new div
-        $('.location-grid').css("margin-top", "41px");
 
         // Add a div to hold the error text
         $surfConditionsRow.append('<div class="col-xs-12 surf-conditions-error"></div>');
@@ -846,7 +830,6 @@ function getMagicSeaweed (spotID, breakName) {
     $('.surf-conditions-row').on('click', function(e) {
 
         $('.surf-conditions-row').remove();
-        setInitialDimensions();
         $('p.conditions-error').remove();
         $('.surf-guide').remove();
 

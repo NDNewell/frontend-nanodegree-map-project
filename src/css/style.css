@@ -9,7 +9,6 @@
 }
 
 body {
-    padding-top: 90px;
     font-family: Arial, Verdana;
 }
 
@@ -30,7 +29,6 @@ body {
 }
 
 .map-container {
-    margin-bottom: 2em;
     padding: 0px 0px;
 }
 
@@ -101,9 +99,6 @@ body {
 
     .search-form {
         font-size: 1.4em;
-        margin-top: 0px;
-        margin-bottom: 0px;
-        margin-right: 0px;
         padding-top: 12.5px;
         padding-bottom: 10px;
         border-top: none;
@@ -114,21 +109,10 @@ body {
         width: 100%;
     }
 
-    .map-container {
-        position: fixed;
-        right: 0;
-        left: 0;
-        z-index: 1030;
-        margin-top: 41px;
-        padding: 0px 0px;
-    }
-
     #map {
         height: 180px;
         width: 100%;
     }
-
-
 
     .surf-conditions-left p {
         text-align: center;
@@ -188,11 +172,6 @@ body {
     .conditions-error {
         text-align: center;
         font-size: 1.2em;
-        margin-top: 6px;
-    }
-
-    .location-grid {
-        margin-top: 221px;
     }
 
     .location-frame {

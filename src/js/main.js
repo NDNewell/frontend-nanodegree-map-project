@@ -546,9 +546,6 @@ function AppViewModel () {
             // Pass obj to the location guide
             surfLocationGuide(obj);
 
-            // Pass info to API function and initiate request
-            getMagicSeaweed(obj.spotID, obj.breakName);
-
         };
 
     };
@@ -584,22 +581,24 @@ function AppViewModel () {
     /* Display detailed information about the location*/
     self.surfLocationGuide = function (obj) {
 
-        /* Remove any exisiting information from a previous click */
-        $('.surf-guide').remove();
+        /* Remove any existing information from previous click */
+        $('.surf-guide-row').remove();
+
+        $('.surf-info-container').append('<div class="row surf-guide-row"></div>');
 
         // Create a new div to hold the surf guide
-        $('.surf-conditions-right').after('<div class="col-xs-12 surf-guide"></div>');
+        $('.surf-guide-row').append('<div class="col-xs-12 surf-guide"></div>');
 
         /* Create a table for displaying more information about the location */
         $('.surf-guide').append('<table class="surf-guide-table"></table>');
 
         // Cache the reference to the table
-        $surfGuideTable = $('.surf-guide-table');
+        var $surfGuideTable = $('.surf-guide-table');
 
         // Create a table head to hold the clicked object's name and location
         $surfGuideTable.append('<thead class="table-head"></thead>');
 
-        // Add the name of the breaka and location
+        // Add the name of the break and location
         $('.table-head').append('<tr>' + '<th colspan="4">' + obj.breakName + ',' + ' ' + obj.location + '</th>' + '</tr>');
 
         // Create table body to display more unique information about the location
@@ -616,6 +615,9 @@ function AppViewModel () {
         $surfGuideTableBody.append('<tr>' + '<td>' + "Best Wind:"+ '</td>' + '<td>' + obj.bestWind + '</td>' + '<td>' + "Best Time:" + '</td>' + '<td>' + obj.bestTime + '</td>' + '</tr>');
         $surfGuideTableBody.append('<tr>' + '<td>' + "Climate:"+ '</td>' + '<td>' + obj.climate + '</td>' + '<td>' + "Wear:" + '</td>' + '<td>' + obj.attire + '</td>' + '</tr>');
         $surfGuideTableBody.append('<tr>' + '<td>' + "Hazards:"+ '</td>' + '<td colspan="3">' + obj.hazards + '</td>' + '</tr>');
+
+        // Pass info to API function and initiate request
+        getMagicSeaweed(obj.spotID, obj.breakName);
     }
 
 };
@@ -627,14 +629,24 @@ var clickInProgress = false;
 
 function getMagicSeaweed (spotID, breakName) {
 
-    // Get attributes from DOM elements and save in variables for later use
-    var $surfConditionsFrame = $('div.conditions-frame');
-    var $surfConditionsLeft = $('div.surf-conditions-left');
-    var $surfConditionsMiddle = $('div.surf-conditions-middle');
-    var $surfConditionsRight = $('div.surf-conditions-right');
+    /* Remove any existing information from previous click */
+    $('.surf-conditions-row').remove();
 
-    // Clear old conditions data if open from previous click
-    clearSurfConditions();
+    // Insert a new row above the surf guide
+    $('.surf-guide-row').before('<div class="row surf-conditions-row"></div>');
+
+    // Cache the new row in a variable
+    var $surfConditionsRow = $('.surf-conditions-row');
+
+    // Add three columns to the new row
+    $surfConditionsRow.append('<div class="col-xs-4 surf-conditions-left"></div>');
+    $surfConditionsRow.append('<div class="col-xs-4 surf-conditions-middle"></div>');
+    $surfConditionsRow.append('<div class="col-xs-4 surf-conditions-right"></div>');
+
+    // Cache references to each column
+    var $surfConditionsLeft = $('.surf-conditions-left');
+    var $surfConditionsMiddle = $('.surf-conditions-middle');
+    var $surfConditionsRight = $('.surf-conditions-right');
 
     /* Reset margins for other elements to accommodate lack of conditions
     window if it was already open from a previous click*/
@@ -642,9 +654,6 @@ function getMagicSeaweed (spotID, breakName) {
 
     // Remove last error window if open from a previous click
     $('p.conditions-error').remove();
-
-    // Load Magic Seaweed API data
-    var msUrl = 'http://magicseaweed.com/api/d2983e394d07724e96404fba11c10485/forecast/?spot_id=' + spotID + '&units=us&fields=timestamp,fadedRating,solidRating,swell.minBreakingHeight,swell.maxBreakingHeight,swell.components.primary.*,wind.*,condition.*';
 
     /* Check for the location's spot ID. If there is no spot ID,
     immediately display an error message. This also prevents an API request
@@ -677,6 +686,9 @@ function getMagicSeaweed (spotID, breakName) {
             ranSetTimeout = true;
 
         }, 8000);
+
+        // Load Magic Seaweed API data
+        var msUrl = 'http://magicseaweed.com/api/d2983e394d07724e96404fba11c10485/forecast/?spot_id=' + spotID + '&units=us&fields=timestamp,fadedRating,solidRating,swell.minBreakingHeight,swell.maxBreakingHeight,swell.components.primary.*,wind.*,condition.*';
 
         $.ajax({
             url: msUrl,
@@ -755,50 +767,51 @@ function getMagicSeaweed (spotID, breakName) {
                     /* Get wave and conditions ratings */
                     var rating = [];
 
-                    /* Add solid stars to the array equal to number value retrieved
-                    from MSW*/
+                    /* Add solid stars to the array equal to number value
+                    retrieved from MSW*/
                     for (var i = 0; i < forcastData.solidRating; i++) {
                         rating.push('<img src="img/star_filled.png" />');
                     }
 
-                    /* Add faded stars to the array equal to number value retrieved
-                    from MSW*/
+                    /* Add faded stars to the array equal to number value
+                    retrieved from MSW*/
                     for (var i = 0; i < forcastData.fadedRating; i++) {
                         rating.push('<img src="img/star_empty.png" />');
                     }
 
-                    /* Combine the array into one line of stars to form the overall
-                    rating of both the surfing conditions and wave quality*/
+                    /* Combine the array into one line of stars to form the overall rating of both the surfing conditions and wave
+                    quality*/
                     var waveRating = rating.join("");
 
-                    /* Render the temperature and weather image in the left side of the
-                    newly created conditions window*/
+                    /* Render the temperature and weather image in the left
+                    side of the newly created conditions window*/
                     $surfConditionsLeft.append('<p>' + temperature + " ℉ " + '</p>');
                     $surfConditionsLeft.append('<img class="img-responsive" src="' + weatherImg + '" alt="Symbol for current weather">');
 
-                    /* Render the swell height, period, breaking wave height, and wave
-                    rating from above in the center of the conditions window*/
+                    /* Render the swell height, period, breaking wave height,
+                    and wave rating from above in the center of the conditions
+                    window*/
                     $surfConditionsMiddle.append('<p>' + swellHeight + "ft" + ' ' + "primary" + '</p>');
                     $surfConditionsMiddle.append('<p>' + "@" + ' ' + swellPeriod + 's' + ' ' + swellCompassDirection + '</p>');
                     $surfConditionsMiddle.append('<p>' + waveHeight + "ft" + '</p>');
                     $surfConditionsMiddle.append('<p>' + waveRating + '</p>');
 
-                    /* Render the wind speed, direction, and wind image in the right
-                    side of the conditions window*/
+                    /* Render the wind speed, direction, and wind image in the
+                    right side of the conditions window*/
                     $surfConditionsRight.append('<p>' + windSpeed + "mph" + '</p>');
                     $surfConditionsRight.append('<p>' + compassDirection + '</p>');
                     $surfConditionsRight.append('<img class="img-responsive" src="' + windImg + '" alt="Symbol for wind">');
 
                     /* Set dimensions to make room for a new window holding surf conditions*/
                     $('.map-container').css("margin-top","-305px");
-                    $('.conditions-frame').css("margin-top","-125px");
+                    $('.surf-conditions-row').css("margin-top","-125px");
                     $('body').css("padding-top","436px");
 
                     // Disable error message
                     clearTimeout(msRequestTimeout);
 
-                    /* API request has ended, set variable back to false in order
-                    to allow other locations to be clicked*/
+                    /* API request has ended, set variable back to false in
+                    order to allow other locations to be clicked*/
                     clickInProgress = false;
                 }
             }
@@ -806,36 +819,36 @@ function getMagicSeaweed (spotID, breakName) {
 
     };
 
-    function clearSurfConditions () {
-        $surfConditionsLeft.text("");
-        $surfConditionsMiddle.text("");
-        $surfConditionsRight.text("");
-    }
-
     function setInitialDimensions () {
 
         $('.map-container').css("margin-top","-178px");
-        $('.conditions-frame').css("margin-top","0px");
+        $('.surf-conditions-row').css("margin-top","0px");
         $('body').css("padding-top","309px");
         $('.location-grid').css("margin-top", "0px");
     }
 
     function showError () {
 
+        // Remove current conditions if any from a previous click
+        $('.surf-conditions-left, .surf-conditions-middle, .surf-conditions-right').remove();
+
         // Reset position of locations grid to accommodate a new div
         $('.location-grid').css("margin-top", "41px");
 
-        /* Add a text element to display an error if not data is returned
-        8 seconds*/
-        $surfConditionsFrame.append('<p class="conditions-error">' + breakName + ' ' + "conditions unavailable =(" + '</p>');
+        // Add a div to hold the error text
+        $surfConditionsRow.append('<div class="col-xs-12 surf-conditions-error"></div>');
+
+        /* Display an error if not data is returned 8 seconds*/
+        $('.surf-conditions-error').append('<p class="conditions-error">' + breakName + ' ' + "conditions unavailable =(" + '</p>');
     }
 
     // Close surf conditions or error window when either is clicked
-    $('.conditions-frame').on('click', function(e) {
+    $('.surf-conditions-row').on('click', function(e) {
 
-        clearSurfConditions();
+        $('.surf-conditions-row').remove();
         setInitialDimensions();
         $('p.conditions-error').remove();
+        $('.surf-guide').remove();
 
     })
 }

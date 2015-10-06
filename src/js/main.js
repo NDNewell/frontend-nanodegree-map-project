@@ -532,17 +532,22 @@ function AppViewModel () {
     function*/
     self.clickLocationFrame = function(obj) {
 
-        /* If an api request is already processing, clicking the location
-        frame and its resulting actions is disabled. This is to prevent the api function and UI from being overloaded with multiple requests*/
-        if (!getApi) {
+        /* If a click is already processing, clicking the location
+        frame and its resulting actions is disabled. This is to prevent
+        overloading other functions with multiple requests*/
+        if (!clickInProgress) {
 
-            getApi = true;
+            // Disable clicking of other locations
+            clickInProgress = true;
 
+            // Pass object to match the appropriate marker with the obj
             self.goToMarker(obj.breakName);
 
-            getMagicSeaweed(obj.spotID, obj.breakName);
-
+            // Pass obj to the location guide
             surfLocationGuide(obj);
+
+            // Pass info to API function and initiate request
+            getMagicSeaweed(obj.spotID, obj.breakName);
 
         };
 
@@ -574,14 +579,51 @@ function AppViewModel () {
             }
 
         });
-
     }
+
+    /* Display detailed information about the location*/
+    self.surfLocationGuide = function (obj) {
+
+        /* Remove any exisiting information from a previous click */
+        $('.surf-guide').remove();
+
+        // Create a new div to hold the surf guide
+        $('.surf-conditions-right').after('<div class="col-xs-12 surf-guide"></div>');
+
+        /* Create a table for displaying more information about the location */
+        $('.surf-guide').append('<table class="surf-guide-table"></table>');
+
+        // Cache the reference to the table
+        $surfGuideTable = $('.surf-guide-table');
+
+        // Create a table head to hold the clicked object's name and location
+        $surfGuideTable.append('<thead class="table-head"></thead>');
+
+        // Add the name of the breaka and location
+        $('.table-head').append('<tr>' + '<th colspan="4">' + obj.breakName + ',' + ' ' + obj.location + '</th>' + '</tr>');
+
+        // Create table body to display more unique information about the location
+        $surfGuideTable.append('<tbody class="table-body"></tbody>');
+
+        // Cache the reference to the table body
+        var $surfGuideTableBody = $('.table-body');
+
+        // Add additional information to the table body
+        $surfGuideTableBody.append('<tr>' + '<td colspan="2">' + obj.bigWave + '</td>' + '<td colspan="2">' + obj.worldFamous + '</td>' + '</tr>');
+        $surfGuideTableBody.append('<tr>' + '<td>' + "Cost/Day:"+ '</td>' + '<td>' + obj.cost + '</td>' + '<td>' + "Skill Level:" + '</td>' + '<td>' + obj.skillLevel + '</td>' + '</tr>');
+        $surfGuideTableBody.append('<tr>' + '<td>' + "Wave Type:"+ '</td>' + '<td>' + obj.waveType + '</td>' + '<td>' + "Break Type:" + '</td>' + '<td>' + obj.breakType + '</td>' + '</tr>');
+        $surfGuideTableBody.append('<tr>' + '<td>' + "Wave Size:"+ '</td>' + '<td>' + obj.waveSize + '</td>' + '<td>' + "Best Swell:" + '</td>' + '<td>' + obj.bestSwell + '</td>' + '</tr>');
+        $surfGuideTableBody.append('<tr>' + '<td>' + "Best Wind:"+ '</td>' + '<td>' + obj.bestWind + '</td>' + '<td>' + "Best Time:" + '</td>' + '<td>' + obj.bestTime + '</td>' + '</tr>');
+        $surfGuideTableBody.append('<tr>' + '<td>' + "Climate:"+ '</td>' + '<td>' + obj.climate + '</td>' + '<td>' + "Wear:" + '</td>' + '<td>' + obj.attire + '</td>' + '</tr>');
+        $surfGuideTableBody.append('<tr>' + '<td>' + "Hazards:"+ '</td>' + '<td colspan="3">' + obj.hazards + '</td>' + '</tr>');
+    }
+
 };
 
 /* Set this value to false (api request isn't in process upon page load). This
 variable is made globally accessible in order to allow the View Model to see
 its value*/
-var getApi = false;
+var clickInProgress = false;
 
 function getMagicSeaweed (spotID, breakName) {
 
@@ -613,7 +655,7 @@ function getMagicSeaweed (spotID, breakName) {
 
         /* API request has ended, set variable back to false in order to
         allow other locations to be clicked*/
-        getApi = false;
+        clickInProgress = false;
 
     } else {
 
@@ -629,7 +671,7 @@ function getMagicSeaweed (spotID, breakName) {
 
             /* API request has ended, set variable back to false in order to
             allow other locations to be clicked*/
-            getApi = false;
+            clickInProgress = false;
 
             /* Set timeout was just executed, so set to true */
             ranSetTimeout = true;
@@ -757,7 +799,7 @@ function getMagicSeaweed (spotID, breakName) {
 
                     /* API request has ended, set variable back to false in order
                     to allow other locations to be clicked*/
-                    getApi = false;
+                    clickInProgress = false;
                 }
             }
         });
@@ -797,30 +839,6 @@ function getMagicSeaweed (spotID, breakName) {
 
     })
 }
-
-
-function surfLocationGuide (obj) {
-
-    $('.surf-conditions-right').after('<div class="col-xs-12 surf-guide"></div>');
-
-    var $surfGuide = $('.surf-guide');
-
-    $surfGuide.append('<p>' + obj.breakName  + ',' + ' ' + obj.location + '</p>');
-    $surfGuide.append('<p>' + obj.bigWave + ' ' + obj.worldFamous + '</p>');
-    $surfGuide.append('<p>' + "Cost/Day:" + ' ' + obj.cost + '</p>');
-    $surfGuide.append('<p>' + "Skill Level:" + ' ' + obj.skillLevel + '</p>');
-    $surfGuide.append('<p>' + "Wave Type:" + ' ' + obj.waveType + '</p>');
-    $surfGuide.append('<p>' + "Break Type:" + ' ' + obj.breakType + '</p>');
-    $surfGuide.append('<p>' + "Wave Size:" + ' ' + obj.waveSize + '</p>');
-    $surfGuide.append('<p>' + "Best Swell:" + ' ' + obj.bestSwell + '</p>');
-    $surfGuide.append('<p>' + "Best Wind:" + ' ' + obj.bestWind+ '</p>');
-    $surfGuide.append('<p>' + "Best Time:" + ' ' + obj.bestTime + '</p>');
-    $surfGuide.append('<p>' + "Climate:" + ' ' + obj.climate + '</p>');
-    $surfGuide.append('<p>' + "Attire:" + ' ' + obj.attire + '</p>');
-    $surfGuide.append('<p>' + "Hazards:" + ' ' + obj.hazards + '</p>');
-
-};
-
 
 // Declare global variables map and infoWindow
 var map, infoWindow;

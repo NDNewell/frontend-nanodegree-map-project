@@ -604,21 +604,64 @@ function AppViewModel () {
         $surfGuideTableBody.append('<tr>' + '<td>' + "Climate:"+ '</td>' + '<td>' + obj.climate + '</td>' + '<td>' + "Wear:" + '</td>' + '<td>' + obj.attire + '</td>' + '</tr>');
         $surfGuideTableBody.append('<tr>' + '<td>' + "Hazards:"+ '</td>' + '<td colspan="3">' + obj.hazards + '</td>' + '</tr>');
 
-        /* Open surf conditions (error window if bad request) when table is clicked */
-        $('.surf-guide').on('click', function(e) {
+        // Add a button for displaying surf conditions
+        $('.surf-guide').prepend('<button type="button" class="btn btn-default conditions-button">Current Condtions</button>');
 
-            /* If a click is already processing, clicking the surf guide
-             and its resulting actions is disabled. This is to prevent
-            overloading other functions with multiple requests*/
-            if (!clickInProgress) {
+        // Add a button for closing the surf guide
+        $('.surf-guide').append('<button type="button" class="btn btn-default guide-close-button">Close</button>');
 
-                // Disable clicking
-                clickInProgress = true;
+        /* When the surf conditions button is clicked, display current
+        conditions */
+        $('.conditions-button').on('click', function(e) {
 
-                // Pass info to API function and initiate request
-                getMagicSeaweed(obj.spotID, obj.breakName);
+            /* If surf conditions for a particular location have already been
+            display, simply make visible again */
+            if ($('.surf-conditions-row').is(":hidden")) {
 
-            };
+                $('.surf-conditions-row').toggle();
+
+                // Hide the surf conditions button
+                $('.conditions-button').toggle();
+
+                // Hide the close surf guide button
+                $('.guide-close-button').toggle();
+
+            /* If surf conditions arent' already cached request new data */
+            } else {
+
+                /* If a click is already processing, clicking the surf guide
+                 and its resulting actions is disabled. This is to prevent
+                overloading other functions with multiple requests*/
+                if (!clickInProgress && !surfConditionsDisplayed) {
+
+                    // Hide the surf conditions button
+                    $('.conditions-button').toggle();
+
+                    // Hide the surf guide close button
+                    $('.guide-close-button').toggle();
+
+                    // Disable clicking
+                    clickInProgress = true;
+
+                    /* Disable clicking surf guide if surf conditions are already displayed */
+                    surfConditionsDisplayed = true;
+
+                    // Pass info to API function and initiate request
+                    getMagicSeaweed(obj.spotID, obj.breakName);
+
+                };
+
+            }
+
+        });
+
+        /* When the close surf guide button is clicked the surf guide is
+        removed */
+        $('.guide-close-button').on('click', function(e) {
+
+                // Remove both surf conditions and surf guide from DOM
+                $('.surf-conditions-row').remove();
+                $('.surf-guide-row').remove();
 
         });
 
@@ -630,6 +673,8 @@ function AppViewModel () {
 variable is made globally accessible in order to allow the View Model to see
 its value*/
 var clickInProgress = false;
+
+var surfConditionsDisplayed = false;
 
 function getMagicSeaweed (spotID, breakName) {
 
@@ -802,6 +847,25 @@ function getMagicSeaweed (spotID, breakName) {
                     $surfConditionsRight.append('<p>' + compassDirection + '</p>');
                     $surfConditionsRight.append('<img class="img-responsive" src="' + windImg + '" alt="Symbol for wind">');
 
+                    // Add button for closing the surf conditions window
+                    $surfConditionsLeft.prepend('<button type="button" class="btn btn-default conditions-close-button">Close</button>');
+
+                    /* When the surf conditions button is clicked the surf
+                    conditions window is closed */
+                    $('.conditions-close-button').on('click', function(e) {
+
+                        // Hide the surf conditions window
+                        $surfConditionsRow.toggle();
+
+                        // Make visible the show surf conditions button
+                        $('.conditions-button').toggle();
+
+                        // Make visible the surf guide close button
+                        $('.guide-close-button').toggle();
+
+                        surfConditionsDisplayed = false;
+                    });
+
                     // Disable error message
                     clearTimeout(msRequestTimeout);
 
@@ -822,18 +886,29 @@ function getMagicSeaweed (spotID, breakName) {
         // Add a div to hold the error text
         $surfConditionsRow.append('<div class="col-xs-12 surf-conditions-error"></div>');
 
-        /* Display an error if not data is returned 8 seconds*/
+        /* Display an error message */
         $('.surf-conditions-error').append('<p class="conditions-error">' + breakName + ' ' + "conditions unavailable =(" + '</p>');
+
+        // Add a button for closing the error window
+        $('.surf-conditions-error').prepend('<button type="button" class="btn btn-default conditions-close-button">Close</button>');
+
+        /* When the conditions close button is clicked remove the error
+        message */
+        $('.conditions-close-button').on('click', function(e) {
+
+        // Remove conditions row from DOM
+        $surfConditionsRow.remove();
+
+        // Make visible the show surf conditions button
+        $('.conditions-button').toggle();
+
+        // Make visible the close surf guide button
+        $('.guide-close-button').toggle();
+
+        surfConditionsDisplayed = false;
+        });
     }
 
-    // Close surf conditions or error window when either is clicked
-    $('.surf-conditions-row').on('click', function(e) {
-
-        $('.surf-conditions-row').remove();
-        $('p.conditions-error').remove();
-        $('.surf-guide').remove();
-
-    })
 }
 
 // Declare global variables map and infoWindow

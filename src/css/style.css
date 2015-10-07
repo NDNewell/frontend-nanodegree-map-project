@@ -2,6 +2,12 @@
   border: 1px solid red;
 } */
 
+.outer-container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
 
 #map {
     height: 350px;

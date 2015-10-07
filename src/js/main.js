@@ -599,13 +599,18 @@ function AppViewModel () {
         var $surfGuideTableBody = $('.table-body');
 
         // Add additional information to the table body
-        $surfGuideTableBody.append('<tr>' + '<td colspan="2">' + obj.bigWave + '</td>' + '<td colspan="2">' + obj.worldFamous + '</td>' + '</tr>');
-        $surfGuideTableBody.append('<tr>' + '<td>' + "Cost/Day:"+ '</td>' + '<td>' + obj.cost + '</td>' + '<td>' + "Skill Level:" + '</td>' + '<td>' + obj.skillLevel + '</td>' + '</tr>');
-        $surfGuideTableBody.append('<tr>' + '<td>' + "Wave Type:"+ '</td>' + '<td>' + obj.waveType + '</td>' + '<td>' + "Break Type:" + '</td>' + '<td>' + obj.breakType + '</td>' + '</tr>');
-        $surfGuideTableBody.append('<tr>' + '<td>' + "Wave Size:"+ '</td>' + '<td>' + obj.waveSize + '</td>' + '<td>' + "Best Swell:" + '</td>' + '<td>' + obj.bestSwell + '</td>' + '</tr>');
-        $surfGuideTableBody.append('<tr>' + '<td>' + "Best Wind:"+ '</td>' + '<td>' + obj.bestWind + '</td>' + '<td>' + "Best Time:" + '</td>' + '<td>' + obj.bestTime + '</td>' + '</tr>');
-        $surfGuideTableBody.append('<tr>' + '<td>' + "Climate:"+ '</td>' + '<td>' + obj.climate + '</td>' + '<td>' + "Wear:" + '</td>' + '<td>' + obj.attire + '</td>' + '</tr>');
-        $surfGuideTableBody.append('<tr>' + '<td>' + "Hazards:"+ '</td>' + '<td colspan="3">' + obj.hazards + '</td>' + '</tr>');
+        $surfGuideTableBody.append('<tr>' + '<td>' + obj.bigWave + '</td>' + '<td>' + obj.worldFamous + '</td>' + '</tr>');
+        $surfGuideTableBody.append('<tr>' + '<td>' + "Cost/Day:"+ '</td>' + '<td>' + obj.cost + '</td>' + '</tr>');
+        $surfGuideTableBody.append('<tr>' + '<td>' + "Skill Level:" + '</td>' + '<td>' + obj.skillLevel + '</td>' + '</tr>');
+        $surfGuideTableBody.append('<tr>' + '<td>' + "Wave Type:"+ '</td>' + '<td>' + obj.waveType + '</td>' + '</tr>');
+        $surfGuideTableBody.append('<tr>' + '<td>' + "Break Type:" + '</td>' + '<td>' + obj.breakType + '</td>' + '</tr>');
+        $surfGuideTableBody.append('<tr>' + '<td>' + "Wave Size:"+ '</td>' + '<td>' + obj.waveSize + '</td>' + '</tr>');
+        $surfGuideTableBody.append('<tr>' + '<td>' + "Best Swell:" + '</td>' + '<td>' + obj.bestSwell + '</td>' + '</tr>');
+        $surfGuideTableBody.append('<tr>' + '<td>' + "Best Wind:"+ '</td>' + '<td>' + obj.bestWind + '</td>' + '</tr>');
+        $surfGuideTableBody.append('<tr>' + '<td>' + "Best Time:" + '</td>' + '<td>' + obj.bestTime + '</td>' + '</tr>');
+        $surfGuideTableBody.append('<tr>' + '<td>' + "Climate:"+ '</td>' + '<td>' + obj.climate + '</td>' + '</tr>');
+        $surfGuideTableBody.append('<tr>' + '<td>' + "Wear:" + '</td>' + '<td>' + obj.attire + '</td>' + '</tr>');
+        $surfGuideTableBody.append('<tr>' + '<td>' + "Hazards:"+ '</td>' + '<td>' + obj.hazards + '</td>' + '</tr>');
 
         // Add a button for displaying surf conditions
         $('.surf-guide').prepend('<button type="button" class="btn btn-default conditions-button">Current Condtions</button>');

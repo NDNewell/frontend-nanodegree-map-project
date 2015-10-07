@@ -533,7 +533,7 @@ function AppViewModel () {
             // Pass object to match the appropriate marker with the obj
             self.goToMarker(obj.breakName);
 
-            // Pass obj to the location guide
+            // Pass obj to the surf guide
             renderSurfGuide(obj);
 
     };
@@ -568,6 +568,9 @@ function AppViewModel () {
 
     /* Display detailed information about the location*/
     self.renderSurfGuide = function (obj) {
+
+        // Hide the location grid
+        $('.location-grid').toggle();
 
         /* Remove any existing information from previous click */
         $('.surf-guide-row').remove();
@@ -649,6 +652,9 @@ function AppViewModel () {
                 // Remove both surf conditions and surf guide from DOM
                 $('.surf-conditions-row').remove();
                 $('.surf-guide-row').remove();
+
+                // Make visible the location grid
+                $('.location-grid').toggle();
 
         });
 

@@ -881,6 +881,8 @@ function initMap() {
     infoWindow = new google.maps.InfoWindow();
 
     generateMarkers();
+
+    addMapButton();
 }
 
 function generateMarkers () {
@@ -1020,6 +1022,18 @@ function animateMarker (marker) {
     window.setTimeout(function() {
         marker.setAnimation(null);
     }, 1400);
+}
+
+function addMapButton () {
+
+    // Add button for hiding the map
+    $('.map-container').prepend('<button type="button" class="btn btn-default hide-map-button">Hide Map</button>');
+
+    $('.hide-map-button').on('click', function(e) {
+
+        $('#map').toggle();
+
+    });
 }
 
 ko.applyBindings(new AppViewModel);

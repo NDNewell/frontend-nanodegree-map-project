@@ -664,6 +664,14 @@ function AppViewModel () {
         // Add an inner table that displays varying budgets
         $surfGuideTableBody.append('<tr>' + '<td>' + "Cost/day:"+ '</td>' + '<td>' + '<table>' + '<tr>' + '<td>' + "Budget" + '</td>' + '<td>' + "Mid-range" + '</td>' + '<td>' + "Deluxe" + '</td>' + '</tr>' + '<tr>' + '<td>' + "$" + obj.cost.budget + '</td>' + '<td>' + "$" + obj.cost.budget + ' ' + "-" + ' ' + obj.cost.highEnd + '</td>' + '<td>' + "$" + obj.cost.highEnd + "+" + '</td>' + '</tr>' + '</table>' + '</td>' + '</tr>');
 
+        addGuideButtons(obj);
+
+    };
+
+    /* Create buttons for openeing closing surf guide / view current break
+    conditions */
+    self.addGuideButtons = function (obj) {
+
         // Add a button for displaying surf conditions
         $('.surf-guide').prepend('<button type="button" class="btn btn-default conditions-button">Current Condtions</button>');
 
@@ -674,8 +682,8 @@ function AppViewModel () {
         conditions */
         $('.conditions-button').on('click', function(e) {
 
-            /* If surf conditions for a particular location have already been
-            display, simply make visible again */
+            /* If surf conditions for a particular location have already
+            been displayed, simply make visible again */
             if ($('.surf-conditions-row').is(":hidden")) {
 
                 $('.surf-conditions-row').toggle();
@@ -714,9 +722,7 @@ function AppViewModel () {
                 $('.location-grid').toggle();
 
         });
-
-    }
-
+    };
 };
 
 function getMagicSeaweed (spotID, breakName) {

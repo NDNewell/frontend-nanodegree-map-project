@@ -13,6 +13,7 @@ var locationData = [
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
+      optimalTide: [' Mid'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
@@ -20,7 +21,7 @@ var locationData = [
       lat: 21.679011,
       lng: -158.041277,
       spotID: 657,
-      picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Pipeline/Backdoor',
@@ -34,6 +35,7 @@ var locationData = [
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
+      optimalTide: [' High'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
@@ -41,7 +43,7 @@ var locationData = [
       lat: 21.665244,
       lng: -158.053408,
       spotID: 616,
-      picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Cannons',
@@ -55,6 +57,7 @@ var locationData = [
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
+      optimalTide: [' High'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
@@ -62,7 +65,7 @@ var locationData = [
       lat: 22.224744,
       lng: -159.566712,
       spotID: 'none',
-      picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Tunnels',
@@ -76,6 +79,7 @@ var locationData = [
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
+      optimalTide: [' High'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
@@ -83,7 +87,7 @@ var locationData = [
       lat: 22.224744,
       lng: -159.566712,
       spotID: 'none',
-      picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Anahola',
@@ -97,6 +101,7 @@ var locationData = [
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
+      optimalTide: [' High'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
@@ -104,7 +109,7 @@ var locationData = [
       lat: 22.148311,
       lng: -159.300331,
       spotID: 'none',
-      picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Hanalei',
@@ -118,6 +123,7 @@ var locationData = [
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
+      optimalTide: [' High'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
@@ -125,7 +131,7 @@ var locationData = [
       lat: 22.218315,
       lng: -159.502265,
       spotID: 3051,
-      picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: "Hale'iwa",
@@ -139,6 +145,7 @@ var locationData = [
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
+      optimalTide: [' High'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
@@ -146,7 +153,7 @@ var locationData = [
       lat: 21.596416,
       lng: -158.109121,
       spotID: 660,
-      picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Waimea Bay',
@@ -160,6 +167,7 @@ var locationData = [
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
+      optimalTide: [' High'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
@@ -167,7 +175,7 @@ var locationData = [
       lat: 21.642987,
       lng: -158.066743,
       spotID: 549,
-      picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Rocky Point',
@@ -181,6 +189,7 @@ var locationData = [
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
+      optimalTide: [' High'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
@@ -188,7 +197,7 @@ var locationData = [
       lat: 21.670862,
       lng: -158.049157,
       spotID: 658,
-      picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Turtle Bay',
@@ -202,6 +211,7 @@ var locationData = [
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
+      optimalTide: [' High'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
@@ -209,7 +219,7 @@ var locationData = [
       lat: 21.708047,
       lng: -158.002275,
       spotID: 'none',
-      picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Halawa Bay',
@@ -223,6 +233,7 @@ var locationData = [
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
+      optimalTide: [' High'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
@@ -230,7 +241,7 @@ var locationData = [
       lat: 21.159132,
       lng: -156.735906,
       spotID: 'none',
-      picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Honolua Bay',
@@ -244,6 +255,7 @@ var locationData = [
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
+      optimalTide: [' High'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
@@ -251,7 +263,7 @@ var locationData = [
       lat: 21.024350,
       lng: -156.641890,
       spotID: 697,
-      picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Jaws/Peahi',
@@ -265,6 +277,7 @@ var locationData = [
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
+      optimalTide: [' High'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
@@ -272,7 +285,7 @@ var locationData = [
       lat: 20.946401,
       lng: -156.297389,
       spotID: 617,
-      picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'The Cove',
@@ -286,6 +299,7 @@ var locationData = [
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
+      optimalTide: [' High'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
@@ -293,7 +307,7 @@ var locationData = [
       lat: 20.728298,
       lng: -156.452353,
       spotID: 'none',
-      picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: "Ma'alaea",
@@ -307,6 +321,7 @@ var locationData = [
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
+      optimalTide: [' High'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
@@ -314,7 +329,7 @@ var locationData = [
       lat: 20.791860,
       lng: -156.508960,
       spotID: 618,
-      picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Lahaina',
@@ -328,6 +343,7 @@ var locationData = [
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
+      optimalTide: [' High'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
@@ -335,7 +351,7 @@ var locationData = [
       lat: 20.869326,
       lng: -156.679025,
       spotID: 4287,
-      picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Lymans/Banyans',
@@ -349,6 +365,7 @@ var locationData = [
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
+      optimalTide: [' High'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
@@ -356,7 +373,7 @@ var locationData = [
       lat: 19.606206,
       lng: -155.978016,
       spotID: 2784,
-      picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Pine Trees',
@@ -370,6 +387,7 @@ var locationData = [
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
+      optimalTide: [' High'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
@@ -377,7 +395,7 @@ var locationData = [
       lat: 19.695131,
       lng: -156.045926,
       spotID: 3958,
-      picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Kiholo Bay',
@@ -391,6 +409,7 @@ var locationData = [
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
+      optimalTide: [' High'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
@@ -398,7 +417,7 @@ var locationData = [
       lat: 19.854416,
       lng: -155.931340,
       spotID: 'none',
-      picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: "Honoli'i",
@@ -412,6 +431,7 @@ var locationData = [
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
+      optimalTide: [' High'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
@@ -419,7 +439,7 @@ var locationData = [
       lat: 19.756298,
       lng: -155.089960,
       spotID: 3815,
-      picture: '<img src="http://lorempixel.com/500/250/nature" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
     }
 ];
 
@@ -451,6 +471,7 @@ function AppViewModel () {
         this.breakDetails = obj.breakDetails;
         this.avgSize = obj.avgSize;
         this.optimalSwell = obj.optimalSwell;
+        this.optimalTide = obj.optimalTide;
         this.optimalWind = obj.optimalWind;
         this.optimalTime = obj.optimalTime;
         this.climate = obj.climate;
@@ -598,8 +619,22 @@ function AppViewModel () {
         // Cache the reference to the table body
         var $surfGuideTableBody = $('.table-body');
 
+        // Check if break has big waves
+        if (obj.bigWave) {
+            var bigWave = '<img src="http://lorempixel.com/40/40/technics" class="img-responsive img-circle">'
+        } else {
+            var bigWave = '';
+        };
+
+        // Check if break is well known
+        if (obj.wellKnown) {
+            var wellKnown = '<img src="http://lorempixel.com/40/40/technics" class="img-responsive img-circle">'
+        } else {
+            var wellKnown = '';
+        };
+
         // Add special designations for the break
-        $surfGuideTableBody.append('<tr>' + '<td>' + obj.bigWave + '</td>' + '<td>' + obj.wellKnown + '</td>' + '</tr>');
+        $surfGuideTableBody.append('<tr>' + '<td>' + bigWave + '</td>' + '<td>' + wellKnown + '</td>' + '</tr>');
 
         // Add break difficulty
         $surfGuideTableBody.append('<tr>' + '<td>' + "Difficulty:" + '</td>' + '<td>' + obj.skillLevel + '</td>' + '</tr>');
@@ -623,13 +658,16 @@ function AppViewModel () {
         $surfGuideTableBody.append('<tr>' + '<td>' + "Height:"+ '</td>' + '<td>' + obj.avgSize.min + ' ' + "-" + ' ' + obj.avgSize.max + plus + "ft" + '</td>' + '</tr>');
 
         // Add the optimal swell direction
-        $surfGuideTableBody.append('<tr>' + '<td>' + "Optimal Swell:" + '</td>' + '<td>' + obj.optimalSwell + '</td>' + '</tr>');
+        $surfGuideTableBody.append('<tr>' + '<td>' + "Swell:" + '</td>' + '<td>' + obj.optimalSwell + '</td>' + '</tr>');
+
+        // Add the optimal tide
+        $surfGuideTableBody.append('<tr>' + '<td>' + "Tide:" + '</td>' + '<td>' + obj.optimalTide + '</td>' + '</tr>');
 
         // Add the optimal wind direction
-        $surfGuideTableBody.append('<tr>' + '<td>' + "Optimal Wind:" + '</td>' + '<td>' + obj.optimalWind + ' ' + '</td>' + '</tr>');
+        $surfGuideTableBody.append('<tr>' + '<td>' + "Wind:" + '</td>' + '<td>' + obj.optimalWind + ' ' + '</td>' + '</tr>');
 
         // Add the optimal time of year to surf the break
-        $surfGuideTableBody.append('<tr>' + '<td>' + "Optimal Time:" + '</td>' + '<td>' + obj.optimalTime + '</td>' + '</tr>');
+        $surfGuideTableBody.append('<tr>' + '<td>' + "Time:" + '</td>' + '<td>' + obj.optimalTime + '</td>' + '</tr>');
 
         // Add the climate details
         $surfGuideTableBody.append('<tr>' + '<td>' + "Climate:" + '</td>' + '<td>' + obj.climate + '</td>' + '</tr>');
@@ -668,7 +706,7 @@ function AppViewModel () {
 
     };
 
-    /* Create buttons for openeing closing surf guide / view current break
+    /* Create buttons for opening closing surf guide / view current break
     conditions */
     self.addGuideButtons = function (obj) {
 

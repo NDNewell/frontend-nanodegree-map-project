@@ -736,7 +736,7 @@ function AppViewModel () {
                 $('.conditions-button').toggle();
 
                 // Hide the close surf guide button
-                $('.guide-close-button').toggle();
+                //$('.guide-close-button').toggle();
 
             /* If surf conditions arent' already cached request new data */
             } else {
@@ -745,7 +745,7 @@ function AppViewModel () {
                     $('.conditions-button').toggle();
 
                     // Hide the surf guide close button
-                    $('.guide-close-button').toggle();
+                    //$('.guide-close-button').toggle();
 
                     // Pass info to API function and initiate request
                     getMagicSeaweed(obj.spotID, obj.breakName);
@@ -883,89 +883,118 @@ function getMagicSeaweed (spotID, breakName) {
         quality*/
         var waveRating = rating.join("");
 
-        // Insert a new row above the surf guide
-        $('.surf-guide-row').before('<div class="row surf-conditions-row"></div>');
+        /* Before rendering the surf conditions, check which surf guide is
+        currently open and make sure it matches the API request. This ensures
+        that an api request that takes time to download isn't injected
+        into another surf guide if the user changed surf guides during
+        the api request processing */
+        var currentSurfGuide = $('th').text();
+        if (currentSurfGuide.indexOf(breakName) >= 0) {
 
-        // Cache the new row in a variable
-        var $surfConditionsRow = $('.surf-conditions-row');
+            // Insert a new row above the surf guide
+            $('.surf-guide-row').before('<div class="row surf-conditions-row"></div>');
 
-        // Add three columns to the new row
-        $surfConditionsRow.append('<div class="col-xs-4 surf-conditions-left"></div>');
-        $surfConditionsRow.append('<div class="col-xs-4 surf-conditions-middle"></div>');
-        $surfConditionsRow.append('<div class="col-xs-4 surf-conditions-right"></div>');
+            // Cache the new row in a variable
+            var $surfConditionsRow = $('.surf-conditions-row');
 
-        // Cache references to each column
-        var $surfConditionsLeft = $('.surf-conditions-left');
-        var $surfConditionsMiddle = $('.surf-conditions-middle');
-        var $surfConditionsRight = $('.surf-conditions-right');
+            // Add three columns to the new row
+            $surfConditionsRow.append('<div class="col-xs-4 surf-conditions-left"></div>');
+            $surfConditionsRow.append('<div class="col-xs-4 surf-conditions-middle"></div>');
+            $surfConditionsRow.append('<div class="col-xs-4 surf-conditions-right"></div>');
 
-        /* Render the temperature and weather image in the left
-        side of the newly created conditions window*/
-        $surfConditionsLeft.append('<p>' + temperature + " ℉" + '</p>');
-        $surfConditionsLeft.append('<img class="img-responsive" src="' + weatherImg + '" alt="Symbol for current weather">');
+            // Cache references to each column
+            var $surfConditionsLeft = $('.surf-conditions-left');
+            var $surfConditionsMiddle = $('.surf-conditions-middle');
+            var $surfConditionsRight = $('.surf-conditions-right');
 
-        /* Render the swell height, period, breaking wave height,
-        and wave rating from above in the center of the conditions
-        window*/
-        $surfConditionsMiddle.append('<p>' + swellHeight + "ft" + ' ' + "primary" + '</p>');
-        $surfConditionsMiddle.append('<p>' + "@" + ' ' + swellPeriod + 's' + ' ' + swellCompassDirection + '</p>');
-        $surfConditionsMiddle.append('<p>' + waveHeight + "ft" + '</p>');
-        $surfConditionsMiddle.append('<p>' + waveRating + '</p>');
+            /* Render the temperature and weather image in the left
+            side of the newly created conditions window*/
+            $surfConditionsLeft.append('<p>' + temperature + " ℉" + '</p>');
+            $surfConditionsLeft.append('<img class="img-responsive" src="' + weatherImg + '" alt="Symbol for current weather">');
 
-        /* Render the wind speed, direction, and wind image in the
-        right side of the conditions window*/
-        $surfConditionsRight.append('<p>' + windSpeed + "mph" + '</p>');
-        $surfConditionsRight.append('<p>' + compassDirection + '</p>');
-        $surfConditionsRight.append('<img class="img-responsive" src="' + windImg + '" alt="Symbol for wind">');
+            /* Render the swell height, period, breaking wave height,
+            and wave rating from above in the center of the conditions
+            window*/
+            $surfConditionsMiddle.append('<p>' + swellHeight + "ft" + ' ' + "primary" + '</p>');
+            $surfConditionsMiddle.append('<p>' + "@" + ' ' + swellPeriod + 's' + ' ' + swellCompassDirection + '</p>');
+            $surfConditionsMiddle.append('<p>' + waveHeight + "ft" + '</p>');
+            $surfConditionsMiddle.append('<p>' + waveRating + '</p>');
 
-        // Add button for closing the surf conditions window
-        $surfConditionsLeft.prepend('<button type="button" class="btn btn-default conditions-close-button">Close</button>');
+            /* Render the wind speed, direction, and wind image in the
+            right side of the conditions window*/
+            $surfConditionsRight.append('<p>' + windSpeed + "mph" + '</p>');
+            $surfConditionsRight.append('<p>' + compassDirection + '</p>');
+            $surfConditionsRight.append('<img class="img-responsive" src="' + windImg + '" alt="Symbol for wind">');
 
-        /* When the surf conditions button is clicked the surf
-        conditions window is closed */
-        $('.conditions-close-button').on('click', function(e) {
+            // Add button for closing the surf conditions window
+            $surfConditionsLeft.prepend('<button type="button" class="btn btn-default conditions-close-button">Close</button>');
 
-            // Hide the surf conditions window
-            $surfConditionsRow.toggle();
+            /* When the surf conditions button is clicked the surf
+            conditions window is closed */
+            $('.conditions-close-button').on('click', function(e) {
 
-            // Make visible the show surf conditions button
-            $('.conditions-button').toggle();
+                // Hide the surf conditions window
+                $surfConditionsRow.toggle();
 
-            // Make visible the surf guide close button
-            $('.guide-close-button').toggle();
+                // Make visible the show surf conditions button
+                $('.conditions-button').toggle();
 
-        });
+                // Make visible the surf guide close button
+                //$('.guide-close-button').toggle();
+
+            });
+
+        } else {
+
+          return
+
+        }
     }
 
     function showError () {
 
-        // Insert a new row above the surf guide
-        $('.surf-guide-row').before('<div class="row surf-conditions-row"></div>');
+        /* Before rendering the error message, check which surf guide is
+        currently open and make sure it matches the API request. This ensures
+        that an api request that takes time to download isn't injected
+        into another surf guide if the user changed surf guides during
+        the api request processing */
+        var currentSurfGuide = $('th').text();
+        if (currentSurfGuide.indexOf(breakName) >= 0) {
 
-        // Add a div to hold the error text
-        $('.surf-conditions-row').append('<div class="col-xs-12 surf-conditions-error"></div>');
+            // Insert a new row above the surf guide
+            $('.surf-guide-row').before('<div class="row surf-conditions-row"></div>');
 
-        /* Display an error message */
-        $('.surf-conditions-error').append('<p class="conditions-error">' + breakName + ' ' + "conditions unavailable =(" + '</p>');
+            // Add a div to hold the error text
+            $('.surf-conditions-row').append('<div class="col-xs-12 surf-conditions-error"></div>');
 
-        // Add a button for closing the error window
-        $('.surf-conditions-error').prepend('<button type="button" class="btn btn-default conditions-close-button">Close</button>');
+            /* Display an error message */
+            $('.surf-conditions-error').append('<p class="conditions-error">' + breakName + ' ' + "conditions unavailable =(" + '</p>');
 
-        /* When the conditions close button is clicked remove the error
-        message */
-        $('.conditions-close-button').on('click', function(e) {
+            // Add a button for closing the error window
+            $('.surf-conditions-error').prepend('<button type="button" class="btn btn-default conditions-close-button">Close</button>');
 
-            // Remove conditions row from DOM
-            $('.surf-conditions-row').remove();
+            /* When the conditions close button is clicked remove the error
+            message */
+            $('.conditions-close-button').on('click', function(e) {
 
-            // Make visible the show surf conditions button
-            $('.conditions-button').toggle();
+                // Remove conditions row from DOM
+                $('.surf-conditions-row').remove();
 
-            // Make visible the close surf guide button
-            $('.guide-close-button').toggle();
+                // Make visible the show surf conditions button
+                $('.conditions-button').toggle();
 
-        });
-    }
+                // Make visible the close surf guide button
+                //$('.guide-close-button').toggle();
+
+            });
+
+        } else {
+
+            return
+
+        };
+
+    };
 
 }
 

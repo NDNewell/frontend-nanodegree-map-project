@@ -1103,6 +1103,9 @@ function addListeners(marker, breakName) {
 
             // Bounce marker upon clicking
             animateMarker(marker);
+
+            showLocationFrame(breakName);
+
         }
 
     /* Pass the relevant marker and break name (breakName) for the current
@@ -1168,6 +1171,19 @@ function addMapButton () {
     $('.hide-map-button').on('click', function(e) {
 
         $('#map').toggle();
+
+    });
+}
+
+function showLocationFrame (breakName) {
+
+    $('.location-frame').each(function() {
+      var $this = $(this);
+      if($this.text().indexOf(breakName) >= 0) {
+        var match = ($this);
+        $('.location-frame').hide();
+        match.show();
+      }
 
     });
 }

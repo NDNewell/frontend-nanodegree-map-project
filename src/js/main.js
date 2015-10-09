@@ -596,8 +596,13 @@ function AppViewModel () {
     /* Display detailed information about the location*/
     self.renderSurfGuide = function (obj) {
 
-        // Hide the location grid
-        $('.location-grid').toggle();
+        /* Check if the surf guide window is open already from a previous
+        click. If it isn't hide the locatin grid. If it is, the location
+        grid is already hidden, so we don't want to make it visible! */
+        if (!$('.surf-guide-row').is(":visible")) {
+            // Hide the location grid
+            $('.location-grid').toggle();
+        }
 
         /* Remove any existing information from previous click */
         $('.surf-guide-row').remove();
@@ -947,9 +952,6 @@ function getMagicSeaweed (spotID, breakName) {
                 // Make visible the show surf conditions button
                 $('.conditions-button').toggle();
 
-                // Make visible the surf guide close button
-                //$('.guide-close-button').toggle();
-
             });
 
         } else {
@@ -1038,6 +1040,8 @@ function generateMarkers () {
     in their own variables for easy referencing*/
     for(var i = 0; i < locationData.length; i++) {
 
+        var obj = locationData[i];
+
         // Create a variable to hold each break's coordinates
         var breakCoordinates = ({lat: locationData[i].lat, lng: locationData[i].lng});
 
@@ -1049,7 +1053,7 @@ function generateMarkers () {
 
         /* Create a marker and set its position. Pass the variables
         created above as arguments*/
-        addMarker(breakName, breakCoordinates, breakLocation);
+        addMarker(breakName, breakCoordinates, breakLocation, obj);
 
     }
 
@@ -1061,7 +1065,7 @@ function generateMarkers () {
 
 }
 
-function addMarker(breakName, breakCoordinates, breakLocation) {
+function addMarker(breakName, breakCoordinates, breakLocation, obj) {
 
     var marker = new google.maps.Marker({
 
@@ -1078,10 +1082,10 @@ function addMarker(breakName, breakCoordinates, breakLocation) {
     });
 
     // Add a text box that displays the break name and location when clicked
-    addListeners(marker, breakName);
+    addListeners(marker, breakName, obj);
 }
 
-function addListeners(marker, breakName) {
+function addListeners(marker, breakName, obj) {
 
     google.maps.event.addListener(marker, 'dblclick', (function(marker) {
 
@@ -1103,7 +1107,7 @@ function addListeners(marker, breakName) {
     into the function*/
     })(marker));
 
-    google.maps.event.addListener(marker, 'click', (function(marker, breakName) {
+    google.maps.event.addListener(marker, 'click', (function(marker, breakName, obj) {
 
         /* Create an inner function what will at the time of iteration save
         the individual break's name (breakName) within the infoWindow and
@@ -1114,14 +1118,20 @@ function addListeners(marker, breakName) {
             // Bounce marker upon clicking
             animateMarker(marker);
 
-            // Hide all location frames except the one related to the marker
-            showLocationFrame(breakName);
-
+            /* Show surf guide (only if surf guide is already open) when the
+            marker is clicked */
+            if ($('.surf-guide-row').is(":visible")) {
+                renderSurfGuide(obj);
+            } else {
+                /* If the surf guide isn't open, hide all location frames
+                except the one related to the marker */
+                showLocationFrame(breakName);
+            }
         }
 
     /* Pass the relevant marker and break name (breakName) for the current
     iteration as an argument into the function*/
-    })(marker, breakName));
+    })(marker, breakName, obj));
 
     // Add each marker to the markers array
     markers.push(marker);
@@ -1198,16 +1208,15 @@ function showLocationFrame (breakName) {
     // Loop through all of the location frames
     $('.location-frame').each(function() {
 
-      var $this = $(this);
+        var $this = $(this);
 
-      /* If a specific location frame's text matches the currenlty selected
-      break, show it and hide the others*/
-      if($this.text().indexOf(breakName) >= 0) {
-        var match = ($this);
-        $('.location-frame').hide();
-        match.show();
-      }
-
+        /* If a specific location frame's text matches the currenlty selected
+        break, show it and hide the others*/
+        if($this.text().indexOf(breakName) >= 0) {
+            var match = ($this);
+            $('.location-frame').hide();
+            match.show();
+        }
     });
 }
 
@@ -1216,8 +1225,13 @@ function addMapClickEvent () {
     /* When the map is clicked, location frames are made visible. This is useful if they were hidden as a result of a marker being clicked.
     In addition, all open info windows are closed */
     map.addListener('click', function() {
-      $('.location-frame').show();
-      infoWindow.close();
+
+        /* If the surf guide isn't visible show the locations, otherwise
+        do nothing (just close the info windows) */
+        if (!$('.surf-guide-row').is(":visible")) {
+            $('.location-frame').show();
+        }
+            infoWindow.close();
     });
 }
 

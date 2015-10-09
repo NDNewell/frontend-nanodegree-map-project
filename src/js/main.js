@@ -762,9 +762,14 @@ function AppViewModel () {
                 $('.surf-conditions-row').remove();
                 $('.surf-guide-row').remove();
 
-                // Make visible the location grid
+                /* Make both the location grid and the location frames
+                within it visible. The location frames need to be made
+                visible again in case a marker has been selected. */
+                $('.location-frame').show();
                 $('.location-grid').toggle();
 
+                // Reset the map window to display all markers
+                setMapBounds();
         });
     };
 };
@@ -1175,6 +1180,9 @@ function addMapButton () {
 
         // Either hide or reveal the map depending the last click
         $('#map').toggle();
+
+        // Reset the map window to display all markers
+        setMapBounds();
 
         /* Show the locations in case a marker has been selected. This will display the whole list of locations again */
         $('.location-frame').show();

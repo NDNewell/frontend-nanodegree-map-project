@@ -1019,6 +1019,8 @@ function initMap() {
     generateMarkers();
 
     addMapButton();
+
+    addMapClickEvent();
 }
 
 function generateMarkers () {
@@ -1104,6 +1106,7 @@ function addListeners(marker, breakName) {
             // Bounce marker upon clicking
             animateMarker(marker);
 
+            // Hide all location frames except the one related to the marker
             showLocationFrame(breakName);
 
         }
@@ -1177,14 +1180,25 @@ function addMapButton () {
 
 function showLocationFrame (breakName) {
 
+    // Loop through all of the location frames
     $('.location-frame').each(function() {
+
       var $this = $(this);
+
+      /* If a specific location frame's text matches the currenlty selected
+      break, show it and hide the others*/
       if($this.text().indexOf(breakName) >= 0) {
         var match = ($this);
         $('.location-frame').hide();
         match.show();
       }
 
+    });
+}
+
+function addMapClickEvent () {
+    map.addListener('click', function() {
+      $('.location-frame').show();
     });
 }
 

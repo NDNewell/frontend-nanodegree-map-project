@@ -1173,7 +1173,11 @@ function addMapButton () {
 
     $('.hide-map-button').on('click', function(e) {
 
+        // Either hide or reveal the map depending the last click
         $('#map').toggle();
+
+        /* Show the locations in case a marker has been selected. This will display the whole list of locations again */
+        $('.location-frame').show();
 
     });
 }
@@ -1197,6 +1201,8 @@ function showLocationFrame (breakName) {
 }
 
 function addMapClickEvent () {
+
+    /* When the map is clicked, location frames are made visible. This is useful if they were hidden as a result of a marker being clicked */
     map.addListener('click', function() {
       $('.location-frame').show();
     });

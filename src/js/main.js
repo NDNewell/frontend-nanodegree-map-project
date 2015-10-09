@@ -763,21 +763,21 @@ function AppViewModel () {
         removed */
         $('.guide-close-button').on('click', function(e) {
 
-                // Remove both surf conditions and surf guide from DOM
-                $('.surf-conditions-row').remove();
-                $('.surf-guide-row').remove();
+            // Remove both surf conditions and surf guide from DOM
+            $('.surf-conditions-row').remove();
+            $('.surf-guide-row').remove();
 
-                /* Make both the location grid and the location frames
-                within it visible. The location frames need to be made
-                visible again in case a marker has been selected. */
-                $('.location-frame').show();
-                $('.location-grid').toggle();
+            /* Make both the location grid and the location frames
+            within it visible. The location frames need to be made
+            visible again in case a marker has been selected. */
+            $('.location-frame').show();
+            $('.location-grid').toggle();
 
-                // Reset the map window to display all markers
-                setMapBounds();
+            // Reset the map window to display all markers
+            setMapBounds();
 
-                // Close any info windows that remain open
-                infoWindow.close();
+            // Close any info windows that remain open
+            infoWindow.close();
         });
     };
 };
@@ -1111,7 +1111,7 @@ function addListeners(marker, breakName, obj) {
 
         /* Create an inner function what will at the time of iteration save
         the individual break's name (breakName) within the infoWindow and
-        attach it to the relevant marker*/
+        attach it to the relevant marker */
         return function() {
             getInfoWindow(marker, breakName);
 
@@ -1121,6 +1121,9 @@ function addListeners(marker, breakName, obj) {
             /* Show surf guide (only if surf guide is already open) when the
             marker is clicked */
             if ($('.surf-guide-row').is(":visible")) {
+                /* Remove any visible surf conditions so they aren't still
+                displayed when the new surf guide renders */
+                $('.surf-conditions-row').remove();
                 renderSurfGuide(obj);
             } else {
                 /* If the surf guide isn't open, hide all location frames

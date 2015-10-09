@@ -770,6 +770,9 @@ function AppViewModel () {
 
                 // Reset the map window to display all markers
                 setMapBounds();
+
+                // Close any info windows that remain open
+                infoWindow.close();
         });
     };
 };
@@ -1210,10 +1213,13 @@ function showLocationFrame (breakName) {
 
 function addMapClickEvent () {
 
-    /* When the map is clicked, location frames are made visible. This is useful if they were hidden as a result of a marker being clicked */
+    /* When the map is clicked, location frames are made visible. This is useful if they were hidden as a result of a marker being clicked.
+    In addition, all open info windows are closed */
     map.addListener('click', function() {
       $('.location-frame').show();
+      infoWindow.close();
     });
 }
+
 
 ko.applyBindings(new AppViewModel);

@@ -504,10 +504,11 @@ function AppViewModel () {
     self.searchLocations = function () {
 
         /* In case a surf guide is open, remove it and show searchable
-        locations */
+        locations and close infoWindows */
         $('.surf-conditions-row').remove();
         $('.surf-guide-row').remove();
         $('.location-grid').show();
+        infoWindow.close();
 
         /* Convert search input to lowercase in order to compare like
         characters in each break and location name & store in a new var*/

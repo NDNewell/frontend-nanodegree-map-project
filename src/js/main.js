@@ -455,7 +455,7 @@ function AppViewModel () {
     /* Iterate through the location data from the model and push each object to
     the location array above*/
     locationData.forEach(function(obj) {
-    self.LocationArray.push(new beachLocation(obj));
+        self.LocationArray.push(new beachLocation(obj));
     });
 
     /* Using a constructor, location objects are built here via the forEach
@@ -498,6 +498,45 @@ function AppViewModel () {
      View is altered*/
     self.Query = ko.observable("");
 
+    /* Create an array that holds keywords that pop up in a small menu
+    within the search bar dynamically during searches */
+    self.searchKeywords = [];
+
+    /* Loop through the location array and obtain all of the break names
+    and adding them to the search keywords array */
+    self.LocationArray.forEach(function(obj) {
+        self.searchKeywords.push(obj.breakName);
+
+        /* If a location keyword already exists in the search keywords array
+        do not it. If it doesn't add it to the array. This avoids having the
+        same location listed multiple times in the pop-up window */
+        if(searchKeywords.indexOf(obj.location) < 0) {
+            self.searchKeywords.push(obj.location);
+        }
+    });
+
+    /* Call the jQuery-UI auto complete widget.*/
+    $('.search-form').autocomplete({
+        /* All keywords come from the above array */
+        source: searchKeywords,
+        /* Highlight the pop-up menu item that matches what is currently in
+         the search input field */
+        autoFocus: true,
+        /* A search must be at least two characters long before the pop-up
+        window shows */
+        minLength: 2,
+        // Delay the pop-up window from displaying for (x) milliseconds
+        delay: 500,
+        /* The a selection has been made, change the ko variable that
+        represents the search and then activate the search filtering
+        below */
+        select: function (event, ui) {
+            self.Query(ui.item.value);
+            self.searchLocations();
+        }
+
+    });
+
     /* Filter through the location objects and compare each one to the
     search terms (value of self.Query). If there is a match, the matching
     object is re-added to the locationGrid (observ. array bound to the View). */
@@ -510,9 +549,10 @@ function AppViewModel () {
         $('.location-grid').show();
         infoWindow.close();
 
-        /* Convert search input to lowercase in order to compare like
+        /* Convert search input to lowercase, remove spaces, remove
+        apostrophes, and remove commas in order to compare like
         characters in each break and location name & store in a new var*/
-        var search = self.Query().toLowerCase();
+        var search = self.Query().toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
 
         /* Remove all location objects from obs. array, so that only objects
         which match the search can be re-added to the array and subsequently
@@ -521,27 +561,27 @@ function AppViewModel () {
 
         /* Compare each object's break name and location to the search terms.
          If it matches, re-add it to the obs. array and render in the View.
-         If it doesn't match, then it isnt re-added*/
+         If it doesn't match, then it isnt re-added.*/
         self.LocationArray.forEach(function(obj) {
 
-            if (obj.breakName.toLowerCase().indexOf(search) >= 0) {
+            // Convert break names (remove spaces, commas, apostrophes etc.)
+            if (obj.breakName.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) >= 0) {
 
               self.locationGrid.push(obj);
 
-            } else if (obj.location.toLowerCase().indexOf(search) >= 0) {
+            // Convert locations (remove spaces, commas, apostrophes etc.)
+            } else if (obj.location.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) >= 0) {
 
               self.locationGrid.push(obj);
             }
         });
 
-        // Set the map bounds & map position for every search
-        setMapBounds();
-
         /* Compare each marker's title, which holds the break and location name, to the search terms. If it matches, set the marker as visible.
         If it doesn't match, make setVisible false*/
         markers.forEach(function(marker) {
 
-            if (marker.title.toLowerCase().indexOf(search) >= 0) {
+            // Convert marker titles (remove spaces, commas, apostrophes etc.)
+            if (marker.title.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) >= 0) {
 
               marker.setVisible(true);
 
@@ -552,6 +592,9 @@ function AppViewModel () {
             }
 
         });
+
+        // Set the map bounds & map position for every search
+        setMapBounds();
 
     }
 

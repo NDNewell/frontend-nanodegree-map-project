@@ -21,7 +21,7 @@ var locationData = [
       lat: 21.679011,
       lng: -158.041277,
       spotID: 657,
-      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="/img/flickr_sunset_beach-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Pipeline/Backdoor',
@@ -43,7 +43,7 @@ var locationData = [
       lat: 21.665244,
       lng: -158.053408,
       spotID: 616,
-      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="/img/flickr_pipeline-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Cannons',
@@ -65,7 +65,7 @@ var locationData = [
       lat: 22.224744,
       lng: -159.566712,
       spotID: 'none',
-      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="/img/flickr_cannons-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Tunnels',
@@ -87,7 +87,7 @@ var locationData = [
       lat: 22.224744,
       lng: -159.566712,
       spotID: 'none',
-      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="/img/flickr_tunnels-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Anahola',
@@ -109,7 +109,7 @@ var locationData = [
       lat: 22.148311,
       lng: -159.300331,
       spotID: 'none',
-      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="/img/flickr_anahola-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Hanalei',
@@ -131,7 +131,7 @@ var locationData = [
       lat: 22.218315,
       lng: -159.502265,
       spotID: 3051,
-      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="/img/google_hanalei-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: "Hale'iwa",
@@ -153,7 +153,7 @@ var locationData = [
       lat: 21.596416,
       lng: -158.109121,
       spotID: 660,
-      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="/img/flickr_haleiwa-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Waimea Bay',
@@ -175,7 +175,7 @@ var locationData = [
       lat: 21.642987,
       lng: -158.066743,
       spotID: 549,
-      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="/img/wiki_waimea_bay-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Rocky Point',
@@ -197,7 +197,7 @@ var locationData = [
       lat: 21.670862,
       lng: -158.049157,
       spotID: 658,
-      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="/img/flickr_rocky_point-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Turtle Bay',
@@ -219,7 +219,7 @@ var locationData = [
       lat: 21.708047,
       lng: -158.002275,
       spotID: 'none',
-      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="/img/flickr_turtle_bay-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Halawa Bay',
@@ -241,7 +241,7 @@ var locationData = [
       lat: 21.159132,
       lng: -156.735906,
       spotID: 'none',
-      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="/img/flickr_halawa_bay-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Honolua Bay',
@@ -263,7 +263,7 @@ var locationData = [
       lat: 21.024350,
       lng: -156.641890,
       spotID: 697,
-      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="/img/flickr_honolua_bay-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Jaws/Peahi',
@@ -285,7 +285,7 @@ var locationData = [
       lat: 20.946401,
       lng: -156.297389,
       spotID: 617,
-      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="/img/flickr_jaws-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'The Cove',
@@ -307,7 +307,7 @@ var locationData = [
       lat: 20.728298,
       lng: -156.452353,
       spotID: 'none',
-      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="/img/flickr_the_cove-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: "Ma'alaea",
@@ -329,7 +329,7 @@ var locationData = [
       lat: 20.791860,
       lng: -156.508960,
       spotID: 618,
-      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="/img/flickr_maalaea-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Lahaina',
@@ -351,7 +351,7 @@ var locationData = [
       lat: 20.869326,
       lng: -156.679025,
       spotID: 4287,
-      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="/img/flickr_lahaina-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Lymans/Banyans',
@@ -373,7 +373,7 @@ var locationData = [
       lat: 19.606206,
       lng: -155.978016,
       spotID: 2784,
-      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="/img/flickr_lymans-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Pine Trees',
@@ -395,7 +395,7 @@ var locationData = [
       lat: 19.695131,
       lng: -156.045926,
       spotID: 3958,
-      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="/img/flickr_pine_trees-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Kiholo Bay',
@@ -417,7 +417,7 @@ var locationData = [
       lat: 19.854416,
       lng: -155.931340,
       spotID: 'none',
-      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="/img/flickr_kiholo_bay-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: "Honoli'i",
@@ -439,7 +439,7 @@ var locationData = [
       lat: 19.756298,
       lng: -155.089960,
       spotID: 3815,
-      picture: '<img src="http://lorempixel.com/500/250/nature/5" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="/img/flickr_honolii-w640.jpg" class="location-image  img-responsive img-rounded">'
     }
 ];
 

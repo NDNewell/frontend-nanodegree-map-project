@@ -5,7 +5,7 @@ module.exports = function (grunt, config) {
                 files: [{
                     expand: true,
                     cwd: config.imgSrcDir,
-                    src: ['*.{.gif,jpg,png,svg}'],
+                    src: ['*.{gif,jpg,png,svg}'],
                     dest: config.imgResDir
                 }],
             }

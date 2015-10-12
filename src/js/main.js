@@ -498,6 +498,25 @@ function AppViewModel () {
      View is altered*/
     self.Query = ko.observable("");
 
+    /* Clear any existing text in the search field, clear any existing
+    searches, close the surf guide if open, show searchable locations, and
+    close any open info windows */
+    $('.search-form').on("click", function () {
+        // Clear search field
+        $(this).val("");
+        // Clear any searches
+        self.Query("");
+        // Remove the surf guide and conditions
+        $('.surf-conditions-row').remove();
+        $('.surf-guide-row').remove();
+        // Show the locations
+        $('.location-grid').show();
+        // Close open info windows
+        infoWindow.close();
+        // Run a search to reset the map by running an empty search
+        self.searchLocations();
+    });
+
     /* Create an array that holds keywords that pop up in a small menu
     within the search bar dynamically during searches */
     self.searchKeywords = [];
@@ -541,13 +560,6 @@ function AppViewModel () {
     search terms (value of self.Query). If there is a match, the matching
     object is re-added to the locationGrid (observ. array bound to the View). */
     self.searchLocations = function () {
-
-        /* In case a surf guide is open, remove it and show searchable
-        locations and close infoWindows */
-        $('.surf-conditions-row').remove();
-        $('.surf-guide-row').remove();
-        $('.location-grid').show();
-        infoWindow.close();
 
         /* Convert search input to lowercase, remove spaces, remove
         apostrophes, and remove commas in order to compare like
@@ -784,17 +796,11 @@ function AppViewModel () {
                 // Hide the surf conditions button
                 $('.conditions-button').toggle();
 
-                // Hide the close surf guide button
-                //$('.guide-close-button').toggle();
-
             /* If surf conditions arent' already cached request new data */
             } else {
 
                     // Hide the surf conditions button
                     $('.conditions-button').toggle();
-
-                    // Hide the surf guide close button
-                    //$('.guide-close-button').toggle();
 
                     // Pass info to API function and initiate request
                     getMagicSeaweed(obj.spotID, obj.breakName);
@@ -1036,9 +1042,6 @@ function getMagicSeaweed (spotID, breakName) {
 
                 // Make visible the show surf conditions button
                 $('.conditions-button').toggle();
-
-                // Make visible the close surf guide button
-                //$('.guide-close-button').toggle();
 
             });
 

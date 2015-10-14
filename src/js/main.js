@@ -832,6 +832,39 @@ function AppViewModel () {
     };
 };
 
+
+$(document).ready(function() {
+
+    $('.location-frame').each(function () {
+
+        console.log(this);
+
+        var locationFrame = $(this);
+
+        var breakName = $(this).find('.break-name');
+
+        var location = $(this).find('.location-name');
+
+        var img = $(this).find('img.location-image');
+
+        breakName.add(img).add(location).hover(
+            function () {
+
+                  locationFrame.css('-webkit-filter', 'blur(3px)');
+                  location.toggle()
+                  breakName.toggle();
+            },
+            function () {
+                  locationFrame.css('-webkit-filter', 'blur(0px)');
+                  location.toggle();
+                  breakName.toggle();
+            }
+        );
+
+    });
+});
+
+
 function getMagicSeaweed (spotID, breakName) {
 
     /* Check for the location's spot ID. If there is no spot ID,

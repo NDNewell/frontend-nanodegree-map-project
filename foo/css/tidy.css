@@ -64,6 +64,7 @@ body {
 .break-name {
   font-size: 2em;
   color: white;
+  text-shadow: 1px 1px 10px black;
   position: absolute;
   top: 15%;
   left: 50%;
@@ -109,7 +110,7 @@ body {
   }
 
   .location-frame {
-    height: 82px;
+    height: 194px;
     text-align: center;
     padding: 0px 0px 0px 0px;
     border-top: solid black;

@@ -519,7 +519,7 @@ function AppViewModel () {
 
                 var bestMonthsInfo = '<img src="/img/marquee.png" class="rollover-info best-months">';
 
-                var costInfo = '<p class="rollover-info cost">' + '$' + 100 + '/' + 'day' + '</p>';
+
 
                 var distanceInfo = '<p class="rollover-info distance">' + 100 + 'M' + '</p>';
 
@@ -527,117 +527,145 @@ function AppViewModel () {
 
                 var waveSizeInfo = '<p class="rollover-info wave-size">' + 5 + '-' + 16 + '+' + 'ft' + '</p>';
 
-                locationFrame.hover(
-                    function () {
-                        img.css('-webkit-filter', 'blur(3px)');
-                        location.toggle()
-                        breakName.toggle();
+                locationFrame.on('mouseenter',
 
-                        locationFrame.append(bigWaveInfo);
-                        locationFrame.append(wellKnownInfo);
-                        locationFrame.append(skillLevelInfo);
-                        locationFrame.append(breakTypeInfo);
-                        locationFrame.append(waveDirectionInfo);
-                        locationFrame.append(bestMonthsInfo);
-                        locationFrame.append(costInfo);
-                        locationFrame.append(distanceInfo);
-                        locationFrame.append(waterTempInfo);
-                        locationFrame.append(waveSizeInfo);
+                    function (e) {
 
-                        var bigWave = $('.big-wave');
-                        var wellKnown = $('.well-known');
-                        var skillLevel = $('.skill-level');
-                        var breakType = $('.break-type');
-                        var waveDirection = $('.wave-direction');
-                        var bestMonths = $('.best-months');
-                        var cost = $('.cost');
-                        var distance = $('.distance');
-                        var waterTemp = $('.water-temp');
-                        var waveSize = $('.wave-size');
+                        var targetData = e.currentTarget.innerText;
+                        var hoverItem = targetData.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
 
-                        bigWave.css({
-                          "position": "absolute",
-                          "top": "20%",
-                          "left": "25%",
-                          "height" : "60px"
+                        // Iterate through the location array
+                        self.LocationArray.forEach(function(obj) {
+
+                            var breakName = obj.breakName.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
+
+                            /* Filter locations that match the hovered item.
+                            When a match is filter it out */
+                            if (hoverItem.indexOf(breakName) >= 0) {
+
+                                importInfo(obj);
+                            }
+
                         });
 
-                        wellKnown.css({
-                          "position": "absolute",
-                          "top" : "20%",
-                          "left" : "0",
-                          "right" : "0",
-                          "margin" : "0 auto",
-                          "height" : "60px"
-                        });
+                        function importInfo(obj) {
 
-                        skillLevel.css({
-                          "position": "absolute",
-                          "top" : "20%",
-                          "right" : "25%",
-                          "height" : "60px"
-                        });
+                            console.log(obj.breakName);
 
-                        breakType.css({
-                          "position": "absolute",
-                          "bottom": "20%",
-                          "left": "25%",
-                          "height" : "60px"
-                        });
+                            img.css('-webkit-filter', 'blur(3px)');
+                            location.toggle()
+                            breakName.toggle();
 
-                        waveDirection.css({
-                          "position": "absolute",
-                          "bottom" : "20%",
-                          "left" : "0",
-                          "right" : "0",
-                          "margin" : "0 auto",
-                          "height" : "60px"
-                        });
+                            var costInfo = '<p class="rollover-info cost">' + '$' + obj.cost.budget + '/' + 'day' + '</p>';
 
-                        bestMonths.css({
-                          "position": "absolute",
-                          "bottom" : "20%",
-                          "right" : "25%",
-                          "height" : "60px"
-                        });
+                            locationFrame.append(bigWaveInfo);
+                            locationFrame.append(wellKnownInfo);
+                            locationFrame.append(skillLevelInfo);
+                            locationFrame.append(breakTypeInfo);
+                            locationFrame.append(waveDirectionInfo);
+                            locationFrame.append(bestMonthsInfo);
+                            locationFrame.append(costInfo);
+                            locationFrame.append(distanceInfo);
+                            locationFrame.append(waterTempInfo);
+                            locationFrame.append(waveSizeInfo);
 
-                        cost.css({
-                          "font-size" : "1.25em",
-                          "color" : "white",
-                          "text-shadow" : "1px 1px 10px black",
-                          "position" : "absolute",
-                          "top" : "10px",
-                          "left" : "15px"
-                        });
+                            var bigWave = $('.big-wave');
+                            var wellKnown = $('.well-known');
+                            var skillLevel = $('.skill-level');
+                            var breakType = $('.break-type');
+                            var waveDirection = $('.wave-direction');
+                            var bestMonths = $('.best-months');
+                            var cost = $('.cost');
+                            var distance = $('.distance');
+                            var waterTemp = $('.water-temp');
+                            var waveSize = $('.wave-size');
 
-                        distance.css({
-                          "font-size" : "1.25em",
-                          "color" : "white",
-                          "text-shadow" : "1px 1px 10px black",
-                          "position" : "absolute",
-                          "top" : "10px",
-                          "right" : "15px"
-                        });
+                            bigWave.css({
+                              "position": "absolute",
+                              "top": "20%",
+                              "left": "25%",
+                              "height" : "60px"
+                            });
 
-                        waterTemp.css({
-                          "font-size" : "1.25em",
-                          "color" : "white",
-                          "text-shadow" : "1px 1px 10px black",
-                          "position" : "absolute",
-                          "bottom" : "0",
-                          "right" : "15px"
-                        });
+                            wellKnown.css({
+                              "position": "absolute",
+                              "top" : "20%",
+                              "left" : "0",
+                              "right" : "0",
+                              "margin" : "0 auto",
+                              "height" : "60px"
+                            });
 
-                        waveSize.css({
-                          "font-size" : "1.25em",
-                          "color" : "white",
-                          "text-shadow" : "1px 1px 10px black",
-                          "position" : "absolute",
-                          "bottom" : "0",
-                          "left" : "17px"
-                        });
-                    },
+                            skillLevel.css({
+                              "position": "absolute",
+                              "top" : "20%",
+                              "right" : "25%",
+                              "height" : "60px"
+                            });
 
+                            breakType.css({
+                              "position": "absolute",
+                              "bottom": "20%",
+                              "left": "25%",
+                              "height" : "60px"
+                            });
+
+                            waveDirection.css({
+                              "position": "absolute",
+                              "bottom" : "20%",
+                              "left" : "0",
+                              "right" : "0",
+                              "margin" : "0 auto",
+                              "height" : "60px"
+                            });
+
+                            bestMonths.css({
+                              "position": "absolute",
+                              "bottom" : "20%",
+                              "right" : "25%",
+                              "height" : "60px"
+                            });
+
+                            cost.css({
+                              "font-size" : "1.25em",
+                              "color" : "white",
+                              "text-shadow" : "1px 1px 10px black",
+                              "position" : "absolute",
+                              "top" : "10px",
+                              "left" : "15px"
+                            });
+
+                            distance.css({
+                              "font-size" : "1.25em",
+                              "color" : "white",
+                              "text-shadow" : "1px 1px 10px black",
+                              "position" : "absolute",
+                              "top" : "10px",
+                              "right" : "15px"
+                            });
+
+                            waterTemp.css({
+                              "font-size" : "1.25em",
+                              "color" : "white",
+                              "text-shadow" : "1px 1px 10px black",
+                              "position" : "absolute",
+                              "bottom" : "0",
+                              "right" : "15px"
+                            });
+
+                            waveSize.css({
+                              "font-size" : "1.25em",
+                              "color" : "white",
+                              "text-shadow" : "1px 1px 10px black",
+                              "position" : "absolute",
+                              "bottom" : "0",
+                              "left" : "17px"
+                            });
+                        };
+                    }
+                );
+
+                locationFrame.on('mouseleave',
                     function () {
                         img.css('-webkit-filter', 'blur(0px)');
                         location.toggle();

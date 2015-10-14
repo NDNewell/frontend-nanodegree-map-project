@@ -507,25 +507,25 @@ function AppViewModel () {
                 var location = $(this).find('.location-name');
                 var img = $(this).find('img.location-image');
 
-                var bigWaveBallicon = '<img src="/img/marquee.png" class="rollover-ballicon big-wave">';
+                var bigWaveInfo = '<img src="/img/marquee.png" class="rollover-info big-wave">';
 
-                var wellKnownBallicon = '<img src="/img/marquee.png" class="rollover-ballicon well-known">';
+                var wellKnownInfo = '<img src="/img/marquee.png" class="rollover-info well-known">';
 
-                var skillLevelBallicon = '<img src="/img/marquee.png" class="rollover-ballicon skill-level">';
+                var skillLevelInfo = '<img src="/img/marquee.png" class="rollover-info skill-level">';
 
-                var breakTypeBallicon = '<img src="/img/marquee.png" class="rollover-ballicon break-type">';
+                var breakTypeInfo = '<img src="/img/marquee.png" class="rollover-info break-type">';
 
-                var waveDirectionBallicon = '<img src="/img/marquee.png" class="rollover-ballicon wave-direction">';
+                var waveDirectionInfo = '<img src="/img/marquee.png" class="rollover-info wave-direction">';
 
-                var bestMonthsBallicon = '<img src="/img/marquee.png" class="rollover-ballicon best-months">';
+                var bestMonthsInfo = '<img src="/img/marquee.png" class="rollover-info best-months">';
 
-                var costBallicon = '<p class="rollover-ballicon cost">' + '$' + 100 + '/' + 'day' + '</p>';
+                var costInfo = '<p class="rollover-info cost">' + '$' + 100 + '/' + 'day' + '</p>';
 
-                var distanceBallicon = '<p class="rollover-ballicon distance">' + 100 + 'M' + '</p>';
+                var distanceInfo = '<p class="rollover-info distance">' + 100 + 'M' + '</p>';
 
-                var waterTempBallicon = '<p class="rollover-ballicon water-temp">' + 78 + '℉' + '</p>';
+                var waterTempInfo = '<p class="rollover-info water-temp">' + 78 + '℉' + '</p>';
 
-                var waveSizeBallicon = '<p class="rollover-ballicon wave-size">' + 5 + '-' + 16 + '+' + 'ft' + '</p>';
+                var waveSizeInfo = '<p class="rollover-info wave-size">' + 5 + '-' + 16 + '+' + 'ft' + '</p>';
 
                 locationFrame.hover(
                     function () {
@@ -533,16 +533,16 @@ function AppViewModel () {
                         location.toggle()
                         breakName.toggle();
 
-                        locationFrame.append(bigWaveBallicon);
-                        locationFrame.append(wellKnownBallicon);
-                        locationFrame.append(skillLevelBallicon);
-                        locationFrame.append(breakTypeBallicon);
-                        locationFrame.append(waveDirectionBallicon);
-                        locationFrame.append(bestMonthsBallicon);
-                        locationFrame.append(costBallicon);
-                        locationFrame.append(distanceBallicon);
-                        locationFrame.append(waterTempBallicon);
-                        locationFrame.append(waveSizeBallicon);
+                        locationFrame.append(bigWaveInfo);
+                        locationFrame.append(wellKnownInfo);
+                        locationFrame.append(skillLevelInfo);
+                        locationFrame.append(breakTypeInfo);
+                        locationFrame.append(waveDirectionInfo);
+                        locationFrame.append(bestMonthsInfo);
+                        locationFrame.append(costInfo);
+                        locationFrame.append(distanceInfo);
+                        locationFrame.append(waterTempInfo);
+                        locationFrame.append(waveSizeInfo);
 
                         var bigWave = $('.big-wave');
                         var wellKnown = $('.well-known');
@@ -643,7 +643,7 @@ function AppViewModel () {
                         location.toggle();
                         breakName.toggle();
 
-                        $('.rollover-ballicon').remove();
+                        $('.rollover-info').remove();
                     }
                 );
             });

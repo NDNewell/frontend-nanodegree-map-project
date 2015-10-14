@@ -493,6 +493,39 @@ function AppViewModel () {
         self.locationGrid.push(obj);
     });
 
+    /* When the cursor hovers over a location, remove the text and add
+    a gaussian blur. Wait until the locations have been loaded */
+    self.addRolloverEffect = function () {
+
+        // Wait until the locations have been loaded
+        $(document).ready(function() {
+
+            // For each location set variables and add hover effects
+            $('.location-frame').each(function () {
+                var locationFrame = $(this);
+                var breakName = $(this).find('.break-name');
+                var location = $(this).find('.location-name');
+                var img = $(this).find('img.location-image');
+
+                breakName.add(img).add(location).hover(
+                    function () {
+                        locationFrame.css('-webkit-filter', 'blur(3px)');
+                        location.toggle()
+                        breakName.toggle();
+                    },
+                    function () {
+                        locationFrame.css('-webkit-filter', 'blur(0px)');
+                        location.toggle();
+                        breakName.toggle();
+                    }
+                );
+            });
+        });
+    };
+
+    // Add hover effects to each location
+    self.addRolloverEffect();
+
     /* self.Query is bound to the input on the View. Because it is an
      observable variable, it's value will be updated whenver the input on the
      View is altered*/
@@ -607,6 +640,10 @@ function AppViewModel () {
 
         // Set the map bounds & map position for every search
         setMapBounds();
+
+        /* After a search, there are new objects in the locationGrid, so the
+        rollover effects that were added before need to be re-added */
+        addRolloverEffect();
 
     }
 
@@ -831,39 +868,6 @@ function AppViewModel () {
         });
     };
 };
-
-
-$(document).ready(function() {
-
-    $('.location-frame').each(function () {
-
-        console.log(this);
-
-        var locationFrame = $(this);
-
-        var breakName = $(this).find('.break-name');
-
-        var location = $(this).find('.location-name');
-
-        var img = $(this).find('img.location-image');
-
-        breakName.add(img).add(location).hover(
-            function () {
-
-                  locationFrame.css('-webkit-filter', 'blur(3px)');
-                  location.toggle()
-                  breakName.toggle();
-            },
-            function () {
-                  locationFrame.css('-webkit-filter', 'blur(0px)');
-                  location.toggle();
-                  breakName.toggle();
-            }
-        );
-
-    });
-});
-
 
 function getMagicSeaweed (spotID, breakName) {
 

@@ -507,16 +507,143 @@ function AppViewModel () {
                 var location = $(this).find('.location-name');
                 var img = $(this).find('img.location-image');
 
-                breakName.add(img).add(location).hover(
+                var bigWaveBallicon = '<img src="/img/marquee.png" class="rollover-ballicon big-wave">';
+
+                var wellKnownBallicon = '<img src="/img/marquee.png" class="rollover-ballicon well-known">';
+
+                var skillLevelBallicon = '<img src="/img/marquee.png" class="rollover-ballicon skill-level">';
+
+                var breakTypeBallicon = '<img src="/img/marquee.png" class="rollover-ballicon break-type">';
+
+                var waveDirectionBallicon = '<img src="/img/marquee.png" class="rollover-ballicon wave-direction">';
+
+                var bestMonthsBallicon = '<img src="/img/marquee.png" class="rollover-ballicon best-months">';
+
+                var costBallicon = '<p class="rollover-ballicon cost">' + '$' + 100 + '/' + 'day' + '</p>';
+
+                var distanceBallicon = '<p class="rollover-ballicon distance">' + 100 + 'M' + '</p>';
+
+                var waterTempBallicon = '<p class="rollover-ballicon water-temp">' + 78 + '℉' + '</p>';
+
+                var waveSizeBallicon = '<p class="rollover-ballicon wave-size">' + 5 + '-' + 16 + '+' + 'ft' + '</p>';
+
+                locationFrame.hover(
                     function () {
-                        locationFrame.css('-webkit-filter', 'blur(3px)');
+                        img.css('-webkit-filter', 'blur(3px)');
                         location.toggle()
                         breakName.toggle();
+
+                        locationFrame.append(bigWaveBallicon);
+                        locationFrame.append(wellKnownBallicon);
+                        locationFrame.append(skillLevelBallicon);
+                        locationFrame.append(breakTypeBallicon);
+                        locationFrame.append(waveDirectionBallicon);
+                        locationFrame.append(bestMonthsBallicon);
+                        locationFrame.append(costBallicon);
+                        locationFrame.append(distanceBallicon);
+                        locationFrame.append(waterTempBallicon);
+                        locationFrame.append(waveSizeBallicon);
+
+                        var bigWave = $('.big-wave');
+                        var wellKnown = $('.well-known');
+                        var skillLevel = $('.skill-level');
+                        var breakType = $('.break-type');
+                        var waveDirection = $('.wave-direction');
+                        var bestMonths = $('.best-months');
+                        var cost = $('.cost');
+                        var distance = $('.distance');
+                        var waterTemp = $('.water-temp');
+                        var waveSize = $('.wave-size');
+
+                        bigWave.css({
+                          "position": "absolute",
+                          "top": "20%",
+                          "left": "25%",
+                          "height" : "60px"
+                        });
+
+                        wellKnown.css({
+                          "position": "absolute",
+                          "top" : "20%",
+                          "left" : "0",
+                          "right" : "0",
+                          "margin" : "0 auto",
+                          "height" : "60px"
+                        });
+
+                        skillLevel.css({
+                          "position": "absolute",
+                          "top" : "20%",
+                          "right" : "25%",
+                          "height" : "60px"
+                        });
+
+                        breakType.css({
+                          "position": "absolute",
+                          "bottom": "20%",
+                          "left": "25%",
+                          "height" : "60px"
+                        });
+
+                        waveDirection.css({
+                          "position": "absolute",
+                          "bottom" : "20%",
+                          "left" : "0",
+                          "right" : "0",
+                          "margin" : "0 auto",
+                          "height" : "60px"
+                        });
+
+                        bestMonths.css({
+                          "position": "absolute",
+                          "bottom" : "20%",
+                          "right" : "25%",
+                          "height" : "60px"
+                        });
+
+                        cost.css({
+                          "font-size" : "1.25em",
+                          "color" : "white",
+                          "text-shadow" : "1px 1px 10px black",
+                          "position" : "absolute",
+                          "top" : "10px",
+                          "left" : "15px"
+                        });
+
+                        distance.css({
+                          "font-size" : "1.25em",
+                          "color" : "white",
+                          "text-shadow" : "1px 1px 10px black",
+                          "position" : "absolute",
+                          "top" : "10px",
+                          "right" : "15px"
+                        });
+
+                        waterTemp.css({
+                          "font-size" : "1.25em",
+                          "color" : "white",
+                          "text-shadow" : "1px 1px 10px black",
+                          "position" : "absolute",
+                          "bottom" : "0",
+                          "right" : "15px"
+                        });
+
+                        waveSize.css({
+                          "font-size" : "1.25em",
+                          "color" : "white",
+                          "text-shadow" : "1px 1px 10px black",
+                          "position" : "absolute",
+                          "bottom" : "0",
+                          "left" : "17px"
+                        });
                     },
+
                     function () {
-                        locationFrame.css('-webkit-filter', 'blur(0px)');
+                        img.css('-webkit-filter', 'blur(0px)');
                         location.toggle();
                         breakName.toggle();
+
+                        $('.rollover-ballicon').remove();
                     }
                 );
             });

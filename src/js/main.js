@@ -5,7 +5,7 @@ var locationData = [
       breakName: 'Sunset Beach',
       location: 'Oahu, Hawaii',
       bigWave: true,
-      wellKnown: true,
+      wellKnown: false,
       cost: {budget: 100, highEnd: 250},
       skillLevel: 'advanced',
       waveDirection: 'left',
@@ -26,19 +26,19 @@ var locationData = [
     {
       breakName: 'Pipeline/Backdoor',
       location: 'Oahu, Hawaii',
-      bigWave: true,
+      bigWave: false,
       wellKnown: true,
       cost: {budget: 100, highEnd: 250},
       skillLevel: 'advanced',
       waveDirection: 'left',
       breakDetails: 'reef',
-      avgSize: {min: 5, max: 16, aboveMax: true},
+      avgSize: {min: 5, max: 10, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
       optimalTide: [' High'],
-      optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
-      climate: [' tropical', ' humid'],
-      avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
+      optimalTime: [' Mar', ' Jan', ' Feb', ' Apr', ' May'],
+      climate: [' cold', ' humid'],
+      avgWaterTemp: {spring: 77, summer: 80, autumn: 75, winter: 77},
       hazards: [' strong currents', ' crowds'],
       lat: 21.665244,
       lng: -158.053408,
@@ -49,19 +49,19 @@ var locationData = [
       breakName: 'Cannons',
       location: 'Kauai, Hawaii',
       bigWave: true,
-      wellKnown: true,
+      wellKnown: false,
       cost: {budget: 100, highEnd: 250},
       skillLevel: 'advanced',
       waveDirection: 'left',
       breakDetails: 'reef',
-      avgSize: {min: 5, max: 16, aboveMax: true},
+      avgSize: {min: 5, max: 8, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
       optimalTide: [' High'],
-      optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
+      optimalTime: [' Sep', ' Oct', ' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
-      avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
-      hazards: [' strong currents', ' crowds'],
+      avgWaterTemp: {spring: 77, summer: 80, autumn: 66, winter: 77},
+      hazards: [' sharks', ' crowds'],
       lat: 22.224744,
       lng: -159.566712,
       spotID: 'none',
@@ -70,19 +70,19 @@ var locationData = [
     {
       breakName: 'Tunnels',
       location: 'Kauai, Hawaii',
-      bigWave: true,
-      wellKnown: true,
+      bigWave: false,
+      wellKnown: false,
       cost: {budget: 100, highEnd: 250},
       skillLevel: 'advanced',
-      waveDirection: 'left',
+      waveDirection: 'right',
       breakDetails: 'reef',
-      avgSize: {min: 5, max: 16, aboveMax: true},
+      avgSize: {min: 3, max: 7, aboveMax: false},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
       optimalTide: [' High'],
-      optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
+      optimalTime: [' Dec', ' Jan', ' Feb', ' Mar', ' Apr', ' Jun', ' Jul'],
       climate: [' tropical', ' humid'],
-      avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
+      avgWaterTemp: {spring: 77, summer: 80, autumn: 74, winter: 77},
       hazards: [' strong currents', ' crowds'],
       lat: 22.224744,
       lng: -159.566712,
@@ -92,19 +92,19 @@ var locationData = [
     {
       breakName: 'Anahola',
       location: 'Kauai, Hawaii',
-      bigWave: true,
+      bigWave: false,
       wellKnown: true,
       cost: {budget: 100, highEnd: 250},
       skillLevel: 'advanced',
       waveDirection: 'left',
-      breakDetails: 'reef',
-      avgSize: {min: 5, max: 16, aboveMax: true},
+      breakDetails: 'point',
+      avgSize: {min: 7, max: 9, aboveMax: false},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
       optimalTide: [' High'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
-      avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
+      avgWaterTemp: {spring: 77, summer: 80, autumn: 79, winter: 77},
       hazards: [' strong currents', ' crowds'],
       lat: 22.148311,
       lng: -159.300331,
@@ -115,19 +115,19 @@ var locationData = [
       breakName: 'Hanalei',
       location: 'Kauai, Hawaii',
       bigWave: true,
-      wellKnown: true,
+      wellKnown: false,
       cost: {budget: 100, highEnd: 250},
       skillLevel: 'advanced',
-      waveDirection: 'left',
-      breakDetails: 'reef',
+      waveDirection: 'right',
+      breakDetails: 'river mouth',
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
       optimalTide: [' High'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
-      avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
-      hazards: [' strong currents', ' crowds'],
+      avgWaterTemp: {spring: 77, summer: 80, autumn: 73, winter: 77},
+      hazards: [' crowds', ' sharks'],
       lat: 22.218315,
       lng: -159.502265,
       spotID: 3051,
@@ -136,7 +136,7 @@ var locationData = [
     {
       breakName: "Hale'iwa",
       location: 'Oahu, Hawaii',
-      bigWave: true,
+      bigWave: false,
       wellKnown: true,
       cost: {budget: 100, highEnd: 250},
       skillLevel: 'advanced',
@@ -147,8 +147,8 @@ var locationData = [
       optimalWind: [' E', ' SSE'],
       optimalTide: [' High'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
-      climate: [' tropical', ' humid'],
-      avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
+      climate: [' dry', ' humid'],
+      avgWaterTemp: {spring: 77, summer: 80, autumn: 71, winter: 77},
       hazards: [' strong currents', ' crowds'],
       lat: 21.596416,
       lng: -158.109121,
@@ -159,7 +159,7 @@ var locationData = [
       breakName: 'Waimea Bay',
       location: 'Oahu, Hawaii',
       bigWave: true,
-      wellKnown: true,
+      wellKnown: false,
       cost: {budget: 100, highEnd: 250},
       skillLevel: 'advanced',
       waveDirection: 'left',
@@ -170,8 +170,8 @@ var locationData = [
       optimalTide: [' High'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
-      avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
-      hazards: [' strong currents', ' crowds'],
+      avgWaterTemp: {spring: 77, summer: 80, autumn: 76, winter: 77},
+      hazards: [' sharks', ' crowds'],
       lat: 21.642987,
       lng: -158.066743,
       spotID: 549,
@@ -180,19 +180,19 @@ var locationData = [
     {
       breakName: 'Rocky Point',
       location: 'Oahu, Hawaii',
-      bigWave: true,
-      wellKnown: true,
+      bigWave: false,
+      wellKnown: false,
       cost: {budget: 100, highEnd: 250},
       skillLevel: 'advanced',
-      waveDirection: 'left',
-      breakDetails: 'reef',
+      waveDirection: 'right',
+      breakDetails: 'point',
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
       optimalTide: [' High'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
-      climate: [' tropical', ' humid'],
-      avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
+      climate: [' dry', ' humid'],
+      avgWaterTemp: {spring: 77, summer: 80, autumn: 98, winter: 77},
       hazards: [' strong currents', ' crowds'],
       lat: 21.670862,
       lng: -158.049157,
@@ -205,16 +205,16 @@ var locationData = [
       bigWave: true,
       wellKnown: true,
       cost: {budget: 100, highEnd: 250},
-      skillLevel: 'advanced',
+      skillLevel: 'intermediate',
       waveDirection: 'left',
-      breakDetails: 'reef',
+      breakDetails: 'river mouth',
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
       optimalTide: [' High'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
-      avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
+      avgWaterTemp: {spring: 77, summer: 80, autumn: 86, winter: 77},
       hazards: [' strong currents', ' crowds'],
       lat: 21.708047,
       lng: -158.002275,
@@ -224,20 +224,20 @@ var locationData = [
     {
       breakName: 'Halawa Bay',
       location: 'Molokai, Hawaii',
-      bigWave: true,
-      wellKnown: true,
+      bigWave: false,
+      wellKnown: false,
       cost: {budget: 100, highEnd: 250},
-      skillLevel: 'advanced',
-      waveDirection: 'left',
+      skillLevel: 'beginner',
+      waveDirection: 'right',
       breakDetails: 'reef',
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
       optimalTide: [' High'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
-      climate: [' tropical', ' humid'],
-      avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
-      hazards: [' strong currents', ' crowds'],
+      climate: [' dry', ' humid'],
+      avgWaterTemp: {spring: 77, summer: 80, autumn: 45, winter: 77},
+      hazards: [' sharks', ' crowds'],
       lat: 21.159132,
       lng: -156.735906,
       spotID: 'none',
@@ -246,11 +246,11 @@ var locationData = [
     {
       breakName: 'Honolua Bay',
       location: 'Maui, Hawaii',
-      bigWave: true,
-      wellKnown: true,
+      bigWave: false,
+      wellKnown: false,
       cost: {budget: 100, highEnd: 250},
-      skillLevel: 'advanced',
-      waveDirection: 'left',
+      skillLevel: 'intermediate',
+      waveDirection: 'left & right',
       breakDetails: 'reef',
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: [' W', ' NW'],
@@ -258,8 +258,8 @@ var locationData = [
       optimalTide: [' High'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
-      avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
-      hazards: [' strong currents', ' crowds'],
+      avgWaterTemp: {spring: 77, summer: 80, autumn: 36, winter: 77},
+      hazards: [' crowds', ' sharks'],
       lat: 21.024350,
       lng: -156.641890,
       spotID: 697,
@@ -268,20 +268,20 @@ var locationData = [
     {
       breakName: 'Jaws/Peahi',
       location: 'Maui, Hawaii',
-      bigWave: true,
-      wellKnown: true,
+      bigWave: false,
+      wellKnown: false,
       cost: {budget: 100, highEnd: 250},
-      skillLevel: 'advanced',
-      waveDirection: 'left',
-      breakDetails: 'reef',
+      skillLevel: 'beginner',
+      waveDirection: 'right',
+      breakDetails: 'point',
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
       optimalTide: [' High'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
-      climate: [' tropical', ' humid'],
+      climate: [' dry', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
-      hazards: [' strong currents', ' crowds'],
+      hazards: [' crowds', ' strong currents'],
       lat: 20.946401,
       lng: -156.297389,
       spotID: 617,
@@ -290,18 +290,18 @@ var locationData = [
     {
       breakName: 'The Cove',
       location: 'Maui, Hawaii',
-      bigWave: true,
+      bigWave: false,
       wellKnown: true,
       cost: {budget: 100, highEnd: 250},
-      skillLevel: 'advanced',
-      waveDirection: 'left',
-      breakDetails: 'reef',
+      skillLevel: 'intermediate',
+      waveDirection: 'left & right',
+      breakDetails: 'river mouth',
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
       optimalTide: [' High'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
-      climate: [' tropical', ' humid'],
+      climate: [' cold', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
       hazards: [' strong currents', ' crowds'],
       lat: 20.728298,
@@ -313,11 +313,11 @@ var locationData = [
       breakName: "Ma'alaea",
       location: 'Maui, Hawaii',
       bigWave: true,
-      wellKnown: true,
+      wellKnown: false,
       cost: {budget: 100, highEnd: 250},
-      skillLevel: 'advanced',
-      waveDirection: 'left',
-      breakDetails: 'reef',
+      skillLevel: 'beginner',
+      waveDirection: 'right',
+      breakDetails: 'beach',
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
@@ -325,7 +325,7 @@ var locationData = [
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
-      hazards: [' strong currents', ' crowds'],
+      hazards: [' sharks', ' crowds'],
       lat: 20.791860,
       lng: -156.508960,
       spotID: 618,
@@ -334,18 +334,18 @@ var locationData = [
     {
       breakName: 'Lahaina',
       location: 'Maui, Hawaii',
-      bigWave: true,
+      bigWave: false,
       wellKnown: true,
       cost: {budget: 100, highEnd: 250},
-      skillLevel: 'advanced',
-      waveDirection: 'left',
-      breakDetails: 'reef',
+      skillLevel: 'intermediate',
+      waveDirection: 'left & right',
+      breakDetails: 'point',
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
       optimalTide: [' High'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
-      climate: [' tropical', ' humid'],
+      climate: [' cold', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
       hazards: [' strong currents', ' crowds'],
       lat: 20.869326,
@@ -357,11 +357,11 @@ var locationData = [
       breakName: 'Lymans/Banyans',
       location: 'Big Island, Hawaii',
       bigWave: true,
-      wellKnown: true,
+      wellKnown: false,
       cost: {budget: 100, highEnd: 250},
       skillLevel: 'advanced',
       waveDirection: 'left',
-      breakDetails: 'reef',
+      breakDetails: 'beach',
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
@@ -369,7 +369,7 @@ var locationData = [
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
-      hazards: [' strong currents', ' crowds'],
+      hazards: [' sharks', ' crowds'],
       lat: 19.606206,
       lng: -155.978016,
       spotID: 2784,
@@ -378,20 +378,20 @@ var locationData = [
     {
       breakName: 'Pine Trees',
       location: 'Big Island, Hawaii',
-      bigWave: true,
-      wellKnown: true,
+      bigWave: false,
+      wellKnown: false,
       cost: {budget: 100, highEnd: 250},
-      skillLevel: 'advanced',
-      waveDirection: 'left',
+      skillLevel: 'beginner',
+      waveDirection: 'left & right',
       breakDetails: 'reef',
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
       optimalTide: [' High'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
-      climate: [' tropical', ' humid'],
+      climate: [' cold', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
-      hazards: [' strong currents', ' crowds'],
+      hazards: [' crowds', ' strong currents'],
       lat: 19.695131,
       lng: -156.045926,
       spotID: 3958,
@@ -405,7 +405,7 @@ var locationData = [
       cost: {budget: 100, highEnd: 250},
       skillLevel: 'advanced',
       waveDirection: 'left',
-      breakDetails: 'reef',
+      breakDetails: 'beach',
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
@@ -423,19 +423,19 @@ var locationData = [
       breakName: "Honoli'i",
       location: 'Big Island, Hawaii',
       bigWave: true,
-      wellKnown: true,
+      wellKnown: false,
       cost: {budget: 100, highEnd: 250},
-      skillLevel: 'advanced',
-      waveDirection: 'left',
-      breakDetails: 'reef',
+      skillLevel: 'intermediate',
+      waveDirection: 'left & right',
+      breakDetails: 'point',
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
       optimalTide: [' High'],
-      optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
-      climate: [' tropical', ' humid'],
+      optimalTime: [' Jan', ' Feb', ' Mar', ' Apr', ' May', ' Jun', ' Jul', ' Aug', ' Sep', ' Oct', ' Nov', ' Dec'],
+      climate: [' cold', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
-      hazards: [' strong currents', ' crowds'],
+      hazards: [' sharks', ' crowds'],
       lat: 19.756298,
       lng: -155.089960,
       spotID: 3815,
@@ -507,40 +507,25 @@ function AppViewModel () {
                 var location = $(this).find('.location-name');
                 var img = $(this).find('img.location-image');
 
-                var bigWaveInfo = '<img src="/img/marquee.png" class="rollover-info big-wave">';
-
-                var wellKnownInfo = '<img src="/img/marquee.png" class="rollover-info well-known">';
-
-                var skillLevelInfo = '<img src="/img/marquee.png" class="rollover-info skill-level">';
-
-                var breakTypeInfo = '<img src="/img/marquee.png" class="rollover-info break-type">';
-
-                var waveDirectionInfo = '<img src="/img/marquee.png" class="rollover-info wave-direction">';
-
-                var bestMonthsInfo = '<img src="/img/marquee.png" class="rollover-info best-months">';
-
-
-
-                var distanceInfo = '<p class="rollover-info distance">' + 100 + 'M' + '</p>';
-
-                var waterTempInfo = '<p class="rollover-info water-temp">' + 78 + '℉' + '</p>';
-
-                var waveSizeInfo = '<p class="rollover-info wave-size">' + 5 + '-' + 16 + '+' + 'ft' + '</p>';
-
                 locationFrame.on('mouseenter',
 
                     function (e) {
 
+                        // Get identifying information from the clicked object
                         var targetData = e.currentTarget.innerText;
+
+                        // Format the obtained information
                         var hoverItem = targetData.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
 
                         // Iterate through the location array
                         self.LocationArray.forEach(function(obj) {
 
+                            // Format info from object
                             var breakName = obj.breakName.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
 
                             /* Filter locations that match the hovered item.
-                            When a match is filter it out */
+                            When a match is found, export it to be displayed
+                            in the location frame */
                             if (hoverItem.indexOf(breakName) >= 0) {
 
                                 importInfo(obj);
@@ -548,46 +533,297 @@ function AppViewModel () {
 
                         });
 
+                        /* When the mouse is hovering over a location frame
+                        show unique information about that location */
                         function importInfo(obj) {
-
-                            console.log(obj.breakName);
 
                             img.css('-webkit-filter', 'blur(3px)');
                             location.toggle()
                             breakName.toggle();
 
+                            /* Display icon associated with the skill level
+                            needed to surf the break */
+                            switch(obj.skillLevel) {
+                              case 'advanced':
+                                  var skillLevelInfo = '<img src="/img/marquee.png" class="rollover-info skill-level">';
+                              break;
+
+                              case 'intermediate':
+                                  var skillLevelInfo = '<img src="/img/marquee.png" class="rollover-info skill-level">';
+                              break;
+
+                              case 'beginner':
+                                  var skillLevelInfo = '<img src="/img/marquee.png" class="rollover-info skill-level">';
+                              break;
+
+                              case 'all levels':
+                                  var skillLevelInfo = '<img src="/img/marquee.png" class="rollover-info skill-level">';
+                              break;
+                            }
+
+                            /* Display the icon associated with the type of
+                            break it is (i.e. what kind of surface is beneath
+                            it */
+                            switch(obj.breakDetails) {
+                              case 'reef':
+                                  var breakTypeInfo = '<img src="/img/marquee.png" class="rollover-info break-type">';
+                              break;
+
+                              case 'point':
+                                  var breakTypeInfo = '<img src="/img/marquee.png" class="rollover-info break-type">';
+                              break;
+
+                              case 'beach':
+                                  var breakTypeInfo = '<img src="/img/marquee.png" class="rollover-info break-type">';
+                              break;
+
+                              case 'river mouth':
+                                  var breakTypeInfo = '<img src="/img/marquee.png" class="rollover-info break-type">';
+                              break;
+                            }
+
+                            /* Display the icon associated with the direction
+                            the wave breaks */
+                            switch(obj.waveDirection) {
+                              case 'left':
+                                  var waveDirectionInfo = '<img src="/img/marquee.png" class="rollover-info wave-direction">';
+                              break;
+
+                              case 'right':
+                                  var waveDirectionInfo = '<img src="/img/marquee.png" class="rollover-info wave-direction">';
+                              break;
+
+                              case 'left & right':
+                                  var waveDirectionInfo = '<img src="/img/marquee.png" class="rollover-info wave-direction">';
+                              break;
+                            }
+
+                            // Set variables for each season at zero
+                            var spring = 0;
+                            var summer = 0;
+                            var autumn = 0;
+                            var winter = 0;
+
+                            /* Tally the number of months fall into a
+                            particular season */
+                            for (i = 0; i < obj.optimalTime.length; i++) {
+                                switch (obj.optimalTime[i]) {
+                                    case ' Dec':
+                                    case ' Jan':
+                                    case ' Feb':
+                                        winter++;
+                                    break;
+
+                                    case ' Mar':
+                                    case ' Apr':
+                                    case ' May':
+                                        spring++;
+                                    break;
+
+                                    case ' Jun':
+                                    case ' Jul':
+                                    case ' Aug':
+                                        summer++;
+                                    break
+
+                                    case ' Sep':
+                                    case ' Oct':
+                                    case ' Nov':
+                                        autumn++;
+                                    break
+                                }
+                            }
+
+                            /* Filter which seasons are the best for the
+                            particular break */
+                            /* Display icon associated with best time of
+                            year */
+                            if (winter === spring && summer && autumn &&
+                                spring === summer && autumn && winter &&
+                                summer === autumn && winter && spring &&
+                                autumn === winter && spring && summer) {
+                                  var bestMonthsInfo = '<img src="/img/marquee.png" class="rollover-info best-months">';
+                            } else if(winter >= spring && winter >= summer && winter >= autumn) {
+                                  if(winter === spring) {
+                                      var bestMonthsInfo = '<img src="/img/marquee.png" class="rollover-info best-months">';
+                                  } else if (winter === summer) {
+                                      var bestMonthsInfo = '<img src="/img/marquee.png" class="rollover-info best-months">';
+                                  } else if (winter === autumn) {
+                                      var bestMonthsInfo = '<img src="/img/marquee.png" class="rollover-info best-months">';
+                                  } else {
+                                      var bestMonthsInfo = '<img src="/img/marquee.png" class="rollover-info best-months">';
+                                  };
+                            } else if (spring >= summer && spring >= autumn && spring > winter) {
+                                  if (spring === summer) {
+                                      var bestMonthsInfo = '<img src="/img/marquee.png" class="rollover-info best-months">';
+                                  } else if (spring === autumn) {
+                                      var bestMonthsInfo = '<img src="/img/marquee.png" class="rollover-info best-months">';
+                                  } else {
+                                      var bestMonthsInfo = '<img src="/img/marquee.png" class="rollover-info best-months">';
+                                  };
+                            } else if (summer >= autumn && summer > winter && summer > spring) {
+                                  if(summer === autumn) {
+                                      var bestMonthsInfo = '<img src="/img/marquee.png" class="rollover-info best-months">';
+                                  } else {
+                                      var bestMonthsInfo = '<img src="/img/marquee.png" class="rollover-info best-months">';
+                                  };
+                            } else if (autumn > winter && autumn > spring && autumn > summer) {
+                                  var bestMonthsInfo = '<img src="/img/marquee.png" class="rollover-info best-months">';
+                            };
+
+                            /* If there is big wave surfing at this break
+                            display big wave icon. If not, display the
+                            related climate icon */
+                            if(obj.bigWave) {
+                                var miscInfoOne = '<img src="/img/marquee.png" class="rollover-info misc-info-one">';
+                            } else if (obj.climate[0] === ' tropical') {
+                                var miscInfoOne = '<img src="/img/marquee.png" class="rollover-info misc-info-one">';
+                            } else if (obj.climate[0] === ' dry') {
+                                var miscInfoOne = '<img src="/img/marquee.png" class="rollover-info misc-info-one">';
+                            } else if (obj.climate[0] === ' cold') {
+                                var miscInfoOne = '<img src="/img/marquee.png" class="rollover-info misc-info-one">';
+                            };
+
+                            /* If the wave is well known dispaly the well
+                            well known icon, otherwise display the correct
+                            hazard icon. FYI only the first hazard will
+                            be display. The worst hazard has been positioned
+                            first in the array purposfully */
+                            if(obj.wellKnown) {
+                                var miscInfoTwo = '<img src="/img/marquee.png" class="rollover-info misc-info-two">';
+                            } else if (obj.hazards[0] === ' strong currents') {
+                                var miscInfoTwo = '<img src="/img/marquee.png" class="rollover-info misc-info-two">';
+                            } else if (obj.hazards[0] === ' crowds') {
+                                var miscInfoTwo = '<img src="/img/marquee.png" class="rollover-info misc-info-two">';
+                            } else if (obj.hazards[0] === ' sharks') {
+                                var miscInfoTwo = '<img src="/img/marquee.png" class="rollover-info misc-info-two">';
+                            };
+
+                            /* Display the budget cost for the location */
                             var costInfo = '<p class="rollover-info cost">' + '$' + obj.cost.budget + '/' + 'day' + '</p>';
 
-                            locationFrame.append(bigWaveInfo);
-                            locationFrame.append(wellKnownInfo);
+                            /* Get distance between both locations using
+                            the Haversine formula */
+                            /* Obtain current location from user */
+                            var latOrigin = currentLat;
+                            var lngOrigin = currentLng;
+
+                            /* Obtain location data for the selected break */
+                            var latDest = obj.lat;
+                            var lngDest = obj.lng;
+
+                            // Set the radius of Earth in mi
+                            var R = 3959;
+
+                            // Calculate radians diff between both locations
+                            var latR = deg2rad(latDest-latOrigin);
+                            var lngR = deg2rad(lngDest-lngOrigin);
+
+                            var a =
+                              Math.sin(latR/2) * Math.sin(latR/2) +
+                              Math.cos(deg2rad(latOrigin)) * Math.cos(deg2rad(latDest)) *
+                              Math.sin(lngR/2) * Math.sin(lngR/2)
+                              ;
+                            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+                            // Solve for d
+                            var d = R * c;
+
+                            // Round distance to nearest integer
+                            var distance = Math.round(d);
+
+                            // Converts degrees to radians
+                            function deg2rad(deg) {
+                              return deg * (Math.PI/180)
+                            }
+
+                            // Cache distance element with distance
+                            var distanceInfo = '<p class="rollover-info distance">' + distance + 'mi' + '</p>';
+
+                            // Get today's date and month
+                            var today = new Date();
+                            var month = today.getMonth();
+
+                            /* Compare today's month with the array of water
+                            temps and associated seasons. Display the temp
+                            related to the current season (depending on the
+                            current month */
+                            switch (month) {
+                              case 11 :
+                              case 0 :
+                              case 1 :
+                                  var waterTemp = obj.avgWaterTemp.winter;
+                              break;
+
+                              case 2:
+                              case 3:
+                              case 4:
+                                  var waterTemp = obj.avgWaterTemp.spring;
+                              break;
+
+                              case 5:
+                              case 6:
+                              case 7:
+                                  var waterTemp = obj.avgWaterTemp.summer;
+                              break;
+
+                              case 8:
+                              case 9:
+                              case 10:
+                                  var waterTemp = obj.avgWaterTemp.autumn;
+                              break;
+                            }
+
+                            /* Cache the water temp element */
+                            var waterTempInfo = '<p class="rollover-info water-temp">' + waterTemp + '℉' + '</p>';
+
+                            /* Check if the average maximum wave size
+                            sometimes goes above the max. If it does, save a plus sign in a variable to add to the min/max wave height */
+                            if (obj.avgSize.aboveMax) {
+                                var plus = '+';
+                            } else {
+                                var plus = '';
+                            };
+
+                            /* Cache the average wave size element */
+                            var waveSizeInfo = '<p class="rollover-info wave-size">'+ obj.avgSize.min + "-" + obj.avgSize.max + plus + "ft" +'</p>';
+
+                            /* Append all cached elements to the selected
+                            location frame */
                             locationFrame.append(skillLevelInfo);
                             locationFrame.append(breakTypeInfo);
                             locationFrame.append(waveDirectionInfo);
                             locationFrame.append(bestMonthsInfo);
+                            locationFrame.append(miscInfoOne);
+                            locationFrame.append(miscInfoTwo);
                             locationFrame.append(costInfo);
                             locationFrame.append(distanceInfo);
                             locationFrame.append(waterTempInfo);
                             locationFrame.append(waveSizeInfo);
 
-                            var bigWave = $('.big-wave');
-                            var wellKnown = $('.well-known');
+                            /* Get each element from within the location
+                            frame and cache it for later use */
                             var skillLevel = $('.skill-level');
                             var breakType = $('.break-type');
                             var waveDirection = $('.wave-direction');
                             var bestMonths = $('.best-months');
+                            var miscInfoOne = $('.misc-info-one');
+                            var miscInfoTwo = $('.misc-info-two');
                             var cost = $('.cost');
                             var distance = $('.distance');
                             var waterTemp = $('.water-temp');
                             var waveSize = $('.wave-size');
 
-                            bigWave.css({
+                            /* Position the skill level icon */
+                            skillLevel.css({
                               "position": "absolute",
                               "top": "20%",
                               "left": "25%",
                               "height" : "60px"
                             });
 
-                            wellKnown.css({
+                            /* Position the break type icon */
+                            breakType.css({
                               "position": "absolute",
                               "top" : "20%",
                               "left" : "0",
@@ -596,21 +832,25 @@ function AppViewModel () {
                               "height" : "60px"
                             });
 
-                            skillLevel.css({
+                            /* Position the wave direction icon */
+                            waveDirection.css({
                               "position": "absolute",
                               "top" : "20%",
                               "right" : "25%",
                               "height" : "60px"
                             });
 
-                            breakType.css({
+                            /* Position the best months icon */
+                            bestMonths.css({
                               "position": "absolute",
                               "bottom": "20%",
                               "left": "25%",
                               "height" : "60px"
                             });
 
-                            waveDirection.css({
+                            /* Position the misc icon. It's either
+                            the big wave or climate icon */
+                            miscInfoOne.css({
                               "position": "absolute",
                               "bottom" : "20%",
                               "left" : "0",
@@ -619,13 +859,16 @@ function AppViewModel () {
                               "height" : "60px"
                             });
 
-                            bestMonths.css({
+                            /* Position the misc icon. It's either
+                            the well known or hazard icon */
+                            miscInfoTwo.css({
                               "position": "absolute",
                               "bottom" : "20%",
                               "right" : "25%",
                               "height" : "60px"
                             });
 
+                            /* Position the cost info */
                             cost.css({
                               "font-size" : "1.25em",
                               "color" : "white",
@@ -635,6 +878,7 @@ function AppViewModel () {
                               "left" : "15px"
                             });
 
+                            /* Position the distance info */
                             distance.css({
                               "font-size" : "1.25em",
                               "color" : "white",
@@ -644,6 +888,7 @@ function AppViewModel () {
                               "right" : "15px"
                             });
 
+                            /* Position the water temp info */
                             waterTemp.css({
                               "font-size" : "1.25em",
                               "color" : "white",
@@ -653,6 +898,7 @@ function AppViewModel () {
                               "right" : "15px"
                             });
 
+                            /* Position the wave size info */
                             waveSize.css({
                               "font-size" : "1.25em",
                               "color" : "white",
@@ -665,6 +911,7 @@ function AppViewModel () {
                     }
                 );
 
+                /* Remove all imported info when the mouse stops hovering */
                 locationFrame.on('mouseleave',
                     function () {
                         img.css('-webkit-filter', 'blur(0px)');
@@ -1244,8 +1491,14 @@ function getMagicSeaweed (spotID, breakName) {
         };
 
     };
-
 }
+
+navigator.geolocation.getCurrentPosition(success);
+
+function success(position) {
+    currentLat = position.coords.latitude;
+    currentLng = position.coords.longitude;
+};
 
 // Declare global variables map and infoWindow
 var map, infoWindow;

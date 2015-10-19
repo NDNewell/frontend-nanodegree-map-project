@@ -1504,16 +1504,118 @@ function success(position) {
 var map, infoWindow;
 
 /* Create array of map markers that is globally accessible, particularly by
-the ViewModel*/
+the ViewModel */
 var markers = [];
 
 function initMap() {
 
-    // Create a new Google map centered on the Hawaiian Islands
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 20.67, lng: -157.505},
-        mapTypeId: google.maps.MapTypeId.TERRAIN
-    });
+  // Create an array of styles for the surf map
+    var surfMapStyles = [
+      {
+        featureType:"all",
+        elemntType: "geometry",
+        stylers: [
+         { visibility: "off" }
+        ]
+      },{
+        featureType:"all",
+        elemntType: "labels",
+        stylers: [
+         { visibility: "off" }
+        ]
+      },{
+        featureType:"water",
+        elemntType: "geometry",
+        stylers: [
+         { color: "#FFFFFF" },
+         { visibility: "on" }
+        ]
+      },{
+        featureType:"landscape",
+        elemntType: "geometry",
+        stylers: [
+         { visibility: "on" },
+         { color: "#99EB99" }
+        ]
+      }
+    ];
+
+    // Create an array of styles for the driving map
+    var driveMapStyles = [
+      {
+        stylers: [
+          { hue: "#99EB99" },
+          { saturation: -20 }
+        ]
+      },{
+        featureType:"water",
+        elemntType: "geometry",
+        stylers: [
+         { color: "#FFFFFF" }
+        ]
+      },{
+        featureType: "road",
+        elementType: "labels",
+        stylers: [
+          { visibility: "simplified" }
+        ]
+      },{
+        featureType: "road.local",
+        elementType: "geometry",
+        stylers: [
+          { visibility: "off" },
+        ]
+      },{
+        featureType: "road",
+        elementType: "geometry",
+        stylers: [
+          { lightness: 50 },
+          { color: "#00B8E6" }
+        ]
+      },{
+        featureType: "poi",
+        elementType: "geometry",
+        stylers: [
+          { visibility: "none" }
+        ]
+      },{
+        featureType: "poi",
+        elementType: "labels",
+        stylers: [
+          { visibility: "none" }
+        ]
+      }
+    ];
+
+    /* Create StyledMapType objects and pass the corresponding array of
+    styles and name to each one. The name will be displayed in the map
+    controls.*/
+    var surfMapStyled = new google.maps.StyledMapType(surfMapStyles,
+      {name: "Surf"});
+
+    var driveMapStyled = new google.maps.StyledMapType(driveMapStyles,
+      {name: "Drive"});
+
+    // Create the map and center on the Hawaiian Islands
+    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+    // Set the options for the map
+    var mapOptions = {
+        center: new google.maps.LatLng(20.67,-157.505),
+                mapTypeControlOptions: {
+                    mapTypeIds: ['drive_map_style', 'surf_map_style']
+                },
+        disableDefaultUI: true,
+        zoomControl: true,
+        mapTypeControl: true
+    };
+
+    // Associate the styled maps with the corresponding MapTypeId
+    map.mapTypes.set('surf_map_style', surfMapStyled);
+    map.mapTypes.set('drive_map_style', driveMapStyled);
+
+    // Set the surf map to display
+    map.setMapTypeId('surf_map_style');
 
     // Create an info window object for displaying the break name
     infoWindow = new google.maps.InfoWindow();
@@ -1559,6 +1661,9 @@ function generateMarkers () {
 
 function addMarker(breakName, breakCoordinates, breakLocation, obj) {
 
+    // Set a variable for custom map marker
+    var image = 'img/marker.png';
+
     var marker = new google.maps.Marker({
 
         // Set position using the newly created variable
@@ -1567,6 +1672,7 @@ function addMarker(breakName, breakCoordinates, breakLocation, obj) {
         // Animate markers by dropping them onto the map at page load
         animation: google.maps.Animation.DROP,
         map: map,
+        icon: image,
 
         /* Set the title for the break marker as the name of the wave/location
         of the break. This way it can be searched/filtered in the ViewModel*/

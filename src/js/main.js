@@ -1596,9 +1596,6 @@ function initMap() {
     var driveMapStyled = new google.maps.StyledMapType(driveMapStyles,
       {name: "Drive"});
 
-    // Create the map and center on the Hawaiian Islands
-    map = new google.maps.Map(document.getElementById('map'), mapOptions);
-
     // Set the options for the map
     var mapOptions = {
         center: new google.maps.LatLng(20.67,-157.505),
@@ -1609,6 +1606,9 @@ function initMap() {
         zoomControl: true,
         mapTypeControl: true
     };
+
+    // Create the map and center on the Hawaiian Islands
+    map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
     // Associate the styled maps with the corresponding MapTypeId
     map.mapTypes.set('surf_map_style', surfMapStyled);

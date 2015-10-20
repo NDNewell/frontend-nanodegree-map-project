@@ -942,8 +942,9 @@ function AppViewModel () {
         // Clear any searches
         self.Query("");
         // Remove the surf guide and conditions
-        $('.surf-conditions-row').remove();
-        $('.surf-guide-row').remove();
+        $('.surf-conditions').remove();
+        $('.surf-conditions-error').remove();
+        $('.surf-guide-container').remove();
         // Show the locations
         $('.location-grid').show();
         // Close open info windows
@@ -1094,35 +1095,35 @@ function AppViewModel () {
         /* Check if the surf guide window is open already from a previous
         click. If it isn't hide the locatin grid. If it is, the location
         grid is already hidden, so we don't want to make it visible! */
-        if (!$('.surf-guide-row').is(":visible")) {
+        if (!$('.surf-guide-container').is(":visible")) {
             // Hide the location grid
             $('.location-grid').toggle();
         }
 
         /* Remove any existing information from previous click */
-        $('.surf-guide-row').remove();
+        $('.surf-guide-container').remove();
 
         $('.surf-info-container').append('<div class="row surf-guide-container"></div>');
 
         $surfGuideContainer = $('.surf-guide-container');
 
-        $surfGuideContainer.append('<div class="col-xs-12 surf-guide-title card">' + '<p>' + obj.breakName + ',' + ' ' + obj.location + '</p>' + '</div>');
+        $surfGuideContainer.append('<div class="col-xs-12 surf-guide-title">' + '<p class="title">' + obj.breakName + ',' + ' ' + obj.location + '</p>' + '</div>');
 
         // Check if break has big waves
         if (obj.bigWave) {
-            $surfGuideContainer.append('<div class="col-xs-12 col-sm-4 col-md-3 big-wave card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive img-circle">' + '<p>' + "Big Waves" + '</p>' + '</div>');
+            $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 big-wave card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive img-circle">' + '<p>' + "Big Waves" + '</p>' + '</div>');
         };
 
         // Check if break is well known
         if (obj.bigWave) {
-            $surfGuideContainer.append('<div class="col-xs-12 col-sm-4 col-md-3 well-known card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive img-circle">' + '<p>' + "Well-Known Wave" + '</p>' + '</div>');
+            $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 well-known card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive img-circle">' + '<p>' + "Well-Known Wave" + '</p>' + '</div>');
         }
 
-        $surfGuideContainer.append('<div class="col-xs-12 col-sm-4 col-md-3 difficulty card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + obj.skillLevel + '</p>' + '</div>');
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 difficulty card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + obj.skillLevel + '</p>' + '</div>');
 
-        $surfGuideContainer.append('<div class="col-xs-12 col-sm-4 col-md-3 direction card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + obj.waveDirection + '</p>' + '</div>');
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 direction card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + obj.waveDirection + '</p>' + '</div>');
 
-        $surfGuideContainer.append('<div class="col-xs-12 col-sm-4 col-md-3 break-details card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + obj.breakDetails + '</p>' + '</div>');
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 break-details card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + obj.breakDetails + '</p>' + '</div>');
 
         /* Check if the average maximum wave size sometime goes above the max.
         If it does, save a plus sign in a variable to add to the min/max wave
@@ -1133,24 +1134,24 @@ function AppViewModel () {
             var plus = '';
         }
 
-        $surfGuideContainer.append('<div class="col-xs-12 col-sm-4 col-md-3 wave-height card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + obj.avgSize.min + ' ' + "-" + ' ' + obj.avgSize.max + plus + "ft" + '</p>' + '</div>');
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 wave-height card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + obj.avgSize.min + ' ' + "-" + ' ' + obj.avgSize.max + plus + "ft" + '</p>' + '</div>');
 
-        $surfGuideContainer.append('<div class="col-xs-12 col-sm-4 col-md-3 swell-direction card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + obj.optimalSwell + '</p>' + '</div>');
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 swell-direction card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + obj.optimalSwell + '</p>' + '</div>');
 
-        $surfGuideContainer.append('<div class="col-xs-12 col-sm-4 col-md-3 tide card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + obj.optimalTide + '</p>' + '</div>');
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 tide card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + obj.optimalTide + '</p>' + '</div>');
 
-        $surfGuideContainer.append('<div class="col-xs-12 col-sm-4 col-md-3 tide card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + obj.optimalTide + '</p>' + '</div>');
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 tide card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + obj.optimalTide + '</p>' + '</div>');
 
-        $surfGuideContainer.append('<div class="col-xs-12 col-sm-4 col-md-3 wind card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + obj.optimalWind + '</p>' + '</div>');
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 wind card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + obj.optimalWind + '</p>' + '</div>');
 
-        $surfGuideContainer.append('<div class="col-xs-12 col-sm-4 col-md-3 time card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + obj.optimalTime + '</p>' + '</div>');
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 time card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + "Best Time" + '</p>' + '</div>');
 
-        $surfGuideContainer.append('<div class="col-xs-12 col-sm-4 col-md-3 climate card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + obj.climate  + '</p>' + '</div>');
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 climate card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + obj.climate  + '</p>' + '</div>');
 
-        /* Create an array to hold the details for what kind of water attire one should wear according to the time of year */
+        /* Create an array to hold the details for what kind of water attire one should wear according to the time of year
         var gear = [];
 
-        /* Loop through the average water temps for each time of year. Designate specific water attire for each time of year */
+        /* Loop through the average water temps for each time of year. Designate specific water attire for each time of year
         for (var temp in obj.avgWaterTemp) {
 
             if(obj.avgWaterTemp[temp] > 72) {
@@ -1168,13 +1169,18 @@ function AppViewModel () {
             };
         };
 
-        /* Create an inner table that displays water temp and recommended water attire according to time of year */
-        $surfGuideContainer.append('<div class="col-xs-12 col-sm-4 col-md-3 water-temp attire card">' + '<table>' + '<thead>' + '<tr>'  + '<th colspan="4">' + "Water Temp" + '</th>' + '</tr>' + '</thead>' + '<tbody>' + '<tr>' + '<td>' + "Spring" + '</td>' + '<td>' + "Summer" + '</td>' + '<td>' + "Autumn" + '</td>' + '<td>' + "Winter" + '</td>' + '</tr>' + '<tr>' + '<td>' + obj.avgWaterTemp.spring + "℉" + '</td>' + '<td>' + obj.avgWaterTemp.summer + "℉" + '</td>' + '<td>' + obj.avgWaterTemp.autumn + "℉" + '</td>' + '<td>' + obj.avgWaterTemp.winter + "℉" + '</td>' + '</tr>' + '<tr>' + '<td>' + gear[0] + '</td>' + '<td>' + gear[1] + '</td>' + '<td>' + gear[2] + '</td>' + '<td>' + gear[3] + '</td>' + '</tr>' + '</tbody>' + '</table>' + '</div>');
+         Create an inner table that displays water temp and recommended water attire according to time of year
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 water-temp attire card">' + '<table>' + '<thead>' + '<tr>'  + '<th colspan="4">' + "Water Temp" + '</th>' + '</tr>' + '</thead>' + '<tbody>' + '<tr>' + '<td>' + "Spring" + '</td>' + '<td>' + "Summer" + '</td>' + '<td>' + "Autumn" + '</td>' + '<td>' + "Winter" + '</td>' + '</tr>' + '<tr>' + '<td>' + obj.avgWaterTemp.spring + "℉" + '</td>' + '<td>' + obj.avgWaterTemp.summer + "℉" + '</td>' + '<td>' + obj.avgWaterTemp.autumn + "℉" + '</td>' + '<td>' + obj.avgWaterTemp.winter + "℉" + '</td>' + '</tr>' + '<tr>' + '<td>' + gear[0] + '</td>' + '<td>' + gear[1] + '</td>' + '<td>' + gear[2] + '</td>' + '<td>' + gear[3] + '</td>' + '</tr>' + '</tbody>' + '</table>' + '</div>');*/
 
-        $surfGuideContainer.append('<div class="col-xs-12 col-sm-4 col-md-3 cost card">' + '<table>' + '<thead>' + '<tr>'  + '<th colspan="3">' + "Cost" + '</th>' + '</tr>' + '</thead>' + '<tbody>' + '<tr>' + '<td>' + "Cost/day:"+ '</td>' + '<td>' + '<table>' + '<tr>' + '<td>' + "Budget" + '</td>' + '<td>' + "Mid-range" + '</td>' + '<td>' + "Deluxe" + '</td>' + '</tr>' + '<tr>' + '<td>' + "$" + obj.cost.budget + '</td>' + '<td>' + "$" + obj.cost.budget + ' ' + "-" + ' ' + obj.cost.highEnd + '</td>' + '<td>' + "$" + obj.cost.highEnd + "+" + '</td>' + '</tr>' + '</table>' + '</td>' + '</tr>' + '</tbody>' + '</table>' + '</div>');
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 water-temp card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + "Water Temp"  + '</p>' + '</div>');
+
+        /*
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 cost card">' + '<table>' + '<thead>' + '<tr>'  + '<th colspan="3">' + "Cost" + '</th>' + '</tr>' + '</thead>' + '<tbody>' + '<tr>' + '<td>' + "Cost/day:"+ '</td>' + '<td>' + '<table>' + '<tr>' + '<td>' + "Budget" + '</td>' + '<td>' + "Mid-range" + '</td>' + '<td>' + "Deluxe" + '</td>' + '</tr>' + '<tr>' + '<td>' + "$" + obj.cost.budget + '</td>' + '<td>' + "$" + obj.cost.budget + ' ' + "-" + ' ' + obj.cost.highEnd + '</td>' + '<td>' + "$" + obj.cost.highEnd + "+" + '</td>' + '</tr>' + '</table>' + '</td>' + '</tr>' + '</tbody>' + '</table>' + '</div>');*/
+
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 cost card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + "Cost" + '</p>' + '</div>');
 
         for (var i = 0; i < obj.hazards.length; i++) {
-            $surfGuideContainer.append('<div class="col-xs-12 col-sm-4 col-md-3 hazard card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + obj.hazards[i]  + '</p>' + '</div>');
+            $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + obj.hazards[i]  + '</p>' + '</div>');
         };
 /*
         /* Create a table for displaying more information about the location
@@ -1285,12 +1291,11 @@ function AppViewModel () {
     /* Create buttons for opening closing surf guide / view current break
     conditions */
     self.addGuideButtons = function (obj) {
+        // Add a button for closing the surf guide
+        $surfGuideContainer.prepend('<button type="button" class="btn guide-close-button">✖</button>');
 
         // Add a button for displaying surf conditions
-        $('.surf-guide').prepend('<button type="button" class="btn btn-default conditions-button">Current Condtions</button>');
-
-        // Add a button for closing the surf guide
-        $('.surf-guide').append('<button type="button" class="btn btn-default guide-close-button">Close</button>');
+        $('.surf-guide-title').append('<button type="button" class="btn btn-default conditions-button">Current Condtions</button>');
 
         /* When the surf conditions button is clicked, display current
         conditions */
@@ -1298,12 +1303,17 @@ function AppViewModel () {
 
             /* If surf conditions for a particular location have already
             been displayed, simply make visible again */
-            if ($('.surf-conditions-row').is(":hidden")) {
+            if ($('.surf-conditions').is(":hidden")) {
 
-                $('.surf-conditions-row').toggle();
+                console.log('filter working')
+
+                $('.surf-conditions').toggle();
 
                 // Hide the surf conditions button
                 $('.conditions-button').toggle();
+
+                // Show the close conditions button
+                $('.conditions-close-button').toggle();
 
             /* If surf conditions arent' already cached request new data */
             } else {
@@ -1323,8 +1333,9 @@ function AppViewModel () {
         $('.guide-close-button').on('click', function(e) {
 
             // Remove both surf conditions and surf guide from DOM
-            $('.surf-conditions-row').remove();
-            $('.surf-guide-row').remove();
+            $('.surf-conditions').remove();
+            $('.surf-conditions-error').remove();
+            $('.surf-guide-container').remove();
 
             /* Make both the location grid and the location frames
             within it visible. The location frames need to be made
@@ -1460,53 +1471,59 @@ function getMagicSeaweed (spotID, breakName) {
         that an api request that takes time to download isn't injected
         into another surf guide if the user changed surf guides during
         the api request processing */
-        var currentSurfGuide = $('th').text();
+        var currentSurfGuide = $('.surf-guide-title').text();
         if (currentSurfGuide.indexOf(breakName) >= 0) {
 
-            // Insert a new row above the surf guide
-            $('.surf-guide-row').before('<div class="row surf-conditions-row"></div>');
-
-            // Cache the new row in a variable
-            var $surfConditionsRow = $('.surf-conditions-row');
+            $surfGuideTitleContainer = $('.surf-guide-title');
 
             // Add three columns to the new row
-            $surfConditionsRow.append('<div class="col-xs-4 surf-conditions-left"></div>');
-            $surfConditionsRow.append('<div class="col-xs-4 surf-conditions-middle"></div>');
-            $surfConditionsRow.append('<div class="col-xs-4 surf-conditions-right"></div>');
+            $surfGuideTitleContainer.after('<div class="col-xs-6 col-sm-3 surf-conditions surf-conditions-wind"></div>');
+            $surfGuideTitleContainer.after('<div class="col-xs-6 col-sm-3 surf-conditions surf-conditions-swell"></div>');
+            $surfGuideTitleContainer.after('<div class="col-xs-6 col-sm-3 surf-conditions surf-conditions-waves"></div>');
+            $surfGuideTitleContainer.after('<div class="col-xs-6 col-sm-3 surf-conditions surf-conditions-weather"></div>');
+
+            $surfConditions = $('.surf-conditions');
 
             // Cache references to each column
-            var $surfConditionsLeft = $('.surf-conditions-left');
-            var $surfConditionsMiddle = $('.surf-conditions-middle');
-            var $surfConditionsRight = $('.surf-conditions-right');
+
+            var $surfConditionsWind = $('.surf-conditions-wind');
+            var $surfConditionsSwell = $('.surf-conditions-swell');
+            var $surfConditionsWaves = $('.surf-conditions-waves');
+            var $surfConditionsWeather = $('.surf-conditions-weather');
+
 
             /* Render the temperature and weather image in the left
             side of the newly created conditions window*/
-            $surfConditionsLeft.append('<p>' + temperature + " ℉" + '</p>');
-            $surfConditionsLeft.append('<img class="img-responsive" src="' + weatherImg + '" alt="Symbol for current weather">');
+            $surfConditionsWeather.append('<p>' + temperature + " ℉" + '</p>');
+            $surfConditionsWeather.append('<img class="img-responsive" src="' + weatherImg + '" alt="Symbol for current weather">');
 
-            /* Render the swell height, period, breaking wave height,
-            and wave rating from above in the center of the conditions
-            window*/
-            $surfConditionsMiddle.append('<p>' + swellHeight + "ft" + ' ' + "primary" + '</p>');
-            $surfConditionsMiddle.append('<p>' + "@" + ' ' + swellPeriod + 's' + ' ' + swellCompassDirection + '</p>');
-            $surfConditionsMiddle.append('<p>' + waveHeight + "ft" + '</p>');
-            $surfConditionsMiddle.append('<p>' + waveRating + '</p>');
+            /* Render the swell height and period */
+            $surfConditionsSwell.append('<p>' + swellHeight + "ft" + ' ' + "primary" + '</p>');
+            $surfConditionsSwell.append('<p>' + "@" + ' ' + swellPeriod + 's' + ' ' + swellCompassDirection + '</p>');
+
+            /* Render the breaking wave height, and wave rating from above in
+            the center of the conditions window */
+            $surfConditionsWaves.append('<p>' + waveHeight + "ft" + '</p>');
+            $surfConditionsWaves.append('<p>' + waveRating + '</p>');
 
             /* Render the wind speed, direction, and wind image in the
             right side of the conditions window*/
-            $surfConditionsRight.append('<p>' + windSpeed + "mph" + '</p>');
-            $surfConditionsRight.append('<p>' + compassDirection + '</p>');
-            $surfConditionsRight.append('<img class="img-responsive" src="' + windImg + '" alt="Symbol for wind">');
+            $surfConditionsWind.append('<p>' + windSpeed + "mph" + '</p>');
+            $surfConditionsWind.append('<p>' + compassDirection + '</p>');
+            $surfConditionsWind.append('<img class="img-responsive" src="' + windImg + '" alt="Symbol for wind">');
 
             // Add button for closing the surf conditions window
-            $surfConditionsLeft.prepend('<button type="button" class="btn btn-default conditions-close-button">Close</button>');
+            $surfGuideTitleContainer.append('<button type="button" class="btn btn-default conditions-close-button">Close Conditions</button>');
 
             /* When the surf conditions button is clicked the surf
             conditions window is closed */
             $('.conditions-close-button').on('click', function(e) {
 
                 // Hide the surf conditions window
-                $surfConditionsRow.toggle();
+                $surfConditions.toggle();
+
+                // Hide the close conditions button
+                $('.conditions-close-button').toggle();
 
                 // Make visible the show surf conditions button
                 $('.conditions-button').toggle();
@@ -1527,27 +1544,26 @@ function getMagicSeaweed (spotID, breakName) {
         that an api request that takes time to download isn't injected
         into another surf guide if the user changed surf guides during
         the api request processing */
-        var currentSurfGuide = $('th').text();
+        var currentSurfGuide = $('.surf-guide-title').text();
         if (currentSurfGuide.indexOf(breakName) >= 0) {
 
             // Insert a new row above the surf guide
-            $('.surf-guide-row').before('<div class="row surf-conditions-row"></div>');
+            $('.surf-guide-title').after('<div class="col-xs-12 surf-conditions-error"></div>');
 
-            // Add a div to hold the error text
-            $('.surf-conditions-row').append('<div class="col-xs-12 surf-conditions-error"></div>');
-
-            /* Display an error message */
             $('.surf-conditions-error').append('<p class="conditions-error">' + breakName + ' ' + "conditions unavailable =(" + '</p>');
 
             // Add a button for closing the error window
-            $('.surf-conditions-error').prepend('<button type="button" class="btn btn-default conditions-close-button">Close</button>');
+            $('.surf-guide-title').append('<button type="button" class="btn btn-default conditions-close-button">Close Conditions</button>');
 
             /* When the conditions close button is clicked remove the error
             message */
             $('.conditions-close-button').on('click', function(e) {
 
                 // Remove conditions row from DOM
-                $('.surf-conditions-row').remove();
+                $('.surf-conditions-error').remove();
+
+                // Remove the close conditions button
+                $('.conditions-close-button').remove();
 
                 // Make visible the show surf conditions button
                 $('.conditions-button').toggle();
@@ -1788,10 +1804,10 @@ function addListeners(marker, breakName, obj) {
 
             /* Show surf guide (only if surf guide is already open) when the
             marker is clicked */
-            if ($('.surf-guide-row').is(":visible")) {
+            if ($('.surf-guide-container').is(":visible")) {
                 /* Remove any visible surf conditions so they aren't still
                 displayed when the new surf guide renders */
-                $('.surf-conditions-row').remove();
+                $('.surf-conditions').remove();
                 renderSurfGuide(obj);
             } else {
                 /* If the surf guide isn't open, hide all location frames
@@ -1899,7 +1915,7 @@ function addMapClickEvent () {
 
         /* If the surf guide isn't visible show the locations, otherwise
         do nothing (just close the info windows) */
-        if (!$('.surf-guide-row').is(":visible")) {
+        if (!$('.surf-guide-container').is(":visible")) {
             $('.location-frame').show();
         }
             infoWindow.close();

@@ -107,6 +107,108 @@ body {
     height: 194px;
 }
 
+.surf-guide-title {
+    padding: 15px;
+    text-align: center;
+    font-size: 2em;
+}
+
+.surf-guide-title p {
+    margin: 0px 0px;
+}
+
+.card {
+    height: 160px;
+    padding: 10px 10px;
+    border: 1px;
+    border-style: dashed;
+    border-color: #E8E8E8;
+    text-align: center;
+
+}
+
+.card img {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.card p {
+    margin: 0px 0px;
+}
+
+.surf-conditions {
+    background-color: #F5FDF5;
+    height: 160px;
+    border: 1px;
+    border-style: dashed;
+    border-color: white;
+}
+
+.surf-conditions-error {
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.surf-conditions-weather p {
+    text-align: center;
+    font-size: 2em;
+    margin-top: 42px;
+    margin-bottom: 0px;
+}
+
+.surf-conditions-weather img {
+    margin: auto;
+}
+
+.surf-conditions-swell {
+    text-align: center;
+    padding-top: 40px;
+    font-size: 2em;
+}
+
+.surf-conditions-waves  {
+    padding-top: 40px;
+    text-align: center;
+}
+
+.surf-conditions-waves > p:first-child{
+    font-size: 2em;
+}
+
+.surf-conditions-wind {
+    text-align: center;
+}
+
+.surf-conditions-wind > p:first-child {
+    font-size: 1em;
+    color: #A9A9A9;
+    margin-top: 13px;
+}
+
+.surf-conditions-wind > p:first-child + p {
+    font-size: 2em;
+    margin-top: -1px;
+    margin-bottom: 0px;
+}
+
+.surf-conditions-wind img {
+    font-size: 2em;
+    margin: auto;
+    margin-bottom: 10px;
+}
+
+.guide-close-button {
+    position: absolute;
+    z-index: 500;
+    margin-top: 12px;
+    margin-left: 10px;
+    padding: 0;
+    border: none;
+    background: none;
+    font-size: 1.8em;
+    color: #D1D1D1;
+}
+
 @media (max-width: 767px) {
 
     .horizontal-rule {
@@ -115,8 +217,8 @@ body {
 
     .search-container {
         padding-bottom: 5px;
+        border-color: #E8E8E8;
         border-top-style: solid;
-        border-top-color: #E8E8E8;
         border-top-width: 1px;
     }
 
@@ -137,74 +239,15 @@ body {
         width: 100%;
     }
 
-    .surf-conditions-left p {
+    .surf-conditions-error {
         text-align: center;
-        font-size: 2em;
-        margin-top: 42px;
-        margin-bottom: 0px;
-    }
-
-    .surf-conditions-left img {
-        margin: auto;
-    }
-
-    .surf-conditions-middle  {
-        text-align: center;
-    }
-
-    .surf-conditions-middle > p:first-child {
-        font-size: 1em;
-        color: #A9A9A9;
-        margin-top: 5px;
-    }
-
-    .surf-conditions-middle > p:first-child + p{
-        font-size: 1em;
-        color: #A9A9A9;
-        margin-top: -13px;
-    }
-
-    .surf-conditions-middle > p:first-child + p + p {
-        font-size: 2em;
-        margin-top: -10px;
-        margin-bottom: 3px;
-    }
-
-    .surf-conditions-right {
-        text-align: center;
-    }
-
-    .surf-conditions-right > p:first-child {
-        font-size: 1em;
-        color: #A9A9A9;
-        margin-top: 13px;
-    }
-
-    .surf-conditions-right > p:first-child + p {
-        font-size: 2em;
-        margin-top: -1px;
-        margin-bottom: 0px;
-    }
-
-    .surf-conditions-right img {
-        font-size: 2em;
-        margin: auto;
-        margin-bottom: 10px;
-    }
-
-    .conditions-error {
-        text-align: center;
-        font-size: 1.2em;
+        font-size: 1.3em;
     }
 
     .location-frame {
         height: 194px;
         text-align:center;
         padding: 0px 0px 0px 0px;
-        border-top: solid black;
-        border-top-width: 1px;
-        border-bottom: solid black;
-        border-bottom-width: 1px;
     }
 
     .location-image {
@@ -215,6 +258,10 @@ body {
 
     .break-name {
         top: 25%;
+    }
+
+    .surf-guide-title p {
+        font-size: .7em;
     }
 
 }

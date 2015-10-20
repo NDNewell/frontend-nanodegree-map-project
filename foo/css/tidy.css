@@ -85,13 +85,13 @@ body {
 
 @media (max-width: 767px) {
   .horizontal-rule {
+    border-color: #E8E8E8;
     border-bottom: none;
   }
 
   .search-container {
     padding-bottom: 5px;
     border-top-style: solid;
-    border-top-color: #E8E8E8;
     border-top-width: 1px;
   }
 

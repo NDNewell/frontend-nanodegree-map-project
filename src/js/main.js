@@ -818,7 +818,7 @@ function AppViewModel () {
                             skillLevel.css({
                               "position": "absolute",
                               "top": "20%",
-                              "left": "25%",
+                              "left": "20%",
                               "height" : "60px"
                             });
 
@@ -836,7 +836,7 @@ function AppViewModel () {
                             waveDirection.css({
                               "position": "absolute",
                               "top" : "20%",
-                              "right" : "25%",
+                              "right" : "20%",
                               "height" : "60px"
                             });
 
@@ -844,7 +844,7 @@ function AppViewModel () {
                             bestMonths.css({
                               "position": "absolute",
                               "bottom": "20%",
-                              "left": "25%",
+                              "left": "20%",
                               "height" : "60px"
                             });
 
@@ -864,7 +864,7 @@ function AppViewModel () {
                             miscInfoTwo.css({
                               "position": "absolute",
                               "bottom" : "20%",
-                              "right" : "25%",
+                              "right" : "20%",
                               "height" : "60px"
                             });
 

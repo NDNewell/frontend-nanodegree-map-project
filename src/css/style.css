@@ -219,7 +219,7 @@ body {
     }
 
     .search-container {
-        padding-top: 5px;
+        padding-top: 7px;
         padding-bottom: 5px;
         border-color: #E8E8E8;
         border-top-style: solid;
@@ -253,8 +253,9 @@ body {
     }
 
     .hide-map-button {
-        margin-right: 45%;
-
+        float: none;
+        margin-left: 48.25%;
+        margin-right: 0;
     }
 
     .surf-conditions-error {
@@ -278,3 +279,4 @@ body {
     }
 
 }
+

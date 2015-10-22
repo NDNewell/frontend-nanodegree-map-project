@@ -85,12 +85,12 @@ body {
 
 @media (max-width: 767px) {
   .horizontal-rule {
-    border-color: #E8E8E8;
     border-bottom: none;
   }
 
   .search-container {
     padding-bottom: 5px;
+    border-color: #E8E8E8;
     border-top-style: solid;
     border-top-width: 1px;
   }
@@ -116,10 +116,6 @@ body {
     height: 194px;
     text-align: center;
     padding: 0px 0px 0px 0px;
-    border-top: solid black;
-    border-top-width: 1px;
-    border-bottom: solid black;
-    border-bottom-width: 1px;
   }
 
   .break-name {

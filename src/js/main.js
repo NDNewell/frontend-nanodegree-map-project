@@ -1295,7 +1295,7 @@ function AppViewModel () {
         $surfGuideContainer.prepend('<button type="button" class="btn guide-close-button">✖</button>');
 
         // Add a button for displaying surf conditions
-        $('.surf-guide-title').append('<button type="button" class="btn btn-default conditions-button">Current Condtions</button>');
+        $('.surf-guide-title').append('<button type="button" class="btn btn-default conditions-button">Show Current Condtions</button>');
 
         /* When the surf conditions button is clicked, display current
         conditions */
@@ -1513,7 +1513,7 @@ function getMagicSeaweed (spotID, breakName) {
             $surfConditionsWind.append('<img class="img-responsive" src="' + windImg + '" alt="Symbol for wind">');
 
             // Add button for closing the surf conditions window
-            $surfGuideTitleContainer.append('<button type="button" class="btn btn-default conditions-close-button">Close Conditions</button>');
+            $surfGuideTitleContainer.append('<button type="button" class="btn btn-default conditions-close-button">Hide Current Conditions</button>');
 
             /* When the surf conditions button is clicked the surf
             conditions window is closed */
@@ -1874,15 +1874,20 @@ function animateMarker (marker) {
 function addMapButton () {
 
     // Add button for hiding the map
-    $('.map-container').prepend('<button type="button" class="btn btn-default hide-map-button">Hide Map</button>');
+    $('.map-container').prepend('<button type="button" class="btn hide-map-button">▼</button>');
 
     $('.hide-map-button').on('click', function(e) {
 
         // Either hide or reveal the map depending the last click
         $('#map').toggle();
 
-        // Reset the map window to display all markers
-        setMapBounds();
+        if (!$('#map').is(":visible")) {
+            // Replace map text
+            $(this).text('▲');
+        } else {
+            // Replace map text
+            $(this).text('▼');
+        };
 
         /* Show the locations in case a marker has been selected. This will display the whole list of locations again */
         $('.location-frame').show();

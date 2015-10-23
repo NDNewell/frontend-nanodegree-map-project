@@ -1135,10 +1135,39 @@ function AppViewModel () {
         }
 
         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 wave-height card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + obj.avgSize.min + ' ' + "-" + ' ' + obj.avgSize.max + plus + "ft" + '</p>' + '</div>');
+/*
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 swell-direction card"><canvas id="compass" width="300" height="300"></canvas></div>');
 
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 swell-direction card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + obj.optimalSwell + '</p>' + '</div>');
+        degrees = 22.5;
 
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 tide card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + obj.optimalTide + '</p>' + '</div>');
+        var canvas = document.getElementById('compass');
+
+        ctx = canvas.getContext('2d');
+
+        pointer = new Image();
+        pointer.src = 'img/pointer.svg';
+
+        img = new Image();
+        img.src = 'img/compass.svg';
+        img.onload = draw;
+
+        function draw() {
+
+            ctx.drawImage(img, 0, 0);
+
+            ctx.save();
+
+            ctx.translate(150, 150);
+
+            ctx.rotate(degrees * (Math.PI / 180));
+
+            ctx.drawImage(pointer, -150, -150);
+
+            ctx.restore();
+
+        }
+*/
+
 
         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 tide card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + obj.optimalTide + '</p>' + '</div>');
 
@@ -1476,11 +1505,63 @@ function getMagicSeaweed (spotID, breakName) {
 
             $surfGuideTitleContainer = $('.surf-guide-title');
 
-            // Add three columns to the new row
-            $surfGuideTitleContainer.after('<div class="col-xs-6 col-sm-3 surf-conditions surf-conditions-wind"></div>');
-            $surfGuideTitleContainer.after('<div class="col-xs-6 col-sm-3 surf-conditions surf-conditions-swell"></div>');
-            $surfGuideTitleContainer.after('<div class="col-xs-6 col-sm-3 surf-conditions surf-conditions-waves"></div>');
-            $surfGuideTitleContainer.after('<div class="col-xs-6 col-sm-3 surf-conditions surf-conditions-weather"></div>');
+            // Add two columns
+
+            $surfGuideTitleContainer.after('<div class="col-xs-12 col-sm-6 compass-conditions surf-conditions compass"><canvas id="compass" width="300" height="300"></canvas></div>');
+
+            // Render live swell and wind compasses
+            renderCompass();
+
+            function renderCompass () {
+
+                var Canvas = document.getElementById('compass');
+
+                var ctx = Canvas.getContext('2d');
+
+                var windPointer = new Image();
+                windPointer.src = 'img/windPointer.svg';
+
+                var swellPointer = new Image();
+                swellPointer.src = 'img/swellPointer.svg';
+
+                var img = new Image();
+                img.src = 'img/compass.svg';
+                img.onload = draw;
+
+                var windCompassRotation = windDirection * (Math.PI / 180);
+                var swellCompassRotation = swellDirection * (Math.PI / 180);
+
+                function draw() {
+
+                    ctx.drawImage(img, 0, 0);
+
+                    ctx.save();
+
+                    ctx.translate(150, 150);
+
+                    ctx.rotate(windCompassRotation);
+
+                    ctx.drawImage(windPointer, -150, -150);
+
+                    ctx.rotate(-windCompassRotation);
+
+                    ctx.rotate(swellCompassRotation);
+
+                    ctx.drawImage(swellPointer, -150, -150);
+
+                    ctx.restore();
+
+                }
+            };
+
+            // Cache last compass as starting point for next divs
+            $conditionsCompass = $('.compass-conditions');
+
+            // Add four columns
+            $conditionsCompass.after('<div class="col-xs-6 col-sm-3 surf-conditions surf-conditions-small surf-conditions-wind"></div>');
+            $conditionsCompass.after('<div class="col-xs-6 col-sm-3 surf-conditions surf-conditions-small surf-conditions-swell"></div>');
+            $conditionsCompass.after('<div class="col-xs-6 col-sm-3 surf-conditions surf-conditions-small surf-conditions-waves"></div>');
+            $conditionsCompass.after('<div class="col-xs-6 col-sm-3 surf-conditions surf-conditions-small surf-conditions-weather"></div>');
 
             $surfConditions = $('.surf-conditions');
 

@@ -89,6 +89,7 @@ body {
   }
 
   .search-container {
+    padding-top: 7px;
     padding-bottom: 5px;
     border-color: #E8E8E8;
     border-top-style: solid;
@@ -96,7 +97,8 @@ body {
   }
 
   .search-form {
-    font-size: 1.4em;
+    margin: 0 auto;
+    font-size: 1.3em;
     padding-top: 12.5px;
     padding-bottom: 10px;
     border-top: none;
@@ -107,19 +109,21 @@ body {
     width: 100%;
   }
 
+  .map-container {
+    border: 1px dashed;
+    border-color: #E8E8E8;
+    margin-top: 1px;
+    margin-bottom: 1px;
+  }
+
   #map {
     height: 180px;
     width: 100%;
   }
 
   .location-frame {
-    height: 194px;
     text-align: center;
     padding: 0px 0px 0px 0px;
-  }
-
-  .break-name {
-    top: 25%;
   }
 }
 

@@ -139,7 +139,11 @@ body {
     margin: 0px 0px;
 }
 
-.surf-conditions {
+.compass {
+    text-align: center;
+}
+
+.surf-conditions-small {
     background-color: #F5FDF5;
     height: 160px;
     border: 1px;

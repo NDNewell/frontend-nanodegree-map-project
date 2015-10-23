@@ -145,8 +145,14 @@ body {
     text-align: center;
 }
 
+.surf-conditions-container {
+    border: solid 2px;
+    border-color: #E8E8E8;
+    margin-bottom: 15px;
+    border-radius: 20px;
+}
+
 .surf-conditions-small {
-    background-color: #F5FDF5;
     height: 160px;
 }
 
@@ -173,7 +179,9 @@ body {
 }
 
 .surf-conditions-waves  {
-    padding-top: 40px;
+    padding-top: 20px;
+    padding-left: 0px;
+    padding-right: 0px;
     text-align: center;
 }
 
@@ -259,6 +267,21 @@ body {
         float: none;
         margin-left: 48.25%;
         margin-right: 0;
+    }
+
+    .surf-conditions-container {
+        margin-bottom: 15px;
+        border-top: solid 2px;
+        border-bottom: solid 2px;
+        border-right: none;
+        border-left: none;
+        border-color: #E8E8E8;
+        border-radius: 0;
+    }
+
+    .star {
+        height: 60px;
+        width: 60px;
     }
 
     .surf-conditions-error {

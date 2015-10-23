@@ -1482,13 +1482,21 @@ function getMagicSeaweed (spotID, breakName) {
         /* Add solid stars to the array equal to number value
         retrieved from MSW*/
         for (var i = 0; i < forecastData.solidRating; i++) {
-            rating.push('<img src="img/star_filled.png" />');
+            rating.push('<img class="star" src="img/star_filled.svg" />');
         }
 
         /* Add faded stars to the array equal to number value
         retrieved from MSW*/
         for (var i = 0; i < forecastData.fadedRating; i++) {
-            rating.push('<img src="img/star_empty.png" />');
+            rating.push('<img class="star" src="img/star_faded.svg" />');
+        }
+
+        var fillEmptyStars = 5 - rating.length;
+
+        console.log(fillEmptyStars);
+
+        for (var i = 0; i < fillEmptyStars; i++) {
+            rating.push('<img class="star" src="img/star_empty.svg" />');
         }
 
         /* Combine the array into one line of stars to form the overall rating of both the surfing conditions and wave
@@ -1508,18 +1516,23 @@ function getMagicSeaweed (spotID, breakName) {
             // Add compass column
             $surfGuideTitleContainer.after('<div class="col-xs-12 col-sm-6 compass-conditions surf-conditions compass"><canvas id="compass" width="300" height="300"></canvas></div>');
 
+            // Add compass column
+            $surfGuideTitleContainer.after('<div class="col-xs-12 surf-conditions-container surf-conditions"></div>');
+
+            $surfConditionsContainer = $('.surf-conditions-container');
+
             // Add live conditions columns
-            $surfGuideTitleContainer.after('<div class="col-xs-6 col-sm-3 surf-conditions surf-conditions-small surf-conditions-wind"></div>');
-            $surfGuideTitleContainer.after('<div class="col-xs-6 col-sm-3 surf-conditions surf-conditions-small surf-conditions-swell"></div>');
-            $surfGuideTitleContainer.after('<div class="col-xs-6 col-sm-3 surf-conditions surf-conditions-small surf-conditions-waves"></div>');
-            $surfGuideTitleContainer.after('<div class="col-xs-6 col-sm-3 surf-conditions surf-conditions-small surf-conditions-weather"></div>');
+            $surfConditionsContainer.append('<div class="col-xs-12 col-sm-6 surf-conditions surf-conditions-small surf-conditions-waves"></div>');
+            $surfConditionsContainer.append('<div class="col-xs-6 col-sm-3 surf-conditions surf-conditions-small surf-conditions-weather"></div>');
+            /*$surfConditionsContainer.append('<div class="col-xs-6 col-sm-3 surf-conditions surf-conditions-small surf-conditions-swell"></div>');*/
+            $surfConditionsContainer.append('<div class="col-xs-6 col-sm-3 surf-conditions surf-conditions-small surf-conditions-wind"></div>');
 
             $surfConditions = $('.surf-conditions');
 
             // Cache references to each column
 
             var $surfConditionsWind = $('.surf-conditions-wind');
-            var $surfConditionsSwell = $('.surf-conditions-swell');
+            //var $surfConditionsSwell = $('.surf-conditions-swell');
             var $surfConditionsWaves = $('.surf-conditions-waves');
             var $surfConditionsWeather = $('.surf-conditions-weather');
 
@@ -1530,8 +1543,8 @@ function getMagicSeaweed (spotID, breakName) {
             $surfConditionsWeather.append('<img class="img-responsive" src="' + weatherImg + '" alt="Symbol for current weather">');
 
             /* Render the swell height and period */
-            $surfConditionsSwell.append('<p>' + swellHeight + "ft" + ' ' + "primary" + '</p>');
-            $surfConditionsSwell.append('<p>' + "@" + ' ' + swellPeriod + 's' + ' ' + swellCompassDirection + '</p>');
+            /*$surfConditionsSwell.append('<p>' + swellHeight + "ft" + ' ' + "primary" + '</p>');
+            $surfConditionsSwell.append('<p>' + "@" + ' ' + swellPeriod + 's' + ' ' + swellCompassDirection + '</p>');*/
 
             /* Render the breaking wave height, and wave rating from above in
             the center of the conditions window */

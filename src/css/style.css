@@ -140,15 +140,14 @@ body {
 }
 
 .compass {
+    height: 320px;
+    padding: 10px 10px;
     text-align: center;
 }
 
 .surf-conditions-small {
     background-color: #F5FDF5;
     height: 160px;
-    border: 1px;
-    border-style: dashed;
-    border-color: white;
 }
 
 .surf-conditions-error {

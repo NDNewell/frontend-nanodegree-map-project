@@ -1505,11 +1505,46 @@ function getMagicSeaweed (spotID, breakName) {
 
             $surfGuideTitleContainer = $('.surf-guide-title');
 
-            // Add two columns
-
+            // Add compass column
             $surfGuideTitleContainer.after('<div class="col-xs-12 col-sm-6 compass-conditions surf-conditions compass"><canvas id="compass" width="300" height="300"></canvas></div>');
 
-            // Render live swell and wind compasses
+            // Add live conditions columns
+            $surfGuideTitleContainer.after('<div class="col-xs-6 col-sm-3 surf-conditions surf-conditions-small surf-conditions-wind"></div>');
+            $surfGuideTitleContainer.after('<div class="col-xs-6 col-sm-3 surf-conditions surf-conditions-small surf-conditions-swell"></div>');
+            $surfGuideTitleContainer.after('<div class="col-xs-6 col-sm-3 surf-conditions surf-conditions-small surf-conditions-waves"></div>');
+            $surfGuideTitleContainer.after('<div class="col-xs-6 col-sm-3 surf-conditions surf-conditions-small surf-conditions-weather"></div>');
+
+            $surfConditions = $('.surf-conditions');
+
+            // Cache references to each column
+
+            var $surfConditionsWind = $('.surf-conditions-wind');
+            var $surfConditionsSwell = $('.surf-conditions-swell');
+            var $surfConditionsWaves = $('.surf-conditions-waves');
+            var $surfConditionsWeather = $('.surf-conditions-weather');
+
+
+            /* Render the temperature and weather image in the left
+            side of the newly created conditions window*/
+            $surfConditionsWeather.append('<p>' + temperature + " ℉" + '</p>');
+            $surfConditionsWeather.append('<img class="img-responsive" src="' + weatherImg + '" alt="Symbol for current weather">');
+
+            /* Render the swell height and period */
+            $surfConditionsSwell.append('<p>' + swellHeight + "ft" + ' ' + "primary" + '</p>');
+            $surfConditionsSwell.append('<p>' + "@" + ' ' + swellPeriod + 's' + ' ' + swellCompassDirection + '</p>');
+
+            /* Render the breaking wave height, and wave rating from above in
+            the center of the conditions window */
+            $surfConditionsWaves.append('<p>' + waveHeight + "ft" + '</p>');
+            $surfConditionsWaves.append('<p>' + waveRating + '</p>');
+
+            /* Render the wind speed, direction, and wind image in the
+            right side of the conditions window*/
+            $surfConditionsWind.append('<p>' + windSpeed + "mph" + '</p>');
+            $surfConditionsWind.append('<p>' + compassDirection + '</p>');
+            $surfConditionsWind.append('<img class="img-responsive" src="' + windImg + '" alt="Symbol for wind">');
+
+            // Render live swell and wind compass
             renderCompass();
 
             function renderCompass () {
@@ -1553,45 +1588,6 @@ function getMagicSeaweed (spotID, breakName) {
 
                 }
             };
-
-            // Cache last compass as starting point for next divs
-            $conditionsCompass = $('.compass-conditions');
-
-            // Add four columns
-            $conditionsCompass.after('<div class="col-xs-6 col-sm-3 surf-conditions surf-conditions-small surf-conditions-wind"></div>');
-            $conditionsCompass.after('<div class="col-xs-6 col-sm-3 surf-conditions surf-conditions-small surf-conditions-swell"></div>');
-            $conditionsCompass.after('<div class="col-xs-6 col-sm-3 surf-conditions surf-conditions-small surf-conditions-waves"></div>');
-            $conditionsCompass.after('<div class="col-xs-6 col-sm-3 surf-conditions surf-conditions-small surf-conditions-weather"></div>');
-
-            $surfConditions = $('.surf-conditions');
-
-            // Cache references to each column
-
-            var $surfConditionsWind = $('.surf-conditions-wind');
-            var $surfConditionsSwell = $('.surf-conditions-swell');
-            var $surfConditionsWaves = $('.surf-conditions-waves');
-            var $surfConditionsWeather = $('.surf-conditions-weather');
-
-
-            /* Render the temperature and weather image in the left
-            side of the newly created conditions window*/
-            $surfConditionsWeather.append('<p>' + temperature + " ℉" + '</p>');
-            $surfConditionsWeather.append('<img class="img-responsive" src="' + weatherImg + '" alt="Symbol for current weather">');
-
-            /* Render the swell height and period */
-            $surfConditionsSwell.append('<p>' + swellHeight + "ft" + ' ' + "primary" + '</p>');
-            $surfConditionsSwell.append('<p>' + "@" + ' ' + swellPeriod + 's' + ' ' + swellCompassDirection + '</p>');
-
-            /* Render the breaking wave height, and wave rating from above in
-            the center of the conditions window */
-            $surfConditionsWaves.append('<p>' + waveHeight + "ft" + '</p>');
-            $surfConditionsWaves.append('<p>' + waveRating + '</p>');
-
-            /* Render the wind speed, direction, and wind image in the
-            right side of the conditions window*/
-            $surfConditionsWind.append('<p>' + windSpeed + "mph" + '</p>');
-            $surfConditionsWind.append('<p>' + compassDirection + '</p>');
-            $surfConditionsWind.append('<img class="img-responsive" src="' + windImg + '" alt="Symbol for wind">');
 
             // Add button for closing the surf conditions window
             $surfGuideTitleContainer.append('<button type="button" class="btn btn-default conditions-close-button">Hide Current Conditions</button>');

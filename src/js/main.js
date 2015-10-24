@@ -1301,8 +1301,6 @@ function AppViewModel () {
             been displayed, simply make visible again */
             if ($('.surf-conditions').is(":hidden")) {
 
-                console.log('filter working')
-
                 $('.surf-conditions').toggle();
 
                 // Hide the surf conditions button
@@ -1460,8 +1458,6 @@ function getMagicSeaweed (spotID, breakName) {
 
         var fillEmptyStars = 5 - rating.length;
 
-        console.log(fillEmptyStars);
-
         for (var i = 0; i < fillEmptyStars; i++) {
             rating.push('<img class="star" src="img/star_empty.svg" />');
         }
@@ -1600,19 +1596,19 @@ function getMagicSeaweed (spotID, breakName) {
         if (currentSurfGuide.indexOf(breakName) >= 0) {
 
             // Insert a new row above the surf guide
-            $('.surf-guide-title').after('<div class="col-xs-12 surf-conditions-error"></div>');
+            $('.surf-guide-title').after('<div class="col-xs-12 error-container"></div>');
 
-            $('.surf-conditions-error').append('<p class="conditions-error">' + breakName + ' ' + "conditions unavailable =(" + '</p>');
+            $('.error-container').append('<p class="conditions-error">' + breakName + ' ' + "conditions unavailable =(" + '</p>');
 
             // Add a button for closing the error window
-            $('.surf-guide-title').append('<button type="button" class="btn btn-default conditions-close-button">Close Conditions</button>');
+            $('.error-container').prepend('<button type="button" class="btn error-close-button">✖</button>');
 
             /* When the conditions close button is clicked remove the error
             message */
-            $('.conditions-close-button').on('click', function(e) {
+            $('.error-close-button').on('click', function(e) {
 
                 // Remove conditions row from DOM
-                $('.surf-conditions-error').remove();
+                $('.error-container').remove();
 
                 // Remove the close conditions button
                 $('.conditions-close-button').remove();

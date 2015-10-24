@@ -1501,7 +1501,8 @@ function getMagicSeaweed (spotID, breakName) {
             var $surfConditionsWaves = $('.surf-conditions-waves');
 
             /* Render the swell height and period */
-            $surfConditionsSwell.append('<p>' + swellHeight + "ft" + ' ' + "primary" + '</p>');
+            $surfConditionsSwell.append('<p>' + swellHeight + "ft" + '</p>');
+            $surfConditionsSwell.append('<p>' + "primary" + '</p>');
             $surfConditionsSwell.append('<p>' + "@" + ' ' + swellPeriod + 's' + ' ' + swellCompassDirection + '</p>');
 
             /* Render the breaking wave height, and wave rating from above in
@@ -1512,8 +1513,8 @@ function getMagicSeaweed (spotID, breakName) {
             /* Render the wind speed, direction, and wind image in the
             right side of the conditions window*/
             $surfConditionsWind.append('<p>' + windSpeed + "mph" + '</p>');
-            $surfConditionsWind.append('<p>' + compassDirection + '</p>');
             $surfConditionsWind.append('<img class="img-responsive" src="' + windImg + '" alt="Symbol for wind">');
+            $surfConditionsWind.append('<p>' + compassDirection + " " + "wind" + '</p>');
 
             // Render live swell and wind compass
             renderCompass();

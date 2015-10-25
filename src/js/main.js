@@ -30,9 +30,9 @@ var locationData = [
       wellKnown: true,
       cost: {budget: 100, highEnd: 250},
       skillLevel: 'advanced',
-      waveDirection: 'left',
+      waveDirection: 'right',
       breakDetails: 'reef',
-      avgSize: {min: 5, max: 10, aboveMax: true},
+      avgSize: {min: 3, max: 7, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
       optimalTide: [' High'],
@@ -52,7 +52,7 @@ var locationData = [
       wellKnown: false,
       cost: {budget: 100, highEnd: 250},
       skillLevel: 'advanced',
-      waveDirection: 'left',
+      waveDirection: 'left & right',
       breakDetails: 'reef',
       avgSize: {min: 5, max: 8, aboveMax: true},
       optimalSwell: [' W', ' NW'],
@@ -73,10 +73,10 @@ var locationData = [
       bigWave: false,
       wellKnown: false,
       cost: {budget: 100, highEnd: 250},
-      skillLevel: 'advanced',
+      skillLevel: 'intermediate',
       waveDirection: 'right',
       breakDetails: 'reef',
-      avgSize: {min: 3, max: 7, aboveMax: false},
+      avgSize: {min: 10, max: 17, aboveMax: false},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
       optimalTide: [' High'],
@@ -95,7 +95,7 @@ var locationData = [
       bigWave: false,
       wellKnown: true,
       cost: {budget: 100, highEnd: 250},
-      skillLevel: 'advanced',
+      skillLevel: 'beginner',
       waveDirection: 'left',
       breakDetails: 'point',
       avgSize: {min: 7, max: 9, aboveMax: false},
@@ -117,10 +117,10 @@ var locationData = [
       bigWave: true,
       wellKnown: false,
       cost: {budget: 100, highEnd: 250},
-      skillLevel: 'advanced',
-      waveDirection: 'right',
+      skillLevel: 'all levels',
+      waveDirection: 'left & right',
       breakDetails: 'river mouth',
-      avgSize: {min: 5, max: 16, aboveMax: true},
+      avgSize: {min: 20, max: 25, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
       optimalTide: [' High'],
@@ -164,7 +164,7 @@ var locationData = [
       skillLevel: 'advanced',
       waveDirection: 'left',
       breakDetails: 'reef',
-      avgSize: {min: 5, max: 16, aboveMax: true},
+      avgSize: {min: 11, max: 16, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
       optimalTide: [' High'],
@@ -186,7 +186,7 @@ var locationData = [
       skillLevel: 'advanced',
       waveDirection: 'right',
       breakDetails: 'point',
-      avgSize: {min: 5, max: 16, aboveMax: true},
+      avgSize: {min: 5, max: 8, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
       optimalTide: [' High'],
@@ -1111,17 +1111,53 @@ function AppViewModel () {
 
         // Check if break has big waves
         if (obj.bigWave) {
-            $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 big-wave card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive img-circle">' + '<p>' + "Big Waves" + '</p>' + '</div>');
+            $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 big-wave card">' + '<img src="img/big_wave.svg">' + '</div>');
         };
 
         // Check if break is well known
         if (obj.bigWave) {
-            $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 well-known card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive img-circle">' + '<p>' + "Well-Known Wave" + '</p>' + '</div>');
+            $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 big-wave card">' + '<img src="img/well_known.svg">' + '</div>');
         }
 
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 difficulty card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + obj.skillLevel + '</p>' + '</div>');
+        /* Display icon associated with the skill level
+        needed to surf the break */
+        switch(obj.skillLevel) {
+          case 'advanced':
+              var skillLevelIcon = '<img src="/img/skill_level_advanced.svg">';
+          break;
 
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 direction card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + obj.waveDirection + '</p>' + '</div>');
+          case 'intermediate':
+              var skillLevelIcon = '<img src="img/skill_level_intermediate.svg">';
+          break;
+
+          case 'beginner':
+              var skillLevelIcon = '<img src="img/skill_level_beginner.svg">';
+          break;
+
+          case 'all levels':
+              var skillLevelIcon = '<img src="img/skill_level_all.svg">';
+          break;
+        }
+
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 difficulty card">' + skillLevelIcon + '</div>');
+
+        /* Display the icon associated with the direction
+        the wave breaks */
+        switch(obj.waveDirection) {
+          case 'left':
+              var waveDirectionIcon = '<img src="/img/direction_left.svg">';
+          break;
+
+          case 'right':
+              var waveDirectionIcon = '<img src="/img/direction_right.svg">';
+          break;
+
+          case 'left & right':
+              var waveDirectionIcon = '<img src="/img/direction_both.svg">';
+          break;
+        }
+
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 direction card">' + waveDirectionIcon + '</div>');
 
         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 break-details card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + obj.breakDetails + '</p>' + '</div>');
 
@@ -1134,13 +1170,86 @@ function AppViewModel () {
             var plus = '';
         }
 
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 wave-height card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + obj.avgSize.min + ' ' + "-" + ' ' + obj.avgSize.max + plus + "ft" + '</p>' + '</div>');
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 wave-height card">' + '<img src="img/wave_range.svg">' + '<p>' + obj.avgSize.min + "-" + obj.avgSize.max + plus + "ft" + '</p>' + '</div>');
 
         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 tide card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + obj.optimalTide + '</p>' + '</div>');
 
         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 wind card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + obj.optimalWind + '</p>' + '</div>');
 
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 time card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + "Best Time" + '</p>' + '</div>');
+        // Set variables for each season at zero
+        var spring = 0;
+        var summer = 0;
+        var autumn = 0;
+        var winter = 0;
+
+        /* Tally the number of months fall into a
+        particular season */
+        for (i = 0; i < obj.optimalTime.length; i++) {
+            switch (obj.optimalTime[i]) {
+                case ' Dec':
+                case ' Jan':
+                case ' Feb':
+                    winter++;
+                break;
+
+                case ' Mar':
+                case ' Apr':
+                case ' May':
+                    spring++;
+                break;
+
+                case ' Jun':
+                case ' Jul':
+                case ' Aug':
+                    summer++;
+                break
+
+                case ' Sep':
+                case ' Oct':
+                case ' Nov':
+                    autumn++;
+                break
+            }
+        }
+
+        /* Filter which seasons are the best for the
+        particular break */
+        /* Display icon associated with best time of
+        year */
+        if (winter === spring && summer && autumn &&
+            spring === summer && autumn && winter &&
+            summer === autumn && winter && spring &&
+            autumn === winter && spring && summer) {
+              var bestMonthsIcon = '<img src="/img/season_all.svg">';
+        } else if(winter >= spring && winter >= summer && winter >= autumn) {
+              if(winter === spring) {
+                  var bestMonthsIcon = '<img src="/img/season_winter_spring.svg">';
+              } else if (winter === summer) {
+                  var bestMonthsIcon = '<img src="/img/season_winter_summer.svg">';
+              } else if (winter === autumn) {
+                  var bestMonthsIcon = '<img src="/img/season_winter_autumn.svg">';
+              } else {
+                  var bestMonthsIcon = '<img src="/img/season_winter.svg">';
+              };
+        } else if (spring >= summer && spring >= autumn && spring > winter) {
+              if (spring === summer) {
+                  var bestMonthsIcon = '<img src="/img/season_spring_summer.svg">';
+              } else if (spring === autumn) {
+                  var bestMonthsIcon = '<img src="/img/season_spring_autumn.svg">';
+              } else {
+                  var bestMonthsIcon = '<img src="/img/season_spring.svg">';
+              };
+        } else if (summer >= autumn && summer > winter && summer > spring) {
+              if(summer === autumn) {
+                  var bestMonthsIcon = '<img src="/img/season_summer_autumn.svg">';
+              } else {
+                  var bestMonthsIcon = '<img src="/img/season_summer.svg">';
+              };
+        } else if (autumn > winter && autumn > spring && autumn > summer) {
+              var bestMonthsIcon = '<img src="/img/season_autumn.svg">';
+        };
+
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 time card">' + bestMonthsIcon + '</div>');
 
         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 climate card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + obj.climate  + '</p>' + '</div>');
 

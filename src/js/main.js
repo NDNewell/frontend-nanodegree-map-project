@@ -7,7 +7,7 @@ var locationData = [
       bigWave: true,
       wellKnown: false,
       cost: {budget: 100, highEnd: 250},
-      skillLevel: 'advanced',
+      skillLevel: ['advanced'],
       waveDirection: 'left',
       breakDetails: 'reef',
       avgSize: {min: 5, max: 16, aboveMax: true},
@@ -29,7 +29,7 @@ var locationData = [
       bigWave: false,
       wellKnown: true,
       cost: {budget: 100, highEnd: 250},
-      skillLevel: 'advanced',
+      skillLevel: ['advanced'],
       waveDirection: 'right',
       breakDetails: 'reef',
       avgSize: {min: 3, max: 7, aboveMax: true},
@@ -51,7 +51,7 @@ var locationData = [
       bigWave: true,
       wellKnown: false,
       cost: {budget: 100, highEnd: 250},
-      skillLevel: 'advanced',
+      skillLevel: ['advanced'],
       waveDirection: 'left & right',
       breakDetails: 'reef',
       avgSize: {min: 5, max: 8, aboveMax: true},
@@ -73,7 +73,7 @@ var locationData = [
       bigWave: false,
       wellKnown: false,
       cost: {budget: 100, highEnd: 250},
-      skillLevel: 'intermediate',
+      skillLevel: ['intermediate'],
       waveDirection: 'right',
       breakDetails: 'reef',
       avgSize: {min: 10, max: 17, aboveMax: false},
@@ -95,7 +95,7 @@ var locationData = [
       bigWave: false,
       wellKnown: true,
       cost: {budget: 100, highEnd: 250},
-      skillLevel: 'beginner',
+      skillLevel: ['beginner'],
       waveDirection: 'left',
       breakDetails: 'point',
       avgSize: {min: 7, max: 9, aboveMax: false},
@@ -117,7 +117,7 @@ var locationData = [
       bigWave: true,
       wellKnown: false,
       cost: {budget: 100, highEnd: 250},
-      skillLevel: 'all levels',
+      skillLevel: ['beginner', 'intermediate', 'advanced'],
       waveDirection: 'left & right',
       breakDetails: 'river mouth',
       avgSize: {min: 20, max: 25, aboveMax: true},
@@ -139,7 +139,7 @@ var locationData = [
       bigWave: false,
       wellKnown: true,
       cost: {budget: 100, highEnd: 250},
-      skillLevel: 'advanced',
+      skillLevel: ['advanced'],
       waveDirection: 'left',
       breakDetails: 'reef',
       avgSize: {min: 5, max: 16, aboveMax: true},
@@ -161,7 +161,7 @@ var locationData = [
       bigWave: true,
       wellKnown: false,
       cost: {budget: 100, highEnd: 250},
-      skillLevel: 'advanced',
+      skillLevel: ['advanced'],
       waveDirection: 'left',
       breakDetails: 'reef',
       avgSize: {min: 11, max: 16, aboveMax: true},
@@ -183,7 +183,7 @@ var locationData = [
       bigWave: false,
       wellKnown: false,
       cost: {budget: 100, highEnd: 250},
-      skillLevel: 'advanced',
+      skillLevel: ['advanced'],
       waveDirection: 'right',
       breakDetails: 'point',
       avgSize: {min: 5, max: 8, aboveMax: true},
@@ -205,7 +205,7 @@ var locationData = [
       bigWave: true,
       wellKnown: true,
       cost: {budget: 100, highEnd: 250},
-      skillLevel: 'intermediate',
+      skillLevel: ['intermediate'],
       waveDirection: 'left',
       breakDetails: 'river mouth',
       avgSize: {min: 5, max: 16, aboveMax: true},
@@ -227,7 +227,7 @@ var locationData = [
       bigWave: false,
       wellKnown: false,
       cost: {budget: 100, highEnd: 250},
-      skillLevel: 'beginner',
+      skillLevel: ['beginner'],
       waveDirection: 'right',
       breakDetails: 'reef',
       avgSize: {min: 5, max: 16, aboveMax: true},
@@ -249,7 +249,7 @@ var locationData = [
       bigWave: false,
       wellKnown: false,
       cost: {budget: 100, highEnd: 250},
-      skillLevel: 'intermediate',
+      skillLevel: ['intermediate'],
       waveDirection: 'left & right',
       breakDetails: 'reef',
       avgSize: {min: 5, max: 16, aboveMax: true},
@@ -271,7 +271,7 @@ var locationData = [
       bigWave: false,
       wellKnown: false,
       cost: {budget: 100, highEnd: 250},
-      skillLevel: 'beginner',
+      skillLevel: ['beginner'],
       waveDirection: 'right',
       breakDetails: 'point',
       avgSize: {min: 5, max: 16, aboveMax: true},
@@ -293,7 +293,7 @@ var locationData = [
       bigWave: false,
       wellKnown: true,
       cost: {budget: 100, highEnd: 250},
-      skillLevel: 'intermediate',
+      skillLevel: ['intermediate'],
       waveDirection: 'left & right',
       breakDetails: 'river mouth',
       avgSize: {min: 5, max: 16, aboveMax: true},
@@ -315,7 +315,7 @@ var locationData = [
       bigWave: true,
       wellKnown: false,
       cost: {budget: 100, highEnd: 250},
-      skillLevel: 'beginner',
+      skillLevel: ['beginner'],
       waveDirection: 'right',
       breakDetails: 'beach',
       avgSize: {min: 5, max: 16, aboveMax: true},
@@ -337,7 +337,7 @@ var locationData = [
       bigWave: false,
       wellKnown: true,
       cost: {budget: 100, highEnd: 250},
-      skillLevel: 'intermediate',
+      skillLevel: ['intermediate'],
       waveDirection: 'left & right',
       breakDetails: 'point',
       avgSize: {min: 5, max: 16, aboveMax: true},
@@ -359,7 +359,7 @@ var locationData = [
       bigWave: true,
       wellKnown: false,
       cost: {budget: 100, highEnd: 250},
-      skillLevel: 'advanced',
+      skillLevel: ['advanced'],
       waveDirection: 'left',
       breakDetails: 'beach',
       avgSize: {min: 5, max: 16, aboveMax: true},
@@ -381,7 +381,7 @@ var locationData = [
       bigWave: false,
       wellKnown: false,
       cost: {budget: 100, highEnd: 250},
-      skillLevel: 'beginner',
+      skillLevel: ['beginner'],
       waveDirection: 'left & right',
       breakDetails: 'reef',
       avgSize: {min: 5, max: 16, aboveMax: true},
@@ -403,7 +403,7 @@ var locationData = [
       bigWave: true,
       wellKnown: true,
       cost: {budget: 100, highEnd: 250},
-      skillLevel: 'advanced',
+      skillLevel: ['intermediate', 'advanced'],
       waveDirection: 'left',
       breakDetails: 'beach',
       avgSize: {min: 5, max: 16, aboveMax: true},
@@ -425,7 +425,7 @@ var locationData = [
       bigWave: true,
       wellKnown: false,
       cost: {budget: 100, highEnd: 250},
-      skillLevel: 'intermediate',
+      skillLevel: ['beginner', 'intermediate'],
       waveDirection: 'left & right',
       breakDetails: 'point',
       avgSize: {min: 5, max: 16, aboveMax: true},
@@ -638,10 +638,7 @@ function AppViewModel () {
                             particular break */
                             /* Display icon associated with best time of
                             year */
-                            if (winter === spring && summer && autumn &&
-                                spring === summer && autumn && winter &&
-                                summer === autumn && winter && spring &&
-                                autumn === winter && spring && summer) {
+                            if (winter === spring && summer && autumn) {
                                   var bestMonthsInfo = '<img src="/img/marquee.png" class="rollover-info best-months">';
                             } else if(winter >= spring && winter >= summer && winter >= autumn) {
                                   if(winter === spring) {
@@ -1121,23 +1118,45 @@ function AppViewModel () {
 
         /* Display icon associated with the skill level
         needed to surf the break */
-        switch(obj.skillLevel) {
-          case 'advanced':
-              var skillLevelIcon = '<img src="/img/skill_level_advanced.svg">';
-          break;
 
-          case 'intermediate':
-              var skillLevelIcon = '<img src="img/skill_level_intermediate.svg">';
-          break;
+        // Set variables for each skill level at zero
+        var beginner = 0;
+        var intermediate = 0;
+        var advanced = 0;
 
-          case 'beginner':
-              var skillLevelIcon = '<img src="img/skill_level_beginner.svg">';
-          break;
+        for (var i = 0; i < obj.skillLevel.length; i++) {
+            switch (obj.skillLevel[i]) {
+                case 'beginner':
+                    beginner++;
+                break;
 
-          case 'all levels':
-              var skillLevelIcon = '<img src="img/skill_level_all.svg">';
-          break;
-        }
+                case 'intermediate':
+                    intermediate++;
+                break;
+
+                case 'advanced':
+                    advanced++;
+                break
+            }
+        };
+
+        if (beginner === intermediate && advanced) {
+            var skillLevelIcon = '<img src="/img/skill_level_all.svg">';
+        } else if (beginner >= intermediate && beginner > advanced) {
+              if(beginner === intermediate) {
+                  var skillLevelIcon = '<img src="/img/skill_level_beginner_intermediate.svg">';
+              } else {
+                  var skillLevelIcon = '<img src="/img/skill_level_beginner.svg">';
+              };
+        } else if (intermediate > beginner && intermediate >= advanced) {
+              if(intermediate === advanced) {
+                  var skillLevelIcon = '<img src="/img/skill_level_intermediate_advanced.svg">';
+              } else {
+                  var skillLevelIcon = '<img src="/img/skill_level_intermediate.svg">';
+              };
+        } else if (advanced > beginner && advanced >= intermediate) {
+            var skillLevelIcon = '<img src="/img/skill_level_advanced.svg">';
+        };
 
         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 difficulty card">' + skillLevelIcon + '</div>');
 
@@ -1216,10 +1235,7 @@ function AppViewModel () {
         particular break */
         /* Display icon associated with best time of
         year */
-        if (winter === spring && summer && autumn &&
-            spring === summer && autumn && winter &&
-            summer === autumn && winter && spring &&
-            autumn === winter && spring && summer) {
+        if (winter === spring && summer && autumn) {
               var bestMonthsIcon = '<img src="/img/season_all.svg">';
         } else if(winter >= spring && winter >= summer && winter >= autumn) {
               if(winter === spring) {

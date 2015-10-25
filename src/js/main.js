@@ -17,7 +17,7 @@ var locationData = [
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
-      hazards: [' strong currents', ' crowds'],
+      hazards: ['barnacles', 'beginners', 'boats'],
       lat: 21.679011,
       lng: -158.041277,
       spotID: 657,
@@ -31,7 +31,7 @@ var locationData = [
       cost: {budget: 100, highEnd: 250},
       skillLevel: ['advanced'],
       waveDirection: 'right',
-      breakDetails: 'reef',
+      breakDetails: 'beach',
       avgSize: {min: 3, max: 7, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
@@ -39,7 +39,7 @@ var locationData = [
       optimalTime: [' Mar', ' Jan', ' Feb', ' Apr', ' May'],
       climate: [' cold', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 75, winter: 77},
-      hazards: [' strong currents', ' crowds'],
+      hazards: ['crocs', 'crowded', 'dangerous break'],
       lat: 21.665244,
       lng: -158.053408,
       spotID: 616,
@@ -53,15 +53,15 @@ var locationData = [
       cost: {budget: 100, highEnd: 250},
       skillLevel: ['advanced'],
       waveDirection: 'left & right',
-      breakDetails: 'reef',
+      breakDetails: 'point',
       avgSize: {min: 5, max: 8, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
       optimalTide: [' High'],
       optimalTime: [' Sep', ' Oct', ' Nov', ' Dec', ' Jan', ' Feb'],
-      climate: [' tropical', ' humid'],
+      climate: ['tropical'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 66, winter: 77},
-      hazards: [' sharks', ' crowds'],
+      hazards: ['far from shore', 'pollution', 'rocky bottom'],
       lat: 22.224744,
       lng: -159.566712,
       spotID: 'none',
@@ -75,7 +75,7 @@ var locationData = [
       cost: {budget: 100, highEnd: 250},
       skillLevel: ['intermediate'],
       waveDirection: 'right',
-      breakDetails: 'reef',
+      breakDetails: 'river mouth',
       avgSize: {min: 10, max: 17, aboveMax: false},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
@@ -83,7 +83,7 @@ var locationData = [
       optimalTime: [' Dec', ' Jan', ' Feb', ' Mar', ' Apr', ' Jun', ' Jul'],
       climate: [' tropical', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 74, winter: 77},
-      hazards: [' strong currents', ' crowds'],
+      hazards: ['sea snakes', 'seals', 'seaweed'],
       lat: 22.224744,
       lng: -159.566712,
       spotID: 'none',
@@ -105,7 +105,7 @@ var locationData = [
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 79, winter: 77},
-      hazards: [' strong currents', ' crowds'],
+      hazards: ['sewage', 'shallow', 'sharks'],
       lat: 22.148311,
       lng: -159.300331,
       spotID: 'none',
@@ -127,7 +127,7 @@ var locationData = [
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 73, winter: 77},
-      hazards: [' crowds', ' sharks'],
+      hazards: ['strong currents', 'strong rips', 'theft'],
       lat: 22.218315,
       lng: -159.502265,
       spotID: 3051,
@@ -149,7 +149,7 @@ var locationData = [
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' dry', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 71, winter: 77},
-      hazards: [' strong currents', ' crowds'],
+      hazards: ['undertow', 'unfriendly', 'urchins'],
       lat: 21.596416,
       lng: -158.109121,
       spotID: 660,
@@ -171,7 +171,7 @@ var locationData = [
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 76, winter: 77},
-      hazards: [' sharks', ' crowds'],
+      hazards: ['sharks', 'crowded', 'boats', 'shallow'],
       lat: 21.642987,
       lng: -158.066743,
       spotID: 549,
@@ -193,7 +193,7 @@ var locationData = [
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' dry', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 98, winter: 77},
-      hazards: [' strong currents', ' crowds'],
+      hazards: ['strong currents', 'crowded', 'seals', 'beginners', 'barnacles'],
       lat: 21.670862,
       lng: -158.049157,
       spotID: 658,
@@ -215,7 +215,7 @@ var locationData = [
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 86, winter: 77},
-      hazards: [' strong currents', ' crowds'],
+      hazards: ['strong currents', 'crowded', 'crocs', 'sewage'],
       lat: 21.708047,
       lng: -158.002275,
       spotID: 'none',
@@ -229,7 +229,7 @@ var locationData = [
       cost: {budget: 100, highEnd: 250},
       skillLevel: ['beginner'],
       waveDirection: 'right',
-      breakDetails: 'reef',
+      breakDetails: 'beach',
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
@@ -237,7 +237,7 @@ var locationData = [
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' dry', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 45, winter: 77},
-      hazards: [' sharks', ' crowds'],
+      hazards: ['sharks', 'crowded', 'seaweed', 'urchins', 'sea snakes'],
       lat: 21.159132,
       lng: -156.735906,
       spotID: 'none',
@@ -259,7 +259,7 @@ var locationData = [
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 36, winter: 77},
-      hazards: [' crowds', ' sharks'],
+      hazards: ['crowded', 'sharks', 'dangerous break'],
       lat: 21.024350,
       lng: -156.641890,
       spotID: 697,
@@ -273,7 +273,7 @@ var locationData = [
       cost: {budget: 100, highEnd: 250},
       skillLevel: ['beginner'],
       waveDirection: 'right',
-      breakDetails: 'point',
+      breakDetails: 'beach',
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: [' W', ' NW'],
       optimalWind: [' E', ' SSE'],
@@ -281,7 +281,7 @@ var locationData = [
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' dry', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
-      hazards: [' crowds', ' strong currents'],
+      hazards: ['crowded', 'strong currents', 'rocky bottom', 'far from shore'],
       lat: 20.946401,
       lng: -156.297389,
       spotID: 617,
@@ -303,7 +303,7 @@ var locationData = [
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' cold', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
-      hazards: [' strong currents', ' crowds'],
+      hazards: ['strong currents', 'crowded'],
       lat: 20.728298,
       lng: -156.452353,
       spotID: 'none',
@@ -325,7 +325,7 @@ var locationData = [
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
-      hazards: [' sharks', ' crowds'],
+      hazards: ['sharks', 'crowded', 'seaweed', 'boats'],
       lat: 20.791860,
       lng: -156.508960,
       spotID: 618,
@@ -347,7 +347,7 @@ var locationData = [
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' cold', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
-      hazards: [' strong currents', ' crowds'],
+      hazards: ['strong currents', 'crowded', 'beginners', 'shallow'],
       lat: 20.869326,
       lng: -156.679025,
       spotID: 4287,
@@ -369,7 +369,7 @@ var locationData = [
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
-      hazards: [' sharks', ' crowds'],
+      hazards: ['sharks', 'crowded','strong rips'],
       lat: 19.606206,
       lng: -155.978016,
       spotID: 2784,
@@ -391,7 +391,7 @@ var locationData = [
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' cold', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
-      hazards: [' crowds', ' strong currents'],
+      hazards: ['crowded', 'strong rips', 'unfriendly'],
       lat: 19.695131,
       lng: -156.045926,
       spotID: 3958,
@@ -413,7 +413,7 @@ var locationData = [
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
-      hazards: [' strong currents', ' crowds'],
+      hazards: ['strong currents', 'crowded', 'unfriendly', 'urchins'],
       lat: 19.854416,
       lng: -155.931340,
       spotID: 'none',
@@ -435,7 +435,7 @@ var locationData = [
       optimalTime: [' Jan', ' Feb', ' Mar', ' Apr', ' May', ' Jun', ' Jul', ' Aug', ' Sep', ' Oct', ' Nov', ' Dec'],
       climate: [' cold', ' humid'],
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
-      hazards: [' sharks', ' crowds'],
+      hazards: ['sharks', 'crowded', 'undertow'],
       lat: 19.756298,
       lng: -155.089960,
       spotID: 3815,
@@ -1178,7 +1178,26 @@ function AppViewModel () {
 
         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 direction card">' + waveDirectionIcon + '</div>');
 
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 break-details card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + obj.breakDetails + '</p>' + '</div>');
+        switch(obj.breakDetails) {
+
+          case 'reef':
+              var breakIcon = '<img src="/img/break_reef.svg">';
+          break;
+
+          case 'beach':
+              var breakIcon = '<img src="/img/break_beach.svg">';
+          break;
+
+          case 'point':
+              var breakIcon = '<img src="/img/break_point.svg">';
+          break;
+
+          case 'river mouth':
+              var breakIcon = '<img src="/img/break_river_mouth.svg">';
+          break;
+        }
+
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 break-details card">' + breakIcon + '</div>');
 
         /* Check if the average maximum wave size sometime goes above the max.
         If it does, save a plus sign in a variable to add to the min/max wave
@@ -1301,7 +1320,115 @@ function AppViewModel () {
         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 cost card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + "Cost" + '</p>' + '</div>');
 
         for (var i = 0; i < obj.hazards.length; i++) {
-            $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + obj.hazards[i]  + '</p>' + '</div>');
+
+            switch (obj.hazards[i]) {
+
+                case 'barnacles':
+
+                    $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_barnacles.svg">' + '</div>');
+                break;
+
+                case 'beginners':
+
+                    $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_beginners.svg">' + '</div>');
+                break;
+
+                case 'boats':
+
+                    $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_boats.svg">' + '</div>');
+                break;
+
+                case 'crocs':
+
+                    $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_crocs.svg">' + '</div>');
+                break;
+
+                case 'crowded':
+
+                    $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_crowded.svg">' + '</div>');
+                break;
+
+                case 'dangerous break':
+
+                    $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_dangerous_break.svg">' + '</div>');
+                break;
+
+                case 'far from shore':
+
+                    $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_far_from_shore.svg">' + '</div>');
+                break;
+
+                case 'pollution':
+
+                    $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_pollution.svg">' + '</div>');
+                break;
+
+                case 'rocky bottom':
+
+                    $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_rocky_bottom.svg">' + '</div>');
+                break;
+
+                case 'sea snakes':
+
+                    $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_sea_snakes.svg">' + '</div>');
+                break;
+
+                case 'seals':
+
+                    $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_seals.svg">' + '</div>');
+                break;
+
+                case 'seaweed':
+
+                    $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_seaweed.svg">' + '</div>');
+                break;
+
+                case 'sewage':
+
+                    $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_sewage.svg">' + '</div>');
+                break;
+
+                case 'shallow':
+
+                    $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_shallow.svg">' + '</div>');
+                break;
+
+                case 'sharks':
+
+                    $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_sharks.svg">' + '</div>');
+                break;
+
+                case 'strong currents':
+
+                    $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_strong_currents.svg">' + '</div>');
+                break;
+
+                case 'strong rips':
+
+                    $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_strong_rips.svg">' + '</div>');
+                break;
+
+                case 'theft':
+
+                    $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_theft.svg">' + '</div>');
+                break;
+
+                case 'undertow':
+
+                    $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_undertow.svg">' + '</div>');
+                break;
+
+                case 'unfriendly':
+
+                    $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_unfriendly.svg">' + '</div>');
+                break;
+
+                case 'urchins':
+
+                    $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_urchins.svg">' + '</div>');
+                break;
+
+            }
         };
 /*
         /* Create a table for displaying more information about the location

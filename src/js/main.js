@@ -12,10 +12,10 @@ var locationData = [
       breakDetails: 'reef',
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: ['W', 'NW'],
-      optimalWind: [' E', ' SSE'],
+      optimalWind: ['E', 'SSE'],
       optimalTide: ['mid'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
-      climate: [' tropical', ' humid'],
+      climate: 'AW',
       avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
       hazards: ['barnacles', 'beginners', 'boats'],
       lat: 21.679011,
@@ -34,7 +34,7 @@ var locationData = [
       breakDetails: 'beach',
       avgSize: {min: 3, max: 7, aboveMax: true},
       optimalSwell: ['E', 'SE'],
-      optimalWind: [' E', ' SSE'],
+      optimalWind: ['E', 'SW'],
       optimalTide: ['high'],
       optimalTime: [' Mar', ' Jan', ' Feb', ' Apr', ' May'],
       climate: [' cold', ' humid'],
@@ -56,7 +56,7 @@ var locationData = [
       breakDetails: 'point',
       avgSize: {min: 5, max: 8, aboveMax: true},
       optimalSwell: ['N', 'S'],
-      optimalWind: [' E', ' SSE'],
+      optimalWind: ['N', 'NNE'],
       optimalTide: ['high', 'low'],
       optimalTime: [' Sep', ' Oct', ' Nov', ' Dec', ' Jan', ' Feb'],
       climate: ['tropical'],
@@ -78,7 +78,7 @@ var locationData = [
       breakDetails: 'river mouth',
       avgSize: {min: 10, max: 17, aboveMax: false},
       optimalSwell: ['ESE', 'SSW'],
-      optimalWind: [' E', ' SSE'],
+      optimalWind: ['W', 'WSW'],
       optimalTide: ['high'],
       optimalTime: [' Dec', ' Jan', ' Feb', ' Mar', ' Apr', ' Jun', ' Jul'],
       climate: [' tropical', ' humid'],
@@ -144,7 +144,7 @@ var locationData = [
       breakDetails: 'reef',
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: ['WNW', 'NE'],
-      optimalWind: [' E', ' SSE'],
+      optimalWind: ['NE', 'ESE'],
       optimalTide: ['high', 'mid'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' dry', ' humid'],
@@ -166,7 +166,7 @@ var locationData = [
       breakDetails: 'reef',
       avgSize: {min: 11, max: 16, aboveMax: true},
       optimalSwell: ['W', 'NW'],
-      optimalWind: [' E', ' SSE'],
+      optimalWind: ['ENE', 'S'],
       optimalTide: ['low', 'mid', 'high'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
@@ -188,7 +188,7 @@ var locationData = [
       breakDetails: 'point',
       avgSize: {min: 5, max: 8, aboveMax: true},
       optimalSwell: ['SSE', 'ESE'],
-      optimalWind: [' E', ' SSE'],
+      optimalWind: ['W', 'N'],
       optimalTide: ['high', 'low'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' dry', ' humid'],
@@ -210,7 +210,7 @@ var locationData = [
       breakDetails: 'river mouth',
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: ['SSW', 'NE'],
-      optimalWind: [' E', ' SSE'],
+      optimalWind: ['E'],
       optimalTide: ['high', 'mid'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
@@ -232,7 +232,7 @@ var locationData = [
       breakDetails: 'beach',
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: ['WNW', 'N'],
-      optimalWind: [' E', ' SSE'],
+      optimalWind: ['SW'],
       optimalTide: ['high', 'mid', 'low'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' dry', ' humid'],
@@ -254,7 +254,7 @@ var locationData = [
       breakDetails: 'reef',
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: ['W', 'S'],
-      optimalWind: [' E', ' SSE'],
+      optimalWind: ['E', 'NNE'],
       optimalTide: ['low'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
@@ -276,7 +276,7 @@ var locationData = [
       breakDetails: 'beach',
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: ['N', 'E'],
-      optimalWind: [' E', ' SSE'],
+      optimalWind: ['NE', 'S'],
       optimalTide: ['mid'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' dry', ' humid'],
@@ -298,7 +298,7 @@ var locationData = [
       breakDetails: 'river mouth',
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: ['SSE', 'NNE'],
-      optimalWind: [' E', ' SSE'],
+      optimalWind: ['W', 'SSW'],
       optimalTide: ['high'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' cold', ' humid'],
@@ -320,7 +320,7 @@ var locationData = [
       breakDetails: 'beach',
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: ['WSW', 'ENE'],
-      optimalWind: [' E', ' SSE'],
+      optimalWind: ['NNE', 'NE'],
       optimalTide: ['high', 'low'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
@@ -342,7 +342,7 @@ var locationData = [
       breakDetails: 'point',
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: ['NE', 'NW'],
-      optimalWind: [' E', ' SSE'],
+      optimalWind: ['ESE', 'SE'],
       optimalTide: ['high'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' cold', ' humid'],
@@ -364,7 +364,7 @@ var locationData = [
       breakDetails: 'beach',
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: ['W', 'NW'],
-      optimalWind: [' E', ' SSE'],
+      optimalWind: ['E', 'S'],
       optimalTide: ['low'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
@@ -386,7 +386,7 @@ var locationData = [
       breakDetails: 'reef',
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: ['S', 'SW'],
-      optimalWind: [' E', ' SSE'],
+      optimalWind: ['N', 'S'],
       optimalTide: ['mid'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' cold', ' humid'],
@@ -408,7 +408,7 @@ var locationData = [
       breakDetails: 'beach',
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: ['W', 'E'],
-      optimalWind: [' E', ' SSE'],
+      optimalWind: ['NE', ' ENE'],
       optimalTide: ['mid', 'low'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: [' tropical', ' humid'],
@@ -430,7 +430,7 @@ var locationData = [
       breakDetails: 'point',
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: ['W', 'NW'],
-      optimalWind: [' E', ' SSE'],
+      optimalWind: ['SSE', 'N'],
       optimalTide: ['high', 'low'],
       optimalTime: [' Jan', ' Feb', ' Mar', ' Apr', ' May', ' Jun', ' Jul', ' Aug', ' Sep', ' Oct', ' Nov', ' Dec'],
       climate: [' cold', ' humid'],
@@ -1256,7 +1256,7 @@ function AppViewModel () {
         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 tide card">' + tideIcon + '</div>');
 
       // Render optimal swell compass
-      $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 swell card"><canvas id="compass-swell" width="180" height="180"></canvas></div>');
+      $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 swell card"><canvas id="compass-swell" width="160" height="160"></canvas></div>');
 
 
       renderSwellCompass();
@@ -1271,20 +1271,20 @@ function AppViewModel () {
             pointer.src = 'img/compass_swell_pointer.svg';
 
             var img = new Image();
-            img.src = 'img/compass_swell.svg';
+            img.src = 'img/compass_guide.svg';
             img.onload = draw;
 
             function draw() {
 
-                  console.log('draw compass');
+
                   ctx.drawImage(img, 0, 0);
-                  console.log('save drawing');
+
                   ctx.save();
 
                   ctx.translate(80, 80);
 
                   for (var i = 0; i < obj.optimalSwell.length; i++) {
-                        console.log('check angle');
+
                         switch (obj.optimalSwell[i]) {
                               case 'N':
                                     var swellDirection = 0;
@@ -1359,12 +1359,119 @@ function AppViewModel () {
 
                               ctx.rotate(-pointerAngle);
                   }
-                  console.log('restore saved drawing');
+
                   ctx.restore();
             };
       };
 
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 wind card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + obj.optimalWind + '</p>' + '</div>');
+
+      // Render optimal wind compass
+      $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 wind card"><canvas id="compass-wind" width="160" height="160"></canvas></div>');
+
+
+      renderWindCompass();
+
+      function renderWindCompass () {
+
+            var Canvas = document.getElementById('compass-wind');
+
+            var ctx = Canvas.getContext('2d');
+
+            var pointer = new Image();
+            pointer.src = 'img/compass_wind_pointer.svg';
+
+            var img = new Image();
+            img.src = 'img/compass_guide.svg';
+            img.onload = draw;
+
+            function draw() {
+
+                  ctx.drawImage(img, 0, 0);
+
+                  ctx.save();
+
+                  ctx.translate(80, 80);
+
+                  for (var i = 0; i < obj.optimalWind.length; i++) {
+
+                        switch (obj.optimalWind[i]) {
+                              case 'N':
+                                    var windDirection = 0;
+                              break;
+
+                              case 'NNE':
+                                    var windDirection = 22.5;
+                              break;
+
+                              case 'NE':
+                                    var windDirection = 45;
+                              break;
+
+                              case 'ENE':
+                                    var windDirection = 67.5;
+                              break;
+
+                              case 'E':
+                                    var windDirection = 90;
+                              break;
+
+                              case 'ESE':
+                                    var windDirection = 112.5;
+                              break;
+
+                              case 'SE':
+                                    var windDirection = 135;
+                              break;
+
+                              case 'SSE':
+                                    var windDirection = 157.5;
+                              break;
+
+                              case 'S':
+                                    var windDirection = 180;
+                              break;
+
+                              case 'SSW':
+                                    var windDirection = 202.5;
+                              break;
+
+                              case 'SW':
+                                    var windDirection = 225;
+                              break;
+
+                              case 'WSW':
+                                    var windDirection = 247.5;
+                              break;
+
+                              case 'W':
+                                    var windDirection = 270;
+                              break;
+
+                              case 'WNW':
+                                    var windDirection = 292.5;
+                              break;
+
+                              case 'NW':
+                                    var windDirection = 315;
+                              break;
+
+                              case 'NNW':
+                                    var windDirection = 337.5;
+                              break;
+                        }
+
+                              var pointerAngle = windDirection * (Math.PI / 180);
+
+                              ctx.rotate(pointerAngle);
+
+                              ctx.drawImage(pointer, -80, -80);
+
+                              ctx.rotate(-pointerAngle);
+                  }
+
+                  ctx.restore();
+            };
+      };
 
         // Set variables for each season at zero
         var spring = 0;
@@ -1438,7 +1545,7 @@ function AppViewModel () {
 
         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 time card">' + bestMonthsIcon + '</div>');
 
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 climate card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + obj.climate  + '</p>' + '</div>');
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 climate card">' + '<img src="img/empty_marquee.svg">' + '<p>' + obj.climate  + '</p>' + '</div>');
 
         /* Create an array to hold the details for what kind of water attire one should wear according to the time of year
         var gear = [];

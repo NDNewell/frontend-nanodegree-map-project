@@ -257,6 +257,13 @@ body {
     margin-top: -115px;
 }
 
+.climate > img:first-child + p {
+    font-size: 5em;
+    font-weight: bolder;
+    font-color: #333333;
+    margin-top: -127px;
+}
+
 .guide-close-button {
     position: absolute;
     z-index: 500;

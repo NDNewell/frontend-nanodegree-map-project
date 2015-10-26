@@ -258,10 +258,34 @@ body {
 }
 
 .climate > img:first-child + p {
-    font-size: 5em;
+    font-size: 4em;
     font-weight: bolder;
     font-color: #333333;
-    margin-top: -127px;
+    margin-top: -120px;
+}
+
+.cost > img:first-child + p {
+    font-size: 2em;
+    font-weight: bolder;
+    font-color: #333333;
+    margin-top: -141px;
+    margin-left: -10px;
+}
+
+.cost > img:first-child + p + p{
+    font-size: 2em;
+    font-weight: bolder;
+    font-color: #333333;
+    margin-top: -6px;
+    margin-left: 30px;
+}
+
+.cost > img:first-child + p + p + p {
+    font-size: 2em;
+    font-weight: bolder;
+    font-color: #333333;
+    margin-top: -3px;
+    margin-left: 75px;
 }
 
 .guide-close-button {

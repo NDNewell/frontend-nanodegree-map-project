@@ -292,10 +292,13 @@ body {
     margin-top: -180px;
 }
 
-.highlight-attire {
+.highlight-attire > img:first-child {
+    margin-left: 0%;
+    margin-right: 0%;
     border: solid 4px;
     border-color: #00B8E6;
     border-radius: 26px;
+    margin-top: -4px;
 }
 
 .guide-close-button {
@@ -426,10 +429,20 @@ body {
     }
 
     .highlight-attire {
-        border: solid 4px;
-        border-color: #00B8E6;
-        border-radius: 26px;
-        margin-left: -4px;
+        padding-left: 6px;
+        border: 6px;
+    }
+
+    .highlight-attire > img:first-child + img {
+        margin-left: 6px;
+    }
+
+}
+
+@media (max-width: 767px) and (min-width: 699px) {
+    .water-temp {
+        padding-left: 50px;
+        padding-right: 50px;
     }
 }
 

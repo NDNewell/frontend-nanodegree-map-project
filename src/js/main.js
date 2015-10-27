@@ -1566,13 +1566,13 @@ function AppViewModel () {
             };
         };
 
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 water-temp card">' + '<img class="spring" src="img/water_temp_spring.svg">' + gear[0] + '</div>');
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 water-temp spring card">' + '<img src="img/water_temp_spring.svg">' + gear[0] + '</div>');
 
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 water-temp card">' + '<img class="summer" src="img/water_temp_summer.svg">' + gear[1] + '</div>');
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 water-temp summer card">' + '<img src="img/water_temp_summer.svg">' + gear[1] + '</div>');
 
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 water-temp card">' + '<img class="autumn" src="img/water_temp_autumn.svg">' + gear[2] + '</div>');
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 water-temp autumn card">' + '<img src="img/water_temp_autumn.svg">' + gear[2] + '</div>');
 
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 water-temp card">' + '<img class="winter" src="img/water_temp_winter.svg">' + gear[3] + '</div>');
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 water-temp winter card">' + '<img src="img/water_temp_winter.svg">' + gear[3] + '</div>');
 
         // Get today's date and month
         var today = new Date();

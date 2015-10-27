@@ -1608,7 +1608,6 @@ function AppViewModel () {
                     ctx.drawImage(seasonBackground, 0, 0);
                     ctx.drawImage(attire, 0, 0);
                 }
-
         }
 
         // Get today's date and month
@@ -1647,11 +1646,13 @@ function AppViewModel () {
 
         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 climate card">' + '<img src="img/empty_marquee.svg">' + '<p>' + obj.climate  + '</p>' + '</div>');
 
-        var midRange = (obj.cost.highEnd - obj.cost.budget)/2 + obj.cost.budget;
+        var midRange = Math.floor((obj.cost.highEnd - obj.cost.budget)/2 + obj.cost.budget);
 
         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 cost card">' + '<img src="img/cost.svg">' + '<p>' + obj.cost.budget + '</p>' + '<p>' + midRange + '</p>' + '<p>' + obj.cost.highEnd +'</p>' + '</div>');
 
-        for (var i = 0; i < obj.hazards.length; i++) {
+        var hazardsLength = obj.hazards.length;
+
+        for (var i = hazardsLength; i--;) {
 
             switch (obj.hazards[i]) {
 

@@ -1621,12 +1621,6 @@ function AppViewModel () {
         }
 
         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 climate card">' + '<img src="img/empty_marquee.svg">' + '<p>' + obj.climate  + '</p>' + '</div>');
-/*
-         Create an inner table that displays water temp and recommended water attire according to time of year
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 water-temp attire card">' + '<table>' + '<thead>' + '<tr>'  + '<th colspan="4">' + "Water Temp" + '</th>' + '</tr>' + '</thead>' + '<tbody>' + '<tr>' + '<td>' + "Spring" + '</td>' + '<td>' + "Summer" + '</td>' + '<td>' + "Autumn" + '</td>' + '<td>' + "Winter" + '</td>' + '</tr>' + '<tr>' + '<td>' + obj.avgWaterTemp.spring + "℉" + '</td>' + '<td>' + obj.avgWaterTemp.summer + "℉" + '</td>' + '<td>' + obj.avgWaterTemp.autumn + "℉" + '</td>' + '<td>' + obj.avgWaterTemp.winter + "℉" + '</td>' + '</tr>' + '<tr>' + '<td>' + gear[0] + '</td>' + '<td>' + gear[1] + '</td>' + '<td>' + gear[2] + '</td>' + '<td>' + gear[3] + '</td>' + '</tr>' + '</tbody>' + '</table>' + '</div>');*/
-
-        /*
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 cost card">' + '<table>' + '<thead>' + '<tr>'  + '<th colspan="3">' + "Cost" + '</th>' + '</tr>' + '</thead>' + '<tbody>' + '<tr>' + '<td>' + "Cost/day:"+ '</td>' + '<td>' + '<table>' + '<tr>' + '<td>' + "Budget" + '</td>' + '<td>' + "Mid-range" + '</td>' + '<td>' + "Deluxe" + '</td>' + '</tr>' + '<tr>' + '<td>' + "$" + obj.cost.budget + '</td>' + '<td>' + "$" + obj.cost.budget + ' ' + "-" + ' ' + obj.cost.highEnd + '</td>' + '<td>' + "$" + obj.cost.highEnd + "+" + '</td>' + '</tr>' + '</table>' + '</td>' + '</tr>' + '</tbody>' + '</table>' + '</div>');*/
 
         var midRange = (obj.cost.highEnd - obj.cost.budget)/2 + obj.cost.budget;
 
@@ -1743,108 +1737,7 @@ function AppViewModel () {
 
             }
         };
-/*
-        /* Create a table for displaying more information about the location
-        $('.surf-guide').append('<table class="surf-guide-table"></table>');
 
-        // Cache the reference to the table
-        var $surfGuideTable = $('.surf-guide-table');
-
-        // Create a table head to hold the clicked object's name and location
-        $surfGuideTable.append('<thead class="table-head"></thead>');
-
-        // Add the name of the break and location as title of table
-        $('.table-head').append('<tr>' + '<th colspan="4">' + obj.breakName + ',' + ' ' + obj.location + '</th>' + '</tr>');
-
-        // Create table body to display more unique information about the location
-        $surfGuideTable.append('<tbody class="table-body"></tbody>');
-
-        // Cache the reference to the table body
-        var $surfGuideTableBody = $('.table-body');
-
-        // Check if break has big waves
-        if (obj.bigWave) {
-            var bigWave = '<img src="http://lorempixel.com/40/40/technics" class="img-responsive img-circle">'
-        } else {
-            var bigWave = '';
-        };
-
-        // Check if break is well known
-        if (obj.wellKnown) {
-            var wellKnown = '<img src="http://lorempixel.com/40/40/technics" class="img-responsive img-circle">'
-        } else {
-            var wellKnown = '';
-        };
-
-        // Add special designations for the break
-        $surfGuideTableBody.append('<tr>' + '<td>' + bigWave + '</td>' + '<td>' + wellKnown + '</td>' + '</tr>');
-
-        // Add break difficulty
-        $surfGuideTableBody.append('<tr>' + '<td>' + "Difficulty:" + '</td>' + '<td>' + obj.skillLevel + '</td>' + '</tr>');
-
-        // Add break direction (left, right etc.)
-        $surfGuideTableBody.append('<tr>' + '<td>' + "Direction:"+ '</td>' + '<td>' + obj.waveDirection + '</td>' + '</tr>');
-
-        // Add what the wave breaks over (beach, reef, rocks etc.)
-        $surfGuideTableBody.append('<tr>' + '<td>' + "Break:" + '</td>' + '<td>' + obj.breakDetails + '</td>' + '</tr>');
-
-        /* Check if the average maximum wave size sometime goes above the max.
-        If it does, save a plus sign in a variable to add to the min/max wave
-        height
-        if (obj.avgSize.aboveMax) {
-            var plus = '+';
-        } else {
-            var plus = '';
-        }
-
-        // Add the average wave size range
-        $surfGuideTableBody.append('<tr>' + '<td>' + "Height:"+ '</td>' + '<td>' + obj.avgSize.min + ' ' + "-" + ' ' + obj.avgSize.max + plus + "ft" + '</td>' + '</tr>');
-
-        // Add the optimal swell direction
-        $surfGuideTableBody.append('<tr>' + '<td>' + "Swell:" + '</td>' + '<td>' + obj.optimalSwell + '</td>' + '</tr>');
-
-        // Add the optimal tide
-        $surfGuideTableBody.append('<tr>' + '<td>' + "Tide:" + '</td>' + '<td>' + obj.optimalTide + '</td>' + '</tr>');
-
-        // Add the optimal wind direction
-        $surfGuideTableBody.append('<tr>' + '<td>' + "Wind:" + '</td>' + '<td>' + obj.optimalWind + ' ' + '</td>' + '</tr>');
-
-        // Add the optimal time of year to surf the break
-        $surfGuideTableBody.append('<tr>' + '<td>' + "Time:" + '</td>' + '<td>' + obj.optimalTime + '</td>' + '</tr>');
-
-        // Add the climate details
-        $surfGuideTableBody.append('<tr>' + '<td>' + "Climate:" + '</td>' + '<td>' + obj.climate + '</td>' + '</tr>');
-
-        /* Create an array to hold the details for what kind of water attire one should wear according to the time of year
-        var gear = [];
-
-        /* Loop through the average water temps for each time of year. Designate specific water attire for each time of year
-        for (var temp in obj.avgWaterTemp) {
-
-            if(obj.avgWaterTemp[temp] > 72) {
-                gear.push('boardies');
-            } else if (obj.avgWaterTemp[temp] > 66) {
-                gear.push('2mm wetsuit');
-            } else if (obj.avgWaterTemp[temp] > 59) {
-                gear.push('3mm wetsuit');
-            } else if (obj.avgWaterTemp[temp] > 54) {
-                gear.push('4mm wetsuit');
-            } else if (obj.avgWaterTemp[temp] > 48) {
-                gear.push('5mm wetsuit');
-            } else if (obj.avgWaterTemp[temp] > 43) {
-                gear.push('6mm wetsuit');
-            };
-        };
-
-        /* Create an inner table that displays water temp and recommended water attire according to time of year
-        $surfGuideTableBody.append('<tr>' + '<td>' + "Water Temp:" + '</td>' + '<td>' + '<table>' + '<tr>' + '<td>' + "Spring" + '</td>' + '<td>' + "Summer" + '</td>' + '<td>' + "Autumn" + '</td>' + '<td>' + "Winter" + '</td>' + '</tr>' + '<tr>' + '<td>' + obj.avgWaterTemp.spring + "℉" + '</td>' + '<td>' + obj.avgWaterTemp.summer + "℉" + '</td>' + '<td>' + obj.avgWaterTemp.autumn + "℉" + '</td>' + '<td>' + obj.avgWaterTemp.winter + "℉" + '</td>' + '</tr>' + '<tr>' + '<td>' + gear[0] + '</td>' + '<td>' + gear[1] + '</td>' + '<td>' + gear[2] + '</td>' + '<td>' + gear[3] + '</td>' + '</tr>' + '</table>' + '</td>' + '</tr>');
-
-        // Add a list of surfing hazards for the specific break
-        $surfGuideTableBody.append('<tr>' + '<td>' + "Hazards:"+ '</td>' + '<td>' + obj.hazards + '</td>' + '</tr>');
-
-        // Add an inner table that displays varying budgets
-        $surfGuideTableBody.append('<tr>' + '<td>' + "Cost/day:"+ '</td>' + '<td>' + '<table>' + '<tr>' + '<td>' + "Budget" + '</td>' + '<td>' + "Mid-range" + '</td>' + '<td>' + "Deluxe" + '</td>' + '</tr>' + '<tr>' + '<td>' + "$" + obj.cost.budget + '</td>' + '<td>' + "$" + obj.cost.budget + ' ' + "-" + ' ' + obj.cost.highEnd + '</td>' + '<td>' + "$" + obj.cost.highEnd + "+" + '</td>' + '</tr>' + '</table>' + '</td>' + '</tr>');
-*/
         addGuideButtons(obj);
 
     };

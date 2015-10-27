@@ -292,6 +292,12 @@ body {
     margin-top: -180px;
 }
 
+.highlight-attire {
+    border: solid 4px;
+    border-color: #00B8E6;
+    border-radius: 26px;
+}
+
 .guide-close-button {
     position: absolute;
     z-index: 500;
@@ -419,5 +425,11 @@ body {
         font-size: .7em;
     }
 
+    .highlight-attire {
+        border: solid 4px;
+        border-color: #00B8E6;
+        border-radius: 26px;
+        margin-left: -4px;
+    }
 }
 

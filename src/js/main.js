@@ -1586,37 +1586,25 @@ function AppViewModel () {
           case 11 :
           case 0 :
           case 1 :
-              $('.winter').css({
-                "background-color": "#E0F9E0",
-                "border-radius": "20px"
-              });
+              $('.winter').addClass("highlight-attire");
           break;
 
           case 2:
           case 3:
           case 4:
-              $('.spring').css({
-                "background-color": "#E0F9E0",
-                "border-radius": "20px"
-              });
+              $('.spring').addClass("highlight-attire");
           break;
 
           case 5:
           case 6:
           case 7:
-              $('.summer').css({
-                "background-color": "#E0F9E0",
-                "border-radius": "20px"
-              });
+              $('.summer').addClass("highlight-attire");
           break;
 
           case 8:
           case 9:
           case 10:
-              $('.autumn').css({
-                "background-color": "#E0F9E0",
-                "border-radius": "20px"
-              });
+              $('.autumn').addClass("highlight-attire");
           break;
         }
 

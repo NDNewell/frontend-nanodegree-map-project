@@ -28,7 +28,7 @@ var locationData = [
       location: 'Oahu, Hawaii',
       bigWave: false,
       wellKnown: true,
-      cost: {budget: 100, highEnd: 250},
+      cost: {budget: 50, highEnd: 150},
       skillLevel: ['advanced'],
       waveDirection: 'right',
       breakDetails: 'beach',
@@ -50,7 +50,7 @@ var locationData = [
       location: 'Kauai, Hawaii',
       bigWave: true,
       wellKnown: false,
-      cost: {budget: 100, highEnd: 250},
+      cost: {budget: 125, highEnd: 300},
       skillLevel: ['advanced'],
       waveDirection: 'left & right',
       breakDetails: 'point',
@@ -72,7 +72,7 @@ var locationData = [
       location: 'Kauai, Hawaii',
       bigWave: false,
       wellKnown: false,
-      cost: {budget: 100, highEnd: 250},
+      cost: {budget: 20, highEnd: 50},
       skillLevel: ['intermediate'],
       waveDirection: 'right',
       breakDetails: 'river mouth',
@@ -94,7 +94,7 @@ var locationData = [
       location: 'Kauai, Hawaii',
       bigWave: false,
       wellKnown: true,
-      cost: {budget: 100, highEnd: 250},
+      cost: {budget: 50, highEnd: 100},
       skillLevel: ['beginner'],
       waveDirection: 'left',
       breakDetails: 'point',
@@ -116,7 +116,7 @@ var locationData = [
       location: 'Kauai, Hawaii',
       bigWave: true,
       wellKnown: false,
-      cost: {budget: 100, highEnd: 250},
+      cost: {budget: 30, highEnd: 60},
       skillLevel: ['beginner', 'intermediate', 'advanced'],
       waveDirection: 'left & right',
       breakDetails: 'river mouth',
@@ -138,7 +138,7 @@ var locationData = [
       location: 'Oahu, Hawaii',
       bigWave: false,
       wellKnown: true,
-      cost: {budget: 100, highEnd: 250},
+      cost: {budget: 15, highEnd: 35},
       skillLevel: ['advanced'],
       waveDirection: 'left',
       breakDetails: 'reef',
@@ -160,7 +160,7 @@ var locationData = [
       location: 'Oahu, Hawaii',
       bigWave: true,
       wellKnown: false,
-      cost: {budget: 100, highEnd: 250},
+      cost: {budget: 20, highEnd: 50},
       skillLevel: ['advanced'],
       waveDirection: 'left',
       breakDetails: 'reef',
@@ -182,7 +182,7 @@ var locationData = [
       location: 'Oahu, Hawaii',
       bigWave: false,
       wellKnown: false,
-      cost: {budget: 100, highEnd: 250},
+      cost: {budget: 35, highEnd: 75},
       skillLevel: ['advanced'],
       waveDirection: 'right',
       breakDetails: 'point',
@@ -204,7 +204,7 @@ var locationData = [
       location: 'Oahu, Hawaii',
       bigWave: true,
       wellKnown: true,
-      cost: {budget: 100, highEnd: 250},
+      cost: {budget: 200, highEnd: 600},
       skillLevel: ['intermediate'],
       waveDirection: 'left',
       breakDetails: 'river mouth',
@@ -226,7 +226,7 @@ var locationData = [
       location: 'Molokai, Hawaii',
       bigWave: false,
       wellKnown: false,
-      cost: {budget: 100, highEnd: 250},
+      cost: {budget: 5, highEnd: 25},
       skillLevel: ['beginner'],
       waveDirection: 'right',
       breakDetails: 'beach',
@@ -248,7 +248,7 @@ var locationData = [
       location: 'Maui, Hawaii',
       bigWave: false,
       wellKnown: false,
-      cost: {budget: 100, highEnd: 250},
+      cost: {budget: 10, highEnd: 25},
       skillLevel: ['intermediate'],
       waveDirection: 'left & right',
       breakDetails: 'reef',
@@ -270,7 +270,7 @@ var locationData = [
       location: 'Maui, Hawaii',
       bigWave: false,
       wellKnown: false,
-      cost: {budget: 100, highEnd: 250},
+      cost: {budget: 45, highEnd: 85},
       skillLevel: ['beginner'],
       waveDirection: 'right',
       breakDetails: 'beach',
@@ -292,7 +292,7 @@ var locationData = [
       location: 'Maui, Hawaii',
       bigWave: false,
       wellKnown: true,
-      cost: {budget: 100, highEnd: 250},
+      cost: {budget: 60, highEnd: 100},
       skillLevel: ['intermediate'],
       waveDirection: 'left & right',
       breakDetails: 'river mouth',
@@ -314,7 +314,7 @@ var locationData = [
       location: 'Maui, Hawaii',
       bigWave: true,
       wellKnown: false,
-      cost: {budget: 100, highEnd: 250},
+      cost: {budget: 20, highEnd: 55},
       skillLevel: ['beginner'],
       waveDirection: 'right',
       breakDetails: 'beach',
@@ -336,7 +336,7 @@ var locationData = [
       location: 'Maui, Hawaii',
       bigWave: false,
       wellKnown: true,
-      cost: {budget: 100, highEnd: 250},
+      cost: {budget: 10, highEnd: 30},
       skillLevel: ['intermediate'],
       waveDirection: 'left & right',
       breakDetails: 'point',
@@ -358,7 +358,7 @@ var locationData = [
       location: 'Big Island, Hawaii',
       bigWave: true,
       wellKnown: false,
-      cost: {budget: 100, highEnd: 250},
+      cost: {budget: 60, highEnd: 185},
       skillLevel: ['advanced'],
       waveDirection: 'left',
       breakDetails: 'beach',
@@ -380,7 +380,7 @@ var locationData = [
       location: 'Big Island, Hawaii',
       bigWave: false,
       wellKnown: false,
-      cost: {budget: 100, highEnd: 250},
+      cost: {budget: 70, highEnd: 120},
       skillLevel: ['beginner'],
       waveDirection: 'left & right',
       breakDetails: 'reef',
@@ -402,7 +402,7 @@ var locationData = [
       location: 'Big Island, Hawaii',
       bigWave: true,
       wellKnown: true,
-      cost: {budget: 100, highEnd: 250},
+      cost: {budget: 10, highEnd: 30},
       skillLevel: ['intermediate', 'advanced'],
       waveDirection: 'left',
       breakDetails: 'beach',
@@ -424,7 +424,7 @@ var locationData = [
       location: 'Big Island, Hawaii',
       bigWave: true,
       wellKnown: false,
-      cost: {budget: 100, highEnd: 250},
+      cost: {budget: 5, highEnd: 25},
       skillLevel: ['beginner', 'intermediate'],
       waveDirection: 'left & right',
       breakDetails: 'point',
@@ -1210,8 +1210,225 @@ function AppViewModel () {
 
         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 wave-height card">' + '<img src="img/wave_range.svg">' + '<p>' + obj.avgSize.min + "-" + obj.avgSize.max + plus + "ft" + '</p>' + '</div>');
 
-        /* Display icon associated with the optimal tide */
+        // Render optimal swell compass
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 swell card"><canvas id="compass-swell" width="160" height="160"></canvas></div>');
 
+
+        renderSwellCompass();
+
+        function renderSwellCompass () {
+
+              var Canvas = document.getElementById('compass-swell');
+
+              var ctx = Canvas.getContext('2d');
+
+              var pointer = new Image();
+              pointer.src = 'img/compass_swell_pointer.svg';
+
+              var img = new Image();
+              img.src = 'img/compass_guide.svg';
+              img.onload = draw;
+
+              function draw() {
+
+
+                    ctx.drawImage(img, 0, 0);
+
+                    ctx.save();
+
+                    ctx.translate(80, 80);
+
+                    for (var i = 0; i < obj.optimalSwell.length; i++) {
+
+                          switch (obj.optimalSwell[i]) {
+                                case 'N':
+                                      var swellDirection = 0;
+                                break;
+
+                                case 'NNE':
+                                      var swellDirection = 22.5;
+                                break;
+
+                                case 'NE':
+                                      var swellDirection = 45;
+                                break;
+
+                                case 'ENE':
+                                      var swellDirection = 67.5;
+                                break;
+
+                                case 'E':
+                                      var swellDirection = 90;
+                                break;
+
+                                case 'ESE':
+                                      var swellDirection = 112.5;
+                                break;
+
+                                case 'SE':
+                                      var swellDirection = 135;
+                                break;
+
+                                case 'SSE':
+                                      var swellDirection = 157.5;
+                                break;
+
+                                case 'S':
+                                      var swellDirection = 180;
+                                break;
+
+                                case 'SSW':
+                                      var swellDirection = 202.5;
+                                break;
+
+                                case 'SW':
+                                      var swellDirection = 225;
+                                break;
+
+                                case 'WSW':
+                                      var swellDirection = 247.5;
+                                break;
+
+                                case 'W':
+                                      var swellDirection = 270;
+                                break;
+
+                                case 'WNW':
+                                      var swellDirection = 292.5;
+                                break;
+
+                                case 'NW':
+                                      var swellDirection = 315;
+                                break;
+
+                                case 'NNW':
+                                      var swellDirection = 337.5;
+                                break;
+                          }
+
+                                var pointerAngle = swellDirection * (Math.PI / 180);
+
+                                ctx.rotate(pointerAngle);
+
+                                ctx.drawImage(pointer, -80, -80);
+
+                                ctx.rotate(-pointerAngle);
+                    }
+
+                    ctx.restore();
+              };
+        };
+
+
+        // Render optimal wind compass
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 wind card"><canvas id="compass-wind" width="160" height="160"></canvas></div>');
+
+
+        renderWindCompass();
+
+        function renderWindCompass () {
+
+              var Canvas = document.getElementById('compass-wind');
+
+              var ctx = Canvas.getContext('2d');
+
+              var pointer = new Image();
+              pointer.src = 'img/compass_wind_pointer.svg';
+
+              var img = new Image();
+              img.src = 'img/compass_guide.svg';
+              img.onload = draw;
+
+              function draw() {
+
+                    ctx.drawImage(img, 0, 0);
+
+                    ctx.save();
+
+                    ctx.translate(80, 80);
+
+                    for (var i = 0; i < obj.optimalWind.length; i++) {
+
+                          switch (obj.optimalWind[i]) {
+                                case 'N':
+                                      var windDirection = 0;
+                                break;
+
+                                case 'NNE':
+                                      var windDirection = 22.5;
+                                break;
+
+                                case 'NE':
+                                      var windDirection = 45;
+                                break;
+
+                                case 'ENE':
+                                      var windDirection = 67.5;
+                                break;
+
+                                case 'E':
+                                      var windDirection = 90;
+                                break;
+
+                                case 'ESE':
+                                      var windDirection = 112.5;
+                                break;
+
+                                case 'SE':
+                                      var windDirection = 135;
+                                break;
+
+                                case 'SSE':
+                                      var windDirection = 157.5;
+                                break;
+
+                                case 'S':
+                                      var windDirection = 180;
+                                break;
+
+                                case 'SSW':
+                                      var windDirection = 202.5;
+                                break;
+
+                                case 'SW':
+                                      var windDirection = 225;
+                                break;
+
+                                case 'WSW':
+                                      var windDirection = 247.5;
+                                break;
+
+                                case 'W':
+                                      var windDirection = 270;
+                                break;
+
+                                case 'WNW':
+                                      var windDirection = 292.5;
+                                break;
+
+                                case 'NW':
+                                      var windDirection = 315;
+                                break;
+
+                                case 'NNW':
+                                      var windDirection = 337.5;
+                                break;
+                          }
+
+                                var pointerAngle = windDirection * (Math.PI / 180);
+
+                                ctx.rotate(pointerAngle);
+
+                                ctx.drawImage(pointer, -80, -80);
+
+                                ctx.rotate(-pointerAngle);
+                    }
+
+                    ctx.restore();
+              };
+        };
+
+        /* Display icon associated with the optimal tide */
         // Set variables for each skill level at zero
         var low = 0;
         var mid = 0;
@@ -1255,223 +1472,6 @@ function AppViewModel () {
 
         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 tide card">' + tideIcon + '</div>');
 
-      // Render optimal swell compass
-      $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 swell card"><canvas id="compass-swell" width="160" height="160"></canvas></div>');
-
-
-      renderSwellCompass();
-
-      function renderSwellCompass () {
-
-            var Canvas = document.getElementById('compass-swell');
-
-            var ctx = Canvas.getContext('2d');
-
-            var pointer = new Image();
-            pointer.src = 'img/compass_swell_pointer.svg';
-
-            var img = new Image();
-            img.src = 'img/compass_guide.svg';
-            img.onload = draw;
-
-            function draw() {
-
-
-                  ctx.drawImage(img, 0, 0);
-
-                  ctx.save();
-
-                  ctx.translate(80, 80);
-
-                  for (var i = 0; i < obj.optimalSwell.length; i++) {
-
-                        switch (obj.optimalSwell[i]) {
-                              case 'N':
-                                    var swellDirection = 0;
-                              break;
-
-                              case 'NNE':
-                                    var swellDirection = 22.5;
-                              break;
-
-                              case 'NE':
-                                    var swellDirection = 45;
-                              break;
-
-                              case 'ENE':
-                                    var swellDirection = 67.5;
-                              break;
-
-                              case 'E':
-                                    var swellDirection = 90;
-                              break;
-
-                              case 'ESE':
-                                    var swellDirection = 112.5;
-                              break;
-
-                              case 'SE':
-                                    var swellDirection = 135;
-                              break;
-
-                              case 'SSE':
-                                    var swellDirection = 157.5;
-                              break;
-
-                              case 'S':
-                                    var swellDirection = 180;
-                              break;
-
-                              case 'SSW':
-                                    var swellDirection = 202.5;
-                              break;
-
-                              case 'SW':
-                                    var swellDirection = 225;
-                              break;
-
-                              case 'WSW':
-                                    var swellDirection = 247.5;
-                              break;
-
-                              case 'W':
-                                    var swellDirection = 270;
-                              break;
-
-                              case 'WNW':
-                                    var swellDirection = 292.5;
-                              break;
-
-                              case 'NW':
-                                    var swellDirection = 315;
-                              break;
-
-                              case 'NNW':
-                                    var swellDirection = 337.5;
-                              break;
-                        }
-
-                              var pointerAngle = swellDirection * (Math.PI / 180);
-
-                              ctx.rotate(pointerAngle);
-
-                              ctx.drawImage(pointer, -80, -80);
-
-                              ctx.rotate(-pointerAngle);
-                  }
-
-                  ctx.restore();
-            };
-      };
-
-
-      // Render optimal wind compass
-      $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 wind card"><canvas id="compass-wind" width="160" height="160"></canvas></div>');
-
-
-      renderWindCompass();
-
-      function renderWindCompass () {
-
-            var Canvas = document.getElementById('compass-wind');
-
-            var ctx = Canvas.getContext('2d');
-
-            var pointer = new Image();
-            pointer.src = 'img/compass_wind_pointer.svg';
-
-            var img = new Image();
-            img.src = 'img/compass_guide.svg';
-            img.onload = draw;
-
-            function draw() {
-
-                  ctx.drawImage(img, 0, 0);
-
-                  ctx.save();
-
-                  ctx.translate(80, 80);
-
-                  for (var i = 0; i < obj.optimalWind.length; i++) {
-
-                        switch (obj.optimalWind[i]) {
-                              case 'N':
-                                    var windDirection = 0;
-                              break;
-
-                              case 'NNE':
-                                    var windDirection = 22.5;
-                              break;
-
-                              case 'NE':
-                                    var windDirection = 45;
-                              break;
-
-                              case 'ENE':
-                                    var windDirection = 67.5;
-                              break;
-
-                              case 'E':
-                                    var windDirection = 90;
-                              break;
-
-                              case 'ESE':
-                                    var windDirection = 112.5;
-                              break;
-
-                              case 'SE':
-                                    var windDirection = 135;
-                              break;
-
-                              case 'SSE':
-                                    var windDirection = 157.5;
-                              break;
-
-                              case 'S':
-                                    var windDirection = 180;
-                              break;
-
-                              case 'SSW':
-                                    var windDirection = 202.5;
-                              break;
-
-                              case 'SW':
-                                    var windDirection = 225;
-                              break;
-
-                              case 'WSW':
-                                    var windDirection = 247.5;
-                              break;
-
-                              case 'W':
-                                    var windDirection = 270;
-                              break;
-
-                              case 'WNW':
-                                    var windDirection = 292.5;
-                              break;
-
-                              case 'NW':
-                                    var windDirection = 315;
-                              break;
-
-                              case 'NNW':
-                                    var windDirection = 337.5;
-                              break;
-                        }
-
-                              var pointerAngle = windDirection * (Math.PI / 180);
-
-                              ctx.rotate(pointerAngle);
-
-                              ctx.drawImage(pointer, -80, -80);
-
-                              ctx.rotate(-pointerAngle);
-                  }
-
-                  ctx.restore();
-            };
-      };
 
         // Set variables for each season at zero
         var spring = 0;
@@ -1545,33 +1545,85 @@ function AppViewModel () {
 
         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 time card">' + bestMonthsIcon + '</div>');
 
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 climate card">' + '<img src="img/empty_marquee.svg">' + '<p>' + obj.climate  + '</p>' + '</div>');
 
-        /* Create an array to hold the details for what kind of water attire one should wear according to the time of year
-        var gear = [];
+        var gear =[];
 
-        /* Loop through the average water temps for each time of year. Designate specific water attire for each time of year
+        /* Loop through the average water temps for each time of year. Designate specific water attire for each time of year*/
         for (var temp in obj.avgWaterTemp) {
 
             if(obj.avgWaterTemp[temp] > 72) {
-                gear.push('boardies');
+                gear.push('<img class="attire boardies" src="img/water_attire_boardies.svg">');
             } else if (obj.avgWaterTemp[temp] > 66) {
-                gear.push('2mm wetsuit');
+                gear.push('<img class="attire 2mm-wetsuit" src="img/water_attire_2mm_wetsuit.svg">');
             } else if (obj.avgWaterTemp[temp] > 59) {
-                gear.push('3mm wetsuit');
+                gear.push('<img class="attire 3mm-wetsuit" src="img/water_attire_3mm_wetsuit.svg">');
             } else if (obj.avgWaterTemp[temp] > 54) {
-                gear.push('4mm wetsuit');
+                gear.push('<img class="attire 4mm-wetsuit" src="img/water_attire_4mm_wetsuit.svg">');
             } else if (obj.avgWaterTemp[temp] > 48) {
-                gear.push('5mm wetsuit');
-            } else if (obj.avgWaterTemp[temp] > 43) {
-                gear.push('6mm wetsuit');
+                gear.push('<img class="attire 5mm-wetsuit" src="img/water_attire_5mm_wetsuit.svg">');
+            } else if (obj.avgWaterTemp[temp] <= 48) {
+                gear.push('<img class="attire 6mm-wetsuit" src="img/water_attire_6mm_wetsuit.svg">');
             };
         };
 
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 water-temp card">' + '<img class="spring" src="img/water_temp_spring.svg">' + gear[0] + '</div>');
+
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 water-temp card">' + '<img class="summer" src="img/water_temp_summer.svg">' + gear[1] + '</div>');
+
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 water-temp card">' + '<img class="autumn" src="img/water_temp_autumn.svg">' + gear[2] + '</div>');
+
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 water-temp card">' + '<img class="winter" src="img/water_temp_winter.svg">' + gear[3] + '</div>');
+
+        // Get today's date and month
+        var today = new Date();
+        var month = today.getMonth();
+
+        /* Compare today's month with the array of water
+        temps and associated seasons. Display the temp
+        related to the current season (depending on the
+        current month */
+        switch (month) {
+          case 11 :
+          case 0 :
+          case 1 :
+              $('.winter').css({
+                "background-color": "#E0F9E0",
+                "border-radius": "20px"
+              });
+          break;
+
+          case 2:
+          case 3:
+          case 4:
+              $('.spring').css({
+                "background-color": "#E0F9E0",
+                "border-radius": "20px"
+              });
+          break;
+
+          case 5:
+          case 6:
+          case 7:
+              $('.summer').css({
+                "background-color": "#E0F9E0",
+                "border-radius": "20px"
+              });
+          break;
+
+          case 8:
+          case 9:
+          case 10:
+              $('.autumn').css({
+                "background-color": "#E0F9E0",
+                "border-radius": "20px"
+              });
+          break;
+        }
+
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 climate card">' + '<img src="img/empty_marquee.svg">' + '<p>' + obj.climate  + '</p>' + '</div>');
+/*
          Create an inner table that displays water temp and recommended water attire according to time of year
         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 water-temp attire card">' + '<table>' + '<thead>' + '<tr>'  + '<th colspan="4">' + "Water Temp" + '</th>' + '</tr>' + '</thead>' + '<tbody>' + '<tr>' + '<td>' + "Spring" + '</td>' + '<td>' + "Summer" + '</td>' + '<td>' + "Autumn" + '</td>' + '<td>' + "Winter" + '</td>' + '</tr>' + '<tr>' + '<td>' + obj.avgWaterTemp.spring + "℉" + '</td>' + '<td>' + obj.avgWaterTemp.summer + "℉" + '</td>' + '<td>' + obj.avgWaterTemp.autumn + "℉" + '</td>' + '<td>' + obj.avgWaterTemp.winter + "℉" + '</td>' + '</tr>' + '<tr>' + '<td>' + gear[0] + '</td>' + '<td>' + gear[1] + '</td>' + '<td>' + gear[2] + '</td>' + '<td>' + gear[3] + '</td>' + '</tr>' + '</tbody>' + '</table>' + '</div>');*/
-
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 water-temp card">' + '<img src="http://lorempixel.com/120/120/technics" class="img-responsive">' + '<p>' + "Water Temp"  + '</p>' + '</div>');
 
         /*
         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 cost card">' + '<table>' + '<thead>' + '<tr>'  + '<th colspan="3">' + "Cost" + '</th>' + '</tr>' + '</thead>' + '<tbody>' + '<tr>' + '<td>' + "Cost/day:"+ '</td>' + '<td>' + '<table>' + '<tr>' + '<td>' + "Budget" + '</td>' + '<td>' + "Mid-range" + '</td>' + '<td>' + "Deluxe" + '</td>' + '</tr>' + '<tr>' + '<td>' + "$" + obj.cost.budget + '</td>' + '<td>' + "$" + obj.cost.budget + ' ' + "-" + ' ' + obj.cost.highEnd + '</td>' + '<td>' + "$" + obj.cost.highEnd + "+" + '</td>' + '</tr>' + '</table>' + '</td>' + '</tr>' + '</tbody>' + '</table>' + '</div>');*/

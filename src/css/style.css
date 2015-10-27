@@ -269,7 +269,7 @@ body {
     font-weight: bolder;
     font-color: #333333;
     margin-top: -141px;
-    margin-left: -10px;
+    margin-left: -15px;
 }
 
 .cost > img:first-child + p + p{
@@ -277,7 +277,7 @@ body {
     font-weight: bolder;
     font-color: #333333;
     margin-top: -6px;
-    margin-left: 30px;
+    margin-left: 25px;
 }
 
 .cost > img:first-child + p + p + p {
@@ -285,7 +285,11 @@ body {
     font-weight: bolder;
     font-color: #333333;
     margin-top: -3px;
-    margin-left: 75px;
+    margin-left: 67px;
+}
+
+.attire {
+    margin-top: -180px;
 }
 
 .guide-close-button {

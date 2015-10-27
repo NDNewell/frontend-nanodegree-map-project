@@ -1545,34 +1545,129 @@ function AppViewModel () {
 
         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 time card">' + bestMonthsIcon + '</div>');
 
-
         var gear =[];
 
         /* Loop through the average water temps for each time of year. Designate specific water attire for each time of year*/
         for (var temp in obj.avgWaterTemp) {
 
             if(obj.avgWaterTemp[temp] > 72) {
-                gear.push('<img class="attire boardies" src="img/water_attire_boardies.svg">');
+                gear.push('img/water_attire_boardies.svg');
             } else if (obj.avgWaterTemp[temp] > 66) {
-                gear.push('<img class="attire 2mm-wetsuit" src="img/water_attire_2mm_wetsuit.svg">');
+                gear.push('img/water_attire_2mm_wetsuit.svg');
             } else if (obj.avgWaterTemp[temp] > 59) {
-                gear.push('<img class="attire 3mm-wetsuit" src="img/water_attire_3mm_wetsuit.svg">');
+                gear.push('img/water_attire_3mm_wetsuit.svg');
             } else if (obj.avgWaterTemp[temp] > 54) {
-                gear.push('<img class="attire 4mm-wetsuit" src="img/water_attire_4mm_wetsuit.svg">');
+                gear.push('img/water_attire_4mm_wetsuit.svg');
             } else if (obj.avgWaterTemp[temp] > 48) {
-                gear.push('<img class="attire 5mm-wetsuit" src="img/water_attire_5mm_wetsuit.svg">');
+                gear.push('img/water_attire_5mm_wetsuit.svg');
             } else if (obj.avgWaterTemp[temp] <= 48) {
-                gear.push('<img class="attire 6mm-wetsuit" src="img/water_attire_6mm_wetsuit.svg">');
+                gear.push('img/water_attire_6mm_wetsuit.svg');
             };
         };
 
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 water-temp spring card">' + '<img src="img/water_temp_spring.svg">' + gear[0] + '</div>');
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 water-temp spring card">' + '<canvas id="spring" width="160" height="160"></canvas>');
 
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 water-temp summer card">' + '<img src="img/water_temp_summer.svg">' + gear[1] + '</div>');
+        drawSpring();
 
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 water-temp autumn card">' + '<img src="img/water_temp_autumn.svg">' + gear[2] + '</div>');
+        function drawSpring() {
 
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 water-temp winter card">' + '<img src="img/water_temp_winter.svg">' + gear[3] + '</div>');
+            var Canvas = document.getElementById('spring');
+
+            var ctx = Canvas.getContext('2d');
+
+            var attireSpring = new Image();
+            attireSpring.src = gear[0];
+
+            var seasonSpring = new Image();
+            seasonSpring.src = 'img/water_temp_spring.svg';
+            seasonSpring.onload = drawAttire;
+
+            function drawAttire () {
+
+                ctx.drawImage(seasonSpring, 0, 0);
+
+                ctx.drawImage(attireSpring, 0, 0);
+            }
+
+        }
+
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 water-temp summer card">' + '<canvas id="summer" width="160" height="160"></canvas>');
+
+        drawSummer();
+
+        function drawSummer() {
+
+            var Canvas = document.getElementById('summer');
+
+            var ctx = Canvas.getContext('2d');
+
+            var attireSummer = new Image();
+            attireSummer.src = gear[1];
+
+            var seasonSummer = new Image();
+            seasonSummer.src = 'img/water_temp_summer.svg';
+            seasonSummer.onload = drawAttire;
+
+            function drawAttire () {
+
+                ctx.drawImage(seasonSummer, 0, 0);
+
+                ctx.drawImage(attireSummer, 0, 0);
+            }
+
+        }
+
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 water-temp autumn card">' + '<canvas id="autumn" width="160" height="160"></canvas>');
+
+        drawAutumn();
+
+        function drawAutumn() {
+
+            var Canvas = document.getElementById('autumn');
+
+            var ctx = Canvas.getContext('2d');
+
+            var attireAutumn = new Image();
+            attireAutumn.src = gear[2];
+
+            var seasonAutumn = new Image();
+            seasonAutumn.src = 'img/water_temp_autumn.svg';
+            seasonAutumn.onload = drawAttire;
+
+            function drawAttire () {
+
+                ctx.drawImage(seasonAutumn, 0, 0);
+
+                ctx.drawImage(attireAutumn, 0, 0);
+            }
+
+        }
+
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 water-temp winter card">' + '<canvas id="winter" width="160" height="160"></canvas>');
+
+        drawWinter();
+
+        function drawWinter() {
+
+            var Canvas = document.getElementById('winter');
+
+            var ctx = Canvas.getContext('2d');
+
+            var attireWinter = new Image();
+            attireWinter.src = gear[3];
+
+            var seasonWinter = new Image();
+            seasonWinter.src = 'img/water_temp_winter.svg';
+            seasonWinter.onload = drawAttire;
+
+            function drawAttire () {
+
+                ctx.drawImage(seasonWinter, 0, 0);
+
+                ctx.drawImage(attireWinter, 0, 0);
+            }
+
+        }
 
         // Get today's date and month
         var today = new Date();
@@ -1586,25 +1681,25 @@ function AppViewModel () {
           case 11 :
           case 0 :
           case 1 :
-              $('.winter').addClass("highlight-attire");
+              $('#winter').addClass("highlight-attire");
           break;
 
           case 2:
           case 3:
           case 4:
-              $('.spring').addClass("highlight-attire");
+              $('#spring').addClass("highlight-attire");
           break;
 
           case 5:
           case 6:
           case 7:
-              $('.summer').addClass("highlight-attire");
+              $('#summer').addClass("highlight-attire");
           break;
 
           case 8:
           case 9:
           case 10:
-              $('.autumn').addClass("highlight-attire");
+              $('#autumn').addClass("highlight-attire");
           break;
         }
 

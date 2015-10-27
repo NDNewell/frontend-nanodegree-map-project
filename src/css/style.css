@@ -288,18 +288,14 @@ body {
     margin-left: 67px;
 }
 
-.attire {
-    margin-top: -180px;
+.water-temp > canvas:first-child {
+    border-radius: 19px;
 }
 
-.highlight-attire > img:first-child {
-    margin-left: 0%;
-    margin-right: 0%;
-    border: solid 4px;
-    border-color: #00B8E6;
-    border-radius: 26px;
-    margin-top: -4px;
+.highlight-attire {
+    box-shadow: 0px 0px 20px #00B8E6;
 }
+
 
 .guide-close-button {
     position: absolute;
@@ -428,21 +424,7 @@ body {
         font-size: .7em;
     }
 
-    .highlight-attire {
-        padding-left: 6px;
-        border: 6px;
-    }
-
-    .highlight-attire > img:first-child + img {
-        margin-left: 6px;
-    }
-
 }
 
-@media (max-width: 767px) and (min-width: 699px) {
-    .water-temp {
-        padding-left: 50px;
-        padding-right: 50px;
-    }
-}
+
 

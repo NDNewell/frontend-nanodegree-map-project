@@ -128,11 +128,15 @@ body {
     border-radius: 10px;
 }
 
-.skill-level {
-  position: absolute;
-  top: 20%;
-  left: 20%;
-  height: 60px;
+.skill-level-guide {
+    height: 160px;
+}
+
+.skill-level-hover {
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    height: 60px;
 }
 
 .card {

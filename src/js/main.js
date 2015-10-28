@@ -797,7 +797,7 @@ function AppViewModel () {
                             var waterTemp = $('.water-temp');
                             var waveSize = $('.wave-size');*/
 
-                            $(skillLevel).addClass('rollover-info');
+                            $(skillLevel).addClass('rollover-info skill-level-hover');
 
                             /* Position the skill level icon *
                             skillLevel.css({
@@ -1110,6 +1110,8 @@ function AppViewModel () {
         displaySkillIcon(obj.skillLevel);
 
         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 difficulty card">' + skillLevelIcon + '</div>');
+
+        $('.skill-level').addClass('skill-level-guide');
 
         /* Display the icon associated with the direction
         the wave breaks */

@@ -134,9 +134,21 @@ body {
 
 .skill-level-hover {
     position: absolute;
-
     top: 15%;
-    left: 20%;
+    left: 15%;
+    height: 80px;
+}
+
+.break-type-guide {
+    height: 160px;
+}
+
+.break-type-hover {
+    position: absolute;
+    top: 15%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
     height: 80px;
 }
 
@@ -147,16 +159,6 @@ body {
     border-style: dashed;
     border-color: #E8E8E8;
     text-align: center;
-
-}
-
-.card img {
-    margin-right: auto;
-    margin-left: auto;
-}
-
-.card p {
-    margin: 0px 0px;
 }
 
 .compass {

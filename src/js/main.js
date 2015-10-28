@@ -551,10 +551,16 @@ function AppViewModel () {
 
                             displaySkillIcon(obj.skillLevel);
                             var skillLevelInfo = skillLevelIcon;
-/*
+
                             /* Display the icon associated with the type of
                             break it is (i.e. what kind of surface is beneath
-                            it *
+                            it */
+
+                            displayBreakIcon(obj.breakDetails);
+                            var breakTypeInfo = breakIcon;
+
+/*
+
                             switch(obj.breakDetails) {
                               case 'reef':
                                   var breakTypeInfo = '<img src="/img/marquee.png" class="rollover-info break-type">';
@@ -778,8 +784,8 @@ function AppViewModel () {
 */
                             /* Append all cached elements to the selected
                             location frame */
-                            locationFrame.append(skillLevelInfo);/*
-                            locationFrame.append(breakTypeInfo);
+                            locationFrame.append(skillLevelInfo);
+                            locationFrame.append(breakTypeInfo);/*
                             locationFrame.append(waveDirectionInfo);
                             locationFrame.append(bestMonthsInfo);
                             locationFrame.append(miscInfoOne);
@@ -791,8 +797,8 @@ function AppViewModel () {
 
                             /* Get each element from within the location
                             frame and cache it for later use */
-                            var skillLevel = $('.skill-level');/*
-                            var breakType = $('.break-type');
+                            var skillLevel = $('.skill-level');
+                            var breakType = $('.break-type');/*
                             var waveDirection = $('.wave-direction');
                             var bestMonths = $('.best-months');
                             var miscInfoOne = $('.misc-info-one');
@@ -803,14 +809,8 @@ function AppViewModel () {
                             var waveSize = $('.wave-size');*/
 
                             $(skillLevel).addClass('rollover-info skill-level-hover');
+                            $(breakType).addClass('rollover-info break-type-hover');
 
-                            /* Position the skill level icon *
-                            skillLevel.css({
-                              "position": "absolute",
-                              "top": "20%",
-                              "left": "20%",
-                              "height" : "60px"
-                            });
 
                             /* Position the break type icon *
                             breakType.css({
@@ -909,7 +909,6 @@ function AppViewModel () {
                         breakName.toggle();
 
                         $('.rollover-info').remove();
-                        rollover = false;
                     }
                 );
             });
@@ -1044,6 +1043,9 @@ function AppViewModel () {
     /* Go to specific marker and open the surf guide */
     self.clickLocationFrame = function(obj) {
 
+            // Disable rollover effects so the correct icon loads in surf guide
+            rollover = false;
+
             // Pass object to match the appropriate marker with the obj
             self.goToMarker(obj.breakName);
 
@@ -1137,26 +1139,13 @@ function AppViewModel () {
 
         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 direction card">' + waveDirectionIcon + '</div>');
 
-        switch(obj.breakDetails) {
 
-          case 'reef':
-              var breakIcon = '<img src="/img/break_reef.svg">';
-          break;
+        displayBreakIcon(obj.breakDetails);
 
-          case 'beach':
-              var breakIcon = '<img src="/img/break_beach.svg">';
-          break;
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 break card">' + breakIcon + '</div>');
 
-          case 'point':
-              var breakIcon = '<img src="/img/break_point.svg">';
-          break;
+        $('.break-type').addClass('break-type-guide');
 
-          case 'river mouth':
-              var breakIcon = '<img src="/img/break_river_mouth.svg">';
-          break;
-        }
-
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 break-details card">' + breakIcon + '</div>');
 
         /* Check if the average maximum wave size sometime goes above the max.
         If it does, save a plus sign in a variable to add to the min/max wave
@@ -1788,8 +1777,6 @@ function AppViewModel () {
         });
     };
 
-    var skillLevelIcon;
-
     function displaySkillIcon (obj) {
         // Set variables for each skill level at zero
         var beginner = 0;
@@ -1856,6 +1843,42 @@ function AppViewModel () {
             }
         };
 
+    }
+
+    function displayBreakIcon (obj) {
+        switch(obj) {
+          case 'reef':
+              if(rollover) {
+                  breakIcon = '<img src="/img/break_ro_reef.svg" class="icon break-type">';
+              } else {
+                  breakIcon = '<img src="/img/break_reef.svg" class="icon break-type">';
+              }
+          break;
+
+          case 'beach':
+              if(rollover) {
+                  breakIcon = '<img src="/img/break_ro_beach.svg" class="icon break-type">';
+              } else {
+                  breakIcon = '<img src="/img/break_beach.svg" class="icon break-type">';
+              }
+          break;
+
+          case 'point':
+              if(rollover) {
+                  breakIcon = '<img src="/img/break_ro_point.svg" class="icon break-type">';
+              } else {
+                  breakIcon = '<img src="/img/break_point.svg" class="icon break-type">';
+              }
+          break;
+
+          case 'river mouth':
+              if(rollover) {
+                  breakIcon = '<img src="/img/break_ro_river_mouth.svg" class="icon break-type">';
+              } else {
+                  breakIcon = '<img src="/img/break_river_mouth.svg" class="icon break-type">';
+              }
+          break;
+        }
     }
 };
 

@@ -543,27 +543,13 @@ function AppViewModel () {
 
                             /* Display icon associated with the skill level
                             needed to surf the break */
-                            switch(obj.skillLevel) {
-                              case 'advanced':
-                                  var skillLevelInfo = '<img src="/img/marquee.png" class="rollover-info skill-level">';
-                              break;
 
-                              case 'intermediate':
-                                  var skillLevelInfo = '<img src="/img/marquee.png" class="rollover-info skill-level">';
-                              break;
-
-                              case 'beginner':
-                                  var skillLevelInfo = '<img src="/img/marquee.png" class="rollover-info skill-level">';
-                              break;
-
-                              case 'all levels':
-                                  var skillLevelInfo = '<img src="/img/marquee.png" class="rollover-info skill-level">';
-                              break;
-                            }
-
+                            displaySkillIcon(obj.skillLevel);
+                            var skillLevelInfo = skillLevelIcon;
+/*
                             /* Display the icon associated with the type of
                             break it is (i.e. what kind of surface is beneath
-                            it */
+                            it *
                             switch(obj.breakDetails) {
                               case 'reef':
                                   var breakTypeInfo = '<img src="/img/marquee.png" class="rollover-info break-type">';
@@ -583,7 +569,7 @@ function AppViewModel () {
                             }
 
                             /* Display the icon associated with the direction
-                            the wave breaks */
+                            the wave breaks *
                             switch(obj.waveDirection) {
                               case 'left':
                                   var waveDirectionInfo = '<img src="/img/marquee.png" class="rollover-info wave-direction">';
@@ -605,7 +591,7 @@ function AppViewModel () {
                             var winter = 0;
 
                             /* Tally the number of months fall into a
-                            particular season */
+                            particular season *
                             for (i = 0; i < obj.optimalTime.length; i++) {
                                 switch (obj.optimalTime[i]) {
                                     case ' Dec':
@@ -637,7 +623,7 @@ function AppViewModel () {
                             /* Filter which seasons are the best for the
                             particular break */
                             /* Display icon associated with best time of
-                            year */
+                            year *
                             if (winter === spring && summer && autumn) {
                                   var bestMonthsInfo = '<img src="/img/marquee.png" class="rollover-info best-months">';
                             } else if(winter >= spring && winter >= summer && winter >= autumn) {
@@ -670,7 +656,7 @@ function AppViewModel () {
 
                             /* If there is big wave surfing at this break
                             display big wave icon. If not, display the
-                            related climate icon */
+                            related climate icon *
                             if(obj.bigWave) {
                                 var miscInfoOne = '<img src="/img/marquee.png" class="rollover-info misc-info-one">';
                             } else if (obj.climate[0] === ' tropical') {
@@ -685,7 +671,7 @@ function AppViewModel () {
                             well known icon, otherwise display the correct
                             hazard icon. FYI only the first hazard will
                             be display. The worst hazard has been positioned
-                            first in the array purposfully */
+                            first in the array purposfully *
                             if(obj.wellKnown) {
                                 var miscInfoTwo = '<img src="/img/marquee.png" class="rollover-info misc-info-two">';
                             } else if (obj.hazards[0] === ' strong currents') {
@@ -696,16 +682,16 @@ function AppViewModel () {
                                 var miscInfoTwo = '<img src="/img/marquee.png" class="rollover-info misc-info-two">';
                             };
 
-                            /* Display the budget cost for the location */
+                            /* Display the budget cost for the location *
                             var costInfo = '<p class="rollover-info cost">' + '$' + obj.cost.budget + '/' + 'day' + '</p>';
 
                             /* Get distance between both locations using
-                            the Haversine formula */
-                            /* Obtain current location from user */
+                            the Haversine formula *
+                            /* Obtain current location from user *
                             var latOrigin = currentLat;
                             var lngOrigin = currentLng;
 
-                            /* Obtain location data for the selected break */
+                            /* Obtain location data for the selected break *
                             var latDest = obj.lat;
                             var lngDest = obj.lng;
 
@@ -744,7 +730,7 @@ function AppViewModel () {
                             /* Compare today's month with the array of water
                             temps and associated seasons. Display the temp
                             related to the current season (depending on the
-                            current month */
+                            current month *
                             switch (month) {
                               case 11 :
                               case 0 :
@@ -771,23 +757,23 @@ function AppViewModel () {
                               break;
                             }
 
-                            /* Cache the water temp element */
+                            /* Cache the water temp element *
                             var waterTempInfo = '<p class="rollover-info water-temp">' + waterTemp + '℉' + '</p>';
 
                             /* Check if the average maximum wave size
-                            sometimes goes above the max. If it does, save a plus sign in a variable to add to the min/max wave height */
+                            sometimes goes above the max. If it does, save a plus sign in a variable to add to the min/max wave height *
                             if (obj.avgSize.aboveMax) {
                                 var plus = '+';
                             } else {
                                 var plus = '';
                             };
 
-                            /* Cache the average wave size element */
+                            /* Cache the average wave size element *
                             var waveSizeInfo = '<p class="rollover-info wave-size">'+ obj.avgSize.min + "-" + obj.avgSize.max + plus + "ft" +'</p>';
-
+*/
                             /* Append all cached elements to the selected
                             location frame */
-                            locationFrame.append(skillLevelInfo);
+                            locationFrame.append(skillLevelInfo);/*
                             locationFrame.append(breakTypeInfo);
                             locationFrame.append(waveDirectionInfo);
                             locationFrame.append(bestMonthsInfo);
@@ -800,7 +786,7 @@ function AppViewModel () {
 
                             /* Get each element from within the location
                             frame and cache it for later use */
-                            var skillLevel = $('.skill-level');
+                            var skillLevel = $('.skill-level');/*
                             var breakType = $('.break-type');
                             var waveDirection = $('.wave-direction');
                             var bestMonths = $('.best-months');
@@ -809,9 +795,11 @@ function AppViewModel () {
                             var cost = $('.cost');
                             var distance = $('.distance');
                             var waterTemp = $('.water-temp');
-                            var waveSize = $('.wave-size');
+                            var waveSize = $('.wave-size');*/
 
-                            /* Position the skill level icon */
+                            $(skillLevel).addClass('rollover-info');
+
+                            /* Position the skill level icon *
                             skillLevel.css({
                               "position": "absolute",
                               "top": "20%",
@@ -819,7 +807,7 @@ function AppViewModel () {
                               "height" : "60px"
                             });
 
-                            /* Position the break type icon */
+                            /* Position the break type icon *
                             breakType.css({
                               "position": "absolute",
                               "top" : "20%",
@@ -829,7 +817,7 @@ function AppViewModel () {
                               "height" : "60px"
                             });
 
-                            /* Position the wave direction icon */
+                            /* Position the wave direction icon *
                             waveDirection.css({
                               "position": "absolute",
                               "top" : "20%",
@@ -837,7 +825,7 @@ function AppViewModel () {
                               "height" : "60px"
                             });
 
-                            /* Position the best months icon */
+                            /* Position the best months icon *
                             bestMonths.css({
                               "position": "absolute",
                               "bottom": "20%",
@@ -846,7 +834,7 @@ function AppViewModel () {
                             });
 
                             /* Position the misc icon. It's either
-                            the big wave or climate icon */
+                            the big wave or climate icon *
                             miscInfoOne.css({
                               "position": "absolute",
                               "bottom" : "20%",
@@ -857,7 +845,7 @@ function AppViewModel () {
                             });
 
                             /* Position the misc icon. It's either
-                            the well known or hazard icon */
+                            the well known or hazard icon *
                             miscInfoTwo.css({
                               "position": "absolute",
                               "bottom" : "20%",
@@ -865,7 +853,7 @@ function AppViewModel () {
                               "height" : "60px"
                             });
 
-                            /* Position the cost info */
+                            /* Position the cost info *
                             cost.css({
                               "font-size" : "1.25em",
                               "color" : "white",
@@ -875,7 +863,7 @@ function AppViewModel () {
                               "left" : "15px"
                             });
 
-                            /* Position the distance info */
+                            /* Position the distance info *
                             distance.css({
                               "font-size" : "1.25em",
                               "color" : "white",
@@ -885,7 +873,7 @@ function AppViewModel () {
                               "right" : "15px"
                             });
 
-                            /* Position the water temp info */
+                            /* Position the water temp info *
                             waterTemp.css({
                               "font-size" : "1.25em",
                               "color" : "white",
@@ -895,7 +883,7 @@ function AppViewModel () {
                               "right" : "15px"
                             });
 
-                            /* Position the wave size info */
+                            /* Position the wave size info *
                             waveSize.css({
                               "font-size" : "1.25em",
                               "color" : "white",
@@ -903,7 +891,7 @@ function AppViewModel () {
                               "position" : "absolute",
                               "bottom" : "0",
                               "left" : "17px"
-                            });
+                            });*/
                         };
                     }
                 );
@@ -1119,44 +1107,7 @@ function AppViewModel () {
         /* Display icon associated with the skill level
         needed to surf the break */
 
-        // Set variables for each skill level at zero
-        var beginner = 0;
-        var intermediate = 0;
-        var advanced = 0;
-
-        for (var i = 0; i < obj.skillLevel.length; i++) {
-            switch (obj.skillLevel[i]) {
-                case 'beginner':
-                    beginner++;
-                break;
-
-                case 'intermediate':
-                    intermediate++;
-                break;
-
-                case 'advanced':
-                    advanced++;
-                break
-            }
-        };
-
-        if (beginner === intermediate && advanced) {
-            var skillLevelIcon = '<img src="/img/skill_level_all.svg">';
-        } else if (beginner >= intermediate && beginner > advanced) {
-              if(beginner === intermediate) {
-                  var skillLevelIcon = '<img src="/img/skill_level_beginner_intermediate.svg">';
-              } else {
-                  var skillLevelIcon = '<img src="/img/skill_level_beginner.svg">';
-              };
-        } else if (intermediate > beginner && intermediate >= advanced) {
-              if(intermediate === advanced) {
-                  var skillLevelIcon = '<img src="/img/skill_level_intermediate_advanced.svg">';
-              } else {
-                  var skillLevelIcon = '<img src="/img/skill_level_intermediate.svg">';
-              };
-        } else if (advanced > beginner && advanced >= intermediate) {
-            var skillLevelIcon = '<img src="/img/skill_level_advanced.svg">';
-        };
+        displaySkillIcon(obj.skillLevel);
 
         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 difficulty card">' + skillLevelIcon + '</div>');
 
@@ -1828,6 +1779,52 @@ function AppViewModel () {
             infoWindow.close();
         });
     };
+
+    var skillLevelIcon;
+
+    function displaySkillIcon (obj) {
+        // Set variables for each skill level at zero
+        var beginner = 0;
+        var intermediate = 0;
+        var advanced = 0;
+
+        var skillLevelLength = obj.length;
+
+        for (var i = skillLevelLength; i--;) {
+            switch (obj[i]) {
+                case 'beginner':
+                    beginner++;
+                break;
+
+                case 'intermediate':
+                    intermediate++;
+                break;
+
+                case 'advanced':
+                    advanced++;
+                break
+            }
+        };
+
+        if (beginner === intermediate && advanced) {
+            skillLevelIcon = '<img src="/img/skill_level_all.svg" class="icon skill-level">';
+        } else if (beginner >= intermediate && beginner > advanced) {
+              if(beginner === intermediate) {
+                  skillLevelIcon = '<img src="/img/skill_level_beginner_intermediate.svg" class="icon skill-level">';
+              } else {
+                  skillLevelIcon = '<img src="/img/skill_level_beginner.svg" class="icon skill-level">';
+              };
+        } else if (intermediate > beginner && intermediate >= advanced) {
+              if(intermediate === advanced) {
+                  skillLevelIcon = '<img src="/img/skill_level_intermediate_advanced.svg" class="icon skill-level">';
+              } else {
+                  skillLevelIcon = '<img src="/img/skill_level_intermediate.svg" class="icon skill-level">';
+              };
+        } else if (advanced > beginner && advanced >= intermediate) {
+            skillLevelIcon = '<img src="/img/skill_level_advanced.svg" class="icon skill-level">';
+        };
+
+    }
 };
 
 function getMagicSeaweed (spotID, breakName) {

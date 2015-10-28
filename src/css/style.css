@@ -134,32 +134,35 @@ body {
 
 .skill-level-hover {
     position: absolute;
-    top: 15%;
-    left: 15%;
+    top: 11.5%;
+    left: 17%;
     height: 80px;
 }
 
-.break-type-guide {
+.break-type-guide, .wave-direction-guide, .best-season-guide {
     height: 160px;
 }
 
 .break-type-hover {
     position: absolute;
-    top: 15%;
+    top: 11.5%;
     left: 0;
     right: 0;
     margin: 0 auto;
     height: 80px;
 }
 
-.wave-direction-guide {
-    height: 160px;
-}
-
 .wave-direction-hover {
     position: absolute;
-    top: 15%;
-    right: 15%;
+    top: 11.5%;
+    right: 17%;
+    height: 80px;
+}
+
+.best-season-hover {
+    position: absolute;
+    bottom: 11.5%;
+    left: 17%;
     height: 80px;
 }
 

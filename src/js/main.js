@@ -565,21 +565,13 @@ function AppViewModel () {
                             displayDirectionIcon(obj.waveDirection);
                             var waveDirectionInfo = directionIcon;
 
+                            /* Display the icon for the best month in which to
+                            surf at the specific break*/
+
+                            displayBestSeasonIcon(obj.optimalTime);
+                            var bestSeasonInfo = bestSeasonIcon;
+
 /*
-                            switch(obj.waveDirection) {
-                              case 'left':
-                                  var waveDirectionInfo = '<img src="/img/marquee.png" class="rollover-info wave-direction">';
-                              break;
-
-                              case 'right':
-                                  var waveDirectionInfo = '<img src="/img/marquee.png" class="rollover-info wave-direction">';
-                              break;
-
-                              case 'left & right':
-                                  var waveDirectionInfo = '<img src="/img/marquee.png" class="rollover-info wave-direction">';
-                              break;
-                            }
-
                             // Set variables for each season at zero
                             var spring = 0;
                             var summer = 0;
@@ -771,8 +763,8 @@ function AppViewModel () {
                             location frame */
                             locationFrame.append(skillLevelInfo);
                             locationFrame.append(breakTypeInfo);
-                            locationFrame.append(waveDirectionInfo);/*
-                            locationFrame.append(bestMonthsInfo);
+                            locationFrame.append(waveDirectionInfo);
+                            locationFrame.append(bestSeasonInfo);/*
                             locationFrame.append(miscInfoOne);
                             locationFrame.append(miscInfoTwo);
                             locationFrame.append(costInfo);
@@ -784,8 +776,8 @@ function AppViewModel () {
                             frame and cache it for later use */
                             var skillLevel = $('.skill-level');
                             var breakType = $('.break-type');
-                            var waveDirection = $('.wave-direction');/*
-                            var bestMonths = $('.best-months');
+                            var waveDirection = $('.wave-direction');
+                            var bestSeason = $('.best-season');/*
                             var miscInfoOne = $('.misc-info-one');
                             var miscInfoTwo = $('.misc-info-two');
                             var cost = $('.cost');
@@ -796,6 +788,7 @@ function AppViewModel () {
                             $(skillLevel).addClass('rollover-info skill-level-hover');
                             $(breakType).addClass('rollover-info break-type-hover');
                             $(waveDirection).addClass('rollover-info wave-direction-hover');
+                            $(bestSeason).addClass('rollover-info best-season-hover');
 
                             /* Position the best months icon *
                             bestMonths.css({
@@ -1079,24 +1072,26 @@ function AppViewModel () {
             $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 big-wave card">' + '<img src="img/well_known.svg">' + '</div>');
         }
 
+
         /* Display icon associated with the skill level
         needed to surf the break */
-
         displaySkillIcon(obj.skillLevel);
 
         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 difficulty card">' + skillLevelIcon + '</div>');
 
         $('.skill-level').addClass('skill-level-guide');
 
+
         /* Display the icon associated with the direction
         the wave breaks */
-
         displayDirectionIcon(obj.waveDirection);
 
         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 direction card">' + directionIcon + '</div>');
 
         $('.wave-direction').addClass('wave-direction-guide');
 
+
+        // Display the icon for the break details
         displayBreakIcon(obj.breakDetails);
 
         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 break card">' + breakIcon + '</div>');
@@ -1113,7 +1108,9 @@ function AppViewModel () {
             var plus = '';
         }
 
+
         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 wave-height card">' + '<img src="img/wave_range.svg">' + '<p>' + obj.avgSize.min + "-" + obj.avgSize.max + plus + "ft" + '</p>' + '</div>');
+
 
         // Render optimal swell compass
         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 swell card"><canvas id="compass-swell" width="160" height="160"></canvas></div>');
@@ -1378,77 +1375,12 @@ function AppViewModel () {
         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 tide card">' + tideIcon + '</div>');
 
 
-        // Set variables for each season at zero
-        var spring = 0;
-        var summer = 0;
-        var autumn = 0;
-        var winter = 0;
 
-        /* Tally the number of months fall into a
-        particular season */
-        for (i = 0; i < obj.optimalTime.length; i++) {
-            switch (obj.optimalTime[i]) {
-                case ' Dec':
-                case ' Jan':
-                case ' Feb':
-                    winter++;
-                break;
+        displayBestSeasonIcon(obj.optimalTime);
 
-                case ' Mar':
-                case ' Apr':
-                case ' May':
-                    spring++;
-                break;
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 time card">' + bestSeasonIcon + '</div>');
 
-                case ' Jun':
-                case ' Jul':
-                case ' Aug':
-                    summer++;
-                break
-
-                case ' Sep':
-                case ' Oct':
-                case ' Nov':
-                    autumn++;
-                break
-            }
-        }
-
-        /* Filter which seasons are the best for the
-        particular break */
-        /* Display icon associated with best time of
-        year */
-        if (winter === spring && summer && autumn) {
-              var bestMonthsIcon = '<img src="/img/season_all.svg">';
-        } else if(winter >= spring && winter >= summer && winter >= autumn) {
-              if(winter === spring) {
-                  var bestMonthsIcon = '<img src="/img/season_winter_spring.svg">';
-              } else if (winter === summer) {
-                  var bestMonthsIcon = '<img src="/img/season_winter_summer.svg">';
-              } else if (winter === autumn) {
-                  var bestMonthsIcon = '<img src="/img/season_winter_autumn.svg">';
-              } else {
-                  var bestMonthsIcon = '<img src="/img/season_winter.svg">';
-              };
-        } else if (spring >= summer && spring >= autumn && spring > winter) {
-              if (spring === summer) {
-                  var bestMonthsIcon = '<img src="/img/season_spring_summer.svg">';
-              } else if (spring === autumn) {
-                  var bestMonthsIcon = '<img src="/img/season_spring_autumn.svg">';
-              } else {
-                  var bestMonthsIcon = '<img src="/img/season_spring.svg">';
-              };
-        } else if (summer >= autumn && summer > winter && summer > spring) {
-              if(summer === autumn) {
-                  var bestMonthsIcon = '<img src="/img/season_summer_autumn.svg">';
-              } else {
-                  var bestMonthsIcon = '<img src="/img/season_summer.svg">';
-              };
-        } else if (autumn > winter && autumn > spring && autumn > summer) {
-              var bestMonthsIcon = '<img src="/img/season_autumn.svg">';
-        };
-
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 time card">' + bestMonthsIcon + '</div>');
+        $('.best-season').addClass('best-season-guide');
 
 
 
@@ -1865,6 +1797,126 @@ function AppViewModel () {
           break;
         }
 
+    }
+
+    function displayBestSeasonIcon (obj) {
+
+        // Set variables for each season at zero
+        var spring = 0;
+        var summer = 0;
+        var autumn = 0;
+        var winter = 0;
+
+        /* Tally the number of months fall into a
+        particular season */
+
+        var bestSeasonLength = obj.length;
+
+        for (var i = bestSeasonLength; i--;) {
+            switch (obj[i]) {
+                case ' Dec':
+                case ' Jan':
+                case ' Feb':
+                    winter++;
+                break;
+
+                case ' Mar':
+                case ' Apr':
+                case ' May':
+                    spring++;
+                break;
+
+                case ' Jun':
+                case ' Jul':
+                case ' Aug':
+                    summer++;
+                break
+
+                case ' Sep':
+                case ' Oct':
+                case ' Nov':
+                    autumn++;
+                break
+            }
+        }
+
+        /* Filter which seasons are the best for the
+        particular break */
+        /* Display icon associated with best time of
+        year */
+        if (winter === spring && winter === summer && winter === autumn) {
+            if(rollover) {
+                bestSeasonIcon = '<img src="/img/season_ro_all.svg" class="icon best-season">';
+            } else {
+                bestSeasonIcon = '<img src="/img/season_all.svg" class="icon best-season">';
+            };
+        } else if(winter >= spring && winter >= summer && winter >= autumn) {
+              if(winter === spring) {
+                  if(rollover) {
+                      bestSeasonIcon = '<img src="/img/season_ro_winter_spring.svg" class="icon best-season">';
+                  } else {
+                      bestSeasonIcon = '<img src="/img/season_winter_spring.svg" class="icon best-season">';
+                  };
+              } else if (winter === summer) {
+                  if(rollover) {
+                      bestSeasonIcon = '<img src="/img/season_ro_winter_summer.svg" class="icon best-season">';
+                  } else {
+                      bestSeasonIcon = '<img src="/img/season_winter_summer.svg" class="icon best-season">';
+                  };
+              } else if (winter === autumn) {
+                  if(rollover) {
+                      bestSeasonIcon = '<img src="/img/season_ro_winter_autumn.svg" class="icon best-season">';
+                  } else {
+                      bestSeasonIcon = '<img src="/img/season_winter_autumn.svg" class="icon best-season">';
+                  };
+              } else {
+                  if(rollover) {
+                      bestSeasonIcon = '<img src="/img/season_ro_winter.svg" class="icon best-season">';
+                  } else {
+                      bestSeasonIcon = '<img src="/img/season_winter.svg" class="icon best-season">';
+                  };
+              };
+        } else if (spring >= summer && spring >= autumn && spring > winter) {
+              if (spring === summer) {
+                  if(rollover) {
+                      bestSeasonIcon = '<img src="/img/season_ro_spring_summer.svg" class="icon best-season">';
+                  } else {
+                      bestSeasonIcon = '<img src="/img/season_spring_summer.svg" class="icon best-season">';
+                  };
+              } else if (spring === autumn) {
+                  if(rollover) {
+                      bestSeasonIcon = '<img src="/img/season_ro_spring_autumn.svg" class="icon best-season">';
+                  } else {
+                      bestSeasonIcon = '<img src="/img/season_spring_autumn.svg" class="icon best-season">';
+                  };
+              } else {
+                  if(rollover) {
+                      bestSeasonIcon = '<img src="/img/season_ro_spring.svg" class="icon best-season">';
+                  } else {
+                      bestSeasonIcon = '<img src="/img/season_spring.svg" class="icon best-season">';
+                  };
+              };
+        } else if (summer >= autumn && summer > winter && summer > spring) {
+              if(summer === autumn) {
+                  if(rollover) {
+                      bestSeasonIcon = '<img src="/img/season_ro_summer_autumn.svg" class="icon best-season">';
+                  } else {
+                      bestSeasonIcon = '<img src="/img/season_summer_autumnsvg" class="icon best-season">';
+                  };
+              } else {
+                  if(rollover) {
+                      bestSeasonIcon = '<img src="/img/season_ro_summer.svg" class="icon best-season">';
+                  } else {
+                      bestSeasonIcon = '<img src="/img/season_summer.svg" class="icon best-season">';
+                  };
+              };
+        } else {
+                  if(rollover) {
+                      bestSeasonIcon = '<img src="/img/season_ro_autumn.svg" class="icon best-season">';
+                  } else {
+                      bestSeasonIcon = '<img src="/img/season_autumn.svg" class="icon best-season">';
+                  };
+        };
     }
 };
 

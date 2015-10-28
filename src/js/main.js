@@ -559,28 +559,13 @@ function AppViewModel () {
                             displayBreakIcon(obj.breakDetails);
                             var breakTypeInfo = breakIcon;
 
-/*
-
-                            switch(obj.breakDetails) {
-                              case 'reef':
-                                  var breakTypeInfo = '<img src="/img/marquee.png" class="rollover-info break-type">';
-                              break;
-
-                              case 'point':
-                                  var breakTypeInfo = '<img src="/img/marquee.png" class="rollover-info break-type">';
-                              break;
-
-                              case 'beach':
-                                  var breakTypeInfo = '<img src="/img/marquee.png" class="rollover-info break-type">';
-                              break;
-
-                              case 'river mouth':
-                                  var breakTypeInfo = '<img src="/img/marquee.png" class="rollover-info break-type">';
-                              break;
-                            }
-
                             /* Display the icon associated with the direction
-                            the wave breaks *
+                            the wave breaks */
+
+                            displayDirectionIcon(obj.waveDirection);
+                            var waveDirectionInfo = directionIcon;
+
+/*
                             switch(obj.waveDirection) {
                               case 'left':
                                   var waveDirectionInfo = '<img src="/img/marquee.png" class="rollover-info wave-direction">';
@@ -785,8 +770,8 @@ function AppViewModel () {
                             /* Append all cached elements to the selected
                             location frame */
                             locationFrame.append(skillLevelInfo);
-                            locationFrame.append(breakTypeInfo);/*
-                            locationFrame.append(waveDirectionInfo);
+                            locationFrame.append(breakTypeInfo);
+                            locationFrame.append(waveDirectionInfo);/*
                             locationFrame.append(bestMonthsInfo);
                             locationFrame.append(miscInfoOne);
                             locationFrame.append(miscInfoTwo);
@@ -798,8 +783,8 @@ function AppViewModel () {
                             /* Get each element from within the location
                             frame and cache it for later use */
                             var skillLevel = $('.skill-level');
-                            var breakType = $('.break-type');/*
-                            var waveDirection = $('.wave-direction');
+                            var breakType = $('.break-type');
+                            var waveDirection = $('.wave-direction');/*
                             var bestMonths = $('.best-months');
                             var miscInfoOne = $('.misc-info-one');
                             var miscInfoTwo = $('.misc-info-two');
@@ -810,25 +795,7 @@ function AppViewModel () {
 
                             $(skillLevel).addClass('rollover-info skill-level-hover');
                             $(breakType).addClass('rollover-info break-type-hover');
-
-
-                            /* Position the break type icon *
-                            breakType.css({
-                              "position": "absolute",
-                              "top" : "20%",
-                              "left" : "0",
-                              "right" : "0",
-                              "margin" : "0 auto",
-                              "height" : "60px"
-                            });
-
-                            /* Position the wave direction icon *
-                            waveDirection.css({
-                              "position": "absolute",
-                              "top" : "20%",
-                              "right" : "20%",
-                              "height" : "60px"
-                            });
+                            $(waveDirection).addClass('rollover-info wave-direction-hover');
 
                             /* Position the best months icon *
                             bestMonths.css({
@@ -1123,22 +1090,12 @@ function AppViewModel () {
 
         /* Display the icon associated with the direction
         the wave breaks */
-        switch(obj.waveDirection) {
-          case 'left':
-              var waveDirectionIcon = '<img src="/img/direction_left.svg">';
-          break;
 
-          case 'right':
-              var waveDirectionIcon = '<img src="/img/direction_right.svg">';
-          break;
+        displayDirectionIcon(obj.waveDirection);
 
-          case 'left & right':
-              var waveDirectionIcon = '<img src="/img/direction_both.svg">';
-          break;
-        }
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 direction card">' + directionIcon + '</div>');
 
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 direction card">' + waveDirectionIcon + '</div>');
-
+        $('.wave-direction').addClass('wave-direction-guide');
 
         displayBreakIcon(obj.breakDetails);
 
@@ -1801,7 +1758,7 @@ function AppViewModel () {
             }
         };
 
-        if (beginner === intermediate && advanced) {
+        if (beginner === intermediate && beginner === advanced) {
             if(rollover){
                 skillLevelIcon = '<img src="/img/skill_level_ro_all.svg" class="icon skill-level">';
             } else {
@@ -1835,7 +1792,7 @@ function AppViewModel () {
                     skillLevelIcon = '<img src="/img/skill_level_intermediate.svg" class="icon skill-level">'
                 }
             };
-        } else if (advanced > beginner && advanced > intermediate) {
+        } else {
             if(rollover){
                 skillLevelIcon = '<img src="/img/skill_level_ro_advanced.svg" class="icon skill-level">';
             } else {
@@ -1879,6 +1836,35 @@ function AppViewModel () {
               }
           break;
         }
+    }
+
+    function displayDirectionIcon (obj) {
+        switch(obj) {
+          case 'left':
+              if(rollover) {
+                  directionIcon = '<img src="/img/direction_ro_left.svg" class="icon wave-direction">';
+              } else {
+                  directionIcon = '<img src="/img/direction_left.svg" class="icon wave-direction">';;
+              }
+          break;
+
+          case 'right':
+              if(rollover) {
+                  directionIcon = '<img src="/img/direction_ro_right.svg" class="icon wave-direction">';
+              } else {
+                  directionIcon = '<img src="/img/direction_right.svg" class="icon wave-direction">';;
+              }
+          break;
+
+          case 'left & right':
+              if(rollover) {
+                  directionIcon = '<img src="/img/direction_ro_both.svg" class="icon wave-direction">';
+              } else {
+                  directionIcon = '<img src="/img/direction_both.svg" class="icon wave-direction">';;
+              }
+          break;
+        }
+
     }
 };
 

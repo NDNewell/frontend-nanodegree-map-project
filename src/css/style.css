@@ -152,6 +152,17 @@ body {
     height: 80px;
 }
 
+.wave-direction-guide {
+    height: 160px;
+}
+
+.wave-direction-hover {
+    position: absolute;
+    top: 15%;
+    right: 15%;
+    height: 80px;
+}
+
 .card {
     height: 183px;
     padding: 10px 10px;

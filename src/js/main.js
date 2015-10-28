@@ -493,8 +493,11 @@ function AppViewModel () {
         self.locationGrid.push(obj);
     });
 
+
     /* When the cursor hovers over a location, remove the text and add
     a gaussian blur. Wait until the locations have been loaded */
+    var rollover;
+
     self.addRolloverEffect = function () {
 
         // Wait until the locations have been loaded
@@ -510,6 +513,8 @@ function AppViewModel () {
                 locationFrame.on('mouseenter',
 
                     function (e) {
+
+                        rollover = true;
 
                         // Get identifying information from the clicked object
                         var targetData = e.currentTarget.innerText;
@@ -537,7 +542,7 @@ function AppViewModel () {
                         show unique information about that location */
                         function importInfo(obj) {
 
-                            img.css('-webkit-filter', 'blur(3px)');
+                            img.css('-webkit-filter', 'blur(4px) brightness(80%)' );
                             location.toggle()
                             breakName.toggle();
 
@@ -904,6 +909,7 @@ function AppViewModel () {
                         breakName.toggle();
 
                         $('.rollover-info').remove();
+                        rollover = false;
                     }
                 );
             });
@@ -1809,21 +1815,45 @@ function AppViewModel () {
         };
 
         if (beginner === intermediate && advanced) {
-            skillLevelIcon = '<img src="/img/skill_level_all.svg" class="icon skill-level">';
+            if(rollover){
+                skillLevelIcon = '<img src="/img/skill_level_ro_all.svg" class="icon skill-level">';
+            } else {
+                skillLevelIcon = '<img src="/img/skill_level_all.svg" class="icon skill-level">';
+            }
         } else if (beginner >= intermediate && beginner > advanced) {
-              if(beginner === intermediate) {
-                  skillLevelIcon = '<img src="/img/skill_level_beginner_intermediate.svg" class="icon skill-level">';
-              } else {
-                  skillLevelIcon = '<img src="/img/skill_level_beginner.svg" class="icon skill-level">';
-              };
+            if(beginner === intermediate) {
+                if(rollover){
+                    skillLevelIcon = '<img src="/img/skill_level_ro_beginner_intermediate.svg" class="icon skill-level">';
+                } else {
+                    skillLevelIcon = '<img src="/img/skill_level_beginner_intermediate.svg" class="icon skill-level">'
+                }
+            } else {
+                if(rollover){
+                    skillLevelIcon = '<img src="/img/skill_level_ro_beginner.svg" class="icon skill-level">';
+                } else {
+                    skillLevelIcon = '<img src="/img/skill_level_beginner.svg" class="icon skill-level">'
+                }
+            };
         } else if (intermediate > beginner && intermediate >= advanced) {
-              if(intermediate === advanced) {
-                  skillLevelIcon = '<img src="/img/skill_level_intermediate_advanced.svg" class="icon skill-level">';
-              } else {
-                  skillLevelIcon = '<img src="/img/skill_level_intermediate.svg" class="icon skill-level">';
-              };
-        } else if (advanced > beginner && advanced >= intermediate) {
-            skillLevelIcon = '<img src="/img/skill_level_advanced.svg" class="icon skill-level">';
+            if(intermediate === advanced) {
+                if(rollover){
+                    skillLevelIcon = '<img src="/img/skill_level_ro_intermediate_advanced.svg" class="icon skill-level">';
+                } else {
+                    skillLevelIcon = '<img src="/img/skill_level_intermediate_advanced.svg" class="icon skill-level">'
+                }
+            } else {
+                if(rollover){
+                    skillLevelIcon = '<img src="/img/skill_level_ro_intermediate.svg" class="icon skill-level">';
+                } else {
+                    skillLevelIcon = '<img src="/img/skill_level_intermediate.svg" class="icon skill-level">'
+                }
+            };
+        } else if (advanced > beginner && advanced > intermediate) {
+            if(rollover){
+                skillLevelIcon = '<img src="/img/skill_level_ro_advanced.svg" class="icon skill-level">';
+            } else {
+                skillLevelIcon = '<img src="/img/skill_level_advanced.svg" class="icon skill-level">'
+            }
         };
 
     }

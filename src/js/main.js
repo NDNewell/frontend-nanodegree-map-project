@@ -571,76 +571,15 @@ function AppViewModel () {
                             displayBestSeasonIcon(obj.optimalTime);
                             var bestSeasonInfo = bestSeasonIcon;
 
-/*
-                            // Set variables for each season at zero
-                            var spring = 0;
-                            var summer = 0;
-                            var autumn = 0;
-                            var winter = 0;
-
-                            /* Tally the number of months fall into a
-                            particular season *
-                            for (i = 0; i < obj.optimalTime.length; i++) {
-                                switch (obj.optimalTime[i]) {
-                                    case ' Dec':
-                                    case ' Jan':
-                                    case ' Feb':
-                                        winter++;
-                                    break;
-
-                                    case ' Mar':
-                                    case ' Apr':
-                                    case ' May':
-                                        spring++;
-                                    break;
-
-                                    case ' Jun':
-                                    case ' Jul':
-                                    case ' Aug':
-                                        summer++;
-                                    break
-
-                                    case ' Sep':
-                                    case ' Oct':
-                                    case ' Nov':
-                                        autumn++;
-                                    break
-                                }
+                            /* If there is big wave surfing at this break
+                            display big wave icon. If not, display the
+                            related climate icon */
+                            if(obj.bigWave) {
+                                var miscInfoOne = '<img src="/img/big_wave_ro.svg" class="rollover-info misc-info-one-hover">';
+                            } else {
+                                var miscInfoOne = '<img src="img/empty_ro_marquee.svg" class="rollover-info misc-info-one-hover">' + '<p class="rollover-info climate-info-hover">' + obj.climate  + '</p>';
                             }
-
-                            /* Filter which seasons are the best for the
-                            particular break */
-                            /* Display icon associated with best time of
-                            year *
-                            if (winter === spring && summer && autumn) {
-                                  var bestMonthsInfo = '<img src="/img/marquee.png" class="rollover-info best-months">';
-                            } else if(winter >= spring && winter >= summer && winter >= autumn) {
-                                  if(winter === spring) {
-                                      var bestMonthsInfo = '<img src="/img/marquee.png" class="rollover-info best-months">';
-                                  } else if (winter === summer) {
-                                      var bestMonthsInfo = '<img src="/img/marquee.png" class="rollover-info best-months">';
-                                  } else if (winter === autumn) {
-                                      var bestMonthsInfo = '<img src="/img/marquee.png" class="rollover-info best-months">';
-                                  } else {
-                                      var bestMonthsInfo = '<img src="/img/marquee.png" class="rollover-info best-months">';
-                                  };
-                            } else if (spring >= summer && spring >= autumn && spring > winter) {
-                                  if (spring === summer) {
-                                      var bestMonthsInfo = '<img src="/img/marquee.png" class="rollover-info best-months">';
-                                  } else if (spring === autumn) {
-                                      var bestMonthsInfo = '<img src="/img/marquee.png" class="rollover-info best-months">';
-                                  } else {
-                                      var bestMonthsInfo = '<img src="/img/marquee.png" class="rollover-info best-months">';
-                                  };
-                            } else if (summer >= autumn && summer > winter && summer > spring) {
-                                  if(summer === autumn) {
-                                      var bestMonthsInfo = '<img src="/img/marquee.png" class="rollover-info best-months">';
-                                  } else {
-                                      var bestMonthsInfo = '<img src="/img/marquee.png" class="rollover-info best-months">';
-                                  };
-                            } else if (autumn > winter && autumn > spring && autumn > summer) {
-                                  var bestMonthsInfo = '<img src="/img/marquee.png" class="rollover-info best-months">';
-                            };
+/*
 
                             /* If there is big wave surfing at this break
                             display big wave icon. If not, display the
@@ -764,8 +703,8 @@ function AppViewModel () {
                             locationFrame.append(skillLevelInfo);
                             locationFrame.append(breakTypeInfo);
                             locationFrame.append(waveDirectionInfo);
-                            locationFrame.append(bestSeasonInfo);/*
-                            locationFrame.append(miscInfoOne);
+                            locationFrame.append(bestSeasonInfo);
+                            locationFrame.append(miscInfoOne);/*
                             locationFrame.append(miscInfoTwo);
                             locationFrame.append(costInfo);
                             locationFrame.append(distanceInfo);
@@ -777,8 +716,8 @@ function AppViewModel () {
                             var skillLevel = $('.skill-level');
                             var breakType = $('.break-type');
                             var waveDirection = $('.wave-direction');
-                            var bestSeason = $('.best-season');/*
-                            var miscInfoOne = $('.misc-info-one');
+                            var bestSeason = $('.best-season');
+                            var miscInfoOne = $('.misc-info-one');/*
                             var miscInfoTwo = $('.misc-info-two');
                             var cost = $('.cost');
                             var distance = $('.distance');
@@ -790,13 +729,6 @@ function AppViewModel () {
                             $(waveDirection).addClass('rollover-info wave-direction-hover');
                             $(bestSeason).addClass('rollover-info best-season-hover');
 
-                            /* Position the best months icon *
-                            bestMonths.css({
-                              "position": "absolute",
-                              "bottom": "20%",
-                              "left": "20%",
-                              "height" : "60px"
-                            });
 
                             /* Position the misc icon. It's either
                             the big wave or climate icon *
@@ -1062,14 +994,14 @@ function AppViewModel () {
 
         $surfGuideContainer.append('<div class="col-xs-12 surf-guide-title">' + '<p class="title">' + obj.breakName + ',' + ' ' + obj.location + '</p>' + '</div>');
 
-        // Check if break has big waves
+        // Check if break has big waves and render
         if (obj.bigWave) {
-            $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 big-wave card">' + '<img src="img/big_wave.svg">' + '</div>');
+            $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 big-wave card">' + '<img src="img/big_wave.svg" class="icon big-wave-guide">' + '</div>');
         };
 
         // Check if break is well known
-        if (obj.bigWave) {
-            $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 big-wave card">' + '<img src="img/well_known.svg">' + '</div>');
+        if (obj.wellKnown) {
+            $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 well-known card">' + '<img src="img/well_known.svg">' + '</div>');
         }
 
 
@@ -1481,7 +1413,7 @@ function AppViewModel () {
           break;
         }
 
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 climate card">' + '<img src="img/empty_marquee.svg">' + '<p>' + obj.climate  + '</p>' + '</div>');
+        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 climate card">' + '<img src="img/empty_marquee.svg" class="icon climate-guide">' + '<p>' + obj.climate  + '</p>' + '</div>');
 
         var midRange = Math.floor((obj.cost.highEnd - obj.cost.budget)/2 + obj.cost.budget);
 

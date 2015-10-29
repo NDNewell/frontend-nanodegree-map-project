@@ -139,7 +139,7 @@ body {
     height: 80px;
 }
 
-.break-type-guide, .wave-direction-guide, .best-season-guide {
+.big-wave-guide, .break-type-guide, .wave-direction-guide, .best-season-guide {
     height: 160px;
 }
 
@@ -164,6 +164,25 @@ body {
     bottom: 11.5%;
     left: 17%;
     height: 80px;
+}
+
+.misc-info-one-hover {
+    position: absolute;
+    bottom: 11.5%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    height: 80px;
+}
+
+.climate-info-hover {
+    position: absolute;
+    bottom: 19%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    font-size: 2.3em;
+    color: white;
 }
 
 .card {

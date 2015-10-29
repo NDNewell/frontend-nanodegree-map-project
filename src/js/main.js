@@ -581,13 +581,8 @@ function AppViewModel () {
                             }
 
                             /* If the wave is well known display the well
-                            known icon, otherwise display the correct
-                            hazard icon. FYI only the first hazard will
-                            be display. The worst hazard has been positioned
-                            first in the array purposfully */
-
-
-
+                            known icon, otherwise display a random hazard
+                            icon */
                             if(obj.wellKnown) {
                                 var miscInfoTwo = '<img src="/img/well_known_ro.svg" class="rollover-info misc-info-two-hover">';
                             } else {
@@ -604,65 +599,20 @@ function AppViewModel () {
 
                                 displayHazardIcons(randomHazard);
                                 var miscInfoTwo = miscInfoTwoIcon;
-                            }
-/*
-
-                            /* If the wave is well known display the well
-                            known icon, otherwise display the correct
-                            hazard icon. FYI only the first hazard will
-                            be display. The worst hazard has been positioned
-                            first in the array purposfully *
-                            if(obj.wellKnown) {
-                                var miscInfoTwo = '<img src="/img/marquee.png" class="rollover-info misc-info-two">';
-                            } else if (obj.hazards[0] === ' strong currents') {
-                                var miscInfoTwo = '<img src="/img/marquee.png" class="rollover-info misc-info-two">';
-                            } else if (obj.hazards[0] === ' crowds') {
-                                var miscInfoTwo = '<img src="/img/marquee.png" class="rollover-info misc-info-two">';
-                            } else if (obj.hazards[0] === ' sharks') {
-                                var miscInfoTwo = '<img src="/img/marquee.png" class="rollover-info misc-info-two">';
                             };
 
-                            /* Display the budget cost for the location *
-                            var costInfo = '<p class="rollover-info cost">' + '$' + obj.cost.budget + '/' + 'day' + '</p>';
+                            /* Display the budget cost for the location */
+                            var costInfo = '<p class="rollover-info cost cost-hover">' + '$' + obj.cost.budget + '</p>';
 
-                            /* Get distance between both locations using
-                            the Haversine formula *
-                            /* Obtain current location from user *
-                            var latOrigin = currentLat;
-                            var lngOrigin = currentLng;
-
-                            /* Obtain location data for the selected break *
-                            var latDest = obj.lat;
-                            var lngDest = obj.lng;
-
-                            // Set the radius of Earth in mi
-                            var R = 3959;
-
-                            // Calculate radians diff between both locations
-                            var latR = deg2rad(latDest-latOrigin);
-                            var lngR = deg2rad(lngDest-lngOrigin);
-
-                            var a =
-                              Math.sin(latR/2) * Math.sin(latR/2) +
-                              Math.cos(deg2rad(latOrigin)) * Math.cos(deg2rad(latDest)) *
-                              Math.sin(lngR/2) * Math.sin(lngR/2)
-                              ;
-                            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-
-                            // Solve for d
-                            var d = R * c;
-
-                            // Round distance to nearest integer
-                            var distance = Math.round(d);
-
-                            // Converts degrees to radians
-                            function deg2rad(deg) {
-                              return deg * (Math.PI/180)
-                            }
-
-                            // Cache distance element with distance
-                            var distanceInfo = '<p class="rollover-info distance">' + distance + 'mi' + '</p>';
-
+                            /* Check if current location is available, if it is
+                            render the distance to the hovered over location in
+                            the top right corner of the picture */
+                            if(typeof currentLat !== 'undefined') {
+                                displayDistance(obj.lat, obj.lng);
+                                locationFrame.append(distanceInfo);
+                                var distance = $('.distance');
+                            };
+/*
                             // Get today's date and month
                             var today = new Date();
                             var month = today.getMonth();
@@ -718,9 +668,9 @@ function AppViewModel () {
                             locationFrame.append(waveDirectionInfo);
                             locationFrame.append(bestSeasonInfo);
                             locationFrame.append(miscInfoOne);
-                            locationFrame.append(miscInfoTwo);/*
+                            locationFrame.append(miscInfoTwo);
                             locationFrame.append(costInfo);
-                            locationFrame.append(distanceInfo);
+                            /*
                             locationFrame.append(waterTempInfo);
                             locationFrame.append(waveSizeInfo);
 
@@ -731,9 +681,9 @@ function AppViewModel () {
                             var waveDirection = $('.wave-direction');
                             var bestSeason = $('.best-season');
                             var miscInfoOne = $('.misc-info-one');
-                            var miscInfoTwo = $('.misc-info-two');/*
+                            var miscInfoTwo = $('.misc-info-two');
                             var cost = $('.cost');
-                            var distance = $('.distance');
+                            /*
                             var waterTemp = $('.water-temp');
                             var waveSize = $('.wave-size');*/
 
@@ -742,34 +692,6 @@ function AppViewModel () {
                             $(waveDirection).addClass('rollover-info wave-direction-hover');
                             $(bestSeason).addClass('rollover-info best-season-hover');
 
-                            /* Position the misc icon. It's either
-                            the well known or hazard icon *
-                            miscInfoTwo.css({
-                              "position": "absolute",
-                              "bottom" : "20%",
-                              "right" : "20%",
-                              "height" : "60px"
-                            });
-
-                            /* Position the cost info *
-                            cost.css({
-                              "font-size" : "1.25em",
-                              "color" : "white",
-                              "text-shadow" : "1px 1px 10px black",
-                              "position" : "absolute",
-                              "top" : "10px",
-                              "left" : "15px"
-                            });
-
-                            /* Position the distance info *
-                            distance.css({
-                              "font-size" : "1.25em",
-                              "color" : "white",
-                              "text-shadow" : "1px 1px 10px black",
-                              "position" : "absolute",
-                              "top" : "10px",
-                              "right" : "15px"
-                            });
 
                             /* Position the water temp info *
                             waterTemp.css({
@@ -1420,6 +1342,15 @@ function AppViewModel () {
 
         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 cost card">' + '<img src="img/cost.svg">' + '<p>' + obj.cost.budget + '</p>' + '<p>' + midRange + '</p>' + '<p>' + obj.cost.highEnd +'</p>' + '</div>');
 
+        /* Check if current location is available, if it is
+        render the distance icon in the surf guide */
+        if(typeof currentLat !== 'undefined') {
+
+            displayDistance(obj.lat, obj.lng);
+
+            $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 distance card">' + distanceIcon + '</div>');
+        };
+
         displayHazardIcons(obj.hazards);
 
         addGuideButtons(obj);
@@ -1739,6 +1670,88 @@ function AppViewModel () {
                   };
         };
     };
+
+    function displayDistance (latDest,lngDest) {
+        /* Get distance between both locations using
+        the Haversine formula */
+        /* Obtain current location from user */
+        var latOrigin = currentLat;
+        var lngOrigin = currentLng;
+
+        // Set the radius of Earth in mi
+        var R = 3959;
+
+        // Calculate radians diff between both locations
+        var latR = deg2rad(latDest-latOrigin);
+        var lngR = deg2rad(lngDest-lngOrigin);
+
+        var a =
+          Math.sin(latR/2) * Math.sin(latR/2) +
+          Math.cos(deg2rad(latOrigin)) * Math.cos(deg2rad(latDest)) *
+          Math.sin(lngR/2) * Math.sin(lngR/2)
+          ;
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+        // Solve for d
+        var d = R * c;
+
+        // Round distance to nearest integer
+        var result = Math.round(d);
+
+        /* If the distance is greater than 200 miles, calculate the
+        average non-stop flight time in hours to the destination using
+        an average cruising speed of 450mph */
+        if(result > 200) {
+            var hours = result/450;
+
+            // If the time is below an hour, set the new time at one hour
+            if(hours < 1) {
+                var newTime = 1;
+            } else {
+                var newTime = Math.round(hours);
+            };
+
+            /* If distance is greater than avg distance of a direct flight,
+            add two hours in layover time */
+            if(newTime > 8 && newTime <= 12) {
+                var layOver = newTime + 2;
+                var flightTime = layOver;
+
+            /* If distance is greater than avg distance of a 1+ connection
+             flight, add four hours in layover time */
+            } else if (newTime > 12) {
+                var layOver = newTime + 4;
+                var flightTime = layOver;
+            } else {
+                var flightTime = newTime;
+            };
+                var distance = flightTime;
+
+            if(rollover) {
+                // Cache distance element with distance
+                distanceInfo = '<p class="rollover-info distance distance-hover">' + distance + 'h' + '</p>';
+            } else {
+
+                distanceIcon = '<img src="img/distance_plane.svg" class="icon distance-guide">' + '<p class="distance-guide-hours">' + distance + 'h' +'</p>';
+            };
+        } else {
+
+            var distance = result;
+
+            if(rollover) {
+                // Cache distance element with distance
+                distanceInfo = '<p class="rollover-info distance distance-hover">' + distance + 'm' + '</p>';
+            } else {
+
+                distanceIcon = '<img src="img/distance.svg" class="icon distance-guide">' + '<p class="distance-guide-miles">' + distance + 'm' +'</p>';
+            };
+        };
+
+        // Converts degrees to radians
+        function deg2rad(deg) {
+          return deg * (Math.PI/180)
+        }
+    }
 
     function displayHazardIcons (obj) {
 

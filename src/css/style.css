@@ -139,7 +139,7 @@ body {
     height: 80px;
 }
 
-.big-wave-guide, .break-type-guide, .wave-direction-guide, .best-season-guide {
+.big-wave-guide, .break-type-guide, .wave-direction-guide, .best-season-guide, .distance-guide {
     height: 160px;
 }
 
@@ -190,6 +190,24 @@ body {
     bottom: 11.5%;
     right: 17%;
     height: 80px;
+}
+
+.cost-hover {
+    font-size: 1.25em;
+    color: white;
+    text-shadow: 1px 1px 10px black;
+    position: absolute;
+    top: 10px;
+    left: 15px;
+}
+
+.distance-hover {
+    font-size: 1.25em;
+    color: white;
+    text-shadow: 1px 1px 10px black;
+    position:absolute;
+    top: 10px;
+    right: 15px;
 }
 
 .card {
@@ -317,6 +335,14 @@ body {
     margin-top: -120px;
 }
 
+.water-temp > canvas:first-child {
+    border-radius: 19px;
+}
+
+.highlight-attire {
+    box-shadow: 0px 0px 20px #00B8E6;
+}
+
 .cost > img:first-child + p {
     font-size: 2em;
     font-weight: bolder;
@@ -329,7 +355,7 @@ body {
     font-size: 2em;
     font-weight: bolder;
     font-color: #333333;
-    margin-top: -6px;
+    margin-top: -15px;
     margin-left: 25px;
 }
 
@@ -337,16 +363,24 @@ body {
     font-size: 2em;
     font-weight: bolder;
     font-color: #333333;
-    margin-top: -3px;
+    margin-top: -14px;
     margin-left: 67px;
 }
 
-.water-temp > canvas:first-child {
-    border-radius: 19px;
+.distance-guide-hours {
+    font-size: 2em;
+    font-weight: bolder;
+    font-color: #333333;
+    margin-top: -60px;
+    margin-right: 65px;
 }
 
-.highlight-attire {
-    box-shadow: 0px 0px 20px #00B8E6;
+.distance-guide-miles {
+    font-size: 2em;
+    font-weight: bolder;
+    font-color: #333333;
+    margin-top: -132px;
+    margin-left: 50px;
 }
 
 

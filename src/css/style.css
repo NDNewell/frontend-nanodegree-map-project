@@ -185,6 +185,13 @@ body {
     color: white;
 }
 
+.misc-info-two-hover {
+    position: absolute;
+    bottom: 11.5%;
+    right: 17%;
+    height: 80px;
+}
+
 .card {
     height: 183px;
     padding: 10px 10px;

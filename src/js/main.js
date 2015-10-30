@@ -569,7 +569,7 @@ function AppViewModel () {
 
                             /* If there is big wave surfing at this break
                             display big wave icon. If not, display the
-                            related climate icon */
+                            suggested swim attire icon for current season */
                             if(obj.bigWave) {
                                 var miscIconOne = '<img src="/img/big_wave_ro.svg" class="rollover-info misc-info-one-hover">';
                             } else {
@@ -599,101 +599,13 @@ function AppViewModel () {
                                 locationFrame.append(distanceInfo);
                             };
 
+                            // Display average water temp for current season
                             var waterTempInfo = getCurrentWaterTemp(obj.avgWaterTemp);
                             locationFrame.append(waterTempInfo);
-/*
-                            // Get today's date and month
-                            var today = new Date();
-                            var month = today.getMonth();
 
-                            /* Compare today's month with the array of water
-                            temps and associated seasons. Display the temp
-                            related to the current season (depending on the
-                            current month *
-                            switch (month) {
-                              case 11 :
-                              case 0 :
-                              case 1 :
-                                  var waterTemp = obj.avgWaterTemp.winter;
-                              break;
-
-                              case 2:
-                              case 3:
-                              case 4:
-                                  var waterTemp = obj.avgWaterTemp.spring;
-                              break;
-
-                              case 5:
-                              case 6:
-                              case 7:
-                                  var waterTemp = obj.avgWaterTemp.summer;
-                              break;
-
-                              case 8:
-                              case 9:
-                              case 10:
-                                  var waterTemp = obj.avgWaterTemp.autumn;
-                              break;
-                            }
-
-                            /* Cache the water temp element *
-                            var waterTempInfo = '<p class="rollover-info water-temp">' + waterTemp + '℉' + '</p>';
-
-                            /* Check if the average maximum wave size
-                            sometimes goes above the max. If it does, save a plus sign in a variable to add to the min/max wave height *
-                            if (obj.avgSize.aboveMax) {
-                                var plus = '+';
-                            } else {
-                                var plus = '';
-                            };
-
-                            /* Cache the average wave size element *
-                            var waveSizeInfo = '<p class="rollover-info wave-size">'+ obj.avgSize.min + "-" + obj.avgSize.max + plus + "ft" +'</p>';
-*/
-                            /* Append all cached elements to the selected
-                            location frame */
-
-
-
-
-
-
-
-                            /*
-                            locationFrame.append(waterTempInfo);
+                            // Display avg wave height for the break
+                            var waveSizeInfo = getWaveSize(obj.avgSize);
                             locationFrame.append(waveSizeInfo);
-
-                            /* Get each element from within the location
-                            frame and cache it for later use */
-
-
-
-
-                            /*
-                            var waterTemp = $('.water-temp');
-                            var waveSize = $('.wave-size');*/
-
-
-
-                            /* Position the water temp info *
-                            waterTemp.css({
-                              "font-size" : "1.25em",
-                              "color" : "white",
-                              "text-shadow" : "1px 1px 10px black",
-                              "position" : "absolute",
-                              "bottom" : "0",
-                              "right" : "15px"
-                            });
-
-                            /* Position the wave size info *
-                            waveSize.css({
-                              "font-size" : "1.25em",
-                              "color" : "white",
-                              "text-shadow" : "1px 1px 10px black",
-                              "position" : "absolute",
-                              "bottom" : "0",
-                              "left" : "17px"
-                            });*/
                         };
                     }
                 );
@@ -701,7 +613,7 @@ function AppViewModel () {
                 /* Remove all imported info when the mouse stops hovering */
                 locationFrame.on('mouseleave',
                     function () {
-                        img.css('-webkit-filter', 'blur(0px)');
+                        img.css('-webkit-filter', 'blur(0px) brightness(100%)');
                         location.toggle();
                         breakName.toggle();
 
@@ -1810,10 +1722,25 @@ function AppViewModel () {
           break
         };
 
-        var waterTempInfo = '<p class="rollover-info water-temp">' + waterTemp + '℉' + '</p>';
+        var waterTempInfo = '<p class="rollover-info water-temp-hover">' + waterTemp + '℉' + '</p>';
 
         return waterTempInfo;
-    }
+    };
+
+    function getWaveSize (obj) {
+        /* Check if the average maximum wave size
+        sometimes goes above the max. If it does, save a plus sign in a variable to add to the min/max wave height */
+        if (obj.aboveMax) {
+            var plus = '+';
+        } else {
+            var plus = '';
+        };
+
+        /* Cache the average wave height */
+        var waveSizeInfo = '<p class="rollover-info wave-size-hover">' + obj.min + "-" + obj.max + "'" +'</p>';
+
+        return waveSizeInfo;
+    };
 
     function getCurrentSeason () {
         // Get today's date and month

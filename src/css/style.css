@@ -202,13 +202,22 @@ body {
     right: 15px;
 }
 
-.water-temp {
+.water-temp-hover {
     font-size: 1.25em;
     color: white;
     text-shadow: 1px 1px 10px black;
     position: absolute;
     bottom: 0;
     right: 15px;
+}
+
+.wave-size-hover {
+    font-size: 1.25em;
+    color: white;
+    text-shadow: 1px 1px 10px black;
+    position: absolute;
+    bottom: 0;
+    left: 17px;
 }
 
 .card {
@@ -480,15 +489,7 @@ body {
         font-size: 8vw;
     }
 
-    .cost-hover {
-        font-size: 4.5vw;
-    }
-
-    .distance-hover {
-        font-size: 4.5vw;
-    }
-
-    .water-temp {
+    .cost-hover, .distance-hover, .water-temp-hover, .wave-size-hover {
         font-size: 4.5vw;
     }
 
@@ -632,6 +633,10 @@ body {
         right: 23px;
     }
 
-    .water-temp {
+    .water-temp-hover {
         right: 23px;
+    }
+
+    .wave-size-hover {
+        left: 23px;
     }

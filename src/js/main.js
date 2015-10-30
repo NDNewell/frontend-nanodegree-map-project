@@ -577,9 +577,7 @@ function AppViewModel () {
                             if(obj.bigWave) {
                                 var miscInfoOne = '<img src="/img/big_wave_ro.svg" class="rollover-info misc-info-one-hover">';
                             } else {
-
                                 var suggestedAttireIcon = displaySuggestedAttireIcons(obj.avgWaterTemp);
-                                console.log(suggestedAttireIcon);
                                 var miscInfoOne = suggestedAttireIcon;
                             };
 
@@ -589,18 +587,7 @@ function AppViewModel () {
                             if(obj.wellKnown) {
                                 var miscInfoTwo = '<img src="/img/well_known_ro.svg" class="rollover-info misc-info-two-hover">';
                             } else {
-                                /* Generate a number between min and max to
-                                render a random hazard in case wave is not
-                                well known */
-                                // Set a random number within a given range
-                                var min = 0;
-                                var max = obj.hazards.length;;
-
-                                var randomArrayItem = Math.floor((Math.random() * (max - min)) + min);
-
-                                var randomHazard = obj.hazards[randomArrayItem];
-
-                                displayHazardIcons(randomHazard);
+                                var miscInfoTwoIcon = displayHazardIcons(obj.hazards);
                                 var miscInfoTwo = miscInfoTwoIcon;
                             };
 
@@ -1241,9 +1228,7 @@ function AppViewModel () {
         $('.best-season').addClass('best-season-guide');
 
 
-
         displaySuggestedAttireIcons(obj.avgWaterTemp);
-
 
 
         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 climate card">' + '<img src="img/empty_marquee.svg" class="icon climate-guide">' + '<p>' + obj.climate  + '</p>' + '</div>');
@@ -1830,7 +1815,19 @@ function AppViewModel () {
     function displayHazardIcons (obj) {
 
         if(rollover) {
-            hazards(obj);
+            /* Generate a number between min and max to
+            render a random hazard in case wave is not
+            well known */
+            // Set a random number within a given range
+            var min = 0;
+            var max = obj.length;
+
+            var randomArrayItem = Math.floor((Math.random() * (max - min)) + min);
+
+            var randomHazard = obj[randomArrayItem];
+            var miscInfoTwoIcon = hazards(randomHazard);
+
+            return miscInfoTwoIcon;
         } else {
 
             var hazardsLength = obj.length;
@@ -1846,7 +1843,7 @@ function AppViewModel () {
 
                 case 'beginners':
                     if(rollover) {
-                        miscInfoTwoIcon = '<img src="img/hazards_ro_beginners.svg" class="rollover-info misc-info-two-hover">';
+                        var hazardIcon = '<img src="img/hazards_ro_beginners.svg" class="rollover-info misc-info-two-hover">';
                     } else {
                         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_beginners.svg" class="icon hazard-guide">' + '</div>');
                     };
@@ -1854,7 +1851,7 @@ function AppViewModel () {
 
                 case 'boats':
                     if(rollover) {
-                        miscInfoTwoIcon = '<img src="img/hazards_ro_boats.svg" class="rollover-info misc-info-two-hover">';
+                        var hazardIcon = '<img src="img/hazards_ro_boats.svg" class="rollover-info misc-info-two-hover">';
                     } else {
                         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_boats.svg" class="icon hazard-guide">' + '</div>');
                     };
@@ -1862,7 +1859,7 @@ function AppViewModel () {
 
                 case 'crocs':
                     if(rollover) {
-                        miscInfoTwoIcon = '<img src="img/hazards_ro_crocs.svg" class="rollover-info misc-info-two-hover">';
+                        var hazardIcon = '<img src="img/hazards_ro_crocs.svg" class="rollover-info misc-info-two-hover">';
                     } else {
                         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_crocs.svg" class="icon hazard-guide">' + '</div>');
                     };
@@ -1870,7 +1867,7 @@ function AppViewModel () {
 
                 case 'crowded':
                     if(rollover) {
-                        miscInfoTwoIcon = '<img src="img/hazards_ro_crowded.svg" class="rollover-info misc-info-two-hover">';
+                        var hazardIcon = '<img src="img/hazards_ro_crowded.svg" class="rollover-info misc-info-two-hover">';
                     } else {
                         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_crowded.svg" class="icon hazard-guide">' + '</div>');
                     };
@@ -1878,7 +1875,7 @@ function AppViewModel () {
 
                 case 'dangerous break':
                     if(rollover) {
-                        miscInfoTwoIcon = '<img src="img/hazards_ro_dangerous_break.svg" class="rollover-info misc-info-two-hover">';
+                        var hazardIcon = '<img src="img/hazards_ro_dangerous_break.svg" class="rollover-info misc-info-two-hover">';
                     } else {
                         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_dangerous_break.svg" class="icon hazard-guide">' + '</div>');
                     };
@@ -1886,7 +1883,7 @@ function AppViewModel () {
 
                 case 'far from shore':
                     if(rollover) {
-                        miscInfoTwoIcon = '<img src="img/hazards_ro_far_from_shore.svg" class="rollover-info misc-info-two-hover">';
+                        var hazardIcon = '<img src="img/hazards_ro_far_from_shore.svg" class="rollover-info misc-info-two-hover">';
                     } else {
                         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_far_from_shore.svg" class="icon hazard-guide">' + '</div>');
                     };
@@ -1894,7 +1891,7 @@ function AppViewModel () {
 
                 case 'pollution':
                     if(rollover) {
-                        miscInfoTwoIcon = '<img src="img/hazards_ro_pollution.svg" class="rollover-info misc-info-two-hover">';
+                        var hazardIcon = '<img src="img/hazards_ro_pollution.svg" class="rollover-info misc-info-two-hover">';
                     } else {
                         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_pollution.svg" class="icon hazard-guide">' + '</div>');
                     };
@@ -1902,7 +1899,7 @@ function AppViewModel () {
 
                 case 'rocky bottom':
                     if(rollover) {
-                        miscInfoTwoIcon = '<img src="img/hazards_ro_rocky_bottom.svg" class="rollover-info misc-info-two-hover">';
+                        var hazardIcon = '<img src="img/hazards_ro_rocky_bottom.svg" class="rollover-info misc-info-two-hover">';
                     } else {
                         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_rocky_bottom.svg" class="icon hazard-guide">' + '</div>');
                     };
@@ -1910,7 +1907,7 @@ function AppViewModel () {
 
                 case 'sea snakes':
                     if(rollover) {
-                        miscInfoTwoIcon = '<img src="img/hazards_ro_sea_snakes.svg" class="rollover-info misc-info-two-hover">';
+                        var hazardIcon = '<img src="img/hazards_ro_sea_snakes.svg" class="rollover-info misc-info-two-hover">';
                     } else {
                         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_sea_snakes.svg" class="icon hazard-guide">' + '</div>');
                     };
@@ -1918,7 +1915,7 @@ function AppViewModel () {
 
                 case 'seals':
                     if(rollover) {
-                        miscInfoTwoIcon = '<img src="img/hazards_ro_seals.svg" class="rollover-info misc-info-two-hover">';
+                        var hazardIcon = '<img src="img/hazards_ro_seals.svg" class="rollover-info misc-info-two-hover">';
                     } else {
                         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_seals.svg" class="icon hazard-guide">' + '</div>');
                     };
@@ -1926,7 +1923,7 @@ function AppViewModel () {
 
                 case 'seaweed':
                     if(rollover) {
-                        miscInfoTwoIcon = '<img src="img/hazards_ro_seaweed.svg" class="rollover-info misc-info-two-hover">';
+                        var hazardIcon = '<img src="img/hazards_ro_seaweed.svg" class="rollover-info misc-info-two-hover">';
                     } else {
                         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_seaweed.svg" class="icon hazard-guide">' + '</div>');
                     };
@@ -1934,7 +1931,7 @@ function AppViewModel () {
 
                 case 'sewage':
                     if(rollover) {
-                        miscInfoTwoIcon = '<img src="img/hazards_ro_sewage.svg" class="rollover-info misc-info-two-hover">';
+                        var hazardIcon = '<img src="img/hazards_ro_sewage.svg" class="rollover-info misc-info-two-hover">';
                     } else {
                         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_sewage.svg" class="icon hazard-guide">' + '</div>');
                     };
@@ -1942,7 +1939,7 @@ function AppViewModel () {
 
                 case 'shallow':
                     if(rollover) {
-                        miscInfoTwoIcon = '<img src="img/hazards_ro_shallow.svg" class="rollover-info misc-info-two-hover">';
+                        var hazardIcon = '<img src="img/hazards_ro_shallow.svg" class="rollover-info misc-info-two-hover">';
                     } else {
                         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_shallow.svg" class="icon hazard-guide">' + '</div>');
                     };
@@ -1950,7 +1947,7 @@ function AppViewModel () {
 
                 case 'sharks':
                     if(rollover) {
-                        miscInfoTwoIcon = '<img src="img/hazards_ro_sharks.svg" class="rollover-info misc-info-two-hover">';
+                        var hazardIcon = '<img src="img/hazards_ro_sharks.svg" class="rollover-info misc-info-two-hover">';
                     } else {
                         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_sharks.svg" class="icon hazard-guide">' + '</div>');
                     };
@@ -1958,7 +1955,7 @@ function AppViewModel () {
 
                 case 'strong currents':
                     if(rollover) {
-                        miscInfoTwoIcon = '<img src="img/hazards_ro_strong_currents.svg" class="rollover-info misc-info-two-hover">';
+                        var hazardIcon = '<img src="img/hazards_ro_strong_currents.svg" class="rollover-info misc-info-two-hover">';
                     } else {
                         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_strong_currents.svg" class="icon hazard-guide">' + '</div>');
                     };
@@ -1966,7 +1963,7 @@ function AppViewModel () {
 
                 case 'strong rips':
                     if(rollover) {
-                        miscInfoTwoIcon = '<img src="img/hazards_ro_strong_rips.svg" class="rollover-info misc-info-two-hover">';
+                        var hazardIcon = '<img src="img/hazards_ro_strong_rips.svg" class="rollover-info misc-info-two-hover">';
                     } else {
                         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_strong_rips.svg" class="icon hazard-guide">' + '</div>');
                     };
@@ -1974,7 +1971,7 @@ function AppViewModel () {
 
                 case 'theft':
                     if(rollover) {
-                        miscInfoTwoIcon = '<img src="img/hazards_ro_theft.svg" class="rollover-info misc-info-two-hover">';
+                        var hazardIcon = '<img src="img/hazards_ro_theft.svg" class="rollover-info misc-info-two-hover">';
                     } else {
                         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_theft.svg" class="icon hazard-guide">' + '</div>');
                     };
@@ -1982,7 +1979,7 @@ function AppViewModel () {
 
                 case 'undertow':
                     if(rollover) {
-                        miscInfoTwoIcon = '<img src="img/hazards_ro_undertow.svg" class="rollover-info misc-info-two-hover">';
+                        var hazardIcon = '<img src="img/hazards_ro_undertow.svg" class="rollover-info misc-info-two-hover">';
                     } else {
                         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_undertow.svg" class="icon hazard-guide">' + '</div>');
                     };
@@ -1990,7 +1987,7 @@ function AppViewModel () {
 
                 case 'unfriendly':
                     if(rollover) {
-                        miscInfoTwoIcon = '<img src="img/hazards_ro_unfriendly.svg" class="rollover-info misc-info-two-hover">';
+                        var hazardIcon = '<img src="img/hazards_ro_unfriendly.svg" class="rollover-info misc-info-two-hover">';
                     } else {
                         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_unfriendly.svg" class="icon hazard-guide">' + '</div>');
                     };
@@ -1998,13 +1995,18 @@ function AppViewModel () {
 
                 case 'urchins':
                     if(rollover) {
-                        miscInfoTwoIcon = '<img src="img/hazards_ro_urchins.svg" class="rollover-info misc-info-two-hover">';
+                        var hazardIcon = '<img src="img/hazards_ro_urchins.svg" class="rollover-info misc-info-two-hover">';
                     } else {
                         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_urchins.svg" class="icon hazard-guide">' + '</div>');
                     };
                 break;
 
             }
+
+            if(rollover) {
+              return hazardIcon;
+            };
+
         };
     }
 };

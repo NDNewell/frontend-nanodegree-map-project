@@ -600,11 +600,11 @@ function AppViewModel () {
                             };
 
                             // Display average water temp for current season
-                            var waterTempInfo = getCurrentWaterTemp(obj.avgWaterTemp);
+                            var waterTempInfo = displayCurrentWaterTemp(obj.avgWaterTemp);
                             locationFrame.append(waterTempInfo);
 
                             // Display avg wave height for the break
-                            var waveSizeInfo = getWaveSize(obj.avgSize);
+                            var waveSizeInfo = displayWaveSize(obj.avgSize);
                             locationFrame.append(waveSizeInfo);
                         };
                     }
@@ -795,7 +795,7 @@ function AppViewModel () {
     self.renderSurfGuide = function (obj) {
 
         /* Check if the surf guide window is open already from a previous
-        click. If it isn't hide the locatin grid. If it is, the location
+        click. If it isn't, hide the locatin grid. If it is, the location
         grid is already hidden, so we don't want to make it visible! */
         if (!$('.surf-guide-container').is(":visible")) {
             // Hide the location grid
@@ -809,275 +809,56 @@ function AppViewModel () {
 
         $surfGuideContainer = $('.surf-guide-container');
 
-        $surfGuideContainer.append('<div class="col-xs-12 surf-guide-title">' + '<p class="title">' + obj.breakName + ',' + ' ' + obj.location + '</p>' + '</div>');
+
+        // Render the name and location of the break at the top of the guide
+        var guideTitle = displayTitle(obj.breakName, obj.location);
+        $surfGuideContainer.append(guideTitle);
+
 
         // Check if break has big waves and render
         if (obj.bigWave) {
-            $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 big-wave card">' + '<img src="img/big_wave.svg" class="icon big-wave-guide">' + '</div>');
+            var bigWaveIcon = displayBigWaveIcon();
+            $surfGuideContainer.append(bigWaveIcon);
         };
 
-        // Check if break is well known
+
+        // Check if break is well known and render
         if (obj.wellKnown) {
-            $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 well-known card">' + '<img src="img/well_known.svg">' + '</div>');
-        }
+            var wellKnownIcon = displayWellKnownIcon();
+            $surfGuideContainer.append(wellKnownIcon);
+        };
 
 
         /* Display icon associated with the skill level
         needed to surf the break */
         var skillLevelIcon = displaySkillIcon(obj.skillLevel);
-
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 difficulty card">' + skillLevelIcon + '</div>');
-
-        $('.skill-level').addClass('skill-level-guide');
+        $surfGuideContainer.append(skillLevelIcon);
 
 
         /* Display the icon associated with the direction
         the wave breaks */
         var directionIcon = displayDirectionIcon(obj.waveDirection);
-
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 direction card">' + directionIcon + '</div>');
-
-        $('.wave-direction').addClass('wave-direction-guide');
+        $surfGuideContainer.append(directionIcon);
 
 
         // Display the icon for the break details
         var breakIcon = displayBreakIcon(obj.breakDetails);
-
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 break card">' + breakIcon + '</div>');
-
-        $('.break-type').addClass('break-type-guide');
+        $surfGuideContainer.append(breakIcon);
 
 
-        /* Check if the average maximum wave size sometime goes above the max.
-        If it does, save a plus sign in a variable to add to the min/max wave
-        height */
-        if (obj.avgSize.aboveMax) {
-            var plus = '+';
-        } else {
-            var plus = '';
-        }
-
-
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 wave-height card">' + '<img src="img/wave_range.svg">' + '<p>' + obj.avgSize.min + "-" + obj.avgSize.max + plus + "ft" + '</p>' + '</div>');
+        // Display the icon for the average wave height
+        displayWaveSize(obj.avgSize);
 
 
         // Render optimal swell compass
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 swell card"><canvas id="compass-swell" width="160" height="160"></canvas></div>');
-
-
-        renderSwellCompass();
-
-        function renderSwellCompass () {
-
-              var Canvas = document.getElementById('compass-swell');
-
-              var ctx = Canvas.getContext('2d');
-
-              var pointer = new Image();
-              pointer.src = 'img/compass_swell_pointer.svg';
-
-              var img = new Image();
-              img.src = 'img/compass_guide.svg';
-              img.onload = draw;
-
-              function draw() {
-
-
-                    ctx.drawImage(img, 0, 0);
-
-                    ctx.save();
-
-                    ctx.translate(80, 80);
-
-                    for (var i = 0; i < obj.optimalSwell.length; i++) {
-
-                          switch (obj.optimalSwell[i]) {
-                                case 'N':
-                                      var swellDirection = 0;
-                                break;
-
-                                case 'NNE':
-                                      var swellDirection = 22.5;
-                                break;
-
-                                case 'NE':
-                                      var swellDirection = 45;
-                                break;
-
-                                case 'ENE':
-                                      var swellDirection = 67.5;
-                                break;
-
-                                case 'E':
-                                      var swellDirection = 90;
-                                break;
-
-                                case 'ESE':
-                                      var swellDirection = 112.5;
-                                break;
-
-                                case 'SE':
-                                      var swellDirection = 135;
-                                break;
-
-                                case 'SSE':
-                                      var swellDirection = 157.5;
-                                break;
-
-                                case 'S':
-                                      var swellDirection = 180;
-                                break;
-
-                                case 'SSW':
-                                      var swellDirection = 202.5;
-                                break;
-
-                                case 'SW':
-                                      var swellDirection = 225;
-                                break;
-
-                                case 'WSW':
-                                      var swellDirection = 247.5;
-                                break;
-
-                                case 'W':
-                                      var swellDirection = 270;
-                                break;
-
-                                case 'WNW':
-                                      var swellDirection = 292.5;
-                                break;
-
-                                case 'NW':
-                                      var swellDirection = 315;
-                                break;
-
-                                case 'NNW':
-                                      var swellDirection = 337.5;
-                                break;
-                          }
-
-                                var pointerAngle = swellDirection * (Math.PI / 180);
-
-                                ctx.rotate(pointerAngle);
-
-                                ctx.drawImage(pointer, -80, -80);
-
-                                ctx.rotate(-pointerAngle);
-                    }
-
-                    ctx.restore();
-              };
-        };
+        swell = true;
+        var swellCompassIcon = displayCompassIcon(obj.optimalSwell, $surfGuideContainer);
 
 
         // Render optimal wind compass
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 wind card"><canvas id="compass-wind" width="160" height="160"></canvas></div>');
+        wind = true;
+        var swellCompassIcon = displayCompassIcon(obj.optimalSwell, $surfGuideContainer);
 
-
-        renderWindCompass();
-
-        function renderWindCompass () {
-
-              var Canvas = document.getElementById('compass-wind');
-
-              var ctx = Canvas.getContext('2d');
-
-              var pointer = new Image();
-              pointer.src = 'img/compass_wind_pointer.svg';
-
-              var img = new Image();
-              img.src = 'img/compass_guide.svg';
-              img.onload = draw;
-
-              function draw() {
-
-                    ctx.drawImage(img, 0, 0);
-
-                    ctx.save();
-
-                    ctx.translate(80, 80);
-
-                    for (var i = 0; i < obj.optimalWind.length; i++) {
-
-                          switch (obj.optimalWind[i]) {
-                                case 'N':
-                                      var windDirection = 0;
-                                break;
-
-                                case 'NNE':
-                                      var windDirection = 22.5;
-                                break;
-
-                                case 'NE':
-                                      var windDirection = 45;
-                                break;
-
-                                case 'ENE':
-                                      var windDirection = 67.5;
-                                break;
-
-                                case 'E':
-                                      var windDirection = 90;
-                                break;
-
-                                case 'ESE':
-                                      var windDirection = 112.5;
-                                break;
-
-                                case 'SE':
-                                      var windDirection = 135;
-                                break;
-
-                                case 'SSE':
-                                      var windDirection = 157.5;
-                                break;
-
-                                case 'S':
-                                      var windDirection = 180;
-                                break;
-
-                                case 'SSW':
-                                      var windDirection = 202.5;
-                                break;
-
-                                case 'SW':
-                                      var windDirection = 225;
-                                break;
-
-                                case 'WSW':
-                                      var windDirection = 247.5;
-                                break;
-
-                                case 'W':
-                                      var windDirection = 270;
-                                break;
-
-                                case 'WNW':
-                                      var windDirection = 292.5;
-                                break;
-
-                                case 'NW':
-                                      var windDirection = 315;
-                                break;
-
-                                case 'NNW':
-                                      var windDirection = 337.5;
-                                break;
-                          }
-
-                                var pointerAngle = windDirection * (Math.PI / 180);
-
-                                ctx.rotate(pointerAngle);
-
-                                ctx.drawImage(pointer, -80, -80);
-
-                                ctx.rotate(-pointerAngle);
-                    }
-
-                    ctx.restore();
-              };
-        };
 
         /* Display icon associated with the optimal tide */
         // Set variables for each skill level at zero
@@ -1163,7 +944,7 @@ function AppViewModel () {
         $surfGuideContainer.prepend('<button type="button" class="btn guide-close-button">✖</button>');
 
         // Add a button for displaying surf conditions
-        $('.surf-guide-title').append('<button type="button" class="btn btn-default conditions-button">Current Condtions</button>');
+        $('.title-guide').append('<button type="button" class="btn btn-default conditions-button">Current Condtions</button>');
 
         /* When the surf conditions button is clicked, display current
         conditions */
@@ -1217,6 +998,24 @@ function AppViewModel () {
         });
     };
 
+    function displayTitle (breakName, location) {
+        var guideTitle = $surfGuideContainer.append('<div class="col-xs-12 title-guide">' + '<p class="title">' + breakName + ',' + ' ' + location + '</p>' + '</div>');
+
+        return guideTitle;
+    };
+
+    function displayBigWaveIcon () {
+        var bigWaveIcon = $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 big-wave card">' + '<img src="img/big_wave.svg" class="big-wave-guide">' + '</div>');
+
+        return bigWaveIcon;
+    };
+
+    function displayWellKnownIcon () {
+        var wellKnownIcon = $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 well-known card">' + '<img src="img/well_known.svg" class="well-known-guide">' + '</div>');
+
+        return wellKnownIcon;
+    }
+
     function displaySkillIcon (obj) {
         // Set variables for each skill level at zero
         var beginner = 0;
@@ -1245,85 +1044,47 @@ function AppViewModel () {
             if(rollover){
                 var skillLevelIcon = '<img src="/img/skill_level_ro_all.svg" class="rollover-info skill-level-hover">';
             } else {
-                var skillLevelIcon = '<img src="/img/skill_level_all.svg" class="icon skill-level">';
-            }
+                var skillLevelIcon = '<div class="col-xs-6 col-sm-3 skill-level card">' + '<img src="/img/skill_level_all.svg" class=" skill-level-guide">' + '</div>';
+            };
         } else if (beginner >= intermediate && beginner > advanced) {
             if(beginner === intermediate) {
                 if(rollover){
                     var skillLevelIcon = '<img src="/img/skill_level_ro_beginner_intermediate.svg" class="rollover-info skill-level-hover">';
                 } else {
-                    var skillLevelIcon = '<img src="/img/skill_level_beginner_intermediate.svg" class="icon skill-level">'
-                }
+                    var skillLevelIcon = '<div class="col-xs-6 col-sm-3 skill-level card">' + '<img src="/img/skill_level_beginner_intermediate.svg" class=" skill-level-guide">' + '</div>';
+                };
             } else {
                 if(rollover){
                     var skillLevelIcon = '<img src="/img/skill_level_ro_beginner.svg" class="rollover-info skill-level-hover">';
                 } else {
-                    var skillLevelIcon = '<img src="/img/skill_level_beginner.svg" class="icon skill-level">'
-                }
+                    var skillLevelIcon = '<div class="col-xs-6 col-sm-3 skill-level card">' + '<img src="/img/skill_level_beginner.svg" class=" skill-level-guide">' + '</div>';
+                };
             };
         } else if (intermediate > beginner && intermediate >= advanced) {
             if(intermediate === advanced) {
                 if(rollover){
                     var skillLevelIcon = '<img src="/img/skill_level_ro_intermediate_advanced.svg" class="rollover-info skill-level-hover">';
                 } else {
-                    var skillLevelIcon = '<img src="/img/skill_level_intermediate_advanced.svg" class="icon skill-level">'
-                }
+                    var skillLevelIcon = '<div class="col-xs-6 col-sm-3 skill-level card">' + '<img src="/img/skill_level_intermediate_advanced.svg" class=" skill-level-guide">' + '</div>';
+                };
             } else {
                 if(rollover){
                     var skillLevelIcon = '<img src="/img/skill_level_ro_intermediate.svg" class="rollover-info skill-level-hover">';
                 } else {
-                    var skillLevelIcon = '<img src="/img/skill_level_intermediate.svg" class="icon skill-level">'
-                }
+                    var skillLevelIcon = '<div class="col-xs-6 col-sm-3 skill-level card">' + '<img src="/img/skill_level_intermediate.svg" class=" skill-level-guide">' + '</div>';
+                };
             };
         } else {
             if(rollover){
                 var skillLevelIcon = '<img src="/img/skill_level_ro_advanced.svg" class="rollover-info skill-level-hover">';
             } else {
-                var skillLevelIcon = '<img src="/img/skill_level_advanced.svg" class="icon skill-level">'
-            }
+                var skillLevelIcon = '<div class="col-xs-6 col-sm-3 skill-level card">' + '<img src="/img/skill_level_advanced.svg" class=" skill-level-guide">' + '</div>';
+            };
         };
 
         return skillLevelIcon;
 
-    }
-
-    function displayBreakIcon (obj) {
-        switch(obj) {
-          case 'reef':
-              if(rollover) {
-                  var breakIcon = '<img src="/img/break_ro_reef.svg" class="rollover-info break-type-hover">';
-              } else {
-                  var breakIcon = '<img src="/img/break_reef.svg" class="icon break-type">';
-              }
-          break;
-
-          case 'beach':
-              if(rollover) {
-                  var breakIcon = '<img src="/img/break_ro_beach.svg" class="rollover-info break-type-hover">';
-              } else {
-                  var breakIcon = '<img src="/img/break_beach.svg" class="icon break-type">';
-              }
-          break;
-
-          case 'point':
-              if(rollover) {
-                  var breakIcon = '<img src="/img/break_ro_point.svg" class="rollover-info break-type-hover">';
-              } else {
-                  var breakIcon = '<img src="/img/break_point.svg" class="icon break-type">';
-              }
-          break;
-
-          case 'river mouth':
-              if(rollover) {
-                  var breakIcon = '<img src="/img/break_ro_river_mouth.svg" class="rollover-info break-type-hover">';
-              } else {
-                  var breakIcon = '<img src="/img/break_river_mouth.svg" class="icon break-type">';
-              }
-          break;
-        }
-
-        return breakIcon;
-    }
+    };
 
     function displayDirectionIcon (obj) {
         switch(obj) {
@@ -1331,28 +1092,185 @@ function AppViewModel () {
               if(rollover) {
                   var directionIcon = '<img src="/img/direction_ro_left.svg" class="rollover-info wave-direction-hover">';
               } else {
-                  var directionIcon = '<img src="/img/direction_left.svg" class="icon wave-direction">';;
-              }
+                  var directionIcon = '<div class="col-xs-6 col-sm-3 direction card">' + '<img src="/img/direction_left.svg" class="wave-direction-guide">' + '</div>';
+              };
           break;
 
           case 'right':
               if(rollover) {
                   var directionIcon = '<img src="/img/direction_ro_right.svg" class="rollover-info wave-direction-hover">';
               } else {
-                  var directionIcon = '<img src="/img/direction_right.svg" class="icon wave-direction">';;
-              }
+                  var directionIcon = '<div class="col-xs-6 col-sm-3 direction card">' + '<img src="/img/direction_right.svg" class="wave-direction-guide">' + '</div>';
+              };
           break;
 
           case 'left & right':
               if(rollover) {
                   var directionIcon = '<img src="/img/direction_ro_both.svg" class="rollover-info wave-direction-hover">';
               } else {
-                  var directionIcon = '<img src="/img/direction_both.svg" class="icon wave-direction">';;
-              }
+                  var directionIcon = '<div class="col-xs-6 col-sm-3 direction card">' + '<img src="/img/direction_both.svg" class="wave-direction-guide">' + '</div>';
+              };
           break;
         }
 
         return directionIcon;
+    };
+
+    function displayBreakIcon (obj) {
+        switch(obj) {
+          case 'reef':
+              if(rollover) {
+                  var breakIcon = '<img src="/img/break_ro_reef.svg" class="rollover-info break-type-hover">';
+              } else {
+                  var breakIcon = '<div class="col-xs-6 col-sm-3 break card">' + '<img src="/img/break_reef.svg" class="break-type-guide">' + '</div>';
+              };
+          break;
+
+          case 'beach':
+              if(rollover) {
+                  var breakIcon = '<img src="/img/break_ro_beach.svg" class="rollover-info break-type-hover">';
+              } else {
+                  var breakIcon = '<div class="col-xs-6 col-sm-3 break card">' + '<img src="/img/break_beach.svg" class="break-type-guide">' + '</div>';
+              };
+          break;
+
+          case 'point':
+              if(rollover) {
+                  var breakIcon = '<img src="/img/break_ro_point.svg" class="rollover-info break-type-hover">';
+              } else {
+                  var breakIcon = '<div class="col-xs-6 col-sm-3 break card">' + '<img src="/img/break_point.svg" class="break-type-guide">' + '</div>';
+              };
+          break;
+
+          case 'river mouth':
+              if(rollover) {
+                  var breakIcon = '<img src="/img/break_ro_river_mouth.svg" class="rollover-info break-type-hover">';
+              } else {
+                  var breakIcon = '<div class="col-xs-6 col-sm-3 break card">' + '<img src="/img/break_river_mouth.svg" class="break-type-guide">' + '</div>';
+              };
+          break;
+        }
+
+        return breakIcon;
+    };
+
+    function displayCompassIcon (obj, $surfGuideContainer) {
+
+        if(swell) {
+            swell = false;
+
+            $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 swell-compass-guide card"><canvas id="compass-swell" width="160" height="160"></canvas></div>');
+
+            var Canvas = document.getElementById('compass-swell');
+            var elementPointer = 'img/compass_swell_pointer.svg';
+
+        } else if (wind) {
+            wind = false;
+
+            $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 wind-compass-guide card"><canvas id="compass-wind" width="160" height="160"></canvas></div>');
+
+            var Canvas = document.getElementById('compass-wind');
+            var elementPointer = 'img/compass_wind_pointer.svg';
+        };
+
+        var ctx = Canvas.getContext('2d');
+
+        var pointer = new Image();
+        pointer.src = elementPointer;
+
+        var img = new Image();
+        img.src = 'img/compass_guide.svg';
+        img.onload = draw;
+
+        function draw() {
+
+              ctx.drawImage(img, 0, 0);
+
+              ctx.save();
+
+              ctx.translate(80, 80);
+
+              var directions = obj.length;
+
+              for (var i = directions; i--;) {
+
+                    switch (obj[i]) {
+                          case 'N':
+                                var swellDirection = 0;
+                          break;
+
+                          case 'NNE':
+                                var swellDirection = 22.5;
+                          break;
+
+                          case 'NE':
+                                var swellDirection = 45;
+                          break;
+
+                          case 'ENE':
+                                var swellDirection = 67.5;
+                          break;
+
+                          case 'E':
+                                var swellDirection = 90;
+                          break;
+
+                          case 'ESE':
+                                var swellDirection = 112.5;
+                          break;
+
+                          case 'SE':
+                                var swellDirection = 135;
+                          break;
+
+                          case 'SSE':
+                                var swellDirection = 157.5;
+                          break;
+
+                          case 'S':
+                                var swellDirection = 180;
+                          break;
+
+                          case 'SSW':
+                                var swellDirection = 202.5;
+                          break;
+
+                          case 'SW':
+                                var swellDirection = 225;
+                          break;
+
+                          case 'WSW':
+                                var swellDirection = 247.5;
+                          break;
+
+                          case 'W':
+                                var swellDirection = 270;
+                          break;
+
+                          case 'WNW':
+                                var swellDirection = 292.5;
+                          break;
+
+                          case 'NW':
+                                var swellDirection = 315;
+                          break;
+
+                          case 'NNW':
+                                var swellDirection = 337.5;
+                          break;
+                    }
+
+                          var pointerAngle = swellDirection * (Math.PI / 180);
+
+                          ctx.rotate(pointerAngle);
+
+                          ctx.drawImage(pointer, -80, -80);
+
+                          ctx.rotate(-pointerAngle);
+              }
+
+              ctx.restore();
+        };
     };
 
     function displayBestSeasonIcon (obj) {
@@ -1700,7 +1618,7 @@ function AppViewModel () {
         }
     }
 
-    function getCurrentWaterTemp (obj) {
+    function displayCurrentWaterTemp (obj) {
 
         var currentSeason = getCurrentSeason();
 
@@ -1727,7 +1645,7 @@ function AppViewModel () {
         return waterTempInfo;
     };
 
-    function getWaveSize (obj) {
+    function displayWaveSize (obj) {
         /* Check if the average maximum wave size
         sometimes goes above the max. If it does, save a plus sign in a variable to add to the min/max wave height */
         if (obj.aboveMax) {
@@ -1736,8 +1654,12 @@ function AppViewModel () {
             var plus = '';
         };
 
-        /* Cache the average wave height */
-        var waveSizeInfo = '<p class="rollover-info wave-size-hover">' + obj.min + "-" + obj.max + "'" +'</p>';
+        if(rollover) {
+            /* Cache the average wave height */
+            var waveSizeInfo = '<p class="rollover-info wave-size-hover">' + obj.min + "-" + obj.max + "'" +'</p>';
+        } else {
+            var waveSizeInfo = '<div class="col-xs-6 col-sm-3 wave-size card">' + '<img src="img/wave_range.svg" class"wave-size-guide">' + '<p>' + obj.min + "-" + obj.max + plus + "ft" + '</p>' + '</div>';
+        };
 
         return waveSizeInfo;
     };
@@ -2102,10 +2024,10 @@ function getMagicSeaweed (spotID, breakName) {
         that an api request that takes time to download isn't injected
         into another surf guide if the user changed surf guides during
         the api request processing */
-        var currentSurfGuide = $('.surf-guide-title').text();
+        var currentSurfGuide = $('.title-guide').text();
         if (currentSurfGuide.indexOf(breakName) >= 0) {
 
-            $surfGuideTitleContainer = $('.surf-guide-title');
+            $surfGuideTitleContainer = $('.title-guide');
 
             // Add compass column
             $surfGuideTitleContainer.after('<div class="col-xs-12 col-sm-6 compass-conditions surf-conditions compass"><canvas id="compass" width="300" height="300"></canvas></div>');
@@ -2224,11 +2146,11 @@ function getMagicSeaweed (spotID, breakName) {
         that an api request that takes time to download isn't injected
         into another surf guide if the user changed surf guides during
         the api request processing */
-        var currentSurfGuide = $('.surf-guide-title').text();
+        var currentSurfGuide = $('.title-guide').text();
         if (currentSurfGuide.indexOf(breakName) >= 0) {
 
             // Insert a new row above the surf guide
-            $('.surf-guide-title').after('<div class="col-xs-12 error-container"></div>');
+            $('.title-guide').after('<div class="col-xs-12 error-container"></div>');
 
             $('.error-container').append('<p class="conditions-error">' + breakName + ' ' + "conditions unavailable =(" + '</p>');
 

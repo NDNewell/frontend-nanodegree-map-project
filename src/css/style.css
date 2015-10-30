@@ -110,7 +110,7 @@ body {
     height: 194px;
 }
 
-.surf-guide-title {
+.title-guide {
     margin-top: 20px;
     margin-bottom: 12px;
     padding: 15px;
@@ -336,7 +336,7 @@ body {
     height: 160px;
 }
 
-.wave-height > img:first-child + p {
+.wave-size > img:first-child + p {
     font-size: 2.35em;
     font-weight: bolder;
     font-color: #333333;
@@ -558,7 +558,7 @@ body {
         height: 100%;
     }
 
-    .surf-guide-title p {
+    .title-guide p {
         font-size: .7em;
     }
 

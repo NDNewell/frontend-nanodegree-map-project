@@ -549,26 +549,26 @@ function AppViewModel () {
                             /* Display icon associated with the skill level
                             needed to surf the break */
 
-                            displaySkillIcon(obj.skillLevel);
+                            var skillLevelIcon = displaySkillIcon(obj.skillLevel);
                             var skillLevelInfo = skillLevelIcon;
 
                             /* Display the icon associated with the type of
                             break it is (i.e. what kind of surface is beneath
                             it */
 
-                            displayBreakIcon(obj.breakDetails);
+                            var breakIcon = displayBreakIcon(obj.breakDetails);
                             var breakTypeInfo = breakIcon;
 
                             /* Display the icon associated with the direction
                             the wave breaks */
 
-                            displayDirectionIcon(obj.waveDirection);
+                            var directionIcon = displayDirectionIcon(obj.waveDirection);
                             var waveDirectionInfo = directionIcon;
 
                             /* Display the icon for the best month in which to
                             surf at the specific break*/
 
-                            displayBestSeasonIcon(obj.optimalTime);
+                            var bestSeasonIcon = displayBestSeasonIcon(obj.optimalTime);
                             var bestSeasonInfo = bestSeasonIcon;
 
                             /* If there is big wave surfing at this break
@@ -920,7 +920,7 @@ function AppViewModel () {
 
         /* Display icon associated with the skill level
         needed to surf the break */
-        displaySkillIcon(obj.skillLevel);
+        var skillLevelIcon = displaySkillIcon(obj.skillLevel);
 
         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 difficulty card">' + skillLevelIcon + '</div>');
 
@@ -929,7 +929,7 @@ function AppViewModel () {
 
         /* Display the icon associated with the direction
         the wave breaks */
-        displayDirectionIcon(obj.waveDirection);
+        var directionIcon = displayDirectionIcon(obj.waveDirection);
 
         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 direction card">' + directionIcon + '</div>');
 
@@ -937,7 +937,7 @@ function AppViewModel () {
 
 
         // Display the icon for the break details
-        displayBreakIcon(obj.breakDetails);
+        var breakIcon = displayBreakIcon(obj.breakDetails);
 
         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 break card">' + breakIcon + '</div>');
 
@@ -1221,7 +1221,7 @@ function AppViewModel () {
 
 
 
-        displayBestSeasonIcon(obj.optimalTime);
+        var bestSeasonIcon = displayBestSeasonIcon(obj.optimalTime);
 
         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 time card">' + bestSeasonIcon + '</div>');
 
@@ -1339,45 +1339,47 @@ function AppViewModel () {
 
         if (beginner === intermediate && beginner === advanced) {
             if(rollover){
-                skillLevelIcon = '<img src="/img/skill_level_ro_all.svg" class="icon skill-level">';
+                var skillLevelIcon = '<img src="/img/skill_level_ro_all.svg" class="icon skill-level">';
             } else {
-                skillLevelIcon = '<img src="/img/skill_level_all.svg" class="icon skill-level">';
+                var skillLevelIcon = '<img src="/img/skill_level_all.svg" class="icon skill-level">';
             }
         } else if (beginner >= intermediate && beginner > advanced) {
             if(beginner === intermediate) {
                 if(rollover){
-                    skillLevelIcon = '<img src="/img/skill_level_ro_beginner_intermediate.svg" class="icon skill-level">';
+                    var skillLevelIcon = '<img src="/img/skill_level_ro_beginner_intermediate.svg" class="icon skill-level">';
                 } else {
-                    skillLevelIcon = '<img src="/img/skill_level_beginner_intermediate.svg" class="icon skill-level">'
+                    var skillLevelIcon = '<img src="/img/skill_level_beginner_intermediate.svg" class="icon skill-level">'
                 }
             } else {
                 if(rollover){
-                    skillLevelIcon = '<img src="/img/skill_level_ro_beginner.svg" class="icon skill-level">';
+                    var skillLevelIcon = '<img src="/img/skill_level_ro_beginner.svg" class="icon skill-level">';
                 } else {
-                    skillLevelIcon = '<img src="/img/skill_level_beginner.svg" class="icon skill-level">'
+                    var skillLevelIcon = '<img src="/img/skill_level_beginner.svg" class="icon skill-level">'
                 }
             };
         } else if (intermediate > beginner && intermediate >= advanced) {
             if(intermediate === advanced) {
                 if(rollover){
-                    skillLevelIcon = '<img src="/img/skill_level_ro_intermediate_advanced.svg" class="icon skill-level">';
+                    var skillLevelIcon = '<img src="/img/skill_level_ro_intermediate_advanced.svg" class="icon skill-level">';
                 } else {
-                    skillLevelIcon = '<img src="/img/skill_level_intermediate_advanced.svg" class="icon skill-level">'
+                    var skillLevelIcon = '<img src="/img/skill_level_intermediate_advanced.svg" class="icon skill-level">'
                 }
             } else {
                 if(rollover){
-                    skillLevelIcon = '<img src="/img/skill_level_ro_intermediate.svg" class="icon skill-level">';
+                    var skillLevelIcon = '<img src="/img/skill_level_ro_intermediate.svg" class="icon skill-level">';
                 } else {
-                    skillLevelIcon = '<img src="/img/skill_level_intermediate.svg" class="icon skill-level">'
+                    var skillLevelIcon = '<img src="/img/skill_level_intermediate.svg" class="icon skill-level">'
                 }
             };
         } else {
             if(rollover){
-                skillLevelIcon = '<img src="/img/skill_level_ro_advanced.svg" class="icon skill-level">';
+                var skillLevelIcon = '<img src="/img/skill_level_ro_advanced.svg" class="icon skill-level">';
             } else {
-                skillLevelIcon = '<img src="/img/skill_level_advanced.svg" class="icon skill-level">'
+                var skillLevelIcon = '<img src="/img/skill_level_advanced.svg" class="icon skill-level">'
             }
         };
+
+        return skillLevelIcon;
 
     }
 
@@ -1385,66 +1387,69 @@ function AppViewModel () {
         switch(obj) {
           case 'reef':
               if(rollover) {
-                  breakIcon = '<img src="/img/break_ro_reef.svg" class="icon break-type">';
+                  var breakIcon = '<img src="/img/break_ro_reef.svg" class="icon break-type">';
               } else {
-                  breakIcon = '<img src="/img/break_reef.svg" class="icon break-type">';
+                  var breakIcon = '<img src="/img/break_reef.svg" class="icon break-type">';
               }
           break;
 
           case 'beach':
               if(rollover) {
-                  breakIcon = '<img src="/img/break_ro_beach.svg" class="icon break-type">';
+                  var breakIcon = '<img src="/img/break_ro_beach.svg" class="icon break-type">';
               } else {
-                  breakIcon = '<img src="/img/break_beach.svg" class="icon break-type">';
+                  var breakIcon = '<img src="/img/break_beach.svg" class="icon break-type">';
               }
           break;
 
           case 'point':
               if(rollover) {
-                  breakIcon = '<img src="/img/break_ro_point.svg" class="icon break-type">';
+                  var breakIcon = '<img src="/img/break_ro_point.svg" class="icon break-type">';
               } else {
-                  breakIcon = '<img src="/img/break_point.svg" class="icon break-type">';
+                  var breakIcon = '<img src="/img/break_point.svg" class="icon break-type">';
               }
           break;
 
           case 'river mouth':
               if(rollover) {
-                  breakIcon = '<img src="/img/break_ro_river_mouth.svg" class="icon break-type">';
+                  var breakIcon = '<img src="/img/break_ro_river_mouth.svg" class="icon break-type">';
               } else {
-                  breakIcon = '<img src="/img/break_river_mouth.svg" class="icon break-type">';
+                  var breakIcon = '<img src="/img/break_river_mouth.svg" class="icon break-type">';
               }
           break;
         }
+
+        return breakIcon;
     }
 
     function displayDirectionIcon (obj) {
         switch(obj) {
           case 'left':
               if(rollover) {
-                  directionIcon = '<img src="/img/direction_ro_left.svg" class="icon wave-direction">';
+                  var directionIcon = '<img src="/img/direction_ro_left.svg" class="icon wave-direction">';
               } else {
-                  directionIcon = '<img src="/img/direction_left.svg" class="icon wave-direction">';;
+                  var directionIcon = '<img src="/img/direction_left.svg" class="icon wave-direction">';;
               }
           break;
 
           case 'right':
               if(rollover) {
-                  directionIcon = '<img src="/img/direction_ro_right.svg" class="icon wave-direction">';
+                  var directionIcon = '<img src="/img/direction_ro_right.svg" class="icon wave-direction">';
               } else {
-                  directionIcon = '<img src="/img/direction_right.svg" class="icon wave-direction">';;
+                  var directionIcon = '<img src="/img/direction_right.svg" class="icon wave-direction">';;
               }
           break;
 
           case 'left & right':
               if(rollover) {
-                  directionIcon = '<img src="/img/direction_ro_both.svg" class="icon wave-direction">';
+                  var directionIcon = '<img src="/img/direction_ro_both.svg" class="icon wave-direction">';
               } else {
-                  directionIcon = '<img src="/img/direction_both.svg" class="icon wave-direction">';;
+                  var directionIcon = '<img src="/img/direction_both.svg" class="icon wave-direction">';;
               }
           break;
         }
 
-    }
+        return directionIcon;
+    };
 
     function displayBestSeasonIcon (obj) {
 
@@ -1493,77 +1498,79 @@ function AppViewModel () {
         year */
         if (winter === spring && winter === summer && winter === autumn) {
             if(rollover) {
-                bestSeasonIcon = '<img src="/img/season_ro_all.svg" class="icon best-season">';
+                var bestSeasonIcon = '<img src="/img/season_ro_all.svg" class="icon best-season">';
             } else {
-                bestSeasonIcon = '<img src="/img/season_all.svg" class="icon best-season">';
+                var bestSeasonIcon = '<img src="/img/season_all.svg" class="icon best-season">';
             };
         } else if(winter >= spring && winter >= summer && winter >= autumn) {
               if(winter === spring) {
                   if(rollover) {
-                      bestSeasonIcon = '<img src="/img/season_ro_winter_spring.svg" class="icon best-season">';
+                      var bestSeasonIcon = '<img src="/img/season_ro_winter_spring.svg" class="icon best-season">';
                   } else {
-                      bestSeasonIcon = '<img src="/img/season_winter_spring.svg" class="icon best-season">';
+                      var bestSeasonIcon = '<img src="/img/season_winter_spring.svg" class="icon best-season">';
                   };
               } else if (winter === summer) {
                   if(rollover) {
-                      bestSeasonIcon = '<img src="/img/season_ro_winter_summer.svg" class="icon best-season">';
+                      var bestSeasonIcon = '<img src="/img/season_ro_winter_summer.svg" class="icon best-season">';
                   } else {
-                      bestSeasonIcon = '<img src="/img/season_winter_summer.svg" class="icon best-season">';
+                      var bestSeasonIcon = '<img src="/img/season_winter_summer.svg" class="icon best-season">';
                   };
               } else if (winter === autumn) {
                   if(rollover) {
-                      bestSeasonIcon = '<img src="/img/season_ro_winter_autumn.svg" class="icon best-season">';
+                      var bestSeasonIcon = '<img src="/img/season_ro_winter_autumn.svg" class="icon best-season">';
                   } else {
-                      bestSeasonIcon = '<img src="/img/season_winter_autumn.svg" class="icon best-season">';
+                      var bestSeasonIcon = '<img src="/img/season_winter_autumn.svg" class="icon best-season">';
                   };
               } else {
                   if(rollover) {
-                      bestSeasonIcon = '<img src="/img/season_ro_winter.svg" class="icon best-season">';
+                      var bestSeasonIcon = '<img src="/img/season_ro_winter.svg" class="icon best-season">';
                   } else {
-                      bestSeasonIcon = '<img src="/img/season_winter.svg" class="icon best-season">';
+                      var bestSeasonIcon = '<img src="/img/season_winter.svg" class="icon best-season">';
                   };
               };
         } else if (spring >= summer && spring >= autumn && spring > winter) {
               if (spring === summer) {
                   if(rollover) {
-                      bestSeasonIcon = '<img src="/img/season_ro_spring_summer.svg" class="icon best-season">';
+                      var bestSeasonIcon = '<img src="/img/season_ro_spring_summer.svg" class="icon best-season">';
                   } else {
-                      bestSeasonIcon = '<img src="/img/season_spring_summer.svg" class="icon best-season">';
+                      var bestSeasonIcon = '<img src="/img/season_spring_summer.svg" class="icon best-season">';
                   };
               } else if (spring === autumn) {
                   if(rollover) {
-                      bestSeasonIcon = '<img src="/img/season_ro_spring_autumn.svg" class="icon best-season">';
+                      var bestSeasonIcon = '<img src="/img/season_ro_spring_autumn.svg" class="icon best-season">';
                   } else {
-                      bestSeasonIcon = '<img src="/img/season_spring_autumn.svg" class="icon best-season">';
+                      var bestSeasonIcon = '<img src="/img/season_spring_autumn.svg" class="icon best-season">';
                   };
               } else {
                   if(rollover) {
-                      bestSeasonIcon = '<img src="/img/season_ro_spring.svg" class="icon best-season">';
+                      var bestSeasonIcon = '<img src="/img/season_ro_spring.svg" class="icon best-season">';
                   } else {
-                      bestSeasonIcon = '<img src="/img/season_spring.svg" class="icon best-season">';
+                      var bestSeasonIcon = '<img src="/img/season_spring.svg" class="icon best-season">';
                   };
               };
         } else if (summer >= autumn && summer > winter && summer > spring) {
               if(summer === autumn) {
                   if(rollover) {
-                      bestSeasonIcon = '<img src="/img/season_ro_summer_autumn.svg" class="icon best-season">';
+                      var bestSeasonIcon = '<img src="/img/season_ro_summer_autumn.svg" class="icon best-season">';
                   } else {
-                      bestSeasonIcon = '<img src="/img/season_summer_autumnsvg" class="icon best-season">';
+                      var bestSeasonIcon = '<img src="/img/season_summer_autumnsvg" class="icon best-season">';
                   };
               } else {
                   if(rollover) {
-                      bestSeasonIcon = '<img src="/img/season_ro_summer.svg" class="icon best-season">';
+                      var bestSeasonIcon = '<img src="/img/season_ro_summer.svg" class="icon best-season">';
                   } else {
-                      bestSeasonIcon = '<img src="/img/season_summer.svg" class="icon best-season">';
+                      var bestSeasonIcon = '<img src="/img/season_summer.svg" class="icon best-season">';
                   };
               };
         } else {
                   if(rollover) {
-                      bestSeasonIcon = '<img src="/img/season_ro_autumn.svg" class="icon best-season">';
+                      var bestSeasonIcon = '<img src="/img/season_ro_autumn.svg" class="icon best-season">';
                   } else {
-                      bestSeasonIcon = '<img src="/img/season_autumn.svg" class="icon best-season">';
+                      var bestSeasonIcon = '<img src="/img/season_autumn.svg" class="icon best-season">';
                   };
         };
+
+        return bestSeasonIcon;
     };
 
     function displaySuggestedAttireIcons (obj) {

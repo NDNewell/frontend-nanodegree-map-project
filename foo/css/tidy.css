@@ -83,6 +83,8 @@ body {
   padding: 10px 10px;
 }
 
+/** Icons **/
+
 @media (max-width: 767px) {
   .horizontal-rule {
     border-bottom: none;

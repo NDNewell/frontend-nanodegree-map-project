@@ -577,8 +577,11 @@ function AppViewModel () {
                             if(obj.bigWave) {
                                 var miscInfoOne = '<img src="/img/big_wave_ro.svg" class="rollover-info misc-info-one-hover">';
                             } else {
-                                var miscInfoOne = '<img src="img/empty_ro_marquee.svg" class="rollover-info misc-info-one-hover">' + '<p class="rollover-info climate-info-hover">' + obj.climate  + '</p>';
-                            }
+
+                                var suggestedAttireIcon = displaySuggestedAttireIcons(obj.avgWaterTemp);
+                                console.log(suggestedAttireIcon);
+                                var miscInfoOne = suggestedAttireIcon;
+                            };
 
                             /* If the wave is well known display the well
                             known icon, otherwise display a random hazard
@@ -734,7 +737,7 @@ function AppViewModel () {
     self.addRolloverEffect();
 
     /* self.Query is bound to the input on the View. Because it is an
-     observable variable, it's value will be updated whenver the input on the
+     observable variable, it's value will be updated whenever the input on the
      View is altered*/
     self.Query = ko.observable("");
 
@@ -1239,102 +1242,9 @@ function AppViewModel () {
 
 
 
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 water-temp spring card">' + '<canvas id="spring" width="160" height="160"></canvas>');
+        displaySuggestedAttireIcons(obj.avgWaterTemp);
 
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 water-temp summer card">' + '<canvas id="summer" width="160" height="160"></canvas>');
 
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 water-temp autumn card">' + '<canvas id="autumn" width="160" height="160"></canvas>');
-
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 water-temp winter card">' + '<canvas id="winter" width="160" height="160"></canvas>');
-
-        var season = 0;
-        /* Loop through the average water temps for each time of year. Designate specific water attire for each time of year*/
-        for (var temp in obj.avgWaterTemp) {
-
-            season++;
-
-            if(obj.avgWaterTemp[temp] > 72) {
-                var gear = 'img/water_attire_boardies.svg';
-            } else if (obj.avgWaterTemp[temp] > 66) {
-                var gear = 'img/water_attire_2mm_wetsuit.svg';
-            } else if (obj.avgWaterTemp[temp] > 59) {
-                var gear = 'img/water_attire_3mm_wetsuit.svg';
-            } else if (obj.avgWaterTemp[temp] > 54) {
-                var gear = 'img/water_attire_4mm_wetsuit.svg';
-            } else if (obj.avgWaterTemp[temp] > 48) {
-                var gear = 'img/water_attire_5mm_wetsuit.svg';
-            } else if (obj.avgWaterTemp[temp] <= 48) {
-                var gear = 'img/water_attire_6mm_wetsuit.svg';
-            };
-
-            drawSeason(gear, season);
-        };
-
-        function drawSeason(gear, season) {
-
-            if(season === 1) {
-                var Canvas = document.getElementById('spring');
-                var seasonImg = 'img/water_temp_spring.svg';
-            } else if (season === 2) {
-                var Canvas = document.getElementById('summer');
-                var seasonImg = 'img/water_temp_summer.svg';
-            } else if (season === 3) {
-                var Canvas = document.getElementById('autumn');
-                var seasonImg = 'img/water_temp_autumn.svg';
-            } else {
-                var Canvas = document.getElementById('winter');
-                var seasonImg = 'img/water_temp_winter.svg';
-            };
-
-            var ctx = Canvas.getContext('2d');
-
-            var attire = new Image();
-            attire.src = gear;
-
-            var seasonBackground = new Image();
-            seasonBackground.src = seasonImg;
-            seasonBackground.onload = drawAttire;
-
-                function drawAttire () {
-
-                    ctx.drawImage(seasonBackground, 0, 0);
-                    ctx.drawImage(attire, 0, 0);
-                }
-        }
-
-        // Get today's date and month
-        var today = new Date();
-        var month = today.getMonth();
-
-        /* Compare today's month with the array of water
-        temps and associated seasons. Display the temp
-        related to the current season (depending on the
-        current month */
-        switch (month) {
-          case 11 :
-          case 0 :
-          case 1 :
-              $('#winter').addClass("highlight-attire");
-          break;
-
-          case 2:
-          case 3:
-          case 4:
-              $('#spring').addClass("highlight-attire");
-          break;
-
-          case 5:
-          case 6:
-          case 7:
-              $('#summer').addClass("highlight-attire");
-          break;
-
-          case 8:
-          case 9:
-          case 10:
-              $('#autumn').addClass("highlight-attire");
-          break;
-        }
 
         $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 climate card">' + '<img src="img/empty_marquee.svg" class="icon climate-guide">' + '<p>' + obj.climate  + '</p>' + '</div>');
 
@@ -1668,6 +1578,170 @@ function AppViewModel () {
                   } else {
                       bestSeasonIcon = '<img src="/img/season_autumn.svg" class="icon best-season">';
                   };
+        };
+    };
+
+    function displaySuggestedAttireIcons (obj) {
+
+        if(!rollover) {
+            $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 water-temp spring card">' + '<canvas id="spring" width="160" height="160"></canvas>');
+
+            $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 water-temp summer card">' + '<canvas id="summer" width="160" height="160"></canvas>');
+
+            $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 water-temp autumn card">' + '<canvas id="autumn" width="160" height="160"></canvas>');
+
+            $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 water-temp winter card">' + '<canvas id="winter" width="160" height="160"></canvas>');
+
+            var season = 0;
+            /* Loop through the average water temps for each time of year. Designate specific water attire for each time of year */
+            for (var temp in obj) {
+
+                season++;
+                var gear = determineGear(obj[temp]);
+
+                drawSeasonIcon(gear, season);
+
+            };
+
+            function drawSeasonIcon(gear, season) {
+
+                if(season === 1) {
+                    var Canvas = document.getElementById('spring');
+                    var seasonImg = 'img/water_temp_spring.svg';
+                } else if (season === 2) {
+                    var Canvas = document.getElementById('summer');
+                    var seasonImg = 'img/water_temp_summer.svg';
+                } else if (season === 3) {
+                    var Canvas = document.getElementById('autumn');
+                    var seasonImg = 'img/water_temp_autumn.svg';
+                } else {
+                    var Canvas = document.getElementById('winter');
+                    var seasonImg = 'img/water_temp_winter.svg';
+                };
+
+                var ctx = Canvas.getContext('2d');
+
+                var attire = new Image();
+                attire.src = gear;
+
+                var seasonBackground = new Image();
+                seasonBackground.src = seasonImg;
+                seasonBackground.onload = drawIcon;
+
+                    function drawIcon () {
+
+                        ctx.drawImage(seasonBackground, 0, 0);
+                        ctx.drawImage(attire, 0, 0);
+                    };
+            };
+
+            currentSeasonAttire();
+
+        } else {
+            var suggestedAttireIcon = currentSeasonAttire(obj);
+            return suggestedAttireIcon;
+        };
+
+        function currentSeasonAttire (obj) {
+            // Get today's date and month
+            var today = new Date();
+            var month = today.getMonth();
+
+            /* Compare today's month with the array of water
+            temps and associated seasons. Display the temp
+            related to the current season (depending on the
+            current month */
+            switch (month) {
+              case 11 :
+              case 0 :
+              case 1 :
+                  if(rollover) {
+                      var suggestedAttire = determineGear(obj.winter);
+                  } else {
+                      $('#winter').addClass("highlight-attire");
+                  };
+              break;
+
+              case 2:
+              case 3:
+              case 4:
+                  if(rollover) {
+                      var suggestedAttire = determineGear(obj.spring);
+                  } else {
+                      $('#spring').addClass("highlight-attire");
+                  };
+              break;
+
+              case 5:
+              case 6:
+              case 7:
+                  if(rollover) {
+                      var suggestedAttire = determineGear(obj.summer);
+                  } else {
+                      $('#summer').addClass("highlight-attire");
+                  };
+              break;
+
+              case 8:
+              case 9:
+              case 10:
+                  if(rollover) {
+                      var suggestedAttire = determineGear(obj.autumn);
+                  } else {
+                      $('#autumn').addClass("highlight-attire");
+                  };
+              break;
+            };
+
+            if(rollover){
+                return suggestedAttire;
+            };
+      };
+
+        function determineGear (temp) {
+            if(temp > 59) {
+                if(temp > 72) {
+                    if(rollover) {
+                      var gear = '<img src="img/water_attire_ro_boardies.svg" class="rollover-info misc-info-one-hover">';
+                    } else {
+                      var gear = 'img/water_attire_boardies.svg';
+                    };
+                } else if (temp > 66) {
+                    if(rollover) {
+                      var gear = '<img src="img/water_attire_ro_2mm_wetsuit.svg" class="rollover-info misc-info-one-hover">';
+                    } else {
+                      var gear = 'img/water_attire_2mm_wetsuit.svg';
+                    };
+                } else {
+                    if(rollover) {
+                      var gear = '<img src="img/water_attire_ro_3mm_wetsuit.svg" class="rollover-info misc-info-one-hover">';
+                    } else {
+                      var gear = 'img/water_attire_3mm_wetsuit.svg';
+                    };
+                };
+            } else {
+                if (temp > 54) {
+                    if(rollover) {
+                      var gear = '<img src="img/water_attire_ro_4mm_wetsuit.svg.svg" class="rollover-info misc-info-one-hover">';
+                    } else {
+                      var gear = 'img/water_attire_4mm_wetsuit.svg';
+                    };
+                } else if (temp > 48) {
+                    if(rollover) {
+                      var gear = '<img src="img/water_attire_ro_5mm_wetsuit.svg" class="rollover-info misc-info-one-hover">';
+                    } else {
+                      var gear = 'img/water_attire_5mm_wetsuit.svg';
+                    };
+                } else {
+                    if(rollover) {
+                      var gear = '<img src="img/water_attire_ro_6mm_wetsuit.svg" class="rollover-info misc-info-one-hover">';
+                    } else {
+                      var gear = 'img/water_attire_6mm_wetsuit.svg';
+                    };
+                };
+            };
+
+            return gear;
         };
     };
 

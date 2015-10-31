@@ -1989,7 +1989,9 @@ function getMagicSeaweed (spotID, breakName) {
                 var forwardThreeHours = currentTimeSecs + 10800;
 
                 /* Iterate through forecast objects to get the last forecast (i.e. within the last 3 hours)*/
-                for (var i = 0; i < response.length; i++) {
+                var responseLength = response.length;
+
+                for (var i = responseLength; i--;) {
 
                     var forecastTime = response[i].timestamp;
 
@@ -2054,21 +2056,27 @@ function getMagicSeaweed (spotID, breakName) {
 
         /* Add solid stars to the array equal to number value
         retrieved from MSW*/
-        for (var i = 0; i < forecastData.solidRating; i++) {
+        var solidRatingLength = forecastData.solidRating;
+
+        for (var i = solidRatingLength; i--;) {
             rating.push('<img class="star" src="img/star_filled.svg" />');
-        }
+        };
 
         /* Add faded stars to the array equal to number value
         retrieved from MSW*/
-        for (var i = 0; i < forecastData.fadedRating; i++) {
-            rating.push('<img class="star" src="img/star_faded.svg" />');
-        }
+        var fadedRatingLength = forecastData.fadedRating;
 
+        for (var i = fadedRatingLength; i--;) {
+            rating.push('<img class="star" src="img/star_faded.svg" />');
+        };
+
+        /* Add empty stars to the array equal 5 minus the total amount of
+        filled and faded stars */
         var fillEmptyStars = 5 - rating.length;
 
-        for (var i = 0; i < fillEmptyStars; i++) {
+        for (var i = fillEmptyStars; i--;) {
             rating.push('<img class="star" src="img/star_empty.svg" />');
-        }
+        };
 
         /* Combine the array into one line of stars to form the overall rating of both the surfing conditions and wave
         quality*/
@@ -2484,7 +2492,9 @@ function addListeners(marker, breakName, obj) {
 function showMarkers(map) {
 
     // Loop through the markers array and display on the map
-    for (var i = 0; i < markers.length; i++) {
+    var markersLength = markers.length;
+
+    for (var i = markersLength; i--;) {
         markers[i].setMap(map);
     }
 }
@@ -2497,7 +2507,9 @@ function setMapBounds () {
 
     /* Loop through markers and extend bounds to only those markers
     that are visible*/
-    for (var i = 0; i < markers.length; i++) {
+    var markersLength = markers.length;
+
+    for (var i = markersLength; i--;) {
         if(markers[i].visible) {
             bounds.extend(markers[i].getPosition());
         }

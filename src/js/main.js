@@ -1724,8 +1724,6 @@ function AppViewModel () {
         var today = new Date();
         var month = today.getMonth();
 
-        /* Compare today's month with the array of water
-        temps and associated seasons. */
         switch (month) {
           case 11 :
           case 0 :
@@ -1788,7 +1786,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = '<img src="img/hazards_ro_beginners.svg" class="rollover-info misc-info-two-hover">';
                     } else {
-                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_beginners.svg" class="icon hazard-guide">' + '</div>');
+                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_beginners.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -1796,7 +1794,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = '<img src="img/hazards_ro_boats.svg" class="rollover-info misc-info-two-hover">';
                     } else {
-                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_boats.svg" class="icon hazard-guide">' + '</div>');
+                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_boats.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -1804,7 +1802,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = '<img src="img/hazards_ro_crocs.svg" class="rollover-info misc-info-two-hover">';
                     } else {
-                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_crocs.svg" class="icon hazard-guide">' + '</div>');
+                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_crocs.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -1812,7 +1810,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = '<img src="img/hazards_ro_crowded.svg" class="rollover-info misc-info-two-hover">';
                     } else {
-                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_crowded.svg" class="icon hazard-guide">' + '</div>');
+                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_crowded.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -1820,7 +1818,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = '<img src="img/hazards_ro_dangerous_break.svg" class="rollover-info misc-info-two-hover">';
                     } else {
-                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_dangerous_break.svg" class="icon hazard-guide">' + '</div>');
+                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_dangerous_break.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -1828,7 +1826,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = '<img src="img/hazards_ro_far_from_shore.svg" class="rollover-info misc-info-two-hover">';
                     } else {
-                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_far_from_shore.svg" class="icon hazard-guide">' + '</div>');
+                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_far_from_shore.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -1836,7 +1834,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = '<img src="img/hazards_ro_pollution.svg" class="rollover-info misc-info-two-hover">';
                     } else {
-                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_pollution.svg" class="icon hazard-guide">' + '</div>');
+                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_pollution.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -1844,7 +1842,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = '<img src="img/hazards_ro_rocky_bottom.svg" class="rollover-info misc-info-two-hover">';
                     } else {
-                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_rocky_bottom.svg" class="icon hazard-guide">' + '</div>');
+                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_rocky_bottom.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -1852,7 +1850,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = '<img src="img/hazards_ro_sea_snakes.svg" class="rollover-info misc-info-two-hover">';
                     } else {
-                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_sea_snakes.svg" class="icon hazard-guide">' + '</div>');
+                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_sea_snakes.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -1860,7 +1858,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = '<img src="img/hazards_ro_seals.svg" class="rollover-info misc-info-two-hover">';
                     } else {
-                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_seals.svg" class="icon hazard-guide">' + '</div>');
+                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_seals.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -1868,7 +1866,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = '<img src="img/hazards_ro_seaweed.svg" class="rollover-info misc-info-two-hover">';
                     } else {
-                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_seaweed.svg" class="icon hazard-guide">' + '</div>');
+                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_seaweed.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -1876,7 +1874,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = '<img src="img/hazards_ro_sewage.svg" class="rollover-info misc-info-two-hover">';
                     } else {
-                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_sewage.svg" class="icon hazard-guide">' + '</div>');
+                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_sewage.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -1884,7 +1882,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = '<img src="img/hazards_ro_shallow.svg" class="rollover-info misc-info-two-hover">';
                     } else {
-                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_shallow.svg" class="icon hazard-guide">' + '</div>');
+                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_shallow.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -1892,7 +1890,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = '<img src="img/hazards_ro_sharks.svg" class="rollover-info misc-info-two-hover">';
                     } else {
-                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_sharks.svg" class="icon hazard-guide">' + '</div>');
+                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_sharks.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -1900,7 +1898,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = '<img src="img/hazards_ro_strong_currents.svg" class="rollover-info misc-info-two-hover">';
                     } else {
-                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_strong_currents.svg" class="icon hazard-guide">' + '</div>');
+                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_strong_currents.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -1908,7 +1906,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = '<img src="img/hazards_ro_strong_rips.svg" class="rollover-info misc-info-two-hover">';
                     } else {
-                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_strong_rips.svg" class="icon hazard-guide">' + '</div>');
+                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_strong_rips.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -1916,7 +1914,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = '<img src="img/hazards_ro_theft.svg" class="rollover-info misc-info-two-hover">';
                     } else {
-                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_theft.svg" class="icon hazard-guide">' + '</div>');
+                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_theft.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -1924,7 +1922,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = '<img src="img/hazards_ro_undertow.svg" class="rollover-info misc-info-two-hover">';
                     } else {
-                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_undertow.svg" class="icon hazard-guide">' + '</div>');
+                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_undertow.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -1932,7 +1930,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = '<img src="img/hazards_ro_unfriendly.svg" class="rollover-info misc-info-two-hover">';
                     } else {
-                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_unfriendly.svg" class="icon hazard-guide">' + '</div>');
+                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_unfriendly.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -1940,309 +1938,308 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = '<img src="img/hazards_ro_urchins.svg" class="rollover-info misc-info-two-hover">';
                     } else {
-                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_urchins.svg" class="icon hazard-guide">' + '</div>');
+                        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 hazard card">' + '<img src="img/hazards_urchins.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
             }
 
-            if(rollover) {
               return hazardIcon;
+
+        };
+    };
+
+    self.getMagicSeaweed = function (spotID, breakName) {
+
+        /* Check for the location's spot ID. If there is no spot ID,
+        immediately display an error message. This also prevents an API request
+        from going through for a non-existing location*/
+        if(spotID === 'none') {
+
+            showError();
+
+        } else {
+
+            /* If the location object passes the above filter (has a location ID), but times out (no api data is returned), show an error
+            message */
+            var msRequestTimeout = setTimeout (function() {
+
+                showError();
+
+            }, 8000);
+
+            // Load Magic Seaweed API data
+            var msUrl = 'http://magicseaweed.com/api/d2983e394d07724e96404fba11c10485/forecast/?spot_id=' + spotID + '&units=us&fields=timestamp,fadedRating,solidRating,swell.minBreakingHeight,swell.maxBreakingHeight,swell.components.primary.*,wind.*,condition.*';
+
+            $.ajax({
+                url: msUrl,
+                dataType: 'jsonp',
+                // jsonp: "callback",
+                success: function(response) {
+
+                    // Get current time & current time plus/minus three hours
+                    var getTime = Date.now();
+                    var currentTimeSecs = getTime / 1000;
+                    var backThreeHours = currentTimeSecs - 10800;
+                    var forwardThreeHours = currentTimeSecs + 10800;
+
+                    /* Iterate through forecast objects to get the last forecast (i.e. within the last 3 hours)*/
+                    var responseLength = response.length;
+
+                    for (var i = responseLength; i--;) {
+
+                        var forecastTime = response[i].timestamp;
+
+                        if (forecastTime < currentTimeSecs && forecastTime > backThreeHours) {
+
+                            // Save forecast for parsing other information in a variable
+                            var forecastData = response[i];
+
+                        /* if data is not available from within the previous three hours, get the nearest forecast up to 3 hours in the future*/
+                        } else if (forecastTime > currentTimeSecs && forecastTime < forwardThreeHours) {
+
+                            // Save forecast for parsing other information in a variable
+                            var forecastData = response[i];
+
+                        }
+                    }
+
+                    // Show forecast in the View
+                    renderSurfConditions(forecastData);
+
+                    // Disable error message
+                    clearTimeout(msRequestTimeout);
+                }
+            });
+
+        };
+
+        function renderSurfConditions(forecastData) {
+
+            // Save wave break height
+            var minBreakHeight = forecastData.swell.minBreakingHeight;
+            var maxBreakHeight = forecastData.swell.maxBreakingHeight;
+
+            // If the min and max are the same, just save the min height
+            if (minBreakHeight === maxBreakHeight) {
+                var waveHeight = minBreakHeight;
+
+            // If the min and max are different, save both as a range
+            } else {
+                var waveHeight = minBreakHeight + ' ' + '-' + ' ' + maxBreakHeight;
+            };
+
+            // Get and save swell height, direction, period
+            var swellHeight = forecastData.swell.components.primary.height;
+            var swellPeriod = forecastData.swell.components.primary.period;
+            var swellDirection = forecastData.swell.components.primary.direction;
+            var swellCompassDirection = forecastData.swell.components.primary.compassDirection;
+
+            // Get and sav wind speed and direction
+            var windSpeed = forecastData.wind.speed;
+            var windDirection = forecastData.wind.direction;
+            var compassDirection = forecastData.wind.compassDirection;
+
+            // Get and save current temperature and weather
+            var temperature = forecastData.condition.temperature;
+            var weather = forecastData.condition.weather;
+            var weatherImg = 'http://cdnimages.magicseaweed.com/30x30/' + weather + '.png'
+            var windImg = 'img/cloudy-&-wind.png'
+
+            /* Get wave and conditions ratings */
+            var rating = [];
+
+            /* Add solid stars to the array equal to number value
+            retrieved from MSW*/
+            var solidRatingLength = forecastData.solidRating;
+
+            for (var i = solidRatingLength; i--;) {
+                rating.push('<img class="star" src="img/star_filled.svg" />');
+            };
+
+            /* Add faded stars to the array equal to number value
+            retrieved from MSW*/
+            var fadedRatingLength = forecastData.fadedRating;
+
+            for (var i = fadedRatingLength; i--;) {
+                rating.push('<img class="star" src="img/star_faded.svg" />');
+            };
+
+            /* Add empty stars to the array equal 5 minus the total amount of
+            filled and faded stars */
+            var fillEmptyStars = 5 - rating.length;
+
+            for (var i = fillEmptyStars; i--;) {
+                rating.push('<img class="star" src="img/star_empty.svg" />');
+            };
+
+            /* Combine the array into one line of stars to form the overall rating of both the surfing conditions and wave
+            quality*/
+            var waveRating = rating.join("");
+
+            /* Before rendering the surf conditions, check which surf guide is
+            currently open and make sure it matches the API request. This ensures
+            that an api request that takes time to download isn't injected
+            into another surf guide if the user changed surf guides during
+            the api request processing */
+            var currentSurfGuide = $('.title-guide').text();
+
+            if (currentSurfGuide.indexOf(breakName) >= 0) {
+
+                $surfGuideTitleContainer = $('.title-guide');
+
+                // Add compass column
+                $surfGuideTitleContainer.after('<div class="col-xs-12 col-sm-6 compass-conditions surf-conditions compass"><canvas id="compass" width="300" height="300"></canvas></div>');
+
+                // Add container to hold live conditions
+                $surfGuideTitleContainer.after('<div class="col-xs-12 surf-conditions-container surf-conditions"></div>');
+
+                $surfConditionsContainer = $('.surf-conditions-container');
+
+                // Add live conditions columns
+                $surfConditionsContainer.append('<div class="col-xs-12 col-sm-6 surf-conditions surf-conditions-small surf-conditions-waves"></div>');
+                $surfConditionsContainer.append('<div class="col-xs-6 col-sm-3 surf-conditions surf-conditions-small surf-conditions-swell"></div>');
+                $surfConditionsContainer.append('<div class="col-xs-6 col-sm-3 surf-conditions surf-conditions-small surf-conditions-wind"></div>');
+
+                /* Render the temperature and weather image in the left
+                side of the newly created conditions window*/
+                $('.title').after('<p class="live-temp surf-conditions">' + temperature + " ℉" + '<img class="live-weather" src="' + weatherImg + '" alt="Symbol for current weather">' + '</p>');
+                $surfConditions = $('.surf-conditions');
+
+                // Cache references to each column
+
+                var $surfConditionsWind = $('.surf-conditions-wind');
+                var $surfConditionsSwell = $('.surf-conditions-swell');
+                var $surfConditionsWaves = $('.surf-conditions-waves');
+
+                /* Render the swell height and period */
+                $surfConditionsSwell.append('<p>' + swellHeight + "ft" + '</p>');
+                $surfConditionsSwell.append('<p>' + "primary" + '</p>');
+                $surfConditionsSwell.append('<p>' + "@" + ' ' + swellPeriod + 's' + ' ' + swellCompassDirection + '</p>');
+
+                /* Render the breaking wave height, and wave rating from above in
+                the center of the conditions window */
+                $surfConditionsWaves.append('<p>' + waveHeight + "ft" + '</p>');
+                $surfConditionsWaves.append('<p>' + waveRating + '</p>');
+
+                /* Render the wind speed, direction, and wind image in the
+                right side of the conditions window*/
+                $surfConditionsWind.append('<p>' + windSpeed + "mph" + '</p>');
+                $surfConditionsWind.append('<img class="img-responsive" src="' + windImg + '" alt="Symbol for wind">');
+                $surfConditionsWind.append('<p>' + compassDirection + " " + "wind" + '</p>');
+
+                // Render live swell and wind compass
+                renderCompass();
+
+                function renderCompass () {
+
+                    var Canvas = document.getElementById('compass');
+
+                    var ctx = Canvas.getContext('2d');
+
+                    var windPointer = new Image();
+                    windPointer.src = 'img/windPointer.svg';
+
+                    var swellPointer = new Image();
+                    swellPointer.src = 'img/swellPointer.svg';
+
+                    var img = new Image();
+                    img.src = 'img/compass.svg';
+                    img.onload = draw;
+
+                    var windCompassRotation = windDirection * (Math.PI / 180);
+                    var swellCompassRotation = swellDirection * (Math.PI / 180);
+
+                    function draw() {
+
+                        ctx.drawImage(img, 0, 0);
+
+                        ctx.save();
+
+                        ctx.translate(150, 150);
+
+                        ctx.rotate(windCompassRotation);
+
+                        ctx.drawImage(windPointer, -150, -150);
+
+                        ctx.rotate(-windCompassRotation);
+
+                        ctx.rotate(swellCompassRotation);
+
+                        ctx.drawImage(swellPointer, -150, -150);
+
+                        ctx.restore();
+
+                    }
+                };
+
+                // Add button for closing the surf conditions window
+                $surfConditionsWaves.prepend('<button type="button" class="btn conditions-close-button">✖</button>');
+
+                /* When the surf conditions button is clicked the surf
+                conditions window is closed */
+                $('.conditions-close-button').on('click', function(e) {
+
+                    // Hide the surf conditions window
+                    $surfConditions.toggle();
+
+                    // Hide the close conditions button
+                    $('.conditions-close-button').toggle();
+
+                    // Make visible the show surf conditions button
+                    $('.conditions-button').toggle();
+
+                });
+
+            } else {
+
+              return
+
+            }
+        }
+
+        function showError () {
+
+            /* Before rendering the error message, check which surf guide is
+            currently open and make sure it matches the API request. This ensures
+            that an api request that takes time to download isn't injected
+            into another surf guide if the user changed surf guides during
+            the api request processing */
+            var currentSurfGuide = $('.title-guide').text();
+            if (currentSurfGuide.indexOf(breakName) >= 0) {
+
+                // Insert a new row above the surf guide
+                $('.title-guide').after('<div class="col-xs-12 error-container"></div>');
+
+                $('.error-container').append('<p class="conditions-error">' + breakName + ' ' + "conditions unavailable =(" + '</p>');
+
+                // Add a button for closing the error window
+                $('.error-container').prepend('<button type="button" class="btn error-close-button">✖</button>');
+
+                /* When the conditions close button is clicked remove the error
+                message */
+                $('.error-close-button').on('click', function(e) {
+
+                    // Remove conditions row from DOM
+                    $('.error-container').remove();
+
+                    // Remove the close conditions button
+                    $('.conditions-close-button').remove();
+
+                    // Make visible the show surf conditions button
+                    $('.conditions-button').toggle();
+
+                });
+
+            } else {
+
+                return;;
+
             };
 
         };
     }
 };
-
-function getMagicSeaweed (spotID, breakName) {
-
-    /* Check for the location's spot ID. If there is no spot ID,
-    immediately display an error message. This also prevents an API request
-    from going through for a non-existing location*/
-    if(spotID === 'none') {
-
-        showError();
-
-    } else {
-
-        /* If the location object passes the above filter (has a location ID),
-        but times out (no api data is returned), show an error message */
-        var msRequestTimeout = setTimeout (function() {
-
-            showError();
-
-        }, 8000);
-
-        // Load Magic Seaweed API data
-        var msUrl = 'http://magicseaweed.com/api/d2983e394d07724e96404fba11c10485/forecast/?spot_id=' + spotID + '&units=us&fields=timestamp,fadedRating,solidRating,swell.minBreakingHeight,swell.maxBreakingHeight,swell.components.primary.*,wind.*,condition.*';
-
-        $.ajax({
-            url: msUrl,
-            dataType: 'jsonp',
-            // jsonp: "callback",
-            success: function(response) {
-
-                // Get current time & current time plus/minus three hours
-                var getTime = Date.now();
-                var currentTimeSecs = getTime / 1000;
-                var backThreeHours = currentTimeSecs - 10800;
-                var forwardThreeHours = currentTimeSecs + 10800;
-
-                /* Iterate through forecast objects to get the last forecast (i.e. within the last 3 hours)*/
-                var responseLength = response.length;
-
-                for (var i = responseLength; i--;) {
-
-                    var forecastTime = response[i].timestamp;
-
-                    if (forecastTime < currentTimeSecs && forecastTime > backThreeHours) {
-
-                        // Save forecast for parsing other information in a variable
-                        var forecastData = response[i];
-
-                    /* if data is not available from within the previous three hours, get the nearest forecast up to 3 hours in the future*/
-                    } else if (forecastTime > currentTimeSecs && forecastTime < forwardThreeHours) {
-
-                        // Save forecast for parsing other information in a variable
-                        var forecastData = response[i];
-
-                    }
-                }
-
-                // Show forecast in the View
-                renderSurfConditions(forecastData);
-
-                // Disable error message
-                clearTimeout(msRequestTimeout);
-            }
-        });
-
-    };
-
-    function renderSurfConditions(forecastData) {
-
-        // Save wave break height
-        var minBreakHeight = forecastData.swell.minBreakingHeight;
-        var maxBreakHeight = forecastData.swell.maxBreakingHeight;
-
-        // If the min and max are the same, just save the min height
-        if (minBreakHeight === maxBreakHeight) {
-            var waveHeight = minBreakHeight;
-
-        // If the min and max are different, save both as a range
-        } else {
-            var waveHeight = minBreakHeight + ' ' + '-' + ' ' + maxBreakHeight;
-        }
-
-        // Get and save swell height, direction, period
-        var swellHeight = forecastData.swell.components.primary.height;
-        var swellPeriod = forecastData.swell.components.primary.period;
-        var swellDirection = forecastData.swell.components.primary.direction;
-        var swellCompassDirection = forecastData.swell.components.primary.compassDirection;
-
-        // Get and sav wind speed and direction
-        var windSpeed = forecastData.wind.speed;
-        var windDirection = forecastData.wind.direction;
-        var compassDirection = forecastData.wind.compassDirection;
-
-        // Get and save current temperature and weather
-        var temperature = forecastData.condition.temperature;
-        var weather = forecastData.condition.weather;
-        var weatherImg = 'http://cdnimages.magicseaweed.com/30x30/' + weather + '.png'
-        var windImg = 'img/cloudy-&-wind.png'
-
-        /* Get wave and conditions ratings */
-        var rating = [];
-
-        /* Add solid stars to the array equal to number value
-        retrieved from MSW*/
-        var solidRatingLength = forecastData.solidRating;
-
-        for (var i = solidRatingLength; i--;) {
-            rating.push('<img class="star" src="img/star_filled.svg" />');
-        };
-
-        /* Add faded stars to the array equal to number value
-        retrieved from MSW*/
-        var fadedRatingLength = forecastData.fadedRating;
-
-        for (var i = fadedRatingLength; i--;) {
-            rating.push('<img class="star" src="img/star_faded.svg" />');
-        };
-
-        /* Add empty stars to the array equal 5 minus the total amount of
-        filled and faded stars */
-        var fillEmptyStars = 5 - rating.length;
-
-        for (var i = fillEmptyStars; i--;) {
-            rating.push('<img class="star" src="img/star_empty.svg" />');
-        };
-
-        /* Combine the array into one line of stars to form the overall rating of both the surfing conditions and wave
-        quality*/
-        var waveRating = rating.join("");
-
-        /* Before rendering the surf conditions, check which surf guide is
-        currently open and make sure it matches the API request. This ensures
-        that an api request that takes time to download isn't injected
-        into another surf guide if the user changed surf guides during
-        the api request processing */
-        var currentSurfGuide = $('.title-guide').text();
-        if (currentSurfGuide.indexOf(breakName) >= 0) {
-
-            $surfGuideTitleContainer = $('.title-guide');
-
-            // Add compass column
-            $surfGuideTitleContainer.after('<div class="col-xs-12 col-sm-6 compass-conditions surf-conditions compass"><canvas id="compass" width="300" height="300"></canvas></div>');
-
-            // Add container to hold live conditions
-            $surfGuideTitleContainer.after('<div class="col-xs-12 surf-conditions-container surf-conditions"></div>');
-
-            $surfConditionsContainer = $('.surf-conditions-container');
-
-            // Add live conditions columns
-            $surfConditionsContainer.append('<div class="col-xs-12 col-sm-6 surf-conditions surf-conditions-small surf-conditions-waves"></div>');
-            $surfConditionsContainer.append('<div class="col-xs-6 col-sm-3 surf-conditions surf-conditions-small surf-conditions-swell"></div>');
-            $surfConditionsContainer.append('<div class="col-xs-6 col-sm-3 surf-conditions surf-conditions-small surf-conditions-wind"></div>');
-
-            /* Render the temperature and weather image in the left
-            side of the newly created conditions window*/
-            $('.title').after('<p class="live-temp surf-conditions">' + temperature + " ℉" + '<img class="live-weather" src="' + weatherImg + '" alt="Symbol for current weather">' + '</p>');
-            $surfConditions = $('.surf-conditions');
-
-            // Cache references to each column
-
-            var $surfConditionsWind = $('.surf-conditions-wind');
-            var $surfConditionsSwell = $('.surf-conditions-swell');
-            var $surfConditionsWaves = $('.surf-conditions-waves');
-
-            /* Render the swell height and period */
-            $surfConditionsSwell.append('<p>' + swellHeight + "ft" + '</p>');
-            $surfConditionsSwell.append('<p>' + "primary" + '</p>');
-            $surfConditionsSwell.append('<p>' + "@" + ' ' + swellPeriod + 's' + ' ' + swellCompassDirection + '</p>');
-
-            /* Render the breaking wave height, and wave rating from above in
-            the center of the conditions window */
-            $surfConditionsWaves.append('<p>' + waveHeight + "ft" + '</p>');
-            $surfConditionsWaves.append('<p>' + waveRating + '</p>');
-
-            /* Render the wind speed, direction, and wind image in the
-            right side of the conditions window*/
-            $surfConditionsWind.append('<p>' + windSpeed + "mph" + '</p>');
-            $surfConditionsWind.append('<img class="img-responsive" src="' + windImg + '" alt="Symbol for wind">');
-            $surfConditionsWind.append('<p>' + compassDirection + " " + "wind" + '</p>');
-
-            // Render live swell and wind compass
-            renderCompass();
-
-            function renderCompass () {
-
-                var Canvas = document.getElementById('compass');
-
-                var ctx = Canvas.getContext('2d');
-
-                var windPointer = new Image();
-                windPointer.src = 'img/windPointer.svg';
-
-                var swellPointer = new Image();
-                swellPointer.src = 'img/swellPointer.svg';
-
-                var img = new Image();
-                img.src = 'img/compass.svg';
-                img.onload = draw;
-
-                var windCompassRotation = windDirection * (Math.PI / 180);
-                var swellCompassRotation = swellDirection * (Math.PI / 180);
-
-                function draw() {
-
-                    ctx.drawImage(img, 0, 0);
-
-                    ctx.save();
-
-                    ctx.translate(150, 150);
-
-                    ctx.rotate(windCompassRotation);
-
-                    ctx.drawImage(windPointer, -150, -150);
-
-                    ctx.rotate(-windCompassRotation);
-
-                    ctx.rotate(swellCompassRotation);
-
-                    ctx.drawImage(swellPointer, -150, -150);
-
-                    ctx.restore();
-
-                }
-            };
-
-            // Add button for closing the surf conditions window
-            $surfConditionsWaves.prepend('<button type="button" class="btn conditions-close-button">✖</button>');
-
-            /* When the surf conditions button is clicked the surf
-            conditions window is closed */
-            $('.conditions-close-button').on('click', function(e) {
-
-                // Hide the surf conditions window
-                $surfConditions.toggle();
-
-                // Hide the close conditions button
-                $('.conditions-close-button').toggle();
-
-                // Make visible the show surf conditions button
-                $('.conditions-button').toggle();
-
-            });
-
-        } else {
-
-          return
-
-        }
-    }
-
-    function showError () {
-
-        /* Before rendering the error message, check which surf guide is
-        currently open and make sure it matches the API request. This ensures
-        that an api request that takes time to download isn't injected
-        into another surf guide if the user changed surf guides during
-        the api request processing */
-        var currentSurfGuide = $('.title-guide').text();
-        if (currentSurfGuide.indexOf(breakName) >= 0) {
-
-            // Insert a new row above the surf guide
-            $('.title-guide').after('<div class="col-xs-12 error-container"></div>');
-
-            $('.error-container').append('<p class="conditions-error">' + breakName + ' ' + "conditions unavailable =(" + '</p>');
-
-            // Add a button for closing the error window
-            $('.error-container').prepend('<button type="button" class="btn error-close-button">✖</button>');
-
-            /* When the conditions close button is clicked remove the error
-            message */
-            $('.error-close-button').on('click', function(e) {
-
-                // Remove conditions row from DOM
-                $('.error-container').remove();
-
-                // Remove the close conditions button
-                $('.conditions-close-button').remove();
-
-                // Make visible the show surf conditions button
-                $('.conditions-button').toggle();
-
-            });
-
-        } else {
-
-            return
-
-        };
-
-    };
-}
 
 navigator.geolocation.getCurrentPosition(success);
 

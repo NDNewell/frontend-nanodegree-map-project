@@ -493,6 +493,133 @@ function AppViewModel () {
         self.locationGrid.push(obj);
     });
 
+    /* self.Query is bound to the input on the View. Because it is an
+     observable variable, it's value will be updated whenever the input on the
+     View is altered*/
+    self.Query = ko.observable("");
+
+    /* Clear any existing text in the search field, clear any existing
+    searches, close the surf guide if open, show searchable locations, and
+    close any open info windows */
+    $('.search-form').on("click", function () {
+
+        // Clear search field
+        $(this).val("");
+
+        // Clear any searches
+        self.Query("");
+
+        // Remove the surf guide and conditions
+        $('.surf-conditions').remove();
+        $('.surf-conditions-error').remove();
+        $('.surf-guide-container').remove();
+
+        // Show the locations
+        $('.location-grid').show();
+
+        // Close open info windows
+        infoWindow.close();
+
+        // Run a search to reset the map by running an empty search
+        self.searchLocations();
+    });
+
+    /* Create an array that holds keywords that pop up in a small menu
+    within the search bar dynamically during searches */
+    self.searchKeywords = [];
+
+    /* Loop through the location array and obtain all of the break names
+    and adding them to the search keywords array */
+    self.LocationArray.forEach(function(obj) {
+        self.searchKeywords.push(obj.breakName);
+
+        /* If a location keyword already exists in the search keywords array
+        do not add it. If it doesn't add it to the array. This avoids having
+        the same location listed multiple times in the pop-up window */
+        if(searchKeywords.indexOf(obj.location) < 0) {
+            self.searchKeywords.push(obj.location);
+        }
+    });
+
+    /* Call the jQuery-UI auto complete widget.*/
+    $('.search-form').autocomplete({
+        /* All keywords come from the above array */
+        source: searchKeywords,
+        /* Highlight the pop-up menu item that matches what is currently in
+         the search input field */
+        autoFocus: true,
+        /* A search must be at least two characters long before the pop-up
+        window shows */
+        minLength: 2,
+        // Delay the pop-up window from displaying for (x) milliseconds
+        delay: 500,
+        /* The a selection has been made, change the ko variable that
+        represents the search and then activate the search filtering
+        below */
+        select: function (event, ui) {
+            self.Query(ui.item.value);
+            self.searchLocations();
+        }
+
+    });
+
+    /* Filter through the location objects and compare each one to the
+    search terms (value of self.Query). If there is a match, the matching
+    object is re-added to the locationGrid (observ. array bound to the View). */
+    self.searchLocations = function () {
+
+        /* Convert search input to lowercase, remove spaces, remove
+        apostrophes, and remove commas in order to compare like
+        characters in each break and location name & store in a new var*/
+        var search = self.Query().toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
+
+        /* Remove all location objects from obs. array, so that only objects
+        which match the search can be re-added to the array and subsequently
+        rendered in the View*/
+        self.locationGrid.removeAll();
+
+        /* Compare each object's break name and location to the search terms.
+         If it matches, re-add it to the obs. array and render in the View.
+         If it doesn't match, then it isnt re-added.*/
+        self.LocationArray.forEach(function(obj) {
+
+            // Convert break names (remove spaces, commas, apostrophes etc.)
+            if (obj.breakName.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) >= 0) {
+
+              self.locationGrid.push(obj);
+
+            // Convert locations (remove spaces, commas, apostrophes etc.)
+            } else if (obj.location.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) >= 0) {
+
+              self.locationGrid.push(obj);
+            }
+        });
+
+        /* Compare each marker's title, which holds the break and location name, to the search terms. If it matches, set the marker as visible.
+        If it doesn't match, make setVisible false*/
+        markers.forEach(function(marker) {
+
+            // Convert marker titles (remove spaces, commas, apostrophes etc.)
+            if (marker.title.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) >= 0) {
+
+              marker.setVisible(true);
+
+            } else {
+
+              marker.setVisible(false);
+
+            }
+
+        });
+
+        // Set the map bounds & map position for every search
+        setMapBounds();
+
+        /* After a search, there are new objects in the locationGrid, so the
+        rollover effects that were added before need to be re-added */
+        addRolloverEffect();
+
+    }
 
     /* When the cursor hovers over a location, remove the text and add
     a gaussian blur. Wait until the locations have been loaded */
@@ -619,139 +746,17 @@ function AppViewModel () {
     // Add hover effects to each location
     self.addRolloverEffect();
 
-    /* self.Query is bound to the input on the View. Because it is an
-     observable variable, it's value will be updated whenever the input on the
-     View is altered*/
-    self.Query = ko.observable("");
-
-    /* Clear any existing text in the search field, clear any existing
-    searches, close the surf guide if open, show searchable locations, and
-    close any open info windows */
-    $('.search-form').on("click", function () {
-        // Clear search field
-        $(this).val("");
-        // Clear any searches
-        self.Query("");
-        // Remove the surf guide and conditions
-        $('.surf-conditions').remove();
-        $('.surf-conditions-error').remove();
-        $('.surf-guide-container').remove();
-        // Show the locations
-        $('.location-grid').show();
-        // Close open info windows
-        infoWindow.close();
-        // Run a search to reset the map by running an empty search
-        self.searchLocations();
-    });
-
-    /* Create an array that holds keywords that pop up in a small menu
-    within the search bar dynamically during searches */
-    self.searchKeywords = [];
-
-    /* Loop through the location array and obtain all of the break names
-    and adding them to the search keywords array */
-    self.LocationArray.forEach(function(obj) {
-        self.searchKeywords.push(obj.breakName);
-
-        /* If a location keyword already exists in the search keywords array
-        do not it. If it doesn't add it to the array. This avoids having the
-        same location listed multiple times in the pop-up window */
-        if(searchKeywords.indexOf(obj.location) < 0) {
-            self.searchKeywords.push(obj.location);
-        }
-    });
-
-    /* Call the jQuery-UI auto complete widget.*/
-    $('.search-form').autocomplete({
-        /* All keywords come from the above array */
-        source: searchKeywords,
-        /* Highlight the pop-up menu item that matches what is currently in
-         the search input field */
-        autoFocus: true,
-        /* A search must be at least two characters long before the pop-up
-        window shows */
-        minLength: 2,
-        // Delay the pop-up window from displaying for (x) milliseconds
-        delay: 500,
-        /* The a selection has been made, change the ko variable that
-        represents the search and then activate the search filtering
-        below */
-        select: function (event, ui) {
-            self.Query(ui.item.value);
-            self.searchLocations();
-        }
-
-    });
-
-    /* Filter through the location objects and compare each one to the
-    search terms (value of self.Query). If there is a match, the matching
-    object is re-added to the locationGrid (observ. array bound to the View). */
-    self.searchLocations = function () {
-
-        /* Convert search input to lowercase, remove spaces, remove
-        apostrophes, and remove commas in order to compare like
-        characters in each break and location name & store in a new var*/
-        var search = self.Query().toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
-
-        /* Remove all location objects from obs. array, so that only objects
-        which match the search can be re-added to the array and subsequently
-        rendered in the View*/
-        self.locationGrid.removeAll();
-
-        /* Compare each object's break name and location to the search terms.
-         If it matches, re-add it to the obs. array and render in the View.
-         If it doesn't match, then it isnt re-added.*/
-        self.LocationArray.forEach(function(obj) {
-
-            // Convert break names (remove spaces, commas, apostrophes etc.)
-            if (obj.breakName.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) >= 0) {
-
-              self.locationGrid.push(obj);
-
-            // Convert locations (remove spaces, commas, apostrophes etc.)
-            } else if (obj.location.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) >= 0) {
-
-              self.locationGrid.push(obj);
-            }
-        });
-
-        /* Compare each marker's title, which holds the break and location name, to the search terms. If it matches, set the marker as visible.
-        If it doesn't match, make setVisible false*/
-        markers.forEach(function(marker) {
-
-            // Convert marker titles (remove spaces, commas, apostrophes etc.)
-            if (marker.title.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) >= 0) {
-
-              marker.setVisible(true);
-
-            } else {
-
-              marker.setVisible(false);
-
-            }
-
-        });
-
-        // Set the map bounds & map position for every search
-        setMapBounds();
-
-        /* After a search, there are new objects in the locationGrid, so the
-        rollover effects that were added before need to be re-added */
-        addRolloverEffect();
-
-    }
-
     /* Go to specific marker and open the surf guide */
     self.clickLocationFrame = function(obj) {
 
-            // Disable rollover effects so the correct icon loads in surf guide
-            rollover = false;
+        // Disable rollover effects so the correct icon loads in surf guide
+        rollover = false;
 
-            // Pass object to match the appropriate marker with the obj
-            self.goToMarker(obj.breakName);
+        // Pass object to match the appropriate marker with the obj
+        self.goToMarker(obj.breakName);
 
-            // Pass obj to the surf guide
-            renderSurfGuide(obj);
+        // Pass obj to the surf guide
+        renderSurfGuide(obj);
 
     };
 
@@ -778,10 +783,14 @@ function AppViewModel () {
                 // Animate marker
                 animateMarker(marker);
 
-            }
+            };
 
         });
-    }
+    };
+
+    /* Set up boolean variables for wind and swell compasses in local
+    scope */
+    var wind, swell;
 
     /* Display detailed information about the location */
     self.renderSurfGuide = function (obj) {
@@ -868,7 +877,7 @@ function AppViewModel () {
         // Display an icon for each hazard one might encounter at the break
         displayHazardIcons(obj.hazards);
 
-        // Render close buttons for guide
+        // Render buttons for guide
         addGuideButtons(obj);
 
     };
@@ -876,6 +885,7 @@ function AppViewModel () {
     /* Create buttons for opening closing surf guide / view current break
     conditions */
     self.addGuideButtons = function (obj) {
+
         // Add a button for closing the surf guide
         $surfGuideContainer.prepend('<button type="button" class="btn guide-close-button">✖</button>');
 
@@ -898,7 +908,8 @@ function AppViewModel () {
                 // Show the close conditions button
                 $('.conditions-close-button').toggle();
 
-            /* If surf conditions arent' already cached request new data */
+            /* If surf conditions aren't already cached request new data */
+
             } else {
 
                     // Hide the surf conditions button
@@ -934,13 +945,13 @@ function AppViewModel () {
         });
     };
 
-    function displayTitle (breakName, location) {
+    self.displayTitle = function (breakName, location) {
         var guideTitle = '<div class="col-xs-12 title-guide">' + '<p class="title">' + breakName + ',' + ' ' + location + '</p>' + '</div>';
 
         return guideTitle;
     };
 
-    function displayBigWaveIcon (obj, $surfGuideContainer) {
+    self.displayBigWaveIcon = function (obj, $surfGuideContainer) {
 
         if(rollover) {
             if(obj.bigWave) {
@@ -964,7 +975,7 @@ function AppViewModel () {
 
     };
 
-    function displayWellKnownIcon (obj, $surfGuideContainer) {
+    self.displayWellKnownIcon = function (obj, $surfGuideContainer) {
 
         if(rollover) {
             if(obj.wellKnown) {
@@ -988,7 +999,7 @@ function AppViewModel () {
         return icon;
     };
 
-    function displaySkillIcon (obj) {
+    self.displaySkillIcon = function (obj) {
         // Set variables for each skill level at zero
         var beginner = 0;
         var intermediate = 0;
@@ -1058,7 +1069,7 @@ function AppViewModel () {
 
     };
 
-    function displayDirectionIcon (obj) {
+    self.displayDirectionIcon = function (obj) {
         switch(obj) {
           case 'left':
               if(rollover) {
@@ -1088,7 +1099,7 @@ function AppViewModel () {
         return directionIcon;
     };
 
-    function displayBreakIcon (obj) {
+    self.displayBreakIcon = function (obj) {
         switch(obj) {
           case 'reef':
               if(rollover) {
@@ -1126,7 +1137,7 @@ function AppViewModel () {
         return breakIcon;
     };
 
-    function displayCompassIcon (obj, $surfGuideContainer) {
+    self.displayCompassIcon = function (obj, $surfGuideContainer) {
 
         if(swell) {
             swell = false;
@@ -1245,7 +1256,7 @@ function AppViewModel () {
         };
     };
 
-    function displayTideIcon (obj) {
+    self.displayTideIcon = function (obj) {
 
         // Set variables for each skill level at zero
         var low = 0;
@@ -1293,7 +1304,7 @@ function AppViewModel () {
 
     };
 
-    function displayBestSeasonIcon (obj) {
+    self.displayBestSeasonIcon = function (obj) {
 
         // Set variables for each season at zero
         var spring = 0;
@@ -1415,7 +1426,7 @@ function AppViewModel () {
         return bestSeasonIcon;
     };
 
-    function displaySuggestedAttireIcons (obj) {
+    self.displaySuggestedAttireIcons = function (obj) {
 
         if(!rollover) {
             $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 water-temp spring card">' + '<canvas id="spring" width="160" height="160"></canvas>');
@@ -1546,14 +1557,14 @@ function AppViewModel () {
         };
     };
 
-    function displayClimateIcon (obj) {
+    self.displayClimateIcon = function (obj) {
 
         var climateIcon = '<div class="col-xs-6 col-sm-3 climate card">' + '<img src="img/empty_marquee.svg" class="climate-guide">' + '<p>' + obj  + '</p>' + '</div>';
 
         return climateIcon;
     };
 
-    function displayCost (obj) {
+    self.displayCost = function (obj) {
 
       if(rollover) {
 
@@ -1570,7 +1581,7 @@ function AppViewModel () {
 
     };
 
-    function displayDistance (latDest,lngDest) {
+    self.displayDistance = function (latDest,lngDest) {
         /* Get distance between both locations using
         the Haversine formula */
         /* Obtain current location from user */
@@ -1662,7 +1673,7 @@ function AppViewModel () {
         }
     }
 
-    function displayCurrentWaterTemp (obj) {
+    self.displayCurrentWaterTemp = function (obj) {
 
         var currentSeason = getCurrentSeason();
 
@@ -1689,7 +1700,7 @@ function AppViewModel () {
         return waterTempInfo;
     };
 
-    function displayWaveSize (obj) {
+    self.displayWaveSize = function (obj) {
         /* Check if the average maximum wave size
         sometimes goes above the max. If it does, save a plus sign in a variable to add to the min/max wave height */
         if (obj.aboveMax) {
@@ -1708,7 +1719,7 @@ function AppViewModel () {
         return waveSizeInfo;
     };
 
-    function getCurrentSeason () {
+    self.getCurrentSeason = function () {
         // Get today's date and month
         var today = new Date();
         var month = today.getMonth();
@@ -1744,7 +1755,7 @@ function AppViewModel () {
         return currentSeason;
     };
 
-    function displayHazardIcons (obj) {
+    self.displayHazardIcons = function (obj) {
 
         if(rollover) {
             /* Generate a number between min and max to

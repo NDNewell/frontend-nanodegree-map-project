@@ -570,25 +570,17 @@ function AppViewModel () {
                             /* If there is big wave surfing at this break
                             display big wave icon. If not, display the
                             suggested swim attire icon for current season */
-                            if(obj.bigWave) {
-                                var miscIconOne = '<img src="/img/big_wave_ro.svg" class="rollover-info misc-info-one-hover">';
-                            } else {
-                                var miscIconOne = displaySuggestedAttireIcons(obj.avgWaterTemp);
-                            };
+                            var miscIconOne = displayBigWaveIcon(obj);
                             locationFrame.append(miscIconOne);
 
                             /* If the wave is well known display the well
                             known icon, otherwise display a random hazard
                             icon */
-                            if(obj.wellKnown) {
-                                var miscIconTwo= '<img src="/img/well_known_ro.svg" class="rollover-info misc-info-two-hover">';
-                            } else {
-                                var miscIconTwo = displayHazardIcons(obj.hazards);
-                            };
+                            var miscIconTwo = displayWellKnownIcon(obj);
                             locationFrame.append(miscIconTwo);
 
                             /* Display the budget cost for the location */
-                            var costInfo = '<p class="rollover-info cost cost-hover">' + '$' + obj.cost.budget + '</p>';
+                            var costInfo = displayCost(obj.cost);
                             locationFrame.append(costInfo);
 
                             /* Check if current location is available, if it is
@@ -791,7 +783,7 @@ function AppViewModel () {
         });
     }
 
-    /* Display detailed information about the location*/
+    /* Display detailed information about the location */
     self.renderSurfGuide = function (obj) {
 
         /* Check if the surf guide window is open already from a previous
@@ -809,118 +801,60 @@ function AppViewModel () {
 
         $surfGuideContainer = $('.surf-guide-container');
 
-
         // Render the name and location of the break at the top of the guide
         var guideTitle = displayTitle(obj.breakName, obj.location);
         $surfGuideContainer.append(guideTitle);
 
-
         // Check if break has big waves and render
-        if (obj.bigWave) {
-            var bigWaveIcon = displayBigWaveIcon();
-            $surfGuideContainer.append(bigWaveIcon);
-        };
-
+        displayBigWaveIcon(obj, $surfGuideContainer);
 
         // Check if break is well known and render
-        if (obj.wellKnown) {
-            var wellKnownIcon = displayWellKnownIcon();
-            $surfGuideContainer.append(wellKnownIcon);
-        };
-
+        displayWellKnownIcon(obj, $surfGuideContainer);
 
         /* Display icon associated with the skill level
         needed to surf the break */
         var skillLevelIcon = displaySkillIcon(obj.skillLevel);
         $surfGuideContainer.append(skillLevelIcon);
 
-
         /* Display the icon associated with the direction
         the wave breaks */
         var directionIcon = displayDirectionIcon(obj.waveDirection);
         $surfGuideContainer.append(directionIcon);
 
-
         // Display the icon for the break details
         var breakIcon = displayBreakIcon(obj.breakDetails);
         $surfGuideContainer.append(breakIcon);
 
-
         // Display the icon for the average wave height
         displayWaveSize(obj.avgSize);
 
-
         // Render optimal swell compass
         swell = true;
-        var swellCompassIcon = displayCompassIcon(obj.optimalSwell, $surfGuideContainer);
-
+        displayCompassIcon(obj.optimalSwell, $surfGuideContainer);
 
         // Render optimal wind compass
         wind = true;
-        var swellCompassIcon = displayCompassIcon(obj.optimalSwell, $surfGuideContainer);
+        displayCompassIcon(obj.optimalWind, $surfGuideContainer);
 
+        // Display icon associated with the optimal tide
+        var tideIcon = displayTideIcon(obj.optimalTide);
+        $surfGuideContainer.append(tideIcon);
 
-        /* Display icon associated with the optimal tide */
-        // Set variables for each skill level at zero
-        var low = 0;
-        var mid = 0;
-        var high = 0;
-
-        for (var i = 0; i < obj.optimalTide.length; i++) {
-            switch (obj.optimalTide[i]) {
-                case 'low':
-                    low++;
-                break;
-
-                case 'mid':
-                    mid++;
-                break;
-
-                case 'high':
-                    high++;
-                break
-            }
-        };
-
-        if (low === mid && high) {
-            var tideIcon = '<img src="/img/tide_all.svg">';
-        } else if (low >= mid && low >= high) {
-              if(low === mid) {
-                  var tideIcon = '<img src="/img/tide_low_mid.svg">';
-              } else if (low === high) {
-                  var tideIcon = '<img src="/img/tide_low_high.svg">';
-              } else {
-                  var tideIcon = '<img src="/img/tide_low.svg">';
-              };
-        } else if (mid > low && mid >= high) {
-              if(mid === high) {
-                  var tideIcon = '<img src="/img/tide_high_mid.svg">';
-              } else {
-                  var tideIcon = '<img src="/img/tide_mid.svg">';
-              };
-        } else {
-            var tideIcon = '<img src="/img/tide_high.svg">';
-        };
-
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 tide card">' + tideIcon + '</div>');
-
-
-
+        // Display icon associated with the season with the best conditions
         var bestSeasonIcon = displayBestSeasonIcon(obj.optimalTime);
+        $surfGuideContainer.append(bestSeasonIcon);
 
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 time card">' + bestSeasonIcon + '</div>');
-
-        $('.best-season').addClass('best-season-guide');
-
-
+        /* Display icon associated for the suggested water attire for each
+        season */
         displaySuggestedAttireIcons(obj.avgWaterTemp);
 
+        // Display icon associated for the break's climate
+        var climateIcon = displayClimateIcon(obj.climate);
+        $surfGuideContainer.append(climateIcon);
 
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 climate card">' + '<img src="img/empty_marquee.svg" class="icon climate-guide">' + '<p>' + obj.climate  + '</p>' + '</div>');
-
-        var midRange = Math.floor((obj.cost.highEnd - obj.cost.budget)/2 + obj.cost.budget);
-
-        $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 cost card">' + '<img src="img/cost.svg">' + '<p>' + obj.cost.budget + '</p>' + '<p>' + midRange + '</p>' + '<p>' + obj.cost.highEnd +'</p>' + '</div>');
+        // Display the icon associcated with average local costs
+        var costIcon = displayCost(obj.cost);
+        $surfGuideContainer.append(costIcon);
 
         /* Check if current location is available, if it is
         render the distance icon in the surf guide */
@@ -931,8 +865,10 @@ function AppViewModel () {
             $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 distance card">' + distanceIcon + '</div>');
         };
 
+        // Display an icon for each hazard one might encounter at the break
         displayHazardIcons(obj.hazards);
 
+        // Render close buttons for guide
         addGuideButtons(obj);
 
     };
@@ -999,22 +935,58 @@ function AppViewModel () {
     };
 
     function displayTitle (breakName, location) {
-        var guideTitle = $surfGuideContainer.append('<div class="col-xs-12 title-guide">' + '<p class="title">' + breakName + ',' + ' ' + location + '</p>' + '</div>');
+        var guideTitle = '<div class="col-xs-12 title-guide">' + '<p class="title">' + breakName + ',' + ' ' + location + '</p>' + '</div>';
 
         return guideTitle;
     };
 
-    function displayBigWaveIcon () {
-        var bigWaveIcon = $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 big-wave card">' + '<img src="img/big_wave.svg" class="big-wave-guide">' + '</div>');
+    function displayBigWaveIcon (obj, $surfGuideContainer) {
 
-        return bigWaveIcon;
+        if(rollover) {
+            if(obj.bigWave) {
+                var icon = '<img src="/img/big_wave_ro.svg" class="rollover-info misc-info-one-hover">';
+            } else {
+                var icon = displaySuggestedAttireIcons(obj.avgWaterTemp);
+            };
+        } else {
+            if(obj.bigWave) {
+                var icon = '<div class="col-xs-6 col-sm-3 big-wave card">' + '<img src="img/big_wave.svg" class="big-wave-guide">' + '</div>';
+
+                $surfGuideContainer.append(icon);
+
+            } else {
+
+                return;
+            };
+        };
+
+        return icon;
+
     };
 
-    function displayWellKnownIcon () {
-        var wellKnownIcon = $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 well-known card">' + '<img src="img/well_known.svg" class="well-known-guide">' + '</div>');
+    function displayWellKnownIcon (obj, $surfGuideContainer) {
 
-        return wellKnownIcon;
-    }
+        if(rollover) {
+            if(obj.wellKnown) {
+                var icon = '<img src="/img/well_known_ro.svg" class="rollover-info misc-info-two-hover">';
+
+            } else {
+                var icon = displayHazardIcons(obj.hazards);
+            };
+        } else {
+            if(obj.wellKnown) {
+                var icon = '<div class="col-xs-6 col-sm-3 well-known card">' + '<img src="img/well_known.svg" class="well-known-guide">' + '</div>';
+
+                $surfGuideContainer.append(icon);
+
+            } else {
+
+                return;
+            };
+        };
+
+        return icon;
+    };
 
     function displaySkillIcon (obj) {
         // Set variables for each skill level at zero
@@ -1273,6 +1245,54 @@ function AppViewModel () {
         };
     };
 
+    function displayTideIcon (obj) {
+
+        // Set variables for each skill level at zero
+        var low = 0;
+        var mid = 0;
+        var high = 0;
+
+        var tideLength = obj.length;
+        for (var i = tideLength; i--;) {
+            switch (obj[i]) {
+                case 'low':
+                    low++;
+                break;
+
+                case 'mid':
+                    mid++;
+                break;
+
+                case 'high':
+                    high++;
+                break
+            }
+        };
+
+        if (low === mid && high) {
+            var tideIcon = '<div class="col-xs-6 col-sm-3 tide card">' + '<img src="/img/tide_all.svg" class="tide-guide">' + '</div>';
+        } else if (low >= mid && low >= high) {
+              if(low === mid) {
+                  var tideIcon = '<div class="col-xs-6 col-sm-3 tide card">' + '<img src="/img/tide_low_mid.svg" class="tide-guide">' + '</div>';
+              } else if (low === high) {
+                  var tideIcon = '<div class="col-xs-6 col-sm-3 tide card">' + '<img src="/img/tide_low_high.svg" class="tide-guide">' + '</div>';;
+              } else {
+                  var tideIcon = '<div class="col-xs-6 col-sm-3 tide card">' + '<img src="/img/tide_low.svg" class="tide-guide">' + '</div>';
+              };
+        } else if (mid > low && mid >= high) {
+              if(mid === high) {
+                  var tideIcon = '<div class="col-xs-6 col-sm-3 tide card">' + '<img src="/img/tide_high_mid.svg" class="tide-guide">' + '</div>';
+              } else {
+                  var tideIcon = '<div class="col-xs-6 col-sm-3 tide card">' + '<img src="/img/tide_mid.svg" class="tide-guide">' + '</div>';
+              };
+        } else {
+            var tideIcon = '<div class="col-xs-6 col-sm-3 tide card">' + '<img src="/img/tide_high.svg" class="tide-guide">' + '</div>';
+        };
+
+        return tideIcon;
+
+    };
+
     function displayBestSeasonIcon (obj) {
 
         // Set variables for each season at zero
@@ -1322,32 +1342,32 @@ function AppViewModel () {
             if(rollover) {
                 var bestSeasonIcon = '<img src="/img/season_ro_all.svg" class="rollover-info best-season-hover">';
             } else {
-                var bestSeasonIcon = '<img src="/img/season_all.svg" class="icon best-season">';
+                var bestSeasonIcon = '<div class="col-xs-6 col-sm-3 time card">' + '<img src="/img/season_all.svg" class="best-season-guide">' + '</div>';
             };
         } else if(winter >= spring && winter >= summer && winter >= autumn) {
               if(winter === spring) {
                   if(rollover) {
                       var bestSeasonIcon = '<img src="/img/season_ro_winter_spring.svg" class="rollover-info best-season-hover">';
                   } else {
-                      var bestSeasonIcon = '<img src="/img/season_winter_spring.svg" class="icon best-season">';
+                      var bestSeasonIcon = '<div class="col-xs-6 col-sm-3 time card">' + '<img src="/img/season_winter_spring.svg" class="best-season-guide">' + '</div>';
                   };
               } else if (winter === summer) {
                   if(rollover) {
                       var bestSeasonIcon = '<img src="/img/season_ro_winter_summer.svg" class="rollover-info best-season-hover">';
                   } else {
-                      var bestSeasonIcon = '<img src="/img/season_winter_summer.svg" class="icon best-season">';
+                      var bestSeasonIcon = '<div class="col-xs-6 col-sm-3 time card">' + '<img src="/img/season_winter_summer.svg" class="best-season-guide">' + '</div>';
                   };
               } else if (winter === autumn) {
                   if(rollover) {
                       var bestSeasonIcon = '<img src="/img/season_ro_winter_autumn.svg" class="rollover-info best-season-hover">';
                   } else {
-                      var bestSeasonIcon = '<img src="/img/season_winter_autumn.svg" class="icon best-season">';
+                      var bestSeasonIcon = '<div class="col-xs-6 col-sm-3 time card">' + '<img src="/img/season_winter_autumn.svg" class="best-season-guide">' + '</div>';
                   };
               } else {
                   if(rollover) {
                       var bestSeasonIcon = '<img src="/img/season_ro_winter.svg" class="rollover-info best-season-hover">';
                   } else {
-                      var bestSeasonIcon = '<img src="/img/season_winter.svg" class="icon best-season">';
+                      var bestSeasonIcon = '<div class="col-xs-6 col-sm-3 time card">' + '<img src="/img/season_winter.svg" class="best-season-guide">' + '</div>';
                   };
               };
         } else if (spring >= summer && spring >= autumn && spring > winter) {
@@ -1355,40 +1375,40 @@ function AppViewModel () {
                   if(rollover) {
                       var bestSeasonIcon = '<img src="/img/season_ro_spring_summer.svg" class="rollover-info best-season-hover">';
                   } else {
-                      var bestSeasonIcon = '<img src="/img/season_spring_summer.svg" class="icon best-season">';
+                      var bestSeasonIcon = '<div class="col-xs-6 col-sm-3 time card">' + '<img src="/img/season_spring_summer.svg" class="best-season-guide">' + '</div>';
                   };
               } else if (spring === autumn) {
                   if(rollover) {
                       var bestSeasonIcon = '<img src="/img/season_ro_spring_autumn.svg" class="rollover-info best-season-hover">';
                   } else {
-                      var bestSeasonIcon = '<img src="/img/season_spring_autumn.svg" class="icon best-season">';
+                      var bestSeasonIcon = '<div class="col-xs-6 col-sm-3 time card">' + '<img src="/img/season_spring_autumn.svg" class="best-season-guide">' + '</div>';
                   };
               } else {
                   if(rollover) {
                       var bestSeasonIcon = '<img src="/img/season_ro_spring.svg" class="rollover-info best-season-hover">';
                   } else {
-                      var bestSeasonIcon = '<img src="/img/season_spring.svg" class="icon best-season">';
+                      var bestSeasonIcon = '<div class="col-xs-6 col-sm-3 time card">' + '<img src="/img/season_spring.svg" class="best-season-guide">' + '</div>';
                   };
               };
         } else if (summer >= autumn && summer > winter && summer > spring) {
               if(summer === autumn) {
                   if(rollover) {
-                      var bestSeasonIcon = '<img src="/img/season_ro_summer_autumn.svg" class="rollover-info best-season-hover">';
+                      var bestSeasonIcon = '<div class="col-xs-6 col-sm-3 time card">' + '<img src="/img/season_summer_autumn.svg" class="best-season-guide">' + '</div>';
                   } else {
-                      var bestSeasonIcon = '<img src="/img/season_summer_autumnsvg" class="icon best-season">';
+                      var bestSeasonIcon = '<div class="col-xs-6 col-sm-3 time card">' + '<img src="/img/season_summer_autumn.svg" class="best-season-guide">' + '</div>';
                   };
               } else {
                   if(rollover) {
-                      var bestSeasonIcon = '<img src="/img/season_ro_summer.svg" class="rollover-info best-season-hover">';
+                      var bestSeasonIcon = '<div class="col-xs-6 col-sm-3 time card">' + '<img src="/img/season_summer.svg" class="best-season-guide">' + '</div>';
                   } else {
-                      var bestSeasonIcon = '<img src="/img/season_summer.svg" class="icon best-season">';
+                      var bestSeasonIcon = '<div class="col-xs-6 col-sm-3 time card">' + '<img src="/img/season_summer.svg" class="best-season-guide">' + '</div>';
                   };
               };
         } else {
                   if(rollover) {
-                      var bestSeasonIcon = '<img src="/img/season_ro_autumn.svg" class="rollover-info best-season-hover">';
+                      var bestSeasonIcon = '<div class="col-xs-6 col-sm-3 time card">' + '<img src="/img/season_autumn.svg" class="best-season-guide">' + '</div>';
                   } else {
-                      var bestSeasonIcon = '<img src="/img/season_autumn.svg" class="icon best-season">';
+                      var bestSeasonIcon = '<div class="col-xs-6 col-sm-3 time card">' + '<img src="/img/season_autumn.svg" class="best-season-guide">' + '</div>';
                   };
         };
 
@@ -1524,6 +1544,30 @@ function AppViewModel () {
 
             return gear;
         };
+    };
+
+    function displayClimateIcon (obj) {
+
+        var climateIcon = '<div class="col-xs-6 col-sm-3 climate card">' + '<img src="img/empty_marquee.svg" class="climate-guide">' + '<p>' + obj  + '</p>' + '</div>';
+
+        return climateIcon;
+    };
+
+    function displayCost (obj) {
+
+      if(rollover) {
+
+          var costInfo = '<p class="rollover-info cost cost-hover">' + '$' + obj.budget + '</p>';
+
+      } else {
+
+          var midRange = Math.floor((obj.highEnd - obj.budget)/2 + obj.budget);
+
+          var costInfo = $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 cost card">' + '<img src="img/cost.svg">' + '<p>' + obj.budget + '</p>' + '<p>' + midRange + '</p>' + '<p>' + obj.highEnd +'</p>' + '</div>');
+      };
+
+      return costInfo;
+
     };
 
     function displayDistance (latDest,lngDest) {

@@ -481,6 +481,9 @@ function AppViewModel () {
         this.lng = obj.lng;
         this.spotID = obj.spotID;
         this.picture = obj.picture;
+
+
+
     };
 
     /* This obervable array holds filtered location objects from search
@@ -1951,6 +1954,8 @@ function AppViewModel () {
 
     self.getMagicSeaweed = function (spotID, breakName) {
 
+        var $currentSurfGuide = $('.title-guide').text();
+
         /* Check for the location's spot ID. If there is no spot ID,
         immediately display an error message. This also prevents an API request
         from going through for a non-existing location*/
@@ -2001,8 +2006,8 @@ function AppViewModel () {
                             // Save forecast for parsing other information in a variable
                             var forecastData = response[i];
 
-                        }
-                    }
+                        };
+                    };
 
                     // Show forecast in the View
                     renderSurfConditions(forecastData);
@@ -2052,25 +2057,28 @@ function AppViewModel () {
             /* Add solid stars to the array equal to number value
             retrieved from MSW*/
             var solidRatingLength = forecastData.solidRating;
+            var solidStar = '<img class="star" src="img/star_filled.svg"/>';
 
             for (var i = solidRatingLength; i--;) {
-                rating.push('<img class="star" src="img/star_filled.svg" />');
+                rating.push(solidStar);
             };
 
             /* Add faded stars to the array equal to number value
             retrieved from MSW*/
             var fadedRatingLength = forecastData.fadedRating;
+            var fadedStar = '<img class="star" src="img/star_faded.svg"/>';
 
             for (var i = fadedRatingLength; i--;) {
-                rating.push('<img class="star" src="img/star_faded.svg" />');
+                rating.push(fadedStar);
             };
 
             /* Add empty stars to the array equal 5 minus the total amount of
             filled and faded stars */
             var fillEmptyStars = 5 - rating.length;
+            var emptyStar = '<img class="star" src="img/star_empty.svg"/>';
 
             for (var i = fillEmptyStars; i--;) {
-                rating.push('<img class="star" src="img/star_empty.svg" />');
+                rating.push(emptyStar);
             };
 
             /* Combine the array into one line of stars to form the overall rating of both the surfing conditions and wave
@@ -2078,63 +2086,74 @@ function AppViewModel () {
             var waveRating = rating.join("");
 
             /* Before rendering the surf conditions, check which surf guide is
-            currently open and make sure it matches the API request. This ensures
-            that an api request that takes time to download isn't injected
-            into another surf guide if the user changed surf guides during
-            the api request processing */
-            var currentSurfGuide = $('.title-guide').text();
+            currently open and make sure it matches the API request. This ensures that an api request that takes time to download isn't injected into another surf guide if the user changed surf guides duringthe api request processing */
+            if ($currentSurfGuide.indexOf(breakName) >= 0) {
 
-            if (currentSurfGuide.indexOf(breakName) >= 0) {
+                var $surfGuideTitleContainer = $('.title-guide');
+                var liveConditionsElem = '<div class="col-xs-12 surf-conditions-container live-surf-conditions"></div>';
+                var compassContainer = '<div class="col-xs-12 col-sm-6 live-surf-conditions live-compass"><canvas id="compass" width="300" height="300"></canvas></div>';
 
-                $surfGuideTitleContainer = $('.title-guide');
-
-                // Add compass column
-                $surfGuideTitleContainer.after('<div class="col-xs-12 col-sm-6 compass-conditions surf-conditions compass"><canvas id="compass" width="300" height="300"></canvas></div>');
+                // Add compass container
+                $surfGuideTitleContainer.after(compassContainer);
 
                 // Add container to hold live conditions
-                $surfGuideTitleContainer.after('<div class="col-xs-12 surf-conditions-container surf-conditions"></div>');
+                $surfGuideTitleContainer.after(liveConditionsElem);
 
-                $surfConditionsContainer = $('.surf-conditions-container');
+                var $surfConditionsContainer = $('.surf-conditions-container');
+                var waveStatsContainer = '<div class="col-xs-12 col-sm-6 surf-conditions-small surf-conditions-waves"></div>';
+                var swellStatsContainer = '<div class="col-xs-6 col-sm-3 surf-conditions-small surf-conditions-swell"></div>';
+                var windStatsContainer = '<div class="col-xs-6 col-sm-3 surf-conditions-small surf-conditions-wind"></div>';
 
-                // Add live conditions columns
-                $surfConditionsContainer.append('<div class="col-xs-12 col-sm-6 surf-conditions surf-conditions-small surf-conditions-waves"></div>');
-                $surfConditionsContainer.append('<div class="col-xs-6 col-sm-3 surf-conditions surf-conditions-small surf-conditions-swell"></div>');
-                $surfConditionsContainer.append('<div class="col-xs-6 col-sm-3 surf-conditions surf-conditions-small surf-conditions-wind"></div>');
+                // Add live conditions containers
+                $surfConditionsContainer.append(waveStatsContainer);
+                $surfConditionsContainer.append(swellStatsContainer);
+                $surfConditionsContainer.append(windStatsContainer);
+
+                var $locationName = $('.title');
+                var liveTemp = '<p class="live-temp live-surf-conditions">' + temperature + " ℉" + '<img class="live-weather" src="' + weatherImg + '" alt="Symbol for current weather">' + '</p>';
 
                 /* Render the temperature and weather image in the left
                 side of the newly created conditions window*/
-                $('.title').after('<p class="live-temp surf-conditions">' + temperature + " ℉" + '<img class="live-weather" src="' + weatherImg + '" alt="Symbol for current weather">' + '</p>');
-                $surfConditions = $('.surf-conditions');
+                $locationName.after(liveTemp);
 
-                // Cache references to each column
-
+                // Cache references to each container
                 var $surfConditionsWind = $('.surf-conditions-wind');
                 var $surfConditionsSwell = $('.surf-conditions-swell');
                 var $surfConditionsWaves = $('.surf-conditions-waves');
 
-                /* Render the swell height and period */
-                $surfConditionsSwell.append('<p>' + swellHeight + "ft" + '</p>');
-                $surfConditionsSwell.append('<p>' + "primary" + '</p>');
-                $surfConditionsSwell.append('<p>' + "@" + ' ' + swellPeriod + 's' + ' ' + swellCompassDirection + '</p>');
-
-                /* Render the breaking wave height, and wave rating from above in
-                the center of the conditions window */
-                $surfConditionsWaves.append('<p>' + waveHeight + "ft" + '</p>');
-                $surfConditionsWaves.append('<p>' + waveRating + '</p>');
+                var windSpeedInfo = '<p>' + windSpeed + "mph" + '</p>';
+                var windIcon = '<img class="img-responsive" src="' + windImg + '" alt="Symbol for wind">';
+                var cardinalDirection = '<p>' + compassDirection + " " + "wind" + '</p>';
 
                 /* Render the wind speed, direction, and wind image in the
                 right side of the conditions window*/
-                $surfConditionsWind.append('<p>' + windSpeed + "mph" + '</p>');
-                $surfConditionsWind.append('<img class="img-responsive" src="' + windImg + '" alt="Symbol for wind">');
-                $surfConditionsWind.append('<p>' + compassDirection + " " + "wind" + '</p>');
+                $surfConditionsWind.append(windSpeedInfo);
+                $surfConditionsWind.append(windIcon);
+                $surfConditionsWind.append(cardinalDirection);
+
+                var swellHeightInfo = '<p>' + swellHeight + "ft" + '</p>';
+                var primarySwellInfo = '<p>' + "primary" + '</p>';
+                var swellPeriodInfo = '<p>' + "@" + ' ' + swellPeriod + 's' + ' ' + swellCompassDirection + '</p>';
+
+                /* Render the swell height and period */
+                $surfConditionsSwell.append(swellHeightInfo);
+                $surfConditionsSwell.append(primarySwellInfo);
+                $surfConditionsSwell.append(swellPeriodInfo);
+
+                var waveHeightInfo = '<p>' + waveHeight + "ft" + '</p>';
+                var waveRatingInfo = '<p>' + waveRating + '</p>';
+
+                /* Render the breaking wave height, and wave rating from above
+                in the center of the conditions window */
+                $surfConditionsWaves.append(waveHeightInfo);
+                $surfConditionsWaves.append(waveRatingInfo);
 
                 // Render live swell and wind compass
-                renderCompass();
+                renderLiveCompass();
 
-                function renderCompass () {
+                function renderLiveCompass () {
 
                     var Canvas = document.getElementById('compass');
-
                     var ctx = Canvas.getContext('2d');
 
                     var windPointer = new Image();
@@ -2153,60 +2172,54 @@ function AppViewModel () {
                     function draw() {
 
                         ctx.drawImage(img, 0, 0);
-
                         ctx.save();
-
                         ctx.translate(150, 150);
-
                         ctx.rotate(windCompassRotation);
-
                         ctx.drawImage(windPointer, -150, -150);
-
                         ctx.rotate(-windCompassRotation);
-
                         ctx.rotate(swellCompassRotation);
-
                         ctx.drawImage(swellPointer, -150, -150);
-
                         ctx.restore();
-
-                    }
+                    };
                 };
 
+                var closeConditionsButton = '<button type="button" class="btn conditions-close-button">✖</button>';
+
                 // Add button for closing the surf conditions window
-                $surfConditionsWaves.prepend('<button type="button" class="btn conditions-close-button">✖</button>');
+                $surfConditionsWaves.prepend(closeConditionsButton);
+
+                var $closeConditionsButton = $('.conditions-close-button');
+                var $liveSurfConditions = $('.live-surf-conditions');
+                var $showConditionsButton = $('.conditions-button');
 
                 /* When the surf conditions button is clicked the surf
                 conditions window is closed */
-                $('.conditions-close-button').on('click', function(e) {
+                $closeConditionsButton.on('click', function(e) {
 
-                    // Hide the surf conditions window
-                    $surfConditions.toggle();
+                    // Hide the live surf conditions
+                    $liveSurfConditions.toggle();
 
                     // Hide the close conditions button
-                    $('.conditions-close-button').toggle();
+                    $closeConditionsButton.toggle();
 
                     // Make visible the show surf conditions button
-                    $('.conditions-button').toggle();
+                    $showConditionsButton.toggle();
 
                 });
 
             } else {
 
-              return
+              return;
 
-            }
-        }
+            };
+
+        };
 
         function showError () {
 
             /* Before rendering the error message, check which surf guide is
-            currently open and make sure it matches the API request. This ensures
-            that an api request that takes time to download isn't injected
-            into another surf guide if the user changed surf guides during
-            the api request processing */
-            var currentSurfGuide = $('.title-guide').text();
-            if (currentSurfGuide.indexOf(breakName) >= 0) {
+            currently open and make sure it matches the API request. This ensures that an api request that takes time to download isn't injected into another surf guide if the user changed surf guides during the api request processing */
+            if ($currentSurfGuide .indexOf(breakName) >= 0) {
 
                 // Insert a new row above the surf guide
                 $('.title-guide').after('<div class="col-xs-12 error-container"></div>');
@@ -2230,15 +2243,12 @@ function AppViewModel () {
                     $('.conditions-button').toggle();
 
                 });
-
             } else {
 
                 return;;
-
             };
-
         };
-    }
+    };
 };
 
 navigator.geolocation.getCurrentPosition(success);
@@ -2446,8 +2456,8 @@ function addListeners(marker, breakName, obj) {
             or above*/
             if(map.getZoom() < 14) {
                 map.setZoom(14);
-            }
-        }
+            };
+        };
 
     /* Pass the relevant marker for the current iteration as an argument
     into the function*/
@@ -2475,8 +2485,8 @@ function addListeners(marker, breakName, obj) {
                 /* If the surf guide isn't open, hide all location frames
                 except the one related to the marker */
                 showLocationFrame(breakName);
-            }
-        }
+            };
+        };
 
     /* Pass the relevant marker and break name (breakName) for the current
     iteration as an argument into the function*/
@@ -2484,7 +2494,7 @@ function addListeners(marker, breakName, obj) {
 
     // Add each marker to the markers array
     markers.push(marker);
-}
+};
 
 function showMarkers(map) {
 

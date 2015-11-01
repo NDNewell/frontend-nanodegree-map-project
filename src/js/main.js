@@ -2263,6 +2263,7 @@ function AppViewModel () {
     };
 };
 
+// Get current location
 navigator.geolocation.getCurrentPosition(success);
 
 function success(position) {
@@ -2402,7 +2403,9 @@ function generateMarkers () {
     /* Loop through locationData and filter out the coordinates
     & break name for each break. Save the break's coordinates and name
     in their own variables for easy referencing*/
-    for(var i = 0; i < locationData.length; i++) {
+    var locationDataLength = locationData.length;
+
+    for(var i = locationDataLength; i--;) {
 
         var obj = locationData[i];
 
@@ -2419,20 +2422,19 @@ function generateMarkers () {
         created above as arguments*/
         addMarker(breakName, breakCoordinates, breakLocation, obj);
 
-    }
+    };
 
     // Display markers found in the markers array on the map
     showMarkers(map);
 
     // Set initial map bounds based on location of markers
     setMapBounds();
-
-}
+};
 
 function addMarker(breakName, breakCoordinates, breakLocation, obj) {
 
     // Set a variable for custom map marker
-    var image = 'img/marker.png';
+    var markerImg = 'img/marker.png';
 
     var marker = new google.maps.Marker({
 
@@ -2442,7 +2444,7 @@ function addMarker(breakName, breakCoordinates, breakLocation, obj) {
         // Animate markers by dropping them onto the map at page load
         animation: google.maps.Animation.DROP,
         map: map,
-        icon: image,
+        icon: markerImg,
 
         /* Set the title for the break marker as the name of the wave/location
         of the break. This way it can be searched/filtered in the ViewModel*/
@@ -2451,7 +2453,7 @@ function addMarker(breakName, breakCoordinates, breakLocation, obj) {
 
     // Add a text box that displays the break name and location when clicked
     addListeners(marker, breakName, obj);
-}
+};
 
 function addListeners(marker, breakName, obj) {
 
@@ -2515,8 +2517,8 @@ function showMarkers(map) {
 
     for (var i = markersLength; i--;) {
         markers[i].setMap(map);
-    }
-}
+    };
+};
 
 function setMapBounds () {
 
@@ -2531,8 +2533,8 @@ function setMapBounds () {
     for (var i = markersLength; i--;) {
         if(markers[i].visible) {
             bounds.extend(markers[i].getPosition());
-        }
-    }
+        };
+    };
 
     // Fit the map to the bounds calcuated above
     map.fitBounds(bounds);
@@ -2542,7 +2544,7 @@ function setMapBounds () {
     if(map.getZoom() > 12) {
         map.setZoom(12);
     };
-}
+};
 
 function getInfoWindow (marker, breakName) {
     // Assign content to InfoWindow object
@@ -2550,14 +2552,14 @@ function getInfoWindow (marker, breakName) {
 
     // Assign the InfoWindow object the appropriate marker
     infoWindow.open(map, marker);
-}
+};
 
 function animateMarker (marker) {
     marker.setAnimation(google.maps.Animation.BOUNCE);
     window.setTimeout(function() {
         marker.setAnimation(null);
     }, 1400);
-}
+};
 
 function addMapButton () {
 
@@ -2581,7 +2583,7 @@ function addMapButton () {
         $('.location-frame').show();
 
     });
-}
+};
 
 function showLocationFrame (breakName) {
 
@@ -2596,9 +2598,9 @@ function showLocationFrame (breakName) {
             var match = ($this);
             $('.location-frame').hide();
             match.show();
-        }
+        };
     });
-}
+};
 
 function addMapClickEvent () {
 
@@ -2610,10 +2612,10 @@ function addMapClickEvent () {
         do nothing (just close the info windows) */
         if (!$('.surf-guide-container').is(":visible")) {
             $('.location-frame').show();
-        }
+        };
             infoWindow.close();
     });
-}
+};
 
 
 ko.applyBindings(new AppViewModel);

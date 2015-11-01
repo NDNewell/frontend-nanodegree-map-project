@@ -2021,74 +2021,79 @@ function AppViewModel () {
         };
 
         function renderSurfConditions(forecastData) {
-
-            // Save wave break height
-            var minBreakHeight = forecastData.swell.minBreakingHeight;
-            var maxBreakHeight = forecastData.swell.maxBreakingHeight;
-
-            // If the min and max are the same, just save the min height
-            if (minBreakHeight === maxBreakHeight) {
-                var waveHeight = minBreakHeight;
-
-            // If the min and max are different, save both as a range
-            } else {
-                var waveHeight = minBreakHeight + ' ' + '-' + ' ' + maxBreakHeight;
-            };
-
-            // Get and save swell height, direction, period
-            var swellHeight = forecastData.swell.components.primary.height;
-            var swellPeriod = forecastData.swell.components.primary.period;
-            var swellDirection = forecastData.swell.components.primary.direction;
-            var swellCompassDirection = forecastData.swell.components.primary.compassDirection;
-
-            // Get and sav wind speed and direction
-            var windSpeed = forecastData.wind.speed;
-            var windDirection = forecastData.wind.direction;
-            var compassDirection = forecastData.wind.compassDirection;
-
-            // Get and save current temperature and weather
-            var temperature = forecastData.condition.temperature;
-            var weather = forecastData.condition.weather;
-            var weatherImg = 'http://cdnimages.magicseaweed.com/30x30/' + weather + '.png'
-            var windImg = 'img/cloudy-&-wind.png'
-
-            /* Get wave and conditions ratings */
-            var rating = [];
-
-            /* Add solid stars to the array equal to number value
-            retrieved from MSW*/
-            var solidRatingLength = forecastData.solidRating;
-            var solidStar = '<img class="star" src="img/star_filled.svg"/>';
-
-            for (var i = solidRatingLength; i--;) {
-                rating.push(solidStar);
-            };
-
-            /* Add faded stars to the array equal to number value
-            retrieved from MSW*/
-            var fadedRatingLength = forecastData.fadedRating;
-            var fadedStar = '<img class="star" src="img/star_faded.svg"/>';
-
-            for (var i = fadedRatingLength; i--;) {
-                rating.push(fadedStar);
-            };
-
-            /* Add empty stars to the array equal 5 minus the total amount of
-            filled and faded stars */
-            var fillEmptyStars = 5 - rating.length;
-            var emptyStar = '<img class="star" src="img/star_empty.svg"/>';
-
-            for (var i = fillEmptyStars; i--;) {
-                rating.push(emptyStar);
-            };
-
-            /* Combine the array into one line of stars to form the overall rating of both the surfing conditions and wave
-            quality*/
-            var waveRating = rating.join("");
-
             /* Before rendering the surf conditions, check which surf guide is
             currently open and make sure it matches the API request. This ensures that an api request that takes time to download isn't injected into another surf guide if the user changed surf guides duringthe api request processing */
-            if ($currentSurfGuide.indexOf(breakName) >= 0) {
+
+            // Cache a ref to the error container (if it exists)
+            var $checkErrorContainer = $('.error-container');
+
+            /* Cache a ref to the error container (if it exists). Then check
+            that there isn't an error message already present if the guide does match */
+            if ($currentSurfGuide.indexOf(breakName) >= 0 && typeof $checkErrorContainer === 'undefined') {
+
+                // Save wave break height
+                var minBreakHeight = forecastData.swell.minBreakingHeight;
+                var maxBreakHeight = forecastData.swell.maxBreakingHeight;
+
+                // If the min and max are the same, just save the min height
+                if (minBreakHeight === maxBreakHeight) {
+                    var waveHeight = minBreakHeight;
+
+                // If the min and max are different, save both as a range
+                } else {
+                    var waveHeight = minBreakHeight + ' ' + '-' + ' ' + maxBreakHeight;
+                };
+
+                // Get and save swell height, direction, period
+                var swellHeight = forecastData.swell.components.primary.height;
+                var swellPeriod = forecastData.swell.components.primary.period;
+                var swellDirection = forecastData.swell.components.primary.direction;
+                var swellCompassDirection = forecastData.swell.components.primary.compassDirection;
+
+                // Get and sav wind speed and direction
+                var windSpeed = forecastData.wind.speed;
+                var windDirection = forecastData.wind.direction;
+                var compassDirection = forecastData.wind.compassDirection;
+
+                // Get and save current temperature and weather
+                var temperature = forecastData.condition.temperature;
+                var weather = forecastData.condition.weather;
+                var weatherImg = 'http://cdnimages.magicseaweed.com/30x30/' + weather + '.png'
+                var windImg = 'img/cloudy-&-wind.png'
+
+                /* Get wave and conditions ratings */
+                var rating = [];
+
+                /* Add solid stars to the array equal to number value
+                retrieved from MSW*/
+                var solidRatingLength = forecastData.solidRating;
+                var solidStar = '<img class="star" src="img/star_filled.svg"/>';
+
+                for (var i = solidRatingLength; i--;) {
+                    rating.push(solidStar);
+                };
+
+                /* Add faded stars to the array equal to number value
+                retrieved from MSW*/
+                var fadedRatingLength = forecastData.fadedRating;
+                var fadedStar = '<img class="star" src="img/star_faded.svg"/>';
+
+                for (var i = fadedRatingLength; i--;) {
+                    rating.push(fadedStar);
+                };
+
+                /* Add empty stars to the array equal 5 minus the total amount of
+                filled and faded stars */
+                var fillEmptyStars = 5 - rating.length;
+                var emptyStar = '<img class="star" src="img/star_empty.svg"/>';
+
+                for (var i = fillEmptyStars; i--;) {
+                    rating.push(emptyStar);
+                };
+
+                /* Combine the array into one line of stars to form the overall rating of both the surfing conditions and wave
+                quality*/
+                var waveRating = rating.join("");
 
                 var liveConditionsElem = '<div class="col-xs-12 surf-conditions-container live-surf-conditions"></div>';
                 var compassContainer = '<div class="col-xs-12 col-sm-6 live-surf-conditions live-compass"><canvas id="compass" width="300" height="300"></canvas></div>';

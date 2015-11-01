@@ -1955,6 +1955,7 @@ function AppViewModel () {
     self.getMagicSeaweed = function (spotID, breakName) {
 
         var $currentSurfGuide = $('.title-guide').text();
+        var $surfGuideTitleContainer = $('.title-guide');
 
         /* Check for the location's spot ID. If there is no spot ID,
         immediately display an error message. This also prevents an API request
@@ -2089,7 +2090,6 @@ function AppViewModel () {
             currently open and make sure it matches the API request. This ensures that an api request that takes time to download isn't injected into another surf guide if the user changed surf guides duringthe api request processing */
             if ($currentSurfGuide.indexOf(breakName) >= 0) {
 
-                var $surfGuideTitleContainer = $('.title-guide');
                 var liveConditionsElem = '<div class="col-xs-12 surf-conditions-container live-surf-conditions"></div>';
                 var compassContainer = '<div class="col-xs-12 col-sm-6 live-surf-conditions live-compass"><canvas id="compass" width="300" height="300"></canvas></div>';
 
@@ -2219,28 +2219,40 @@ function AppViewModel () {
 
             /* Before rendering the error message, check which surf guide is
             currently open and make sure it matches the API request. This ensures that an api request that takes time to download isn't injected into another surf guide if the user changed surf guides during the api request processing */
+
             if ($currentSurfGuide .indexOf(breakName) >= 0) {
 
-                // Insert a new row above the surf guide
-                $('.title-guide').after('<div class="col-xs-12 error-container"></div>');
+                var errorElem = '<div class="col-xs-12 error-container"></div>';
+                var errorMsg = '<p class="conditions-error">' + breakName + ' ' + "conditions unavailable =(" + '</p>';
+                var errorCloseButton = '<button type="button" class="btn error-close-button">✖</button>';
 
-                $('.error-container').append('<p class="conditions-error">' + breakName + ' ' + "conditions unavailable =(" + '</p>');
+                // Insert a new row above the surf guide icons
+                $surfGuideTitleContainer.after(errorElem);
+
+                var $errorContainer = $('.error-container');
+
+                // Insert the error message
+                $errorContainer.append(errorMsg);
 
                 // Add a button for closing the error window
-                $('.error-container').prepend('<button type="button" class="btn error-close-button">✖</button>');
+                $errorContainer.prepend(errorCloseButton);
+
+                var $errorCloseButton = $('.error-close-button');
+                var $closeConditionsButton = $('.conditions-close-button');
+                var $showConditionsButton = $('.conditions-button');
 
                 /* When the conditions close button is clicked remove the error
                 message */
-                $('.error-close-button').on('click', function(e) {
+                $errorCloseButton.on('click', function(e) {
 
                     // Remove conditions row from DOM
-                    $('.error-container').remove();
+                    $errorContainer.remove();
 
                     // Remove the close conditions button
-                    $('.conditions-close-button').remove();
+                    $closeConditionsButton.remove();
 
                     // Make visible the show surf conditions button
-                    $('.conditions-button').toggle();
+                    $showConditionsButton.toggle();
 
                 });
             } else {

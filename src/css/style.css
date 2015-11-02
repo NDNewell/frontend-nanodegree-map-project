@@ -229,7 +229,7 @@ body {
     text-align: center;
 }
 
-.compass {
+.live-compass {
     height: 320px;
     padding: 10px 10px;
     text-align: center;
@@ -523,7 +523,7 @@ body {
         font-size: .8em;
     }
 
-    .compass {
+    .live-compass {
         margin-top: -28px;
         margin-bottom: -15px;
     }

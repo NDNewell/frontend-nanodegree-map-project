@@ -2022,14 +2022,14 @@ function AppViewModel () {
 
         function renderSurfConditions(forecastData) {
             /* Before rendering the surf conditions, check which surf guide is
-            currently open and make sure it matches the API request. This ensures that an api request that takes time to download isn't injected into another surf guide if the user changed surf guides duringthe api request processing */
+            currently open and make sure it matches the API request and that
+            there isn't an error already displayed. This ensures that an api
+            request that takes time to download isn't injected into another
+            surf guide if the user changed surf guides duringthe api request
+            processing */
+            var $surfGuideContainer = $('.surf-guide-container');
 
-            // Cache a ref to the error container (if it exists)
-            var $checkErrorContainer = $('.error-container');
-
-            /* Cache a ref to the error container (if it exists). Then check
-            that there isn't an error message already present if the guide does match */
-            if ($currentSurfGuide.indexOf(breakName) >= 0 && typeof $checkErrorContainer === 'undefined') {
+            if ($currentSurfGuide.indexOf(breakName) >= 0 && !$surfGuideContainer.is(":contains('unavailable')")) {
 
                 // Save wave break height
                 var minBreakHeight = forecastData.swell.minBreakingHeight;
@@ -2095,6 +2095,8 @@ function AppViewModel () {
                 quality*/
                 var waveRating = rating.join("");
 
+                /* Render containers to hold the compass and live conditions
+                containers */
                 var liveConditionsElem = '<div class="col-xs-12 surf-conditions-container live-surf-conditions"></div>';
                 var compassContainer = '<div class="col-xs-12 col-sm-6 live-surf-conditions live-compass"><canvas id="compass" width="300" height="300"></canvas></div>';
 
@@ -2260,10 +2262,12 @@ function AppViewModel () {
                     $showConditionsButton.toggle();
 
                 });
+
             } else {
 
                 return;;
             };
+
         };
     };
 };

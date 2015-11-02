@@ -615,14 +615,24 @@ function AppViewModel () {
 
         });
 
-        // Set the map bounds & map position for every search
-        setMapBounds();
+        /* If the map is visible, set the map bounds and map position. If it is
+        instead hidden, do nothing. This is because that a bug is created when
+        map bounds are invoked on the hidden map: the map, markers and info-
+        windows skew left for some unknown reason. Because a search results
+        in location frames being filtered and eventually one being selected,
+        centering and map bounds will be set by the clicking of the location
+        frame. Also, if the map is opened (and if the surf guide isn't in view)
+        the map will be centered and the bounds will also be set whichever
+        location frames have or haven't been filtered into view. */
+        if (!$('#map').is(":hidden")) {
+            // Set the map bounds & map position
+            setMapBounds();
+        };
 
         /* After a search, there are new objects in the locationGrid, so the
         rollover effects that were added before need to be re-added */
         addRolloverEffect();
-
-    }
+    };
 
     /* When the cursor hovers over a location, remove the text and add
     a gaussian blur. Wait until the locations have been loaded */
@@ -940,8 +950,11 @@ function AppViewModel () {
             $('.location-frame').show();
             $('.location-grid').toggle();
 
-            // Reset the map window to display all markers
-            setMapBounds();
+
+            if (!$('#map').is(":hidden")) {
+                // Reset the map window to display all markers
+                setMapBounds();
+            };
 
             // Close any info windows that remain open
             infoWindow.close();
@@ -2575,22 +2588,41 @@ function addMapButton () {
     // Add button for hiding the map
     $('.map-container').prepend('<button type="button" class="btn hide-map-button">▼</button>');
 
+    // When the map close symbol is clicked, hide or show the map
     $('.hide-map-button').on('click', function(e) {
 
         // Either hide or reveal the map depending the last click
         $('#map').toggle();
 
+        /* If the map isn't visible after map toggle above (from closing it),
+        replace the 'down' symbol with an up symbol  */
         if (!$('#map').is(":visible")) {
-            // Replace map text
+            // Replace the existing symbol
             $(this).text('▲');
+        /* If the map is made visible after map toggle above (opening it),
+        replace the 'up' symbol with a 'down' symbol & depending on the
+        circumstances, set the map bounds and close any open infowindows */
         } else {
-            // Replace map text
+            // Replace the existing symbol.
             $(this).text('▼');
+
+            /* If the surf guide isn't visible when opening the map, reset the
+            map bounds and close any open info windows. Otherwise, do nothing.
+            We do nothing because if the map bounds are reset while the surf
+            guide is visible it creates a bug. When the map is eventually
+            reopened, the map is skewed left and all of the infowindows are
+            too small. All subsequent centering and map bounds setting results
+            in the map being skewed to the left. This may be because setting
+            the map bounds is called before the map is fully made visible ???
+            It's also unecessary because each marker is zoomed in on upon clicking a specific location even while the map is hidden, so if the map is eventually made visible, it will be centered on the selected location anyway */
+            if (!$('.surf-guide-container').length) {
+                /* Reset the map bounds, so map is centered on markers that
+                represent the currently unselected location frames */
+                setMapBounds();
+                // Close any open info windows
+                infoWindow.close();
+            };
         };
-
-        /* Show the locations in case a marker has been selected. This will display the whole list of locations again */
-        $('.location-frame').show();
-
     });
 };
 

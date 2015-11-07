@@ -34,7 +34,7 @@ var locationData = [
       breakDetails: 'beach',
       avgSize: {min: 3, max: 7, aboveMax: true},
       optimalSwell: ['E', 'SE'],
-      optimalWind: ['E', 'SW'],
+      optimalWind: ['W', 'SW'],
       optimalTide: ['high'],
       optimalTime: [' Mar', ' Jan', ' Feb', ' Apr', ' May'],
       climate: 'Af',
@@ -55,7 +55,7 @@ var locationData = [
       waveDirection: 'left & right',
       breakDetails: 'point',
       avgSize: {min: 5, max: 8, aboveMax: true},
-      optimalSwell: ['N', 'S'],
+      optimalSwell: ['W', 'S'],
       optimalWind: ['N', 'NNE'],
       optimalTide: ['high', 'low'],
       optimalTime: [' Sep', ' Oct', ' Nov', ' Dec', ' Jan', ' Feb'],
@@ -99,7 +99,7 @@ var locationData = [
       waveDirection: 'left',
       breakDetails: 'point',
       avgSize: {min: 7, max: 9, aboveMax: false},
-      optimalSwell: ['WSW', 'NNW'],
+      optimalSwell: ['ESE', 'NNW'],
       optimalWind: ['WSW', 'SSE'],
       optimalTide: ['high', 'mid', 'low'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
@@ -144,7 +144,7 @@ var locationData = [
       breakDetails: 'reef',
       avgSize: {min: 5, max: 16, aboveMax: true},
       optimalSwell: ['WNW', 'NE'],
-      optimalWind: ['NE', 'ESE'],
+      optimalWind: ['NW', 'ESE'],
       optimalTide: ['high', 'mid'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
       climate: 'BWk',
@@ -385,7 +385,7 @@ var locationData = [
       waveDirection: 'left & right',
       breakDetails: 'reef',
       avgSize: {min: 5, max: 16, aboveMax: true},
-      optimalSwell: ['S', 'SW'],
+      optimalSwell: ['SSE', 'SW'],
       optimalWind: ['N', 'S'],
       optimalTide: ['mid'],
       optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
@@ -851,12 +851,7 @@ function AppViewModel () {
         displayWaveSize(obj.avgSize);
 
         // Render optimal swell compass
-        swell = true;
-        displayCompassIcon(obj.optimalSwell, $surfGuideContainer);
-
-        // Render optimal wind compass
-        wind = true;
-        displayCompassIcon(obj.optimalWind, $surfGuideContainer);
+        displayCompassIcon(obj.optimalSwell, obj.optimalWind, $surfGuideContainer);
 
         // Display icon associated with the optimal tide
         var tideIcon = displayTideIcon(obj.optimalTide);
@@ -1153,39 +1148,44 @@ function AppViewModel () {
         return breakIcon;
     };
 
-    self.displayCompassIcon = function (obj, $surfGuideContainer) {
+    self.displayCompassIcon = function (objSwell, objWind, $surfGuideContainer) {
 
-        if(swell) {
-            swell = false;
+      if(objSwell) {
+        var swell = true;
+        buildCompass(objSwell);
+      };
 
-            $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 swell-compass-guide card"><canvas id="compass-swell" width="160" height="160"></canvas></div>');
+      function buildCompass(obj) {
+          if(swell) {
+              swell = false;
+              drawBackground = true;
 
-            var Canvas = document.getElementById('compass-swell');
-            var elementPointer = 'img/compass_swell_pointer.svg';
+              $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 small-compass-guide card"><canvas id="compass-small" width="160" height="160"></canvas></div>');
 
-        } else if (wind) {
-            wind = false;
+              var elementPointer = 'img/compass_swell_pointer.svg';
 
-            $surfGuideContainer.append('<div class="col-xs-6 col-sm-3 wind-compass-guide card"><canvas id="compass-wind" width="160" height="160"></canvas></div>');
+              var img = new Image();
+              img.src = 'img/compass_guide.svg';
 
-            var Canvas = document.getElementById('compass-wind');
-            var elementPointer = 'img/compass_wind_pointer.svg';
-        };
+          } else if (wind) {
+              wind = false;
+              var elementPointer = 'img/compass_wind_pointer.svg';
+          };
 
-        var ctx = Canvas.getContext('2d');
+          var Canvas = document.getElementById('compass-small');
+          var ctx = Canvas.getContext('2d');
 
-        var pointer = new Image();
-        pointer.src = elementPointer;
+          var pointer = new Image();
+          pointer.src = elementPointer;
+          pointer.onload = draw;
 
-        var img = new Image();
-        img.src = 'img/compass_guide.svg';
-        img.onload = draw;
+          function draw() {
 
-        function draw() {
-
-              ctx.drawImage(img, 0, 0);
-
-              ctx.save();
+              if(drawBackground) {
+                  ctx.drawImage(img, 0, 0);
+                  ctx.save();
+                  console.log('drawing & saving background');
+              };
 
               ctx.translate(80, 80);
 
@@ -1193,83 +1193,92 @@ function AppViewModel () {
 
               for (var i = directions; i--;) {
 
-                    switch (obj[i]) {
-                          case 'N':
-                                var swellDirection = 0;
-                          break;
+                  switch (obj[i]) {
+                      case 'N':
+                          var direction = 0;
+                      break;
 
-                          case 'NNE':
-                                var swellDirection = 22.5;
-                          break;
+                      case 'NNE':
+                          var direction = 22.5;
+                      break;
 
-                          case 'NE':
-                                var swellDirection = 45;
-                          break;
+                      case 'NE':
+                          var direction = 45;
+                      break;
 
-                          case 'ENE':
-                                var swellDirection = 67.5;
-                          break;
+                      case 'ENE':
+                          var direction = 67.5;
+                      break;
 
-                          case 'E':
-                                var swellDirection = 90;
-                          break;
+                      case 'E':
+                          var direction = 90;
+                      break;
 
-                          case 'ESE':
-                                var swellDirection = 112.5;
-                          break;
+                      case 'ESE':
+                          var direction = 112.5;
+                      break;
 
-                          case 'SE':
-                                var swellDirection = 135;
-                          break;
+                      case 'SE':
+                          var direction = 135;
+                      break;
 
-                          case 'SSE':
-                                var swellDirection = 157.5;
-                          break;
+                      case 'SSE':
+                          var direction = 157.5;
+                      break;
 
-                          case 'S':
-                                var swellDirection = 180;
-                          break;
+                      case 'S':
+                          var direction = 180;
+                      break;
 
-                          case 'SSW':
-                                var swellDirection = 202.5;
-                          break;
+                      case 'SSW':
+                          var direction = 202.5;
+                      break;
 
-                          case 'SW':
-                                var swellDirection = 225;
-                          break;
+                      case 'SW':
+                          var direction = 225;
+                      break;
 
-                          case 'WSW':
-                                var swellDirection = 247.5;
-                          break;
+                      case 'WSW':
+                          var direction = 247.5;
+                      break;
 
-                          case 'W':
-                                var swellDirection = 270;
-                          break;
+                      case 'W':
+                          var direction = 270;
+                      break;
 
-                          case 'WNW':
-                                var swellDirection = 292.5;
-                          break;
+                      case 'WNW':
+                          var direction = 292.5;
+                      break;
 
-                          case 'NW':
-                                var swellDirection = 315;
-                          break;
+                      case 'NW':
+                          var direction = 315;
+                      break;
 
-                          case 'NNW':
-                                var swellDirection = 337.5;
-                          break;
-                    }
+                      case 'NNW':
+                           var direction = 337.5;
+                      break;
+                  }
 
-                          var pointerAngle = swellDirection * (Math.PI / 180);
+                      var pointerAngle = direction * (Math.PI / 180);
 
-                          ctx.rotate(pointerAngle);
+                      ctx.rotate(pointerAngle);
 
-                          ctx.drawImage(pointer, -80, -80);
+                      ctx.drawImage(pointer, -80, -80);
 
-                          ctx.rotate(-pointerAngle);
+                      ctx.rotate(-pointerAngle);
               }
 
-              ctx.restore();
-        };
+              if(drawBackground) {
+                  drawBackground = false;
+                  ctx.restore();
+                  console.log('restoring background');
+              };
+          };
+      };
+
+      var wind = true;
+      buildCompass(objWind);
+
     };
 
     self.displayTideIcon = function (obj) {
@@ -2060,7 +2069,7 @@ function AppViewModel () {
                 // Get and save swell height, direction, period
                 var swellHeight = forecastData.swell.components.primary.height;
                 var swellPeriod = forecastData.swell.components.primary.period;
-                var swellDirection = forecastData.swell.components.primary.direction;
+                var direction = forecastData.swell.components.primary.direction;
                 var swellCompassDirection = forecastData.swell.components.primary.compassDirection;
 
                 // Get and sav wind speed and direction
@@ -2187,7 +2196,7 @@ function AppViewModel () {
                     img.onload = draw;
 
                     var windCompassRotation = windDirection * (Math.PI / 180);
-                    var swellCompassRotation = swellDirection * (Math.PI / 180);
+                    var swellCompassRotation = direction * (Math.PI / 180);
 
                     function draw() {
 

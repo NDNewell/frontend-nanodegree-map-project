@@ -447,30 +447,40 @@ var images = {};
 
 $(document).ready(function() {
 
-    function loadImages(sources) {
+    function loadImages(source) {
       var loadedImages = 0;
       var numImages = 0;
 
-      for(var src in sources) {
+      for(var src in source) {
         numImages++;
       };
 
-      for(var src in sources) {
+      for(var src in source) {
         images[src] = new Image();
         images[src].onload = function () {
             if(++loadedImages >= numImages) {
               console.log('images loaded');
             };
         };
-        images[src].src = sources[src];
+        images[src].src = source[src];
       };
     };
 
-    var sources = { swellPointer: 'img/compass_swell_pointer.svg',
-                    windPointer: 'img/compass_wind_pointer.svg',
-                    smallCompass: 'img/compass_guide.svg'};
+    var guideIcons = {attireSpring: 'img/water_temp_spring.svg',
+                      attireSummer: 'img/water_temp_summer.svg',
+                      attireAutumn: 'img/water_temp_winter.svg',
+                      attireWinter: 'img/water_temp_autumn.svg',
+                      attireBoardies: 'img/water_attire_boardies.svg',
+                      attireWetsuitTwo: 'img/water_attire_2mm_wetsuit.svg',
+                      attireWetsuitThree: 'img/water_attire_3mm_wetsuit.svg',
+                      attireWetsuitFour: 'img/water_attire_4mm_wetsuit.svg',
+                      attireWetsuitFive: 'img/water_attire_5mm_wetsuit.svg',
+                      attireWetsuitSix: 'img/water_attire_6mm_wetsuit.svg',
+                      swellPointer: 'img/compass_swell_pointer.svg',
+                      windPointer: 'img/compass_wind_pointer.svg',
+                      smallCompass: 'img/compass_guide.svg'};
 
-    loadImages(sources);
+    loadImages(guideIcons);
 
 });
 
@@ -1495,32 +1505,25 @@ function AppViewModel () {
 
                 if(season === 1) {
                     var Canvas = document.getElementById('spring');
-                    var seasonImg = 'img/water_temp_spring.svg';
+                    var seasonImg = images.attireSpring;
                 } else if (season === 2) {
                     var Canvas = document.getElementById('summer');
-                    var seasonImg = 'img/water_temp_summer.svg';
+                    var seasonImg = images.attireSummer;
                 } else if (season === 3) {
                     var Canvas = document.getElementById('autumn');
-                    var seasonImg = 'img/water_temp_autumn.svg';
+                    var seasonImg = images.attireAutumn;
                 } else {
                     var Canvas = document.getElementById('winter');
-                    var seasonImg = 'img/water_temp_winter.svg';
+                    var seasonImg = images.attireWinter;
                 };
 
                 var ctx = Canvas.getContext('2d');
+                var attire = gear;
+                var seasonBackground = seasonImg;
 
-                var attire = new Image();
-                attire.src = gear;
+                ctx.drawImage(seasonBackground, 0, 0);
+                ctx.drawImage(attire, 0, 0);
 
-                var seasonBackground = new Image();
-                seasonBackground.src = seasonImg;
-                seasonBackground.onload = drawIcon;
-
-                    function drawIcon () {
-
-                        ctx.drawImage(seasonBackground, 0, 0);
-                        ctx.drawImage(attire, 0, 0);
-                    };
             };
 
             // Highlight current season's attire
@@ -1559,19 +1562,19 @@ function AppViewModel () {
                     if(rollover) {
                       var gear = '<img src="img/water_attire_ro_boardies.svg" class="rollover-info misc-info-one-hover">';
                     } else {
-                      var gear = 'img/water_attire_boardies.svg';
+                      var gear = images.attireBoardies;
                     };
                 } else if (temp > 66) {
                     if(rollover) {
                       var gear = '<img src="img/water_attire_ro_2mm_wetsuit.svg" class="rollover-info misc-info-one-hover">';
                     } else {
-                      var gear = 'img/water_attire_2mm_wetsuit.svg';
+                      var gear = images.attireWetsuitTwo;
                     };
                 } else {
                     if(rollover) {
                       var gear = '<img src="img/water_attire_ro_3mm_wetsuit.svg" class="rollover-info misc-info-one-hover">';
                     } else {
-                      var gear = 'img/water_attire_3mm_wetsuit.svg';
+                      var gear = images.attireWetsuitThree;
                     };
                 };
             } else {
@@ -1579,19 +1582,19 @@ function AppViewModel () {
                     if(rollover) {
                       var gear = '<img src="img/water_attire_ro_4mm_wetsuit.svg.svg" class="rollover-info misc-info-one-hover">';
                     } else {
-                      var gear = 'img/water_attire_4mm_wetsuit.svg';
+                      var gear = images.attireWetsuitFour;
                     };
                 } else if (temp > 48) {
                     if(rollover) {
                       var gear = '<img src="img/water_attire_ro_5mm_wetsuit.svg" class="rollover-info misc-info-one-hover">';
                     } else {
-                      var gear = 'img/water_attire_5mm_wetsuit.svg';
+                      var gear = images.attireWetsuitFive;
                     };
                 } else {
                     if(rollover) {
                       var gear = '<img src="img/water_attire_ro_6mm_wetsuit.svg" class="rollover-info misc-info-one-hover">';
                     } else {
-                      var gear = 'img/water_attire_6mm_wetsuit.svg';
+                      var gear = images.attireWetsuitSix;
                     };
                 };
             };

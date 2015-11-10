@@ -447,9 +447,10 @@ var images = {};
 
 $(document).ready(function() {
 
+    var numImages = 0;
+    var loadedImages = 0;
+
     function loadImages(source) {
-      var loadedImages = 0;
-      var numImages = 0;
 
       for(var src in source) {
         numImages++;
@@ -460,6 +461,9 @@ $(document).ready(function() {
         images[src].onload = function () {
             if(++loadedImages >= numImages) {
               console.log('images loaded');
+
+              // Add rollover effects to each location
+              addRolloverEffect();
             };
         };
         images[src].src = source[src];
@@ -567,7 +571,7 @@ $(document).ready(function() {
           roIconMiscTwoStrRips: 'img/hazards_ro_strong_rips.svg',
           roIconMiscTwoTheft: 'img/hazards_ro_theft.svg',
           roIconMiscTwoUndertow: 'img/hazards_ro_undertow.svg',
-          roIconMiscTwoUndfriendly: 'img/hazards_ro_unfriendly.svg',
+          roIconMiscTwoUnfriendly: 'img/hazards_ro_unfriendly.svg',
           roIconMiscTwoUrchins: 'img/hazards_ro_urchins.svg',
           roIconMiscTwoWellknown: 'img/well_known_ro.svg' };
 
@@ -618,9 +622,6 @@ function AppViewModel () {
         this.lng = obj.lng;
         this.spotID = obj.spotID;
         this.picture = obj.picture;
-
-
-
     };
 
     /* This obervable array holds filtered location objects from search
@@ -777,124 +778,119 @@ function AppViewModel () {
 
     self.addRolloverEffect = function () {
 
-        // Wait until the locations have been loaded
-        $(document).ready(function() {
+        console.log('Enable rollover effect');
 
-            // For each location set variables and add hover effects
-            $('.location-frame').each(function () {
-                var locationFrame = $(this);
-                var breakName = $(this).find('.break-name');
-                var location = $(this).find('.location-name');
-                var img = $(this).find('img.location-image');
+        // For each location set variables and add hover effects
+        $('.location-frame').each(function () {
+            var locationFrame = $(this);
+            var breakName = $(this).find('.break-name');
+            var location = $(this).find('.location-name');
+            var img = $(this).find('img.location-image');
 
-                locationFrame.on('mouseenter',
+            locationFrame.on('mouseenter',
 
-                    function (e) {
+                function (e) {
 
-                        rollover = true;
+                    rollover = true;
 
-                        // Get identifying information from the clicked object
-                        var targetData = e.currentTarget.innerText;
+                    // Get identifying information from the clicked object
+                    var targetData = e.currentTarget.innerText;
 
-                        // Format the obtained information
-                        var hoverItem = targetData.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
+                    // Format the obtained information
+                    var hoverItem = targetData.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
 
-                        // Iterate through the location array
-                        self.LocationArray.forEach(function(obj) {
+                    // Iterate through the location array
+                    self.LocationArray.forEach(function(obj) {
 
-                            // Format info from object
-                            var breakName = obj.breakName.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
+                        // Format info from object
+                        var breakName = obj.breakName.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
 
-                            /* Filter locations that match the hovered item.
-                            When a match is found, export it to be displayed
-                            in the location frame */
-                            if (hoverItem.indexOf(breakName) >= 0) {
+                        /* Filter locations that match the hovered item.
+                        When a match is found, export it to be displayed
+                        in the location frame */
+                        if (hoverItem.indexOf(breakName) >= 0) {
 
-                                importInfo(obj);
-                            }
+                            importInfo(obj);
+                        }
 
-                        });
+                    });
 
-                        /* When the mouse is hovering over a location frame
-                        show unique information about that location */
-                        function importInfo(obj) {
+                    /* When the mouse is hovering over a location frame
+                    show unique information about that location */
+                    function importInfo(obj) {
 
-                            img.css('-webkit-filter', 'blur(4px) brightness(80%)' );
-                            location.toggle()
-                            breakName.toggle();
-
-                            /* Display icon associated with the skill level
-                            needed to surf the break */
-                            var skillLevelIcon = displaySkillIcon(obj.skillLevel);
-                            locationFrame.append(skillLevelIcon);
-
-                            /* Display the icon associated with the type of
-                            break it is (i.e. what kind of surface is beneath
-                            it */
-                            var breakIcon = displayBreakIcon(obj.breakDetails);
-                            locationFrame.append(breakIcon);
-
-                            /* Display the icon associated with the direction
-                            the wave breaks */
-                            var directionIcon = displayDirectionIcon(obj.waveDirection);
-                            locationFrame.append(directionIcon);
-
-                            /* Display the icon for the best month in which to
-                            surf at the specific break*/
-                            var bestSeasonIcon = displayBestSeasonIcon(obj.optimalTime);
-                            locationFrame.append(bestSeasonIcon);
-
-                            /* If there is big wave surfing at this break
-                            display big wave icon. If not, display the
-                            suggested swim attire icon for current season */
-                            var miscIconOne = displayBigWaveIcon(obj);
-                            locationFrame.append(miscIconOne);
-
-                            /* If the wave is well known display the well
-                            known icon, otherwise display a random hazard
-                            icon */
-                            var miscIconTwo = displayWellKnownIcon(obj);
-                            locationFrame.append(miscIconTwo);
-
-                            /* Display the budget cost for the location */
-                            var costInfo = displayCost(obj.cost);
-                            locationFrame.append(costInfo);
-
-                            /* Check if current location is available, if it is
-                            render the distance to the hovered over location in
-                            the top right corner of the picture */
-                            if(typeof currentLat !== 'undefined') {
-                                var distanceInfo = displayDistance(obj.lat, obj.lng);
-                                locationFrame.append(distanceInfo);
-                            };
-
-                            // Display average water temp for current season
-                            var waterTempInfo = displayCurrentWaterTemp(obj.avgWaterTemp);
-                            locationFrame.append(waterTempInfo);
-
-                            // Display avg wave height for the break
-                            var waveSizeInfo = displayWaveSize(obj.avgSize);
-                            locationFrame.append(waveSizeInfo);
-                        };
-                    }
-                );
-
-                /* Remove all imported info when the mouse stops hovering */
-                locationFrame.on('mouseleave',
-                    function () {
-                        img.css('-webkit-filter', 'blur(0px) brightness(100%)');
-                        location.toggle();
+                        img.css('-webkit-filter', 'blur(4px) brightness(80%)' );
+                        location.toggle()
                         breakName.toggle();
 
-                        $('.rollover-info').remove();
-                    }
-                );
-            });
+                        /* Display icon associated with the skill level
+                        needed to surf the break */
+                        var skillLevelIcon = displaySkillIcon(obj.skillLevel);
+                        locationFrame.append(skillLevelIcon);
+
+                        /* Display the icon associated with the type of
+                        break it is (i.e. what kind of surface is beneath
+                        it */
+                        var breakIcon = displayBreakIcon(obj.breakDetails);
+                        locationFrame.append(breakIcon);
+
+                        /* Display the icon associated with the direction
+                        the wave breaks */
+                        var directionIcon = displayDirectionIcon(obj.waveDirection);
+                        locationFrame.append(directionIcon);
+
+                        /* Display the icon for the best month in which to
+                        surf at the specific break*/
+                        var bestSeasonIcon = displayBestSeasonIcon(obj.optimalTime);
+                        locationFrame.append(bestSeasonIcon);
+
+                        /* If there is big wave surfing at this break
+                        display big wave icon. If not, display the
+                        suggested swim attire icon for current season */
+                        var miscIconOne = displayBigWaveIcon(obj);
+                        locationFrame.append(miscIconOne);
+
+                        /* If the wave is well known display the well
+                        known icon, otherwise display a random hazard
+                        icon */
+                        var miscIconTwo = displayWellKnownIcon(obj);
+                        locationFrame.append(miscIconTwo);
+
+                        /* Display the budget cost for the location */
+                        var costInfo = displayCost(obj.cost);
+                        locationFrame.append(costInfo);
+
+                        /* Check if current location is available, if it is
+                        render the distance to the hovered over location in
+                        the top right corner of the picture */
+                        if(typeof currentLat !== 'undefined') {
+                            var distanceInfo = displayDistance(obj.lat, obj.lng);
+                            locationFrame.append(distanceInfo);
+                        };
+
+                        // Display average water temp for current season
+                        var waterTempInfo = displayCurrentWaterTemp(obj.avgWaterTemp);
+                        locationFrame.append(waterTempInfo);
+
+                        // Display avg wave height for the break
+                        var waveSizeInfo = displayWaveSize(obj.avgSize);
+                        locationFrame.append(waveSizeInfo);
+                    };
+                }
+            );
+
+            /* Remove all imported info when the mouse stops hovering */
+            locationFrame.on('mouseleave',
+                function () {
+                    img.css('-webkit-filter', 'blur(0px) brightness(100%)');
+                    location.toggle();
+                    breakName.toggle();
+
+                    $('.rollover-info').remove();
+                }
+            );
         });
     };
-
-    // Add hover effects to each location
-    self.addRolloverEffect();
 
     /* Go to specific marker and open the surf guide */
     self.clickLocationFrame = function(obj) {
@@ -1109,7 +1105,7 @@ function AppViewModel () {
             };
         } else {
             if(obj.bigWave) {
-                var icon = '<div class="col-xs-6 col-sm-3 big-wave card">' + '<img src="img/big_wave.svg" class="big-wave-guide">' + '</div>';
+                var icon = '<div class="col-xs-6 col-sm-3 col big-wave card">' + '<img src="img/big_wave.svg" class="big-wave-guide">' + '</div>';
 
                 $surfGuideContainer.append(icon);
 

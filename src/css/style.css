@@ -330,10 +330,22 @@ body {
     font-size: 1.8em;
     color: #D1D1D1;
 }
-
+.wave-size-guide,
 /** Icons **/
-.skill-level-guide, .big-wave-guide, .break-type-guide, .wave-direction-guide, .best-season-guide, .distance-guide {
-    height: 160px;
+
+
+.big-wave-guide,
+.well-known-guide,
+.skill-level-guide,
+.wave-direction-guide,
+.break-type-guide,
+.tide-guide,
+.best-season-guide,
+.climate-guide,
+.cost-guide,
+.distance-guide,
+.hazard-guide {
+    height: 120px;
 }
 
 .wave-size > img:first-child + p {

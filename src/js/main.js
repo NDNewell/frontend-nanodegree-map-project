@@ -1078,7 +1078,6 @@ function AppViewModel () {
 
                     // Pass info to API function and initiate request
                     getMagicSeaweed(obj.spotID, obj.breakName);
-
             }
 
         });
@@ -1449,7 +1448,7 @@ function AppViewModel () {
             }
         };
 
-        if (low === mid && high) {
+        if (low === mid && low === high) {
             var tideIcon = '<div class=" tide card">' + '<img src="/img/tide_all.svg" class="tide-guide">' + '</div>';
         } else if (low >= mid && low >= high) {
               if(low === mid) {
@@ -1721,7 +1720,7 @@ function AppViewModel () {
 
     self.displayClimateIcon = function (obj) {
 
-        var climateIcon = '<div class=" climate card">' + '<img src="img/empty_marquee.svg" class="climate-guide">' + '<p>' + obj  + '</p>' + '</div>';
+        var climateIcon = '<div class="climate card">' + '<p>' + obj  + '</p>' + '</div>';
 
         return climateIcon;
     };
@@ -1817,13 +1816,13 @@ function AppViewModel () {
 
             if(rollover) {
                 // Cache distance element with distance
-                var distance = '<p class="rollover-info distance distance-hover">' + distanceDrive + 'm' + '</p>';
+                var distance = '<p class="rollover-info distance distance-hover">' + distanceDrive + 'mi' + '</p>';
 
                 return distance;
 
             } else {
 
-                var distanceIcon = '<img src="img/distance.svg" class="icon distance-guide">' + '<p class="distance-guide-miles">' + distanceDrive + 'm' +'</p>';
+                var distanceIcon = '<img src="img/distance.svg" class="icon distance-guide">' + '<p class="distance-guide-miles">' + distanceDrive + 'mi' +'</p>';
 
                 return distanceIcon;
             };

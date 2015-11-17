@@ -359,11 +359,11 @@ body {
     margin-top: -115px;
 }
 
-.climate > img:first-child + p {
-    font-size: 4em;
+.climate p {
+    font-size: 2.7em;
     font-weight: bolder;
     font-color: #333333;
-    margin-top: -120px;
+    margin-top: 20px;
 }
 
 .highlight-attire {
@@ -374,40 +374,40 @@ body {
     font-size: 1em;
     font-weight: bolder;
     font-color: #333333;
-    margin-top: -100px;
-    margin-left: -15px;
+    margin-top: -86px;
+    margin-left: -11px;
 }
 
 .cost > img:first-child + p + p{
     font-size: 1em;
     font-weight: bolder;
     font-color: #333333;
-    margin-top: -5px;
-    margin-left: 25px;
+    margin-top: -8px;
+    margin-left: 12px;
 }
 
 .cost > img:first-child + p + p + p {
     font-size: 1em;
     font-weight: bolder;
     font-color: #333333;
-    margin-top: -4px;
-    margin-left: 67px;
+    margin-top: -7.5px;
+    margin-left: 40px;
 }
 
 .distance-guide-hours {
-    font-size: 2em;
+    font-size: 1.8em;
     font-weight: bolder;
     font-color: #333333;
-    margin-top: -60px;
-    margin-right: 65px;
+    margin-top: -40px;
+    margin-right: 40px;
 }
 
 .distance-guide-miles {
-    font-size: 2em;
+    font-size: 1.2em;
     font-weight: bolder;
     font-color: #333333;
-    margin-top: -132px;
-    margin-left: 50px;
+    margin-top: -85px;
+    margin-left: 40px;
 }
 
 

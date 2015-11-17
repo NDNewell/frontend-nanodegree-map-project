@@ -1061,6 +1061,8 @@ function AppViewModel () {
                 // Change icon-frame size to accomodate live info
                 $('.icon-frame').addClass('col-sm-6 sm-icon-frame');
 
+                $('.icon-container').addClass('md-icon-container');
+
                 $('.live-surf-conditions').toggle();
 
                 // Hide the surf conditions button
@@ -2264,6 +2266,9 @@ function AppViewModel () {
                 // Change icon-frame size to accomodate compass container
                 $('.icon-frame').addClass('col-sm-6 sm-icon-frame');
 
+                // Move icon container left
+                $('.icon-container').addClass('md-icon-container');
+
                 // Add container to hold live conditions
                 $surfGuideTitleContainer.after(liveConditionsElem);
 
@@ -2360,6 +2365,7 @@ function AppViewModel () {
                 var $liveSurfConditions = $('.live-surf-conditions');
                 var $showConditionsButton = $('.conditions-button');
                 var $iconFrame = $('.icon-frame');
+                var $iconContainer = $('.icon-container');
 
                 /* When the surf conditions button is clicked the surf
                 conditions window is closed */
@@ -2367,6 +2373,10 @@ function AppViewModel () {
 
                     // Change icon-frame size to account for compass absence
                     $iconFrame.removeClass('col-sm-6 sm-icon-frame');
+
+                    // Change icon-frame size to account for compass absence
+                    $iconContainer.removeClass('md-icon-container');
+
 
                     // Hide the live surf conditions
                     $liveSurfConditions.toggle();

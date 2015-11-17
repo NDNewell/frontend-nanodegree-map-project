@@ -1645,13 +1645,13 @@ function AppViewModel () {
             var currentSeason = getCurrentSeason();
 
             if(currentSeason === 'winter') {
-                $('#winter').addClass("highlight-attire");
+                $('.winter').addClass("highlight-attire");
             } else if (currentSeason === 'spring') {
-                $('#spring').addClass("highlight-attire");
+                $('.spring').addClass("highlight-attire");
             } else if (currentSeason === 'winter') {
-                $('#summer').addClass("highlight-attire");
+                $('.summer').addClass("highlight-attire");
             } else if (currentSeason === 'autumn') {
-                $('#autumn').addClass("highlight-attire");
+                $('.autumn').addClass("highlight-attire");
             };
 
         } else {

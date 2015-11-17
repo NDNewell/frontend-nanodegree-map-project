@@ -227,9 +227,12 @@ body {
 
 .card {
     height: 100px;
+    width: 100px;
     padding: 0px 0px;
-    border: 1px;
-    border-style: dashed;
+    margin: 1px 1px;
+    border: 2px;
+    border-radius: 20px;
+    border-style: solid;
     border-color: #E8E8E8;
     text-align: center;
 }
@@ -367,7 +370,9 @@ body {
 }
 
 .highlight-attire {
-    box-shadow: 0px 0px 20px #00B8E6;
+    border-color: #00B8E6;
+    border-style: solid;
+    border-width: 2px;
 }
 
 .cost > img:first-child + p {
@@ -574,8 +579,12 @@ body {
         font-size: .7em;
     }
 
+    .icon-frame {
+
+    }
+
     .xs-icon-container {
-        width: 302px;
+        width: 306px;
         height: 605px;
     }
 
@@ -589,7 +598,7 @@ body {
 
 @media (min-width: 768px) {
     .sm-icon-container {
-        width: 402px;
+        width: 422px;
         height: 605px;
     }
 }

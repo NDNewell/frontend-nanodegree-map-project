@@ -2131,6 +2131,9 @@ pre code {
   .col-lg-1 {
     width: 8.33333333%;
   }
+  .col-lg-misc {
+    width: 12.5%;
+  }
   .col-lg-pull-12 {
     right: 100%;
   }

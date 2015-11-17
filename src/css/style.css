@@ -220,9 +220,14 @@ body {
     left: 17px;
 }
 
+.icon-container {
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .card {
-    height: 183px;
-    padding: 10px 10px;
+    height: 100px;
+    padding: 0px 0px;
     border: 1px;
     border-style: dashed;
     border-color: #E8E8E8;
@@ -330,10 +335,9 @@ body {
     font-size: 1.8em;
     color: #D1D1D1;
 }
-.wave-size-guide,
+
 /** Icons **/
-
-
+.wave-size-guide,
 .big-wave-guide,
 .well-known-guide,
 .skill-level-guide,
@@ -345,7 +349,7 @@ body {
 .cost-guide,
 .distance-guide,
 .hazard-guide {
-    height: 120px;
+    height: 100px;
 }
 
 .wave-size > img:first-child + p {
@@ -362,35 +366,31 @@ body {
     margin-top: -120px;
 }
 
-.water-temp > canvas:first-child {
-    border-radius: 19px;
-}
-
 .highlight-attire {
     box-shadow: 0px 0px 20px #00B8E6;
 }
 
 .cost > img:first-child + p {
-    font-size: 2em;
+    font-size: 1em;
     font-weight: bolder;
     font-color: #333333;
-    margin-top: -141px;
+    margin-top: -100px;
     margin-left: -15px;
 }
 
 .cost > img:first-child + p + p{
-    font-size: 2em;
+    font-size: 1em;
     font-weight: bolder;
     font-color: #333333;
-    margin-top: -15px;
+    margin-top: -5px;
     margin-left: 25px;
 }
 
 .cost > img:first-child + p + p + p {
-    font-size: 2em;
+    font-size: 1em;
     font-weight: bolder;
     font-color: #333333;
-    margin-top: -14px;
+    margin-top: -4px;
     margin-left: 67px;
 }
 
@@ -574,6 +574,30 @@ body {
         font-size: .7em;
     }
 
+    .xs-icon-container {
+        width: 302px;
+        height: 605px;
+    }
+
+}
+
+@media (min-width: 560px) and (max-width: 767px) {
+      .col-xs-sm-misc {
+        width: 25%;
+      }
+}
+
+@media (min-width: 768px) {
+    .sm-icon-container {
+        width: 402px;
+        height: 605px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .sm-icon-frame {
+        padding-left: 80px;
+    }
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
@@ -651,5 +675,9 @@ body {
 
     .wave-size-hover {
         left: 23px;
+    }
+
+    .col-lg-misc {
+        width: 12.5%;
     }
 }

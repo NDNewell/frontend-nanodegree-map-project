@@ -960,55 +960,65 @@ function AppViewModel () {
         var guideTitle = displayTitle(obj.breakName, obj.location);
         $surfGuideContainer.append(guideTitle);
 
+        // Create a frame to hold the icon container
+        $surfGuideContainer.append('<div class="col-xs-12 icon-frame"></div>');
+
+        var $iconFrame = $('.icon-frame');
+
+        // Create a container to hold all icons
+        $iconFrame.append('<div class="xs-icon-container sm-icon-container icon-container"></div>');
+
+        var $iconContainer = $('.icon-container');
+
         // Check if break has big waves and render
-        displayBigWaveIcon(obj, $surfGuideContainer);
+        displayBigWaveIcon(obj, $iconContainer);
 
         // Check if break is well known and render
-        displayWellKnownIcon(obj, $surfGuideContainer);
+        displayWellKnownIcon(obj, $iconContainer);
 
         /* Display icon associated with the skill level
         needed to surf the break */
         var skillLevelIcon = displaySkillIcon(obj.skillLevel);
-        $surfGuideContainer.append(skillLevelIcon);
+        $iconContainer.append(skillLevelIcon);
 
         /* Display the icon associated with the direction
         the wave breaks */
         var directionIcon = displayDirectionIcon(obj.waveDirection);
-        $surfGuideContainer.append(directionIcon);
+        $iconContainer.append(directionIcon);
 
         // Display the icon for the break details
         var breakIcon = displayBreakIcon(obj.breakDetails);
-        $surfGuideContainer.append(breakIcon);
+        $iconContainer.append(breakIcon);
 
         // Display the icon for the average wave height
         displayWaveSize(obj.avgSize);
 
         // Set canvas size for guide compass and suggested attire icons
-        var canvasWidth = 120;
-        var canvasHeight = 120;
+        var canvasWidth = 100;
+        var canvasHeight = 100;
 
         // Render optimal swell compass
-        displayCompassIcon(obj.optimalSwell, obj.optimalWind, $surfGuideContainer, canvasWidth, canvasHeight);
+        displayCompassIcon(obj.optimalSwell, obj.optimalWind, $iconContainer, canvasWidth, canvasHeight);
 
         // Display icon associated with the optimal tide
         var tideIcon = displayTideIcon(obj.optimalTide);
-        $surfGuideContainer.append(tideIcon);
+        $iconContainer.append(tideIcon);
 
         // Display icon associated with the season with the best conditions
         var bestSeasonIcon = displayBestSeasonIcon(obj.optimalTime);
-        $surfGuideContainer.append(bestSeasonIcon);
+        $iconContainer.append(bestSeasonIcon);
 
         /* Display icon associated for the suggested water attire for each
         season */
-        displaySuggestedAttireIcons(obj.avgWaterTemp, canvasWidth, canvasHeight);
+        displaySuggestedAttireIcons(obj.avgWaterTemp, canvasWidth, canvasHeight, $iconContainer);
 
         // Display icon associated for the break's climate
         var climateIcon = displayClimateIcon(obj.climate);
-        $surfGuideContainer.append(climateIcon);
+        $iconContainer.append(climateIcon);
 
         // Display the icon associcated with average local costs
-        var costIcon = displayCost(obj.cost);
-        $surfGuideContainer.append(costIcon);
+        var costIcon = displayCost(obj.cost, $iconContainer);
+        $iconContainer.append(costIcon);
 
         /* Check if current location is available, if it is
         render the distance icon in the surf guide */
@@ -1016,11 +1026,11 @@ function AppViewModel () {
 
             var distanceIcon = displayDistance(obj.lat, obj.lng);
 
-            $surfGuideContainer.append('<div class=" distance card">' + distanceIcon + '</div>');
+            $iconContainer.append('<div class=" distance card">' + distanceIcon + '</div>');
         };
 
         // Display an icon for each hazard one might encounter at the break
-        displayHazardIcons(obj.hazards);
+        displayHazardIcons(obj.hazards, $iconContainer);
 
         // Add class to newly created divs
         $('.card').addClass('col-xs-4 col-sm-3');
@@ -1046,9 +1056,12 @@ function AppViewModel () {
 
             /* If surf conditions for a particular location have already
             been displayed, simply make visible again */
-            if ($('.surf-conditions').is(":hidden")) {
+            if ($('.live-surf-conditions').is(":hidden")) {
 
-                $('.surf-conditions').toggle();
+                // Change icon-frame size to accomodate live info
+                $('.icon-frame').addClass('col-sm-6 sm-icon-frame');
+
+                $('.live-surf-conditions').toggle();
 
                 // Hide the surf conditions button
                 $('.conditions-button').toggle();
@@ -1102,7 +1115,7 @@ function AppViewModel () {
         return guideTitle;
     };
 
-    self.displayBigWaveIcon = function (obj, $surfGuideContainer) {
+    self.displayBigWaveIcon = function (obj, $iconContainer) {
 
         if(rollover) {
             if(obj.bigWave) {
@@ -1114,7 +1127,7 @@ function AppViewModel () {
             if(obj.bigWave) {
                 var icon = '<div class=" big-wave card">' + '<img src="img/big_wave.svg" class="big-wave-guide">' + '</div>';
 
-                $surfGuideContainer.append(icon);
+                $iconContainer.append(icon);
 
             } else {
 
@@ -1126,20 +1139,20 @@ function AppViewModel () {
 
     };
 
-    self.displayWellKnownIcon = function (obj, $surfGuideContainer) {
+    self.displayWellKnownIcon = function (obj, $iconContainer) {
 
         if(rollover) {
             if(obj.wellKnown) {
                 var icon = images.roIconMiscTwoWellknown;
 
             } else {
-                var icon = displayHazardIcons(obj.hazards);
+                var icon = displayHazardIcons(obj.hazards, $iconContainer);
             };
         } else {
             if(obj.wellKnown) {
                 var icon = '<div class=" well-known card">' + '<img src="img/well_known.svg" class="well-known-guide">' + '</div>';
 
-                $surfGuideContainer.append(icon);
+                $iconContainer.append(icon);
 
             } else {
 
@@ -1288,7 +1301,7 @@ function AppViewModel () {
         return breakIcon;
     };
 
-    self.displayCompassIcon = function (objSwell, objWind, $surfGuideContainer, canvasWidth, canvasHeight) {
+    self.displayCompassIcon = function (objSwell, objWind, $iconContainer, canvasWidth, canvasHeight) {
 
       if(objSwell) {
         var swell = true;
@@ -1301,7 +1314,7 @@ function AppViewModel () {
               swell = false;
               drawBackground = true;
 
-              $surfGuideContainer.append('<div class=" small-compass-guide card"><canvas id="compass-small" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas></div>');
+              $iconContainer.append('<div class=" small-compass-guide card"><canvas id="compass-small" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas></div>');
 
               var elementPointer = images.swellPointer;
               var img = images.smallCompass;
@@ -1582,16 +1595,16 @@ function AppViewModel () {
         return bestSeasonIcon;
     };
 
-    self.displaySuggestedAttireIcons = function (obj, canvasWidth, canvasHeight) {
+    self.displaySuggestedAttireIcons = function (obj, canvasWidth, canvasHeight, $iconContainer) {
 
         if(!rollover) {
-            $surfGuideContainer.append('<div class=" water-temp spring card">' + '<canvas id="spring" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas>');
+            $iconContainer.append('<div class=" water-temp spring card">' + '<canvas id="spring" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas>');
 
-            $surfGuideContainer.append('<div class=" water-temp summer card">' + '<canvas id="summer" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas>');
+            $iconContainer.append('<div class=" water-temp summer card">' + '<canvas id="summer" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas>');
 
-            $surfGuideContainer.append('<div class=" water-temp autumn card">' + '<canvas id="autumn" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas>');
+            $iconContainer.append('<div class=" water-temp autumn card">' + '<canvas id="autumn" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas>');
 
-            $surfGuideContainer.append('<div class=" water-temp winter card">' + '<canvas id="winter" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas>');
+            $iconContainer.append('<div class=" water-temp winter card">' + '<canvas id="winter" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas>');
 
             var season = 0;
             /* Loop through the average water temps for each time of year. Designate specific water attire for each time of year */
@@ -1713,7 +1726,7 @@ function AppViewModel () {
         return climateIcon;
     };
 
-    self.displayCost = function (obj) {
+    self.displayCost = function (obj, $iconContainer) {
 
       if(rollover) {
 
@@ -1723,7 +1736,7 @@ function AppViewModel () {
 
           var midRange = Math.floor((obj.highEnd - obj.budget)/2 + obj.budget);
 
-          var costInfo = $surfGuideContainer.append('<div class="cost card">' + '<img src="img/cost.svg" class="cost-guide">' + '<p>' + obj.budget + '</p>' + '<p>' + midRange + '</p>' + '<p>' + obj.highEnd +'</p>' + '</div>');
+          var costInfo = $iconContainer.append('<div class="cost card">' + '<img src="img/cost.svg" class="cost-guide">' + '<p>' + obj.budget + '</p>' + '<p>' + midRange + '</p>' + '<p>' + obj.highEnd +'</p>' + '</div>');
       };
 
       return costInfo;
@@ -1902,7 +1915,7 @@ function AppViewModel () {
         return currentSeason;
     };
 
-    self.displayHazardIcons = function (obj) {
+    self.displayHazardIcons = function (obj, $iconContainer) {
 
         if(rollover) {
             /* Generate a number between min and max to
@@ -1923,19 +1936,19 @@ function AppViewModel () {
             var hazardsLength = obj.length;
 
             for (var i = hazardsLength; i--;) {
-                hazards(obj[i]);
+                hazards(obj[i], $iconContainer);
             }
 
         };
 
-        function hazards (hazard) {
+        function hazards (hazard, $iconContainer) {
             switch (hazard) {
 
                 case 'beginners':
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoBeginners;
                     } else {
-                        $surfGuideContainer.append('<div class=" hazard card">' + '<img src="img/hazards_beginners.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_beginners.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -1943,7 +1956,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoBoats;
                     } else {
-                        $surfGuideContainer.append('<div class=" hazard card">' + '<img src="img/hazards_boats.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_boats.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -1951,7 +1964,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoCrocs;
                     } else {
-                        $surfGuideContainer.append('<div class=" hazard card">' + '<img src="img/hazards_crocs.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_crocs.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -1959,7 +1972,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoCrowded;
                     } else {
-                        $surfGuideContainer.append('<div class=" hazard card">' + '<img src="img/hazards_crowded.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_crowded.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -1967,7 +1980,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoDgrBreak;
                     } else {
-                        $surfGuideContainer.append('<div class=" hazard card">' + '<img src="img/hazards_dangerous_break.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_dangerous_break.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -1975,7 +1988,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoFar;
                     } else {
-                        $surfGuideContainer.append('<div class=" hazard card">' + '<img src="img/hazards_far_from_shore.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_far_from_shore.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -1983,7 +1996,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoPollution;
                     } else {
-                        $surfGuideContainer.append('<div class=" hazard card">' + '<img src="img/hazards_pollution.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_pollution.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -1991,7 +2004,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoRocky;
                     } else {
-                        $surfGuideContainer.append('<div class=" hazard card">' + '<img src="img/hazards_rocky_bottom.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_rocky_bottom.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -1999,7 +2012,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoSnakes;
                     } else {
-                        $surfGuideContainer.append('<div class=" hazard card">' + '<img src="img/hazards_sea_snakes.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_sea_snakes.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -2007,7 +2020,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoSeals;
                     } else {
-                        $surfGuideContainer.append('<div class=" hazard card">' + '<img src="img/hazards_seals.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_seals.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -2015,7 +2028,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoSeaweed;
                     } else {
-                        $surfGuideContainer.append('<div class=" hazard card">' + '<img src="img/hazards_seaweed.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_seaweed.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -2023,7 +2036,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoSewage;
                     } else {
-                        $surfGuideContainer.append('<div class=" hazard card">' + '<img src="img/hazards_sewage.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_sewage.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -2031,7 +2044,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoShallow;
                     } else {
-                        $surfGuideContainer.append('<div class=" hazard card">' + '<img src="img/hazards_shallow.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_shallow.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -2039,7 +2052,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoSharks;
                     } else {
-                        $surfGuideContainer.append('<div class=" hazard card">' + '<img src="img/hazards_sharks.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_sharks.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -2047,7 +2060,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoStrCurrent;
                     } else {
-                        $surfGuideContainer.append('<div class=" hazard card">' + '<img src="img/hazards_strong_currents.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_strong_currents.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -2055,7 +2068,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoStrRips;
                     } else {
-                        $surfGuideContainer.append('<div class=" hazard card">' + '<img src="img/hazards_strong_rips.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_strong_rips.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -2063,7 +2076,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoTheft;
                     } else {
-                        $surfGuideContainer.append('<div class=" hazard card">' + '<img src="img/hazards_theft.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_theft.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -2071,7 +2084,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoUndertow;
                     } else {
-                        $surfGuideContainer.append('<div class=" hazard card">' + '<img src="img/hazards_undertow.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_undertow.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -2079,7 +2092,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoUnfriendly;
                     } else {
-                        $surfGuideContainer.append('<div class=" hazard card">' + '<img src="img/hazards_unfriendly.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_unfriendly.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -2087,7 +2100,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoUrchins;
                     } else {
-                        $surfGuideContainer.append('<div class=" hazard card">' + '<img src="img/hazards_urchins.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_urchins.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -2244,10 +2257,13 @@ function AppViewModel () {
                 /* Render containers to hold the compass and live conditions
                 containers */
                 var liveConditionsElem = '<div class="col-xs-12 surf-conditions-container live-surf-conditions"></div>';
-                var compassContainer = '<div class="col-xs-12 col-sm-6 live-surf-conditions live-compass"><canvas id="compass" width="300" height="300"></canvas></div>';
+                var compassContainer = '<div class="col-xs-12 col-sm-4 col-md-6 live-surf-conditions live-compass"><canvas id="compass" width="300" height="300"></canvas></div>';
 
                 // Add compass container
                 $surfGuideTitleContainer.after(compassContainer);
+
+                // Change icon-frame size to accomodate compass container
+                $('.icon-frame').addClass('col-sm-6 sm-icon-frame');
 
                 // Add container to hold live conditions
                 $surfGuideTitleContainer.after(liveConditionsElem);
@@ -2344,10 +2360,14 @@ function AppViewModel () {
                 var $closeConditionsButton = $('.conditions-close-button');
                 var $liveSurfConditions = $('.live-surf-conditions');
                 var $showConditionsButton = $('.conditions-button');
+                var $iconFrame = $('.icon-frame');
 
                 /* When the surf conditions button is clicked the surf
                 conditions window is closed */
                 $closeConditionsButton.on('click', function(e) {
+
+                    // Change icon-frame size to account for compass absence
+                    $iconFrame.removeClass('col-sm-6 sm-icon-frame');
 
                     // Hide the live surf conditions
                     $liveSurfConditions.toggle();

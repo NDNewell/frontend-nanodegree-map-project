@@ -447,6 +447,14 @@ var images = {};
 
 $(document).ready(function() {
 
+    // Load tooltips
+    $('[title]').tooltip({
+        show: true,
+        hide: 'fade'
+    });
+
+
+    // Load images
     var numImages = 0;
     var loadedImages = 0;
 
@@ -499,8 +507,8 @@ $(document).ready(function() {
     var guideIcons =
         { attireSpring: 'img/water_temp_spring.svg',
           attireSummer: 'img/water_temp_summer.svg',
-          attireAutumn: 'img/water_temp_winter.svg',
-          attireWinter: 'img/water_temp_autumn.svg',
+          attireAutumn: 'img/water_temp_autumn.svg',
+          attireWinter: 'img/water_temp_winter.svg',
           attireBoardies: 'img/water_attire_boardies.svg',
           attireWetsuitTwo: 'img/water_attire_2mm_wetsuit.svg',
           attireWetsuitThree: 'img/water_attire_3mm_wetsuit.svg',
@@ -991,7 +999,8 @@ function AppViewModel () {
         $iconContainer.append(breakIcon);
 
         // Display the icon for the average wave height
-        displayWaveSize(obj.avgSize);
+        var waveSizeIcon = displayWaveSize(obj.avgSize);
+        $iconContainer.append(waveSizeIcon);
 
         // Set canvas size for guide compass and suggested attire icons
         var canvasWidth = 100;
@@ -1126,7 +1135,7 @@ function AppViewModel () {
             };
         } else {
             if(obj.bigWave) {
-                var icon = '<div class=" big-wave card">' + '<img src="img/big_wave.svg" class="big-wave-guide">' + '</div>';
+                var icon = '<div class=" big-wave card">' + '<img src="img/big_wave.svg" class="big-wave-guide" title="Big Wave Surfing">' + '</div>';
 
                 $iconContainer.append(icon);
 
@@ -1151,7 +1160,7 @@ function AppViewModel () {
             };
         } else {
             if(obj.wellKnown) {
-                var icon = '<div class=" well-known card">' + '<img src="img/well_known.svg" class="well-known-guide">' + '</div>';
+                var icon = '<div class=" well-known card">' + '<img src="img/well_known.svg" class="well-known-guide" title="Well Known Wave">' + '</div>';
 
                 $iconContainer.append(icon);
 
@@ -1192,20 +1201,20 @@ function AppViewModel () {
             if(rollover){
                 var skillLevelIcon = images.roIconSkillAll;
             } else {
-                var skillLevelIcon = '<div class=" skill-level card">' + '<img src="/img/skill_level_all.svg" class=" skill-level-guide">' + '</div>';
+                var skillLevelIcon = '<div class=" skill-level card">' + '<img src="/img/skill_level_all.svg" class="skill-level-guide" title="Difficulty: All levels">' + '</div>';
             };
         } else if (beginner >= intermediate && beginner > advanced) {
             if(beginner === intermediate) {
                 if(rollover){
                     var skillLevelIcon = images.roIconSkillBegInt;
                 } else {
-                    var skillLevelIcon = '<div class=" skill-level card">' + '<img src="/img/skill_level_beginner_intermediate.svg" class=" skill-level-guide">' + '</div>';
+                    var skillLevelIcon = '<div class="skill-level card">' + '<img src="/img/skill_level_beginner_intermediate.svg" class=" skill-level-guide" title="Difficulty: Beginner to Intermediate">' + '</div>';
                 };
             } else {
                 if(rollover){
                     var skillLevelIcon = images.roIconSkillBeg;
                 } else {
-                    var skillLevelIcon = '<div class=" skill-level card">' + '<img src="/img/skill_level_beginner.svg" class=" skill-level-guide">' + '</div>';
+                    var skillLevelIcon = '<div class="skill-level card">' + '<img src="/img/skill_level_beginner.svg" class=" skill-level-guide" title="Difficulty: Beginner">' + '</div>';
                 };
             };
         } else if (intermediate > beginner && intermediate >= advanced) {
@@ -1213,20 +1222,20 @@ function AppViewModel () {
                 if(rollover){
                     var skillLevelIcon = images.roIconSkillIntAdv;
                 } else {
-                    var skillLevelIcon = '<div class=" skill-level card">' + '<img src="/img/skill_level_intermediate_advanced.svg" class=" skill-level-guide">' + '</div>';
+                    var skillLevelIcon = '<div class=" skill-level card">' + '<img src="/img/skill_level_intermediate_advanced.svg" class=" skill-level-guide" title="Difficulty: Intermediate to Advanced">' + '</div>';
                 };
             } else {
                 if(rollover){
                     var skillLevelIcon = images.roIconSkillInt;
                 } else {
-                    var skillLevelIcon = '<div class=" skill-level card">' + '<img src="/img/skill_level_intermediate.svg" class=" skill-level-guide">' + '</div>';
+                    var skillLevelIcon = '<div class=" skill-level card">' + '<img src="/img/skill_level_intermediate.svg" class=" skill-level-guide" title="Difficulty: Intermediate">' + '</div>';
                 };
             };
         } else {
             if(rollover){
                 var skillLevelIcon = images.roIconSkillAdv;
             } else {
-                var skillLevelIcon = '<div class=" skill-level card">' + '<img src="/img/skill_level_advanced.svg" class=" skill-level-guide">' + '</div>';
+                var skillLevelIcon = '<div class=" skill-level card">' + '<img src="/img/skill_level_advanced.svg" class=" skill-level-guide" title="Difficulty: Advanced">' + '</div>';
             };
         };
 
@@ -1240,7 +1249,7 @@ function AppViewModel () {
               if(rollover) {
                   var directionIcon = images.roIconDirectionLeft;
               } else {
-                  var directionIcon = '<div class=" direction card">' + '<img src="/img/direction_left.svg" class="wave-direction-guide">' + '</div>';
+                  var directionIcon = '<div class=" direction card">' + '<img src="/img/direction_left.svg" class="wave-direction-guide" title="Wave Direction: Left">' + '</div>';
               };
           break;
 
@@ -1248,7 +1257,7 @@ function AppViewModel () {
               if(rollover) {
                   var directionIcon = images.roIconDirectionRight;
               } else {
-                  var directionIcon = '<div class=" direction card">' + '<img src="/img/direction_right.svg" class="wave-direction-guide">' + '</div>';
+                  var directionIcon = '<div class=" direction card">' + '<img src="/img/direction_right.svg" class="wave-direction-guide" title="Wave Direction: Right">' + '</div>';
               };
           break;
 
@@ -1256,7 +1265,7 @@ function AppViewModel () {
               if(rollover) {
                   var directionIcon = images.roIconDirectionBoth;
               } else {
-                  var directionIcon = '<div class=" direction card">' + '<img src="/img/direction_both.svg" class="wave-direction-guide">' + '</div>';
+                  var directionIcon = '<div class=" direction card">' + '<img src="/img/direction_both.svg" class="wave-direction-guide" title="Wave Direction: Left & Right">' + '</div>';
               };
           break;
         }
@@ -1270,7 +1279,7 @@ function AppViewModel () {
               if(rollover) {
                   var breakIcon = images.roIconBreakReef;
               } else {
-                  var breakIcon = '<div class=" break card">' + '<img src="/img/break_reef.svg" class="break-type-guide">' + '</div>';
+                  var breakIcon = '<div class=" break card">' + '<img src="/img/break_reef.svg" class="break-type-guide" title="Break Type: Reef">' + '</div>';
               };
           break;
 
@@ -1278,7 +1287,7 @@ function AppViewModel () {
               if(rollover) {
                   var breakIcon = images.roIconBreakBeach;
               } else {
-                  var breakIcon = '<div class=" break card">' + '<img src="/img/break_beach.svg" class="break-type-guide">' + '</div>';
+                  var breakIcon = '<div class=" break card">' + '<img src="/img/break_beach.svg" class="break-type-guide" title="Break Type: Beach">' + '</div>';
               };
           break;
 
@@ -1286,7 +1295,7 @@ function AppViewModel () {
               if(rollover) {
                   var breakIcon = images.roIconBreakPoint;
               } else {
-                  var breakIcon = '<div class=" break card">' + '<img src="/img/break_point.svg" class="break-type-guide">' + '</div>';
+                  var breakIcon = '<div class=" break card">' + '<img src="/img/break_point.svg" class="break-type-guide" title="Break Type: Point">' + '</div>';
               };
           break;
 
@@ -1294,7 +1303,7 @@ function AppViewModel () {
               if(rollover) {
                   var breakIcon = images.roIconBreakRiver;
               } else {
-                  var breakIcon = '<div class=" break card">' + '<img src="/img/break_river_mouth.svg" class="break-type-guide">' + '</div>';
+                  var breakIcon = '<div class=" break card">' + '<img src="/img/break_river_mouth.svg" class="break-type-guide" title="Break Type: River Mouth">' + '</div>';
               };
           break;
         }
@@ -1315,7 +1324,7 @@ function AppViewModel () {
               swell = false;
               drawBackground = true;
 
-              $iconContainer.append('<div class=" small-compass-guide card"><canvas id="compass-small" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas></div>');
+              $iconContainer.append('<div class=" small-compass-guide card" title="Best Swell & Best Wind"><canvas id="compass-small" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas></div>');
 
               var elementPointer = images.swellPointer;
               var img = images.smallCompass;
@@ -1451,23 +1460,23 @@ function AppViewModel () {
         };
 
         if (low === mid && low === high) {
-            var tideIcon = '<div class=" tide card">' + '<img src="/img/tide_all.svg" class="tide-guide">' + '</div>';
+            var tideIcon = '<div class=" tide card">' + '<img src="/img/tide_all.svg" class="tide-guide" title="Best Tide: All">' + '</div>';
         } else if (low >= mid && low >= high) {
               if(low === mid) {
-                  var tideIcon = '<div class=" tide card">' + '<img src="/img/tide_low_mid.svg" class="tide-guide">' + '</div>';
+                  var tideIcon = '<div class=" tide card">' + '<img src="/img/tide_low_mid.svg" class="tide-guide" title="Best Tide: Low & Mid">' + '</div>';
               } else if (low === high) {
-                  var tideIcon = '<div class=" tide card">' + '<img src="/img/tide_low_high.svg" class="tide-guide">' + '</div>';;
+                  var tideIcon = '<div class=" tide card">' + '<img src="/img/tide_low_high.svg" class="tide-guide" title="Best Tide: Low & High">' + '</div>';;
               } else {
-                  var tideIcon = '<div class=" tide card">' + '<img src="/img/tide_low.svg" class="tide-guide">' + '</div>';
+                  var tideIcon = '<div class=" tide card">' + '<img src="/img/tide_low.svg" class="tide-guide" title="Best Tide: Low">' + '</div>';
               };
         } else if (mid > low && mid >= high) {
               if(mid === high) {
-                  var tideIcon = '<div class=" tide card">' + '<img src="/img/tide_high_mid.svg" class="tide-guide">' + '</div>';
+                  var tideIcon = '<div class=" tide card">' + '<img src="/img/tide_high_mid.svg" class="tide-guide" title="Best Tide: Mid & High">' + '</div>';
               } else {
-                  var tideIcon = '<div class=" tide card">' + '<img src="/img/tide_mid.svg" class="tide-guide">' + '</div>';
+                  var tideIcon = '<div class=" tide card">' + '<img src="/img/tide_mid.svg" class="tide-guide" title="Best Tide: Mid">' + '</div>';
               };
         } else {
-            var tideIcon = '<div class=" tide card">' + '<img src="/img/tide_high.svg" class="tide-guide">' + '</div>';
+            var tideIcon = '<div class=" tide card">' + '<img src="/img/tide_high.svg" class="tide-guide" title="Best Tide: High">' + '</div>';
         };
 
         return tideIcon;
@@ -1523,32 +1532,32 @@ function AppViewModel () {
             if(rollover) {
                 var bestSeasonIcon = images.roIconBestSeasonAll;
             } else {
-                var bestSeasonIcon = '<div class=" time card">' + '<img src="/img/season_all.svg" class="best-season-guide">' + '</div>';
+                var bestSeasonIcon = '<div class=" time card">' + '<img src="/img/season_all.svg" class="best-season-guide" title="Best Season: All">' + '</div>';
             };
         } else if(winter >= spring && winter >= summer && winter >= autumn) {
               if(winter === spring) {
                   if(rollover) {
                       var bestSeasonIcon = images.roIconBestSeasonWinSpr;
                   } else {
-                      var bestSeasonIcon = '<div class=" time card">' + '<img src="/img/season_winter_spring.svg" class="best-season-guide">' + '</div>';
+                      var bestSeasonIcon = '<div class=" time card">' + '<img src="/img/season_winter_spring.svg" class="best-season-guide" title="Winter & Spring">' + '</div>';
                   };
               } else if (winter === summer) {
                   if(rollover) {
                       var bestSeasonIcon = images.roIconBestSeasonWinSum;
                   } else {
-                      var bestSeasonIcon = '<div class=" time card">' + '<img src="/img/season_winter_summer.svg" class="best-season-guide">' + '</div>';
+                      var bestSeasonIcon = '<div class=" time card">' + '<img src="/img/season_winter_summer.svg" class="best-season-guide" title="Best Season: Winter & Summer">' + '</div>';
                   };
               } else if (winter === autumn) {
                   if(rollover) {
                       var bestSeasonIcon = images.roIconBestSeasonWinAut;
                   } else {
-                      var bestSeasonIcon = '<div class=" time card">' + '<img src="/img/season_winter_autumn.svg" class="best-season-guide">' + '</div>';
+                      var bestSeasonIcon = '<div class=" time card">' + '<img src="/img/season_winter_autumn.svg" class="best-season-guide" title="Best Season: Winter & Autumn">' + '</div>';
                   };
               } else {
                   if(rollover) {
                       var bestSeasonIcon = images.roIconBestSeasonWin;
                   } else {
-                      var bestSeasonIcon = '<div class=" time card">' + '<img src="/img/season_winter.svg" class="best-season-guide">' + '</div>';
+                      var bestSeasonIcon = '<div class=" time card">' + '<img src="/img/season_winter.svg" class="best-season-guide" title="Best Season: Winter">' + '</div>';
                   };
               };
         } else if (spring >= summer && spring >= autumn && spring > winter) {
@@ -1556,19 +1565,19 @@ function AppViewModel () {
                   if(rollover) {
                       var bestSeasonIcon = images.roIconBestSeasonSpgSum;
                   } else {
-                      var bestSeasonIcon = '<div class=" time card">' + '<img src="/img/season_spring_summer.svg" class="best-season-guide">' + '</div>';
+                      var bestSeasonIcon = '<div class=" time card">' + '<img src="/img/season_spring_summer.svg" class="best-season-guide" title="Best Season: Spring & Summer">' + '</div>';
                   };
               } else if (spring === autumn) {
                   if(rollover) {
                       var bestSeasonIcon = images.roIconBestSeasonSpgAut;
                   } else {
-                      var bestSeasonIcon = '<div class=" time card">' + '<img src="/img/season_spring_autumn.svg" class="best-season-guide">' + '</div>';
+                      var bestSeasonIcon = '<div class=" time card">' + '<img src="/img/season_spring_autumn.svg" class="best-season-guide" title="Best Season: Spring & Autumn">' + '</div>';
                   };
               } else {
                   if(rollover) {
                       var bestSeasonIcon = images.roIconBestSeasonSpg;
                   } else {
-                      var bestSeasonIcon = '<div class=" time card">' + '<img src="/img/season_spring.svg" class="best-season-guide">' + '</div>';
+                      var bestSeasonIcon = '<div class=" time card">' + '<img src="/img/season_spring.svg" class="best-season-guide" title="Best Season: Spring">' + '</div>';
                   };
               };
         } else if (summer >= autumn && summer > winter && summer > spring) {
@@ -1576,20 +1585,20 @@ function AppViewModel () {
                   if(rollover) {
                       var bestSeasonIcon = images.roIconBestSeasonSumAut;
                   } else {
-                      var bestSeasonIcon = '<div class=" time card">' + '<img src="/img/season_summer_autumn.svg" class="best-season-guide">' + '</div>';
+                      var bestSeasonIcon = '<div class=" time card">' + '<img src="/img/season_summer_autumn.svg" class="best-season-guide" title="Best Season: Summer & Autumn">' + '</div>';
                   };
               } else {
                   if(rollover) {
                       var bestSeasonIcon = images.roIconBestSeasonSum;
                   } else {
-                      var bestSeasonIcon = '<div class=" time card">' + '<img src="/img/season_summer.svg" class="best-season-guide">' + '</div>';
+                      var bestSeasonIcon = '<div class=" time card">' + '<img src="/img/season_summer.svg" class="best-season-guide" title="Best Season: Summer">' + '</div>';
                   };
               };
         } else {
                   if(rollover) {
                       var bestSeasonIcon = images.roIconBestSeasonAut;
                   } else {
-                      var bestSeasonIcon = '<div class=" time card">' + '<img src="/img/season_autumn.svg" class="best-season-guide">' + '</div>';
+                      var bestSeasonIcon = '<div class=" time card">' + '<img src="/img/season_autumn.svg" class="best-season-guide" title="Best Season: Autumn">' + '</div>';
                   };
         };
 
@@ -1599,13 +1608,13 @@ function AppViewModel () {
     self.displaySuggestedAttireIcons = function (obj, canvasWidth, canvasHeight, $iconContainer) {
 
         if(!rollover) {
-            $iconContainer.append('<div class=" water-temp spring card">' + '<canvas id="spring" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas>');
+            $iconContainer.append('<div class=" water-temp spring card" title="Suggested Spring Attire">' + '<canvas id="spring" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas>');
 
-            $iconContainer.append('<div class=" water-temp summer card">' + '<canvas id="summer" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas>');
+            $iconContainer.append('<div class=" water-temp summer card" title="Suggested Summer Attire">' + '<canvas id="summer" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas>');
 
-            $iconContainer.append('<div class=" water-temp autumn card">' + '<canvas id="autumn" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas>');
+            $iconContainer.append('<div class=" water-temp autumn card" title="Suggested Autumn Attire">' + '<canvas id="autumn" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas>');
 
-            $iconContainer.append('<div class=" water-temp winter card">' + '<canvas id="winter" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas>');
+            $iconContainer.append('<div class=" water-temp winter card" title="Suggested Winter Attire">' + '<canvas id="winter" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas>');
 
             var season = 0;
             /* Loop through the average water temps for each time of year. Designate specific water attire for each time of year */
@@ -1722,7 +1731,7 @@ function AppViewModel () {
 
     self.displayClimateIcon = function (obj) {
 
-        var climateIcon = '<div class="climate card">' + '<p>' + obj  + '</p>' + '</div>';
+        var climateIcon = '<div class="climate card" title="Köppen Climate Classification">' + '<p>' + obj  + '</p>' + '</div>';
 
         return climateIcon;
     };
@@ -1737,7 +1746,7 @@ function AppViewModel () {
 
           var midRange = Math.floor((obj.highEnd - obj.budget)/2 + obj.budget);
 
-          var costInfo = $iconContainer.append('<div class="cost card">' + '<img src="img/cost.svg" class="cost-guide">' + '<p>' + obj.budget + '</p>' + '<p>' + midRange + '</p>' + '<p>' + obj.highEnd +'</p>' + '</div>');
+          var costInfo = $iconContainer.append('<div class="cost card">' + '<img src="img/cost.svg" class="cost-guide" title="Cost: Low, Mid, High">' + '<p>' + obj.budget + '</p>' + '<p>' + midRange + '</p>' + '<p>' + obj.highEnd +'</p>' + '</div>');
       };
 
       return costInfo;
@@ -1808,7 +1817,7 @@ function AppViewModel () {
 
             } else {
 
-                var distanceIcon = '<img src="img/distance_plane.svg" class="icon distance-guide">' + '<p class="distance-guide-hours">' + distanceFly + 'h' +'</p>';
+                var distanceIcon = '<img src="img/distance_plane.svg" class="icon distance-guide" title="Estimated flight duration from present location">' + '<p class="distance-guide-hours">' + distanceFly + 'h' +'</p>';
 
                 return distanceIcon;
             };
@@ -1824,7 +1833,7 @@ function AppViewModel () {
 
             } else {
 
-                var distanceIcon = '<img src="img/distance.svg" class="icon distance-guide">' + '<p class="distance-guide-miles">' + distanceDrive + 'mi' +'</p>';
+                var distanceIcon = '<img src="img/distance.svg" class="icon distance-guide" title="Estimated driving distance from present location">' + '<p class="distance-guide-miles">' + distanceDrive + 'mi' +'</p>';
 
                 return distanceIcon;
             };
@@ -1876,7 +1885,7 @@ function AppViewModel () {
             /* Cache the average wave height */
             var waveSizeInfo = '<p class="rollover-info wave-size-hover">' + obj.min + "-" + obj.max + "'" +'</p>';
         } else {
-            var waveSizeInfo = '<div class=" wave-size card">' + '<img src="img/wave_range.svg" class"wave-size-guide">' + '<p>' + obj.min + "-" + obj.max + plus + "ft" + '</p>' + '</div>';
+            var waveSizeInfo = '<div class=" wave-size card">' + '<img src="img/wave_range.svg" class"wave-size-guide" title="Wave Size">' + '<p>' + obj.min + "-" + obj.max + plus + "ft" + '</p>' + '</div>';
         };
 
         return waveSizeInfo;
@@ -1949,7 +1958,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoBeginners;
                     } else {
-                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_beginners.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_beginners.svg" class="hazard-guide" title="Hazard: Beginners">' + '</div>');
                     };
                 break;
 
@@ -1957,7 +1966,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoBoats;
                     } else {
-                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_boats.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_boats.svg" class="hazard-guide" title="Hazard: Boats">' + '</div>');
                     };
                 break;
 
@@ -1965,7 +1974,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoCrocs;
                     } else {
-                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_crocs.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_crocs.svg" class="hazard-guide" title="Hazard: Crocodiles">' + '</div>');
                     };
                 break;
 
@@ -1973,7 +1982,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoCrowded;
                     } else {
-                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_crowded.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_crowded.svg" class="hazard-guide" title="Hazard: Crowded">' + '</div>');
                     };
                 break;
 
@@ -1981,7 +1990,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoDgrBreak;
                     } else {
-                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_dangerous_break.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_dangerous_break.svg" class="hazard-guide" title="Hazard: Dangerous Break">' + '</div>');
                     };
                 break;
 
@@ -1989,7 +1998,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoFar;
                     } else {
-                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_far_from_shore.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_far_from_shore.svg" class="hazard-guide" title="Hazard: Far From Shore">' + '</div>');
                     };
                 break;
 
@@ -1997,7 +2006,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoPollution;
                     } else {
-                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_pollution.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_pollution.svg" class="hazard-guide" title="Hazard: Pollution">' + '</div>');
                     };
                 break;
 
@@ -2005,7 +2014,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoRocky;
                     } else {
-                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_rocky_bottom.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_rocky_bottom.svg" class="hazard-guide" title="Hazard: Rocky Bottom">' + '</div>');
                     };
                 break;
 
@@ -2013,7 +2022,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoSnakes;
                     } else {
-                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_sea_snakes.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_sea_snakes.svg" class="hazard-guide" title="Hazard: Sea Snakes">' + '</div>');
                     };
                 break;
 
@@ -2021,7 +2030,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoSeals;
                     } else {
-                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_seals.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_seals.svg" class="hazard-guide" title="Hazard: Seals">' + '</div>');
                     };
                 break;
 
@@ -2029,7 +2038,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoSeaweed;
                     } else {
-                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_seaweed.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_seaweed.svg" class="hazard-guide" title="Hazard: Seaweed">' + '</div>');
                     };
                 break;
 
@@ -2037,7 +2046,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoSewage;
                     } else {
-                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_sewage.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_sewage.svg" class="hazard-guide" title="Hazard: Sewage">' + '</div>');
                     };
                 break;
 
@@ -2045,7 +2054,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoShallow;
                     } else {
-                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_shallow.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_shallow.svg" class="hazard-guide" title="Hazard: Shallow Break">' + '</div>');
                     };
                 break;
 
@@ -2053,7 +2062,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoSharks;
                     } else {
-                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_sharks.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_sharks.svg" class="hazard-guide" title="Hazard: Sharks">' + '</div>');
                     };
                 break;
 
@@ -2061,7 +2070,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoStrCurrent;
                     } else {
-                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_strong_currents.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_strong_currents.svg" class="hazard-guide" title="Hazard: Strong Currents">' + '</div>');
                     };
                 break;
 
@@ -2069,7 +2078,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoStrRips;
                     } else {
-                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_strong_rips.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_strong_rips.svg" class="hazard-guide" title="Hazard: Strong Rips">' + '</div>');
                     };
                 break;
 
@@ -2077,7 +2086,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoTheft;
                     } else {
-                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_theft.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_theft.svg" class="hazard-guide" title="Hazard: Theft">' + '</div>');
                     };
                 break;
 
@@ -2085,7 +2094,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoUndertow;
                     } else {
-                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_undertow.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_undertow.svg" class="hazard-guide" title="Hazard: Strong Undertow">' + '</div>');
                     };
                 break;
 
@@ -2093,7 +2102,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoUnfriendly;
                     } else {
-                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_unfriendly.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_unfriendly.svg" class="hazard-guide" title="Hazard: Unfriendly Locals">' + '</div>');
                     };
                 break;
 
@@ -2101,7 +2110,7 @@ function AppViewModel () {
                     if(rollover) {
                         var hazardIcon = images.roIconMiscTwoUrchins;
                     } else {
-                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_urchins.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class=" hazard card">' + '<img src="img/hazards_urchins.svg" class="hazard-guide" title="Hazard: Urchins">' + '</div>');
                     };
                 break;
 
@@ -2374,9 +2383,8 @@ function AppViewModel () {
                     // Change icon-frame size to account for compass absence
                     $iconFrame.removeClass('col-sm-6 sm-icon-frame');
 
-                    // Change icon-frame size to account for compass absence
+                    // Move icon back to original position
                     $iconContainer.removeClass('md-icon-container');
-
 
                     // Hide the live surf conditions
                     $liveSurfConditions.toggle();

@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" height="160px" width="160px"
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" height="100px" width="100px"
 	 viewBox="45 -45 160 160" style="enable-background:new 45 -45 160 160;" xml:space="preserve">
 <style type="text/css">
 	.st0{fill:#333333;}
 </style>
-<path class="st0" d="M90,115h30v-15H90V115z M90-30h30v-15H90V-30z M65-45c-11.1,0-20,9-20,20v15.1l15,0V-20c0-5.5,4.5-10,10-10h9.9
-	l-0.1-15H65z M60,90V79.9l-15,0V95c0,11.1,9,20,20,20h14.9l0.1-15H70C64.4,100,60,95.5,60,90z M60,0H45v30h15V0z M130,115h30v-15
-	h-30V115z M185-45h-14.9L170-30h9.9c5.5,0,10,4.5,10,10V-10l15,0V-25C205-36.1,196-45,185-45z M190,30h15V0h-15L190,30L190,30z
-	 M190,90c0,5.5-4.5,10-10,10h-9.9l0.1,15H185c11.1,0,20-9,20-20V79.9l-15,0L190,90L190,90z M130-30h30v-15h-30V-30z M190,70h15V40
-	h-15L190,70L190,70z M60,40H45v30h15V40z"/>
+
 <path class="st0" d="M181.3,63.3V46.7H69.4v16.6H181.3z M100.9,48.8h49.6v12.4h-49.6L100.9,48.8L100.9,48.8z"/>
 </svg>

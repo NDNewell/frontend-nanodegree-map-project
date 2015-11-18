@@ -788,7 +788,7 @@ function AppViewModel () {
 
     self.addRolloverEffect = function () {
 
-        console.log('enable rollover effect');
+        console.log('enable hover effect');
 
         // For each location set variables and add hover effects
         $('.location-frame').each(function () {
@@ -1059,7 +1059,7 @@ function AppViewModel () {
         $surfGuideContainer.prepend('<button type="button" class="btn guide-close-button">✖</button>');
 
         // Add a button for displaying surf conditions
-        $('.title-guide').append('<button type="button" class="btn btn-default conditions-button">Current Condtions</button>');
+        $('.title-guide').append('<button type="button" class="btn conditions-button">Current Conditions</button>');
 
         /* When the surf conditions button is clicked, display current
         conditions */
@@ -2295,14 +2295,14 @@ function AppViewModel () {
 
                 var $locationName = $('.title');
                 var liveTemp = '<p class="live-temp live-surf-conditions" title="Live weather conditions">' + temperature + " ℉" + '<img class="live-weather" src="' + weatherImg + '" alt="Symbol for current weather">' + '</p>';
-                var accreditMSW = '<a href="http://magicseaweed.com"><img src="img/msw_powered_by.png" class="live-surf-conditions msw-banner" title="Live conditions provided by MSW - Click to visit"></a>';
+                var accreditMSW = '<a href="http://magicseaweed.com" target="_blank"><img src="img/msw_powered_by.png" class="live-surf-conditions msw-banner" title="Live conditions provided by MSW - Click to visit"></a>';
 
                 /* Render MSW accreditation */
                 $locationName.after(accreditMSW);
 
                 /* Render the temperature and weather image in the left
                 side of the newly created conditions window*/
-                locationName.after(liveTemp);
+                $locationName.after(liveTemp);
 
                 // Cache references to each container
                 var $surfConditionsWind = $('.surf-conditions-wind');
@@ -2328,7 +2328,7 @@ function AppViewModel () {
                 $surfConditionsSwell.append(primarySwellInfo);
                 $surfConditionsSwell.append(swellPeriodInfo);
 
-                var waveHeightInfo = '<p title="Live wave height">' + waveHeight + "ft" + '</p>';
+                var waveHeightInfo = '<p class="live-wave-height" title="Live wave height">' + waveHeight + "ft" + '</p>';
                 var waveRatingInfo = '<p class="star-rating" title="Magic Seaweed Rating: The more solid stars, the better. Unfavorable wind conditions change a solid star to a faded star">' + waveRating + '</p>';
 
                 /* Render the breaking wave height, and wave rating from above

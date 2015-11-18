@@ -217,6 +217,21 @@ body {
     left: 17px;
 }
 
+.conditions-button {
+    height: 40px;
+    width: 200px;
+    background-color: #00B8E6;
+    color: white;
+    font-size: .4em;
+    font-family: Arial, Verdana;
+}
+
+.conditions-button:hover {
+    color: white;
+    background-color: #2FC5EA;
+    border-color: #adadad;
+}
+
 .icon-container {
     margin-left: auto;
     margin-right: auto;
@@ -473,8 +488,9 @@ body {
 
     .hide-map-button {
         float: none;
-        margin-left: 48.25%;
+        margin-left: 46%;
         margin-right: 0;
+        font-size: 3em;
     }
 
     .skill-level-hover {
@@ -513,9 +529,29 @@ body {
         font-size: 4.5vw;
     }
 
+    .guide-close-button {
+        margin-left: 9px;
+    }
+
+    .title {
+        font-size: .8em;
+        margin-top: 15px;
+    }
+
+    .conditions-button {
+        height: 70px;
+        width: 90%;
+        background-color: #00B8E6;
+        border-radius: 10px;
+        color: white;
+        font-size: .6em;
+        font-family: Arial, Verdana;
+    }
+
     .live-temp {
         width: 35%;
         margin-left: 33.5%;
+        font-size: .7em;
     }
 
     .surf-conditions-container {
@@ -533,6 +569,10 @@ body {
         text-align: center;
         margin-bottom: -30px;
         padding: 10px 0px 10px;
+    }
+
+    .live-wave-height {
+        margin-right: 12px;
     }
 
     .surf-conditions-wind > p:first-child + img + p {
@@ -577,10 +617,6 @@ body {
         border-radius: 0px;
         width: 100%;
         height: 100%;
-    }
-
-    .title-guide p {
-        font-size: .7em;
     }
 
     .xs-icon-container {

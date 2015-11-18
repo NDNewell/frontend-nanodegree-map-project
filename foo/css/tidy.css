@@ -83,6 +83,8 @@ body {
   padding: 10px 10px;
 }
 
+/** Icons **/
+
 @media (max-width: 767px) {
   .horizontal-rule {
     border-bottom: none;
@@ -123,6 +125,7 @@ body {
 
   .location-frame {
     text-align: center;
+    margin-top: 1px;
     padding: 0px 0px 0px 0px;
   }
 }
@@ -352,11 +355,11 @@ p {
 
 /*** uncss> filename: src/css/jquery-ui.css ***/
 
-/*! jQuery UI - v1.11.4 - 2015-10-10
+/*! jQuery UI - v1.11.4 - 2015-11-17
 * http://jqueryui.com
-* Includes: core.css, autocomplete.css, menu.css, progressbar.css, slider.css, tooltip.css, theme.css
+* Includes: core.css, autocomplete.css, datepicker.css, menu.css, progressbar.css, slider.css, tooltip.css, theme.css
 * To view and modify this theme, visit http://jqueryui.com/themeroller/
-* Copyright 2015 jQuery Foundation and other contributors; Licensed MIT */
+* Copyright jQuery Foundation and other contributors; Licensed MIT */
 
 /* Layout helpers
 ----------------------------------*/
@@ -373,6 +376,10 @@ p {
 ----------------------------------*/
 
 /* Overlays */
+
+/* with multiple calendars */
+
+/* RTL support */
 
 /* icon support */
 

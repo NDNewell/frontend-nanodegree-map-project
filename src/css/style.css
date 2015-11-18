@@ -311,6 +311,7 @@ body {
 
 .surf-conditions-wind img {
     margin: auto;
+    margin-top: -6px;
 }
 
 .surf-conditions-wind > p:first-child + img + p {

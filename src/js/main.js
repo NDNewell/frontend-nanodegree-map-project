@@ -2228,7 +2228,7 @@ function AppViewModel () {
                 var temperature = forecastData.condition.temperature;
                 var weather = forecastData.condition.weather;
                 var weatherImg = 'http://cdnimages.magicseaweed.com/30x30/' + weather + '.png'
-                var windImg = 'img/cloudy-&-wind.png'
+                var windImg = 'img/wind.svg'
 
                 /* Get wave and conditions ratings */
                 var rating = [];
@@ -2267,7 +2267,7 @@ function AppViewModel () {
                 /* Render containers to hold the compass and live conditions
                 containers */
                 var liveConditionsElem = '<div class="col-xs-12 surf-conditions-container live-surf-conditions"></div>';
-                var compassContainer = '<div class="col-xs-12 col-sm-4 col-md-6 live-surf-conditions live-compass"><canvas id="compass" width="300" height="300"></canvas></div>';
+                var compassContainer = '<div class="col-xs-12 col-sm-4 col-md-6 live-surf-conditions live-compass" title="Live wind & swell conditions"><canvas id="compass" width="300" height="300"></canvas></div>';
 
                 // Add compass container
                 $surfGuideTitleContainer.after(compassContainer);
@@ -2292,7 +2292,7 @@ function AppViewModel () {
                 $surfConditionsContainer.append(windStatsContainer);
 
                 var $locationName = $('.title');
-                var liveTemp = '<p class="live-temp live-surf-conditions">' + temperature + " ℉" + '<img class="live-weather" src="' + weatherImg + '" alt="Symbol for current weather">' + '</p>';
+                var liveTemp = '<p class="live-temp live-surf-conditions" title="Live weather conditions">' + temperature + " ℉" + '<img class="live-weather" src="' + weatherImg + '" alt="Symbol for current weather">' + '</p>';
 
                 /* Render the temperature and weather image in the left
                 side of the newly created conditions window*/
@@ -2304,7 +2304,7 @@ function AppViewModel () {
                 var $surfConditionsWaves = $('.surf-conditions-waves');
 
                 var windSpeedInfo = '<p>' + windSpeed + "mph" + '</p>';
-                var windIcon = '<img class="img-responsive" src="' + windImg + '" alt="Symbol for wind">';
+                var windIcon = '<img class="img-responsive" title="Wind direction & speed" src="' + windImg + '" alt="Symbol for wind">';
                 var cardinalDirection = '<p>' + compassDirection + " " + "wind" + '</p>';
 
                 /* Render the wind speed, direction, and wind image in the
@@ -2314,16 +2314,16 @@ function AppViewModel () {
                 $surfConditionsWind.append(cardinalDirection);
 
                 var swellHeightInfo = '<p>' + swellHeight + "ft" + '</p>';
-                var primarySwellInfo = '<p>' + "primary" + '</p>';
-                var swellPeriodInfo = '<p>' + "@" + ' ' + swellPeriod + 's' + ' ' + swellCompassDirection + '</p>';
+                var primarySwellInfo = '<p title="The main swell generating waves">' + "primary" + '</p>';
+                var swellPeriodInfo = '<p title="Live period between waves & current direction">' + "@" + ' ' + swellPeriod + 's' + ' ' + swellCompassDirection + '</p>';
 
                 /* Render the swell height and period */
                 $surfConditionsSwell.append(swellHeightInfo);
                 $surfConditionsSwell.append(primarySwellInfo);
                 $surfConditionsSwell.append(swellPeriodInfo);
 
-                var waveHeightInfo = '<p>' + waveHeight + "ft" + '</p>';
-                var waveRatingInfo = '<p>' + waveRating + '</p>';
+                var waveHeightInfo = '<p title="Live wave height">' + waveHeight + "ft" + '</p>';
+                var waveRatingInfo = '<p title="Magic Seaweed Rating: The more solid stars, the better. Unfavorable wind conditions change a solid star to a faded star">' + waveRating + '</p>';
 
                 /* Render the breaking wave height, and wave rating from above
                 in the center of the conditions window */

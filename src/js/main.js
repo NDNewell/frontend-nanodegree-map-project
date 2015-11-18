@@ -1746,7 +1746,7 @@ function AppViewModel () {
 
           var midRange = Math.floor((obj.highEnd - obj.budget)/2 + obj.budget);
 
-          var costInfo = $iconContainer.append('<div class="cost card">' + '<img src="img/cost.svg" class="cost-guide" title="Cost: Low, Mid, High">' + '<p>' + obj.budget + '</p>' + '<p>' + midRange + '</p>' + '<p>' + obj.highEnd +'</p>' + '</div>');
+          var costInfo = $iconContainer.append('<div class="cost card">' + '<img src="img/cost.svg" class="cost-guide" title="Estimated Daily Cost: Low, Mid, High">' + '<p>' + obj.budget + '</p>' + '<p>' + midRange + '</p>' + '<p>' + obj.highEnd +'</p>' + '</div>');
       };
 
       return costInfo;
@@ -1833,7 +1833,7 @@ function AppViewModel () {
 
             } else {
 
-                var distanceIcon = '<img src="img/distance.svg" class="icon distance-guide" title="Estimated driving distance from present location">' + '<p class="distance-guide-miles">' + distanceDrive + 'mi' +'</p>';
+                var distanceIcon = '<img src="img/distance.svg" class="icon distance-guide" title="Estimated (straight line) distance in miles from present location (actual distance via roads will be greater) ">' + '<p class="distance-guide-miles">' + distanceDrive + 'mi' +'</p>';
 
                 return distanceIcon;
             };

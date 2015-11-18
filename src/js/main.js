@@ -453,6 +453,8 @@ $(document).ready(function() {
         hide: 'fade'
     });
 
+    console.log('tooltips loaded');
+
 
     // Load images
     var numImages = 0;
@@ -786,7 +788,7 @@ function AppViewModel () {
 
     self.addRolloverEffect = function () {
 
-        console.log('Enable rollover effect');
+        console.log('enable rollover effect');
 
         // For each location set variables and add hover effects
         $('.location-frame').each(function () {
@@ -2293,10 +2295,14 @@ function AppViewModel () {
 
                 var $locationName = $('.title');
                 var liveTemp = '<p class="live-temp live-surf-conditions" title="Live weather conditions">' + temperature + " ℉" + '<img class="live-weather" src="' + weatherImg + '" alt="Symbol for current weather">' + '</p>';
+                var accreditMSW = '<a href="http://magicseaweed.com"><img src="img/msw_powered_by.png" class="live-surf-conditions msw-banner" title="Live conditions provided by MSW - Click to visit"></a>';
+
+                /* Render MSW accreditation */
+                $locationName.after(accreditMSW);
 
                 /* Render the temperature and weather image in the left
                 side of the newly created conditions window*/
-                $locationName.after(liveTemp);
+                locationName.after(liveTemp);
 
                 // Cache references to each container
                 var $surfConditionsWind = $('.surf-conditions-wind');
@@ -2323,7 +2329,7 @@ function AppViewModel () {
                 $surfConditionsSwell.append(swellPeriodInfo);
 
                 var waveHeightInfo = '<p title="Live wave height">' + waveHeight + "ft" + '</p>';
-                var waveRatingInfo = '<p title="Magic Seaweed Rating: The more solid stars, the better. Unfavorable wind conditions change a solid star to a faded star">' + waveRating + '</p>';
+                var waveRatingInfo = '<p class="star-rating" title="Magic Seaweed Rating: The more solid stars, the better. Unfavorable wind conditions change a solid star to a faded star">' + waveRating + '</p>';
 
                 /* Render the breaking wave height, and wave rating from above
                 in the center of the conditions window */

@@ -710,8 +710,10 @@ function AppViewModel () {
         select: function (event, ui) {
             self.Query(ui.item.value);
             self.searchLocations();
+        },
+        close: function(){
+            $(this).blur();
         }
-
     });
 
     /* Filter through the location objects and compare each one to the

@@ -601,7 +601,7 @@ body {
 
     .live-compass {
         margin-top: -18px;
-        margin-bottom: -15px;
+        margin-bottom: 0px;
     }
 
     .conditions-close-button {

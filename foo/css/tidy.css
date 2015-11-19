@@ -99,6 +99,8 @@ body {
   }
 
   .search-form {
+    width: 100%;
+    height: 100px;
     margin: 0 auto;
     font-size: 1.3em;
     padding-top: 12.5px;
@@ -108,7 +110,6 @@ body {
     border-left: none;
     border-right: none;
     border-radius: 0px;
-    width: 100%;
   }
 
   .map-container {

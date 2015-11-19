@@ -1819,7 +1819,7 @@ function AppViewModel () {
 
             } else {
 
-                var distanceIcon = '<img src="img/distance_plane.svg" class="icon distance-guide" title="Estimated flight duration from present location">' + '<p class="distance-guide-hours">' + distanceFly + 'h' +'</p>';
+                var distanceIcon = '<img src="img/distance_plane.svg" class="icon distance-guide" title="Estimated flight duration from your location">' + '<p class="distance-guide-hours">' + distanceFly + 'h' +'</p>';
 
                 return distanceIcon;
             };
@@ -1835,7 +1835,7 @@ function AppViewModel () {
 
             } else {
 
-                var distanceIcon = '<img src="img/distance.svg" class="icon distance-guide" title="Estimated (straight line) distance in miles from present location (actual distance via roads will be greater) ">' + '<p class="distance-guide-miles">' + distanceDrive + 'mi' +'</p>';
+                var distanceIcon = '<img src="img/distance.svg" class="icon distance-guide" title="Estimated (straight line) distance in miles from your location (actual distance via roads will be greater) ">' + '<p class="distance-guide-miles">' + distanceDrive + 'mi' +'</p>';
 
                 return distanceIcon;
             };

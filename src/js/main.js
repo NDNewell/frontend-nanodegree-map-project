@@ -2153,14 +2153,14 @@ function AppViewModel () {
             }, 8000);
 
             // Load Magic Seaweed API data
-            var msUrl = 'http://magicseaweed.com/api/d2983e394d07724e96404fba11c10485/forecast/?spot_id=' + spotID + '&units=us&fields=timestamp,fadedRating,solidRating,swell.minBreakingHeight,swell.maxBreakingHeight,swell.components.primary.*,wind.*,condition.*';
+            var msUrl = '//magicseaweed.com/api/d2983e394d07724e96404fba11c10485/forecast/?spot_id=' + spotID + '&units=us&fields=timestamp,fadedRating,solidRating,swell.minBreakingHeight,swell.maxBreakingHeight,swell.components.primary.*,wind.*,condition.*';
 
             $.ajax({
                 url: msUrl,
                 dataType: 'jsonp',
                 // jsonp: "callback",
                 success: function(response) {
-
+                    console.log('api connection successful');
                     // Get current time & current time plus/minus three hours
                     var getTime = Date.now();
                     var currentTimeSecs = getTime / 1000;

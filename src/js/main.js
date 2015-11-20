@@ -1106,8 +1106,6 @@ function AppViewModel () {
         $('.guide-close-button').on('click', function(e) {
 
             // Remove both surf conditions and surf guide from DOM
-            $('.surf-conditions').remove();
-            $('.surf-conditions-error').remove();
             $('.surf-guide-container').remove();
 
             /* Make both the location grid and the location frames

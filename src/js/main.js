@@ -21,7 +21,7 @@ var locationData = [
       lat: 21.679011,
       lng: -158.041277,
       spotID: 657,
-      picture: '<img src="/img/flickr_sunset_beach-w640.jpg" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="img/flickr_sunset_beach-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Pipeline/Backdoor',
@@ -43,7 +43,7 @@ var locationData = [
       lat: 21.665244,
       lng: -158.053408,
       spotID: 616,
-      picture: '<img src="/img/flickr_pipeline-w640.jpg" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="img/flickr_pipeline-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Cannons',
@@ -65,7 +65,7 @@ var locationData = [
       lat: 22.224744,
       lng: -159.566712,
       spotID: 'none',
-      picture: '<img src="/img/flickr_cannons-w640.jpg" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="img/flickr_cannons-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Tunnels',
@@ -87,7 +87,7 @@ var locationData = [
       lat: 22.224744,
       lng: -159.566712,
       spotID: 'none',
-      picture: '<img src="/img/flickr_tunnels-w640.jpg" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="img/flickr_tunnels-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Anahola',
@@ -109,7 +109,7 @@ var locationData = [
       lat: 22.148311,
       lng: -159.300331,
       spotID: 'none',
-      picture: '<img src="/img/flickr_anahola-w640.jpg" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="img/flickr_anahola-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Hanalei',
@@ -131,7 +131,7 @@ var locationData = [
       lat: 22.218315,
       lng: -159.502265,
       spotID: 3051,
-      picture: '<img src="/img/google_hanalei-w640.jpg" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="img/google_hanalei-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: "Hale'iwa",
@@ -153,7 +153,7 @@ var locationData = [
       lat: 21.596416,
       lng: -158.109121,
       spotID: 660,
-      picture: '<img src="/img/flickr_haleiwa-w640.jpg" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="img/flickr_haleiwa-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Waimea Bay',
@@ -175,7 +175,7 @@ var locationData = [
       lat: 21.642987,
       lng: -158.066743,
       spotID: 549,
-      picture: '<img src="/img/wiki_waimea_bay-w640.jpg" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="img/wiki_waimea_bay-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Rocky Point',
@@ -197,7 +197,7 @@ var locationData = [
       lat: 21.670862,
       lng: -158.049157,
       spotID: 658,
-      picture: '<img src="/img/flickr_rocky_point-w640.jpg" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="img/flickr_rocky_point-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Turtle Bay',
@@ -219,7 +219,7 @@ var locationData = [
       lat: 21.708047,
       lng: -158.002275,
       spotID: 'none',
-      picture: '<img src="/img/flickr_turtle_bay-w640.jpg" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="img/flickr_turtle_bay-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Halawa Bay',
@@ -241,7 +241,7 @@ var locationData = [
       lat: 21.159132,
       lng: -156.735906,
       spotID: 'none',
-      picture: '<img src="/img/flickr_halawa_bay-w640.jpg" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="img/flickr_halawa_bay-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Honolua Bay',
@@ -263,7 +263,7 @@ var locationData = [
       lat: 21.024350,
       lng: -156.641890,
       spotID: 697,
-      picture: '<img src="/img/flickr_honolua_bay-w640.jpg" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="img/flickr_honolua_bay-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Jaws/Peahi',
@@ -285,7 +285,7 @@ var locationData = [
       lat: 20.946401,
       lng: -156.297389,
       spotID: 617,
-      picture: '<img src="/img/flickr_jaws-w640.jpg" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="img/flickr_jaws-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'The Cove',
@@ -307,7 +307,7 @@ var locationData = [
       lat: 20.728298,
       lng: -156.452353,
       spotID: 'none',
-      picture: '<img src="/img/flickr_the_cove-w640.jpg" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="img/flickr_the_cove-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: "Ma'alaea",
@@ -329,7 +329,7 @@ var locationData = [
       lat: 20.791860,
       lng: -156.508960,
       spotID: 618,
-      picture: '<img src="/img/flickr_maalaea-w640.jpg" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="img/flickr_maalaea-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Lahaina',
@@ -351,7 +351,7 @@ var locationData = [
       lat: 20.869326,
       lng: -156.679025,
       spotID: 4287,
-      picture: '<img src="/img/flickr_lahaina-w640.jpg" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="img/flickr_lahaina-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Lymans/Banyans',
@@ -373,7 +373,7 @@ var locationData = [
       lat: 19.606206,
       lng: -155.978016,
       spotID: 2784,
-      picture: '<img src="/img/flickr_lymans-w640.jpg" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="img/flickr_lymans-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Pine Trees',
@@ -395,7 +395,7 @@ var locationData = [
       lat: 19.695131,
       lng: -156.045926,
       spotID: 3958,
-      picture: '<img src="/img/flickr_pine_trees-w640.jpg" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="img/flickr_pine_trees-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: 'Kiholo Bay',
@@ -417,7 +417,7 @@ var locationData = [
       lat: 19.854416,
       lng: -155.931340,
       spotID: 'none',
-      picture: '<img src="/img/flickr_kiholo_bay-w640.jpg" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="img/flickr_kiholo_bay-w640.jpg" class="location-image  img-responsive img-rounded">'
     },
     {
       breakName: "Honoli'i",
@@ -439,7 +439,7 @@ var locationData = [
       lat: 19.756298,
       lng: -155.089960,
       spotID: 3815,
-      picture: '<img src="/img/flickr_honolii-w640.jpg" class="location-image  img-responsive img-rounded">'
+      picture: '<img src="img/flickr_honolii-w640.jpg" class="location-image  img-responsive img-rounded">'
     }
 ];
 
@@ -1212,20 +1212,20 @@ function AppViewModel () {
             if(rollover){
                 var skillLevelIcon = images.roIconSkillAll;
             } else {
-                var skillLevelIcon = '<div class=" skill-level card">' + '<img src="/img/skill_level_all.svg" class="skill-level-guide" title="Difficulty: All levels">' + '</div>';
+                var skillLevelIcon = '<div class=" skill-level card">' + '<img src="img/skill_level_all.svg" class="skill-level-guide" title="Difficulty: All levels">' + '</div>';
             };
         } else if (beginner >= intermediate && beginner > advanced) {
             if(beginner === intermediate) {
                 if(rollover){
                     var skillLevelIcon = images.roIconSkillBegInt;
                 } else {
-                    var skillLevelIcon = '<div class="skill-level card">' + '<img src="/img/skill_level_beginner_intermediate.svg" class=" skill-level-guide" title="Difficulty: Beginner to Intermediate">' + '</div>';
+                    var skillLevelIcon = '<div class="skill-level card">' + '<img src="img/skill_level_beginner_intermediate.svg" class=" skill-level-guide" title="Difficulty: Beginner to Intermediate">' + '</div>';
                 };
             } else {
                 if(rollover){
                     var skillLevelIcon = images.roIconSkillBeg;
                 } else {
-                    var skillLevelIcon = '<div class="skill-level card">' + '<img src="/img/skill_level_beginner.svg" class=" skill-level-guide" title="Difficulty: Beginner">' + '</div>';
+                    var skillLevelIcon = '<div class="skill-level card">' + '<img src="img/skill_level_beginner.svg" class=" skill-level-guide" title="Difficulty: Beginner">' + '</div>';
                 };
             };
         } else if (intermediate > beginner && intermediate >= advanced) {
@@ -1233,20 +1233,20 @@ function AppViewModel () {
                 if(rollover){
                     var skillLevelIcon = images.roIconSkillIntAdv;
                 } else {
-                    var skillLevelIcon = '<div class=" skill-level card">' + '<img src="/img/skill_level_intermediate_advanced.svg" class=" skill-level-guide" title="Difficulty: Intermediate to Advanced">' + '</div>';
+                    var skillLevelIcon = '<div class=" skill-level card">' + '<img src="img/skill_level_intermediate_advanced.svg" class=" skill-level-guide" title="Difficulty: Intermediate to Advanced">' + '</div>';
                 };
             } else {
                 if(rollover){
                     var skillLevelIcon = images.roIconSkillInt;
                 } else {
-                    var skillLevelIcon = '<div class=" skill-level card">' + '<img src="/img/skill_level_intermediate.svg" class=" skill-level-guide" title="Difficulty: Intermediate">' + '</div>';
+                    var skillLevelIcon = '<div class=" skill-level card">' + '<img src="img/skill_level_intermediate.svg" class=" skill-level-guide" title="Difficulty: Intermediate">' + '</div>';
                 };
             };
         } else {
             if(rollover){
                 var skillLevelIcon = images.roIconSkillAdv;
             } else {
-                var skillLevelIcon = '<div class=" skill-level card">' + '<img src="/img/skill_level_advanced.svg" class=" skill-level-guide" title="Difficulty: Advanced">' + '</div>';
+                var skillLevelIcon = '<div class=" skill-level card">' + '<img src="img/skill_level_advanced.svg" class=" skill-level-guide" title="Difficulty: Advanced">' + '</div>';
             };
         };
 
@@ -1260,7 +1260,7 @@ function AppViewModel () {
               if(rollover) {
                   var directionIcon = images.roIconDirectionLeft;
               } else {
-                  var directionIcon = '<div class=" direction card">' + '<img src="/img/direction_left.svg" class="wave-direction-guide" title="Wave Direction: Left">' + '</div>';
+                  var directionIcon = '<div class=" direction card">' + '<img src="img/direction_left.svg" class="wave-direction-guide" title="Wave Direction: Left">' + '</div>';
               };
           break;
 
@@ -1268,7 +1268,7 @@ function AppViewModel () {
               if(rollover) {
                   var directionIcon = images.roIconDirectionRight;
               } else {
-                  var directionIcon = '<div class=" direction card">' + '<img src="/img/direction_right.svg" class="wave-direction-guide" title="Wave Direction: Right">' + '</div>';
+                  var directionIcon = '<div class=" direction card">' + '<img src="img/direction_right.svg" class="wave-direction-guide" title="Wave Direction: Right">' + '</div>';
               };
           break;
 
@@ -1276,7 +1276,7 @@ function AppViewModel () {
               if(rollover) {
                   var directionIcon = images.roIconDirectionBoth;
               } else {
-                  var directionIcon = '<div class=" direction card">' + '<img src="/img/direction_both.svg" class="wave-direction-guide" title="Wave Direction: Left & Right">' + '</div>';
+                  var directionIcon = '<div class=" direction card">' + '<img src="img/direction_both.svg" class="wave-direction-guide" title="Wave Direction: Left & Right">' + '</div>';
               };
           break;
         }
@@ -1290,7 +1290,7 @@ function AppViewModel () {
               if(rollover) {
                   var breakIcon = images.roIconBreakReef;
               } else {
-                  var breakIcon = '<div class=" break card">' + '<img src="/img/break_reef.svg" class="break-type-guide" title="Break Type: Reef">' + '</div>';
+                  var breakIcon = '<div class=" break card">' + '<img src="img/break_reef.svg" class="break-type-guide" title="Break Type: Reef">' + '</div>';
               };
           break;
 
@@ -1298,7 +1298,7 @@ function AppViewModel () {
               if(rollover) {
                   var breakIcon = images.roIconBreakBeach;
               } else {
-                  var breakIcon = '<div class=" break card">' + '<img src="/img/break_beach.svg" class="break-type-guide" title="Break Type: Beach">' + '</div>';
+                  var breakIcon = '<div class=" break card">' + '<img src="img/break_beach.svg" class="break-type-guide" title="Break Type: Beach">' + '</div>';
               };
           break;
 
@@ -1306,7 +1306,7 @@ function AppViewModel () {
               if(rollover) {
                   var breakIcon = images.roIconBreakPoint;
               } else {
-                  var breakIcon = '<div class=" break card">' + '<img src="/img/break_point.svg" class="break-type-guide" title="Break Type: Point">' + '</div>';
+                  var breakIcon = '<div class=" break card">' + '<img src="img/break_point.svg" class="break-type-guide" title="Break Type: Point">' + '</div>';
               };
           break;
 
@@ -1314,7 +1314,7 @@ function AppViewModel () {
               if(rollover) {
                   var breakIcon = images.roIconBreakRiver;
               } else {
-                  var breakIcon = '<div class=" break card">' + '<img src="/img/break_river_mouth.svg" class="break-type-guide" title="Break Type: River Mouth">' + '</div>';
+                  var breakIcon = '<div class=" break card">' + '<img src="img/break_river_mouth.svg" class="break-type-guide" title="Break Type: River Mouth">' + '</div>';
               };
           break;
         }
@@ -1471,23 +1471,23 @@ function AppViewModel () {
         };
 
         if (low === mid && low === high) {
-            var tideIcon = '<div class=" tide card">' + '<img src="/img/tide_all.svg" class="tide-guide" title="Best Tide: All">' + '</div>';
+            var tideIcon = '<div class=" tide card">' + '<img src="img/tide_all.svg" class="tide-guide" title="Best Tide: All">' + '</div>';
         } else if (low >= mid && low >= high) {
               if(low === mid) {
-                  var tideIcon = '<div class=" tide card">' + '<img src="/img/tide_low_mid.svg" class="tide-guide" title="Best Tide: Low & Mid">' + '</div>';
+                  var tideIcon = '<div class=" tide card">' + '<img src="img/tide_low_mid.svg" class="tide-guide" title="Best Tide: Low & Mid">' + '</div>';
               } else if (low === high) {
-                  var tideIcon = '<div class=" tide card">' + '<img src="/img/tide_low_high.svg" class="tide-guide" title="Best Tide: Low & High">' + '</div>';;
+                  var tideIcon = '<div class=" tide card">' + '<img src="img/tide_low_high.svg" class="tide-guide" title="Best Tide: Low & High">' + '</div>';;
               } else {
-                  var tideIcon = '<div class=" tide card">' + '<img src="/img/tide_low.svg" class="tide-guide" title="Best Tide: Low">' + '</div>';
+                  var tideIcon = '<div class=" tide card">' + '<img src="img/tide_low.svg" class="tide-guide" title="Best Tide: Low">' + '</div>';
               };
         } else if (mid > low && mid >= high) {
               if(mid === high) {
-                  var tideIcon = '<div class=" tide card">' + '<img src="/img/tide_high_mid.svg" class="tide-guide" title="Best Tide: Mid & High">' + '</div>';
+                  var tideIcon = '<div class=" tide card">' + '<img src="img/tide_high_mid.svg" class="tide-guide" title="Best Tide: Mid & High">' + '</div>';
               } else {
-                  var tideIcon = '<div class=" tide card">' + '<img src="/img/tide_mid.svg" class="tide-guide" title="Best Tide: Mid">' + '</div>';
+                  var tideIcon = '<div class=" tide card">' + '<img src="img/tide_mid.svg" class="tide-guide" title="Best Tide: Mid">' + '</div>';
               };
         } else {
-            var tideIcon = '<div class=" tide card">' + '<img src="/img/tide_high.svg" class="tide-guide" title="Best Tide: High">' + '</div>';
+            var tideIcon = '<div class=" tide card">' + '<img src="img/tide_high.svg" class="tide-guide" title="Best Tide: High">' + '</div>';
         };
 
         return tideIcon;
@@ -1543,32 +1543,32 @@ function AppViewModel () {
             if(rollover) {
                 var bestSeasonIcon = images.roIconBestSeasonAll;
             } else {
-                var bestSeasonIcon = '<div class=" time card">' + '<img src="/img/season_all.svg" class="best-season-guide" title="Best Season: All">' + '</div>';
+                var bestSeasonIcon = '<div class=" time card">' + '<img src="img/season_all.svg" class="best-season-guide" title="Best Season: All">' + '</div>';
             };
         } else if(winter >= spring && winter >= summer && winter >= autumn) {
               if(winter === spring) {
                   if(rollover) {
                       var bestSeasonIcon = images.roIconBestSeasonWinSpr;
                   } else {
-                      var bestSeasonIcon = '<div class=" time card">' + '<img src="/img/season_winter_spring.svg" class="best-season-guide" title="Winter & Spring">' + '</div>';
+                      var bestSeasonIcon = '<div class=" time card">' + '<img src="img/season_winter_spring.svg" class="best-season-guide" title="Winter & Spring">' + '</div>';
                   };
               } else if (winter === summer) {
                   if(rollover) {
                       var bestSeasonIcon = images.roIconBestSeasonWinSum;
                   } else {
-                      var bestSeasonIcon = '<div class=" time card">' + '<img src="/img/season_winter_summer.svg" class="best-season-guide" title="Best Season: Winter & Summer">' + '</div>';
+                      var bestSeasonIcon = '<div class=" time card">' + '<img src="img/season_winter_summer.svg" class="best-season-guide" title="Best Season: Winter & Summer">' + '</div>';
                   };
               } else if (winter === autumn) {
                   if(rollover) {
                       var bestSeasonIcon = images.roIconBestSeasonWinAut;
                   } else {
-                      var bestSeasonIcon = '<div class=" time card">' + '<img src="/img/season_winter_autumn.svg" class="best-season-guide" title="Best Season: Winter & Autumn">' + '</div>';
+                      var bestSeasonIcon = '<div class=" time card">' + '<img src="img/season_winter_autumn.svg" class="best-season-guide" title="Best Season: Winter & Autumn">' + '</div>';
                   };
               } else {
                   if(rollover) {
                       var bestSeasonIcon = images.roIconBestSeasonWin;
                   } else {
-                      var bestSeasonIcon = '<div class=" time card">' + '<img src="/img/season_winter.svg" class="best-season-guide" title="Best Season: Winter">' + '</div>';
+                      var bestSeasonIcon = '<div class=" time card">' + '<img src="img/season_winter.svg" class="best-season-guide" title="Best Season: Winter">' + '</div>';
                   };
               };
         } else if (spring >= summer && spring >= autumn && spring > winter) {
@@ -1576,19 +1576,19 @@ function AppViewModel () {
                   if(rollover) {
                       var bestSeasonIcon = images.roIconBestSeasonSpgSum;
                   } else {
-                      var bestSeasonIcon = '<div class=" time card">' + '<img src="/img/season_spring_summer.svg" class="best-season-guide" title="Best Season: Spring & Summer">' + '</div>';
+                      var bestSeasonIcon = '<div class=" time card">' + '<img src="img/season_spring_summer.svg" class="best-season-guide" title="Best Season: Spring & Summer">' + '</div>';
                   };
               } else if (spring === autumn) {
                   if(rollover) {
                       var bestSeasonIcon = images.roIconBestSeasonSpgAut;
                   } else {
-                      var bestSeasonIcon = '<div class=" time card">' + '<img src="/img/season_spring_autumn.svg" class="best-season-guide" title="Best Season: Spring & Autumn">' + '</div>';
+                      var bestSeasonIcon = '<div class=" time card">' + '<img src="img/season_spring_autumn.svg" class="best-season-guide" title="Best Season: Spring & Autumn">' + '</div>';
                   };
               } else {
                   if(rollover) {
                       var bestSeasonIcon = images.roIconBestSeasonSpg;
                   } else {
-                      var bestSeasonIcon = '<div class=" time card">' + '<img src="/img/season_spring.svg" class="best-season-guide" title="Best Season: Spring">' + '</div>';
+                      var bestSeasonIcon = '<div class=" time card">' + '<img src="img/season_spring.svg" class="best-season-guide" title="Best Season: Spring">' + '</div>';
                   };
               };
         } else if (summer >= autumn && summer > winter && summer > spring) {
@@ -1596,20 +1596,20 @@ function AppViewModel () {
                   if(rollover) {
                       var bestSeasonIcon = images.roIconBestSeasonSumAut;
                   } else {
-                      var bestSeasonIcon = '<div class=" time card">' + '<img src="/img/season_summer_autumn.svg" class="best-season-guide" title="Best Season: Summer & Autumn">' + '</div>';
+                      var bestSeasonIcon = '<div class=" time card">' + '<img src="img/season_summer_autumn.svg" class="best-season-guide" title="Best Season: Summer & Autumn">' + '</div>';
                   };
               } else {
                   if(rollover) {
                       var bestSeasonIcon = images.roIconBestSeasonSum;
                   } else {
-                      var bestSeasonIcon = '<div class=" time card">' + '<img src="/img/season_summer.svg" class="best-season-guide" title="Best Season: Summer">' + '</div>';
+                      var bestSeasonIcon = '<div class=" time card">' + '<img src="img/season_summer.svg" class="best-season-guide" title="Best Season: Summer">' + '</div>';
                   };
               };
         } else {
                   if(rollover) {
                       var bestSeasonIcon = images.roIconBestSeasonAut;
                   } else {
-                      var bestSeasonIcon = '<div class=" time card">' + '<img src="/img/season_autumn.svg" class="best-season-guide" title="Best Season: Autumn">' + '</div>';
+                      var bestSeasonIcon = '<div class=" time card">' + '<img src="img/season_autumn.svg" class="best-season-guide" title="Best Season: Autumn">' + '</div>';
                   };
         };
 

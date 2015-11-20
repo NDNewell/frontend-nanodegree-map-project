@@ -711,6 +711,7 @@ function AppViewModel () {
             self.Query(ui.item.value);
             self.searchLocations();
         },
+        /* Remove focus from search field after selection is made */
         close: function(){
             $(this).blur();
         }
@@ -953,6 +954,9 @@ function AppViewModel () {
     /* Display detailed information about the location */
     self.renderSurfGuide = function (obj) {
 
+        // Scroll to top of the page
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
+
         /* Check if the surf guide window is open already from a previous
         click. If it isn't, hide the locatin grid. If it is, the location
         grid is already hidden, so we don't want to make it visible! */
@@ -1120,6 +1124,9 @@ function AppViewModel () {
 
             // Close any info windows that remain open
             infoWindow.close();
+
+            // Scroll to the top of the page
+            document.body.scrollTop = document.documentElement.scrollTop = 0;
         });
     };
 

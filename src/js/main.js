@@ -1095,9 +1095,20 @@ function AppViewModel () {
                     // Hide the surf conditions button
                     $('.conditions-button').toggle();
 
+                    // Load the progress indicator
+                    /* Check if indicator was already loaded, if not create
+                    its container */
+                    if(!$('#progressBarContainer').length) {
+                        // Insert container to hold indicator
+                        $('.title-guide').append('<div id="progressBarContainer"></div>');
+                    };
+
+                    // Load indicator
+                    var cl = loadProgressBar();
+
                     // Pass info to API function and initiate request
-                    getMagicSeaweed(obj.spotID, obj.breakName);
-            }
+                    getMagicSeaweed(obj.spotID, obj.breakName, cl);
+            };
 
         });
 
@@ -2130,7 +2141,7 @@ function AppViewModel () {
         };
     };
 
-    self.getMagicSeaweed = function (spotID, breakName) {
+    self.getMagicSeaweed = function (spotID, breakName, cl) {
 
         var $currentSurfGuide = $('.title-guide').text();
         var $surfGuideTitleContainer = $('.title-guide');
@@ -2140,6 +2151,8 @@ function AppViewModel () {
         from going through for a non-existing location*/
         if(spotID === 'none') {
 
+            // Disable progress indicator by removing it
+            $('#canvasLoader').remove();
             showError();
 
         } else {
@@ -2148,6 +2161,8 @@ function AppViewModel () {
             message */
             var msRequestTimeout = setTimeout (function() {
 
+                // Disable progress indicator by removing it
+                $('#canvasLoader').remove();
                 showError();
 
             }, 8000);
@@ -2193,6 +2208,10 @@ function AppViewModel () {
 
                     // Disable error message
                     clearTimeout(msRequestTimeout);
+
+                    // Disable progress indicator by removing it
+                    $('#canvasLoader').remove();
+
                 }
             });
 
@@ -2418,7 +2437,7 @@ function AppViewModel () {
 
         };
 
-        function showError () {
+        function showError (cl) {
 
             /* Before rendering the error message, check which surf guide is
             currently open and make sure it matches the API request. This ensures that an api request that takes time to download isn't injected into another surf guide if the user changed surf guides during the api request processing */
@@ -2465,6 +2484,20 @@ function AppViewModel () {
             };
 
         };
+    };
+
+    self.loadProgressBar = function () {
+
+        var cl = new CanvasLoader('progressBarContainer');
+        cl.setColor('#00b8e6'); // default is '#000000'
+        cl.setShape('spiral'); // default is 'oval'
+        cl.setDiameter(72); // default is 40
+        cl.setDensity(33); // default is 40
+        cl.setRange(1); // default is 1.3
+        cl.setFPS(23); // default is 24
+        cl.show(); // Hidden by default
+
+        return cl;
     };
 };
 

@@ -2613,7 +2613,8 @@ function initMap() {
                 },
         disableDefaultUI: true,
         zoomControl: true,
-        mapTypeControl: true
+        mapTypeControl: true,
+        scrollwheel: false
     };
 
     // Create the map and center on the Hawaiian Islands

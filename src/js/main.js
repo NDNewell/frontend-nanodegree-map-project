@@ -186,15 +186,10 @@ function AppViewModel () {
 
         /* Iterate through the location data from the data and push each object to the location array above */
         data.forEach(function(obj) {
-            self.locationArray.push(new beachLocation(obj));
-        });
-        console.log("locationArray loaded");
-
-        /* Iterate through the array of location objects and push them to the
-        observable array above */
-        self.locationArray.forEach(function(obj) {
+            self.locationArray.push(obj);
             self.locationGrid.push(obj);
         });
+        console.log("locationArray loaded");
         console.log("locationGrid loaded");
 
         /* Load the rollover effects only if the related images have
@@ -202,31 +197,6 @@ function AppViewModel () {
         if(imagesLoaded) {
             addRolloverEffect();
         };
-    };
-
-    /* Using a constructor, location objects are built here via the forEach
-    method above*/
-    function beachLocation(obj) {
-        this.breakName = obj.breakName;
-        this.location = obj.location;
-        this.bigWave = obj.bigWave;
-        this.wellKnown = obj.wellKnown;
-        this.cost = obj.cost;
-        this.skillLevel = obj.skillLevel;
-        this.waveDirection = obj.waveDirection;
-        this.breakDetails = obj.breakDetails;
-        this.avgSize = obj.avgSize;
-        this.optimalSwell = obj.optimalSwell;
-        this.optimalTide = obj.optimalTide;
-        this.optimalWind = obj.optimalWind;
-        this.optimalTime = obj.optimalTime;
-        this.climate = obj.climate;
-        this.avgWaterTemp = obj.avgWaterTemp;
-        this.hazards = obj.hazards;
-        this.lat = obj.lat;
-        this.lng = obj.lng;
-        this.spotID = obj.spotID;
-        this.picture = obj.picture;
     };
 
     /* self.Query is bound to the input on the View. Because it is an

@@ -10,7 +10,6 @@ $(document).ready(function() {
 
     console.log('tooltips loaded');
 
-
     // Load images
     var numImages = 0;
     var loadedImages = 0;
@@ -26,7 +25,6 @@ $(document).ready(function() {
         images[src].onload = function () {
             if(++loadedImages >= numImages) {
               console.log('images loaded');
-              imagesLoaded = true;
             };
         };
         images[src].src = source[src];
@@ -148,9 +146,6 @@ $(document).ready(function() {
 
 });
 
-// Not yet populated with data
-var locationData = [];
-
 function AppViewModel () {
 
     this.self = this;
@@ -169,6 +164,10 @@ function AppViewModel () {
 
           // Invoke function to parse the location data
           self.parseLocationData(data);
+
+          // Populate Google map with markers based on location data
+          generateMarkers(data);
+          console.log('generate map markers');
         }
     });
 
@@ -192,11 +191,8 @@ function AppViewModel () {
         console.log("locationArray loaded");
         console.log("locationGrid loaded");
 
-        /* Load the rollover effects only if the related images have
-        successfully loaded */
-        if(imagesLoaded) {
-            addRolloverEffect();
-        };
+        // Load the rollover effects
+        addRolloverEffect();
     };
 
     /* self.Query is bound to the input on the View. Because it is an
@@ -1698,6 +1694,8 @@ function AppViewModel () {
 
     self.getMagicSeaweed = function (spotID, breakName, cl) {
 
+        console.log('get current conditions');
+
         var $currentSurfGuide = $('.title-guide').text();
         var $surfGuideTitleContainer = $('.title-guide');
 
@@ -1994,6 +1992,8 @@ function AppViewModel () {
 
         function showError (cl) {
 
+            console.log('MSW api request unsuccessful');
+
             /* Before rendering the error message, check which surf guide is
             currently open and make sure it matches the API request. This ensures that an api request that takes time to download isn't injected into another surf guide if the user changed surf guides during the api request processing */
 
@@ -2071,6 +2071,7 @@ var map, infoWindow;
 the ViewModel */
 var markers = [];
 
+// Create Google Map
 function initMap() {
 
   // Create an array of styles for the surf map
@@ -2185,14 +2186,11 @@ function initMap() {
     // Create an info window object for displaying the break name
     infoWindow = new google.maps.InfoWindow();
 
-    generateMarkers();
-
     addMapButton();
-
     addMapClickEvent();
 }
 
-function generateMarkers () {
+function generateMarkers (locationData) {
 
     /* Loop through locationData and filter out the coordinates
     & break name for each break. Save the break's coordinates and name

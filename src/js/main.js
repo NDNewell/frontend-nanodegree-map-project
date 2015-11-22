@@ -1,448 +1,3 @@
-
-
-var locationData = [
-    {
-      breakName: 'Sunset Beach',
-      location: 'Oahu, Hawaii',
-      bigWave: true,
-      wellKnown: false,
-      cost: {budget: 100, highEnd: 250},
-      skillLevel: ['advanced'],
-      waveDirection: 'left',
-      breakDetails: 'reef',
-      avgSize: {min: 5, max: 16, aboveMax: true},
-      optimalSwell: ['W', 'NW'],
-      optimalWind: ['E', 'SSE'],
-      optimalTide: ['mid'],
-      optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
-      climate: 'Aw',
-      avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
-      hazards: [ 'beginners', 'boats'],
-      lat: 21.679011,
-      lng: -158.041277,
-      spotID: 657,
-      picture: '<img src="img/flickr_sunset_beach-w640.jpg" class="location-image  img-responsive img-rounded">'
-    },
-    {
-      breakName: 'Pipeline/Backdoor',
-      location: 'Oahu, Hawaii',
-      bigWave: false,
-      wellKnown: true,
-      cost: {budget: 50, highEnd: 150},
-      skillLevel: ['advanced'],
-      waveDirection: 'right',
-      breakDetails: 'beach',
-      avgSize: {min: 3, max: 7, aboveMax: true},
-      optimalSwell: ['E', 'SE'],
-      optimalWind: ['W', 'SW'],
-      optimalTide: ['high'],
-      optimalTime: [' Mar', ' Jan', ' Feb', ' Apr', ' May'],
-      climate: 'Af',
-      avgWaterTemp: {spring: 77, summer: 80, autumn: 75, winter: 77},
-      hazards: ['crocs', 'crowded', 'dangerous break'],
-      lat: 21.665244,
-      lng: -158.053408,
-      spotID: 616,
-      picture: '<img src="img/flickr_pipeline-w640.jpg" class="location-image  img-responsive img-rounded">'
-    },
-    {
-      breakName: 'Cannons',
-      location: 'Kauai, Hawaii',
-      bigWave: true,
-      wellKnown: false,
-      cost: {budget: 125, highEnd: 300},
-      skillLevel: ['advanced'],
-      waveDirection: 'left & right',
-      breakDetails: 'point',
-      avgSize: {min: 5, max: 8, aboveMax: true},
-      optimalSwell: ['W', 'S'],
-      optimalWind: ['N', 'NNE'],
-      optimalTide: ['high', 'low'],
-      optimalTime: [' Sep', ' Oct', ' Nov', ' Dec', ' Jan', ' Feb'],
-      climate: 'BW',
-      avgWaterTemp: {spring: 77, summer: 80, autumn: 66, winter: 77},
-      hazards: ['far from shore', 'pollution', 'rocky bottom'],
-      lat: 22.224744,
-      lng: -159.566712,
-      spotID: 'none',
-      picture: '<img src="img/flickr_cannons-w640.jpg" class="location-image  img-responsive img-rounded">'
-    },
-    {
-      breakName: 'Tunnels',
-      location: 'Kauai, Hawaii',
-      bigWave: false,
-      wellKnown: false,
-      cost: {budget: 20, highEnd: 50},
-      skillLevel: ['intermediate'],
-      waveDirection: 'right',
-      breakDetails: 'river mouth',
-      avgSize: {min: 10, max: 17, aboveMax: false},
-      optimalSwell: ['ESE', 'SSW'],
-      optimalWind: ['W', 'WSW'],
-      optimalTide: ['high'],
-      optimalTime: [' Dec', ' Jan', ' Feb', ' Mar', ' Apr', ' Jun', ' Jul'],
-      climate: 'Cfa',
-      avgWaterTemp: {spring: 77, summer: 80, autumn: 74, winter: 77},
-      hazards: ['sea snakes', 'seals', 'seaweed'],
-      lat: 22.224744,
-      lng: -159.566712,
-      spotID: 'none',
-      picture: '<img src="img/flickr_tunnels-w640.jpg" class="location-image  img-responsive img-rounded">'
-    },
-    {
-      breakName: 'Anahola',
-      location: 'Kauai, Hawaii',
-      bigWave: false,
-      wellKnown: true,
-      cost: {budget: 50, highEnd: 100},
-      skillLevel: ['beginner'],
-      waveDirection: 'left',
-      breakDetails: 'point',
-      avgSize: {min: 7, max: 9, aboveMax: false},
-      optimalSwell: ['ESE', 'NNW'],
-      optimalWind: ['WSW', 'SSE'],
-      optimalTide: ['high', 'mid', 'low'],
-      optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
-      climate: 'Cfc',
-      avgWaterTemp: {spring: 77, summer: 80, autumn: 79, winter: 77},
-      hazards: ['sewage', 'shallow', 'sharks'],
-      lat: 22.148311,
-      lng: -159.300331,
-      spotID: 'none',
-      picture: '<img src="img/flickr_anahola-w640.jpg" class="location-image  img-responsive img-rounded">'
-    },
-    {
-      breakName: 'Hanalei',
-      location: 'Kauai, Hawaii',
-      bigWave: true,
-      wellKnown: false,
-      cost: {budget: 30, highEnd: 60},
-      skillLevel: ['beginner', 'intermediate', 'advanced'],
-      waveDirection: 'left & right',
-      breakDetails: 'river mouth',
-      avgSize: {min: 20, max: 25, aboveMax: true},
-      optimalSwell: ['W', 'NW'],
-      optimalWind: ['SE', 'SW'],
-      optimalTide: ['mid', 'low'],
-      optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
-      climate: 'BWh',
-      avgWaterTemp: {spring: 77, summer: 80, autumn: 73, winter: 77},
-      hazards: ['strong currents', 'strong rips', 'theft'],
-      lat: 22.218315,
-      lng: -159.502265,
-      spotID: 3051,
-      picture: '<img src="img/google_hanalei-w640.jpg" class="location-image  img-responsive img-rounded">'
-    },
-    {
-      breakName: "Hale'iwa",
-      location: 'Oahu, Hawaii',
-      bigWave: false,
-      wellKnown: true,
-      cost: {budget: 15, highEnd: 35},
-      skillLevel: ['advanced'],
-      waveDirection: 'left',
-      breakDetails: 'reef',
-      avgSize: {min: 5, max: 16, aboveMax: true},
-      optimalSwell: ['WNW', 'NE'],
-      optimalWind: ['NW', 'ESE'],
-      optimalTide: ['high', 'mid'],
-      optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
-      climate: 'BWk',
-      avgWaterTemp: {spring: 77, summer: 80, autumn: 71, winter: 77},
-      hazards: ['undertow', 'unfriendly', 'urchins'],
-      lat: 21.596416,
-      lng: -158.109121,
-      spotID: 660,
-      picture: '<img src="img/flickr_haleiwa-w640.jpg" class="location-image  img-responsive img-rounded">'
-    },
-    {
-      breakName: 'Waimea Bay',
-      location: 'Oahu, Hawaii',
-      bigWave: true,
-      wellKnown: false,
-      cost: {budget: 20, highEnd: 50},
-      skillLevel: ['advanced'],
-      waveDirection: 'left',
-      breakDetails: 'reef',
-      avgSize: {min: 11, max: 16, aboveMax: true},
-      optimalSwell: ['W', 'NW'],
-      optimalWind: ['ENE', 'S'],
-      optimalTide: ['low', 'mid', 'high'],
-      optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
-      climate: 'Am',
-      avgWaterTemp: {spring: 77, summer: 80, autumn: 76, winter: 77},
-      hazards: ['sharks', 'crowded', 'boats', 'shallow'],
-      lat: 21.642987,
-      lng: -158.066743,
-      spotID: 549,
-      picture: '<img src="img/wiki_waimea_bay-w640.jpg" class="location-image  img-responsive img-rounded">'
-    },
-    {
-      breakName: 'Rocky Point',
-      location: 'Oahu, Hawaii',
-      bigWave: false,
-      wellKnown: false,
-      cost: {budget: 35, highEnd: 75},
-      skillLevel: ['advanced'],
-      waveDirection: 'right',
-      breakDetails: 'point',
-      avgSize: {min: 5, max: 8, aboveMax: true},
-      optimalSwell: ['SSE', 'ESE'],
-      optimalWind: ['W', 'N'],
-      optimalTide: ['high', 'low'],
-      optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
-      climate: 'Dfa',
-      avgWaterTemp: {spring: 77, summer: 80, autumn: 98, winter: 77},
-      hazards: ['strong currents', 'crowded', 'seals', 'beginners'],
-      lat: 21.670862,
-      lng: -158.049157,
-      spotID: 658,
-      picture: '<img src="img/flickr_rocky_point-w640.jpg" class="location-image  img-responsive img-rounded">'
-    },
-    {
-      breakName: 'Turtle Bay',
-      location: 'Oahu, Hawaii',
-      bigWave: true,
-      wellKnown: true,
-      cost: {budget: 200, highEnd: 600},
-      skillLevel: ['intermediate'],
-      waveDirection: 'left',
-      breakDetails: 'river mouth',
-      avgSize: {min: 5, max: 16, aboveMax: true},
-      optimalSwell: ['SSW', 'NE'],
-      optimalWind: ['E'],
-      optimalTide: ['high', 'mid'],
-      optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
-      climate: 'Dfd',
-      avgWaterTemp: {spring: 77, summer: 80, autumn: 86, winter: 77},
-      hazards: ['strong currents', 'crowded', 'crocs', 'sewage'],
-      lat: 21.708047,
-      lng: -158.002275,
-      spotID: 'none',
-      picture: '<img src="img/flickr_turtle_bay-w640.jpg" class="location-image  img-responsive img-rounded">'
-    },
-    {
-      breakName: 'Halawa Bay',
-      location: 'Molokai, Hawaii',
-      bigWave: false,
-      wellKnown: false,
-      cost: {budget: 5, highEnd: 25},
-      skillLevel: ['beginner'],
-      waveDirection: 'right',
-      breakDetails: 'beach',
-      avgSize: {min: 5, max: 16, aboveMax: true},
-      optimalSwell: ['WNW', 'N'],
-      optimalWind: ['SW'],
-      optimalTide: ['high', 'mid', 'low'],
-      optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
-      climate: 'Cwa',
-      avgWaterTemp: {spring: 77, summer: 80, autumn: 45, winter: 77},
-      hazards: ['sharks', 'crowded', 'seaweed', 'urchins', 'sea snakes'],
-      lat: 21.159132,
-      lng: -156.735906,
-      spotID: 'none',
-      picture: '<img src="img/flickr_halawa_bay-w640.jpg" class="location-image  img-responsive img-rounded">'
-    },
-    {
-      breakName: 'Honolua Bay',
-      location: 'Maui, Hawaii',
-      bigWave: false,
-      wellKnown: false,
-      cost: {budget: 10, highEnd: 25},
-      skillLevel: ['intermediate'],
-      waveDirection: 'left & right',
-      breakDetails: 'reef',
-      avgSize: {min: 5, max: 16, aboveMax: true},
-      optimalSwell: ['W', 'S'],
-      optimalWind: ['E', 'NNE'],
-      optimalTide: ['low'],
-      optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
-      climate: 'BSh',
-      avgWaterTemp: {spring: 77, summer: 80, autumn: 36, winter: 77},
-      hazards: ['crowded', 'sharks', 'dangerous break'],
-      lat: 21.024350,
-      lng: -156.641890,
-      spotID: 697,
-      picture: '<img src="img/flickr_honolua_bay-w640.jpg" class="location-image  img-responsive img-rounded">'
-    },
-    {
-      breakName: 'Jaws/Peahi',
-      location: 'Maui, Hawaii',
-      bigWave: false,
-      wellKnown: false,
-      cost: {budget: 45, highEnd: 85},
-      skillLevel: ['beginner'],
-      waveDirection: 'right',
-      breakDetails: 'beach',
-      avgSize: {min: 5, max: 16, aboveMax: true},
-      optimalSwell: ['N', 'E'],
-      optimalWind: ['NE', 'S'],
-      optimalTide: ['mid'],
-      optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
-      climate: 'Cfc',
-      avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
-      hazards: ['crowded', 'strong currents', 'rocky bottom', 'far from shore'],
-      lat: 20.946401,
-      lng: -156.297389,
-      spotID: 617,
-      picture: '<img src="img/flickr_jaws-w640.jpg" class="location-image  img-responsive img-rounded">'
-    },
-    {
-      breakName: 'The Cove',
-      location: 'Maui, Hawaii',
-      bigWave: false,
-      wellKnown: true,
-      cost: {budget: 60, highEnd: 100},
-      skillLevel: ['intermediate'],
-      waveDirection: 'left & right',
-      breakDetails: 'river mouth',
-      avgSize: {min: 5, max: 16, aboveMax: true},
-      optimalSwell: ['SSE', 'NNE'],
-      optimalWind: ['W', 'SSW'],
-      optimalTide: ['high'],
-      optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
-      climate: 'Cfb',
-      avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
-      hazards: ['strong currents', 'crowded'],
-      lat: 20.728298,
-      lng: -156.452353,
-      spotID: 'none',
-      picture: '<img src="img/flickr_the_cove-w640.jpg" class="location-image  img-responsive img-rounded">'
-    },
-    {
-      breakName: "Ma'alaea",
-      location: 'Maui, Hawaii',
-      bigWave: true,
-      wellKnown: false,
-      cost: {budget: 20, highEnd: 55},
-      skillLevel: ['beginner'],
-      waveDirection: 'right',
-      breakDetails: 'beach',
-      avgSize: {min: 5, max: 16, aboveMax: true},
-      optimalSwell: ['WSW', 'ENE'],
-      optimalWind: ['NNE', 'NE'],
-      optimalTide: ['high', 'low'],
-      optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
-      climate: 'Csb',
-      avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
-      hazards: ['sharks', 'crowded', 'seaweed', 'boats'],
-      lat: 20.791860,
-      lng: -156.508960,
-      spotID: 618,
-      picture: '<img src="img/flickr_maalaea-w640.jpg" class="location-image  img-responsive img-rounded">'
-    },
-    {
-      breakName: 'Lahaina',
-      location: 'Maui, Hawaii',
-      bigWave: false,
-      wellKnown: true,
-      cost: {budget: 10, highEnd: 30},
-      skillLevel: ['intermediate'],
-      waveDirection: 'left & right',
-      breakDetails: 'point',
-      avgSize: {min: 5, max: 16, aboveMax: true},
-      optimalSwell: ['NE', 'NW'],
-      optimalWind: ['ESE', 'SE'],
-      optimalTide: ['high'],
-      optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
-      climate: 'Dwa',
-      avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
-      hazards: ['strong currents', 'crowded', 'beginners', 'shallow'],
-      lat: 20.869326,
-      lng: -156.679025,
-      spotID: 4287,
-      picture: '<img src="img/flickr_lahaina-w640.jpg" class="location-image  img-responsive img-rounded">'
-    },
-    {
-      breakName: 'Lymans/Banyans',
-      location: 'Big Island, Hawaii',
-      bigWave: true,
-      wellKnown: false,
-      cost: {budget: 60, highEnd: 185},
-      skillLevel: ['advanced'],
-      waveDirection: 'left',
-      breakDetails: 'beach',
-      avgSize: {min: 5, max: 16, aboveMax: true},
-      optimalSwell: ['W', 'NW'],
-      optimalWind: ['E', 'S'],
-      optimalTide: ['low'],
-      optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
-      climate: 'Dwd',
-      avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
-      hazards: ['sharks', 'crowded','strong rips'],
-      lat: 19.606206,
-      lng: -155.978016,
-      spotID: 2784,
-      picture: '<img src="img/flickr_lymans-w640.jpg" class="location-image  img-responsive img-rounded">'
-    },
-    {
-      breakName: 'Pine Trees',
-      location: 'Big Island, Hawaii',
-      bigWave: false,
-      wellKnown: false,
-      cost: {budget: 70, highEnd: 120},
-      skillLevel: ['beginner'],
-      waveDirection: 'left & right',
-      breakDetails: 'reef',
-      avgSize: {min: 5, max: 16, aboveMax: true},
-      optimalSwell: ['SSE', 'SW'],
-      optimalWind: ['N', 'S'],
-      optimalTide: ['mid'],
-      optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
-      climate: 'Am',
-      avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
-      hazards: ['crowded', 'strong rips', 'unfriendly'],
-      lat: 19.695131,
-      lng: -156.045926,
-      spotID: 3958,
-      picture: '<img src="img/flickr_pine_trees-w640.jpg" class="location-image  img-responsive img-rounded">'
-    },
-    {
-      breakName: 'Kiholo Bay',
-      location: 'Big Island, Hawaii',
-      bigWave: true,
-      wellKnown: true,
-      cost: {budget: 10, highEnd: 30},
-      skillLevel: ['intermediate', 'advanced'],
-      waveDirection: 'left',
-      breakDetails: 'beach',
-      avgSize: {min: 5, max: 16, aboveMax: true},
-      optimalSwell: ['W', 'E'],
-      optimalWind: ['NE', ' ENE'],
-      optimalTide: ['mid', 'low'],
-      optimalTime: [' Nov', ' Dec', ' Jan', ' Feb'],
-      climate: 'Bsh',
-      avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
-      hazards: ['strong currents', 'crowded', 'unfriendly', 'urchins'],
-      lat: 19.854416,
-      lng: -155.931340,
-      spotID: 'none',
-      picture: '<img src="img/flickr_kiholo_bay-w640.jpg" class="location-image  img-responsive img-rounded">'
-    },
-    {
-      breakName: "Honoli'i",
-      location: 'Big Island, Hawaii',
-      bigWave: true,
-      wellKnown: false,
-      cost: {budget: 5, highEnd: 25},
-      skillLevel: ['beginner', 'intermediate'],
-      waveDirection: 'left & right',
-      breakDetails: 'point',
-      avgSize: {min: 5, max: 16, aboveMax: true},
-      optimalSwell: ['W', 'NW'],
-      optimalWind: ['SSE', 'N'],
-      optimalTide: ['high', 'low'],
-      optimalTime: [' Jan', ' Feb', ' Mar', ' Apr', ' May', ' Jun', ' Jul', ' Aug', ' Sep', ' Oct', ' Nov', ' Dec'],
-      climate: 'Aw',
-      avgWaterTemp: {spring: 77, summer: 80, autumn: 80, winter: 77},
-      hazards: ['sharks', 'crowded', 'undertow'],
-      lat: 19.756298,
-      lng: -155.089960,
-      spotID: 3815,
-      picture: '<img src="img/flickr_honolii-w640.jpg" class="location-image  img-responsive img-rounded">'
-    }
-];
-
 var images = {};
 
 $(document).ready(function() {
@@ -471,9 +26,7 @@ $(document).ready(function() {
         images[src].onload = function () {
             if(++loadedImages >= numImages) {
               console.log('images loaded');
-
-              // Add rollover effects to each location
-              addRolloverEffect();
+              imagesLoaded = true;
             };
         };
         images[src].src = source[src];
@@ -595,19 +148,61 @@ $(document).ready(function() {
 
 });
 
+// Not yet populated with data
+var locationData = [];
+
 function AppViewModel () {
 
     this.self = this;
 
-    /* This array holds the location objects from model that have been created
-    from the beachLocation constructor*/
-    self.LocationArray = [];
+    // Cache api request URL for location data
+    var fireBaseURL = 'https://dazzling-torch-4012.firebaseio.com/locationData.json?';
 
-    /* Iterate through the location data from the model and push each object to
-    the location array above*/
-    locationData.forEach(function(obj) {
-        self.LocationArray.push(new beachLocation(obj));
+    // Load location Data from Firebase using ajax request
+    console.log('get location data');
+    $.ajax({
+        url: fireBaseURL,
+        dataType: 'jsonp',
+        // jsonp: "callback",
+        success: function(data) {
+          console.log('get location data successful');
+
+          // Invoke function to parse the location data
+          self.parseLocationData(data);
+        }
     });
+
+    /* This array holds the location objects that have been created
+    from the beachLocation constructor*/
+    self.locationArray = [];
+
+    /* This obervable array holds filtered location objects from search
+    queries and the initital data entered into the locationArray array. It is
+    automatically updated/rendered in the View */
+    self.locationGrid = ko.observableArray("");
+
+    /* Parse the location data obtained via the api request from Firebase */
+    self.parseLocationData = function (data) {
+
+        /* Iterate through the location data from the data and push each object to the location array above */
+        data.forEach(function(obj) {
+            self.locationArray.push(new beachLocation(obj));
+        });
+        console.log("locationArray loaded");
+
+        /* Iterate through the array of location objects and push them to the
+        observable array above */
+        self.locationArray.forEach(function(obj) {
+            self.locationGrid.push(obj);
+        });
+        console.log("locationGrid loaded");
+
+        /* Load the rollover effects only if the related images have
+        successfully loaded */
+        if(imagesLoaded) {
+            addRolloverEffect();
+        };
+    };
 
     /* Using a constructor, location objects are built here via the forEach
     method above*/
@@ -634,24 +229,14 @@ function AppViewModel () {
         this.picture = obj.picture;
     };
 
-    /* This obervable array holds filtered location objects from search
-    queries. It is automatically updated/rendered in the View*/
-    self.locationGrid = ko.observableArray("");
-
-    /* Iterate through the array of location objects and push them to the
-    observable array above*/
-    self.LocationArray.forEach(function(obj) {
-        self.locationGrid.push(obj);
-    });
-
     /* self.Query is bound to the input on the View. Because it is an
      observable variable, it's value will be updated whenever the input on the
      View is altered*/
     self.Query = ko.observable("");
 
-    /* Clear any existing text in the search field, clear any existing
-    searches, close the surf guide if open, show searchable locations, and
-    close any open info windows */
+    /* Clear any existing text or searches in the search field, close the surf
+     guide if open, show searchable locations, and close any open info windows
+     */
     $('.search-form').on("click", function () {
 
         // Clear search field
@@ -681,7 +266,7 @@ function AppViewModel () {
 
     /* Loop through the location array and obtain all of the break names
     and adding them to the search keywords array */
-    self.LocationArray.forEach(function(obj) {
+    self.locationArray.forEach(function(obj) {
         self.searchKeywords.push(obj.breakName);
 
         /* If a location keyword already exists in the search keywords array
@@ -735,7 +320,7 @@ function AppViewModel () {
         /* Compare each object's break name and location to the search terms.
          If it matches, re-add it to the obs. array and render in the View.
          If it doesn't match, then it isnt re-added.*/
-        self.LocationArray.forEach(function(obj) {
+        self.locationArray.forEach(function(obj) {
 
             // Convert break names (remove spaces, commas, apostrophes etc.)
             if (obj.breakName.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) >= 0) {
@@ -813,7 +398,7 @@ function AppViewModel () {
                     var hoverItem = targetData.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
 
                     // Iterate through the location array
-                    self.LocationArray.forEach(function(obj) {
+                    self.locationArray.forEach(function(obj) {
 
                         // Format info from object
                         var breakName = obj.breakName.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
@@ -2175,7 +1760,7 @@ function AppViewModel () {
                 dataType: 'jsonp',
                 // jsonp: "callback",
                 success: function(response) {
-                    console.log('api connection successful');
+                    console.log('MSW api request successful');
                     // Get current time & current time plus/minus three hours
                     var getTime = Date.now();
                     var currentTimeSecs = getTime / 1000;

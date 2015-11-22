@@ -1,3 +1,4 @@
+var imagesLoaded, locationsLoaded = false;
 var images = {};
 
 $(document).ready(function() {
@@ -25,6 +26,11 @@ $(document).ready(function() {
         images[src].onload = function () {
             if(++loadedImages >= numImages) {
               console.log('images loaded');
+              imagesLoaded = true;
+
+              if(locationsLoaded){
+                  addRolloverEffect();
+              };
             };
         };
         images[src].src = source[src];
@@ -191,8 +197,12 @@ function AppViewModel () {
         console.log("locationArray loaded");
         console.log("locationGrid loaded");
 
+        locationsLoaded = true;
+
         // Load the rollover effects
-        addRolloverEffect();
+        if(imagesLoaded) {
+            addRolloverEffect();
+        };
     };
 
     /* self.Query is bound to the input on the View. Because it is an

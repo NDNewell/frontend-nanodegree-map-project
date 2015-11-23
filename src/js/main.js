@@ -152,34 +152,27 @@ $(document).ready(function() {
 
 });
 
+// Set up connection to Firebase
+var locationData = new Firebase('https://dazzling-torch-4012.firebaseio.com/locationData');
+
+// Set the number of times the location data has been updated to zero
+var locationDataUpdated = 0;
+
 function AppViewModel () {
 
     this.self = this;
 
-    /* */
-    var locationDataTimeout = setTimeout (function() {
-        alert('get location data unsuccessful');
-    }, 8000);
+    // Get the location data from Firebase
+    locationData.on('value', function(snapshot) {
+        // Cache the data object in a variable
+        var data = snapshot.val();
 
-    // Cache api request URL for location data
-    var fireBaseURL = 'https://dazzling-torch-4012.firebaseio.com/locationData.json?';
+        // Parse through the information
+        self.parseLocationData(data);
 
-    // Load location Data from Firebase using ajax request
-    console.log('get location data');
-    $.ajax({
-        url: fireBaseURL,
-        dataType: 'jsonp',
-        // jsonp: "callback",
-        success: function(data) {
-          console.log('get location data successful');
-
-          // Invoke function to parse the location data
-          self.parseLocationData(data);
-
-          // Populate Google map with markers based on location data
-          generateMarkers(data);
-          console.log('generate map markers');
-        }
+    // In case of an error, display reason in console
+    }, function(errorObject) {
+        console.log("The read failed: " + errorObject.code);
     });
 
     /* This array holds the location objects that have been created
@@ -197,6 +190,26 @@ function AppViewModel () {
 
     /* Parse the location data obtained via the api request from Firebase */
     self.parseLocationData = function (data) {
+        // Create a space in console for easier reading
+        console.log(' ');
+
+        /* If the location data hasn't been loaded yet, display first msg, if
+        not display second msg */
+        if(locationDataUpdated < 1) {
+            console.log('load location data:');
+        } else {
+            console.log('update location data:');
+        };
+
+        /* Clear the referenced arrays in order to populate with most updated
+        info */
+        self.locationArray = [];
+        self.locationGrid.removeAll();
+        deleteMarkers();
+
+        // Populate Google map with markers based on location data
+        generateMarkers(data);
+        console.log('generate map markers');
 
         data.forEach(function(obj) {
 
@@ -218,9 +231,17 @@ function AppViewModel () {
             };
         });
 
-        console.log("locationArray loaded");
-        console.log("locationGrid loaded");
-        console.log("autosearch keywords loaded");
+        /* If the location data hasn't been loaded yet, display first group of
+        messages, if not display second group of messages */
+        if(locationDataUpdated < 1) {
+            console.log("  locationArray loaded");
+            console.log("  locationGrid loaded");
+            console.log("  autosearch keywords loaded");
+        } else {
+            console.log("  locationArray updated");
+            console.log("  locationGrid updated");
+            console.log("  autosearch keywords updated");
+        };
 
         /* Set to true. If images are still loading, rollover
         effects will be enabled when they are finished */
@@ -232,8 +253,9 @@ function AppViewModel () {
             addRolloverEffect();
         };
 
-        // Disable error message
-        clearTimeout(locationDataTimeout);
+        /* Iterate the number of times the location data has been
+        loaded/updated */
+        locationDataUpdated++;
     };
 
     /* self.Query is bound to the input on the View. Because it is an
@@ -2243,8 +2265,12 @@ function generateMarkers (locationData) {
     // Display markers found in the markers array on the map
     showMarkers(map);
 
-    // Set initial map bounds based on location of markers
-    setMapBounds();
+    /* If loading markers for the first time, set initial map bounds based on
+    location of markers */
+    if(locationDataUpdated < 1) {
+        setMapBounds();
+    };
+
 };
 
 function addMarker(breakName, breakCoordinates, breakLocation, obj) {
@@ -2252,13 +2278,21 @@ function addMarker(breakName, breakCoordinates, breakLocation, obj) {
     // Set a variable for custom map marker
     var markerImg = 'img/marker.png';
 
+    /* If loading markers for the first time, use the drop in animation;
+    however, if updating information, don't use animation */
+    if(locationDataUpdated < 1) {
+        var markerAnimation = google.maps.Animation.DROP;
+    } else {
+        var markerAnimation = "";
+    };
+
     var marker = new google.maps.Marker({
 
         // Set position using the newly created variable
         position: breakCoordinates,
 
         // Animate markers by dropping them onto the map at page load
-        animation: google.maps.Animation.DROP,
+        animation: markerAnimation,
         map: map,
         icon: markerImg,
 
@@ -2450,6 +2484,12 @@ function addMapClickEvent () {
         };
             infoWindow.close();
     });
+};
+
+// Deletes all markers from the map and array.
+function deleteMarkers() {
+    showMarkers(null);
+    markers = [];
 };
 
 ko.applyBindings(new AppViewModel);

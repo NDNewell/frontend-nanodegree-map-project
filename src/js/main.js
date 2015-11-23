@@ -202,11 +202,9 @@ function AppViewModel () {
 
             /* Iterate through the location data from the data and push each object to the location array above */
             self.locationArray.push(obj);
-            console.log("locationArray loaded");
 
             /* Iterate through the location data from the data and push each object to the location grid above */
             self.locationGrid.push(obj);
-            console.log("locationGrid loaded");
 
             /* Loop through the location array, obtain all of the break names
             and add them to the search keywords array */
@@ -218,8 +216,11 @@ function AppViewModel () {
             if(searchKeywords.indexOf(obj.location) < 0) {
                 self.searchKeywords.push(obj.location);
             };
-            console.log("autosearch keywords loaded");
         });
+
+        console.log("locationArray loaded");
+        console.log("locationGrid loaded");
+        console.log("autosearch keywords loaded");
 
         /* Set to true. If images are still loading, rollover
         effects will be enabled when they are finished */

@@ -162,7 +162,20 @@ function AppViewModel () {
 
     this.self = this;
 
-    // Get the location data from Firebase
+    /* This array holds the location objects that have been created
+    from the Firebase data reference*/
+    self.locationArray = [];
+
+    /* This obervable array holds filtered location objects from search
+    queries and the initial data entered into the location array. It is
+    automatically updated/rendered in the View */
+    self.locationGrid = ko.observableArray("");
+
+    /* This array holds the keywords that pop up in a small menu
+    within the search bar dynamically during searches */
+    self.searchKeywords = [];
+
+    // Get the location data from Firebase ref using an asyncronous listener
     locationData.on('value', function(snapshot) {
         // Cache the data object in a variable
         var data = snapshot.val();
@@ -175,44 +188,30 @@ function AppViewModel () {
         console.log("The read failed: " + errorObject.code);
     });
 
-    /* This array holds the location objects that have been created
-    from the beachLocation constructor*/
-    self.locationArray = [];
-
-    /* This obervable array holds filtered location objects from search
-    queries and the initital data entered into the locationArray array. It is
-    automatically updated/rendered in the View */
-    self.locationGrid = ko.observableArray("");
-
-    /* Create an array that holds keywords that pop up in a small menu
-    within the search bar dynamically during searches */
-    self.searchKeywords = [];
-
-    /* Parse the location data obtained via the api request from Firebase */
+    /* Parse the location data obtained from Firebase data ref*/
     self.parseLocationData = function (data) {
+
         // Create a space in console for easier reading
         console.log(' ');
 
-        /* If the location data hasn't been loaded yet, display first msg, if
-        not display second msg */
+        /* If the location data hasn't been loaded yet, display first msg. If
+        not, display second msg */
         if(locationDataUpdated < 1) {
             console.log('load location data:');
         } else {
             console.log('update location data:');
         };
 
-        /* Clear the referenced arrays in order to populate with most updated
-        info */
-        self.locationArray = [];
-        self.locationGrid.removeAll();
-        deleteMarkers();
-
-        // Populate Google map with markers based on location data
-        generateMarkers(data);
-        console.log('generate map markers');
+        /* If updating information, clear the referenced arrays in order to
+        enter new data */
+        if(locationDataUpdated > 0) {
+            self.locationArray = [];
+            self.locationGrid.removeAll();
+            self.searchKeywords = [];
+            deleteMarkers();
+        };
 
         data.forEach(function(obj) {
-
             /* Iterate through the location data from the data and push each object to the location array above */
             self.locationArray.push(obj);
 
@@ -232,7 +231,7 @@ function AppViewModel () {
         });
 
         /* If the location data hasn't been loaded yet, display first group of
-        messages, if not display second group of messages */
+        messages. If not, display second group of messages */
         if(locationDataUpdated < 1) {
             console.log("  locationArray loaded");
             console.log("  locationGrid loaded");
@@ -241,6 +240,17 @@ function AppViewModel () {
             console.log("  locationArray updated");
             console.log("  locationGrid updated");
             console.log("  autosearch keywords updated");
+        };
+
+        // Update/generate map markers for Google map based on location data
+        generateMarkers(data);
+
+        /* If the location data hasn't been loaded yet, display first msg. If
+        not, display second msg */
+        if(locationDataUpdated < 1) {
+            console.log('generate map markers');
+        } else {
+            console.log('update map markers');
         };
 
         /* Set to true. If images are still loading, rollover
@@ -289,10 +299,10 @@ function AppViewModel () {
         self.searchLocations();
     });
 
-    /* Call the jQuery-UI auto complete widget.*/
+    /* Call the jQuery-UI auto complete widget */
     $('.search-form').autocomplete({
         /* All keywords come from the above array */
-        source: searchKeywords,
+        source: self.searchKeywords,
         /* Highlight the pop-up menu item that matches what is currently in
          the search input field */
         autoFocus: true,

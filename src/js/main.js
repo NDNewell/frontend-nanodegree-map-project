@@ -156,6 +156,11 @@ function AppViewModel () {
 
     this.self = this;
 
+    /* */
+    var locationDataTimeout = setTimeout (function() {
+        alert('get location data unsuccessful');
+    }, 8000);
+
     // Cache api request URL for location data
     var fireBaseURL = 'https://dazzling-torch-4012.firebaseio.com/locationData.json?';
 
@@ -186,23 +191,48 @@ function AppViewModel () {
     automatically updated/rendered in the View */
     self.locationGrid = ko.observableArray("");
 
+    /* Create an array that holds keywords that pop up in a small menu
+    within the search bar dynamically during searches */
+    self.searchKeywords = [];
+
     /* Parse the location data obtained via the api request from Firebase */
     self.parseLocationData = function (data) {
 
-        /* Iterate through the location data from the data and push each object to the location array above */
         data.forEach(function(obj) {
-            self.locationArray.push(obj);
-            self.locationGrid.push(obj);
-        });
-        console.log("locationArray loaded");
-        console.log("locationGrid loaded");
 
+            /* Iterate through the location data from the data and push each object to the location array above */
+            self.locationArray.push(obj);
+            console.log("locationArray loaded");
+
+            /* Iterate through the location data from the data and push each object to the location grid above */
+            self.locationGrid.push(obj);
+            console.log("locationGrid loaded");
+
+            /* Loop through the location array, obtain all of the break names
+            and add them to the search keywords array */
+            self.searchKeywords.push(obj.breakName);
+
+            /* If a location keyword already exists in the search keywords
+            array do not add it. If it doesn't, add it to the array. This
+            avoids having the same location listed multiple times in the pop-up window */
+            if(searchKeywords.indexOf(obj.location) < 0) {
+                self.searchKeywords.push(obj.location);
+            };
+            console.log("autosearch keywords loaded");
+        });
+
+        /* Set to true. If images are still loading, rollover
+        effects will be enabled when they are finished */
         locationsLoaded = true;
 
-        // Load the rollover effects
+        /* Load the rollover effects if the images load before location data
+        is parsed */
         if(imagesLoaded) {
             addRolloverEffect();
         };
+
+        // Disable error message
+        clearTimeout(locationDataTimeout);
     };
 
     /* self.Query is bound to the input on the View. Because it is an
@@ -232,25 +262,8 @@ function AppViewModel () {
         // Close open info windows
         infoWindow.close();
 
-        // Run a search to reset the map by running an empty search
+        // Reset the map by running an empty search
         self.searchLocations();
-    });
-
-    /* Create an array that holds keywords that pop up in a small menu
-    within the search bar dynamically during searches */
-    self.searchKeywords = [];
-
-    /* Loop through the location array and obtain all of the break names
-    and adding them to the search keywords array */
-    self.locationArray.forEach(function(obj) {
-        self.searchKeywords.push(obj.breakName);
-
-        /* If a location keyword already exists in the search keywords array
-        do not add it. If it doesn't add it to the array. This avoids having
-        the same location listed multiple times in the pop-up window */
-        if(searchKeywords.indexOf(obj.location) < 0) {
-            self.searchKeywords.push(obj.location);
-        }
     });
 
     /* Call the jQuery-UI auto complete widget.*/

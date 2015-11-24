@@ -159,7 +159,7 @@ function AppViewModel () {
     /* If no location data is returned within 10 seconds, show error */
     var locationDataTimeout = setTimeout (function() {
         showLocationsLoadError();
-    }, 10000);
+    }, 15000);
 
     // Cache api request URL for location data
     var fireBaseURL = 'https://dazzling-torch-4012.firebaseio.com/locationData.json?';
@@ -250,7 +250,7 @@ function AppViewModel () {
         $('.list-section').toggle();
 
         // Cache error message, image, and container
-        var locationLoadError = '<section class="error-section">' + '<div class="row">' + '<div class="col-xs-12 data-load-error-container">' + '<img src="img/no_connection.svg" class="no-connection">' + '<p>Search unavailable =(</p>' + '</div>' + '</div>' + '</section>';
+        var locationLoadError = '<section class="error-section">' + '<div class="row">' + '<div class="col-xs-12 data-load-error-container">' + '<img src="img/no_connection.svg" class="no-connection">' + '<p>Dude! Really?! =(</p>' + '</div>' + '</div>' + '</section>';
 
         // Cache a reload button
         var reloadButton = '<button type="button" class="btn reload-button">Reload</button>';
@@ -2294,9 +2294,6 @@ function addMarker(breakName, breakCoordinates, breakLocation, obj) {
 
         // Set position using the newly created variable
         position: breakCoordinates,
-
-        // Animate markers by dropping them onto the map at page load
-        animation: google.maps.Animation.DROP,
         map: map,
         icon: markerImg,
 

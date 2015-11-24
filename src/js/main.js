@@ -152,66 +152,54 @@ $(document).ready(function() {
 
 });
 
-// Set up connection to Firebase
-var locationData = new Firebase('https://dazzling-torch-4012.firebaseio.com/locationData');
-
-// Set the number of times the location data has been updated to zero
-var locationDataUpdated = 0;
-
 function AppViewModel () {
 
     this.self = this;
 
+    /* */
+    var locationDataTimeout = setTimeout (function() {
+        alert('get location data unsuccessful');
+    }, 8000);
+
+    // Cache api request URL for location data
+    var fireBaseURL = 'https://dazzling-torch-4012.firebaseio.com/locationData.json?';
+
+    // Load location Data from Firebase using ajax request
+    console.log('get location data');
+    $.ajax({
+        url: fireBaseURL,
+        dataType: 'jsonp',
+        // jsonp: "callback",
+        success: function(data) {
+          console.log('get location data successful');
+
+          // Invoke function to parse the location data
+          self.parseLocationData(data);
+
+          // Populate Google map with markers based on location data
+          generateMarkers(data);
+          console.log('generate map markers');
+        }
+    });
+
     /* This array holds the location objects that have been created
-    from the Firebase data reference*/
+    from the beachLocation constructor*/
     self.locationArray = [];
 
     /* This obervable array holds filtered location objects from search
-    queries and the initial data entered into the location array. It is
+    queries and the initital data entered into the locationArray array. It is
     automatically updated/rendered in the View */
     self.locationGrid = ko.observableArray("");
 
-    /* This array holds the keywords that pop up in a small menu
+    /* Create an array that holds keywords that pop up in a small menu
     within the search bar dynamically during searches */
     self.searchKeywords = [];
 
-    // Get the location data from Firebase ref using an asyncronous listener
-    locationData.on('value', function(snapshot) {
-        // Cache the data object in a variable
-        var data = snapshot.val();
-
-        // Parse through the information
-        self.parseLocationData(data);
-
-    // In case of an error, display reason in console
-    }, function(errorObject) {
-        console.log("The read failed: " + errorObject.code);
-    });
-
-    /* Parse the location data obtained from Firebase data ref*/
+    /* Parse the location data obtained via the api request from Firebase */
     self.parseLocationData = function (data) {
 
-        // Create a space in console for easier reading
-        console.log(' ');
-
-        /* If the location data hasn't been loaded yet, display first msg. If
-        not, display second msg */
-        if(locationDataUpdated < 1) {
-            console.log('load location data:');
-        } else {
-            console.log('update location data:');
-        };
-
-        /* If updating information, clear the referenced arrays in order to
-        enter new data */
-        if(locationDataUpdated > 0) {
-            self.locationArray = [];
-            self.locationGrid.removeAll();
-            self.searchKeywords = [];
-            deleteMarkers();
-        };
-
         data.forEach(function(obj) {
+
             /* Iterate through the location data from the data and push each object to the location array above */
             self.locationArray.push(obj);
 
@@ -230,28 +218,9 @@ function AppViewModel () {
             };
         });
 
-        /* If the location data hasn't been loaded yet, display first group of
-        messages. If not, display second group of messages */
-        if(locationDataUpdated < 1) {
-            console.log("  locationArray loaded");
-            console.log("  locationGrid loaded");
-            console.log("  autosearch keywords loaded");
-        } else {
-            console.log("  locationArray updated");
-            console.log("  locationGrid updated");
-            console.log("  autosearch keywords updated");
-        };
-
-        // Update/generate map markers for Google map based on location data
-        generateMarkers(data);
-
-        /* If the location data hasn't been loaded yet, display first msg. If
-        not, display second msg */
-        if(locationDataUpdated < 1) {
-            console.log('generate map markers');
-        } else {
-            console.log('update map markers');
-        };
+        console.log("locationArray loaded");
+        console.log("locationGrid loaded");
+        console.log("autosearch keywords loaded");
 
         /* Set to true. If images are still loading, rollover
         effects will be enabled when they are finished */
@@ -263,9 +232,8 @@ function AppViewModel () {
             addRolloverEffect();
         };
 
-        /* Iterate the number of times the location data has been
-        loaded/updated */
-        locationDataUpdated++;
+        // Disable error message
+        clearTimeout(locationDataTimeout);
     };
 
     /* self.Query is bound to the input on the View. Because it is an
@@ -299,10 +267,10 @@ function AppViewModel () {
         self.searchLocations();
     });
 
-    /* Call the jQuery-UI auto complete widget */
+    /* Call the jQuery-UI auto complete widget.*/
     $('.search-form').autocomplete({
         /* All keywords come from the above array */
-        source: self.searchKeywords,
+        source: searchKeywords,
         /* Highlight the pop-up menu item that matches what is currently in
          the search input field */
         autoFocus: true,
@@ -2275,12 +2243,8 @@ function generateMarkers (locationData) {
     // Display markers found in the markers array on the map
     showMarkers(map);
 
-    /* If loading markers for the first time, set initial map bounds based on
-    location of markers */
-    if(locationDataUpdated < 1) {
-        setMapBounds();
-    };
-
+    // Set initial map bounds based on location of markers
+    setMapBounds();
 };
 
 function addMarker(breakName, breakCoordinates, breakLocation, obj) {
@@ -2288,21 +2252,13 @@ function addMarker(breakName, breakCoordinates, breakLocation, obj) {
     // Set a variable for custom map marker
     var markerImg = 'img/marker.png';
 
-    /* If loading markers for the first time, use the drop in animation;
-    however, if updating information, don't use animation */
-    if(locationDataUpdated < 1) {
-        var markerAnimation = google.maps.Animation.DROP;
-    } else {
-        var markerAnimation = "";
-    };
-
     var marker = new google.maps.Marker({
 
         // Set position using the newly created variable
         position: breakCoordinates,
 
         // Animate markers by dropping them onto the map at page load
-        animation: markerAnimation,
+        animation: google.maps.Animation.DROP,
         map: map,
         icon: markerImg,
 
@@ -2494,12 +2450,6 @@ function addMapClickEvent () {
         };
             infoWindow.close();
     });
-};
-
-// Deletes all markers from the map and array.
-function deleteMarkers() {
-    showMarkers(null);
-    markers = [];
 };
 
 ko.applyBindings(new AppViewModel);

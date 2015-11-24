@@ -156,16 +156,17 @@ function AppViewModel () {
 
     this.self = this;
 
-    /* */
+    /* If no location data is returned within 10 seconds, show error */
     var locationDataTimeout = setTimeout (function() {
-        alert('get location data unsuccessful');
-    }, 8000);
+        showLocationsLoadError();
+    }, 10000);
 
     // Cache api request URL for location data
     var fireBaseURL = 'https://dazzling-torch-4012.firebaseio.com/locationData.json?';
 
     // Load location Data from Firebase using ajax request
     console.log('get location data');
+
     $.ajax({
         url: fireBaseURL,
         dataType: 'jsonp',
@@ -182,12 +183,12 @@ function AppViewModel () {
         }
     });
 
-    /* This array holds the location objects that have been created
-    from the beachLocation constructor*/
+    /* This array holds the location objects that have been parsed from
+     Firebase */
     self.locationArray = [];
 
     /* This obervable array holds filtered location objects from search
-    queries and the initital data entered into the locationArray array. It is
+    queries and the initital data entered into the location array. It is
     automatically updated/rendered in the View */
     self.locationGrid = ko.observableArray("");
 
@@ -234,6 +235,32 @@ function AppViewModel () {
 
         // Disable error message
         clearTimeout(locationDataTimeout);
+    };
+
+    // Render the error msg when no location data is loaded
+    self.showLocationsLoadError = function () {
+
+        console.log('get location data unsuccessful');
+
+        // Hide sections not able to render properly without location info
+        $('.search-container').toggle();
+        $('.search-section').toggle();
+        $('.map-section').toggle();
+        $('.surf-info-section').toggle();
+        $('.list-section').toggle();
+
+        // Cache error message, image, and container
+        var locationLoadError = '<section class="error-section">' + '<div class="row">' + '<div class="col-xs-12 data-load-error-container">' + '<img src="img/no_connection.svg" class="no-connection">' + '<p>Search unavailable =(</p>' + '</div>' + '</div>' + '</section>';
+
+        // Cache a reload button
+        var reloadButton = '<button type="button" class="btn reload-button">Reload</button>';
+
+        // Attach error msg, img, & reload button
+        $('header').after(locationLoadError);
+        $('.data-load-error-container').append(reloadButton);
+        $('.reload-button').on('click', function(e) {
+            location = location;
+        });
     };
 
     /* self.Query is bound to the input on the View. Because it is an

@@ -22,6 +22,32 @@ body {
     background-color: white;
 }
 
+.data-load-error-container {
+    padding-top: 30%;
+    text-align: center;
+    font-size: 2em;
+    font-family: Arial, Verdana;
+}
+
+.data-load-error-container > img:first-child + p {
+    margin-top: 10px;
+}
+
+.reload-button {
+    height: 40px;
+    width: 200px;
+    background-color: #00B8E6;
+    color: white;
+    font-size: .7em;
+    font-family: Arial, Verdana;
+}
+
+.reload-button:hover {
+    color: white;
+    background-color: #2FC5EA;
+    border-color: #adadad;
+}
+
 .search-form {
     font-size: 1.35em;
     width: 365px;
@@ -469,6 +495,27 @@ body {
 
     .horizontal-rule {
         border-bottom: none;
+    }
+
+    .data-load-error-container {
+        padding-top: 30%;
+        text-align: center;
+        font-size: 2em;
+        font-family: Arial, Verdana;
+    }
+
+    .data-load-error-container > img:first-child + p {
+        margin-top: 10px;
+    }
+
+    .reload-button {
+        height: 70px;
+        width: 90%;
+        background-color: #00B8E6;
+        border-radius: 10px;
+        color: white;
+        font-size: 1em;
+        font-family: Arial, Verdana;
     }
 
     .search-container {

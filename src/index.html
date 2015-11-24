@@ -20,33 +20,33 @@
                 <div class="row header horizontal-rule">
                     <div class="col-xs-12 col-sm-6 logo">
                         <h3>SURF<span style="color:#00B8E6">LIST</span></h3>
-                        <p>Be local anywhere</p>
+                        <p>Be local everywhere</p>
                     </div>
                     <div class="col-xs-12 col-sm-6 search-container" id="search-form">
                         <input type="text" class="search-form" placeholder="Search for a location..." data-bind="textInput: Query, event: {keyup: searchLocations}">
                     </div>
                 </div>
             </header>
-            <section>
+            <section class="search-section">
                 <div class="row">
                     <div class="col-xs-12 search-filters-container">
                     </div>
                 </div>
             </section>
-            <section>
+            <section class="map-section">
                 <div class="row">
                     <div class="col-xs-12 map-container">
                         <div id="map"></div>
                     </div>
                 </div>
             </section>
-            <section>
+            <section class="surf-info-section">
                 <div class="row">
                     <div class="col-xs-12 surf-info-container">
                     </div>
                 </div>
             </section>
-            <section>
+            <section class="list-section">
                 <div class="row location-grid" data-bind="foreach: locationGrid">
                     <div class="col-xs-12 col-sm-6 col-md-4 location-frame" data-bind="click: clickLocationFrame">
                         <span data-bind="html: picture"></span>
@@ -55,7 +55,7 @@
                     </div>
                 </div>
             </section>
-            <section>
+            <section class="forum-section">
                 <div class="row">
                     <div class="col-xs-12 forum-container">
                     </div>

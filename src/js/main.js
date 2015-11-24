@@ -290,6 +290,9 @@ function AppViewModel () {
         // Close open info windows
         infoWindow.close();
 
+        // Find last selected marker and make pin small again
+        makeMarkerSmall();
+
         // Reset the map by running an empty search
         self.searchLocations();
     });
@@ -525,12 +528,17 @@ function AppViewModel () {
     the View. This is accomplished using ko's click binding*/
     self.goToMarker = function(breakName) {
 
+        // Find last selected marker and make pin small again
+        makeMarkerSmall();
+
         // Iterate through the markers array
         markers.forEach(function(marker) {
 
             /* Filter markers that match the location object. When a match is
             found, zoom in and display the relevant info window*/
             if (marker.title.indexOf(breakName) >= 0) {
+
+                marker.setIcon('img/marker_selected.svg');
 
                 // Open info window
                 getInfoWindow(marker, breakName);
@@ -717,6 +725,9 @@ function AppViewModel () {
         /* When the close surf guide button is clicked the surf guide is
         removed */
         $('.guide-close-button').on('click', function(e) {
+
+            // Find last selected marker and make pin small again
+            makeMarkerSmall();
 
             // Remove both surf conditions and surf guide from DOM
             $('.surf-guide-container').remove();
@@ -2277,7 +2288,7 @@ function generateMarkers (locationData) {
 function addMarker(breakName, breakCoordinates, breakLocation, obj) {
 
     // Set a variable for custom map marker
-    var markerImg = 'img/marker.png';
+    var markerImg = 'img/marker_small.svg';
 
     var marker = new google.maps.Marker({
 
@@ -2326,6 +2337,13 @@ function addListeners(marker, breakName, obj) {
         the individual break's name (breakName) within the infoWindow and
         attach it to the relevant marker */
         return function() {
+
+            // Find last selected marker and make pin small again
+            makeMarkerSmall();
+
+            console.log('make ' + marker.title + "'" + 's marker big!');
+            marker.setIcon('img/marker_selected.svg');
+
             getInfoWindow(marker, breakName);
 
             // Bounce marker upon clicking
@@ -2401,7 +2419,7 @@ function animateMarker (marker) {
     marker.setAnimation(google.maps.Animation.BOUNCE);
     window.setTimeout(function() {
         marker.setAnimation(null);
-    }, 1400);
+    }, 730);
 };
 
 function addMapButton () {
@@ -2464,11 +2482,14 @@ function showLocationFrame (breakName) {
     });
 };
 
-function addMapClickEvent () {
+function addMapClickEvent (marker) {
 
     /* When the map is clicked, location frames are made visible. This is useful if they were hidden as a result of a marker being clicked.
     In addition, all open info windows are closed */
     map.addListener('click', function() {
+
+        // Find last selected marker and make pin small again
+        makeMarkerSmall();
 
         /* If the surf guide isn't visible show the locations, otherwise
         do nothing (just close the info windows) */
@@ -2476,6 +2497,16 @@ function addMapClickEvent () {
             $('.location-frame').show();
         };
             infoWindow.close();
+    });
+};
+
+// Find last selected marker and make pin small again
+function makeMarkerSmall () {
+    markers.forEach(function(marker) {
+        if (marker.icon.indexOf('img/marker_selected.svg') >= 0) {
+            console.log('make ' + marker.title + "'" + 's marker small!');
+            marker.setIcon('img/marker_small.svg');
+        };
     });
 };
 

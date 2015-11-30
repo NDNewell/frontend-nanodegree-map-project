@@ -268,13 +268,32 @@ function AppViewModel () {
      View is altered*/
     self.Query = ko.observable("");
 
-    /* Clear any existing text or searches in the search field, close the surf
-     guide if open, show searchable locations, and close any open info windows
-     */
-    $('.search-form').on("click", function () {
+    /* When a search is made, create a 'clear search' button for clearing
+    searches. Also reset search when search field is clicked */
+    $('.search-form').on( "click", function () {
+          self.resetSearch();
+    }).on( "focus", function() {
+          if(!$('.search-form').val()){
+            $('.clear').toggle();
+          };
+      }).on( "blur", function () {
+          if(!$('.search-form').val()){
+            $('.clear').toggle();
+          };
+      });
+      /* When the 'clear search' button is selected, close any existing text
+      or searches in the search field, close the surf guide if open, show
+      searchable locations, close any open info windows and hide the 'clear
+      search' button */
+      $('.clear').on( "click", function() {
+          $('.clear').toggle();
+          self.resetSearch();
+      });
 
+    // Resets the search field and location list
+    self.resetSearch = function () {
         // Clear search field
-        $(this).val("");
+        $('.search-form').val("");
 
         // Clear any searches
         self.Query("");
@@ -295,7 +314,7 @@ function AppViewModel () {
 
         // Reset the map by running an empty search
         self.searchLocations();
-    });
+    };
 
     /* Call the jQuery-UI auto complete widget.*/
     $('.search-form').autocomplete({

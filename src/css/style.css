@@ -75,7 +75,7 @@ body {
     border-radius: 50px;
 }
 
-.clear:hover {
+.clear:hover, .clear:active {
     cursor:pointer;
     background-color: #333333;
     border-color: #333333;
@@ -150,6 +150,10 @@ body {
 .location-frame {
     text-align:center;
     padding: 10px 10px;
+}
+
+.location-frame:hover {
+    cursor: pointer;
 }
 
 .location-image {
@@ -568,7 +572,8 @@ body {
     }
 
     .clear {
-        margin-left: 85%;
+        margin-top: 23px;
+        margin-left: 84%;
     }
 
     .ui-menu-item {
@@ -733,6 +738,7 @@ body {
         width: 25%;
       }
       .clear {
+        margin-top: 23px;
         margin-left: 90%;
       }
 }

@@ -11,13 +11,31 @@
         <div class="container">
             <header>
                 <div class="row header horizontal-rule">
-                    <div class="col-xs-12 col-sm-6 logo">
-                        <h3>SURF<span style="color:#00B8E6">LIST</span></h3>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 search-container" id="search-form">
+                    <nav class="navbar navbar-inverse">
+                      <div class="container-fluid">
+                        <div class="navbar-header">
+                          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                          </button>
+                          <a class="navbar-brand" href="#"><p class="logo">SURF<span style="color:white">LIST</span></p></a>
+                        </div>
+                        <div class="collapse navbar-collapse" id="myNavbar">
+                          <ul class="nav navbar-nav">
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">Community</a></li>
+                          </ul>
+                          <ul class="nav navbar-nav navbar-right">
+                            <li class="search-symbol-list"><a href="#"><img id="magnifying-glass" class="search-symbol svg" src="img/magnifying-glass.svg"></a></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </nav>
+                    <div class="col-xs-12 search-container" id="search-form">
                         <span class="clear">x</span>
                         <input type="text" class="search-form clearable" placeholder="Search for a location..." data-bind="textInput: Query, event: {keyup: searchLocations}">
-
                         </input>
                     </div>
                 </div>
@@ -63,6 +81,7 @@
         </div>
     <script src="js/canvasloader.min.js"></script>
     <script src="js/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>
     <script src="js/knockout.min.js"></script>
     <script src="js/main.min.js"></script>

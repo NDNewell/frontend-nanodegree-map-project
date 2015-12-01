@@ -6,15 +6,16 @@ body {
 }
 
 .logo {
-    text-align: left;
-    vertical-align: middle;
-    padding-left: 0px;
-    margin-top: 4px;
+    font-size: 1.5em;
+    color: #00B8E6;
+}
+
+.search-symbol:hover path {
+    fill: white;
 }
 
 .header {
     background-color: white;
-    padding-top: 6px;
     padding-bottom: 12px;
 }
 
@@ -44,11 +45,15 @@ body {
     border-color: #adadad;
 }
 
+.search-container {
+    display: none;
+}
+
 .search-form {
     font-size: 1.35em;
     width: 250px;
     float: right;
-    margin-top: 14px;
+    margin-top: -7px;
     margin-right: -15px;
     padding-top: 7.5px;
     padding-bottom: 7.5px;
@@ -61,8 +66,8 @@ body {
 .clear {
     display: none;
     position: absolute;
-    margin-left: 86%;
-    margin-top: 20px;
+    margin-left: 93%;
+    margin-top: -1px;
     font-size: 1.5em;
     color: white;
     background-color: #E8E8E8;
@@ -509,16 +514,8 @@ body {
 @media (max-width: 767px) {
 
     .logo {
-        padding-left: 15px;
-    }
-
-    h3 {
-        font-size: 2.6em;
-    }
-
-    .logo > h3:first-child + p {
-        padding-left: 2px;
-        font-size: 1em;
+        font-size: 1.5em;
+        color: #00B8E6;
     }
 
     .horizontal-rule {
@@ -547,8 +544,6 @@ body {
     }
 
     .search-container {
-        padding-top: 7px;
-        padding-bottom: 5px;
         border-color: #E8E8E8;
         border-top-style: solid;
         border-top-width: 1px;
@@ -560,7 +555,6 @@ body {
         margin: 0 auto;
         font-size: 2em;
         padding-top: 12.5px;
-        padding-bottom: 10px;
         border-top: none;
         border-bottom: none;
         border-left: none;
@@ -576,6 +570,10 @@ body {
 
     .ui-menu-item {
         font-size: 1.8em;
+    }
+
+    .header {
+        padding-bottom: 0px;
     }
 
     .map-container {
@@ -824,7 +822,7 @@ body {
         font-size: 2em;
     }
     .clear {
-        margin-left: 89%;
+        margin-left: 94.5%;
     }
 }
 
@@ -870,7 +868,7 @@ body {
     }
 
     .clear {
-        margin-left: 91%;
+        margin-left: 95.5%;
     }
 }
 

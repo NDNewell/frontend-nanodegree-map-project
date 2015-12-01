@@ -268,6 +268,47 @@ function AppViewModel () {
      View is altered*/
     self.Query = ko.observable("");
 
+    /* Replace specific SVG images with inline SVG in order to make CSS
+    styling possible */
+    self.makeSVGInline = function (oldSvg) {
+        var $img = oldSvg;
+        var imgID = $img.attr('id');
+        var imgClass = $img.attr('class');
+        var imgURL = $img.attr('src');
+
+        jQuery.get(imgURL, function(data) {
+            // Get the SVG tag, ignore the rest
+            var $svg = jQuery(data).find('svg');
+
+            // Add replaced image's ID to the new SVG
+            if(typeof imgID !== 'undefined') {
+                $svg = $svg.attr('id', imgID);
+            }
+            // Add replaced image's classes to the new SVG
+            if(typeof imgClass !== 'undefined') {
+                $svg = $svg.attr('class', imgClass);
+            }
+
+            // Remove any invalid XML tags as per http://validator.w3.org
+            $svg = $svg.removeAttr('xmlns:a');
+
+            // Replace image with new SVG
+            $img.replaceWith($svg);
+
+        }, 'xml');
+    };
+
+    self.makeSVGInline($('.search-symbol'));
+
+    /* When the search symbol list item is clicked, the search field is
+    display */
+    $('.search-symbol-list').on("click", function () {
+        $('.navbar-collapse').removeClass("in");
+        $('.search-container').toggle();
+        $('.search-form').focus();
+        self.resetSearch();
+    });
+
     /* When a search is made, create a 'clear search' button for clearing
     searches. Also reset search when search field is clicked */
     $('.search-form').on( "click", function () {

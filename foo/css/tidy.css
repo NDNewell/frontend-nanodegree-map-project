@@ -10,11 +10,6 @@ body {
   padding-left: 0px;
 }
 
-.logo p {
-  font-size: .9em;
-  margin-top: -10px;
-}
-
 .header {
   background-color: white;
 }
@@ -36,7 +31,7 @@ body {
 .clear {
   display: none;
   position: absolute;
-  margin-right: 0px;
+  margin-left: 86%;
   margin-top: 20px;
   font-size: 1.5em;
   color: white;
@@ -48,8 +43,11 @@ body {
   border-radius: 50px;
 }
 
-.clear:hover {
+.clear:hover,
+.clear:active {
   cursor: pointer;
+  background-color: #333333;
+  border-color: #333333;
 }
 
 .map-container {
@@ -100,6 +98,10 @@ body {
   padding: 10px 10px;
 }
 
+.location-frame:hover {
+  cursor: pointer;
+}
+
 /** Icons **/
 
 @media (max-width: 767px) {
@@ -109,11 +111,6 @@ body {
 
   h3 {
     font-size: 2.6em;
-  }
-
-  .logo > h3:first-child + p {
-    padding-left: 2px;
-    font-size: 1em;
   }
 
   .horizontal-rule {
@@ -132,7 +129,7 @@ body {
     width: 100%;
     height: 75px;
     margin: 0 auto;
-    font-size: 2.3em;
+    font-size: 2em;
     padding-top: 12.5px;
     padding-bottom: 10px;
     border-top: none;
@@ -141,6 +138,11 @@ body {
     border-right: none;
     border-radius: 0px;
     outline: 0;
+  }
+
+  .clear {
+    margin-top: 23px;
+    margin-left: 84%;
   }
 
   .map-container {
@@ -162,6 +164,13 @@ body {
   }
 }
 
+@media (min-width: 560px) and (max-width: 767px) {
+  .clear {
+    margin-top: 23px;
+    margin-left: 90%;
+  }
+}
+
 @media (min-width: 768px) {
   .search-form:focus {
     box-shadow: 0 0 15px 5px #b0e0ee;
@@ -176,6 +185,18 @@ body {
 
   input[type=text]:focus {
     width: 365px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .clear {
+    margin-left: 89%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .clear {
+    margin-left: 91%;
   }
 }
 

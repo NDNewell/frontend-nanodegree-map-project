@@ -9,15 +9,13 @@ body {
     text-align: left;
     vertical-align: middle;
     padding-left: 0px;
-}
-
-.logo p {
-    font-size: .9em;
-    margin-top: -10px;
+    margin-top: 4px;
 }
 
 .header {
     background-color: white;
+    padding-top: 6px;
+    padding-bottom: 12px;
 }
 
 .data-load-error-container {

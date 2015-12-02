@@ -303,25 +303,26 @@ function AppViewModel () {
     /* When the search symbol is clicked, the search field is displayed with
     sliding animation */
     $('.search-symbol').on("click", function () {
-        self.displaySearch();
-    });
+        // If the search container is hidden, focus on it after .6 secs
+        if($('.search-container').is(":hidden")) {
+            // The seach container will be made visible
+            // Delay focusing on the search field until it has fully expanded
+            setTimeout(function() {
+                $('.search-form').focus();
+            }, 600);
+        } else {
+            // The search container will be hidden
+            // If the clear search button is visible, hide it
+            if (!$('.clear').is(":hidden")) {
+                $('.clear').toggle();
+            };
+            // Reset the search
+            self.resetSearch();
+        };
 
-    /* When the map symbol is clicked */
-    $('.map-symbol').on("click", function () {
-        console.log('it works!');
-    });
-
-    // Displays the search field using sliding animation
-    self.displaySearch = function () {
-        $('.navbar-collapse').removeClass("in");
+        // Make the search container visible or hidden
         $('.search-container').slideToggle(500);
-
-        // Delay focusing on the search field until it has fully expanded
-        setTimeout(function() {
-            $('.search-form').focus();
-        }, 600);
-        self.resetSearch();
-    };
+    });
 
     /* When a search is made, create a 'clear search' button for clearing
     searches. Also reset search when search field is clicked */
@@ -335,18 +336,20 @@ function AppViewModel () {
           if(!$('.search-form').val()){
             $('.clear').toggle();
           };
-      });
-      /* When the 'clear search' button is selected, close any existing text
-      or searches in the search field, close the surf guide if open, show
-      searchable locations, close any open info windows and hide the 'clear
-      search' button */
-      $('.clear').on( "click", function() {
-          $('.clear').toggle();
-          self.resetSearch();
-      });
+    });
+
+    /* When the 'clear search' button is selected, close any existing text
+    or searches in the search field, close the surf guide if open, show
+    searchable locations, close any open info windows and hide the 'clear
+    search' button */
+    $('.clear').on( "click", function() {
+        $('.clear').toggle();
+        self.resetSearch();
+    });
 
     // Resets the search field and location list
     self.resetSearch = function () {
+
         // Clear search field
         $('.search-form').val("");
 

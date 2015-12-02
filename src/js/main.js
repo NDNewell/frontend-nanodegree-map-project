@@ -293,21 +293,20 @@ function AppViewModel () {
         }, 'xml');
     };
 
-    /* Convert the search symbols to inline svgs so hover effects my be applied
+    /* Convert the imgs to inline svgs so hover effects my be applied
     through css styling */
     self.makeSVGInline($('.search-symbol-desktop'));
     self.makeSVGInline($('.search-symbol-mobile'));
     self.makeSVGInline($('.map-symbol-desktop'));
     self.makeSVGInline($('.map-symbol-mobile'));
 
-    /* When the search symbol list item is clicked, the search field is
-    displayed with sliding animation */
+    /* When the search symbol is clicked, the search field is displayed with
+    sliding animation */
     $('.search-symbol').on("click", function () {
         self.displaySearch();
     });
 
-    /* When the search symbol list item is clicked, the search field is
-    displayed with sliding animation */
+    /* When the map symbol is clicked */
     $('.map-symbol').on("click", function () {
         console.log('it works!');
     });
@@ -2323,7 +2322,7 @@ function initMap() {
     // Create an info window object for displaying the break name
     infoWindow = new google.maps.InfoWindow();
 
-    addMapButton();
+    addMapListener();
     addMapClickEvent();
 }
 
@@ -2494,45 +2493,29 @@ function animateMarker (marker) {
     }, 730);
 };
 
-function addMapButton () {
-
-    // Add button for hiding the map
-    $('.map-container').prepend('<button type="button" class="btn hide-map-button">▼</button>');
+function addMapListener () {
 
     // When the map close symbol is clicked, hide or show the map
-    $('.hide-map-button').on('click', function(e) {
+    $('.map-symbol').on('click', function(e) {
 
         // Either hide or reveal the map depending the last click
-        $('#map').toggle();
+        $('.map-container').slideToggle(1000);
 
-        /* If the map isn't visible after map toggle above (from closing it),
-        replace the 'down' symbol with an up symbol  */
-        if (!$('#map').is(":visible")) {
-            // Replace the existing symbol
-            $(this).text('▲');
-        /* If the map is made visible after map toggle above (opening it),
-        replace the 'up' symbol with a 'down' symbol & depending on the
-        circumstances, set the map bounds and close any open infowindows */
-        } else {
-            // Replace the existing symbol.
-            $(this).text('▼');
-
-            /* If the surf guide isn't visible when opening the map, reset the
-            map bounds and close any open info windows. Otherwise, do nothing.
-            We do nothing because if the map bounds are reset while the surf
-            guide is visible it creates a bug. When the map is eventually
-            reopened, the map is skewed left and all of the infowindows are
-            too small. All subsequent centering and map bounds setting results
-            in the map being skewed to the left. This may be because setting
-            the map bounds is called before the map is fully made visible ???
-            It's also unecessary because each marker is zoomed in on upon clicking a specific location even while the map is hidden, so if the map is eventually made visible, it will be centered on the selected location anyway */
-            if (!$('.surf-guide-container').length) {
-                /* Reset the map bounds, so map is centered on markers that
-                represent the currently unselected location frames */
-                setMapBounds();
-                // Close any open info windows
-                infoWindow.close();
-            };
+        /* If the surf guide isn't visible when opening the map, reset the
+        map bounds and close any open info windows. Otherwise, do nothing.
+        We do nothing because if the map bounds are reset while the surf
+        guide is visible it creates a bug. When the map is eventually
+        reopened, the map is skewed left and all of the infowindows are
+        too small. All subsequent centering and map bounds setting results
+        in the map being skewed to the left. This may be because setting
+        the map bounds is called before the map is fully made visible ???
+        It's also unecessary because each marker is zoomed in on upon clicking a specific location even while the map is hidden, so if the map is eventually made visible, it will be centered on the selected location anyway */
+        if (!$('.surf-guide-container').length) {
+            /* Reset the map bounds, so map is centered on markers that
+            represent the currently unselected location frames */
+            setMapBounds();
+            // Close any open info windows
+            infoWindow.close();
         };
     });
 };

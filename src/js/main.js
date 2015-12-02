@@ -297,11 +297,19 @@ function AppViewModel () {
     through css styling */
     self.makeSVGInline($('.search-symbol-desktop'));
     self.makeSVGInline($('.search-symbol-mobile'));
+    self.makeSVGInline($('.map-symbol-desktop'));
+    self.makeSVGInline($('.map-symbol-mobile'));
 
     /* When the search symbol list item is clicked, the search field is
     displayed with sliding animation */
     $('.search-symbol').on("click", function () {
         self.displaySearch();
+    });
+
+    /* When the search symbol list item is clicked, the search field is
+    displayed with sliding animation */
+    $('.map-symbol').on("click", function () {
+        console.log('it works!');
     });
 
     // Displays the search field using sliding animation

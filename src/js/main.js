@@ -272,7 +272,6 @@ function AppViewModel () {
     styling possible */
     self.makeSVGInline = function (oldSvg) {
         var $img = oldSvg;
-        var imgID = $img.attr('id');
         var imgClass = $img.attr('class');
         var imgURL = $img.attr('src');
 
@@ -280,10 +279,6 @@ function AppViewModel () {
             // Get the SVG tag, ignore the rest
             var $svg = jQuery(data).find('svg');
 
-            // Add replaced image's ID to the new SVG
-            if(typeof imgID !== 'undefined') {
-                $svg = $svg.attr('id', imgID);
-            }
             // Add replaced image's classes to the new SVG
             if(typeof imgClass !== 'undefined') {
                 $svg = $svg.attr('class', imgClass);
@@ -298,20 +293,28 @@ function AppViewModel () {
         }, 'xml');
     };
 
-    /* Make the search symbol an inline svg so hover effects my be applied
+    /* Convert the search symbols to inline svgs so hover effects my be applied
     through css styling */
-    self.makeSVGInline($('.search-symbol'));
+    self.makeSVGInline($('.search-symbol-desktop'));
+    self.makeSVGInline($('.search-symbol-mobile'));
 
     /* When the search symbol list item is clicked, the search field is
-    display */
-    $('.search-symbol-list').on("click", function () {
+    displayed with sliding animation */
+    $('.search-symbol').on("click", function () {
+        self.displaySearch();
+    });
+
+    // Displays the search field using sliding animation
+    self.displaySearch = function () {
         $('.navbar-collapse').removeClass("in");
         $('.search-container').slideToggle(500);
+
+        // Delay focusing on the search field until it has fully expanded
         setTimeout(function() {
             $('.search-form').focus();
         }, 600);
         self.resetSearch();
-    });
+    };
 
     /* When a search is made, create a 'clear search' button for clearing
     searches. Also reset search when search field is clicked */

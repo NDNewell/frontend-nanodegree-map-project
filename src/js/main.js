@@ -298,14 +298,18 @@ function AppViewModel () {
         }, 'xml');
     };
 
+    /* Make the search symbol an inline svg so hover effects my be applied
+    through css styling */
     self.makeSVGInline($('.search-symbol'));
 
     /* When the search symbol list item is clicked, the search field is
     display */
     $('.search-symbol-list').on("click", function () {
         $('.navbar-collapse').removeClass("in");
-        $('.search-container').toggle();
-        $('.search-form').focus();
+        $('.search-container').slideToggle(500);
+        setTimeout(function() {
+            $('.search-form').focus();
+        }, 600);
         self.resetSearch();
     });
 

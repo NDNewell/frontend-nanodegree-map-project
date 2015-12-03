@@ -9,13 +9,41 @@ body {
   color: #00B8E6;
 }
 
+.search-symbol-desktop,
+.map-symbol-desktop {
+  display: block;
+  position: relative;
+  float: right;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.search-symbol-desktop {
+  margin-top: 10.5px;
+}
+
+.map-symbol-desktop {
+  margin-top: 13px;
+}
+
+.search-symbol-mobile,
+.map-symbol-mobile {
+  display: none;
+}
+
 .header {
   background-color: white;
-  padding-bottom: 12px;
+  padding-bottom: 0px;
+}
+
+.navbar {
+  margin-bottom: 0px;
 }
 
 .search-container {
   display: none;
+  padding-top: 20px;
+  padding-bottom: 12px;
 }
 
 .search-form {
@@ -114,14 +142,37 @@ body {
     color: #00B8E6;
   }
 
-  .horizontal-rule {
+  .search-symbol-mobile,
+  .map-symbol-mobile {
+    display: block;
+    position: relative;
+    float: right;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+
+  .search-symbol-mobile {
+    margin-top: 10.5px;
+  }
+
+  .map-symbol-mobile {
+    margin-top: 13px;
+  }
+
+  .navbar-right {
+    display: none;
+  }
+
+  .header {
     border-bottom: none;
   }
 
   .search-container {
+    padding-top: 0px;
+    padding-bottom: 0px;
     border-color: #E8E8E8;
-    border-top-style: solid;
-    border-top-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
   }
 
   .search-form {
@@ -148,7 +199,7 @@ body {
   }
 
   .map-container {
-    border: 1px dashed;
+    border-bottom: 1px dashed;
     border-color: #E8E8E8;
     margin-top: 1px;
     margin-bottom: 1px;
@@ -161,7 +212,7 @@ body {
 
   .location-frame {
     text-align: center;
-    margin-top: 1px;
+    margin-bottom: 1px;
     padding: 0px 0px 0px 0px;
   }
 }
@@ -499,10 +550,6 @@ ul {
   background-color: #eee;
 }
 
-.nav > li > a > img {
-  max-width: none;
-}
-
 .navbar {
   position: relative;
   min-height: 50px;
@@ -724,13 +771,13 @@ ul {
 
 /*# sourceMappingURL=bootstrap.css.map */
 
-/*** uncss> filename: src/css/jquery-ui.css ***/
+/*** uncss> filename: https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css ***/
 
-/*! jQuery UI - v1.11.4 - 2015-11-17
+/*! jQuery UI - v1.11.4 - 2015-03-11
 * http://jqueryui.com
-* Includes: core.css, autocomplete.css, datepicker.css, menu.css, progressbar.css, slider.css, tooltip.css, theme.css
-* To view and modify this theme, visit http://jqueryui.com/themeroller/
-* Copyright jQuery Foundation and other contributors; Licensed MIT */
+* Includes: core.css, accordion.css, autocomplete.css, button.css, datepicker.css, dialog.css, draggable.css, menu.css, progressbar.css, resizable.css, selectable.css, selectmenu.css, slider.css, sortable.css, spinner.css, tabs.css, tooltip.css, theme.css
+* To view and modify this theme, visit http://jqueryui.com/themeroller/?ffDefault=Verdana%2CArial%2Csans-serif&fwDefault=normal&fsDefault=1.1em&cornerRadius=4px&bgColorHeader=cccccc&bgTextureHeader=highlight_soft&bgImgOpacityHeader=75&borderColorHeader=aaaaaa&fcHeader=222222&iconColorHeader=222222&bgColorContent=ffffff&bgTextureContent=flat&bgImgOpacityContent=75&borderColorContent=aaaaaa&fcContent=222222&iconColorContent=222222&bgColorDefault=e6e6e6&bgTextureDefault=glass&bgImgOpacityDefault=75&borderColorDefault=d3d3d3&fcDefault=555555&iconColorDefault=888888&bgColorHover=dadada&bgTextureHover=glass&bgImgOpacityHover=75&borderColorHover=999999&fcHover=212121&iconColorHover=454545&bgColorActive=ffffff&bgTextureActive=glass&bgImgOpacityActive=65&borderColorActive=aaaaaa&fcActive=212121&iconColorActive=454545&bgColorHighlight=fbf9ee&bgTextureHighlight=glass&bgImgOpacityHighlight=55&borderColorHighlight=fcefa1&fcHighlight=363636&iconColorHighlight=2e83ff&bgColorError=fef1ec&bgTextureError=glass&bgImgOpacityError=95&borderColorError=cd0a0a&fcError=cd0a0a&iconColorError=cd0a0a&bgColorOverlay=aaaaaa&bgTextureOverlay=flat&bgImgOpacityOverlay=0&opacityOverlay=30&bgColorShadow=aaaaaa&bgTextureShadow=flat&bgImgOpacityShadow=0&opacityShadow=30&thicknessShadow=8px&offsetTopShadow=-8px&offsetLeftShadow=-8px&cornerRadiusShadow=8px
+* Copyright 2015 jQuery Foundation and other contributors; Licensed MIT */
 
 /* Layout helpers
 ----------------------------------*/
@@ -748,6 +795,28 @@ ul {
 
 /* Overlays */
 
+/* to make room for the icon, a width needs to be set here */
+
+/* button elements seem to need a little more width */
+
+/* button text element */
+
+/* no icon support for input elements, provide padding by default */
+
+/* button icon element(s) */
+
+/* button sets */
+
+/* workarounds */
+
+/* reset extra padding in Firefox, see h5bp.com/l */
+
+input.ui-button::-moz-focus-inner,
+button.ui-button::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
 /* with multiple calendars */
 
 /* RTL support */
@@ -759,6 +828,12 @@ ul {
 /* right-aligned */
 
 /* support: IE8 - See #6727 */
+
+/* more specificity required here to override default borders */
+
+/* vertically center icon */
+
+/* TR overrides */
 
 /* Component containers
 ----------------------------------*/

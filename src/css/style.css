@@ -1,5 +1,6 @@
 body {
     font-family: Arial, Verdana;
+
 }
 
 .logo {
@@ -563,10 +564,6 @@ body {
 
     .map-symbol-mobile {
         margin-top: 13px;
-    }
-
-    .search-symbol-mobile:hover path, .map-symbol-mobile:hover path {
-        fill: white;
     }
 
     .navbar-right {

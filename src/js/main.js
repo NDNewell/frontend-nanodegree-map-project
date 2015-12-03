@@ -263,6 +263,25 @@ function AppViewModel () {
         });
     };
 
+    // Modifiy navbar to sticky navbar upon scrolling down
+    self.stickyNavBar = function() {
+        var navbar = $('#navbar-main'),
+            distance = navbar.offset().top,
+            $window = $(window);
+
+        $window.scroll(function () {
+            if($window.scrollTop() > distance) {
+                navbar.addClass('navbar-fixed-top');
+                $('body').css("padding-top", "50px");
+            } else {
+                navbar.removeClass('navbar-fixed-top');
+                $('body').css("padding-top", "0px");
+            };
+        });
+    };
+
+    self.stickyNavBar();
+
     /* self.Query is bound to the input on the View. Because it is an
      observable variable, it's value will be updated whenever the input on the
      View is altered*/

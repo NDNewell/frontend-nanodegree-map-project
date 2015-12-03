@@ -265,17 +265,18 @@ function AppViewModel () {
 
     // Modifiy navbar to sticky navbar upon scrolling down
     self.stickyNavBar = function() {
-        var navbar = $('#navbar-main'),
-            distance = navbar.offset().top,
-            $window = $(window);
+        var $navbar = $('#navbar-main'),
+            $distance = $navbar.offset().top,
+            $window = $(window),
+            $body = $('body');
 
         $window.scroll(function () {
-            if($window.scrollTop() > distance) {
-                navbar.addClass('navbar-fixed-top');
-                $('body').css("padding-top", "50px");
+            if($window.scrollTop() > $distance) {
+                $navbar.addClass('navbar-fixed-top');
+                $bodycss("padding-top", "50px");
             } else {
-                navbar.removeClass('navbar-fixed-top');
-                $('body').css("padding-top", "0px");
+                $navbar.removeClass('navbar-fixed-top');
+                $body.css("padding-top", "0px");
             };
         });
     };
@@ -295,6 +296,7 @@ function AppViewModel () {
         var imgURL = $img.attr('src');
 
         jQuery.get(imgURL, function(data) {
+
             // Get the SVG tag, ignore the rest
             var $svg = jQuery(data).find('svg');
 
@@ -319,45 +321,72 @@ function AppViewModel () {
     self.makeSVGInline($('.map-symbol-desktop'));
     self.makeSVGInline($('.map-symbol-mobile'));
 
+    // Set variables to be used in the functions to follow
+    var $clear = $('.clear'),
+        $searchForm = $('.search-form');
+
+
     /* When the search symbol is clicked, the search field is displayed with
     sliding animation */
     $('.search-symbol').on("click", function () {
 
-        // Make the search container visible or hidden
-        $('.search-container').slideToggle(500);
+        // Set variables
+        var $window = $(window),
+            $searchContainer = $('.search-container');
 
-        // Delay focusing on the search field until it has fully expanded
-        setTimeout(function() {
+        /* Enable toggling of the search container if the user's scroll position is at the top of the page. If the user's scroll position is
+        below this, only enable toggling of the search container if the search
+        container is not already visible. If the search container is visible,
+        instead of hiding it, the search form is brought into focus so the
+        user can make further searches */
+        if($window.scrollTop() < 56 || $window.scrollTop() >= 56 && $searchContainer.is(":hidden")) {
 
-            /* If the search container is visible, focus on search form and change class to indicate search is selected */
-            if(!$('.search-container').is(":hidden") && !$('.search-selected').length) {
-                $('.search-form').focus();
-                $('.search-symbol').addClass("search-selected");
-            } else {
-                // The search container is hidden
-                // If the clear search button is visible, hide it
-                if (!$('.clear').is(":hidden")) {
-                    $('.clear').toggle();
+            // Scroll to top of the page
+            document.body.scrollTop = document.documentElement.scrollTop = 0;
+
+            // Make the search container visible or hidden
+            $searchContainer.slideToggle(500);
+
+            // Delay focusing on the search field until it has fully expanded
+            setTimeout(function() {
+
+                /* If the search container is visible, focus on search form and change class to indicate search is selected */
+                if(!$searchContainer.is(":hidden") && !$('.search-selected').length) {
+                    $searchForm.focus();
+                    $('.search-symbol').addClass("search-selected");
+                } else {
+
+                    // The search container is hidden
+                    // If the clear search button is visible, hide it
+                    if (!$clear.is(":hidden")) {
+                        $clear.toggle();
+                    };
+
+                    // Remove class to change img's fill back to default
+                    $('.search-symbol').removeClass("search-selected");
+
+                    // Reset the search
+                    self.resetSearch();
                 };
-                // Remove class to change img's fill back to default
-                $('.search-symbol').removeClass("search-selected");
-                // Reset the search
-                self.resetSearch();
-            };
-        }, 600);
+            }, 600);
+
+        } else {
+            $searchForm.focus();
+        };
+
     });
 
     /* When a search is made, create a 'clear search' button for clearing
     searches. Also reset search when search field is clicked */
-    $('.search-form').on( "click", function () {
+    $searchForm.on( "click", function () {
           self.resetSearch();
     }).on( "focus", function() {
-        if(!$('.search-form').val()){
-          $('.clear').toggle();
+        if(!$($searchForm).val()){
+          $clear.toggle();
         };
     }).on( "blur", function () {
-        if(!$('.search-form').val()){
-          $('.clear').toggle();
+        if(!$($searchForm).val()){
+          $clear.toggle();
         };
     });
 
@@ -365,8 +394,8 @@ function AppViewModel () {
     or searches in the search field, close the surf guide if open, show
     searchable locations, close any open info windows and hide the 'clear
     search' button */
-    $('.clear').on( "click", function() {
-        $('.clear').toggle();
+    $clear.on( "click", function() {
+        $clear.toggle();
         self.resetSearch();
     });
 
@@ -374,7 +403,7 @@ function AppViewModel () {
     self.resetSearch = function () {
 
         // Clear search field
-        $('.search-form').val("");
+        $searchForm.val("");
 
         // Clear any searches
         self.Query("");
@@ -398,7 +427,7 @@ function AppViewModel () {
     };
 
     /* Call the jQuery-UI auto complete widget.*/
-    $('.search-form').autocomplete({
+    $searchForm.autocomplete({
         /* All keywords come from the above array */
         source: searchKeywords,
         /* Highlight the pop-up menu item that matches what is currently in
@@ -2523,6 +2552,9 @@ function addMapListener () {
 
     // When the map close symbol is clicked, hide or show the map
     $('.map-symbol').on('click', function(e) {
+
+        // Scroll to top of the page
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
 
         /* Wait 1.1 secs after map is done with transition to indicate selection */
         setTimeout(function() {

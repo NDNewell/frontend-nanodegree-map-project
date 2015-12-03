@@ -303,25 +303,29 @@ function AppViewModel () {
     /* When the search symbol is clicked, the search field is displayed with
     sliding animation */
     $('.search-symbol').on("click", function () {
-        // If the search container is hidden, focus on it after .6 secs
-        if($('.search-container').is(":hidden")) {
-            // The seach container will be made visible
-            // Delay focusing on the search field until it has fully expanded
-            setTimeout(function() {
-                $('.search-form').focus();
-            }, 600);
-        } else {
-            // The search container will be hidden
-            // If the clear search button is visible, hide it
-            if (!$('.clear').is(":hidden")) {
-                $('.clear').toggle();
-            };
-            // Reset the search
-            self.resetSearch();
-        };
 
         // Make the search container visible or hidden
         $('.search-container').slideToggle(500);
+
+        // Delay focusing on the search field until it has fully expanded
+        setTimeout(function() {
+
+            /* If the search container is visible, focus on search form and change class to indicate search is selected */
+            if(!$('.search-container').is(":hidden") && !$('.search-selected').length) {
+                $('.search-form').focus();
+                $('.search-symbol').addClass("search-selected");
+            } else {
+                // The search container is hidden
+                // If the clear search button is visible, hide it
+                if (!$('.clear').is(":hidden")) {
+                    $('.clear').toggle();
+                };
+                // Remove class to change img's fill back to default
+                $('.search-symbol').removeClass("search-selected");
+                // Reset the search
+                self.resetSearch();
+            };
+        }, 600);
     });
 
     /* When a search is made, create a 'clear search' button for clearing
@@ -329,13 +333,13 @@ function AppViewModel () {
     $('.search-form').on( "click", function () {
           self.resetSearch();
     }).on( "focus", function() {
-          if(!$('.search-form').val()){
-            $('.clear').toggle();
-          };
-      }).on( "blur", function () {
-          if(!$('.search-form').val()){
-            $('.clear').toggle();
-          };
+        if(!$('.search-form').val()){
+          $('.clear').toggle();
+        };
+    }).on( "blur", function () {
+        if(!$('.search-form').val()){
+          $('.clear').toggle();
+        };
     });
 
     /* When the 'clear search' button is selected, close any existing text
@@ -2500,6 +2504,19 @@ function addMapListener () {
 
     // When the map close symbol is clicked, hide or show the map
     $('.map-symbol').on('click', function(e) {
+
+        /* Wait 1.1 secs after map is done with transition to indicate selection */
+        setTimeout(function() {
+            /* If the map is visible and element is not selected, add class
+            to indicate selection */
+            if(!$('.map-container').is(":hidden") && !$('.map-selected').length) {
+                $('.map-symbol').addClass("map-selected");
+            } else {
+                /* If the above isn't true, remove class to change the img's
+                fill to its default */
+                $('.map-symbol').removeClass("map-selected");
+            };
+        }, 1100);
 
         // Either hide or reveal the map depending the last click
         $('.map-container').slideToggle(1000);

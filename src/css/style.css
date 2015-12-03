@@ -1,6 +1,3 @@
-
-
-
 body {
     font-family: Arial, Verdana;
 }
@@ -32,6 +29,14 @@ body {
 
 .search-symbol-desktop:hover path, .map-symbol-desktop:hover path {
     fill: white;
+}
+
+.map-selected path {
+    fill: white
+}
+
+.search-selected path {
+    fill: white
 }
 
 .header {

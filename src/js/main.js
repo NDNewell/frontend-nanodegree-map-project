@@ -273,7 +273,7 @@ function AppViewModel () {
         $window.scroll(function () {
             if($window.scrollTop() > $distance) {
                 $navbar.addClass('navbar-fixed-top');
-                $bodycss("padding-top", "50px");
+                $body.css("padding-top", "50px");
             } else {
                 $navbar.removeClass('navbar-fixed-top');
                 $body.css("padding-top", "0px");
@@ -323,12 +323,13 @@ function AppViewModel () {
 
     // Set variables to be used in the functions to follow
     var $clear = $('.clear'),
-        $searchForm = $('.search-form');
+        $searchForm = $('.search-form'),
+        $searchSymbol = $('.search-symbol');
 
 
     /* When the search symbol is clicked, the search field is displayed with
     sliding animation */
-    $('.search-symbol').on("click", function () {
+    $searchSymbol.on("click", function () {
 
         // Set variables
         var $window = $(window),
@@ -353,7 +354,7 @@ function AppViewModel () {
                 /* If the search container is visible, focus on search form and change class to indicate search is selected */
                 if(!$searchContainer.is(":hidden") && !$('.search-selected').length) {
                     $searchForm.focus();
-                    $('.search-symbol').addClass("search-selected");
+                    $searchSymbol.addClass("search-selected");
                 } else {
 
                     // The search container is hidden
@@ -363,7 +364,7 @@ function AppViewModel () {
                     };
 
                     // Remove class to change img's fill back to default
-                    $('.search-symbol').removeClass("search-selected");
+                    $searchSymbol.removeClass("search-selected");
 
                     // Reset the search
                     self.resetSearch();
@@ -2550,44 +2551,68 @@ function animateMarker (marker) {
 
 function addMapListener () {
 
+    var $mapSymbol = $('.map-symbol'),
+        $mapContainer = $('.map-container'),
+        $surfGuideContainer = $('.surf-guide-container'),
+        $searchContainer = $('.search-container'),
+        $window = $(window),
+        $mapSection = $('.map-section'),
+        $height = $('.map-section').height();
+
+
     // When the map close symbol is clicked, hide or show the map
-    $('.map-symbol').on('click', function(e) {
+    $mapSymbol.on('click', function(e) {
 
-        // Scroll to top of the page
-        document.body.scrollTop = document.documentElement.scrollTop = 0;
+        console.log("Height of map section is " + $height);
 
-        /* Wait 1.1 secs after map is done with transition to indicate selection */
-        setTimeout(function() {
-            /* If the map is visible and element is not selected, add class
-            to indicate selection */
-            if(!$('.map-container').is(":hidden") && !$('.map-selected').length) {
-                $('.map-symbol').addClass("map-selected");
-            } else {
-                /* If the above isn't true, remove class to change the img's
-                fill to its default */
-                $('.map-symbol').removeClass("map-selected");
+        console.log("Scrollbar position is " + $(window).scrollTop());
+
+        /* Enable toggling of the search container if the user's scroll position is at the top of the page. If the user's scroll position is
+        below this, only enable toggling of the search container if the search
+        container is not already visible. If the search container is visible,
+        instead of hiding it, the search form is brought into focus so the
+        user can make further searches */
+        if($window.scrollTop() < $height || $window.scrollTop() >= $height && $mapContainer.is(":hidden")) {
+
+            // Scroll to top of the page
+            document.body.scrollTop = document.documentElement.scrollTop = 0;
+
+            /* Wait 1.1 secs after map is done with transition to indicate selection */
+            setTimeout(function() {
+                /* If the map is visible and element is not selected, add class
+                to indicate selection */
+                if(!$mapContainer.is(":hidden") && !$('.map-selected').length) {
+                    $mapSymbol.addClass("map-selected");
+                } else {
+                    /* If the above isn't true, remove class to change the img's
+                    fill to its default */
+                    $mapSymbol.removeClass("map-selected");
+                };
+            }, 600);
+
+            // Either hide or reveal the map depending the last click
+            $mapContainer.slideToggle(500);
+
+            /* If the surf guide isn't visible when opening the map, reset the
+            map bounds and close any open info windows. Otherwise, do nothing.
+            We do nothing because if the map bounds are reset while the surf
+            guide is visible it creates a bug. When the map is eventually
+            reopened, the map is skewed left and all of the infowindows are
+            too small. All subsequent centering and map bounds setting results
+            in the map being skewed to the left. This may be because setting
+            the map bounds is called before the map is fully made visible ???
+            It's also unecessary because each marker is zoomed in on upon clicking a specific location even while the map is hidden, so if the map is eventually made visible, it will be centered on the selected location anyway */
+            if (!$surfGuideContainer.length) {
+                /* Reset the map bounds, so map is centered on markers that
+                represent the currently unselected location frames */
+                setMapBounds();
+                // Close any open info windows
+                infoWindow.close();
             };
-        }, 1100);
-
-        // Either hide or reveal the map depending the last click
-        $('.map-container').slideToggle(1000);
-
-        /* If the surf guide isn't visible when opening the map, reset the
-        map bounds and close any open info windows. Otherwise, do nothing.
-        We do nothing because if the map bounds are reset while the surf
-        guide is visible it creates a bug. When the map is eventually
-        reopened, the map is skewed left and all of the infowindows are
-        too small. All subsequent centering and map bounds setting results
-        in the map being skewed to the left. This may be because setting
-        the map bounds is called before the map is fully made visible ???
-        It's also unecessary because each marker is zoomed in on upon clicking a specific location even while the map is hidden, so if the map is eventually made visible, it will be centered on the selected location anyway */
-        if (!$('.surf-guide-container').length) {
-            /* Reset the map bounds, so map is centered on markers that
-            represent the currently unselected location frames */
-            setMapBounds();
-            // Close any open info windows
-            infoWindow.close();
-        };
+        } else {
+            // Scroll to top of the page
+            document.body.scrollTop = document.documentElement.scrollTop = 0;
+        }
     });
 };
 

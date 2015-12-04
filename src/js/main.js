@@ -2556,36 +2556,28 @@ function addMapListener () {
         $surfGuideContainer = $('.surf-guide-container'),
         $searchContainer = $('.search-container'),
         $window = $(window),
-        $mapSection = $('.map-section'),
         $height = $('.map-section').height();
 
 
     // When the map close symbol is clicked, hide or show the map
     $mapSymbol.on('click', function(e) {
 
-        console.log("Height of map section is " + $height);
-
-        console.log("Scrollbar position is " + $(window).scrollTop());
-
-        /* Enable toggling of the search container if the user's scroll position is at the top of the page. If the user's scroll position is
-        below this, only enable toggling of the search container if the search
-        container is not already visible. If the search container is visible,
-        instead of hiding it, the search form is brought into focus so the
-        user can make further searches */
+        /* Enable toggling of the map container if the user's scroll position is above the bottom of the map container. If the user's scroll position is below this, only enable toggling of the map container if the it is not already visible. If it is visible, instead of hiding it, the window is scrolled to the top of the page so the user can make use
+        the map */
         if($window.scrollTop() < $height || $window.scrollTop() >= $height && $mapContainer.is(":hidden")) {
 
             // Scroll to top of the page
             document.body.scrollTop = document.documentElement.scrollTop = 0;
 
-            /* Wait 1.1 secs after map is done with transition to indicate selection */
+            /* Wait .6 secs after map is done with transition to indicate selection */
             setTimeout(function() {
                 /* If the map is visible and element is not selected, add class
                 to indicate selection */
                 if(!$mapContainer.is(":hidden") && !$('.map-selected').length) {
                     $mapSymbol.addClass("map-selected");
                 } else {
-                    /* If the above isn't true, remove class to change the img's
-                    fill to its default */
+                    /* If the above isn't true, remove class to change the
+                    img's fill to its default */
                     $mapSymbol.removeClass("map-selected");
                 };
             }, 600);

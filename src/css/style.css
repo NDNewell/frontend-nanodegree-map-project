@@ -213,6 +213,10 @@ body {
     fill: #ff33ff;
 }
 
+.fill-favorite-default path {
+    fill: #ffffff;
+}
+
 .title-guide {
     margin-top: 20px;
     margin-bottom: 12px;

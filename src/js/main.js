@@ -152,6 +152,120 @@ $(document).ready(function() {
 
 });
 
+var allData = new Firebase("https://dazzling-torch-4012.firebaseio.com");
+var users = new Firebase('https://dazzling-torch-4012.firebaseio.com/users');
+
+var fireBaseWriteError = function(error) {
+    if (error) {
+      console.log("data could not be saved." + error);
+    } else {
+      console.log("data saved successfully.");
+    };
+};
+var fireBaseReadError = function (errorObject) {
+  console.log("the read failed: " + errorObject.code);
+};
+
+
+var isNewUser;
+
+function getAuthenticaion () {
+    var authData = allData.getAuth();
+    return authData;
+};
+
+allData.onAuth(checkAuthentication);
+
+function checkAuthentication (authData) {
+    // Create a callback which logs the current auth state
+    if (authData) {
+        console.log("user " + authData.uid + " is logged in with " + authData.provider);
+        isNewUser = false;
+    } else {
+        console.log("user is logged out");
+        isNewUser = true;
+    };
+};
+
+
+if(isNewUser) {
+  allData.authAnonymously(function(error, authData) {
+    if (error) {
+        console.log("login Failed!", error);
+    } else {
+      // save the user's profile into the database so we can list users,
+      // use them in Security and Firebase Rules, and show profiles
+      allData.child("users").child(authData.uid).set({
+        favorites: [],
+        name: getName()
+      });
+    };
+  });
+};
+
+
+// find a suitable name based on user input
+function getName() {
+    var name = prompt("Please enter your name");
+    return name;
+};
+
+setInterval(showUser, 10000);
+
+function showUser () {
+      var authData = getAuthenticaion();
+
+      users.child(authData.uid).child("name").on("value", function(snapshot) {
+      var name = snapshot.val();
+        console.log(name + " is currently logged in");
+  }, fireBaseReadError);
+};
+
+var userFavorites = [];
+
+function getFavorites () {
+    var authData = getAuthenticaion();
+    if(authData === null) {
+        console.log('cannot find favorites because there are no logged in users');
+    } else {
+        users.child(authData.uid).child("favorites").on("value", function(snapshot) {
+        var favorites = snapshot.val();
+        userFavorites = [];
+
+        if(favorites === null) {
+            console.log('user has no favorites');
+        } else {
+            favorites.forEach(function(obj) {
+              userFavorites.push(obj);
+            });
+            console.log(userFavorites);
+              };
+        }, fireBaseReadError);
+    };
+};
+
+getFavorites();
+
+
+function addFavorite (newFav) {
+
+    userFavorites.push(newFav);
+
+    users.child(allData.getAuth().uid).update({"favorites":userFavorites}, fireBaseWriteError);
+};
+
+function removeFavorite (removeFav) {
+    var updatedFavs = [];
+
+    userFavorites.forEach(function(keepFav) {
+        if(removeFav !== keepFav) {
+            updatedFavs.push(keepFav);
+        };
+    });
+
+    users.child(allData.getAuth().uid).update({"favorites":updatedFavs}, fireBaseWriteError);
+};
+
 
 function AppViewModel () {
 
@@ -718,7 +832,7 @@ function AppViewModel () {
         $surfGuideContainer.append(guideTitle);
 
         // Add the 'favorite' icon to the end of the location name
-        var favoriteIcon = displayFavoriteIcon();
+        var favoriteIcon = displayFavoriteIcon(obj.breakName);
         $('.title').prepend(favoriteIcon);
         self.makeSVGInline($('.favorite-guide'));
         addFavoriteListener(obj.breakName);
@@ -892,25 +1006,28 @@ function AppViewModel () {
     self.addFavoriteListener = function (breakName) {
         $('.click-heart').on("click", function () {
             if($('.fill-favorite').length) {
-                $(this).removeClass("fill-favorite");
+                $(this).removeClass("fill-favorite").addClass("fill-favorite-default");
                 console.log("unfavorite " + breakName);
+                removeFavorite(breakName);
             } else {
-                $(this).addClass("fill-favorite");
+                $(this).removeClass("fill-favorite-default").addClass("fill-favorite");
                 console.log("favorite " + breakName);
+                addFavorite(breakName);
             };
 
-            $(this).blur();
         });
     };
 
     self.displayTitle = function (breakName, location) {
         var guideTitle = '<div class="col-xs-12 title-guide">' + '<p class="title">' + breakName + ',' + ' ' + location + '</p>' + '</div>';
-
         return guideTitle;
     };
 
-    self.displayFavoriteIcon = function() {
-      var favorite = false;
+    self.displayFavoriteIcon = function(breakName) {
+
+        if(userFavorites.indexOf(breakName) > -1) {
+            var favorite = true;
+        };
 
         if(favorite) {
             var icon = '<span class="click-heart"><img class="favorite-guide fill-favorite" title="Make favorite" src="img/heart.svg"></span>';

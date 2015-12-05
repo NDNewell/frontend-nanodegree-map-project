@@ -152,6 +152,7 @@ $(document).ready(function() {
 
 });
 
+
 function AppViewModel () {
 
     this.self = this;
@@ -716,6 +717,12 @@ function AppViewModel () {
         var guideTitle = displayTitle(obj.breakName, obj.location);
         $surfGuideContainer.append(guideTitle);
 
+        // Add the 'favorite' icon to the end of the location name
+        var favoriteIcon = displayFavoriteIcon();
+        $('.title').prepend(favoriteIcon);
+        self.makeSVGInline($('.favorite-guide'));
+        addFavoriteListener(obj.breakName);
+
         // Create a frame to hold the icon container
         $surfGuideContainer.append('<div class="col-xs-12 icon-frame"></div>');
 
@@ -882,10 +889,36 @@ function AppViewModel () {
         });
     };
 
+    self.addFavoriteListener = function (breakName) {
+        $('.click-heart').on("click", function () {
+            if($('.fill-favorite').length) {
+                $(this).removeClass("fill-favorite");
+                console.log("unfavorite " + breakName);
+            } else {
+                $(this).addClass("fill-favorite");
+                console.log("favorite " + breakName);
+            };
+
+            $(this).blur();
+        });
+    };
+
     self.displayTitle = function (breakName, location) {
         var guideTitle = '<div class="col-xs-12 title-guide">' + '<p class="title">' + breakName + ',' + ' ' + location + '</p>' + '</div>';
 
         return guideTitle;
+    };
+
+    self.displayFavoriteIcon = function() {
+      var favorite = false;
+
+        if(favorite) {
+            var icon = '<span class="click-heart"><img class="favorite-guide fill-favorite" title="Make favorite" src="img/heart.svg"></span>';
+        } else {
+            var icon = '<span class="click-heart"><img class="favorite-guide" title="Make favorite" src="img/heart.svg"></span>';
+        };
+
+        return icon;
     };
 
     self.displayBigWaveIcon = function (obj, $iconContainer) {

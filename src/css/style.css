@@ -1,6 +1,5 @@
 body {
     font-family: Arial, Verdana;
-
 }
 
 .logo {
@@ -197,6 +196,21 @@ body {
     margin-right: auto;
     width: 355px;
     height: 194px;
+}
+
+.favorite-guide {
+    margin-right: 5px;
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.fill-favorite path {
+    fill: #ff33ff;
 }
 
 .title-guide {
@@ -775,6 +789,9 @@ body {
         height: 100%;
     }
 
+    .favorite-guide {
+        margin-bottom: -3px;
+    }
     .xs-icon-container {
         width: 306px;
         height: 605px;

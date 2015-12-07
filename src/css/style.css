@@ -911,12 +911,18 @@ body {
         right: 17%;
         height: 70px;
     }
+
     .climate-info-hover {
         bottom: 23%;
         font-size: 2em;
     }
+
     .clear {
         margin-left: 94.5%;
+    }
+
+    .break-name {
+        font-size: 1.7em;
     }
 }
 
@@ -963,6 +969,10 @@ body {
 
     .clear {
         margin-left: 95.5%;
+    }
+
+    .favorite {
+        left: 7%;
     }
 }
 

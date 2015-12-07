@@ -212,7 +212,7 @@ function getName() {
     return name;
 };
 
-setInterval(showUser, 10000);
+setInterval(showUser, 60000);
 
 function showUser () {
       var authData = getAuthenticaion();
@@ -241,24 +241,10 @@ function getFavorites (authData) {
                 favorites.forEach(function(obj) {
                   userFavorites.push(obj);
                 });
-                console.log("The user's favorites(s) is/are: " + userFavorites);
+                console.log("the user's favorites(s) is/are: " + userFavorites.join(', '));
             };
 
-            $('.location-frame').each(function () {
-                var $locationFrame = $(this);
-                var $favoriteWrapper = $(this).find('.favorite-wrapper');
-                var $breakName = $(this).find('.break-name')[0].innerText;
-
-                if(userFavorites.indexOf($breakName) > -1) {
-                    $favoriteWrapper.removeClass('not-a-favorite');
-                    $favoriteWrapper.addClass('is-a-favorite');
-                } else {
-                    if($favoriteWrapper.hasClass('is-a-favorite')) {
-                        $favoriteWrapper.addClass('not-a-favorite');
-                        $favoriteWrapper.removeClass('is-a-favorite');
-                    };
-                };
-            });
+            renderFavoriteOnLocationFrame();
 
         }, fireBaseReadError);
 
@@ -282,6 +268,24 @@ function removeFavorite (removeFav) {
     });
 
     users.child(allData.getAuth().uid).update({"favorites":updatedFavs}, fireBaseWriteError);
+};
+
+function renderFavoriteOnLocationFrame () {
+    $('.location-frame').each(function () {
+        var $locationFrame = $(this);
+        var $favoriteWrapper = $(this).find('.favorite-wrapper');
+        var $breakName = $(this).find('.break-name')[0].innerText;
+
+        if(userFavorites.indexOf($breakName) > -1) {
+            $favoriteWrapper.removeClass('not-a-favorite');
+            $favoriteWrapper.addClass('is-a-favorite');
+        } else {
+            if($favoriteWrapper.hasClass('is-a-favorite')) {
+                $favoriteWrapper.addClass('not-a-favorite');
+                $favoriteWrapper.removeClass('is-a-favorite');
+            };
+        };
+    });
 };
 
 
@@ -2640,7 +2644,9 @@ function addListeners(marker, breakName, obj) {
             // Find last selected marker and make pin small again
             makeMarkerSmall();
 
-            console.log('make ' + marker.title + "'" + 's marker big!');
+            var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
+
+            console.log('make ' + markerName + "'" + 's marker big!');
             marker.setIcon('img/marker_selected.svg');
 
             getInfoWindow(marker, breakName);
@@ -2818,8 +2824,11 @@ function addMapClickEvent (marker) {
 // Find last selected marker and make pin small again
 function makeMarkerSmall () {
     markers.forEach(function(marker) {
+
+        var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
+
         if (marker.icon.indexOf('img/marker_selected.svg') >= 0) {
-            console.log('make ' + marker.title + "'" + 's marker small!');
+            console.log('make ' + markerName + "'" + 's marker small!');
             marker.setIcon('img/marker_small.svg');
         };
     });

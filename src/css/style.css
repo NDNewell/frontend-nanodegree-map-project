@@ -831,6 +831,14 @@ body {
         width: 60px;
         height: 60px;
     }
+
+    .break-name {
+        font-size: 4.9vw;
+    }
+
+    .location-name {
+        font-size: 4vw;
+    }
 }
 
 @media (min-width: 768px) {

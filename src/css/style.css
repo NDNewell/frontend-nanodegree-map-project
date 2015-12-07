@@ -143,6 +143,22 @@ body {
     border-bottom-width: 1px;
 }
 
+.favorite {
+    position: absolute;
+    left: 6%;
+    top: 8%;
+}
+
+.not-a-favorite path {
+    fill-opacity: 0;
+    stroke-width: 1;
+}
+
+.is-a-favorite path{
+    fill: #ff33ff;
+    stroke-width: 1;
+}
+
 .location-name {
     font-size: 1.5em;
     background: none repeat 0 0 #FFffff;
@@ -155,24 +171,6 @@ body {
     text-align: center;
     width: 250px;
     border-radius: 12.5px;
-}
-
-.favorite {
-    position: absolute;
-    right: 87%;
-    bottom: 79%;
-}
-
-.not-a-favorite path {
-    fill-opacity: 0;
-    stroke: white;
-    stroke-width: 1;
-}
-
-.is-a-favorite path{
-    fill: #ff33ff;
-    stroke: white;
-    stroke-width: 1;
 }
 
 .break-name {
@@ -219,10 +217,12 @@ body {
 
 .fill-favorite path {
     fill: #ff33ff;
+    stroke: #333333;
 }
 
 .fill-favorite-default path {
     fill: #ffffff;
+    stroke: #333333;
 }
 
 .title-guide {
@@ -795,6 +795,11 @@ body {
         padding: 0px 0px 0px 0px;
     }
 
+    .favorite {
+        top: 7%;
+        left: 5%;
+    }
+
     .location-image {
         border-radius: 0px;
         width: 100%;
@@ -812,13 +817,20 @@ body {
 }
 
 @media (min-width: 560px) and (max-width: 767px) {
-      .col-xs-sm-misc {
+    .col-xs-sm-misc {
         width: 25%;
-      }
-      .clear {
+    }
+
+    .clear {
         margin-top: 23px;
         margin-left: 90%;
-      }
+    }
+
+    .favorite {
+        top: 7%;
+        width: 60px;
+        height: 60px;
+    }
 }
 
 @media (min-width: 768px) {

@@ -283,6 +283,31 @@ function AppViewModel () {
 
     self.stickyNavBar();
 
+    /* Replace specific SVG images with inline SVG in order to make CSS
+    styling possible */
+    self.makeSVGInline = function (oldSvg) {
+        var $img = oldSvg;
+        var imgClass = $img.attr('class');
+        var imgURL = $img.attr('src');
+
+        jQuery.get(imgURL, function(data) {
+
+            // Get the SVG tag, ignore the rest
+            var $svg = jQuery(data).find('svg');
+
+            // Add replaced image's classes to the new SVG
+            if(typeof imgClass !== 'undefined') {
+                $svg = $svg.attr('class', imgClass);
+            }
+
+            // Remove any invalid XML tags as per http://validator.w3.org
+            $svg = $svg.removeAttr('xmlns:a');
+
+            // Replace image with new SVG
+            $img.replaceWith($svg);
+
+        }, 'xml');
+    };
 
     /* Cache Firebase database references to all and user data */
     var allData = new Firebase("https://dazzling-torch-4012.firebaseio.com");
@@ -299,6 +324,9 @@ function AppViewModel () {
     var fireBaseReadError = function (errorObject) {
       console.log("the read failed: " + errorObject.code);
     };
+
+    // Make the 'favorite' symbol an inline img for easy styling via CSS
+    self.makeSVGInline($('.favorite'));
 
     /* Iterate through the location frame displayed and fill in any locations
     that match the user's favorites */
@@ -459,34 +487,6 @@ function AppViewModel () {
      observable variable, it's value will be updated whenever the input on the
      View is altered*/
     self.Query = ko.observable("");
-
-    /* Replace specific SVG images with inline SVG in order to make CSS
-    styling possible */
-    self.makeSVGInline = function (oldSvg) {
-        var $img = oldSvg;
-        var imgClass = $img.attr('class');
-        var imgURL = $img.attr('src');
-
-        jQuery.get(imgURL, function(data) {
-
-            // Get the SVG tag, ignore the rest
-            var $svg = jQuery(data).find('svg');
-
-            // Add replaced image's classes to the new SVG
-            if(typeof imgClass !== 'undefined') {
-                $svg = $svg.attr('class', imgClass);
-            }
-
-            // Remove any invalid XML tags as per http://validator.w3.org
-            $svg = $svg.removeAttr('xmlns:a');
-
-            // Replace image with new SVG
-            $img.replaceWith($svg);
-
-        }, 'xml');
-    };
-
-    self.makeSVGInline($('.favorite'));
 
     /* Convert the imgs to inline svgs so hover effects my be applied
     through css styling */

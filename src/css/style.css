@@ -217,12 +217,18 @@ body {
 
 .is-a-favorite-guide path {
     fill: #ff33ff;
-    stroke: #333333;
+    stroke-opacity: 0;
 }
 
 .not-a-favorite-guide path {
     fill: #ffffff;
-    stroke: #333333;
+    stroke: #b3b3b3;
+    stroke-width: 1;
+}
+
+.not-a-favorite-guide:hover path {
+    fill: #ff80ff;
+    stroke-opacity: 0;
 }
 
 .guide-header {

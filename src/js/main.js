@@ -181,6 +181,8 @@ function checkAuthentication (authData) {
     if (authData) {
         console.log("user " + authData.uid + " is logged in with " + authData.provider);
         isNewUser = false;
+        getFavorites(authData);
+
     } else {
         console.log("user is logged out");
         isNewUser = true;
@@ -191,13 +193,13 @@ function checkAuthentication (authData) {
 if(isNewUser) {
   allData.authAnonymously(function(error, authData) {
     if (error) {
-        console.log("login Failed!", error);
+          console.log("login Failed!", error);
     } else {
       // save the user's profile into the database so we can list users,
       // use them in Security and Firebase Rules, and show profiles
       allData.child("users").child(authData.uid).set({
-        favorites: [],
-        name: getName()
+          favorites: [],
+          name: getName()
       });
     };
   });
@@ -223,8 +225,8 @@ function showUser () {
 
 var userFavorites = [];
 
-function getFavorites () {
-    var authData = getAuthenticaion();
+function getFavorites (authData) {
+
     if(authData === null) {
         console.log('cannot find favorites because there are no logged in users');
     } else {
@@ -262,9 +264,6 @@ function getFavorites () {
 
     };
 };
-
-getFavorites();
-
 
 function addFavorite (newFav) {
 

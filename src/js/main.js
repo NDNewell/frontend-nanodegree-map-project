@@ -229,18 +229,37 @@ function getFavorites () {
         console.log('cannot find favorites because there are no logged in users');
     } else {
         users.child(authData.uid).child("favorites").on("value", function(snapshot) {
-        var favorites = snapshot.val();
-        userFavorites = [];
 
-        if(favorites === null) {
-            console.log('user has no favorites');
-        } else {
-            favorites.forEach(function(obj) {
-              userFavorites.push(obj);
+            var favorites = snapshot.val();
+            userFavorites = [];
+
+            if(favorites === null) {
+                console.log('user has no favorites');
+            } else {
+                favorites.forEach(function(obj) {
+                  userFavorites.push(obj);
+                });
+                console.log("The user's favorites(s) is/are: " + userFavorites);
+            };
+
+            $('.location-frame').each(function () {
+                var $locationFrame = $(this);
+                var $favoriteWrapper = $(this).find('.favorite-wrapper');
+                var $breakName = $(this).find('.break-name')[0].innerText;
+
+                if(userFavorites.indexOf($breakName) > -1) {
+                    $favoriteWrapper.removeClass('not-a-favorite');
+                    $favoriteWrapper.addClass('is-a-favorite');
+                } else {
+                    if($favoriteWrapper.hasClass('is-a-favorite')) {
+                        $favoriteWrapper.addClass('not-a-favorite');
+                        $favoriteWrapper.removeClass('is-a-favorite');
+                    };
+                };
             });
-            console.log(userFavorites);
-              };
+
         }, fireBaseReadError);
+
     };
 };
 
@@ -428,6 +447,8 @@ function AppViewModel () {
 
         }, 'xml');
     };
+
+    self.makeSVGInline($('.favorite'));
 
     /* Convert the imgs to inline svgs so hover effects my be applied
     through css styling */
@@ -649,6 +670,7 @@ function AppViewModel () {
             var breakName = $(this).find('.break-name');
             var location = $(this).find('.location-name');
             var img = $(this).find('img.location-image');
+            var $favoriteWrapper = $(this).find('.favorite-wrapper');
 
             locationFrame.on('mouseenter',
 
@@ -685,6 +707,7 @@ function AppViewModel () {
                         img.css('-webkit-filter', 'blur(4px) brightness(80%)' );
                         location.toggle()
                         breakName.toggle();
+                        $favoriteWrapper.toggle();
 
                         /* Display icon associated with the skill level
                         needed to surf the break */
@@ -748,6 +771,7 @@ function AppViewModel () {
                     img.css('-webkit-filter', 'blur(0px) brightness(100%)');
                     location.toggle();
                     breakName.toggle();
+                    $favoriteWrapper.toggle();
 
                     $('.rollover-info').remove();
                 }
@@ -1030,9 +1054,9 @@ function AppViewModel () {
         };
 
         if(favorite) {
-            var icon = '<span class="click-heart"><img class="favorite-guide fill-favorite" title="Make favorite" src="img/heart.svg"></span>';
+            var icon = '<span class="click-heart fill-favorite"><img class="favorite-guide" title="Make favorite" src="img/heart.svg"></span>';
         } else {
-            var icon = '<span class="click-heart"><img class="favorite-guide" title="Make favorite" src="img/heart.svg"></span>';
+            var icon = '<span class="click-heart fill-favorite-default"><img class="favorite-guide" title="Make favorite" src="img/heart.svg"></span>';
         };
 
         return icon;

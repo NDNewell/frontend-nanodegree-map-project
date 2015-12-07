@@ -111,6 +111,12 @@ body {
   border-radius: 12.5px;
 }
 
+.favorite {
+  position: absolute;
+  right: 87%;
+  bottom: 79%;
+}
+
 .break-name {
   font-size: 2em;
   color: white;

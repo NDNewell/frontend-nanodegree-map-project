@@ -151,7 +151,7 @@ body {
 
 .not-a-favorite path {
     fill-opacity: 0;
-    stroke-width: 1;
+    stroke-opacity: 0;
 }
 
 .is-a-favorite path{
@@ -215,12 +215,12 @@ body {
     user-select: none;
 }
 
-.fill-favorite path {
+.is-a-favorite-guide path {
     fill: #ff33ff;
     stroke: #333333;
 }
 
-.fill-favorite-default path {
+.not-a-favorite-guide path {
     fill: #ffffff;
     stroke: #333333;
 }

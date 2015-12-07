@@ -1030,11 +1030,11 @@ function AppViewModel () {
     self.addFavoriteListener = function (breakName) {
         $('.click-heart').on("click", function () {
             if($('.fill-favorite').length) {
-                $(this).removeClass("fill-favorite").addClass("fill-favorite-default");
+                $(this).removeClass("is-a-favorite-guide").addClass("not-a-favorite-guide");
                 console.log("unfavorite " + breakName);
                 removeFavorite(breakName);
             } else {
-                $(this).removeClass("fill-favorite-default").addClass("fill-favorite");
+                $(this).removeClass("not-a-favorite-guide").addClass("is-a-favorite-guide");
                 console.log("favorite " + breakName);
                 addFavorite(breakName);
             };
@@ -1054,9 +1054,9 @@ function AppViewModel () {
         };
 
         if(favorite) {
-            var icon = '<span class="click-heart fill-favorite"><img class="favorite-guide" title="Make favorite" src="img/heart.svg"></span>';
+            var icon = '<span class="click-heart is-a-favorite-guide"><img class="favorite-guide" title="Make favorite" src="img/heart.svg"></span>';
         } else {
-            var icon = '<span class="click-heart fill-favorite-default"><img class="favorite-guide" title="Make favorite" src="img/heart.svg"></span>';
+            var icon = '<span class="click-heart not-a-favorite-guide"><img class="favorite-guide" title="Make favorite" src="img/heart.svg"></span>';
         };
 
         return icon;

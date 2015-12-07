@@ -528,6 +528,7 @@ function AppViewModel () {
                 /* If the search container is visible, focus on search form and change class to indicate search is selected */
                 if(!$searchContainer.is(":hidden") && !$('.search-selected').length) {
                     $searchForm.focus();
+                    $searchSymbol.removeClass("search-default");
                     $searchSymbol.addClass("search-selected");
                 } else {
 
@@ -539,6 +540,7 @@ function AppViewModel () {
 
                     // Remove class to change img's fill back to default
                     $searchSymbol.removeClass("search-selected");
+                    $searchSymbol.addClass("search-default");
 
                     // Reset the search
                     self.resetSearch();
@@ -2787,11 +2789,13 @@ function addMapListener () {
                 /* If the map is visible and element is not selected, add class
                 to indicate selection */
                 if(!$mapContainer.is(":hidden") && !$('.map-selected').length) {
+                    $mapSymbol.removeClass("map-default");
                     $mapSymbol.addClass("map-selected");
                 } else {
                     /* If the above isn't true, remove class to change the
                     img's fill to its default */
                     $mapSymbol.removeClass("map-selected");
+                    $mapSymbol.addClass("map-default");
                 };
             }, 600);
 

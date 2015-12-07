@@ -950,7 +950,7 @@ function AppViewModel () {
         $surfGuideContainer.prepend('<button type="button" class="btn guide-close-button">✖</button>');
 
         // Add a button for displaying surf conditions
-        $('.title-guide').append('<button type="button" class="btn conditions-button">Current Conditions</button>');
+        $('.guide-header').append('<button type="button" class="btn conditions-button">Current Conditions</button>');
 
         /* When the surf conditions button is clicked, display current
         conditions */
@@ -985,7 +985,7 @@ function AppViewModel () {
                     its container */
                     if(!$('#progressBarContainer').length) {
                         // Insert container to hold indicator
-                        $('.title-guide').append('<div id="progressBarContainer"></div>');
+                        $('.guide-header').append('<div id="progressBarContainer"></div>');
                     };
 
                     // Load indicator
@@ -1029,7 +1029,7 @@ function AppViewModel () {
 
     self.addFavoriteListener = function (breakName) {
         $('.click-heart').on("click", function () {
-            if($('.fill-favorite').length) {
+            if($('.is-a-favorite-guide').length) {
                 $(this).removeClass("is-a-favorite-guide").addClass("not-a-favorite-guide");
                 console.log("unfavorite " + breakName);
                 removeFavorite(breakName);
@@ -1038,12 +1038,11 @@ function AppViewModel () {
                 console.log("favorite " + breakName);
                 addFavorite(breakName);
             };
-
         });
     };
 
     self.displayTitle = function (breakName, location) {
-        var guideTitle = '<div class="col-xs-12 title-guide">' + '<p class="title">' + breakName + ',' + ' ' + location + '</p>' + '</div>';
+        var guideTitle = '<div class="col-xs-12 guide-header">' + '<p class="title">' + breakName + ',' + ' ' + location + '</p>' + '</div>';
         return guideTitle;
     };
 
@@ -2062,8 +2061,8 @@ function AppViewModel () {
 
         console.log('get current conditions');
 
-        var $currentSurfGuide = $('.title-guide').text();
-        var $surfGuideTitleContainer = $('.title-guide');
+        var $currentSurfGuide = $('.guide-header').text();
+        var $surfGuideTitleContainer = $('.guide-header');
 
         /* Check for the location's spot ID. If there is no spot ID,
         immediately display an error message. This also prevents an API request

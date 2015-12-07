@@ -152,143 +152,6 @@ $(document).ready(function() {
 
 });
 
-var allData = new Firebase("https://dazzling-torch-4012.firebaseio.com");
-var users = new Firebase('https://dazzling-torch-4012.firebaseio.com/users');
-
-var fireBaseWriteError = function(error) {
-    if (error) {
-      console.log("data could not be saved." + error);
-    } else {
-      console.log("data saved successfully.");
-    };
-};
-var fireBaseReadError = function (errorObject) {
-  console.log("the read failed: " + errorObject.code);
-};
-
-
-var isNewUser;
-
-function getAuthenticaion () {
-    var authData = allData.getAuth();
-    return authData;
-};
-
-allData.onAuth(checkAuthentication);
-
-function checkAuthentication (authData) {
-    // Create a callback which logs the current auth state
-    if (authData) {
-        console.log("user " + authData.uid + " is logged in with " + authData.provider);
-        isNewUser = false;
-        getFavorites(authData);
-
-    } else {
-        console.log("user is logged out");
-        isNewUser = true;
-    };
-};
-
-
-if(isNewUser) {
-  allData.authAnonymously(function(error, authData) {
-    if (error) {
-          console.log("login Failed!", error);
-    } else {
-      // save the user's profile into the database so we can list users,
-      // use them in Security and Firebase Rules, and show profiles
-      allData.child("users").child(authData.uid).set({
-          favorites: [],
-          name: getName()
-      });
-    };
-  });
-};
-
-
-// find a suitable name based on user input
-function getName() {
-    var name = prompt("Please enter your name");
-    return name;
-};
-
-setInterval(showUser, 60000);
-
-function showUser () {
-      var authData = getAuthenticaion();
-
-      users.child(authData.uid).child("name").on("value", function(snapshot) {
-      var name = snapshot.val();
-        console.log(name + " is currently logged in");
-  }, fireBaseReadError);
-};
-
-var userFavorites = [];
-
-function getFavorites (authData) {
-
-    if(authData === null) {
-        console.log('cannot find favorites because there are no logged in users');
-    } else {
-        users.child(authData.uid).child("favorites").on("value", function(snapshot) {
-
-            var favorites = snapshot.val();
-            userFavorites = [];
-
-            if(favorites === null) {
-                console.log('user has no favorites');
-            } else {
-                favorites.forEach(function(obj) {
-                  userFavorites.push(obj);
-                });
-                console.log("the user's favorites(s) is/are: " + userFavorites.join(', '));
-            };
-
-            renderFavoriteOnLocationFrame();
-
-        }, fireBaseReadError);
-
-    };
-};
-
-function addFavorite (newFav) {
-
-    userFavorites.push(newFav);
-
-    users.child(allData.getAuth().uid).update({"favorites":userFavorites}, fireBaseWriteError);
-};
-
-function removeFavorite (removeFav) {
-    var updatedFavs = [];
-
-    userFavorites.forEach(function(keepFav) {
-        if(removeFav !== keepFav) {
-            updatedFavs.push(keepFav);
-        };
-    });
-
-    users.child(allData.getAuth().uid).update({"favorites":updatedFavs}, fireBaseWriteError);
-};
-
-function renderFavoriteOnLocationFrame () {
-    $('.location-frame').each(function () {
-        var $locationFrame = $(this);
-        var $favoriteWrapper = $(this).find('.favorite-wrapper');
-        var $breakName = $(this).find('.break-name')[0].innerText;
-
-        if(userFavorites.indexOf($breakName) > -1) {
-            $favoriteWrapper.removeClass('not-a-favorite');
-            $favoriteWrapper.addClass('is-a-favorite');
-        } else {
-            if($favoriteWrapper.hasClass('is-a-favorite')) {
-                $favoriteWrapper.addClass('not-a-favorite');
-                $favoriteWrapper.removeClass('is-a-favorite');
-            };
-        };
-    });
-};
-
-
 function AppViewModel () {
 
     this.self = this;
@@ -419,6 +282,178 @@ function AppViewModel () {
     };
 
     self.stickyNavBar();
+
+
+    /* Cache Firebase database references to all and user data */
+    var allData = new Firebase("https://dazzling-torch-4012.firebaseio.com");
+    var users = new Firebase('https://dazzling-torch-4012.firebaseio.com/users');
+
+    /* Create write/read error messages to be used as callbacks */
+    var fireBaseWriteError = function(error) {
+        if (error) {
+          console.log("data could not be saved." + error);
+        } else {
+          console.log("data saved successfully.");
+        };
+    };
+    var fireBaseReadError = function (errorObject) {
+      console.log("the read failed: " + errorObject.code);
+    };
+
+    /* Iterate through the location frame displayed and fill in any locations
+    that match the user's favorites */
+    self.renderFavoriteOnLocationFrame = function () {
+        $('.location-frame').each(function () {
+
+            // Cache references to location frame, favorite symbol, & break name
+            var $locationFrame = $(this);
+            var $favoriteWrapper = $(this).find('.favorite-wrapper');
+            var $breakName = $(this).find('.break-name')[0].innerText;
+
+            // Filter locations that match the user's favorites
+            // When a match is found, add a class to style it as 'selected'
+            if(userFavorites.indexOf($breakName) > -1) {
+                $favoriteWrapper.removeClass('not-a-favorite');
+                $favoriteWrapper.addClass('is-a-favorite');
+            } else {
+                if($favoriteWrapper.hasClass('is-a-favorite')) {
+                    $favoriteWrapper.addClass('not-a-favorite');
+                    $favoriteWrapper.removeClass('is-a-favorite');
+                };
+            };
+        });
+    };
+
+    /* Create an empty local array to hold the user's favorites collected from
+    the firebase's database */
+    var userFavorites = [];
+
+    self.getFavorites = function (authData) {
+
+        // If there are no users logged in, authData will be null
+        if(authData === null) {
+            console.log('cannot find favorites because there are no logged in users');
+        } else {
+
+            /* Get the user's favorites */
+            users.child(authData.uid).child("favorites").on("value", function(snapshot) {
+
+                // Save the Firebase snapshot of the user's favorites
+                var favorites = snapshot.val();
+
+                /* Clear any existing favorites in the local favorites array
+                so it can be filled with updated information */
+                userFavorites = [];
+
+                // If the user has no favorites, log msg in console
+                if(favorites === null) {
+                    console.log('user has no favorites');
+                } else {
+
+                    /* Push each favorite found in the Firebase array into the
+                    local favorites array */
+                    favorites.forEach(function(obj) {
+                      userFavorites.push(obj);
+                    });
+                    console.log("the user's favorites(s) is/are: " + userFavorites.join(', '));
+                };
+
+                // Update DOM elements (location frames)
+                /* Fill in the hearts of any locations which are the user's
+                favorites */
+                self.renderFavoriteOnLocationFrame();
+
+            }, fireBaseReadError);
+        };
+    };
+
+    // Set variable for determining if a user is new or not
+    var isNewUser;
+
+    // Create a callback which logs the current auth state
+    self.checkAuthentication = function (authData) {
+
+        if(authData) {
+        /* When user is already logged in, notify in console and update
+           favorites */
+            console.log("user " + authData.uid + " is logged in with " + authData.provider);
+            isNewUser = false;
+            self.getFavorites(authData);
+
+        // If user is logged in notify via console and set new user to true
+        } else {
+            console.log("user is logged out");
+            isNewUser = true;
+        };
+    };
+
+    /* Monitor user authentication state, when there is a change check
+       which user is logged in / logged out */
+    allData.onAuth(self.checkAuthentication);
+
+    /* If the visiter is a new user, get details and write data to Firebase */
+    if(isNewUser) {
+
+      // Log new user in anonymously (tokens last 5 years)
+      allData.authAnonymously(function(error, authData) {
+        if (error) {
+              console.log("login Failed!", error);
+        } else {
+
+          // Save the user's favorites and name in the database
+          allData.child("users").child(authData.uid).set({
+              favorites: [],
+              name: prompt("Please enter your name")
+          });
+        };
+      });
+    };
+
+    // Display which user is logged in the console every minute
+    setInterval(self.showUser, 60000);
+
+    self.showUser = function () {
+
+          // cache user data
+          var authData = allData.getAuth();
+
+          // get the user's name saved in the Firebase database and log in console
+          users.child(authData.uid).child("name").on("value", function(snapshot) {
+          var name = snapshot.val();
+            console.log(name + " is currently logged in");
+      }, fireBaseReadError);
+    };
+
+    // Add a location to the local favorites array and update Firebase version
+    self.addFavorite = function (newFav) {
+
+        // Add location to local array
+        userFavorites.push(newFav);
+
+        // Update Firebase
+        users.child(allData.getAuth().uid).update({"favorites":userFavorites}, fireBaseWriteError);
+    };
+
+
+    // Remove a location from the local favorites array and update Firebase version
+    self.removeFavorite = function (removeFav) {
+
+        /* Create a temporary array to hold any locations that do not match the
+        array that is to be removed */
+        var updatedFavs = [];
+
+        /* Filter any matching locations to the deleted location out of the local
+        favorites array */
+        userFavorites.forEach(function(keepFav) {
+            if(removeFav !== keepFav) {
+                updatedFavs.push(keepFav);
+            };
+        });
+
+        // Update Firebase with the locations from the temporary array above
+        // When Firebase updates, the local favorites array will be replaced
+        users.child(allData.getAuth().uid).update({"favorites":updatedFavs}, fireBaseWriteError);
+    };
 
     /* self.Query is bound to the input on the View. Because it is an
      observable variable, it's value will be updated whenever the input on the

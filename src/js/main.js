@@ -492,8 +492,11 @@ function AppViewModel () {
     through css styling */
     self.makeSVGInline($('.search-symbol-desktop'));
     self.makeSVGInline($('.search-symbol-mobile'));
+    self.makeSVGInline($('.favorite-filter-symbol-desktop'));
+    self.makeSVGInline($('.favorite-filter-symbol-mobile'));
     self.makeSVGInline($('.map-symbol-desktop'));
     self.makeSVGInline($('.map-symbol-mobile'));
+
 
     // Set variables to be used in the functions to follow
     var $clear = $('.clear'),
@@ -543,7 +546,7 @@ function AppViewModel () {
                     $searchSymbol.addClass("search-default");
 
                     // Reset the search
-                    self.resetSearch();
+                    self.resetLocations();
                 };
             }, 600);
 
@@ -556,7 +559,7 @@ function AppViewModel () {
     /* When a search is made, create a 'clear search' button for clearing
     searches. Also reset search when search field is clicked */
     $searchForm.on( "click", function () {
-          self.resetSearch();
+          self.resetLocations();
     }).on( "focus", function() {
         if(!$($searchForm).val()){
           $clear.toggle();
@@ -573,12 +576,12 @@ function AppViewModel () {
     search' button */
     $clear.on( "click", function() {
         $clear.toggle();
-        self.resetSearch();
+        self.resetLocations();
         $searchForm.focus();
     });
 
     // Resets the search field and location list
-    self.resetSearch = function () {
+    self.resetLocations = function () {
 
         // Clear search field
         $searchForm.val("");
@@ -696,6 +699,49 @@ function AppViewModel () {
         rollover effects that were added before need to be re-added */
         addRolloverEffect();
     };
+
+    self.filterFavorites = function () {
+        var $favoriteSymbol = $('.favorite-filter-symbol');
+
+        console.log("show favorites only");
+        $favoriteSymbol.removeClass("favorite-filter-default");
+        $favoriteSymbol.addClass("favorite-filter-selected");
+
+        self.locationGrid.removeAll();
+
+        locationArray.forEach(function(obj) {
+            var breakName = obj.breakName;
+
+            if(userFavorites.indexOf(breakName) > -1) {
+                self.locationGrid.push(obj);
+            };
+        });
+    };
+
+    $('.favorite-filter-symbol').on( "click", function() {
+
+        var $favoriteSymbol = $('.favorite-filter-symbol');
+
+            if($('.favorite-filter-selected').length) {
+
+                console.log("show all locations");
+                $favoriteSymbol.removeClass("favorite-filter-selected");
+                $favoriteSymbol.addClass("favorite-filter-default");
+
+                self.resetLocations();
+
+            } else {
+
+                if($('.surf-guide-container').length) {
+                    self.closeSurfGuide();
+                };
+
+                self.filterFavorites();
+                self.addRolloverEffect();
+            };
+
+            self.renderFavoriteOnLocationFrame();
+    });
 
     /* When the cursor hovers over a location, remove the text and add
     a gaussian blur. Wait until the locations have been loaded */
@@ -1042,30 +1088,41 @@ function AppViewModel () {
         removed */
         $('.guide-close-button').on('click', function(e) {
 
-            // Find last selected marker and make pin small again
-            makeMarkerSmall();
-
-            // Remove both surf conditions and surf guide from DOM
-            $('.surf-guide-container').remove();
-
-            /* Make both the location grid and the location frames
-            within it visible. The location frames need to be made
-            visible again in case a marker has been selected. */
-            $('.location-frame').show();
-            $('.location-grid').toggle();
-
-
-            if (!$('#map').is(":hidden")) {
-                // Reset the map window to display all markers
-                setMapBounds();
+            if($('.favorite-filter-selected').length) {
+                self.filterFavorites();
+                self.addRolloverEffect();
+                self.renderFavoriteOnLocationFrame();
             };
 
-            // Close any info windows that remain open
-            infoWindow.close();
-
-            // Scroll to the top of the page
-            document.body.scrollTop = document.documentElement.scrollTop = 0;
+            self.closeSurfGuide();
         });
+    };
+
+    self.closeSurfGuide = function () {
+
+        // Find last selected marker and make pin small again
+        makeMarkerSmall();
+
+        // Remove both surf conditions and surf guide from DOM
+        $('.surf-guide-container').remove();
+
+        /* Make both the location grid and the location frames
+        within it visible. The location frames need to be made
+        visible again in case a marker has been selected. */
+        $('.location-frame').show();
+        $('.location-grid').toggle();
+
+
+        if (!$('#map').is(":hidden")) {
+            // Reset the map window to display all markers
+            setMapBounds();
+        };
+
+        // Close any info windows that remain open
+        infoWindow.close();
+
+        // Scroll to the top of the page
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
     };
 
     self.addFavoriteListener = function (breakName) {

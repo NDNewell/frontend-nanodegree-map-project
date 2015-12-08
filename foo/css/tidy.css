@@ -97,6 +97,12 @@ body {
   border-bottom-width: 1px;
 }
 
+.favorite {
+  position: absolute;
+  left: 6%;
+  top: 8%;
+}
+
 .location-name {
   font-size: 1.5em;
   background: none repeat 0 0 #FFffff;
@@ -109,12 +115,6 @@ body {
   text-align: center;
   width: 250px;
   border-radius: 12.5px;
-}
-
-.favorite {
-  position: absolute;
-  right: 87%;
-  bottom: 79%;
 }
 
 .break-name {
@@ -221,12 +221,31 @@ body {
     margin-bottom: 1px;
     padding: 0px 0px 0px 0px;
   }
+
+  .favorite {
+    top: 7%;
+    left: 5%;
+  }
 }
 
 @media (min-width: 560px) and (max-width: 767px) {
   .clear {
     margin-top: 23px;
     margin-left: 90%;
+  }
+
+  .favorite {
+    top: 7%;
+    width: 60px;
+    height: 60px;
+  }
+
+  .break-name {
+    font-size: 4.9vw;
+  }
+
+  .location-name {
+    font-size: 4vw;
   }
 }
 
@@ -251,11 +270,19 @@ body {
   .clear {
     margin-left: 94.5%;
   }
+
+  .break-name {
+    font-size: 1.7em;
+  }
 }
 
 @media (min-width: 1200px) {
   .clear {
     margin-left: 95.5%;
+  }
+
+  .favorite {
+    left: 7%;
   }
 }
 

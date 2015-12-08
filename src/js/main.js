@@ -1069,14 +1069,23 @@ function AppViewModel () {
     };
 
     self.addFavoriteListener = function (breakName) {
-        $('.click-heart').on("click", function () {
+        $('.favorite-wrapper-guide').on("click", function () {
+
+            var $this = $(this);
+
             if($('.is-a-favorite-guide').length) {
-                $(this).removeClass("is-a-favorite-guide").addClass("not-a-favorite-guide");
+
+                $this.removeClass("is-a-favorite-guide").addClass("not-a-favorite-guide");
                 console.log("unfavorite " + breakName);
+                $this.attr("title", "Add to favorites");
                 removeFavorite(breakName);
+                $this.blur();
+
             } else {
-                $(this).removeClass("not-a-favorite-guide").addClass("is-a-favorite-guide");
+
+                $this.removeClass("not-a-favorite-guide").addClass("is-a-favorite-guide");
                 console.log("favorite " + breakName);
+                $this.attr("title", "Remove from favorites");
                 addFavorite(breakName);
             };
         });
@@ -1094,9 +1103,9 @@ function AppViewModel () {
         };
 
         if(favorite) {
-            var icon = '<span class="click-heart is-a-favorite-guide"><img class="favorite-guide" title="Make favorite" src="img/heart.svg"></span>';
+            var icon = '<span class="favorite-wrapper-guide is-a-favorite-guide" title="Remove from favorites"><img class="favorite-guide"  src="img/heart.svg"></span>';
         } else {
-            var icon = '<span class="click-heart not-a-favorite-guide"><img class="favorite-guide" title="Make favorite" src="img/heart.svg"></span>';
+            var icon = '<span class="favorite-wrapper-guide not-a-favorite-guide" title="Add to favorites"><img class="favorite-guide" src="img/heart.svg"></span>';
         };
 
         return icon;

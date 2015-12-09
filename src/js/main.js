@@ -514,16 +514,48 @@ function AppViewModel () {
     // Set variables to be used in the functions to follow
     var $clear = $('.clear'),
         $searchForm = $('.search-form'),
-        $searchSymbol = $('.search-symbol');
+        $searchSymbol = $('.search-symbol'),
+        $searchContainer = $('.search-container');
 
+
+    // Toggle the appearance of the search container
+    self.toggleSearch = function () {
+
+        // Make the search container visible or hidden
+        $searchContainer.slideToggle(500);
+
+        // Delay focusing on the search field until it has fully expanded
+        setTimeout(function() {
+
+            // Reset the search
+            self.resetPage();
+
+            // If 'clear search' button is visible, hide it
+            if ($clear.is(":visible")) {
+                $clear.toggle();
+            };
+
+            /* If the search container is visible, focus on search form and change class to indicate search is selected */
+            if($searchContainer.is(":visible") && !$('.search-selected').length) {
+                $searchForm.focus();
+                $searchSymbol.removeClass("search-default");
+                $searchSymbol.addClass("search-selected");
+            } else {
+
+                // Remove class to change img's fill back to default
+                $searchSymbol.removeClass("search-selected");
+                $searchSymbol.addClass("search-default");
+            };
+
+        }, 600);
+    };
 
     /* When the search symbol is clicked, the search field is displayed with
     sliding animation */
     $searchSymbol.on("click", function () {
 
         // Set variables
-        var $window = $(window),
-            $searchContainer = $('.search-container');
+        var $window = $(window);
 
         /* Enable toggling of the search container if the user's scroll position is at the top of the page. If the user's scroll position is
         below this, only enable toggling of the search container if the search
@@ -535,38 +567,11 @@ function AppViewModel () {
             // Scroll to top of the page
             document.body.scrollTop = document.documentElement.scrollTop = 0;
 
-            // Make the search container visible or hidden
-            $searchContainer.slideToggle(500);
-
-            // Delay focusing on the search field until it has fully expanded
-            setTimeout(function() {
-
-                // Reset the search
-                self.resetPage();
-
-                // If 'clear search' button is visible, hide it
-                if ($clear.is(":visible")) {
-                    $clear.toggle();
-                };
-
-                /* If the search container is visible, focus on search form and change class to indicate search is selected */
-                if($searchContainer.is(":visible") && !$('.search-selected').length) {
-                    $searchForm.focus();
-                    $searchSymbol.removeClass("search-default");
-                    $searchSymbol.addClass("search-selected");
-                } else {
-
-                    // Remove class to change img's fill back to default
-                    $searchSymbol.removeClass("search-selected");
-                    $searchSymbol.addClass("search-default");
-
-                };
-            }, 600);
+            self.toggleSearch();
 
         } else {
             $searchForm.focus();
         };
-
     });
 
     /* When a search is made, create a 'clear search' button for clearing

@@ -541,6 +541,9 @@ function AppViewModel () {
             // Delay focusing on the search field until it has fully expanded
             setTimeout(function() {
 
+                // Reset the search
+                self.resetPage();
+
                 /* If the search container is visible, focus on search form and change class to indicate search is selected */
                 if(!$searchContainer.is(":hidden") && !$('.search-selected').length) {
                     $searchForm.focus();
@@ -558,8 +561,6 @@ function AppViewModel () {
                     $searchSymbol.removeClass("search-selected");
                     $searchSymbol.addClass("search-default");
 
-                    // Reset the search
-                    self.resetPage();
                 };
             }, 600);
 

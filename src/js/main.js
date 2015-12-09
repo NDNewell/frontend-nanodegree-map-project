@@ -544,18 +544,17 @@ function AppViewModel () {
                 // Reset the search
                 self.resetPage();
 
+                // If 'clear search' button is visible, hide it
+                if ($clear.is(":visible")) {
+                    $clear.toggle();
+                };
+
                 /* If the search container is visible, focus on search form and change class to indicate search is selected */
-                if(!$searchContainer.is(":hidden") && !$('.search-selected').length) {
+                if($searchContainer.is(":visible") && !$('.search-selected').length) {
                     $searchForm.focus();
                     $searchSymbol.removeClass("search-default");
                     $searchSymbol.addClass("search-selected");
                 } else {
-
-                    // The search container is hidden
-                    // If the clear search button is visible, hide it
-                    if (!$clear.is(":hidden")) {
-                        $clear.toggle();
-                    };
 
                     // Remove class to change img's fill back to default
                     $searchSymbol.removeClass("search-selected");

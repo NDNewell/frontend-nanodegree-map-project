@@ -596,19 +596,17 @@ function AppViewModel () {
     // Resets the search field and location list
     self.resetLocations = function () {
 
+        console.log('reset locations & map, clear search, and close surf guide');
+
+        if($('.surf-guide-container').length) {
+            self.closeSurfGuide();
+        };
+
         // Clear search field
         $searchForm.val("");
 
         // Clear any searches
         self.Query("");
-
-        // Remove the surf guide and conditions
-        $('.surf-conditions').remove();
-        $('.surf-conditions-error').remove();
-        $('.surf-guide-container').remove();
-
-        // Show the locations
-        $('.location-grid').show();
 
         // Close open info windows
         infoWindow.close();
@@ -616,8 +614,29 @@ function AppViewModel () {
         // Find last selected marker and make pin small again
         makeMarkerSmall();
 
-        // Reset the map by running an empty search
-        self.searchLocations();
+        locationGrid.removeAll();
+
+        locationArray.forEach(function (obj) {
+            locationGrid.push(obj);
+        });
+
+        if($('.location-grid').is(":hidden")) {
+            // Show the locations
+            $('.location-grid').show();
+        };
+
+        markers.forEach(function(marker) {
+              marker.setVisible(true);
+        });
+
+        if (!$('#map').is(":hidden")) {
+            // Set the map bounds & map position
+            setMapBounds();
+        };
+
+        self.addRolloverEffect();
+
+        self.renderFavoriteOnLocationFrame();
     };
 
     /* Call the jQuery-UI auto complete widget.*/

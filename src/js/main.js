@@ -567,6 +567,7 @@ function AppViewModel () {
             // Scroll to top of the page
             document.body.scrollTop = document.documentElement.scrollTop = 0;
 
+            // Show/hide the search container
             self.toggleSearch();
 
         } else {
@@ -779,6 +780,11 @@ function AppViewModel () {
             } else if (!$('.favorite-filter-selected').length && userFavorites.length > 0) {
 
                 console.log("show favorites only");
+
+                //If the search container is visible, hide it
+                if($('.search-container').is(":visible")) {
+                   self.toggleSearch();
+                };
 
                 // If the surf guide is open, close it
                 if($('.surf-guide-container').length) {

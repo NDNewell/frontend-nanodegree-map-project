@@ -10,7 +10,8 @@ body {
 }
 
 .search-symbol-desktop,
-.map-symbol-desktop {
+.map-symbol-desktop,
+.favorite-filter-symbol-desktop {
   display: block;
   position: relative;
   float: right;
@@ -26,8 +27,13 @@ body {
   margin-top: 13px;
 }
 
+.favorite-filter-symbol-desktop {
+  margin-top: 10.5px;
+}
+
 .search-symbol-mobile,
-.map-symbol-mobile {
+.map-symbol-mobile,
+.favorite-filter-symbol-mobile {
   display: none;
 }
 
@@ -149,7 +155,8 @@ body {
   }
 
   .search-symbol-mobile,
-  .map-symbol-mobile {
+  .map-symbol-mobile,
+  .favorite-filter-symbol-mobile {
     display: block;
     position: relative;
     float: right;
@@ -163,6 +170,10 @@ body {
 
   .map-symbol-mobile {
     margin-top: 13px;
+  }
+
+  .favorite-filter-symbol-mobile {
+    margin-top: 10.5px;
   }
 
   .navbar-right {

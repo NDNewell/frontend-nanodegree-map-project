@@ -219,8 +219,8 @@ function AppViewModel () {
             };
         });
 
-        console.log("locationArray loaded");
-        console.log("locationGrid loaded");
+        console.log("primary locations array (locationArray) loaded");
+        console.log("locations list (locationGrid) rendered");
         console.log("autosearch keywords loaded");
 
         /* Set to true. If images are still loading, rollover
@@ -331,6 +331,9 @@ function AppViewModel () {
     /* Iterate through the location frame displayed and fill in any locations
     that match the user's favorites */
     self.renderFavoriteOnLocationFrame = function () {
+
+        console.log("display 'favorite' icons on relevant location frames");
+
         $('.location-frame').each(function () {
 
             // Cache references to location frame, favorite symbol, & break name
@@ -481,6 +484,16 @@ function AppViewModel () {
         // Update Firebase with the locations from the temporary array above
         // When Firebase updates, the local favorites array will be replaced
         users.child(allData.getAuth().uid).update({"favorites":updatedFavs}, fireBaseWriteError);
+    };
+
+    // Delete all locations from the local favorites array and update Firebase
+    self.removeAllFavorites = function () {
+
+        // Clear the user's existing favorites
+        userFavorites = [];
+
+        // Update Firebase
+        users.child(allData.getAuth().uid).update({"favorites":userFavorites}, fireBaseWriteError);
     };
 
     /* self.Query is bound to the input on the View. Because it is an
@@ -697,7 +710,35 @@ function AppViewModel () {
 
         /* After a search, there are new objects in the locationGrid, so the
         rollover effects that were added before need to be re-added */
-        addRolloverEffect();
+        self.addRolloverEffect();
+
+        // Update DOM elements (location frames)
+        /* Fill in the hearts of any locations which are the user's
+        favorites */
+        self.renderFavoriteOnLocationFrame();
+    };
+
+    self.addClearFavoritesButton = function () {
+        var $filtersContainer = $('.filters-container'),
+            $clearFavoritesButton = '<button type="button" class="btn clear-favorites-button">Clear All</button>';
+
+        if($filtersContainer.is(':hidden')) {
+            $filtersContainer.show();
+        } else {
+            $filtersContainer.append($clearFavoritesButton);
+        };
+
+        $('.clear-favorites-button').on( "click", function () {
+
+            $('.filters-container').hide();
+
+            $('.favorite-filter-symbol').removeClass("favorite-filter-selected");
+            $('.favorite-filter-symbol').addClass("favorite-filter-default");
+
+            self.removeAllFavorites();
+            self.resetLocations();
+
+        });
     };
 
     self.filterFavorites = function () {
@@ -724,13 +765,15 @@ function AppViewModel () {
 
             if($('.favorite-filter-selected').length) {
 
+                $('.filters-container').hide();
+
                 console.log("show all locations");
                 $favoriteSymbol.removeClass("favorite-filter-selected");
                 $favoriteSymbol.addClass("favorite-filter-default");
 
                 self.resetLocations();
 
-            } else {
+            } else if (!$('.favorite-filter-selected').length && userFavorites.length > 0) {
 
                 if($('.surf-guide-container').length) {
                     self.closeSurfGuide();
@@ -738,7 +781,15 @@ function AppViewModel () {
 
                 self.filterFavorites();
                 self.addRolloverEffect();
+                self.addClearFavoritesButton();
+
+            } else {
+                console.log('You have no favorites');
+                return
             };
+
+            // Scroll to top of the page
+            document.body.scrollTop = document.documentElement.scrollTop = 0;
 
             self.renderFavoriteOnLocationFrame();
     });
@@ -1026,7 +1077,6 @@ function AppViewModel () {
 
         // Render buttons for guide
         addGuideButtons(obj);
-
     };
 
     /* Create buttons for opening closing surf guide / view current break

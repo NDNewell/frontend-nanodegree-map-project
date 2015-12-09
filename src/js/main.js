@@ -1078,6 +1078,11 @@ function AppViewModel () {
     /* Display detailed information about the location */
     self.renderSurfGuide = function (obj) {
 
+        // Hide the filters section if favorites are in view
+        if($('.favorite-filter-selected').length) {
+            $('.filters-container').toggle();
+        };
+
         // Scroll to top of the page
         document.body.scrollTop = document.documentElement.scrollTop = 0;
 
@@ -1246,6 +1251,9 @@ function AppViewModel () {
         $('.guide-close-button').on('click', function(e) {
 
             if($('.favorite-filter-selected').length) {
+
+                // Show the filters container
+                $('.filters-container').toggle();
                 self.filterFavorites();
                 self.addRolloverEffect();
                 self.renderFavoriteOnLocationFrame();

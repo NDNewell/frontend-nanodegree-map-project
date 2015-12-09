@@ -559,7 +559,7 @@ function AppViewModel () {
                     $searchSymbol.addClass("search-default");
 
                     // Reset the search
-                    self.resetLocations();
+                    self.resetPage();
                 };
             }, 600);
 
@@ -572,7 +572,7 @@ function AppViewModel () {
     /* When a search is made, create a 'clear search' button for clearing
     searches. Also reset search when search field is clicked */
     $searchForm.on( "click", function () {
-          self.resetLocations();
+          self.resetPage();
     }).on( "focus", function() {
         if(!$($searchForm).val()){
           $clear.toggle();
@@ -589,57 +589,9 @@ function AppViewModel () {
     search' button */
     $clear.on( "click", function() {
         $clear.toggle();
-        self.resetLocations();
+        self.resetPage();
         $searchForm.focus();
     });
-
-    // Resets the search field and location list
-    self.resetLocations = function () {
-
-        console.log('reset locations & map, clear search, and close surf guide');
-
-        if($('.surf-guide-container').length) {
-            self.closeSurfGuide();
-        };
-
-        // Clear search field
-        $searchForm.val("");
-
-        // Clear any searches
-        self.Query("");
-
-        // Close open info windows
-        infoWindow.close();
-
-        // Find last selected marker and make pin small again
-        makeMarkerSmall();
-
-        locationGrid.removeAll();
-
-        locationArray.forEach(function (obj) {
-            locationGrid.push(obj);
-        });
-
-        if($('.location-grid').is(":hidden")) {
-            // Show the locations
-            $('.location-grid').show();
-        };
-
-        markers.forEach(function(marker) {
-              marker.setVisible(true);
-        });
-
-        if (!$('#map').is(":hidden")) {
-            // Set the map bounds & map position
-            setMapBounds();
-        };
-
-        self.addRolloverEffect();
-
-        if(userFavorites.length > 0) {
-            self.renderFavoriteOnLocationFrame();
-        };
-    };
 
     /* Call the jQuery-UI auto complete widget.*/
     $searchForm.autocomplete({
@@ -736,38 +688,55 @@ function AppViewModel () {
         self.renderFavoriteOnLocationFrame();
     };
 
+    // Add button for clear favorites
     self.addClearFavoritesButton = function () {
-        var $filtersContainer = $('.filters-container'),
-            $clearFavoritesButton = '<button type="button" class="btn clear-favorites-button">Clear All</button>';
 
+        // Cache references to DOM elements
+        var $filtersContainer = $('.filters-container'),
+            $clearFavoritesButton = '<button type="button" class="btn clear-favorites-button">Clear All</button>',
+            $favoriteFilterSymbol = $('.favorite-filter-symbol');
+
+        // If button has already been added, show it; otherwise, add it
         if($filtersContainer.is(':hidden')) {
-            $filtersContainer.show();
+            $filtersContainer.toggle();
         } else {
+
+            // Add the clear favorites button to the filters container
             $filtersContainer.append($clearFavoritesButton);
 
+            // Bind click event to button
+            /* When button's clicked, hide the filters container, remove/add
+            the necessary classes, delete the user's favorites and reset the
+            page (closes surf guide) */
             $('.clear-favorites-button').on( "click", function () {
 
-                $('.filters-container').hide();
+                // Hide the filters container
+                $filtersContainer.toggle();
 
-                $('.favorite-filter-symbol').removeClass("favorite-filter-selected");
-                $('.favorite-filter-symbol').addClass("favorite-filter-default");
+                // Add/remove the classes
+                $favoriteFilterSymbol .removeClass("favorite-filter-selected");
+                $favoriteFilterSymbol .addClass("favorite-filter-default");
 
+                // Clear the user's favorites
                 self.removeAllFavorites();
-                self.resetLocations();
 
+                // Close the surf guide and reset the page
+                self.resetPage();
             });
         };
     };
 
+    // Display only favorite from the locations array
     self.filterFavorites = function () {
+
+        // Cache reference to DOM
         var $favoriteSymbol = $('.favorite-filter-symbol');
 
-        console.log("show favorites only");
-        $favoriteSymbol.removeClass("favorite-filter-default");
-        $favoriteSymbol.addClass("favorite-filter-selected");
-
+        // Clear the observable array
         self.locationGrid.removeAll();
 
+        /* Iterate throught the locations array and update the location grid
+        with any matching locations to the user's favorites */
         locationArray.forEach(function(obj) {
             var breakName = obj.breakName;
 
@@ -777,40 +746,122 @@ function AppViewModel () {
         });
     };
 
+    // Bind click event to the 'favorite' icon on the navbar
     $('.favorite-filter-symbol').on( "click", function() {
 
-        var $favoriteSymbol = $('.favorite-filter-symbol');
+        // Cache reference to DOM elements
+        var $favoriteSymbol = $('.favorite-filter-symbol'),
+            $filtersContainer = $('.filters-container');
 
+            /* If favorites are already visible close the filters container
+            and show all locations */
             if($('.favorite-filter-selected').length) {
 
-                $('.filters-container').hide();
-
                 console.log("show all locations");
+
+                // Hide the filters container
+                $filtersContainer.hide();
+
+                // Add remove relevant classes
                 $favoriteSymbol.removeClass("favorite-filter-selected");
                 $favoriteSymbol.addClass("favorite-filter-default");
 
-                self.resetLocations();
+                // Reset the locations etc.
+                self.resetPage();
 
+            /* If the favorites are not visible, show them only if the user
+            has favorites in the user favorites array */
             } else if (!$('.favorite-filter-selected').length && userFavorites.length > 0) {
 
+                console.log("show favorites only");
+
+                // If the surf guide is open, close it
                 if($('.surf-guide-container').length) {
                     self.closeSurfGuide();
                 };
 
+                // Add remove relevant classes
+                $favoriteSymbol.removeClass("favorite-filter-default");
+                $favoriteSymbol.addClass("favorite-filter-selected");
+
+                // Filter the locations to find favorites
                 self.filterFavorites();
+
+                // Add rollover effects to the new list of objects
                 self.addRolloverEffect();
+
+                // Add a button for clearing all favorites if desired
                 self.addClearFavoritesButton();
+
+                // Display 'favorite' icons on the relevant location frames
                 self.renderFavoriteOnLocationFrame();
 
+            // If the user has no favorites, simply return the function
             } else {
-                console.log('You have no favorites');
+                console.log('user has no favorites');
                 return
             };
 
             // Scroll to top of the page
             document.body.scrollTop = document.documentElement.scrollTop = 0;
-
     });
+
+    // Resets the the page
+    self.resetPage = function () {
+
+        console.log('reset locations & map, clear search, and close surf guide');
+
+        // If the surf guide is open, close it
+        if($('.surf-guide-container').length) {
+            self.closeSurfGuide();
+        };
+
+        // Clear search field
+        $searchForm.val("");
+
+        // Clear any searches
+        self.Query("");
+
+        // Close open info windows
+        infoWindow.close();
+
+        // Find last selected marker and make pin small again
+        makeMarkerSmall();
+
+        // Clear the objects in the array
+        locationGrid.removeAll();
+
+        // Repopulate the objects in the location grid
+        locationArray.forEach(function (obj) {
+            locationGrid.push(obj);
+        });
+
+        // If the location grid is hidden, show it
+        if($('.location-grid').is(":hidden")) {
+            // Show the locations
+            $('.location-grid').show();
+        };
+
+        // Make all map markers visible
+        markers.forEach(function(marker) {
+              marker.setVisible(true);
+        });
+
+        // If the map is visible, reset the bounds
+        if (!$('#map').is(":hidden")) {
+            // Set the map bounds & map position
+            setMapBounds();
+        };
+
+        // Add the hover effects for each location frame
+        self.addRolloverEffect();
+
+        /* If the user has favorites, show a favorite symbold on each
+        revelvant location frame */
+        if(userFavorites.length > 0) {
+            self.renderFavoriteOnLocationFrame();
+        };
+    };
 
     /* When the cursor hovers over a location, remove the text and add
     a gaussian blur. Wait until the locations have been loaded */

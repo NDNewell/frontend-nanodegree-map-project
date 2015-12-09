@@ -440,8 +440,6 @@ function AppViewModel () {
       });
     };
 
-    // Display which user is logged in the console every minute
-    setInterval(self.showUser, 60000);
 
     self.showUser = function () {
 
@@ -454,6 +452,9 @@ function AppViewModel () {
             console.log(name + " is currently logged in");
       }, fireBaseReadError);
     };
+
+    // Display which user is logged in the console every minute
+    setInterval(self.showUser, 60000);
 
     // Add a location to the local favorites array and update Firebase version
     self.addFavorite = function (newFav) {

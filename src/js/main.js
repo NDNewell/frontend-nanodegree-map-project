@@ -636,7 +636,9 @@ function AppViewModel () {
 
         self.addRolloverEffect();
 
-        self.renderFavoriteOnLocationFrame();
+        if(userFavorites.length > 0) {
+            self.renderFavoriteOnLocationFrame();
+        };
     };
 
     /* Call the jQuery-UI auto complete widget.*/
@@ -704,11 +706,8 @@ function AppViewModel () {
             if (marker.title.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) >= 0) {
 
               marker.setVisible(true);
-
             } else {
-
               marker.setVisible(false);
-
             }
 
         });
@@ -745,19 +744,19 @@ function AppViewModel () {
             $filtersContainer.show();
         } else {
             $filtersContainer.append($clearFavoritesButton);
+
+            $('.clear-favorites-button').on( "click", function () {
+
+                $('.filters-container').hide();
+
+                $('.favorite-filter-symbol').removeClass("favorite-filter-selected");
+                $('.favorite-filter-symbol').addClass("favorite-filter-default");
+
+                self.removeAllFavorites();
+                self.resetLocations();
+
+            });
         };
-
-        $('.clear-favorites-button').on( "click", function () {
-
-            $('.filters-container').hide();
-
-            $('.favorite-filter-symbol').removeClass("favorite-filter-selected");
-            $('.favorite-filter-symbol').addClass("favorite-filter-default");
-
-            self.removeAllFavorites();
-            self.resetLocations();
-
-        });
     };
 
     self.filterFavorites = function () {
@@ -801,6 +800,7 @@ function AppViewModel () {
                 self.filterFavorites();
                 self.addRolloverEffect();
                 self.addClearFavoritesButton();
+                self.renderFavoriteOnLocationFrame();
 
             } else {
                 console.log('You have no favorites');
@@ -810,7 +810,6 @@ function AppViewModel () {
             // Scroll to top of the page
             document.body.scrollTop = document.documentElement.scrollTop = 0;
 
-            self.renderFavoriteOnLocationFrame();
     });
 
     /* When the cursor hovers over a location, remove the text and add

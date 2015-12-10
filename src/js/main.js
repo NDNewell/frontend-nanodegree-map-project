@@ -730,11 +730,6 @@ function AppViewModel () {
             $clearFavoritesButton = '<button type="button" class="btn clear-favorites-button">Clear All</button>',
             $favoriteFilterSymbol = $('.favorite-filter-symbol');
 
-        // If button has already been added, show it; otherwise, add it
-        if($filtersContainer.is(':hidden')) {
-            $filtersContainer.toggle();
-        } else {
-
             // Add the clear favorites button to the filters container
             $filtersContainer.append($clearFavoritesButton);
 
@@ -757,7 +752,6 @@ function AppViewModel () {
                 // Close the surf guide and reset the page
                 self.resetPage();
             });
-        };
     };
 
     // Display only favorite from the locations array
@@ -794,7 +788,7 @@ function AppViewModel () {
                 console.log("show all locations");
 
                 // Hide the filters container
-                $filtersContainer.hide();
+                $filtersContainer.toggle();
 
                 // Add remove relevant classes
                 $favoriteSymbol.removeClass("favorite-filter-selected");
@@ -819,6 +813,9 @@ function AppViewModel () {
                     self.closeSurfGuide();
                 };
 
+                // Show the filters container
+                $filtersContainer.toggle();
+
                 // Add remove relevant classes
                 $favoriteSymbol.removeClass("favorite-filter-default");
                 $favoriteSymbol.addClass("favorite-filter-selected");
@@ -829,8 +826,10 @@ function AppViewModel () {
                 // Add rollover effects to the new list of objects
                 self.addRolloverEffect();
 
-                // Add a button for clearing all favorites if desired
-                self.addClearFavoritesButton();
+                // If 'clear favorites' button doesn't exist, create it
+                if(!$('.clear-favorites-button').length) {
+                    self.addClearFavoritesButton();
+                };
 
                 // Display 'favorite' icons on the relevant location frames
                 self.renderFavoriteOnLocationFrame();

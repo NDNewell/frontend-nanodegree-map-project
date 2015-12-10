@@ -2478,8 +2478,6 @@ function AppViewModel () {
             processing */
             var $surfGuideContainer = $('.surf-guide-container');
 
-            console.log($currentSurfGuide);
-
             if ($currentSurfGuide.indexOf(breakName) > -1 && !$('.conditions-error').length) {
 
                 // Save wave break height
@@ -2698,7 +2696,7 @@ function AppViewModel () {
             /* Before rendering the error message, check which surf guide is
             currently open and make sure it matches the API request. This ensures that an api request that takes time to download isn't injected into another surf guide if the user changed surf guides during the api request processing */
 
-            if ($currentSurfGuide .indexOf(breakName) >= 0) {
+            if ($currentSurfGuide .indexOf(breakName) > -1) {
 
                 var errorElem = '<div class="col-xs-12 error-container"></div>';
                 var errorMsg = '<p class="conditions-error">' + breakName + ' ' + "conditions unavailable =(" + '</p>';
@@ -3143,17 +3141,25 @@ function addMapListener () {
 
 function showLocationFrame (breakName) {
 
-    // Loop through all of the location frames
-    $('.location-frame').each(function() {
+    // Cache DOM reference to all location frames
+    var $allLocationFrames = $('.location-frame');
 
-        var $this = $(this);
+    // Hide all location frames
+    $allLocationFrames.hide();
+
+    // Loop through all of the location frames
+    $allLocationFrames.each(function() {
+
+        // Cache the current location frame's reference and text
+        var $locationFrame = $(this);
+        var $locationFrameText = $locationFrame.text();
 
         /* If a specific location frame's text matches the currenlty selected
-        break, show it and hide the others*/
-        if($this.text().indexOf(breakName) >= 0) {
-            var match = ($this);
-            $('.location-frame').hide();
-            match.show();
+        break, show it*/
+        if($locationFrameText.indexOf(breakName) > -1) {
+
+            console.log('show only ' + breakName + "'s location frame");
+            $locationFrame.show();
         };
     });
 };

@@ -773,6 +773,12 @@ function AppViewModel () {
             };
         });
 
+        // Close open info windows
+        infoWindow.close();
+
+        // Find last selected marker and make pin small again
+        makeMarkerSmall();
+
         /* Iterate through the markers array and update the map markers
         with any matching locations to the user's favorites */
         markers.forEach(function(marker) {
@@ -787,6 +793,8 @@ function AppViewModel () {
             };
         });
 
+        console.log('update map with favorites');
+
         /* If the map is visible, set the map bounds and map position. If it is
         instead hidden, do nothing. This is because that a bug is created when
         map bounds are invoked on the hidden map: the map, markers and info-
@@ -796,7 +804,7 @@ function AppViewModel () {
         frame. Also, if the map is opened (and if the surf guide isn't in view)
         the map will be centered and the bounds will also be set whichever
         location frames have or haven't been filtered into view. */
-        if (!$('#map').is(":hidden")) {
+        if ($('#map').is(":visible")) {
             // Set the map bounds & map position
             setMapBounds();
         };

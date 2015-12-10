@@ -730,28 +730,28 @@ function AppViewModel () {
             $clearFavoritesButton = '<button type="button" class="btn clear-favorites-button">Clear All</button>',
             $favoriteFilterSymbol = $('.favorite-filter-symbol');
 
-            // Add the clear favorites button to the filters container
-            $filtersContainer.append($clearFavoritesButton);
+        // Add the clear favorites button to the filters container
+        $filtersContainer.append($clearFavoritesButton);
 
-            // Bind click event to button
-            /* When button's clicked, hide the filters container, remove/add
-            the necessary classes, delete the user's favorites and reset the
-            page (closes surf guide) */
-            $('.clear-favorites-button').on( "click", function () {
+        // Bind click event to button
+        /* When button's clicked, hide the filters container, remove/add
+        the necessary classes, delete the user's favorites and reset the
+        page (closes surf guide) */
+        $('.clear-favorites-button').on( "click", function () {
 
-                // Hide the filters container
-                $filtersContainer.toggle();
+            // Hide the filters container
+            $filtersContainer.toggle();
 
-                // Add/remove the classes
-                $favoriteFilterSymbol .removeClass("favorite-filter-selected");
-                $favoriteFilterSymbol .addClass("favorite-filter-default");
+            // Add/remove the classes
+            $favoriteFilterSymbol .removeClass("favorite-filter-selected");
+            $favoriteFilterSymbol .addClass("favorite-filter-default");
 
-                // Clear the user's favorites
-                self.removeAllFavorites();
+            // Clear the user's favorites
+            self.removeAllFavorites();
 
-                // Close the surf guide and reset the page
-                self.resetPage();
-            });
+            // Close the surf guide and reset the page
+            self.resetPage();
+        });
     };
 
     // Display only favorite from the locations array
@@ -772,6 +772,34 @@ function AppViewModel () {
                 self.locationGrid.push(obj);
             };
         });
+
+        /* Iterate through the markers array and update the map markers
+        with any matching locations to the user's favorites */
+        markers.forEach(function(marker) {
+
+            // Shorten the marker title to just the break name
+            var markerTitle = marker.title.replace(/ *\([^)]*\) */g, "");
+
+            if (userFavorites.indexOf(markerTitle) > -1) {
+                marker.setVisible(true);
+            } else {
+                marker.setVisible(false);
+            };
+        });
+
+        /* If the map is visible, set the map bounds and map position. If it is
+        instead hidden, do nothing. This is because that a bug is created when
+        map bounds are invoked on the hidden map: the map, markers and info-
+        windows skew left for some unknown reason. Because a search results
+        in location frames being filtered and eventually one being selected,
+        centering and map bounds will be set by the clicking of the location
+        frame. Also, if the map is opened (and if the surf guide isn't in view)
+        the map will be centered and the bounds will also be set whichever
+        location frames have or haven't been filtered into view. */
+        if (!$('#map').is(":hidden")) {
+            // Set the map bounds & map position
+            setMapBounds();
+        };
     };
 
     // Bind click event to the 'favorite' icon on the navbar
@@ -788,7 +816,7 @@ function AppViewModel () {
                 console.log("show all locations");
 
                 // Hide the filters container
-                $filtersContainer.toggle();
+                $filtersContainer.hide();
 
                 // Add remove relevant classes
                 $favoriteSymbol.removeClass("favorite-filter-selected");
@@ -814,7 +842,7 @@ function AppViewModel () {
                 };
 
                 // Show the filters container
-                $filtersContainer.toggle();
+                $filtersContainer.show();
 
                 // Add remove relevant classes
                 $favoriteSymbol.removeClass("favorite-filter-default");

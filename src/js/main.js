@@ -690,12 +690,12 @@ function AppViewModel () {
         self.locationArray.forEach(function(obj) {
 
             // Convert break names (remove spaces, commas, apostrophes etc.)
-            if (obj.breakName.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) >= 0) {
+            if (obj.breakName.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) > -1) {
 
               self.locationGrid.push(obj);
 
             // Convert locations (remove spaces, commas, apostrophes etc.)
-            } else if (obj.location.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) >= 0) {
+            } else if (obj.location.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) > -1) {
 
               self.locationGrid.push(obj);
             }
@@ -706,7 +706,7 @@ function AppViewModel () {
         markers.forEach(function(marker) {
 
             // Convert marker titles (remove spaces, commas, apostrophes etc.)
-            if (marker.title.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) >= 0) {
+            if (marker.title.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) > -1) {
 
               marker.setVisible(true);
             } else {

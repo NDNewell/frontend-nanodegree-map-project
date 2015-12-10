@@ -590,7 +590,7 @@ function AppViewModel () {
                 $filtersContainer = $('.filters-container');
 
             // Hide the filters container
-            $filtersContainer.hide();
+            $filtersContainer.slideUp(500);
 
             console.log('hide filters container and favorites');
 
@@ -757,7 +757,7 @@ function AppViewModel () {
         $('.clear-favorites-button').on( "click", function () {
 
             // Hide the filters container
-            $filtersContainer.toggle();
+            $filtersContainer.slideUp(500);
 
             // Add/remove the classes
             $favoriteFilterSymbol .removeClass("favorite-filter-selected");
@@ -841,7 +841,7 @@ function AppViewModel () {
                 console.log("show all locations");
 
                 // Hide the filters container
-                $filtersContainer.hide();
+                $filtersContainer.slideUp(500);
 
                 // Add remove relevant classes
                 $favoriteSymbol.removeClass("favorite-filter-selected");
@@ -867,7 +867,7 @@ function AppViewModel () {
                 };
 
                 // Show the filters container
-                $filtersContainer.show();
+                $filtersContainer.slideDown(500);
 
                 // Add remove relevant classes
                 $favoriteSymbol.removeClass("favorite-filter-default");

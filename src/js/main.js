@@ -991,10 +991,10 @@ function AppViewModel () {
                         /* Filter locations that match the hovered item.
                         When a match is found, export it to be displayed
                         in the location frame */
-                        if (hoverItem.indexOf(breakName) >= 0) {
+                        if (hoverItem.indexOf(breakName) > -1) {
 
                             importInfo(obj);
-                        }
+                        };
 
                     });
 
@@ -2395,7 +2395,7 @@ function AppViewModel () {
 
         console.log('get current conditions');
 
-        var $currentSurfGuide = $('.guide-header').text();
+        var $currentSurfGuide = $('.title').text();
         var $surfGuideTitleContainer = $('.guide-header');
 
         /* Check for the location's spot ID. If there is no spot ID,
@@ -2474,11 +2474,13 @@ function AppViewModel () {
             currently open and make sure it matches the API request and that
             there isn't an error already displayed. This ensures that an api
             request that takes time to download isn't injected into another
-            surf guide if the user changed surf guides duringthe api request
+            surf guide if the user changed surf guides during the api request
             processing */
             var $surfGuideContainer = $('.surf-guide-container');
 
-            if ($currentSurfGuide.indexOf(breakName) >= 0 && !$surfGuideContainer.is(":contains('unavailable')")) {
+            console.log($currentSurfGuide);
+
+            if ($currentSurfGuide.indexOf(breakName) > -1 && !$('.conditions-error').length) {
 
                 // Save wave break height
                 var minBreakHeight = forecastData.swell.minBreakingHeight;

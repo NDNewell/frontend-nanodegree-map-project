@@ -355,9 +355,10 @@ function AppViewModel () {
         });
     };
 
-    /* Create an empty local array to hold the user's favorites collected from
-    the firebase's database */
-    var userFavorites = [];
+    /* Create an empty local array (globally accessible for use with the
+      Google API) to hold the user's favorites collected from the firebase's
+      database */
+    userFavorites = [];
 
     self.getFavorites = function (authData) {
 
@@ -381,18 +382,22 @@ function AppViewModel () {
                     console.log('user has no favorites');
                 } else {
 
+                    /* Convert the marker image of any markers that match the
+                    user's favorites */
+                    makeMarkerFav(favorites);
+
                     /* Push each favorite found in the Firebase array into the
                     local favorites array */
                     favorites.forEach(function(obj) {
                       userFavorites.push(obj);
                     });
-                    console.log("the user's favorites(s) is/are: " + userFavorites.join(', '));
-                };
+                    console.log("the user's favorite(s) is/are: " + userFavorites.join(', '));
 
-                // Update DOM elements (location frames)
-                /* Fill in the hearts of any locations which are the user's
-                favorites */
-                self.renderFavoriteOnLocationFrame();
+                    // Update DOM elements (location frames)
+                    /* Fill in the hearts of any locations which are the user's
+                    favorites */
+                    self.renderFavoriteOnLocationFrame();
+                };
 
             }, fireBaseReadError);
         };
@@ -2993,6 +2998,8 @@ function showMarkers(map) {
 
 function setMapBounds () {
 
+    console.log('set map bounds');
+
     /* Create map bounds rectangle using the most SW / NE locations
     to calculate the size*/
     var bounds = new google.maps.LatLngBounds();
@@ -3137,6 +3144,19 @@ function makeMarkerSmall () {
         if (marker.icon.indexOf('img/marker_selected.svg') >= 0) {
             console.log('make ' + markerName + "'" + 's marker small!');
             marker.setIcon('img/marker_small.svg');
+        };
+    });
+};
+
+/* Convert any map markers that match the user's favorites into 'favorite'
+icons */
+function makeMarkerFav (favorites) {
+    markers.forEach(function(marker) {
+        var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
+
+        if (favorites.indexOf(markerName) > -1) {
+            console.log("make " + markerName + "'s marker a favorite!");
+            marker.setIcon('img/marker_smallFav.svg');
         };
     });
 };

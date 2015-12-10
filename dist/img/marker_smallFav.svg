@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="-200.8 212.7 12.8 12.8" style="enable-background:new -200.8 212.7 12.8 12.8;" xml:space="preserve">
+	 viewBox="-346.7 361.4 12.7 12.7" style="enable-background:new -346.7 361.4 12.7 12.7;" xml:space="preserve">
 <style type="text/css">
 	.st0{fill:#33CCFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;}
+	.st1{fill:#FFFF66;}
 </style>
-<circle class="st0" cx="-194.4" cy="219.1" r="6.2"/>
+<circle class="st0" cx="-340.4" cy="367.7" r="6.2"/>
+<polygon class="st1" points="-340.4,362 -338.8,365.4 -335.1,365.9 -337.8,368.5 -337.1,372.2 -340.4,370.4 -343.7,372.2 
+	-343.1,368.5 -345.8,365.9 -342.1,365.4 "/>
 </svg>

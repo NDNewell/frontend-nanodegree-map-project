@@ -1,5 +1,7 @@
-var imagesLoaded, locationsLoaded = false;
-var images = {};
+var imagesLoaded,
+    locationsLoaded,
+    favoritesUpdated = false,
+    images = {};
 
 $(document).ready(function() {
 
@@ -374,7 +376,7 @@ function AppViewModel () {
                 var favorites = snapshot.val();
 
                 /* Clear any existing favorites in the local favorites array
-                so it can be filled with updated information */
+                so it can be filled with updated information. */
                 userFavorites = [];
 
                 // If the user has no favorites, log msg in console
@@ -382,7 +384,7 @@ function AppViewModel () {
 
                     console.log('user has no favorites');
 
-                    // Cache an emtpy array to replace 'null'
+                    // Cache an empty array to replace 'null'
                     var favorites = [];
 
                     /* Reset all of the marker images using the empty array*/
@@ -405,6 +407,9 @@ function AppViewModel () {
                     favorites */
                     self.renderFavoriteOnLocationFrame();
                 };
+
+                console.log('favorites updated');
+                favoritesUpdated = true;
 
             }, fireBaseReadError);
         };
@@ -2919,8 +2924,20 @@ function generateMarkers (locationData) {
 
 function addMarker(breakName, breakCoordinates, breakLocation, obj) {
 
-    // Set a variable for custom map marker
-    var markerImg = 'img/marker_small.svg';
+    /* If markers load after updateMarkers function has run, update
+    markers' imgs that match the user's favorites */
+    if(favoritesUpdated) {
+
+        console.log('update marker favorites again');
+
+        if(userFavorites.indexOf(breakName) > -1) {
+            var markerImg = 'img/marker_smallFav.svg';
+        } else {
+            var markerImg = 'img/marker_small.svg';
+        };
+    } else {
+        var markerImg = 'img/marker_small.svg';
+    };
 
     var marker = new google.maps.Marker({
 
@@ -3194,10 +3211,10 @@ function updateFavMarkers (favorites) {
             };
         // If the name doesn't match, but was a fav, change the img back
         } else if (marker.icon === 'img/marker_smallFav.svg') {
-            console.log("Unfavorite " + markerName + "'s marker!");
+            console.log("unfavorite " + markerName + "'s marker!");
             marker.setIcon('img/marker_small.svg');
         } else if (marker.icon === 'img/marker_selectedFav.svg') {
-            console.log("Unfavorite " + markerName + "'s marker!");
+            console.log("unfavorite " + markerName + "'s marker!");
             marker.setIcon('img/marker_selected.svg');
         };
     });

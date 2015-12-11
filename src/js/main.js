@@ -2928,7 +2928,7 @@ function addMarker(breakName, breakCoordinates, breakLocation, obj) {
     markers' imgs that match the user's favorites */
     if(favoritesUpdated) {
 
-        console.log('update marker favorites again');
+        console.log('error: marker favorites not updated! --update again');
 
         if(userFavorites.indexOf(breakName) > -1) {
             var markerImg = 'img/marker_smallFav.svg';

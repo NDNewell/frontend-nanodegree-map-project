@@ -219,9 +219,6 @@ body {
 .location-frame {
     text-align:center;
     padding: 10px 10px;
-}
-
-.location-frame:hover {
     cursor: pointer;
 }
 
@@ -898,6 +895,45 @@ body {
 
     input[type=text]:focus {
         width: 365px;
+    }
+
+    .pulse-location-frame {
+        z-index: 1;
+        -webkit-animation-name: pulse;
+        animation-name: pulse;
+        -webkit-animation-duration: 350ms;
+        animation-duration: 350ms;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+    }
+
+    @-webkit-keyframes pulse {
+        0% { -webkit-transform: scale(1); }
+        100% { -webkit-transform: scale(1.1); }
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        100% { transform: scale(1.1); }
+    }
+
+    .reverse-pulse {
+        -webkit-animation-name: reverse-pulse;
+        animation-name: reverse-pulse;
+        -webkit-animation-duration: 350ms;
+        animation-duration: 350ms;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+    }
+
+    @-webkit-keyframes reverse-pulse {
+        0% { -webkit-transform: scale(1.1); }
+        100% { -webkit-transform: scale(1); }
+    }
+
+    @keyframes reverse-pulse {
+        0% { -webkit-transform: scale(1.1); }
+        100% { -webkit-transform: scale(1); }
     }
 
     .sm-icon-container {

@@ -3023,6 +3023,49 @@ function addListeners(marker, breakName, obj) {
 
     // Add each marker to the markers array
     markers.push(marker);
+
+    // Location frame pulsates when it's corresponding marker is hovered over
+    google.maps.event.addListener(marker, 'mouseover', (function(breakName) {
+
+        /* Create an inner function what will at the time of iteration save
+        the breakName and any behavior to the current marker */
+        return function() {
+
+            // If the surf guide is open do nothing
+            if (!$('.surf-guide-container').length) {
+
+                // Pulsate the associated location frame
+                pulsateLocationFrame(breakName);
+            };
+        };
+
+    /* Pass the relevant marker and break name (breakName) for the current
+    iteration as an argument into the function*/
+    })(breakName));
+
+    // Add each marker to the markers array
+    markers.push(marker);
+
+    google.maps.event.addListener(marker, 'mouseout', (function(breakName) {
+
+        /* Create an inner function what will at the time of iteration save
+        the breakName and any behavior to the current marker */
+        return function() {
+
+            // If the surf guide is open do nothing
+            if (!$('.surf-guide-container').length) {
+
+                // Reverse pulstate the associated location frame
+                pulsateLocationFrame(breakName);
+            };
+        };
+
+    /* Pass the relevant marker and break name (breakName) for the current
+    iteration as an argument into the function*/
+    })(breakName));
+
+    // Add each marker to the markers array
+    markers.push(marker);
 };
 
 function showMarkers(map) {
@@ -3162,6 +3205,77 @@ function showLocationFrame (breakName) {
             $locationFrame.show();
         };
     });
+};
+
+function pulsateLocationFrame (breakName) {
+
+    // Cache DOM references
+    var $allLocationFrames = $('.location-frame'),
+        $numFramesVisible = $('.location-frame:visible').length;
+
+    // If more than one location frame are in view execute code
+    if($numFramesVisible !== 1) {
+
+        // Loop through all of the location frames
+        $allLocationFrames.each(function() {
+
+            // Cache the current location frame's reference and text
+            var $locationFrame = $(this),
+                $locationFrameText = $locationFrame.text();
+
+            /* If a specific location frame's text matches the currenlty hovered/unhovered marker, pulsate or reverse pulsate it */
+            if($locationFrameText.indexOf(breakName) > -1) {
+
+                /* If hovering away from the marker, reverse pulsate its
+                location frame */
+                if($('.pulse-location-frame').length) {
+
+                    console.log("make " + breakName + "'s location frame small!");
+
+                    // Add/remove necessary classes to animate
+                    $locationFrame.removeClass("pulse-location-frame").addClass("reverse-pulse");
+
+                    // Remove the reverse pulse effect
+                    removePulse($locationFrame);
+
+                // If hovering over the marker, pulsate its location frame
+                } else {
+
+                    console.log("make " + breakName + "'s location frame big!");
+
+                    // Add necessary class to animate
+                    $locationFrame.removeClass("reverse-pulse").addClass("pulse-location-frame");
+                };
+            };
+        });
+
+    /* If only one location is in view, do nothing unless hovering away from
+    its marker */
+    } else if ($numFramesVisible === 1 && $('.pulse-location-frame').length) {
+
+        // Cache DOM refs to the visible location frame
+        // Capture the location name of the visible location frame
+        var $locationFrame = $('.location-frame:visible'),
+            $locationName = $locationFrame[0].children[1].innerText;
+
+        console.log("make " + $locationName + "'s location frame small!");
+
+        // Add/remove necessary classes to animate
+        $locationFrame.removeClass("pulse-location-frame").addClass("reverse-pulse");
+
+        // Remove the reverse pulse effect
+        removePulse($locationFrame);
+    };
+
+    // Remove the reverse pulse effect
+    function removePulse ($locationFrame) {
+
+        /* Set a time to remove the effect just after the reverse pulse effect
+         finishes its animation on the previous marker's location frame */
+        var timer = setTimeout (function() {
+            $locationFrame.removeClass("reverse-pulse");
+        }, 400);
+    };
 };
 
 function addMapClickEvent (marker) {

@@ -233,51 +233,6 @@ body {
     height: 194px;
 }
 
-.favorite-guide {
-    margin-right: 5px;
-    cursor: pointer;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-.is-a-favorite-guide path {
-    fill: #ff33ff;
-    stroke-opacity: 0;
-}
-
-.not-a-favorite-guide path {
-    fill: #ffffff;
-    stroke: #b3b3b3;
-    stroke-width: 1;
-}
-
-.not-a-favorite-guide:hover path {
-    fill: #ff80ff;
-    stroke-opacity: 0;
-}
-
-.guide-header {
-    margin-top: 20px;
-    margin-bottom: 12px;
-    padding: 15px;
-    text-align: center;
-    font-size: 3em;
-}
-
-.live-temp {
-    width: 15%;
-    margin-top: 18px;
-    margin-left: 42.5%;
-    text-align: center;
-    font-size: .6em;
-    border: 2px solid #E8E8E8;
-    border-radius: 10px;
-}
-
 .skill-level-hover {
     position: absolute;
     top: 11.5%;
@@ -368,6 +323,55 @@ body {
     position: absolute;
     bottom: 0;
     left: 17px;
+}
+
+.favorite-guide {
+    margin-right: 5px;
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.is-a-favorite-guide path {
+    fill: #ff33ff;
+    stroke-opacity: 0;
+}
+
+.not-a-favorite-guide path {
+    fill: #ffffff;
+    stroke: #b3b3b3;
+    stroke-width: 1;
+}
+
+.not-a-favorite-guide:hover path {
+    fill: #ff80ff;
+    stroke-opacity: 0;
+}
+
+.surf-info-container {
+    cursor: default;
+}
+
+.guide-header {
+    margin-top: 20px;
+    margin-bottom: 12px;
+    padding: 15px;
+    text-align: center;
+    font-size: 3em;
+}
+
+.live-temp {
+    width: 15%;
+    margin-top: 18px;
+    margin-left: 42.5%;
+    text-align: center;
+    font-size: .6em;
+    border: 2px solid #E8E8E8;
+    border-radius: 10px;
 }
 
 #progressBar {

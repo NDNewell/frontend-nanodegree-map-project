@@ -970,110 +970,106 @@ function AppViewModel () {
             var $img = $(this).find('img.location-image');
             var $favoriteWrapper = $(this).find('.favorite-wrapper');
 
-            $locationFrame.on('mouseenter',
+            $locationFrame.on('mouseenter', function (e) {
 
-                function (e) {
+                // Enable rollover effects
+                rollover = true;
 
-                    rollover = true;
+                /* Get identifying information from the hovered over
+                locaton frame */
+                var frameBreakName = e.currentTarget.children[1].innerText;
 
-                    // Get identifying information from the clicked object
-                    var targetData = e.currentTarget.innerText;
+                activateMarker(frameBreakName);
 
-                    // Format the obtained information
-                    var hoverItem = targetData.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
+                // Iterate through the location array
+                self.locationArray.forEach(function(obj) {
 
-                    // Iterate through the location array
-                    self.locationArray.forEach(function(obj) {
-
-                        // Format info from object
-                        var breakName = obj.breakName.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
-
-                        /* Filter locations that match the hovered item.
-                        When a match is found, export it to be displayed
-                        in the location frame */
-                        if (hoverItem.indexOf(breakName) > -1) {
-
-                            importInfo(obj);
-                        };
-
-                    });
-
-                    /* When the mouse is hovering over a location frame
-                    show unique information about that location */
-                    function importInfo(obj) {
-
-                        $img.css('-webkit-filter', 'blur(4px) brightness(80%)' );
-                        $location.toggle()
-                        $breakName.toggle();
-                        $favoriteWrapper.toggle();
-
-                        /* Display icon associated with the skill level
-                        needed to surf the break */
-                        var skillLevelIcon = displaySkillIcon(obj.skillLevel);
-                        $locationFrame.append(skillLevelIcon);
-
-                        /* Display the icon associated with the type of
-                        break it is (i.e. what kind of surface is beneath
-                        it */
-                        var breakIcon = displayBreakIcon(obj.breakDetails);
-                        $locationFrame.append(breakIcon);
-
-                        /* Display the icon associated with the direction
-                        the wave breaks */
-                        var directionIcon = displayDirectionIcon(obj.waveDirection);
-                        $locationFrame.append(directionIcon);
-
-                        /* Display the icon for the best month in which to
-                        surf at the specific break*/
-                        var bestSeasonIcon = displayBestSeasonIcon(obj.optimalTime);
-                        $locationFrame.append(bestSeasonIcon);
-
-                        /* If there is big wave surfing at this break
-                        display big wave icon. If not, display the
-                        suggested swim attire icon for current season */
-                        var miscIconOne = displayBigWaveIcon(obj);
-                        $locationFrame.append(miscIconOne);
-
-                        /* If the wave is well known display the well
-                        known icon, otherwise display a random hazard
-                        icon */
-                        var miscIconTwo = displayWellKnownIcon(obj);
-                        $locationFrame.append(miscIconTwo);
-
-                        /* Display the budget cost for the location */
-                        var costInfo = displayCost(obj.cost);
-                        $locationFrame.append(costInfo);
-
-                        /* Check if current location is available, if it is
-                        render the distance to the hovered over location in
-                        the top right corner of the picture */
-                        if(typeof currentLat !== 'undefined') {
-                            var distanceInfo = displayDistance(obj.lat, obj.lng);
-                            $locationFrame.append(distanceInfo);
-                        };
-
-                        // Display average water temp for current season
-                        var waterTempInfo = displayCurrentWaterTemp(obj.avgWaterTemp);
-                        $locationFrame.append(waterTempInfo);
-
-                        // Display avg wave height for the break
-                        var waveSizeInfo = displayWaveSize(obj.avgSize);
-                        $locationFrame.append(waveSizeInfo);
+                    // Filter locations that match the location frame
+                    // Bounce the location frame's associated marker
+                    if (frameBreakName === obj.breakName) {
+                        importInfo(obj);
                     };
-                }
-            );
+                });
 
-            /* Remove all imported info when the mouse stops hovering */
-            $locationFrame.on('mouseleave',
-                function () {
-                    $img.css('-webkit-filter', 'blur(0px) brightness(100%)');
-                    $location.toggle();
+                /* When the mouse is hovering over a location frame
+                show unique information about that location */
+                function importInfo(obj) {
+
+                    $img.css('-webkit-filter', 'blur(4px) brightness(80%)' );
+                    $location.toggle()
                     $breakName.toggle();
                     $favoriteWrapper.toggle();
 
-                    $('.rollover-info').remove();
-                }
-            );
+                    /* Display icon associated with the skill level
+                    needed to surf the break */
+                    var skillLevelIcon = displaySkillIcon(obj.skillLevel);
+                    $locationFrame.append(skillLevelIcon);
+
+                    /* Display the icon associated with the type of
+                    break it is (i.e. what kind of surface is beneath
+                    it */
+                    var breakIcon = displayBreakIcon(obj.breakDetails);
+                    $locationFrame.append(breakIcon);
+
+                    /* Display the icon associated with the direction
+                    the wave breaks */
+                    var directionIcon = displayDirectionIcon(obj.waveDirection);
+                    $locationFrame.append(directionIcon);
+
+                    /* Display the icon for the best month in which to
+                    surf at the specific break*/
+                    var bestSeasonIcon = displayBestSeasonIcon(obj.optimalTime);
+                    $locationFrame.append(bestSeasonIcon);
+
+                    /* If there is big wave surfing at this break
+                    display big wave icon. If not, display the
+                    suggested swim attire icon for current season */
+                    var miscIconOne = displayBigWaveIcon(obj);
+                    $locationFrame.append(miscIconOne);
+
+                    /* If the wave is well known display the well
+                    known icon, otherwise display a random hazard
+                    icon */
+                    var miscIconTwo = displayWellKnownIcon(obj);
+                    $locationFrame.append(miscIconTwo);
+
+                    /* Display the budget cost for the location */
+                    var costInfo = displayCost(obj.cost);
+                    $locationFrame.append(costInfo);
+
+                    /* Check if current location is available, if it is
+                    render the distance to the hovered over location in
+                    the top right corner of the picture */
+                    if(typeof currentLat !== 'undefined') {
+                        var distanceInfo = displayDistance(obj.lat, obj.lng);
+                        $locationFrame.append(distanceInfo);
+                    };
+
+                    // Display average water temp for current season
+                    var waterTempInfo = displayCurrentWaterTemp(obj.avgWaterTemp);
+                    $locationFrame.append(waterTempInfo);
+
+                    // Display avg wave height for the break
+                    var waveSizeInfo = displayWaveSize(obj.avgSize);
+                    $locationFrame.append(waveSizeInfo);
+                };
+            });
+
+            /* Remove all imported info when the mouse stops hovering */
+            $locationFrame.on('mouseleave', function () {
+                $img.css('-webkit-filter', 'blur(0px) brightness(100%)');
+                $location.toggle();
+                $breakName.toggle();
+                $favoriteWrapper.toggle();
+
+                /* Deactivate the location frame's associated marker and
+                make its pin small again */
+                if(!$('.surf-guide-container').length) {
+                    makeMarkerSmall();
+                };
+
+                $('.rollover-info').remove();
+            });
         });
     };
 
@@ -1127,9 +1123,40 @@ function AppViewModel () {
 
                 // Animate marker
                 animateMarker(marker);
-
             };
+        });
+    };
 
+    /* When a location frame is hovered over, the associated marker is
+    activated */
+    self.activateMarker = function(breakName) {
+
+        // Iterate through the markers array
+        markers.forEach(function(marker) {
+
+            // Cache the title of the marker not including the location
+            var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
+
+            // Filter markers that match the location frame
+            if (markerName === breakName) {
+
+                /* If marker wasn't previously activated, make it big for
+                normal and fav icons */
+                if (marker.icon === 'img/marker_small.svg') {
+
+                    console.log('make ' + markerName + "'" + 's marker big!');
+
+                    // Change the marker's image
+                    marker.setIcon('img/marker_selected.svg');
+
+                } else if (marker.icon === 'img/marker_smallFav.svg') {
+
+                    console.log('make ' + markerName + "'" + 's marker big!');
+
+                    // Change the marker's image
+                    marker.setIcon('img/marker_selectedFav.svg');
+                };
+            };
         });
     };
 

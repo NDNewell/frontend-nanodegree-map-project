@@ -216,7 +216,25 @@ body {
     border-radius: 12.5px;
 }
 
+.location-grid {
+    height: 225px;
+    width: 100%;
+    white-space: nowrap;
+    overflow-x: scroll;
+    overflow-y: hidden;
+
+    margin: 0;
+}
+
 .location-frame {
+    position: relative;
+    display: inline-block;
+    vertical-align: bottom;
+    background-position: top left;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+
     text-align:center;
     padding: 10px 10px;
     cursor: pointer;

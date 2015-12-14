@@ -74,8 +74,8 @@
                 </div>
             </section>
             <section class="list-section">
-                <div class="row location-grid" data-bind="foreach: locationGrid">
-                    <div class="col-xs-12 col-sm-6 col-md-4 location-frame" data-bind="click: clickLocationFrame">
+                <div class="row-fluid location-grid" data-bind="foreach: locationGrid">
+                    <div class="location-frame" data-bind="click: clickLocationFrame">
                         <span data-bind="html: picture"></span>
                         <p class="break-name"><strong data-bind="text: breakName"></strong></p>
                         <span class="favorite-wrapper not-a-favorite"><img class="favorite" src="img/heart.svg"></span>
@@ -101,6 +101,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+    <!-- build:js js/jquery.mousewheel.min.js -->
+    <script src="js/jquery.mousewheel.js"></script>
+    <!-- /build -->
     <!-- build:js js/main.min.js -->
     <script src="js/main.js"></script>
     <!-- /build -->

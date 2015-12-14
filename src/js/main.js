@@ -154,6 +154,15 @@ $(document).ready(function() {
 
 });
 
+
+$(document).ready(function() {
+    $('.location-grid').mousewheel(function(e, delta) {
+        this.scrollLeft -= (delta * 1);
+        e.preventDefault();
+    });
+});
+
+
 function AppViewModel () {
 
     this.self = this;

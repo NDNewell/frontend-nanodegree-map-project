@@ -163,6 +163,30 @@ $(document).ready(function() {
 });
 
 
+function adjustMapSize () {
+    var locationGridHeight = $('.location-grid').outerHeight(),
+    navbarHeight = $('#myNavbar').outerHeight(),
+    windowHeight = $(window).height();
+
+    if($('.search-container').is(":visible")) {
+        var searchContainerHeight = $('.search-container').outerHeight(),
+        newMapHeight = windowHeight - (locationGridHeight + searchContainerHeight + navbarHeight);
+    } else {
+        newMapHeight = windowHeight - (locationGridHeight + navbarHeight);
+    };
+
+    $('.map-container').css("height", newMapHeight);
+};
+
+$(document).ready(function() {
+    adjustMapSize();
+});
+
+$(window).resize(function() {
+    adjustMapSize();
+});
+
+
 function AppViewModel () {
 
     this.self = this;
@@ -581,7 +605,16 @@ function AppViewModel () {
                 $searchSymbol.addClass("search-default");
             };
 
+            /* Adjust the map size to accomodate the addition of the search
+            field if the map is visible */
+            if($('.map-container').is(":visible")) {
+                console.log('adjust mapsize');
+                adjustMapSize();
+            };
+
         }, 600);
+
+
     };
 
     /* When the search symbol is clicked, the search field is displayed with

@@ -154,15 +154,6 @@ $(document).ready(function() {
 
 });
 
-
-$(document).ready(function() {
-    $('.location-grid').mousewheel(function(e, delta) {
-        this.scrollLeft -= (delta * 1);
-        e.preventDefault();
-    });
-});
-
-
 function AppViewModel () {
 
     this.self = this;
@@ -274,8 +265,8 @@ function AppViewModel () {
         });
     };
 
-    /* When the map is in view, the height is readjusted when the window size
-    is altered and when a search is made */
+    /* When the map is in view on a screen larger than 767px, the height is
+    adjusted*/
     self.adjustMapSize = function () {
 
         // Save references to DOM elements and heights
@@ -301,17 +292,115 @@ function AppViewModel () {
 
         // Adjust the height of the map container
         $mapContainer.css("height", $newMapHeight);
+
+        // If the Google map and its locations have loaded, set the map bounds
+        if(markers.length !== 0) {
+            setMapBounds();
+        };
     };
 
-    // Adjust the map height if the map is visible or window is resized
-    if($(".map-container").is(":visible")) {
+    /* In screen sizes greater than 767px horizontal scrolling is enabled
+    during map view */
+    self.enableHorizontalScrolling = function () {
 
-        self.adjustMapSize();
+        // Set a ref to the location grid that holds all of the locations
+        var $locationGrid = $('.location-grid');
 
-        $(window).resize(function() {
-            self.adjustMapSize();
+        /* Remove any previous event handlers, so multiples of same handler
+        aren't added */
+        $locationGrid.off();
+
+        // Create event for when mouse scroll wheel is activated
+        $locationGrid.mousewheel(function(e, delta) {
+            this.scrollLeft -= (delta * 1);
+            e.preventDefault();
         });
     };
+
+    /* When the screen width crosses 768px, alter the layout of the page to
+    accommodate the appearence of a horizontal scroll bar for screen widths
+    >= 768px and reverse these effects when the screen width falls below 768px
+     */
+    self.toggleLayout = function () {
+
+        // Cache DOM refs to key elements
+        var $locationGrid = $('.location-grid'),
+            $locationFrame = $('.location-frame'),
+            $container = $('#container'),
+            $mapContainer = $('.map-container');
+
+        /* If the screen width signals a 'mobile' view, alter the layout
+        accordingly*/
+        if(mobileView) {
+
+            // In the mobile view, set the map container away from 100%
+            $mapContainer.css("height", "245px");
+
+            // Change the container away from Bootstrap's 'fluid' class
+            $container.removeClass("container-fluid").addClass("container");
+
+            // Remove Bootstrap's 'fluid' row
+            $locationGrid.removeClass("row-fluid").addClass("row");
+
+            // Re-add the Bootstrap settings
+            $locationFrame.addClass("col-xs-12 col-sm-6 col-md-4");
+
+            /* Remove any listeners attached to the location grid (horiz.
+              scroll) */
+            $locationGrid.off();
+
+        /* If the screen width is larger than a 'mobile' view, alter the
+        layout accordingly*/
+        } else {
+
+            // Change the container to Bootstrap's 'fluid' class
+            $container.removeClass("container").addClass("container-fluid");
+
+            // Add Bootstrap's 'fluid' class setting to the row
+            $locationGrid.removeClass("row").addClass("row-fluid");
+
+            // Remove the Bootstrap settings
+            $locationFrame.removeClass("col-xs-12 col-sm-6 col-md-4");
+
+                // Adjust the map height
+                self.adjustMapSize();
+
+                // Enable horizontal scrolling
+                self.enableHorizontalScrolling();
+        };
+    };
+
+    // Set intitial variable for mobile view setting
+    var mobileView;
+
+    // Check the width of the screen
+    self.checkWinWidth = function () {
+
+        // Set refs to DOM elems
+        var $winWidth = $(window).width();
+
+        // If the screen width is the same size as mobile, set to true
+        if($winWidth < 768) {
+
+            mobileView = true;
+
+        // If the screen width is larger than a mobile device, set to false
+        } else {
+
+            mobileView = false;
+        };
+
+        // Change the site's current layout depending on the above's outcome
+        toggleLayout();
+    };
+
+    // Check the width of the window
+    self.checkWinWidth();
+
+    // Whenever the window is resized, check the width of the window
+    $(window).resize(function() {
+        self.checkWinWidth();
+    });
 
     // Modifiy navbar to sticky navbar upon scrolling down
     self.stickyNavBar = function() {
@@ -620,16 +709,11 @@ function AppViewModel () {
                 $searchSymbol.addClass("search-default");
             };
 
-            /* Adjust the map size to accomodate the addition of the search
-            field if the map is visible */
-            if($('.map-container').is(":visible")) {
-                console.log('adjust map size');
-                self.adjustMapSize();
-            };
+            /* Adjust the layout of the screen to accomodate the search field
+            */
+            self.toggleLayout();
 
         }, 600);
-
-
     };
 
     /* When the search symbol is clicked, the search field is displayed with

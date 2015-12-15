@@ -2,10 +2,6 @@ body {
     font-family: Arial, Verdana;
 }
 
-body, html {
-    height: 100%;
-}
-
 .logo {
     font-size: 1.5em;
     color: #00B8E6;
@@ -209,18 +205,6 @@ body, html {
     text-align: center;
     width: 250px;
     border-radius: 12.5px;
-}
-
-.location-image {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 355px;
-    height: 194px;
-
-    -webkit-box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
-    box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .skill-level-hover {
@@ -690,13 +674,15 @@ body, html {
     }
 
     .map-container {
+        height: 245px;
         border-bottom: 1px dashed;
         border-color: #E8E8E8;
         margin-top: 1px;
+        padding: 0px;
     }
 
     #map {
-        height: 245px;
+        height: 100%;
         width: 100%;
     }
 
@@ -825,6 +811,7 @@ body, html {
         text-align:center;
         margin-bottom: 1px;
         padding: 0px 0px 0px 0px;
+        cursor: pointer;
     }
 
     .favorite {
@@ -833,6 +820,9 @@ body, html {
     }
 
     .location-image {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
         border-radius: 0px;
         width: 100%;
         height: 100%;
@@ -874,6 +864,11 @@ body, html {
 }
 
 @media (min-width: 768px) {
+
+    body, html {
+        height: 100%;
+    }
+
     .search-form:focus {
         box-shadow: 0 0 15px 5px #b0e0ee;
         border: 2px solid #bebede;
@@ -925,11 +920,21 @@ body, html {
 
         margin-top: 6px;
 
-
-
         text-align:center;
         padding: 10px 10px;
         cursor: pointer;
+    }
+
+    .location-image {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 355px;
+        height: 194px;
+
+        -webkit-box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+        -moz-box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+        box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
     }
 
     .pulse-location-frame {

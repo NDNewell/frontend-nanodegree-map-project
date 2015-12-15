@@ -10,7 +10,7 @@
         <script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
     </head>
     <body>
-        <div class="container-fluid">
+        <div class="container" id="container">
             <header>
                 <div class="row header horizontal-rule">
                     <nav id="navbar-main" class="navbar navbar-inverse">
@@ -68,8 +68,8 @@
                 </div>
             </section>
             <section class="list-section">
-                <div class="row-fluid location-grid" data-bind="foreach: locationGrid">
-                    <div class="location-frame" data-bind="click: clickLocationFrame">
+                <div class="row location-grid" data-bind="foreach: locationGrid">
+                    <div class="location-frame col-xs-12 col-sm-6 col-md-4" data-bind="click: clickLocationFrame">
                         <span data-bind="html: picture"></span>
                         <p class="break-name"><strong data-bind="text: breakName"></strong></p>
                         <span class="favorite-wrapper not-a-favorite"><img class="favorite" src="img/heart.svg"></span>

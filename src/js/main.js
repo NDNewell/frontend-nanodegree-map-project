@@ -163,30 +163,6 @@ $(document).ready(function() {
 });
 
 
-function adjustMapSize () {
-    var locationGridHeight = $('.location-grid').outerHeight(),
-    navbarHeight = $('#myNavbar').outerHeight(),
-    windowHeight = $(window).height();
-
-    if($('.search-container').is(":visible")) {
-        var searchContainerHeight = $('.search-container').outerHeight(),
-        newMapHeight = windowHeight - (locationGridHeight + searchContainerHeight + navbarHeight);
-    } else {
-        newMapHeight = windowHeight - (locationGridHeight + navbarHeight);
-    };
-
-    $('.map-container').css("height", newMapHeight);
-};
-
-$(document).ready(function() {
-    adjustMapSize();
-});
-
-$(window).resize(function() {
-    adjustMapSize();
-});
-
-
 function AppViewModel () {
 
     this.self = this;
@@ -295,6 +271,45 @@ function AppViewModel () {
         $('.data-load-error-container').append(reloadButton);
         $('.reload-button').on('click', function(e) {
             location = location;
+        });
+    };
+
+    /* When the map is in view, the height is readjusted when the window size
+    is altered and when a search is made */
+    self.adjustMapSize = function () {
+
+        // Save references to DOM elements and heights
+        var $locationGridHeight = $('.location-grid').outerHeight(),
+        $navbarHeight = $('#myNavbar').outerHeight(),
+        $windowHeight = $(window).height(),
+        $mapContainer = $('.map-container'),
+        $searchContainer = $('.search-container');
+
+        /* If the search container is visible, set a new map height that
+        accounts for the search container height */
+        if($searchContainer.is(":visible")) {
+
+            // Save the search container height and set a new map height
+            var $searchContainerHeight = $searchContainer.outerHeight(),
+            $newMapHeight = $windowHeight - ($locationGridHeight + $searchContainerHeight + $navbarHeight);
+
+        /* If the search container isn't visible, set a new map height without
+        accounting for the search container height */
+        } else {
+            var $newMapHeight = $windowHeight - ($locationGridHeight + $navbarHeight);
+        };
+
+        // Adjust the height of the map container
+        $mapContainer.css("height", $newMapHeight);
+    };
+
+    // Adjust the map height if the map is visible or window is resized
+    if($(".map-container").is(":visible")) {
+
+        self.adjustMapSize();
+
+        $(window).resize(function() {
+            self.adjustMapSize();
         });
     };
 
@@ -608,8 +623,8 @@ function AppViewModel () {
             /* Adjust the map size to accomodate the addition of the search
             field if the map is visible */
             if($('.map-container').is(":visible")) {
-                console.log('adjust mapsize');
-                adjustMapSize();
+                console.log('adjust map size');
+                self.adjustMapSize();
             };
 
         }, 600);

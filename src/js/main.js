@@ -333,6 +333,8 @@ function AppViewModel () {
         accordingly*/
         if(mobileView) {
 
+            console.log('update mobile layout');
+
             $mapContainer.removeClass("map-container-map-view-style").addClass("map-container-default-style");
 
             $locationGrid.removeClass("location-grid-map-view-style");
@@ -359,6 +361,8 @@ function AppViewModel () {
         layout accordingly*/
         } else {
 
+            console.log('update non-mobile layout');
+
             $mapContainer.removeClass("map-container-default-style").addClass("map-container-map-view-style");
 
             $locationGrid.addClass("location-grid-map-view-style");
@@ -370,8 +374,6 @@ function AppViewModel () {
 
             // Add Bootstrap's 'fluid' class setting to the row
             $locationGrid.removeClass("row").addClass("row-fluid");
-
-            console.log('remove bootstrap settings');
 
             // Remove the Bootstrap settings
             $locationFrame.removeClass("col-xs-12 col-sm-6 col-md-4");
@@ -397,11 +399,13 @@ function AppViewModel () {
         if($winWidth < 768) {
 
             mobileView = true;
+            console.log('screen size is mobile');
 
         // If the screen width is larger than a mobile device, set to false
         } else {
 
             mobileView = false;
+            console.log('screen size is non-mobile');
         };
 
         // Change the site's current layout depending on the above's outcome
@@ -888,6 +892,7 @@ function AppViewModel () {
         /* Fill in the hearts of any locations which are the user's
         favorites */
         self.renderFavoriteOnLocationFrame();
+
     };
 
     // Add button for clear favorites
@@ -1053,11 +1058,6 @@ function AppViewModel () {
 
         console.log('reset locations & map, clear search, and close surf guide');
 
-        // Adjust the layout of the screen if map open
-        if($('.map-container').is(":visible")) {
-            self.toggleLayout();
-        };
-
         // If the surf guide is open, close it
         if($('.surf-guide-container').length) {
             self.closeSurfGuide();
@@ -1087,6 +1087,13 @@ function AppViewModel () {
         if($('.location-grid').is(":hidden")) {
             // Show the locations
             $('.location-grid').show();
+        };
+
+        /* On each reset new versions of the location frames are added. If the
+        map is visible, the layout must be adjusted */
+        if($('.map-container').is(":visible")) {
+            // Update layout
+            self.toggleLayout();
         };
 
         // Make all map markers visible

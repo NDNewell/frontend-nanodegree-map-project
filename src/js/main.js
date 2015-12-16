@@ -371,6 +371,8 @@ function AppViewModel () {
             // Add Bootstrap's 'fluid' class setting to the row
             $locationGrid.removeClass("row").addClass("row-fluid");
 
+            console.log('remove bootstrap settings');
+
             // Remove the Bootstrap settings
             $locationFrame.removeClass("col-xs-12 col-sm-6 col-md-4");
 
@@ -721,10 +723,6 @@ function AppViewModel () {
                 $searchSymbol.addClass("search-default");
             };
 
-            /* Adjust the layout of the screen to accomodate the search field
-            */
-            self.toggleLayout();
-
         }, 600);
     };
 
@@ -1055,6 +1053,11 @@ function AppViewModel () {
 
         console.log('reset locations & map, clear search, and close surf guide');
 
+        // Adjust the layout of the screen if map open
+        if($('.map-container').is(":visible")) {
+            self.toggleLayout();
+        };
+
         // If the surf guide is open, close it
         if($('.surf-guide-container').length) {
             self.closeSurfGuide();
@@ -1100,8 +1103,8 @@ function AppViewModel () {
         // Add the hover effects for each location frame
         self.addRolloverEffect();
 
-        /* If the user has favorites, show a favorite symbold on each
-        revelvant location frame */
+        /* If the user has favorites, show a favorite symbol on each
+        relevant location frame */
         if(userFavorites.length > 0) {
             self.renderFavoriteOnLocationFrame();
         };

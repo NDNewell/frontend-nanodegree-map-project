@@ -895,7 +895,7 @@ body {
         height: 100%;
     }
 
-    .location-grid {
+    .location-grid-map-view {
         position: fixed;
         left: 0;
         bottom: 0;

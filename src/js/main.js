@@ -270,7 +270,7 @@ function AppViewModel () {
     self.adjustMapSize = function () {
 
         // Save references to DOM elements and heights
-        var $locationGridHeight = $('.location-grid').outerHeight(),
+        var $locationGridHeight = $('#location-grid').outerHeight(),
         $navbarHeight = $('#myNavbar').outerHeight(),
         $windowHeight = $(window).height(),
         $mapContainer = $('.map-container'),
@@ -304,7 +304,7 @@ function AppViewModel () {
     self.enableHorizontalScrolling = function () {
 
         // Set a ref to the location grid that holds all of the locations
-        var $locationGrid = $('.location-grid');
+        var $locationGrid = $('#location-grid');
 
         /* Remove any previous event handlers, so multiples of same handler
         aren't added */
@@ -324,7 +324,7 @@ function AppViewModel () {
     self.toggleLayout = function () {
 
         // Cache DOM refs to key elements
-        var $locationGrid = $('.location-grid'),
+        var $locationGrid = $('#location-grid'),
             $locationFrame = $('.location-frame'),
             $container = $('#container'),
             $mapContainer = $('.map-container');
@@ -353,6 +353,8 @@ function AppViewModel () {
         layout accordingly*/
         } else {
 
+            $locationGrid.removeClass("location-grid").addClass("location-grid-map-view");
+
             // Change the container to Bootstrap's 'fluid' class
             $container.removeClass("container").addClass("container-fluid");
 
@@ -362,11 +364,11 @@ function AppViewModel () {
             // Remove the Bootstrap settings
             $locationFrame.removeClass("col-xs-12 col-sm-6 col-md-4");
 
-                // Adjust the map height
-                self.adjustMapSize();
+            // Adjust the map height
+            self.adjustMapSize();
 
-                // Enable horizontal scrolling
-                self.enableHorizontalScrolling();
+            // Enable horizontal scrolling
+            self.enableHorizontalScrolling();
         };
     };
 
@@ -1069,9 +1071,9 @@ function AppViewModel () {
         });
 
         // If the location grid is hidden, show it
-        if($('.location-grid').is(":hidden")) {
+        if($('#location-grid').is(":hidden")) {
             // Show the locations
-            $('.location-grid').show();
+            $('#location-grid').show();
         };
 
         // Make all map markers visible
@@ -1321,7 +1323,7 @@ function AppViewModel () {
         grid is already hidden, so we don't want to make it visible! */
         if (!$('.surf-guide-container').is(":visible")) {
             // Hide the location grid
-            $('.location-grid').toggle();
+            $('#location-grid').toggle();
         }
 
         /* Remove any existing information from previous click */
@@ -1505,7 +1507,7 @@ function AppViewModel () {
         within it visible. The location frames need to be made
         visible again in case a marker has been selected. */
         $('.location-frame').show();
-        $('.location-grid').toggle();
+        $('#location-grid').toggle();
 
 
         if (!$('#map').is(":hidden")) {

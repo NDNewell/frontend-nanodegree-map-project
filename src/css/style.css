@@ -2,6 +2,10 @@ body {
     font-family: Arial, Verdana;
 }
 
+body, html {
+    height: 100%;
+}
+
 .logo {
     font-size: 1.5em;
     color: #00B8E6;
@@ -126,6 +130,16 @@ body {
     font-size: 1.2em;
 }
 
+.map-container-default-style {
+    height: 350px;
+    width: 100%;
+    padding: 0px;
+}
+
+#map {
+    height: 100%;
+}
+
 .gmnoprint a {
     display:none;
 }
@@ -205,6 +219,23 @@ body {
     text-align: center;
     width: 250px;
     border-radius: 12.5px;
+}
+
+.location-frame {
+    text-align:center;
+    padding: 10px 10px;
+    cursor: pointer;
+}
+
+.location-image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 355px;
+    height: 194px;
+    -webkit-box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+    box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .skill-level-hover {
@@ -673,17 +704,12 @@ body {
         padding-bottom: 0px;
     }
 
-    .map-container {
+    .map-container-default-style {
         height: 245px;
         border-bottom: 1px dashed;
         border-color: #E8E8E8;
         margin-top: 1px;
         padding: 0px;
-    }
-
-    #map {
-        height: 100%;
-        width: 100%;
     }
 
     .hide-map-button {
@@ -865,10 +891,6 @@ body {
 
 @media (min-width: 768px) {
 
-    body, html {
-        height: 100%;
-    }
-
     .search-form:focus {
         box-shadow: 0 0 15px 5px #b0e0ee;
         border: 2px solid #bebede;
@@ -884,14 +906,8 @@ body {
         width: 365px;
     }
 
-    .map-container {
+    .map-container-map-view-style {
         position: absolute;
-        height: 100%;
-        width: 100%;
-        padding: 0px 0px;
-    }
-
-    #map {
         height: 100%;
     }
 
@@ -908,12 +924,6 @@ body {
         margin: 0;
     }
 
-    .location-frame {
-        text-align:center;
-        padding: 10px 10px;
-        cursor: pointer;
-    }
-
     .location-frame-map-view-style {
         position: relative;
         display: inline-block;
@@ -922,17 +932,6 @@ body {
         background-repeat: no-repeat;
         background-size: cover;
         margin-top: 6px;
-    }
-
-    .location-image {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        width: 355px;
-        height: 194px;
-        -webkit-box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
-        -moz-box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
-        box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
     }
 
     .pulse-location-frame {

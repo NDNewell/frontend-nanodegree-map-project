@@ -333,6 +333,8 @@ function AppViewModel () {
         accordingly*/
         if(mobileView) {
 
+            $mapContainer.removeClass("map-container-map-view-style").addClass("map-container-default-style");
+
             $locationGrid.removeClass("location-grid-map-view-style");
 
             $locationFrame.removeClass("location-frame-map-view-style");
@@ -356,6 +358,8 @@ function AppViewModel () {
         /* If the screen width is larger than a 'mobile' view, alter the
         layout accordingly*/
         } else {
+
+            $mapContainer.removeClass("map-container-default-style").addClass("map-container-map-view-style");
 
             $locationGrid.addClass("location-grid-map-view-style");
 

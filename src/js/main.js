@@ -353,6 +353,20 @@ function AppViewModel () {
             // Re-add the Bootstrap settings
             $locationFrame.addClass("col-xs-12 col-sm-6 col-md-4");
 
+            $('.skill-level-hover-map').removeClass("skill-level-hover-map-view-style");
+
+            $('.break-type-hover').removeClass("break-type-hover-map-view-style");
+
+            $('.wave-direction-hover').removeClass("wave-direction-hover-map-view-style");
+
+            $('.best-season-hover').removeClass("best-season-hover-map-view-style");
+
+            $('.misc-info-one-hover').removeClass("misc-info-one-hover-map-view-style");
+
+            $('.misc-info-two-hover').removeClass("misc-info-two-hover-map-view-style");
+
+            $('.climate-info-hover').removeClass("climate-info-hover-map-view-style");
+
             /* Remove any listeners attached to the location grid (horiz.
               scroll) */
             $locationGrid.off();
@@ -384,6 +398,33 @@ function AppViewModel () {
             // Enable horizontal scrolling
             self.enableHorizontalScrolling();
         };
+    };
+
+    self.toggleRolloverIcons = function () {
+
+          console.log('adding classes');
+
+          $('.skill-level-hover').addClass("skill-level-hover-map-view-style").removeClass('skill-level-hover');
+
+          $('.break-type-hover').addClass("break-type-hover-map-view-style").removeClass('break-type-hover');
+
+          $('.wave-direction-hover').addClass("wave-direction-hover-map-view-style").removeClass('wave-direction-hover');
+
+          $('.best-season-hover').addClass("best-season-hover-map-view-style").removeClass('best-season-hover');
+
+          $('.misc-info-one-hover').addClass("misc-info-one-hover-map-view-style").removeClass('misc-info-one-hover');
+
+          $('.misc-info-two-hover').addClass("misc-info-two-hover-map-view-style").removeClass('misc-info-two-hover');
+
+          $('.climate-info-hover').addClass("climate-info-hover-map-view-style").removeClass('climate-info-hover');
+
+          $('.distance-hover').addClass("distance-hover-map-view-style").removeClass('distance-hover');
+
+          $('.water-temp-hover').addClass("water-temp-hover-map-view-style").removeClass('water-temp-hover');
+
+          $('.wave-size-hover').addClass("wave-size-hover-map-view-style").removeClass('wave-size-hover');
+
+          $('.cost-hover').addClass("cost-hover-map-view-style").removeClass('cost-hover');
     };
 
     // Set intitial variable for mobile view setting
@@ -1215,6 +1256,12 @@ function AppViewModel () {
                     // Display avg wave height for the break
                     var waveSizeInfo = displayWaveSize(obj.avgSize);
                     $locationFrame.append(waveSizeInfo);
+                };
+
+                /* If screen is larger than mobile view adjust the icons
+                for map view */
+                if(!mobileView) {
+                    self.toggleRolloverIcons();
                 };
             });
 

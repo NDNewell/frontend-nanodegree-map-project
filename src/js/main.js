@@ -329,7 +329,8 @@ function AppViewModel () {
             $container = $('#container'),
             $mapContainer = $('.map-container'),
             $favoriteSymbol = $('.favorite'),
-            $breakName = $('.break-name');
+            $breakName = $('.break-name'),
+            $searchForm = $('.search-form');
 
         /* If the screen width signals a 'mobile' view, alter the layout
         accordingly*/
@@ -338,6 +339,8 @@ function AppViewModel () {
             console.log('update mobile layout');
 
             $mapContainer.removeClass("map-container-map-view-style").addClass("map-container-default-style");
+
+            $searchForm.removeClass("search-form-map-view-style").addClass("search-form-default-style");
 
             $locationGrid.removeClass("location-grid-map-view-style");
 
@@ -373,6 +376,8 @@ function AppViewModel () {
             console.log('update non-mobile layout');
 
             $mapContainer.removeClass("map-container-default-style").addClass("map-container-map-view-style");
+
+            $searchForm.addClass("search-form-map-view-style").removeClass("search-form-default-style");
 
             $locationGrid.addClass("location-grid-map-view-style");
 

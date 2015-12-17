@@ -85,6 +85,7 @@ body, html {
 }
 
 .search-container {
+    position: relative;
     display: none;
     padding-top: 20px;
     padding-bottom: 12px;
@@ -104,7 +105,7 @@ body, html {
     border-radius: 15px;
 }
 
-.clear {
+.clear-default-style {
     display: none;
     position: absolute;
     margin-left: 93%;
@@ -119,7 +120,7 @@ body, html {
     border-radius: 50px;
 }
 
-.clear:hover, .clear:active {
+.clear-default-style:hover, .clear-default-style:active, .clear-map-view-style:hover, .clear-map-view-style:active {
     cursor:pointer;
     background-color: #333333;
     border-color: #333333;
@@ -681,7 +682,7 @@ body, html {
         outline: 0;
     }
 
-    .clear {
+    .clear-default-style {
         margin-top: 23px;
         margin-left: 84%;
     }
@@ -855,7 +856,7 @@ body, html {
         width: 25%;
     }
 
-    .clear {
+    .clear-default-style {
         margin-top: 23px;
         margin-left: 90%;
     }
@@ -894,6 +895,21 @@ body, html {
     .search-form-default-style:focus, .search-form-map-view-style:focus {
         box-shadow: 0 0 15px 5px #b0e0ee;
         border: 2px solid #bebede;
+    }
+
+    .clear-map-view-style {
+        display: none;
+        position: absolute;
+        right: 30px;
+        margin-top: -1px;
+        font-size: 1.5em;
+        color: white;
+        background-color: #E8E8E8;
+        padding: 0px 10px 0px 10px;
+        border-style: solid;
+        border-color: #E8E8E8;
+        border-width: 1px;
+        border-radius: 50px;
     }
 
     input[type=text] {
@@ -1138,7 +1154,7 @@ body, html {
         height: 70px;
     }
 
-    .clear {
+    .clear-default-style {
         margin-left: 94.5%;
     }
 
@@ -1188,7 +1204,7 @@ body, html {
         width: 12.5%;
     }
 
-    .clear {
+    .clear-default-style {
         margin-left: 95.5%;
     }
 

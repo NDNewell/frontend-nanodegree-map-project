@@ -108,7 +108,7 @@ body, html {
 .clear-default-style {
     display: none;
     position: absolute;
-    margin-left: 93%;
+    right: 10px;
     margin-top: -1px;
     font-size: 1.5em;
     color: white;
@@ -854,11 +854,6 @@ body, html {
 @media (min-width: 560px) and (max-width: 767px) {
     .col-xs-sm-misc {
         width: 25%;
-    }
-
-    .clear-default-style {
-        margin-top: 23px;
-        margin-left: 90%;
     }
 
     .favorite-default-style {

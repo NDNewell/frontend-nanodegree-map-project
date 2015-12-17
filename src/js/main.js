@@ -328,7 +328,8 @@ function AppViewModel () {
             $locationFrame = $('.location-frame'),
             $container = $('#container'),
             $mapContainer = $('.map-container'),
-            $favoriteSymbol = $('.favorite');
+            $favoriteSymbol = $('.favorite'),
+            $breakName = $('.break-name');
 
         /* If the screen width signals a 'mobile' view, alter the layout
         accordingly*/
@@ -354,8 +355,12 @@ function AppViewModel () {
             // Re-add the Bootstrap settings
             $locationFrame.addClass("col-xs-12 col-sm-6 col-md-4");
 
-            // Change 'favorite' symbol style back to default
-            $favoriteSymbol.removeClass("favorite-map-view-style").addClass("favorite-default-style");
+            // Change break name style back to default
+            $breakName.removeClass("break-name-map-view-style").addClass("break-name-default-style");
+
+            /* Change 'favorite' symbol style back to default *must change
+            via attr in order to change the class of an inline svg */
+            $favoriteSymbol.attr("class", "favorite favorite-default-style");
 
             /* Remove any listeners attached to the location grid (horiz.
               scroll) */
@@ -382,8 +387,12 @@ function AppViewModel () {
             // Remove the Bootstrap settings
             $locationFrame.removeClass("col-xs-12 col-sm-6 col-md-4");
 
-            // Change 'favorite' symbol style to map view style
-            $favoriteSymbol.removeClass("favorite-default-style").addClass("favorite-map-view-style");
+            // Change break name style to map view style
+            $breakName.removeClass("break-name-default-style").addClass("break-name-map-view-style");
+
+            /* Change 'favorite' symbol style to map view style *must change
+            via attr in order to change the class of an inline svg */
+            $favoriteSymbol.attr("class", "favorite favorite-map-view-style");
 
             // Adjust the map height
             self.adjustMapSize();
@@ -398,7 +407,7 @@ function AppViewModel () {
     self.toggleRolloverClasses = function () {
 
         // Cache refs to selected DOM elements
-        var $skillLevelIcon = $('.skill-level-hover-rollover'),
+        var $skillLevelIcon = $('.skill-level-rollover'),
             $breakTypeIcon = $('.break-type-rollover'),
             $waveDirectionIcon = $('.wave-direction-rollover')
             $bestSeasonIcon = $('.best-season-rollover'),

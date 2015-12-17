@@ -207,7 +207,7 @@ body, html {
     border-radius: 12.5px;
 }
 
-.break-name {
+.break-name-default-style {
     font-size: 2em;
     color: white;
     text-shadow: 1px 1px 10px black;
@@ -826,7 +826,7 @@ body, html {
         cursor: pointer;
     }
 
-    .favorite {
+    .favorite-default-style {
         top: 7%;
         left: 5%;
     }
@@ -860,13 +860,13 @@ body, html {
         margin-left: 90%;
     }
 
-    .favorite {
+    .favorite-default-style {
         top: 7%;
         width: 60px;
         height: 60px;
     }
 
-    .break-name {
+    .break-name-default-style {
         font-size: 4.9vw;
     }
 
@@ -918,6 +918,20 @@ body, html {
         background-repeat: no-repeat;
         background-size: cover;
         margin-top: 6px;
+    }
+
+    .break-name-map-view-style {
+        font-size: 2em;
+        color: white;
+        text-shadow: 1px 1px 10px black;
+        position: absolute;
+        top: 15%;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        width: 250px;
+        border-radius: 12.5px;
     }
 
     .favorite-map-view-style {
@@ -1114,7 +1128,7 @@ body, html {
         margin-left: 94.5%;
     }
 
-    .break-name {
+    .break-name-default-style {
         font-size: 1.7em;
     }
 }
@@ -1164,7 +1178,7 @@ body, html {
         margin-left: 95.5%;
     }
 
-    .favorite {
+    .favorite-default-style {
         left: 7%;
     }
 }

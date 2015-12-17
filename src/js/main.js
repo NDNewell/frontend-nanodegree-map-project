@@ -1161,7 +1161,7 @@ function AppViewModel () {
         // Hide the filters container
         // If the map is visible, fade only the button out
         // If it isn't visible, slide the filters container up
-        if($('map-container-map-view-style').length) {
+        if($('.map-container-map-view-style').length) {
             $filtersContainer.fadeOut(500);
         } else {
             $filtersContainer.slideUp(500);

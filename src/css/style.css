@@ -154,7 +154,7 @@ body, html {
     border-bottom-width: 1px;
 }
 
-.favorite {
+.favorite-default-style {
     position: absolute;
     left: 6%;
     top: 8%;
@@ -920,6 +920,12 @@ body, html {
         margin-top: 6px;
     }
 
+    .favorite-map-view-style {
+        position: absolute;
+        left: 6%;
+        top: 8%;
+    }
+
     .skill-level-hover-map-view-style {
         position: absolute;
         top: 11.5%;
@@ -1059,7 +1065,7 @@ body, html {
 
 @media (min-width: 992px) {
 
-    .md-icon-container{
+    .md-icon-container {
         float: left;
     }
 

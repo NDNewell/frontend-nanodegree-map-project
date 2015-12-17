@@ -327,7 +327,8 @@ function AppViewModel () {
         var $locationGrid = $('.location-grid'),
             $locationFrame = $('.location-frame'),
             $container = $('#container'),
-            $mapContainer = $('.map-container');
+            $mapContainer = $('.map-container'),
+            $favoriteSymbol = $('.favorite');
 
         /* If the screen width signals a 'mobile' view, alter the layout
         accordingly*/
@@ -352,6 +353,9 @@ function AppViewModel () {
 
             // Re-add the Bootstrap settings
             $locationFrame.addClass("col-xs-12 col-sm-6 col-md-4");
+
+            // Change 'favorite' symbol style back to default
+            $favoriteSymbol.removeClass("favorite-map-view-style").addClass("favorite-default-style");
 
             /* Remove any listeners attached to the location grid (horiz.
               scroll) */
@@ -378,6 +382,9 @@ function AppViewModel () {
             // Remove the Bootstrap settings
             $locationFrame.removeClass("col-xs-12 col-sm-6 col-md-4");
 
+            // Change 'favorite' symbol style to map view style
+            $favoriteSymbol.removeClass("favorite-default-style").addClass("favorite-map-view-style");
+
             // Adjust the map height
             self.adjustMapSize();
 
@@ -389,8 +396,6 @@ function AppViewModel () {
     /* When screen size is larger than mobile and map is in view, adjust the
     rollover icons' positioning/size when hovering over a location frame */
     self.toggleRolloverClasses = function () {
-
-        console.log("toggle hover icon/info classes");
 
         // Cache refs to selected DOM elements
         var $skillLevelIcon = $('.skill-level-hover-rollover'),
@@ -404,7 +409,11 @@ function AppViewModel () {
             $waveSizeInfo = $('.wave-size-rollover'),
             $costInfo = $('.cost-rollover');
 
+        /* Whilst hovering over a location add/remove the appropriate classes
+        in order to change the icons' styling */
         if(rollover) {
+
+            console.log('adjust hover icons and info to map view style');
 
             $skillLevelIcon.addClass("skill-level-hover-map-view-style").removeClass("skill-level-hover-default-style");
 
@@ -426,7 +435,12 @@ function AppViewModel () {
 
             $costInfo.addClass("cost-hover-map-view-style").removeClass("cost-hover-default-style");
 
+
+        /* When hovering over a location is finished, add/remove the appropriate classes in order to change the icons' styling back to the
+        default style */
         } else {
+
+            console.log('revert hover icons and info back to default style');
 
             $skillLevelIcon.addClass("skill-level-hover-default-style").removeClass("skill-level-hover-map-view-style");
 
@@ -1281,8 +1295,8 @@ function AppViewModel () {
                     $locationFrame.append(waveSizeInfo);
                 };
 
-                /* If screen is larger than mobile view adjust the icons
-                for map view */
+                /* If screen is larger than mobile view adjust the icons'
+                styling for the map view if enabled */
                 if(!mobileView) {
                     self.toggleRolloverClasses();
                 };
@@ -1291,10 +1305,11 @@ function AppViewModel () {
             /* Remove all imported info when the mouse stops hovering */
             $locationFrame.on('mouseleave', function () {
 
+                // Set rollover to false
                 rollover = false;
 
-                /* If screen is larger than mobile view adjust the icons
-                for map view */
+                /* If screen is larger than mobile view adjust the icons'
+                styling back to default if the the map view is enabled */
                 if(!mobileView) {
                     self.toggleRolloverClasses();
                 };

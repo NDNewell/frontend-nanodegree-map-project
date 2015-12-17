@@ -981,6 +981,13 @@ function AppViewModel () {
             setMapBounds();
         };
 
+        /* On each search new versions of the location frames are added. If the
+        map is visible, the layout must be adjusted */
+        if($('.map-container').is(":visible")) {
+            // Update layout
+            self.toggleLayout();
+        };
+
         /* After a search, there are new objects in the locationGrid, so the
         rollover effects that were added before need to be re-added */
         self.addRolloverEffect();

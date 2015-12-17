@@ -171,7 +171,12 @@ body, html {
     stroke-width: 1;
 }
 
-.clear-favorites-button {
+.filters-container {
+    display: none;
+    position: relative;
+}
+
+.clear-favorites-button-default-style {
     height: 40px;
     width: 100px;
     margin: 20px 15px 15px 0px;
@@ -184,13 +189,13 @@ body, html {
     font-family: Arial, Verdana;
 }
 
-.clear-favorites-button:hover {
+.clear-favorites-button-default-style:hover {
     color: white;
     background-color: #b3b3b3;
     border-color: #b3b3b3;
 }
 
-.clear-favorites-button:focus {
+.clear-favorites-button-default-style:focus {
     outline: 0 !important;
 }
 
@@ -917,6 +922,31 @@ body, html {
         width: 365px;
     }
 
+    .clear-favorites-button-map-view-style {
+        position: absolute;
+        height: 40px;
+        width: 100px;
+        top: 5px;
+        right: 25px;
+        background-color: #ffffff;
+        border: 2px solid;
+        border-color: #E8E8E8;
+        border-radius: 15px;
+        font-size: 1.2em;
+        color: #b3b3b3;
+        font-family: Arial, Verdana;
+    }
+
+    .clear-favorites-button-map-view-style:hover {
+        color: white;
+        background-color: #b3b3b3;
+        border-color: #b3b3b3;
+    }
+
+    .clear-favorites-button-map-view-style:focus {
+        outline: 0 !important;
+    }
+
     .map-container-map-view-style {
         position: absolute;
         height: 100%;
@@ -1047,7 +1077,7 @@ body, html {
         left: 17px;
     }
 
-    .pulse-location-frame-map-view-style {
+    .pulse-location-frame {
         z-index: 1;
         -webkit-animation-name: pulse;
         animation-name: pulse;

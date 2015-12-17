@@ -39,27 +39,27 @@ $(document).ready(function() {
 
         switch (source) {
             case roIconsSkillLevel:
-                images[src].className = "rollover-info skill-level-hover";;
+                images[src].className = "rollover-info skill-level-rollover skill-level-hover-default-style";
             break;
 
             case roIconsBreak:
-                images[src].className = "rollover-info break-type-hover";
+                images[src].className = "rollover-info break-type-rollover break-type-hover-default-style";
             break;
 
             case roIconsDirection:
-                images[src].className = "rollover-info wave-direction-hover";
+                images[src].className = "rollover-info wave-direction-rollover wave-direction-hover-default-style";
             break;
 
             case roIconsBestSeason:
-                images[src].className = "rollover-info best-season-hover";
+                images[src].className = "rollover-info best-season-rollover best-season-hover-default-style";
             break;
 
             case roIconsMiscOne:
-                images[src].className = "rollover-info misc-info-one-hover";
+                images[src].className = "rollover-info misc-info-one-rollover misc-info-one-hover-default-style";
             break;
 
             case roIconsMiscTwo:
-                images[src].className = "rollover-info misc-info-two-hover";
+                images[src].className = "rollover-info misc-info-two-rollover misc-info-two-hover-default-style";
             break;
         };
       };
@@ -353,20 +353,6 @@ function AppViewModel () {
             // Re-add the Bootstrap settings
             $locationFrame.addClass("col-xs-12 col-sm-6 col-md-4");
 
-            $('.skill-level-hover-map').removeClass("skill-level-hover-map-view-style");
-
-            $('.break-type-hover').removeClass("break-type-hover-map-view-style");
-
-            $('.wave-direction-hover').removeClass("wave-direction-hover-map-view-style");
-
-            $('.best-season-hover').removeClass("best-season-hover-map-view-style");
-
-            $('.misc-info-one-hover').removeClass("misc-info-one-hover-map-view-style");
-
-            $('.misc-info-two-hover').removeClass("misc-info-two-hover-map-view-style");
-
-            $('.climate-info-hover').removeClass("climate-info-hover-map-view-style");
-
             /* Remove any listeners attached to the location grid (horiz.
               scroll) */
             $locationGrid.off();
@@ -400,31 +386,68 @@ function AppViewModel () {
         };
     };
 
-    self.toggleRolloverIcons = function () {
+    /* When screen size is larger than mobile and map is in view, adjust the
+    rollover icons' positioning/size when hovering over a location frame */
+    self.toggleRolloverClasses = function () {
 
-          console.log('adding classes');
+        console.log("toggle hover icon/info classes");
 
-          $('.skill-level-hover').addClass("skill-level-hover-map-view-style").removeClass('skill-level-hover');
+        // Cache refs to selected DOM elements
+        var $skillLevelIcon = $('.skill-level-hover-rollover'),
+            $breakTypeIcon = $('.break-type-rollover'),
+            $waveDirectionIcon = $('.wave-direction-rollover')
+            $bestSeasonIcon = $('.best-season-rollover'),
+            $miscInfoOneIcon = $('.misc-info-one-rollover'),
+            $miscInfoTwoIcon = $('.misc-info-two-rollover'),
+            $distanceInfo = $('.distance-rollover'),
+            $waterTempInfo = $('.water-temp-rollover'),
+            $waveSizeInfo = $('.wave-size-rollover'),
+            $costInfo = $('.cost-rollover');
 
-          $('.break-type-hover').addClass("break-type-hover-map-view-style").removeClass('break-type-hover');
+        if(rollover) {
 
-          $('.wave-direction-hover').addClass("wave-direction-hover-map-view-style").removeClass('wave-direction-hover');
+            $skillLevelIcon.addClass("skill-level-hover-map-view-style").removeClass("skill-level-hover-default-style");
 
-          $('.best-season-hover').addClass("best-season-hover-map-view-style").removeClass('best-season-hover');
+            $breakTypeIcon.addClass("break-type-hover-map-view-style").removeClass("break-type-hover-default-style");
 
-          $('.misc-info-one-hover').addClass("misc-info-one-hover-map-view-style").removeClass('misc-info-one-hover');
+            $waveDirectionIcon.addClass("wave-direction-hover-map-view-style").removeClass("wave-direction-hover-default-style");
 
-          $('.misc-info-two-hover').addClass("misc-info-two-hover-map-view-style").removeClass('misc-info-two-hover');
+            $bestSeasonIcon.addClass("best-season-hover-map-view-style").removeClass("best-season-hover-default-style");
 
-          $('.climate-info-hover').addClass("climate-info-hover-map-view-style").removeClass('climate-info-hover');
+            $miscInfoOneIcon.addClass("misc-info-one-hover-map-view-style").removeClass("misc-info-one-hover-default-style");
 
-          $('.distance-hover').addClass("distance-hover-map-view-style").removeClass('distance-hover');
+            $miscInfoTwoIcon.addClass("misc-info-two-hover-map-view-style").removeClass("misc-info-two-hover-default-style");
 
-          $('.water-temp-hover').addClass("water-temp-hover-map-view-style").removeClass('water-temp-hover');
+            $distanceInfo.addClass("distance-hover-map-view-style").removeClass("distance-hover-default-style");
 
-          $('.wave-size-hover').addClass("wave-size-hover-map-view-style").removeClass('wave-size-hover');
+            $waterTempInfo.addClass("water-temp-hover-map-view-style").removeClass("water-temp-hover-default-style");
 
-          $('.cost-hover').addClass("cost-hover-map-view-style").removeClass('cost-hover');
+            $waveSizeInfo.addClass("wave-size-hover-map-view-style").removeClass("wave-size-hover-default-style");
+
+            $costInfo.addClass("cost-hover-map-view-style").removeClass("cost-hover-default-style");
+
+        } else {
+
+            $skillLevelIcon.addClass("skill-level-hover-default-style").removeClass("skill-level-hover-map-view-style");
+
+            $breakTypeIcon.addClass("break-type-hover-default-style").removeClass("break-type-hover-map-view-style");
+
+            $waveDirectionIcon.addClass("wave-direction-hover-default-style").removeClass("wave-direction-hover-map-view-style");
+
+            $bestSeasonIcon.addClass("best-season-hover-default-style").removeClass("best-season-hover-map-view-style");
+
+            $miscInfoOneIcon.addClass("misc-info-one-hover-default-style").removeClass("misc-info-one-hover-map-view-style");
+
+            $miscInfoTwoIcon.addClass("misc-info-two-hover-default-style").removeClass("misc-info-two-hover-map-view-style");
+
+            $distanceInfo.addClass("distance-hover-default-style").removeClass("distance-hover-map-view-style");
+
+            $waterTempInfo.addClass("water-temp-hover-default-style").removeClass("water-temp-hover-map-view-style");
+
+            $waveSizeInfo.addClass("wave-size-hover-default-style").removeClass("wave-size-hover-map-view-style");
+
+            $costInfo.addClass("cost-hover-default-style").removeClass("cost-hover-map-view-style");
+        };
     };
 
     // Set intitial variable for mobile view setting
@@ -1261,12 +1284,21 @@ function AppViewModel () {
                 /* If screen is larger than mobile view adjust the icons
                 for map view */
                 if(!mobileView) {
-                    self.toggleRolloverIcons();
+                    self.toggleRolloverClasses();
                 };
             });
 
             /* Remove all imported info when the mouse stops hovering */
             $locationFrame.on('mouseleave', function () {
+
+                rollover = false;
+
+                /* If screen is larger than mobile view adjust the icons
+                for map view */
+                if(!mobileView) {
+                    self.toggleRolloverClasses();
+                };
+
                 $img.css('-webkit-filter', 'blur(0px) brightness(100%)');
                 $location.toggle();
                 $breakName.toggle();
@@ -2247,7 +2279,7 @@ function AppViewModel () {
 
       if(rollover) {
 
-          var costInfo = '<p class="rollover-info cost cost-hover">' + '$' + obj.budget + '</p>';
+          var costInfo = '<p class="rollover-info cost-rollover cost-hover-default-style ">' + '$' + obj.budget + '</p>';
 
       } else {
 
@@ -2318,7 +2350,7 @@ function AppViewModel () {
 
             if(rollover) {
                 // Cache distance element with distance
-                var distance = '<p class="rollover-info distance distance-hover">' + distanceFly + 'h' + '</p>';
+                var distance = '<p class="rollover-info distance-rollover distance-hover-default-style">' + distanceFly + 'h' + '</p>';
 
                 return distance;
 
@@ -2334,7 +2366,7 @@ function AppViewModel () {
 
             if(rollover) {
                 // Cache distance element with distance
-                var distance = '<p class="rollover-info distance distance-hover">' + distanceDrive + 'mi' + '</p>';
+                var distance = '<p class="rollover-info distance-rollover distance-hover-default-style">' + distanceDrive + 'mi' + '</p>';
 
                 return distance;
 
@@ -2374,7 +2406,7 @@ function AppViewModel () {
           break
         };
 
-        var waterTempInfo = '<p class="rollover-info water-temp-hover">' + waterTemp + '℉' + '</p>';
+        var waterTempInfo = '<p class="rollover-info water-temp-rollover water-temp-hover-default-style ">' + waterTemp + '℉' + '</p>';
 
         return waterTempInfo;
     };
@@ -2390,7 +2422,7 @@ function AppViewModel () {
 
         if(rollover) {
             /* Cache the average wave height */
-            var waveSizeInfo = '<p class="rollover-info wave-size-hover">' + obj.min + "-" + obj.max + "'" +'</p>';
+            var waveSizeInfo = '<p class="rollover-info wave-size-rollover wave-size-hover-default-style ">' + obj.min + "-" + obj.max + "'" +'</p>';
         } else {
             var waveSizeInfo = '<div class=" wave-size card">' + '<img src="img/wave_range.svg" class"wave-size-guide" title="Wave Size">' + '<p>' + obj.min + "-" + obj.max + plus + "ft" + '</p>' + '</div>';
         };

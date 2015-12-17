@@ -238,14 +238,14 @@ body, html {
     box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-.skill-level-hover {
+.skill-level-hover-default-style {
     position: absolute;
     top: 11.5%;
     left: 17%;
     height: 80px;
 }
 
-.break-type-hover {
+.break-type-hover-default-style {
     position: absolute;
     top: 11.5%;
     left: 0;
@@ -254,21 +254,21 @@ body, html {
     height: 80px;
 }
 
-.wave-direction-hover {
+.wave-direction-hover-default-style {
     position: absolute;
     top: 11.5%;
     right: 17%;
     height: 80px;
 }
 
-.best-season-hover {
+.best-season-hover-default-style {
     position: absolute;
     bottom: 11.5%;
     left: 17%;
     height: 80px;
 }
 
-.misc-info-one-hover {
+.misc-info-one-hover-default-style {
     position: absolute;
     bottom: 11.5%;
     left: 0;
@@ -277,24 +277,14 @@ body, html {
     height: 80px;
 }
 
-.misc-info-two-hover {
+.misc-info-two-hover-default-style {
     position: absolute;
     bottom: 11.5%;
     right: 17%;
     height: 80px;
 }
 
-.climate-info-hover {
-    position: absolute;
-    bottom: 19%;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    font-size: 2.3em;
-    color: white;
-}
-
-.cost-hover {
+.cost-hover-default-style {
     font-size: 1.25em;
     color: white;
     text-shadow: 1px 1px 10px black;
@@ -303,7 +293,7 @@ body, html {
     left: 15px;
 }
 
-.distance-hover {
+.distance-hover-default-style {
     font-size: 1.25em;
     color: white;
     text-shadow: 1px 1px 10px black;
@@ -312,7 +302,7 @@ body, html {
     right: 15px;
 }
 
-.water-temp-hover {
+.water-temp-hover-default-style {
     font-size: 1.25em;
     color: white;
     text-shadow: 1px 1px 10px black;
@@ -321,7 +311,7 @@ body, html {
     right: 15px;
 }
 
-.wave-size-hover {
+.wave-size-hover-default-style {
     font-size: 1.25em;
     color: white;
     text-shadow: 1px 1px 10px black;
@@ -719,39 +709,35 @@ body, html {
         font-size: 3em;
     }
 
-    .skill-level-hover {
+    .skill-level-hover-default-style {
         left: 18%;
         height: 38%;
     }
 
-    .break-type-hover {
+    .break-type-hover-default-style {
         height: 38%;
     }
 
-    .wave-direction-hover {
+    .wave-direction-hover-default-style {
         right: 18%;
         height: 38%;
     }
 
-    .best-season-hover {
+    .best-season-hover-default-style {
         left: 18%;
         height: 38%;
     }
 
-    .misc-info-one-hover {
+    .misc-info-one-hover-default-style {
         height: 38%;
     }
 
-    .misc-info-two-hover {
+    .misc-info-two-hover-default-style {
         right: 18%;
         height: 38%;
     }
 
-    .climate-info-hover {
-        font-size: 8vw;
-    }
-
-    .cost-hover, .distance-hover, .water-temp-hover, .wave-size-hover {
+    .cost-hover-default-style, .distance-hover-default-style, .water-temp-hover-default-style, .wave-size-hover-default-style {
         font-size: 4.5vw;
     }
 
@@ -980,16 +966,6 @@ body, html {
         height: 80px;
     }
 
-    .climate-info-hover-map-view-style {
-        position: absolute;
-        bottom: 19%;
-        left: 0;
-        right: 0;
-        margin: 0 auto;
-        font-size: 2.3em;
-        color: white;
-    }
-
     .cost-hover-map-view-style {
         font-size: 1.25em;
         color: white;
@@ -1094,43 +1070,38 @@ body, html {
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
-    .skill-level-hover {
+    .skill-level-hover-default-style {
         top: 17%;
         left: 17%;
         height: 70px;
     }
 
-    .break-type-hover {
+    .break-type-hover-default-style {
         top: 17%;
         height: 70px;
     }
 
-    .wave-direction-hover {
+    .wave-direction-hover-default-style {
         top: 17%;
         right: 17%;
         height: 70px;
     }
 
-    .best-season-hover {
+    .best-season-hover-default-style {
         bottom: 17%;
         left: 17%;
         height: 70px;
     }
 
-    .misc-info-one-hover {
+    .misc-info-one-hover-default-style {
         bottom: 17%;
         height: 70px;
     }
 
-    .misc-info-two-hover {
+    .misc-info-two-hover-default-style {
         bottom: 17%;
         right: 17%;
         height: 70px;
-    }
-
-    .climate-info-hover {
-        bottom: 23%;
-        font-size: 2em;
     }
 
     .clear {
@@ -1143,39 +1114,39 @@ body, html {
 }
 
 @media (min-width: 1200px) {
-    .skill-level-hover {
+    .skill-level-hover-default-style {
         left: 18%;
         height: 80px;
     }
 
-    .wave-direction-hover {
+    .wave-direction-hover-default-style {
         right: 18%;
         height: 80px;
     }
 
-    .best-season-hover {
+    .best-season-hover-default-style {
         left: 18%;
         height: 80px;
     }
 
-    .misc-info-two-hover {
+    .misc-info-two-hover-default-style {
         right: 18%;
         height: 80px;
     }
 
-    .cost-hover {
+    .cost-hover-default-style {
         left: 23px;
     }
 
-    .distance-hover {
+    .distance-hover-default-style {
         right: 23px;
     }
 
-    .water-temp-hover {
+    .water-temp-hover-default-style {
         right: 23px;
     }
 
-    .wave-size-hover {
+    .wave-size-hover-default-style {
         left: 23px;
     }
 

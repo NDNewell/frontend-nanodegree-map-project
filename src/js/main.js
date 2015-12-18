@@ -3174,6 +3174,7 @@ function AppViewModel () {
                 $mapSymbol.addClass("map-selected");
 
                 checkView();
+
                 $mapContainer.slideToggle(200, function() {
                     if ($('.surf-guide-container').is(":hidden") || !$('.surf-guide-container').length && $('#map').is(":visible")) {
                         setMapBounds();

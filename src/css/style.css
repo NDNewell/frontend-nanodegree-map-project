@@ -967,7 +967,7 @@ body, html {
 
     .location-frame-map-view-style {
         position: relative;
-        display: inline-block;
+        display: inline-block !important;
         vertical-align: middle;
         background-position: top left;
         background-repeat: no-repeat;

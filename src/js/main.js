@@ -989,8 +989,8 @@ function AppViewModel () {
         };
 
         /* On each search new versions of the location frames are added. If the
-        map is visible in 'map view', the layout must be adjusted */
-        if($('.map-container-map-view-style').length) {
+        map is visible, the layout must be adjusted */
+        if($('.map-container').is(":visible")) {
             // Update layout
             self.toggleLayout();
         };
@@ -1122,7 +1122,7 @@ function AppViewModel () {
                 the favorites before results in a flash of unstyled content
                 while waiting for the search container to close in order to
                 adjust the layout and styling */
-                if($('.map-container').is(":visible") && $('.search-container').is(":visible") && !mobileView) {
+                if($('.map-container-map-view-style').length && $('.search-container').is(":visible")) {
 
                     // Toggle the layout after the search container is hidden
                     setTimeout( function () {

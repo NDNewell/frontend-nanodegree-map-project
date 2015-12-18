@@ -1263,12 +1263,9 @@ function AppViewModel () {
             $('.location-grid').show();
         };
 
-        /* On each reset new versions of the location frames are added. If the
-        map is visible, the layout must be adjusted */
-        if($('.map-container').is(":visible")) {
-            // Update layout
-            self.toggleLayout();
-        };
+        /* On each reset new versions of the location frames are added, so the view must be checked in case layout needs adjusting */
+
+        self.checkView();
 
         // Make all map markers visible
         markers.forEach(function(marker) {

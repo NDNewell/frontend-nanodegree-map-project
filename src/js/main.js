@@ -1109,26 +1109,52 @@ function AppViewModel () {
                 // Add & remove relevant classes
                 $favoriteSymbol.removeClass("favorite-filter-default").addClass("favorite-filter-selected");
 
-                // Filter the locations to find favorites
-                self.filterFavorites();
-
-                /* After filtering the favorites, there are new versions of the location frames and they need to be updated*/
-                /* If the map and search container are visible, adjust the layout after the search container has been toggled. Toggling
-                the layout before the search container has been toggled
-                results in a gap between the location grid and the bottom of
-                the map container. Toggling the layout after the search
-                container has completely disappeared adjusts the layout
-                appropriately */
-                if($('.map-container').is(":visible") && $('.search-container').is(":visible")) {
+                /* After filtering the favorites, there are new versions of the location frames and they need to be updated */
+                /* If the map and search container are visible and 'mobile
+                view' is false, adjust the layout after the search container
+                has been toggled. Toggling the layout before the search
+                container has been toggled results in a gap between the
+                location grid and the bottom of the map container. Toggling
+                the layout after the search container has completely
+                disappeared adjusts the layout appropriately */
+                /* Also, filter favorites after the search container
+                has been toggled and before adjusting the layout. Filtering
+                the favorites before results in a flash of unstyled content
+                while waiting for the search container to close in order to
+                adjust the layout and styling */
+                if($('.map-container').is(":visible") && $('.search-container').is(":visible") && !mobileView) {
 
                     // Toggle the layout after the search container is hidden
                     setTimeout( function () {
+
+                        // Filter the locations to find favorites
+                        self.filterFavorites();
+
+                        // Adjust the layout
                         self.toggleLayout();
+
+                        // Add rollover effects to the new list of objects
+                        self.addRolloverEffect();
+
+                        // Display 'favorite' icons on the relevant location frames
+                        self.renderFavoriteOnLocationFrame();
+
                     }, 600);
 
                 // If the search container is hidden, toggle layout normally
-                } else if ($('.map-container').is(":visible") && $('.search-container').is(":hidden")) {
+                } else {
+
+                        // Filter the locations to find favorites
+                        self.filterFavorites();
+
+                        // Adjust the layout
                         self.toggleLayout();
+
+                        // Add rollover effects to the new list of objects
+                        self.addRolloverEffect();
+
+                        // Display 'favorite' icons on the relevant location frames
+                        self.renderFavoriteOnLocationFrame();
                 };
 
                 // Show the filters container
@@ -1140,20 +1166,17 @@ function AppViewModel () {
                     $filtersContainer.slideDown(500);
                 };
 
-                // Add rollover effects to the new list of objects
-                self.addRolloverEffect();
-
-                // Display 'favorite' icons on the relevant location frames
-                self.renderFavoriteOnLocationFrame();
-
             // If the user has no favorites, simply return the function
             } else {
                 console.log('user has no favorites');
                 return
             };
 
-            // Scroll to top of the page
-            document.body.scrollTop = document.documentElement.scrollTop = 0;
+            // Scroll to the top of the page only if 'map view' not enabled
+            if(!$('.map-container-map-view-style').length) {
+                // Scroll to top of the page
+                document.body.scrollTop = document.documentElement.scrollTop = 0;
+            };
     });
 
 

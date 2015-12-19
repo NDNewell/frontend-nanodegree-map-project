@@ -350,7 +350,7 @@ function AppViewModel () {
 
             $locationGrid.removeClass("location-grid-map-view-style");
 
-            $locationFrame.removeClass("location-frame-map-view-style");
+            $locationFrame.removeClass("location-frame-map-view-style").addClass("location-frame-default-style");
 
             // In the mobile view, set the map container away from 100%
             $mapContainer.css("height", "245px");
@@ -391,7 +391,9 @@ function AppViewModel () {
 
             $locationGrid.addClass("location-grid-map-view-style");
 
-            $locationFrame.addClass("location-frame-map-view-style");
+            $locationFrame.addClass("location-frame-map-view-style").removeClass("location-frame-default-style");
+
+            $locationFrame.css("display", "inline-block");
 
             // Change the container to Bootstrap's 'fluid' class
             $container.removeClass("container").addClass("container-fluid");

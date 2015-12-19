@@ -1417,8 +1417,9 @@ function AppViewModel () {
                 $favoriteWrapper.toggle();
 
                 /* Deactivate the location frame's associated marker and
-                make its pin small again */
-                if(!$('.surf-guide-container').length) {
+                make its pin small again only if more than one is visible */
+                if($('.location-frame:visible').length !== 1) {
+                    console.log('make that damn thing smaller!');
                     makeMarkerSmall();
                 };
 
@@ -3643,7 +3644,7 @@ function pulsateLocationFrame (breakName) {
     var $allLocationFrames = $('.location-frame'),
         $numFramesVisible = $('.location-frame:visible').length;
 
-    // If more than one location frame are in view execute code
+    // If more than one location frame is in view, execute code
     if($numFramesVisible !== 1) {
 
         // Loop through all of the location frames
@@ -3653,7 +3654,7 @@ function pulsateLocationFrame (breakName) {
             var $locationFrame = $(this),
                 $locationFrameText = $locationFrame.text();
 
-            /* If a specific location frame's text matches the currenlty hovered/unhovered marker, pulsate or reverse pulsate it */
+            /* If a specific location frame's text matches the currently hovered/unhovered marker, pulsate or reverse pulsate it */
             if($locationFrameText.indexOf(breakName) > -1) {
 
                 /* If hovering away from the marker, reverse pulsate its

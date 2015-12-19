@@ -502,6 +502,9 @@ function AppViewModel () {
         // If the screen width is the same size as mobile, set to true
         if($winWidth < 768) {
 
+            mapView = false;
+            gridView = false;
+
             mobileView = true;
             console.log('view is mobile');
 
@@ -1264,7 +1267,6 @@ function AppViewModel () {
         };
 
         /* On each reset new versions of the location frames are added, so the view must be checked in case layout needs adjusting */
-
         self.checkView();
 
         // Make all map markers visible
@@ -3119,27 +3121,30 @@ function AppViewModel () {
 
     self.addMapListener = function() {
 
-        var $mapSymbol = $('.map-symbol'),
-            $mapContainer = $('.map-container'),
-            $surfGuideContainer = $('.surf-guide-container'),
-            $searchContainer = $('.search-container'),
-            $window = $(window),
-            $height = $('.map-section').height();
-
         // When the map close symbol is clicked, hide or show the map
-        $mapSymbol.on('click', function(e) {
+        $('.map-symbol').on('click', function(e) {
 
-            if($('.map-selected').length) {
+            var $mapSymbol = $('.map-symbol'),
+                $mapContainer = $('.map-container'),
+                $map = $('#map'),
+                $surfGuide = $('.surf-guide-container'),
+                $searchContainer = $('.search-container'),
+                $topOfWindow = $(window).scrollTop(),
+                $bottomOfMap = $('.map-section').height(),
+                $locationFrames = $('.location-frame');
 
-                $mapSymbol.removeClass("map-selected");
-                $mapSymbol.addClass("map-default");
+            if(mapView) {
+
+                console.log('map view map toggle');
+
+                $mapSymbol.toggleClass("map-default map-selected");
 
                 checkView();
 
-                $('.location-frame').show();
+                $locationFrames.show();
 
                 $mapContainer.slideToggle(200, function() {
-                    if ($('.surf-guide-container').is(":hidden") || !$('.surf-guide-container').length) {
+                    if ($surfGuide.is(":hidden") || !$surfGuide.length) {
                         makeMarkerSmall();
                         infoWindow.close();
                     };
@@ -3147,34 +3152,46 @@ function AppViewModel () {
 
             } else if(gridView) {
 
+                console.log('grid view map toggle');
+
                 // Scroll to top of the page
                 document.body.scrollTop = document.documentElement.scrollTop = 0;
 
-                $mapSymbol.removeClass("map-default");
-                $mapSymbol.addClass("map-selected");
+                $mapSymbol.toggleClass("map-default map-selected");
 
                 checkView();
                 $mapContainer.fadeIn(1000, function() {
-                    if ($('.surf-guide-container').is(":hidden") || !$('.surf-guide-container').length && $('#map').is(":visible")) {
+                    if ($surfGuide.is(":hidden") || !$surfGuide.length && $map.is(":visible")) {
                         setMapBounds();
                     };
                 });
 
             /* Enable toggling of the map container if the user's scroll position is above the bottom of the map container. If the user's scroll position is below this, only enable toggling of the map container if the it is not already visible. If it is visible, instead of hiding it, the window is scrolled to the top of the page so the user can make use
-            the map */
-            } else if (mobileView && $window.scrollTop() < $height || $window.scrollTop() >= $height && $mapContainer.is(":hidden")) {
+            the map
+
+            ----> old code might need again
+            } else if (mobileView && $topOfWindow < $bottomOfMap || $topOfWindow >= $bottomOfMap && $mapContainer.is(":hidden")) {
+
+            */
+            } else if (mobileView && $topOfWindow < $bottomOfMap || $topOfWindow >= $bottomOfMap && $mapContainer.is(":hidden")) {
+
+                console.log('mobile view map toggle');
 
                 // Scroll to top of the page
                 document.body.scrollTop = document.documentElement.scrollTop = 0;
 
-                $mapSymbol.removeClass("map-default");
-                $mapSymbol.addClass("map-selected");
+                $mapSymbol.toggleClass("map-default map-selected");
 
                 checkView();
 
+                $locationFrames.show();
+
                 $mapContainer.slideToggle(200, function() {
-                    if ($('.surf-guide-container').is(":hidden") || !$('.surf-guide-container').length && $('#map').is(":visible")) {
+                    if ($surfGuide.is(":hidden") || !$surfGuide.length && $map.is(":visible")) {
                         setMapBounds();
+                    } else if ($surfGuide.is(":hidden") || !$surfGuide.length && $('#map').is(":hidden")) {
+                        makeMarkerSmall();
+                        infoWindow.close();
                     };
                 });
 

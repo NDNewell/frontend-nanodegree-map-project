@@ -3119,88 +3119,116 @@ function AppViewModel () {
         };
     };
 
-    self.addMapListener = function() {
+    // When the map close symbol is clicked, hide or show the map
+    $('.map-symbol').on('click', function(e) {
 
-        // When the map close symbol is clicked, hide or show the map
-        $('.map-symbol').on('click', function(e) {
+        // Cache refs to DOM
+        var $mapSymbol = $('.map-symbol'),
+            $mapContainer = $('.map-container'),
+            $map = $('#map'),
+            $surfGuide = $('.surf-guide-container'),
+            $searchContainer = $('.search-container'),
+            $topOfWindow = $(window).scrollTop(),
+            $bottomOfMap = $('.map-section').height(),
+            $locationFrames = $('.location-frame'),
+            $numLocations = $('.location-frame:visible').length;
 
-            var $mapSymbol = $('.map-symbol'),
-                $mapContainer = $('.map-container'),
-                $map = $('#map'),
-                $surfGuide = $('.surf-guide-container'),
-                $searchContainer = $('.search-container'),
-                $topOfWindow = $(window).scrollTop(),
-                $bottomOfMap = $('.map-section').height(),
-                $locationFrames = $('.location-frame');
+        /* If clicking the button from map view, close the map and show the
+         grid view of the location frames */
+        if(mapView) {
 
-            if(mapView) {
+            // Select/deselect the map symbol
+            $mapSymbol.toggleClass("map-default map-selected");
 
-                console.log('map view map toggle');
+            /* Update the layout (do this after toggling the map symbol)
+             because 'checkView' uses it to determine if map view is
+             enabled */
+            checkView();
 
-                $mapSymbol.toggleClass("map-default map-selected");
-
-                checkView();
-
+            /* Show all location frames if only one is visible.
+               If only one frame is visible due to a search, then do
+               nothing */
+            if($numLocations == 1 && $locationFrames.length > 1) {
                 $locationFrames.show();
-
-                $mapContainer.slideToggle(200, function() {
-                    if ($surfGuide.is(":hidden") || !$surfGuide.length) {
-                        makeMarkerSmall();
-                        infoWindow.close();
-                    };
-                });
-
-            } else if(gridView) {
-
-                console.log('grid view map toggle');
-
-                // Scroll to top of the page
-                document.body.scrollTop = document.documentElement.scrollTop = 0;
-
-                $mapSymbol.toggleClass("map-default map-selected");
-
-                checkView();
-                $mapContainer.fadeIn(1000, function() {
-                    if ($surfGuide.is(":hidden") || !$surfGuide.length && $map.is(":visible")) {
-                        setMapBounds();
-                    };
-                });
-
-            /* Enable toggling of the map container if the user's scroll position is above the bottom of the map container. If the user's scroll position is below this, only enable toggling of the map container if the it is not already visible. If it is visible, instead of hiding it, the window is scrolled to the top of the page so the user can make use
-            the map
-
-            ----> old code might need again
-            } else if (mobileView && $topOfWindow < $bottomOfMap || $topOfWindow >= $bottomOfMap && $mapContainer.is(":hidden")) {
-
-            */
-            } else if (mobileView && $topOfWindow < $bottomOfMap || $topOfWindow >= $bottomOfMap && $mapContainer.is(":hidden")) {
-
-                console.log('mobile view map toggle');
-
-                // Scroll to top of the page
-                document.body.scrollTop = document.documentElement.scrollTop = 0;
-
-                $mapSymbol.toggleClass("map-default map-selected");
-
-                checkView();
-
-                $locationFrames.show();
-
-                $mapContainer.slideToggle(200, function() {
-                    if ($surfGuide.is(":hidden") || !$surfGuide.length && $map.is(":visible")) {
-                        setMapBounds();
-                    } else if ($surfGuide.is(":hidden") || !$surfGuide.length && $('#map').is(":hidden")) {
-                        makeMarkerSmall();
-                        infoWindow.close();
-                    };
-                });
-
-            } else {
-                // Scroll to top of the page
-                document.body.scrollTop = document.documentElement.scrollTop = 0;
             };
-        });
-    };
+
+            /* Close the map. Once fully closed, make all markers small &
+            close any open info windows unless the surf guide is open */
+            $mapContainer.slideToggle(200, function() {
+                if ($surfGuide.is(":hidden") || !$surfGuide.length) {
+                    makeMarkerSmall();
+                    infoWindow.close();
+                };
+            });
+
+        /* If clicking the button from grid view, close the grid and show the map view of the locations */
+        } else if(gridView) {
+
+            // Scroll to top of the page
+            document.body.scrollTop = document.documentElement.scrollTop = 0;
+
+            // Select/deselect the map symbol
+            $mapSymbol.toggleClass("map-default map-selected");
+
+            /* Update the layout (do this after toggling the map symbol)
+             because 'checkView' uses it to determine if map view is
+             enabled */
+            checkView();
+
+            /* Opens the map view. Once the map is opened, the map bounds
+            are set. We do not set the map bounds until after rendering
+            the map! */
+            $mapContainer.fadeIn(1000, function() {
+                if ($surfGuide.is(":hidden") || !$surfGuide.length && $map.is(":visible")) {
+                    setMapBounds();
+                };
+            });
+
+        /* The mobile view toggling of the map view handles both opening
+        and closing of the map.
+        ** If the user's scroll position is above the
+        bottom of the map container, map toggling is enabled.
+        ** If the user's scroll position is below this, only enable
+        toggling of the map if it's not already visible.
+        ** If it is visible, instead of hiding it, the window is scrolled
+        to the top of the page so the user can make use of the map */
+        } else if (mobileView && $topOfWindow < $bottomOfMap || $topOfWindow >= $bottomOfMap && $mapContainer.is(":hidden")) {
+
+            // Scroll to top of the page
+            document.body.scrollTop = document.documentElement.scrollTop = 0;
+
+            // Select/deselect the map symbol
+            $mapSymbol.toggleClass("map-default map-selected");
+
+            /* Update the layout (do this after toggling the map symbol)
+             because 'checkView' uses it to determine if map view is
+             enabled */
+            checkView();
+
+            /* Show all location frames if only one is visible.
+               If only one frame is visible due to a search, then do
+               nothing */
+            if($numLocations == 1 && $locationFrames.length > 1) {
+                $locationFrames.show();
+            };
+
+            /* Toggle the map. When opening it, set map bounds only after
+            the map has fully rendered. When closing is, make all markers
+            small and close any open info windows */
+            $mapContainer.slideToggle(200, function() {
+                if ($surfGuide.is(":hidden") || !$surfGuide.length && $map.is(":visible")) {
+                    setMapBounds();
+                } else if ($surfGuide.is(":hidden") || !$surfGuide.length && $('#map').is(":hidden")) {
+                    makeMarkerSmall();
+                    infoWindow.close();
+                };
+            });
+        } else {
+            /* Scroll to top of the page if the map is already open in
+            mobile view */
+            document.body.scrollTop = document.documentElement.scrollTop = 0;
+        };
+    });
 
     self.loadProgressBar = function () {
 
@@ -3347,7 +3375,6 @@ function initMap() {
     // Create an info window object for displaying the break name
     infoWindow = new google.maps.InfoWindow();
 
-    self.addMapListener();
     addMapClickEvent();
 }
 

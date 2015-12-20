@@ -980,7 +980,7 @@ function AppViewModel () {
         window shows */
         minLength: 2,
         // Delay the pop-up window from displaying for (x) milliseconds
-        delay: 500,
+        delay: 250,
         /* The a selection has been made, change the ko variable that
         represents the search and then activate the search filtering
         below */
@@ -3450,7 +3450,7 @@ function generateMarkers (locationData) {
 
     /* Loop through locationData and filter out the coordinates
     & break name for each break. Save the break's coordinates and name
-    in their own variables for easy referencing*/
+    in their own variables for easy referencing */
     var locationDataLength = locationData.length;
 
     for(var i = locationDataLength; i--;) {
@@ -3458,18 +3458,17 @@ function generateMarkers (locationData) {
         var obj = locationData[i];
 
         // Create a variable to hold each break's coordinates
-        var breakCoordinates = ({lat: locationData[i].lat, lng: locationData[i].lng});
+        var breakCoordinates = ({lat: obj.lat, lng: obj.lng});
 
         // Create a variable to hold the name of the break
-        var breakName = locationData[i].breakName;
+        var breakName = obj.breakName;
 
         // Create a variable to hold the name of the break location
-        var breakLocation = locationData[i].location;
+        var breakLocation = obj.location;
 
         /* Create a marker and set its position. Pass the variables
         created above as arguments*/
         addMarker(breakName, breakCoordinates, breakLocation, obj);
-
     };
 
     // Display markers found in the markers array on the map
@@ -3578,9 +3577,6 @@ function addListeners(marker, breakName, obj) {
     iteration as an argument into the function*/
     })(marker, breakName, obj));
 
-    // Add each marker to the markers array
-    markers.push(marker);
-
     // Location frame pulsates when it's corresponding marker is hovered over
     google.maps.event.addListener(marker, 'mouseover', (function(breakName) {
 
@@ -3599,9 +3595,6 @@ function addListeners(marker, breakName, obj) {
     /* Pass the relevant marker and break name (breakName) for the current
     iteration as an argument into the function*/
     })(breakName));
-
-    // Add each marker to the markers array
-    markers.push(marker);
 
     google.maps.event.addListener(marker, 'mouseout', (function(breakName) {
 

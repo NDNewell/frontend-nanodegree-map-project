@@ -2829,7 +2829,7 @@ function AppViewModel () {
 
         console.log('get current conditions');
 
-        var $currentSurfGuide = $('.title').text();
+        var $currentSurfGuide = $('#guide-break-name').text();
         var $surfGuideTitleContainer = $('.guide-header');
 
         /* Check for the location's spot ID. If there is no spot ID,
@@ -2912,7 +2912,7 @@ function AppViewModel () {
             processing */
             var $surfGuideContainer = $('.surf-guide-container');
 
-            if ($currentSurfGuide.indexOf(breakName) > -1 && !$('.conditions-error').length) {
+            if ($currentSurfGuide === breakName && !$('.conditions-error').length) {
 
                 // Save wave break height
                 var minBreakHeight = forecastData.swell.minBreakingHeight;
@@ -3130,7 +3130,7 @@ function AppViewModel () {
             /* Before rendering the error message, check which surf guide is
             currently open and make sure it matches the API request. This ensures that an api request that takes time to download isn't injected into another surf guide if the user changed surf guides during the api request processing */
 
-            if ($currentSurfGuide .indexOf(breakName) > -1) {
+            if ($currentSurfGuide === breakName) {
 
                 var errorElem = '<div class="col-xs-12 error-container"></div>';
                 var errorMsg = '<p class="conditions-error">' + breakName + ' ' + "conditions unavailable =(" + '</p>';

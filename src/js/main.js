@@ -3239,6 +3239,19 @@ function AppViewModel () {
                 };
             });
 
+        /* The guide view toggling of the map handles both opening and closing
+        the map */
+        } else if (guideView) {
+
+            // Scroll to top of the page
+            document.body.scrollTop = document.documentElement.scrollTop = 0;
+
+            // Select/deselect the map symbol
+            $mapSymbol.toggleClass("map-default map-selected");
+
+            // Toggle the map
+            $mapContainer.slideToggle(200);
+
         /* The mobile view toggling of the map view handles both opening
         and closing of the map.
         ** If the user's scroll position is above the

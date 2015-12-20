@@ -336,9 +336,9 @@ function AppViewModel () {
 
         /* If the screen width signals a 'mobile' view, alter the layout
         accordingly*/
-        if(mobileView || gridView) {
+        if(mobileView || gridView || guideView) {
 
-            console.log('update mobile/grid view layout');
+            console.log('update mobile/grid/guide view layout');
 
             $mapContainer.removeClass("map-container-map-view-style").addClass("map-container-default-style");
 
@@ -374,6 +374,38 @@ function AppViewModel () {
             /* Remove any listeners attached to the location grid (horiz.
               scroll) */
             $locationGrid.off();
+
+            /* If the Google map and its locations have loaded, set the map
+            bounds */
+            if(markers.length !== 0 && $('#map').is(":visible") &&(!guideView)) {
+
+                setMapBounds();
+
+            /* If the surf guide is open, center the map on the selected
+            location's marker */
+            } else if (guideView) {
+
+                // Cache DOM ref
+                var breakName = $('#guide-break-name').text();
+
+                // Iterate through the markers array
+                markers.forEach(function(marker) {
+
+                    // Cache the title of the marker not including the location
+                    var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
+
+                    if (breakName === markerName) {
+
+                        // Allow map to fully load before centering
+                        setTimeout(function(){
+
+                            // Center the map
+                            map.setCenter(marker.getPosition());
+
+                        }, 250);
+                    };
+                });
+            };
 
         /* If the screen width is larger than a 'mobile' view, alter the
         layout accordingly*/
@@ -493,7 +525,8 @@ function AppViewModel () {
     // Set intitial variable for mobile view setting
     var mobileView,
         mapView,
-        gridView;
+        gridView,
+        guideView;
 
     // Check the width of the screen
     self.checkView = function () {
@@ -501,11 +534,22 @@ function AppViewModel () {
         // Set refs to DOM elems
         var $winWidth = window.outerWidth;
 
-        // If the screen width is the same size as mobile, set to true
-        if($winWidth < 768) {
+        if($('.surf-guide-container').is(":visible")) {
 
             mapView = false;
             gridView = false;
+            mobileView = false;
+
+            guideView = true;
+
+            console.log('view is surf guide');
+
+        // If the screen width is the same size as mobile, set to true
+        } else if($winWidth < 768) {
+
+            mapView = false;
+            gridView = false;
+            guideView = false;
 
             mobileView = true;
             console.log('view is mobile');
@@ -514,6 +558,7 @@ function AppViewModel () {
         } else {
 
             mobileView = false;
+            guideView = false;
 
                 if($('.map-selected').length) {
 
@@ -1317,6 +1362,8 @@ function AppViewModel () {
                 locaton frame */
                 var frameBreakName = e.currentTarget.children[1].innerText;
 
+                console.log('hover over ' + frameBreakName);
+
                 /* If gridView is not enabled, activate the location frame's
                  associated marker and info window */
                 if(!gridView) {
@@ -1425,7 +1472,6 @@ function AppViewModel () {
                 pin small again only if more than one is visible and the surf
                 guide isn't open*/
                 if($('.location-frame:visible').length !== 1 && !$('.surf-guide-container').length && !gridView) {
-                    console.log('make that damn thing smaller!');
                     makeMarkerSmall();
                     infoWindow.close();
                 };
@@ -1441,19 +1487,21 @@ function AppViewModel () {
         // Disable rollover effects so the correct icon loads in surf guide
         rollover = false;
 
-        // Pass object to match the appropriate marker with the obj
+        // Zoom in and show the info window of the location
         self.goToMarker(obj.breakName);
 
-        // Pass obj to the surf guide
-        renderSurfGuide(obj);
+        // Open the surf guide
+        self.renderSurfGuide(obj);
 
+        // Check view to change the layout for the surf guide
+        self.checkView();
     };
 
     /* Select and zoom in on each marker related to a location object from
     the View. This is accomplished using ko's click binding*/
     self.goToMarker = function(breakName) {
 
-        // Find last selected marker and make pin small again
+        // Find last selected marker and make it small
         makeMarkerSmall();
 
         // Iterate through the markers array
@@ -1518,9 +1566,6 @@ function AppViewModel () {
                     // Change the marker's image
                     marker.setIcon('img/marker_selectedFav.svg');
                 };
-
-                // Show the marker's info window
-                getInfoWindow(marker, breakName);
             };
         });
     };
@@ -1541,7 +1586,7 @@ function AppViewModel () {
         document.body.scrollTop = document.documentElement.scrollTop = 0;
 
         /* Check if the surf guide window is open already from a previous
-        click. If it isn't, hide the locatin grid. If it is, the location
+        click. If it isn't, hide the location grid. If it is, the location
         grid is already hidden, so we don't want to make it visible! */
         if (!$('.surf-guide-container').is(":visible")) {
             // Hide the location grid
@@ -1725,17 +1770,14 @@ function AppViewModel () {
         // Remove both surf conditions and surf guide from DOM
         $('.surf-guide-container').remove();
 
+        // Adjust the layout
+        self.checkView();
+
         /* Make both the location grid and the location frames
         within it visible. The location frames need to be made
         visible again in case a marker has been selected. */
         $('.location-frame').show();
         $('.location-grid').toggle();
-
-
-        if (!$('#map').is(":hidden")) {
-            // Reset the map window to display all markers
-            setMapBounds();
-        };
 
         // Close any info windows that remain open
         infoWindow.close();
@@ -1768,7 +1810,7 @@ function AppViewModel () {
     };
 
     self.displayTitle = function (breakName, location) {
-        var guideTitle = '<div class="col-xs-12 guide-header">' + '<p class="title">' + breakName + ',' + ' ' + location + '</p>' + '</div>';
+        var guideTitle = '<div class="col-xs-12 guide-header">' + '<p class="title">' + '<span id="guide-break-name">' + breakName +'</span>' + ',' + ' ' + location + '</p>' + '</div>';
         return guideTitle;
     };
 

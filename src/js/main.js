@@ -1317,7 +1317,11 @@ function AppViewModel () {
                 locaton frame */
                 var frameBreakName = e.currentTarget.children[1].innerText;
 
-                activateMarker(frameBreakName);
+                /* If gridView is not enabled, activate the location frame's
+                 associated marker and info window */
+                if(!gridView) {
+                    activateMarkerAndInfoWindow(frameBreakName);
+                };
 
                 // Iterate through the location array
                 self.locationArray.forEach(function(obj) {
@@ -1416,11 +1420,14 @@ function AppViewModel () {
                 $breakName.toggle();
                 $favoriteWrapper.toggle();
 
-                /* Deactivate the location frame's associated marker and
-                make its pin small again only if more than one is visible */
-                if($('.location-frame:visible').length !== 1) {
+                /* If gridView is not enabled, deactivate the location frame's
+                associated marker, close any open info windows, and make its
+                pin small again only if more than one is visible and the surf
+                guide isn't open*/
+                if($('.location-frame:visible').length !== 1 && !$('.surf-guide-container').length && !gridView) {
                     console.log('make that damn thing smaller!');
                     makeMarkerSmall();
+                    infoWindow.close();
                 };
 
                 $('.rollover-info').remove();
@@ -1482,9 +1489,9 @@ function AppViewModel () {
         });
     };
 
-    /* When a location frame is hovered over, the associated marker is
-    activated */
-    self.activateMarker = function(breakName) {
+    /* When a location frame is hovered over, the associated marker and
+    info window is activated */
+    self.activateMarkerAndInfoWindow = function(breakName) {
 
         // Iterate through the markers array
         markers.forEach(function(marker) {
@@ -1511,6 +1518,9 @@ function AppViewModel () {
                     // Change the marker's image
                     marker.setIcon('img/marker_selectedFav.svg');
                 };
+
+                // Show the marker's info window
+                getInfoWindow(marker, breakName);
             };
         });
     };

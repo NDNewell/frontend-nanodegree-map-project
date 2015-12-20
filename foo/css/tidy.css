@@ -172,7 +172,8 @@ html {
   border-radius: 12.5px;
 }
 
-.location-frame {
+.location-frame-default-style {
+  display: block;
   text-align: center;
   padding: 10px 10px;
   cursor: pointer;
@@ -259,7 +260,7 @@ html {
     padding: 0px;
   }
 
-  .location-frame {
+  .location-frame-default-style {
     text-align: center;
     margin-bottom: 1px;
     padding: 0px 0px 0px 0px;

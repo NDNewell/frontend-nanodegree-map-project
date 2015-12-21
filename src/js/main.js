@@ -355,6 +355,7 @@ function AppViewModel () {
             $locationFrame = $('.location-frame'),
             $container = $('#container'),
             $mapContainer = $('.map-container'),
+            $map = $('#map'),
             $favoriteSymbol = $('.favorite'),
             $breakName = $('.break-name'),
             $searchForm = $('.search-form'),
@@ -404,18 +405,14 @@ function AppViewModel () {
 
             /* If the Google map and its locations have loaded and the surf
             guide is hidden, set the map bounds */
-            if(markers.length !== 0 && $('#map').is(":visible") && (!guideView)) {
+            if(markers.length !== 0 && $map.is(":visible") && (!guideView)) {
                 console.log('map is visible');
                 setMapBounds();
 
-            /* If the surf guide is open, center the map on the selected
-            location's marker */
-            } else if (guideView && $('#map').is(":visible")) {
-
-            // Allow map to fully load before centering over relevant marker
-                setTimeout(function(){
-                    centerOnGuideMarker();
-                });
+            /* If the surf guide is open, reset the map size, then center the map on the selected location's marker */
+            } else if (guideView && $map.is(":visible")) {
+                google.maps.event.trigger(map, 'resize');
+                centerOnGuideMarker();
             };
 
         /* If the screen width is larger than a 'mobile' view, alter the
@@ -533,7 +530,7 @@ function AppViewModel () {
         };
     };
 
-    // Set intitial variable for mobile view setting
+    // Set intitial variables for map, grid, guide, and mobile views
     var mobileView,
         mapView,
         gridView,
@@ -1509,7 +1506,7 @@ function AppViewModel () {
         // Disable rollover effects so the correct icon loads in surf guide
         rollover = false;
 
-        // Zoom in and show the info window of the location
+        // Highlight the location's marker
         self.goToMarker(obj.breakName);
 
         // Open the surf guide
@@ -1519,7 +1516,7 @@ function AppViewModel () {
         self.checkView();
     };
 
-    /* Select and zoom in on each marker related to a location object from
+    /* Select each marker related to a location object from
     the View. This is accomplished using ko's click binding*/
     self.goToMarker = function(breakName) {
 

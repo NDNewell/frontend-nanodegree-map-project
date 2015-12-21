@@ -179,9 +179,35 @@ function AppViewModel () {
           // Invoke function to parse the location data
           self.parseLocationData(data);
 
-          // Populate Google map with markers based on location data
-          generateMarkers(data);
-          console.log('generate map markers');
+          // Make sure Google maps api has loaded
+          if (typeof google === 'object' && typeof google.maps === 'object') {
+              console.log('Google maps api loaded');
+              console.log('generate map markers');
+
+              // Populate Google map with markers based on location data
+              generateMarkers(data);
+
+          // If it hasn't loaded, keep checking until it is
+          // When it is loaded, generate map markers
+          } else {
+              var checkGoogle = setInterval(function() {
+
+                  console.log('Error: Google maps api NOT loaded');
+                  console.log('Load Google maps api again');
+
+                  // Check if Google maps api has loaded
+                  if(typeof google === 'object' && typeof google.maps === 'object') {
+                      console.log('Google maps api loaded');
+                      console.log('generate map markers');
+
+                      // Populate Google map with markers based on data
+                      generateMarkers(data);
+
+                      // Stop checking if Google maps api is loaded
+                      clearInterval(checkGoogle);
+                  };
+              },1000);
+          };
         }
     });
 
@@ -379,7 +405,7 @@ function AppViewModel () {
             /* If the Google map and its locations have loaded and the surf
             guide is hidden, set the map bounds */
             if(markers.length !== 0 && $('#map').is(":visible") && (!guideView)) {
-
+                console.log('map is visible');
                 setMapBounds();
 
             /* If the surf guide is open, center the map on the selected
@@ -3164,10 +3190,15 @@ function AppViewModel () {
             // Select/deselect the map symbol
             $mapSymbol.toggleClass("map-default map-selected");
 
+            // Hide the map immediately
+            // When view is checked the map bounds won't be set
+            // Map must be hidden imediately to avoid this
+            $map.hide();
+
             /* Update the layout (do this after toggling the map symbol)
              because 'checkView' uses it to determine if map view is
              enabled */
-            checkView();
+            self.checkView();
 
             /* Show all location frames if only one is visible.
                However, if only one frame is visible due to a search, then do
@@ -3176,13 +3207,14 @@ function AppViewModel () {
                 $locationFrames.show();
             };
 
-            /* Close the map. Once fully closed, make all markers small &
-            close any open info windows unless the surf guide is open */
+            /* Close the map container. Once fully closed, make all markers
+            small & close any open info windows */
             $mapContainer.slideToggle(200, function() {
-                if ($surfGuide.is(":hidden") || !$surfGuide.length) {
-                    makeMarkerSmall();
-                    infoWindow.close();
-                };
+
+                console.log('close map & any open infowindows');
+
+                makeMarkerSmall();
+                infoWindow.close();
             });
 
         /* If clicking the button from grid view, close the grid and show the map view of the locations */
@@ -3194,26 +3226,29 @@ function AppViewModel () {
             // Select/deselect the map symbol
             $mapSymbol.toggleClass("map-default map-selected");
 
+            // Show the map immediately
+            $map.show();
+
             /* Update the layout (do this after toggling the map symbol)
              because 'checkView' uses it to determine if map view is
              enabled */
-            checkView();
+            self.checkView();
 
-            /* Opens the map view. Once the map is opened, the map bounds
-            are set. We do not set the map bounds until after rendering
-            the map! */
-            $mapContainer.fadeIn(1000, function() {
-                if ($surfGuide.is(":hidden") || !$surfGuide.length && $map.is(":visible")) {
-                    console.log('map bounds set here');
-                    setMapBounds();
-                };
-            });
+            console.log('open map');
+
+            // Opens the map view by slowly fading into view
+            $mapContainer.fadeIn(1000);
+
+            console.log('resize map');
 
             // Resize the map immediately after it begins to fade in
             // Sometimes the window size is toggled while the map is hidden
             // Or the map size may change between different views
             // This resizes the map to adjust to the windows new dimensions
             google.maps.event.trigger(map, 'resize');
+
+            // Set the map bounds after map size has been adjusted
+            setMapBounds();
 
         /* The guide view toggling of the map handles both opening and closing
         the map */
@@ -3259,6 +3294,7 @@ function AppViewModel () {
                     if($surfGuide.is(":visible")) {
 
                         console.log('resize map');
+
                         // Resize the map to adapt to new window size
                         google.maps.event.trigger(map, 'resize');
 
@@ -3269,6 +3305,7 @@ function AppViewModel () {
                     } else {
 
                         console.log('resize map');
+
                         // Resize map and set bounds to adapt to window size
                         google.maps.event.trigger(map, 'resize');
                         setMapBounds();
@@ -3277,7 +3314,8 @@ function AppViewModel () {
                 // When map is closed and surf guide is visible/hidden:
                 } else {
 
-                    console.log('close map & infowindow');
+                    console.log('close map & any open infowindows');
+
                     // Close open info window and make marker small
                     makeMarkerSmall();
                     infoWindow.close();

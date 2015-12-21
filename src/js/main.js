@@ -1404,9 +1404,9 @@ function AppViewModel () {
                 function importInfo(obj) {
 
                     $img.css('-webkit-filter', 'blur(4px) brightness(80%)' );
-                    $location.toggle()
-                    $breakName.toggle();
-                    $favoriteWrapper.toggle();
+                    $location.hide()
+                    $breakName.hide();
+                    $favoriteWrapper.hide();
 
                     /* Display icon associated with the skill level
                     needed to surf the break */
@@ -1482,9 +1482,9 @@ function AppViewModel () {
                 };
 
                 $img.css('-webkit-filter', 'blur(0px) brightness(100%)');
-                $location.toggle();
-                $breakName.toggle();
-                $favoriteWrapper.toggle();
+                $location.show();
+                $breakName.show();
+                $favoriteWrapper.show();
 
                 /* If gridView is not enabled, deactivate the location frame's
                 associated marker, close any open info windows, and make its

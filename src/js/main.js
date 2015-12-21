@@ -295,6 +295,7 @@ function AppViewModel () {
 
         // If the Google map and its locations have loaded, set the map bounds
         if(markers.length !== 0 && $('#map').is(":visible")) {
+            google.maps.event.trigger(map, 'resize');
             setMapBounds();
         };
     };
@@ -375,35 +376,19 @@ function AppViewModel () {
               scroll) */
             $locationGrid.off();
 
-            /* If the Google map and its locations have loaded, set the map
-            bounds */
-            if(markers.length !== 0 && $('#map').is(":visible") &&(!guideView)) {
+            /* If the Google map and its locations have loaded and the surf
+            guide is hidden, set the map bounds */
+            if(markers.length !== 0 && $('#map').is(":visible") && (!guideView)) {
 
                 setMapBounds();
 
             /* If the surf guide is open, center the map on the selected
             location's marker */
-            } else if (guideView) {
+            } else if (guideView && $('#map').is(":visible")) {
 
-                // Cache DOM ref
-                var breakName = $('#guide-break-name').text();
-
-                // Iterate through the markers array
-                markers.forEach(function(marker) {
-
-                    // Cache the title of the marker not including the location
-                    var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
-
-                    if (breakName === markerName) {
-
-                        // Allow map to fully load before centering
-                        setTimeout(function(){
-
-                            // Center the map
-                            map.setCenter(marker.getPosition());
-
-                        }, 250);
-                    };
+            // Allow map to fully load before centering over relevant marker
+                setTimeout(function(){
+                    centerOnGuideMarker();
                 });
             };
 
@@ -534,7 +519,18 @@ function AppViewModel () {
         // Set refs to DOM elems
         var $winWidth = window.outerWidth;
 
-        if($('.surf-guide-container').is(":visible")) {
+        if($('.surf-guide-container').is(":visible") && $winWidth < 768) {
+
+            mapView = false;
+            gridView = false;
+
+            mobileView = true;
+            guideView = true;
+
+            console.log('view is surf guide/mobile');
+
+        // If the screen width is the same size as mobile, set to true
+        } else if($('.surf-guide-container').is(":visible") && $winWidth >= 768) {
 
             mapView = false;
             gridView = false;
@@ -1514,22 +1510,11 @@ function AppViewModel () {
             found, zoom in and display the relevant info window*/
             if (markerName === breakName) {
 
-                if (marker.icon === 'img/marker_small.svg') {
-                    console.log('make ' + markerName + "'" + 's marker big!');
-                    marker.setIcon('img/marker_selected.svg');
-                } else if (marker.icon === 'img/marker_smallFav.svg') {
-                    console.log('make ' + markerName + "'" + 's marker big!');
-                    marker.setIcon('img/marker_selectedFav.svg');
-                };
+                // Make the matching marker's icon big
+                makeMarkerBig(marker, markerName);
 
                 // Open info window
                 getInfoWindow(marker, breakName);
-
-                // Center the map
-                map.setCenter(marker.getPosition());
-
-                // Zoom in on marker
-                map.setZoom(10);
 
                 // Animate marker
                 animateMarker(marker);
@@ -1550,22 +1535,8 @@ function AppViewModel () {
             // Filter markers that match the location frame
             if (markerName === breakName) {
 
-                /* If marker wasn't previously activated, make it big for
-                normal and fav icons */
-                if (marker.icon === 'img/marker_small.svg') {
+                makeMarkerBig(marker, markerName);
 
-                    console.log('make ' + markerName + "'" + 's marker big!');
-
-                    // Change the marker's image
-                    marker.setIcon('img/marker_selected.svg');
-
-                } else if (marker.icon === 'img/marker_smallFav.svg') {
-
-                    console.log('make ' + markerName + "'" + 's marker big!');
-
-                    // Change the marker's image
-                    marker.setIcon('img/marker_selectedFav.svg');
-                };
             };
         });
     };
@@ -3118,9 +3089,7 @@ function AppViewModel () {
             } else {
 
               return;
-
             };
-
         };
 
         function showError (cl) {
@@ -3201,7 +3170,7 @@ function AppViewModel () {
             checkView();
 
             /* Show all location frames if only one is visible.
-               If only one frame is visible due to a search, then do
+               However, if only one frame is visible due to a search, then do
                nothing */
             if($numLocations == 1 && $locationFrames.length > 1) {
                 $locationFrames.show();
@@ -3235,13 +3204,20 @@ function AppViewModel () {
             the map! */
             $mapContainer.fadeIn(1000, function() {
                 if ($surfGuide.is(":hidden") || !$surfGuide.length && $map.is(":visible")) {
+                    console.log('map bounds set here');
                     setMapBounds();
                 };
             });
 
+            // Resize the map immediately after it begins to fade in
+            // Sometimes the window size is toggled while the map is hidden
+            // Or the map size may change between different views
+            // This resizes the map to adjust to the windows new dimensions
+            google.maps.event.trigger(map, 'resize');
+
         /* The guide view toggling of the map handles both opening and closing
         the map */
-        } else if (guideView) {
+        } else if (guideView && !mobileView) {
 
             // Scroll to top of the page
             document.body.scrollTop = document.documentElement.scrollTop = 0;
@@ -3268,25 +3244,41 @@ function AppViewModel () {
             // Select/deselect the map symbol
             $mapSymbol.toggleClass("map-default map-selected");
 
-            /* Update the layout (do this after toggling the map symbol)
-             because 'checkView' uses it to determine if map view is
-             enabled */
-            checkView();
-
             /* Show all location frames if only one is visible.
-               If only one frame is visible due to a search, then do
+               However, ff only one frame is visible due to a search, then do
                nothing */
             if($numLocations == 1 && $locationFrames.length > 1) {
                 $locationFrames.show();
             };
 
-            /* Toggle the map. When opening it, set map bounds only after
-            the map has fully rendered. When closing is, make all markers
-            small and close any open info windows */
+            // Toggle the map.
             $mapContainer.slideToggle(200, function() {
-                if ($surfGuide.is(":hidden") || !$surfGuide.length && $map.is(":visible")) {
-                    setMapBounds();
-                } else if ($surfGuide.is(":hidden") || !$surfGuide.length && $('#map').is(":hidden")) {
+                if($map.is(":visible")) {
+
+                  // When map is open and surf guide is visible:
+                    if($surfGuide.is(":visible")) {
+
+                        console.log('resize map');
+                        // Resize the map to adapt to new window size
+                        google.maps.event.trigger(map, 'resize');
+
+                        // Center the map over the relevant marker
+                        centerOnGuideMarker();
+
+                    // When map is opened and the surf guide is hidden:
+                    } else {
+
+                        console.log('resize map');
+                        // Resize map and set bounds to adapt to window size
+                        google.maps.event.trigger(map, 'resize');
+                        setMapBounds();
+                    };
+
+                // When map is closed and surf guide is visible/hidden:
+                } else {
+
+                    console.log('close map & infowindow');
+                    // Close open info window and make marker small
                     makeMarkerSmall();
                     infoWindow.close();
                 };
@@ -3547,10 +3539,10 @@ function addListeners(marker, breakName, obj) {
             var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
 
             if (marker.icon === 'img/marker_small.svg') {
-                console.log('make ' + markerName + "'" + 's marker big!');
+                console.log('make ' + markerName + "'" + 's marker big');
                 marker.setIcon('img/marker_selected.svg');
             } else if (marker.icon === 'img/marker_smallFav.svg') {
-                console.log('make ' + markerName + "'" + 's marker big!');
+                console.log('make ' + markerName + "'" + 's marker big');
                 marker.setIcon('img/marker_selectedFav.svg');
             };
 
@@ -3656,7 +3648,53 @@ function setMapBounds () {
     };
 };
 
+// Center the map on the selected marker
+function centerOnGuideMarker () {
+
+    console.log('center map to relevant marker');
+
+    // Cache DOM ref
+    var breakName = $('#guide-break-name').text();
+
+    // Iterate through the markers array
+    markers.forEach(function(marker) {
+
+        // Cache the title of the marker not including the location
+        var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
+
+        // If the currently selected surf guide's break name matches
+        // a marker's break name:
+        if (breakName === markerName) {
+
+            // Center the map over the marker
+            map.setCenter(marker.getPosition());
+
+            // If info window isn't open
+            // Also, make the marker big if it isn't
+            // If the info window/marker are already open/big, do nothing
+            // This avoids repeating these tasks everytime window is resized
+            if (!isInfoWindowOpen(infoWindow)){
+
+                console.log('info window & marker not activated');
+
+                // Open info window
+                getInfoWindow(marker, breakName);
+
+                // Make the relevant marker big
+                makeMarkerBig(marker, markerName);
+            };
+
+            // Zoom in on the relevant marker
+            map.setZoom(10);
+        };
+    });
+};
+
+// Activate the info window for the selected marker
 function getInfoWindow (marker, breakName) {
+
+    console.log('show ' + breakName + "'s info window");
+
     // Assign content to InfoWindow object
     infoWindow.setContent(breakName);
 
@@ -3664,6 +3702,13 @@ function getInfoWindow (marker, breakName) {
     infoWindow.open(map, marker);
 };
 
+// Check to see if the info window object is alreay open
+function isInfoWindowOpen(infoWindow){
+    var map = infoWindow.getMap();
+    return (map !== null && typeof map !== "undefined");
+};
+
+// Set the animation for the selected marker
 function animateMarker (marker) {
     marker.setAnimation(google.maps.Animation.BOUNCE);
     window.setTimeout(function() {
@@ -3719,7 +3764,7 @@ function pulsateLocationFrame (breakName) {
                 location frame */
                 if($('.pulse-location-frame').length) {
 
-                    console.log("make " + breakName + "'s location frame small!");
+                    console.log("make " + breakName + "'s location frame small");
 
                     // Add/remove necessary classes to animate
                     $locationFrame.removeClass("pulse-location-frame").addClass("reverse-pulse");
@@ -3730,7 +3775,7 @@ function pulsateLocationFrame (breakName) {
                 // If hovering over the marker, pulsate its location frame
                 } else {
 
-                    console.log("make " + breakName + "'s location frame big!");
+                    console.log("make " + breakName + "'s location frame big");
 
                     // Add necessary class to animate
                     $locationFrame.removeClass("reverse-pulse").addClass("pulse-location-frame");
@@ -3747,7 +3792,7 @@ function pulsateLocationFrame (breakName) {
         var $locationFrame = $('.location-frame:visible'),
             $locationName = $locationFrame[0].children[1].innerText;
 
-        console.log("make " + $locationName + "'s location frame small!");
+        console.log("make " + $locationName + "'s location frame small");
 
         // Add/remove necessary classes to animate
         $locationFrame.removeClass("pulse-location-frame").addClass("reverse-pulse");
@@ -3793,13 +3838,34 @@ function makeMarkerSmall () {
         var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
 
         if (marker.icon === 'img/marker_selected.svg') {
-            console.log('make ' + markerName + "'" + 's marker small!');
+            console.log('make ' + markerName + "'" + 's marker small');
             marker.setIcon('img/marker_small.svg');
         } else if (marker.icon === 'img/marker_selectedFav.svg') {
-            console.log('make ' + markerName + "'" + 's marker small!');
+            console.log('make ' + markerName + "'" + 's marker small');
             marker.setIcon('img/marker_smallFav.svg');
         };
     });
+};
+
+function makeMarkerBig (marker, markerName) {
+
+    /* If marker wasn't previously activated, make it big for
+    normal and fav icons */
+    if (marker.icon === 'img/marker_small.svg') {
+
+        console.log('make ' + markerName + "'" + 's marker big');
+
+        // Change the marker's image
+        marker.setIcon('img/marker_selected.svg');
+
+    } else if (marker.icon === 'img/marker_smallFav.svg') {
+
+        console.log('make ' + markerName + "'" + 's marker big');
+
+        // Change the marker's image
+        marker.setIcon('img/marker_selectedFav.svg');
+
+    };
 };
 
 // Change any map markers that match/don't match the user's favorites

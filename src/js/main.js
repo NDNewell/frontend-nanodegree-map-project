@@ -3261,7 +3261,27 @@ function AppViewModel () {
             $mapSymbol.toggleClass("map-default map-selected");
 
             // Toggle the map
-            $mapContainer.slideToggle(200);
+            $mapContainer.slideToggle(200, function() {
+                if($map.is(":visible")) {
+
+                    console.log('open map');
+                    console.log('resize map');
+
+                    // Resize the map to adapt to new window size
+                    google.maps.event.trigger(map, 'resize');
+
+                    // Center the map over the relevant marker
+                    centerOnGuideMarker();
+
+                } else {
+
+                    console.log('close map & any open infowindows');
+
+                    // Close open info window and make marker small
+                    makeMarkerSmall();
+                    infoWindow.close();
+                };
+            });
 
         /* The mobile view toggling of the map view handles both opening
         and closing of the map.
@@ -3289,6 +3309,8 @@ function AppViewModel () {
             // Toggle the map.
             $mapContainer.slideToggle(200, function() {
                 if($map.is(":visible")) {
+
+                  console.log('open map');
 
                   // When map is open and surf guide is visible:
                     if($surfGuide.is(":visible")) {
@@ -3322,6 +3344,9 @@ function AppViewModel () {
                 };
             });
         } else {
+
+            console.log('scroll to map');
+
             /* Scroll to top of the page if the map is already open in
             mobile view */
             document.body.scrollTop = document.documentElement.scrollTop = 0;
@@ -3704,9 +3729,6 @@ function centerOnGuideMarker () {
         // a marker's break name:
         if (breakName === markerName) {
 
-            // Center the map over the marker
-            map.setCenter(marker.getPosition());
-
             // If info window isn't open
             // Also, make the marker big if it isn't
             // If the info window/marker are already open/big, do nothing
@@ -3715,12 +3737,15 @@ function centerOnGuideMarker () {
 
                 console.log('info window & marker not activated');
 
-                // Open info window
-                getInfoWindow(marker, breakName);
-
                 // Make the relevant marker big
                 makeMarkerBig(marker, markerName);
+
+                // Open info window
+                getInfoWindow(marker, breakName);
             };
+
+            // Center the map over the marker
+            map.setCenter(marker.getPosition());
 
             // Zoom in on the relevant marker
             map.setZoom(10);

@@ -1366,11 +1366,12 @@ function AppViewModel () {
 
         // For each location set variables and add hover effects
         $('.location-frame').each(function () {
-            var $locationFrame = $(this);
-            var $breakName = $(this).find('.break-name');
-            var $location = $(this).find('.location-name');
-            var $img = $(this).find('img.location-image');
-            var $favoriteWrapper = $(this).find('.favorite-wrapper');
+            var $locationFrame = $(this),
+                $breakName = $(this).find('.break-name'),
+                $location = $(this).find('.location-name'),
+                $img = $(this).find('img.location-image'),
+                $favoriteWrapper = $(this).find('.favorite-wrapper'),
+                $mapContainer = $('.map-container');
 
             $locationFrame.on('mouseenter', function (e) {
 
@@ -1385,8 +1386,8 @@ function AppViewModel () {
 
                 /* If gridView is not enabled, activate the location frame's
                  associated marker and info window */
-                if(!gridView) {
-                    activateMarkerAndInfoWindow(frameBreakName);
+                if($mapContainer.is(":visible")) {
+                    activateMarker(frameBreakName);
                 };
 
                 // Iterate through the location array
@@ -1506,8 +1507,10 @@ function AppViewModel () {
         // Disable rollover effects so the correct icon loads in surf guide
         rollover = false;
 
-        // Highlight the location's marker
-        self.goToMarker(obj.breakName);
+        // Highlight the location's marker if the map is visible
+        if($('.map-container').is(":visible")) {
+            self.goToMarker(obj.breakName);
+        };
 
         // Open the surf guide
         self.renderSurfGuide(obj);
@@ -1547,7 +1550,7 @@ function AppViewModel () {
 
     /* When a location frame is hovered over, the associated marker and
     info window is activated */
-    self.activateMarkerAndInfoWindow = function(breakName) {
+    self.activateMarker = function(breakName) {
 
         // Iterate through the markers array
         markers.forEach(function(marker) {
@@ -3189,7 +3192,7 @@ function AppViewModel () {
 
             // Hide the map immediately
             // When view is checked the map bounds won't be set
-            // Map must be hidden imediately to avoid this
+            // Map must be hidden immediately to avoid this
             $map.hide();
 
             /* Update the layout (do this after toggling the map symbol)
@@ -3229,8 +3232,10 @@ function AppViewModel () {
             // Select/deselect the map symbol
             $mapSymbol.toggleClass("map-default map-selected");
 
-            // Show the map immediately
-            $map.show();
+            // Show the map immediately if it was hidden in map view
+            if($map.is(":hidden")) {
+                $map.show();
+            };
 
             /* Update the layout (do this after toggling the map symbol)
              because 'checkView' uses it to determine if map view is
@@ -3262,6 +3267,11 @@ function AppViewModel () {
 
             // Select/deselect the map symbol
             $mapSymbol.toggleClass("map-default map-selected");
+
+            // Show the map immediately if it was hidden in map view
+            if($map.is(":hidden")) {
+                $map.show();
+            };
 
             // Toggle the map
             $mapContainer.slideToggle(200, function() {
@@ -3301,6 +3311,11 @@ function AppViewModel () {
 
             // Select/deselect the map symbol
             $mapSymbol.toggleClass("map-default map-selected");
+
+            // Show the map immediately if it was hidden in map view
+            if($map.is(":hidden")) {
+                $map.show();
+            };
 
             /* Show all location frames if only one is visible.
                However, ff only one frame is visible due to a search, then do

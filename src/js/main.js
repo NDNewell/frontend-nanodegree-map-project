@@ -1,3 +1,5 @@
+
+
 var imagesLoaded,
     locationsLoaded,
     favoritesUpdated = false,
@@ -3860,6 +3862,9 @@ function pulsateLocationFrame (breakName) {
 
                     // Add necessary class to animate
                     $locationFrame.removeClass("reverse-pulse").addClass("pulse-location-frame");
+
+                    // Scroll to specific location frame
+                    scrollToFrame();
                 };
             };
         });
@@ -3891,6 +3896,49 @@ function pulsateLocationFrame (breakName) {
             $locationFrame.removeClass("reverse-pulse");
         }, 400);
     };
+};
+
+// Automatically scroll to the location frame whose markers is being hovered
+// over
+function scrollToFrame() {
+
+    // Cache DOM refs
+    var $locationsContainer = $('.location-grid'),
+        $locationFrame = $('.location-frame'),
+        $pulsatingLocation = $('.pulse-location-frame');
+
+    // Cache the width of the outer container for the locations
+    var $locationsCountainerWidth = $locationsContainer.width();
+
+    // Cache the width the scrolling width of all of the location frames
+    var $locationsWidth = document.getElementById("location-grid").scrollWidth;
+
+    // Calculate the position of the center of the locations
+    var moveToCenter = ($locationsWidth - $locationsCountainerWidth)/2;
+
+    // Scroll the location frames to the center of the locations list
+    $locationsContainer.scrollLeft(moveToCenter);
+
+    // Get and cache the outer width of the location frame
+    var $frameWidth = $locationFrame.outerWidth(true);
+
+    // Get the space needed on both sides of a location frame to center it
+    var spaceLeftNRight = ($locationsCountainerWidth - $frameWidth)/2;
+
+    // Get and cache a ref to the location of frame that is being hovered over
+    var $targetIndex = $pulsatingLocation.index();
+
+    // Calculate the amount of space preceding the location being hovered over
+    // This is done by multiplying the number of the frames preceding the said
+    // location by the location frame width
+    var spacePreceding = $frameWidth * $targetIndex;
+
+    // Subtract the space needed on the left/right of the frame
+    // from the space that preceeds the targeted frame
+    var newPosition = spacePreceding - spaceLeftNRight;
+
+    // Scroll to the new locaiton using the new position
+    $locationsContainer.scrollLeft(newPosition);
 };
 
 function addMapClickEvent (marker) {

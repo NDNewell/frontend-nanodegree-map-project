@@ -3864,7 +3864,7 @@ function pulsateLocationFrame (breakName) {
                     $locationFrame.removeClass("reverse-pulse").addClass("pulse-location-frame");
 
                     // Scroll to specific location frame
-                    scrollToFrame();
+                    scrollToFrame(breakName);
                 };
             };
         });
@@ -3900,12 +3900,29 @@ function pulsateLocationFrame (breakName) {
 
 // Automatically scroll to the location frame whose markers is being hovered
 // over
-function scrollToFrame() {
+function scrollToFrame(breakName) {
+
+    if (typeof scrollRightRunning === 'undefined'){
+        console.log('no righty loopty loops!');
+
+    } else if (scrollRightRunning) {
+        console.log('scrolling right already, so clear it!');
+        clearInterval(scrollRight);
+    };
+
+    if (typeof scrollLeftRunning === 'undefined'){
+        console.log('no lefty loopty loops!');
+
+    } else if (scrollLeftRunning) {
+        console.log('scrolling left already, so clear it!');
+        clearInterval(scrollLeft);
+    };
 
     // Cache DOM refs
     var $locationsContainer = $('.location-grid'),
         $locationFrame = $('.location-frame'),
-        $pulsatingLocation = $('.pulse-location-frame');
+        $pulsatingLocation = $('.pulse-location-frame'),
+        $oldPosition = $locationsContainer.scrollLeft();
 
     // Cache the width of the outer container for the locations
     var $locationsCountainerWidth = $locationsContainer.width();
@@ -3937,8 +3954,60 @@ function scrollToFrame() {
     // from the space that preceeds the targeted frame
     var newPosition = spacePreceding - spaceLeftNRight;
 
+    console.log("auto scroll to " + breakName + "'s location frame");
+
+
     // Scroll to the new locaiton using the new position
-    $locationsContainer.scrollLeft(newPosition);
+    if(newPosition > $oldPosition) {
+
+      var transitionRight = $oldPosition;
+
+      var scrollRight = setInterval(function() {
+          scrollRightRunning = true;
+
+          transitionRight+=30
+
+          if(transitionRight <  newPosition) {
+              $locationsContainer.scrollLeft(transitionRight);
+          } else {
+              clearInterval(scrollRight);
+              scrollRightRunning = false;
+
+              console.log('clear interval');
+              console.log('moved scroll position from: ' + $oldPosition + ' to: ' + newPosition);
+              console.log('current scroll position is: ' + $locationsContainer.scrollLeft());
+              console.log('transition = ' + transitionRight);
+          };
+
+      }, 1);
+
+
+    } else {
+
+      var transitionLeft = $oldPosition;
+
+      var scrollLeft = setInterval(function() {
+          scrollLeftRunning = true;
+
+          transitionLeft-=30
+
+          if(transitionLeft >=  newPosition) {
+              $locationsContainer.scrollLeft(transitionLeft);
+          } else {
+              clearInterval(scrollLeft);
+              scrollLeftRunning = false;
+
+              console.log('clear interval');
+              console.log('moved scroll position from: ' + $oldPosition + ' to: ' + newPosition);
+              console.log('current scroll position is: ' + $locationsContainer.scrollLeft());
+              console.log('transition = ' + transitionLeft);
+          };
+
+      }, 1);
+
+    };
+
+
 };
 
 function addMapClickEvent (marker) {

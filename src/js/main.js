@@ -3197,6 +3197,12 @@ function AppViewModel () {
              enabled */
             self.checkView();
 
+            // After checking view, map container is set back to default
+            // Default is display:none, which means the slide toggle below
+            // will have the opposite effect (it will reopen the map) unless
+            // the map is reshown beforehand
+            $mapContainer.show();
+
             /* Show all location frames if only one is visible.
                However, if only one frame is visible due to a search, then do
                nothing */

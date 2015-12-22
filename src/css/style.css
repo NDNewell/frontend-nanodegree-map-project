@@ -132,12 +132,14 @@ body, html {
 }
 
 .map-container-default-style {
+    display: none;
     height: 350px;
     width: 100%;
     padding: 0px;
 }
 
 #map {
+    display: none;
     height: 100%;
 }
 
@@ -702,6 +704,7 @@ body, html {
     }
 
     .map-container-default-style {
+        display: none;
         height: 245px;
         border-bottom: 1px dashed;
         border-color: #E8E8E8;
@@ -949,6 +952,7 @@ body, html {
     }
 
     .map-container-map-view-style {
+        display: block;
         position: absolute;
         height: 100%;
     }

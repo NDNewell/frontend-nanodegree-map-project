@@ -3659,11 +3659,19 @@ function addListeners(marker, breakName, obj) {
         the breakName and any behavior to the current marker */
         return function() {
 
+            var $numFramesVisible = $('.location-frame:visible').length;
+
             // If the surf guide is open do nothing
             if (!$('.surf-guide-container').length) {
 
                 // Pulsate the associated location frame
                 pulsateLocationFrame(breakName);
+
+                // If more than one location frame is in view, execute code
+                if($numFramesVisible !== 1) {
+                    // Scroll to specific location frame
+                    scrollToFrame(breakName);
+                };
             };
         };
 
@@ -3862,9 +3870,6 @@ function pulsateLocationFrame (breakName) {
 
                     // Add necessary class to animate
                     $locationFrame.removeClass("reverse-pulse").addClass("pulse-location-frame");
-
-                    // Scroll to specific location frame
-                    scrollToFrame(breakName);
                 };
             };
         });
@@ -3898,25 +3903,9 @@ function pulsateLocationFrame (breakName) {
     };
 };
 
-// Automatically scroll to the location frame whose markers is being hovered
+// Automatically scroll to the location frame whose marker is being hovered
 // over
 function scrollToFrame(breakName) {
-
-    if (typeof scrollRightRunning === 'undefined'){
-        console.log('no righty loopty loops!');
-
-    } else if (scrollRightRunning) {
-        console.log('scrolling right already, so clear it!');
-        clearInterval(scrollRight);
-    };
-
-    if (typeof scrollLeftRunning === 'undefined'){
-        console.log('no lefty loopty loops!');
-
-    } else if (scrollLeftRunning) {
-        console.log('scrolling left already, so clear it!');
-        clearInterval(scrollLeft);
-    };
 
     // Cache DOM refs
     var $locationsContainer = $('.location-grid'),
@@ -3924,17 +3913,18 @@ function scrollToFrame(breakName) {
         $pulsatingLocation = $('.pulse-location-frame'),
         $oldPosition = $locationsContainer.scrollLeft();
 
+    // Check if autoscroll is already engaged
+    // If it is, clear the interval
+    if (typeof scrollRightRunning !== 'undefined' && scrollRightRunning) {
+        console.log('clear right scrolling in progress');
+        clearInterval(scrollRight);
+    } else if (typeof scrollLeftRunning !== 'undefined' && scrollLeftRunning) {
+        console.log('clear left scrolling in progress');
+        clearInterval(scrollLeft);
+    };
+
     // Cache the width of the outer container for the locations
     var $locationsCountainerWidth = $locationsContainer.width();
-
-    // Cache the width the scrolling width of all of the location frames
-    var $locationsWidth = document.getElementById("location-grid").scrollWidth;
-
-    // Calculate the position of the center of the locations
-    var moveToCenter = ($locationsWidth - $locationsCountainerWidth)/2;
-
-    // Scroll the location frames to the center of the locations list
-    $locationsContainer.scrollLeft(moveToCenter);
 
     // Get and cache the outer width of the location frame
     var $frameWidth = $locationFrame.outerWidth(true);
@@ -3942,7 +3932,8 @@ function scrollToFrame(breakName) {
     // Get the space needed on both sides of a location frame to center it
     var spaceLeftNRight = ($locationsCountainerWidth - $frameWidth)/2;
 
-    // Get and cache a ref to the location of frame that is being hovered over
+    // Get and cache a ref to the position (index) of frame that is being
+    // hovered over
     var $targetIndex = $pulsatingLocation.index();
 
     // Calculate the amount of space preceding the location being hovered over
@@ -3956,58 +3947,87 @@ function scrollToFrame(breakName) {
 
     console.log("auto scroll to " + breakName + "'s location frame");
 
-
-    // Scroll to the new locaiton using the new position
+    // Scroll to the new location using the new position
+    // Scroll right if the new scrollLeft position is greater than current pos.
     if(newPosition > $oldPosition) {
 
+      // Set the beginning scollLeft position on which to iterate
       var transitionRight = $oldPosition;
 
+      // Create a loop that moves the scroll bar from left to right
       var scrollRight = setInterval(function() {
+
+          // Create a global variable to indicate the scrolling is in progress
           scrollRightRunning = true;
 
-          transitionRight+=30
+          // Increase the scrollLeft position 30px for each 1/1000 of second
+          transitionRight+=50;
 
-          if(transitionRight <  newPosition) {
+          // If the scrollLeft position is less than the new position
+          // move the scrollLeft position incrementally closer to it
+          if(transitionRight < newPosition) {
               $locationsContainer.scrollLeft(transitionRight);
-          } else {
-              clearInterval(scrollRight);
-              scrollRightRunning = false;
 
-              console.log('clear interval');
-              console.log('moved scroll position from: ' + $oldPosition + ' to: ' + newPosition);
-              console.log('current scroll position is: ' + $locationsContainer.scrollLeft());
-              console.log('transition = ' + transitionRight);
+          // If the scrollLeft position is greater/equal to the new position,
+          // stop the loop
+          } else {
+              stopScrolling();
           };
 
       }, 1);
 
-
+    // Scroll left if the new scrollLeft position is less than current position
     } else {
 
+      // Set the beginning scollLeft position on which to iterate
       var transitionLeft = $oldPosition;
 
+      // Create a loop that moves the scroll bar from right to left
       var scrollLeft = setInterval(function() {
+
+          // Create a global variable to indicate the scrolling is in progress
           scrollLeftRunning = true;
 
-          transitionLeft-=30
+          // Increase the scrollLeft position 30px for each 1/1000 of second
+          transitionLeft-=50;
 
-          if(transitionLeft >=  newPosition) {
+          // If the scrollLeft position is greater than the new position
+          // move the scrollLeft position incrementally closer to it
+          if(transitionLeft >  newPosition) {
               $locationsContainer.scrollLeft(transitionLeft);
-          } else {
-              clearInterval(scrollLeft);
-              scrollLeftRunning = false;
 
-              console.log('clear interval');
-              console.log('moved scroll position from: ' + $oldPosition + ' to: ' + newPosition);
-              console.log('current scroll position is: ' + $locationsContainer.scrollLeft());
-              console.log('transition = ' + transitionLeft);
+          // If the scrollLeft position is less/equal to the new position,
+          // stop the loop
+          } else {
+              stopScrolling();
           };
 
       }, 1);
 
     };
 
+    // Stop auto scrolling
+    function stopScrolling () {
 
+        // If scrolling left or right, stop the loop
+        if(typeof scrollLeftRunning !== 'undefined' && scrollLeftRunning) {
+            clearInterval(scrollLeft);
+            scrollLeftRunning = false;
+        } else if (typeof scrollRightRunning !== 'undefined' && scrollRightRunning) {
+            clearInterval(scrollRight);
+            scrollRightRunning = false;
+        };
+
+        // Since each iteration towards the new position increments by 30px
+        // each time, it will never quite reach the exact goal, which leaves
+        // the location frame off center. To avoid this, set the scrollLeft
+        // position to the new position at the end of scrolling
+        $locationsContainer.scrollLeft(newPosition);
+
+        console.log('stop scrolling');
+        console.log('move scroll position from ' + $oldPosition + ' toward ' + newPosition);
+        console.log('scroll position at: ' + $locationsContainer.scrollLeft());
+    };
 };
 
 function addMapClickEvent (marker) {

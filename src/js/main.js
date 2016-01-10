@@ -370,7 +370,21 @@ function AppViewModel () {
 
             console.log('update mobile/grid/guide view layout');
 
-            $mapContainer.removeClass("map-container-map-view-style").addClass("map-container-default-style");
+            // If changing from map view to guide view, leave the map open
+            // check if the guide view is true and if the map is visible.
+            // If both are true change the map container to default style
+            // but set the map to visible instead of default display:none
+            if(guideView && $('#map').is(':visible')) {
+
+                $mapContainer.removeClass("map-container-map-view-style").addClass("map-container-default-style");
+
+                $('.map-container-default-style').css("display", "block");
+
+            // Set the map to default in all other cases
+            } else {
+
+                $mapContainer.removeClass("map-container-map-view-style").addClass("map-container-default-style");
+            };
 
             $searchForm.removeClass("search-form-map-view-style").addClass("search-form-default-style");
 
@@ -1603,7 +1617,7 @@ function AppViewModel () {
         var guideTitle = displayTitle(obj.breakName, obj.location);
         $surfGuideContainer.append(guideTitle);
 
-        // Add the 'favorite' icon to the end of the location name
+        // Add the 'favorite' icon to the beginning of the location name
         var favoriteIcon = displayFavoriteIcon(obj.breakName);
         $('.title').prepend(favoriteIcon);
         self.makeSVGInline($('.favorite-guide'));
@@ -4024,8 +4038,8 @@ function scrollToFrame(breakName) {
         // position to the new position at the end of scrolling
         $locationsContainer.scrollLeft(newPosition);
 
-        console.log('stop scrolling');
         console.log('move scroll position from ' + $oldPosition + ' toward ' + newPosition);
+        console.log('stop scrolling');
         console.log('scroll position at: ' + $locationsContainer.scrollLeft());
     };
 };

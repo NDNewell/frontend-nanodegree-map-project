@@ -3143,12 +3143,18 @@ function AppViewModel () {
 
             if ($currentSurfGuide === breakName) {
 
-                var errorElem = '<div class="col-xs-12 error-container"></div>';
-                var errorMsg = '<p class="conditions-error">' + breakName + ' ' + "conditions unavailable =(" + '</p>';
-                var errorCloseButton = '<button type="button" class="btn error-close-button">✖</button>';
+                var errorFrame = '<div class="col-xs-12 error-frame"></div>',
+                    errorElem = '<div class="error-container"></div>',
+                    errorMsg = '<p class="conditions-error">' + breakName + ' ' + "conditions unavailable =(" + '</p>',
+                    errorCloseButton = '<button type="button" class="btn error-close-button">✖</button>';
 
-                // Insert a new row above the surf guide icons
-                $surfGuideTitleContainer.after(errorElem);
+                // Insert a frame to hold the error container
+                $surfGuideTitleContainer.after(errorFrame);
+
+                var $errorFrame = $('.error-frame');
+
+                // Insert the error container
+                $errorFrame.append(errorElem);
 
                 var $errorContainer = $('.error-container');
 

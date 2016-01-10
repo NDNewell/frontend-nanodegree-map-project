@@ -401,6 +401,7 @@ body, html {
 .icon-container {
     margin-left: auto;
     margin-right: auto;
+    padding-left: 5px;
 }
 
 .icon-frame {
@@ -439,7 +440,15 @@ body, html {
     height: 160px;
 }
 
+.error-frame {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
 .error-container {
+    width: 480px;
+    margin-right: auto;
+    margin-left: auto;
     border: solid 2px;
     border-color: #E8E8E8;
     border-radius: 20px;
@@ -515,7 +524,8 @@ body, html {
 
 .error-close-button {
     float: left;
-    margin-left: -7px;
+    margin-left: 9px;
+    margin-top: -2px;
     padding: 0;
     border: none;
     background: none;
@@ -770,6 +780,10 @@ body, html {
         font-family: Arial, Verdana;
     }
 
+    .icon-container {
+        padding-left: 0px;
+    }
+
     .live-temp {
         width: 35%;
         margin-left: 33.5%;
@@ -820,12 +834,13 @@ body, html {
     }
 
     .error-container {
-        margin-left: 5%;
-        width: 90%;
+        width: 306px;
+        margin-right: auto;
+        margin-left: auto;
     }
 
     .conditions-error {
-        margin-top: 6px;
+        margin-top: 4px;
         font-size: 1.2em;
     }
 

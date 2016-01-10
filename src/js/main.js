@@ -3681,8 +3681,9 @@ function addListeners(marker, breakName, obj) {
                 // Pulsate the associated location frame
                 pulsateLocationFrame(breakName);
 
-                // If more than one location frame is in view, execute code
-                if($numFramesVisible !== 1) {
+                // If more than one location frame is in view and
+                // not in mobile view, execute code
+                if($numFramesVisible !== 1 && window.outerWidth >= 768) {
                     // Scroll to specific location frame
                     scrollToFrame(breakName);
                 };
@@ -3852,8 +3853,9 @@ function pulsateLocationFrame (breakName) {
     var $allLocationFrames = $('.location-frame'),
         $numFramesVisible = $('.location-frame:visible').length;
 
-    // If more than one location frame is in view, execute code
-    if($numFramesVisible !== 1) {
+    // If more than one location frame is in view and not in mobile view,
+    // execute code
+    if($numFramesVisible !== 1 && window.outerWidth >= 768) {
 
         // Loop through all of the location frames
         $allLocationFrames.each(function() {

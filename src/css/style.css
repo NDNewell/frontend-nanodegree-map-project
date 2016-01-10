@@ -761,12 +761,16 @@ body, html {
         font-size: 4.5vw;
     }
 
+    .break-name-default-style {
+        font-size: 1.8em;
+    }
+
     .guide-close-button {
         margin-left: 9px;
     }
 
     .title {
-        font-size: .8em;
+        font-size: .7em;
         margin-top: 15px;
     }
 

@@ -201,7 +201,7 @@ body, html {
     outline: 0 !important;
 }
 
-.location-name {
+.location-name-default-style {
     font-size: 1.5em;
     background: none repeat 0 0 #FFffff;
     opacity: 0.5;
@@ -844,8 +844,13 @@ body, html {
     }
 
     .conditions-error {
-        margin-top: 4px;
-        font-size: 1.2em;
+        margin-right: 10px;
+        margin-left: 10px;
+        font-size: 1.1em;
+    }
+
+    .error-close-button {
+        margin-top: -6px;
     }
 
     .location-frame-default-style {
@@ -1002,12 +1007,26 @@ body, html {
         cursor: pointer;
     }
 
+    .location-name-map-view-style {
+        font-size: 1.5em;
+        background: none repeat 0 0 #FFffff;
+        opacity: 0.5;
+        position: absolute;
+        bottom: -7%;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        width: 250px;
+        border-radius: 12.5px;
+    }
+
     .break-name-map-view-style {
         font-size: 2em;
         color: white;
         text-shadow: 1px 1px 10px black;
         position: absolute;
-        top: 15%;
+        top: 12%;
         left: 50%;
         margin-right: -50%;
         transform: translate(-50%, -50%);
@@ -1018,8 +1037,8 @@ body, html {
 
     .favorite-map-view-style {
         position: absolute;
-        left: 6%;
-        top: 8%;
+        left: 2.5%;
+        top: 3.5%;
     }
 
     .skill-level-hover-map-view-style {

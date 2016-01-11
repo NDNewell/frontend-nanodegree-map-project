@@ -360,6 +360,7 @@ function AppViewModel () {
             $map = $('#map'),
             $favoriteSymbol = $('.favorite'),
             $breakName = $('.break-name'),
+            $locationName = $('.location-name'),
             $searchForm = $('.search-form'),
             $clearSymbol = $('.clear'),
             $clearFavsBtn = $('.clear-favorites-button');
@@ -410,6 +411,9 @@ function AppViewModel () {
 
             // Change break name style back to default
             $breakName.removeClass("break-name-map-view-style").addClass("break-name-default-style");
+
+            // Change location name style back to default
+            $locationName.removeClass("location-name-map-view-style").addClass("location-name-default-style");
 
             /* Change 'favorite' symbol style back to default *must change
             via attr in order to change the class of an inline svg */
@@ -462,6 +466,9 @@ function AppViewModel () {
 
             // Change break name style to map view style
             $breakName.removeClass("break-name-default-style").addClass("break-name-map-view-style");
+
+            // Change location name style to map view style
+            $locationName.removeClass("location-name-default-style").addClass("location-name-map-view-style");
 
             /* Change 'favorite' symbol style to map view style *must change
             via attr in order to change the class of an inline svg */

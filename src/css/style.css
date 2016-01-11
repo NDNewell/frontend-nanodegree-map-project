@@ -998,7 +998,7 @@ body, html {
         background-size: cover;
         margin-top: 6px;
         text-align:center;
-        padding: 10px 20px 10px 0px;
+        margin: 15px 20px 0px 0px;
         cursor: pointer;
     }
 
@@ -1024,14 +1024,14 @@ body, html {
 
     .skill-level-hover-map-view-style {
         position: absolute;
-        top: 11.5%;
-        left: 17%;
+        top: 7.5%;
+        left: 15%;
         height: 80px;
     }
 
     .break-type-hover-map-view-style {
         position: absolute;
-        top: 11.5%;
+        top: 7.5%;
         left: 0;
         right: 0;
         margin: 0 auto;
@@ -1040,21 +1040,21 @@ body, html {
 
     .wave-direction-hover-map-view-style {
         position: absolute;
-        top: 11.5%;
-        right: 17%;
+        top: 7.5%;
+        right: 15%;
         height: 80px;
     }
 
     .best-season-hover-map-view-style {
         position: absolute;
-        bottom: 11.5%;
-        left: 17%;
+        bottom: 7.5%;
+        left: 15%;
         height: 80px;
     }
 
     .misc-info-one-hover-map-view-style {
         position: absolute;
-        bottom: 11.5%;
+        bottom: 7.5%;
         left: 0;
         right: 0;
         margin: 0 auto;
@@ -1063,8 +1063,8 @@ body, html {
 
     .misc-info-two-hover-map-view-style {
         position: absolute;
-        bottom: 11.5%;
-        right: 17%;
+        bottom: 7.5%;
+        right: 15%;
         height: 80px;
     }
 
@@ -1073,8 +1073,8 @@ body, html {
         color: white;
         text-shadow: 1px 1px 10px black;
         position: absolute;
-        top: 10px;
-        left: 15px;
+        top: 0px;
+        left: 5px;
     }
 
     .distance-hover-map-view-style {
@@ -1082,8 +1082,8 @@ body, html {
         color: white;
         text-shadow: 1px 1px 10px black;
         position:absolute;
-        top: 10px;
-        right: 15px;
+        top: 0px;
+        right: 5px;
     }
 
     .water-temp-hover-map-view-style {
@@ -1091,8 +1091,8 @@ body, html {
         color: white;
         text-shadow: 1px 1px 10px black;
         position: absolute;
-        bottom: 0;
-        right: 15px;
+        bottom: -12px;
+        right: 5px;
     }
 
     .wave-size-hover-map-view-style {
@@ -1100,8 +1100,8 @@ body, html {
         color: white;
         text-shadow: 1px 1px 10px black;
         position: absolute;
-        bottom: 0;
-        left: 17px;
+        bottom: -12px;
+        left: 5px;
     }
 
     .pulse-location-frame {

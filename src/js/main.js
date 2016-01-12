@@ -1543,7 +1543,7 @@ function AppViewModel () {
                 associated marker, close any open info windows, and make its
                 pin small again only if more than one is visible and the surf
                 guide isn't open*/
-                if($('.location-frame:visible').length !== 1 && !$('.surf-guide-container').length && !gridView) {
+                if(!$('.surf-guide-container').length && !gridView) {
                     makeMarkerSmall();
                     infoWindow.close();
                 };
@@ -3443,7 +3443,7 @@ function AppViewModel () {
         return cl;
     };
 
-    // Update visible frame depending on markers visible in the view port
+    // Update visible frames depending on markers visible in the view port
     self.manageFrames = function () {
 
         // Only execute the following code if the map is visible

@@ -3719,7 +3719,13 @@ function AppViewModel () {
                 // If the markers are not within the current map bounds,
                 // hide them
                 } else {
-                    markers[i].setVisible(false);
+
+                    // If a marker is selected, don't hide it
+                    if(markers[i].icon === "img/marker_selected.svg" || markers[i].icon === "img/marker_selectedFav.svg") {
+                        markers[i].setVisible(true);
+                    } else {
+                        markers[i].setVisible(false);
+                    };
                 };
             };
         };

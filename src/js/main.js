@@ -1543,12 +1543,14 @@ function AppViewModel () {
                 $favoriteWrapper.show();
 
                 /* If gridView is not enabled, deactivate the location frame's
-                associated marker, close any open info windows, and make its
-                pin small again only if more than one is visible and the surf
-                guide isn't open*/
-                if(!$('.surf-guide-container').length && !gridView) {
+                associated marker. Make its pin small again only if its
+                info window isn't open. If it's info window were open, that
+                would mean that it is selected, which for the purposes of
+                selection, should stay big. If a marker is selected, it also
+                prevents the locaiton frames from being managed (keeps only
+                one location frame visible) */
+                if(!$('.surf-guide-container').length && !isInfoWindowOpen(infoWindow) && !gridView) {
                     makeMarkerSmall();
-                    infoWindow.close();
                 };
 
                 $('.rollover-info').remove();

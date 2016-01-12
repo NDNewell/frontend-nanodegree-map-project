@@ -182,6 +182,33 @@ function AppViewModel () {
 
           // Make sure Google maps api has loaded
           if (typeof google === 'object' && typeof google.maps === 'object') {
+
+              // When loaded, set up Google map
+              setUpGoogleMap();
+
+          // If it hasn't loaded, keep checking until it is
+          // When it is loaded, generate map markers
+          } else {
+              var checkGoogle = setInterval(function() {
+
+                  console.log('Error: Google maps api NOT loaded');
+                  console.log('Load Google maps api again');
+
+                  // Check if Google maps api has loaded
+                  if(typeof google === 'object' && typeof google.maps === 'object') {
+
+                      // When loaded, set up Google map
+                      setUpGoogleMap();
+
+                      // Stop checking if Google maps api is loaded
+                      clearInterval(checkGoogle);
+                  };
+              },1000);
+          };
+
+          // Sets up markers and listeners for Google map
+          function setUpGoogleMap () {
+
               console.log('Google maps api loaded');
               console.log('generate map markers');
 
@@ -195,34 +222,12 @@ function AppViewModel () {
               // port's map bounds
               google.maps.event.addListener(map, 'idle', self.manageFrames);
 
-          // If it hasn't loaded, keep checking until it is
-          // When it is loaded, generate map markers
-          } else {
-              var checkGoogle = setInterval(function() {
-
-                  console.log('Error: Google maps api NOT loaded');
-                  console.log('Load Google maps api again');
-
-                  // Check if Google maps api has loaded
-                  if(typeof google === 'object' && typeof google.maps === 'object') {
-                      console.log('Google maps api loaded');
-                      console.log('generate map markers');
-
-                      // Populate Google map with markers based on data
-                      generateMarkers(data);
-
-                      // Add map event listener the detects when the map is
-                      // idle
-                      // Make markers within the viewport/map bounds visible
-                      // and those that aren't invisible
-                      // Show only the location frames whose markers are
-                      // within view port's map bounds
-                      google.maps.event.addListener(map, 'idle', self.manageFrames);
-
-                      // Stop checking if Google maps api is loaded
-                      clearInterval(checkGoogle);
-                  };
-              },1000);
+              // When the map is clicked, location frames are made visible.
+              // This is useful if they were hidden as a result of a marker
+              // being clicked.
+              // In addition, all open info windows are closed and any selected
+              // markers are made small again
+              google.maps.event.addListener(map, 'click', self.clickMap);
           };
         }
     });
@@ -3443,6 +3448,24 @@ function AppViewModel () {
         return cl;
     };
 
+    self.clickMap = function () {
+
+        // Find last selected marker and make pin small again
+        makeMarkerSmall();
+
+        /* If the surf guide isn't visible show the locations, otherwise
+        do nothing (just close the info windows) */
+        if (!$('.surf-guide-container').is(":visible")) {
+            $('.location-frame').show();
+        };
+
+        // Close any open info windows
+        infoWindow.close();
+
+        // Update visible frames
+        self.manageFrames();
+    };
+
     // Update visible frames depending on markers visible in the view port
     self.manageFrames = function () {
 
@@ -3674,7 +3697,6 @@ function initMap() {
     // Create an info window object for displaying the break name
     infoWindow = new google.maps.InfoWindow();
 
-    addMapClickEvent();
 }
 
 function generateMarkers (locationData) {
@@ -4186,24 +4208,6 @@ function scrollToFrame(breakName) {
         console.log('stop scrolling');
         console.log('scroll position at: ' + $locationsContainer.scrollLeft());
     };
-};
-
-function addMapClickEvent (marker) {
-
-    /* When the map is clicked, location frames are made visible. This is useful if they were hidden as a result of a marker being clicked.
-    In addition, all open info windows are closed */
-    map.addListener('click', function() {
-
-        // Find last selected marker and make pin small again
-        makeMarkerSmall();
-
-        /* If the surf guide isn't visible show the locations, otherwise
-        do nothing (just close the info windows) */
-        if (!$('.surf-guide-container').is(":visible")) {
-            $('.location-frame').show();
-        };
-            infoWindow.close();
-    });
 };
 
 // Find last selected marker and make pin small again

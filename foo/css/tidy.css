@@ -146,7 +146,7 @@ html {
   outline: 0 !important;
 }
 
-.location-name {
+.location-name-default-style {
   font-size: 1.5em;
   background: none repeat 0 0 #FFffff;
   opacity: 0.5;
@@ -261,6 +261,10 @@ html {
     border-color: #E8E8E8;
     margin-top: 1px;
     padding: 0px;
+  }
+
+  .break-name-default-style {
+    font-size: 1.8em;
   }
 
   .location-frame-default-style {

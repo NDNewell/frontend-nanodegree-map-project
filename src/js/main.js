@@ -174,7 +174,6 @@ function AppViewModel () {
     $.ajax({
         url: fireBaseURL,
         dataType: 'jsonp',
-        // jsonp: "callback",
         success: function(data) {
           console.log('get location data successful');
 
@@ -188,6 +187,13 @@ function AppViewModel () {
 
               // Populate Google map with markers based on location data
               generateMarkers(data);
+
+              // Add map event listener the detects when the map is idle
+              // Make markers within the viewport/map bounds visible and those
+              // that aren't invisible
+              // Show only the location frames whose markers are within view
+              // port's map bounds
+              google.maps.event.addListener(map, 'idle', self.manageFrames);
 
           // If it hasn't loaded, keep checking until it is
           // When it is loaded, generate map markers
@@ -204,6 +210,14 @@ function AppViewModel () {
 
                       // Populate Google map with markers based on data
                       generateMarkers(data);
+
+                      // Add map event listener the detects when the map is
+                      // idle
+                      // Make markers within the viewport/map bounds visible
+                      // and those that aren't invisible
+                      // Show only the location frames whose markers are
+                      // within view port's map bounds
+                      google.maps.event.addListener(map, 'idle', self.manageFrames);
 
                       // Stop checking if Google maps api is loaded
                       clearInterval(checkGoogle);
@@ -451,28 +465,14 @@ function AppViewModel () {
 
             $locationGrid.addClass("location-grid-map-view-style");
 
-            $locationFrame.addClass("location-frame-map-view-style").removeClass("location-frame-default-style");
-
-            $locationFrame.css("display", "inline-block");
-
             // Change the container to Bootstrap's 'fluid' class
             $container.removeClass("container").addClass("container-fluid");
 
             // Add Bootstrap's 'fluid' class setting to the row
             $locationGrid.removeClass("row").addClass("row-fluid");
 
-            // Remove the Bootstrap settings
-            $locationFrame.removeClass("col-xs-12 col-sm-6 col-md-4");
-
-            // Change break name style to map view style
-            $breakName.removeClass("break-name-default-style").addClass("break-name-map-view-style");
-
-            // Change location name style to map view style
-            $locationName.removeClass("location-name-default-style").addClass("location-name-map-view-style");
-
-            /* Change 'favorite' symbol style to map view style *must change
-            via attr in order to change the class of an inline svg */
-            $favoriteSymbol.attr("class", "favorite favorite-map-view-style");
+            // Reset location frame's elements
+            self.resetLocationFrames();
 
             // Adjust the map height
             self.adjustMapSize();
@@ -551,6 +551,35 @@ function AppViewModel () {
 
             $costInfo.addClass("cost-hover-default-style").removeClass("cost-hover-map-view-style");
         };
+    };
+
+    // Set the style on the location frames for map view
+    self.resetLocationFrames = function () {
+
+        // Cache DOM elements
+        var $locationFrame = $('.location-frame'),
+            $locationName = $('.location-name'),
+            $breakName = $('.break-name'),
+            $favorite = $('.favorite');
+
+        // Change the location frame's style to map view
+        $locationFrame.addClass("location-frame-map-view-style").removeClass("location-frame-default-style");
+
+        // Make sure display is inline
+        $locationFrame.css("display", "inline-block");
+
+        // Remove the Bootstrap settings
+        $locationFrame.removeClass("col-xs-12 col-sm-6 col-md-4");
+
+        // Change break name style to map view style
+        $breakName.removeClass("break-name-default-style").addClass("break-name-map-view-style");
+
+        // Change location name style to map view style
+        $locationName.removeClass("location-name-default-style").addClass("location-name-map-view-style");
+
+        /* Change 'favorite' symbol style to map view style *must change
+        via attr in order to change the class of an inline svg */
+        $favorite.attr("class", "favorite favorite-map-view-style");
     };
 
     // Set intitial variables for map, grid, guide, and mobile views
@@ -3413,6 +3442,106 @@ function AppViewModel () {
 
         return cl;
     };
+
+    // Update visible frame depending on markers visible in the view port
+    self.manageFrames = function () {
+
+        // Only execute the following code if the map is visible
+        if($('#map').is(":visible")) {
+
+            // Cache the length of the markers array
+            var markersLength = markers.length;
+
+            // Check if any markers are selected, if so do not adjust visible
+            // frames. Otherwise, the selected marker's frame will not be the
+            // only frame visible as others would be added whenever the map is
+            // adjusted
+            for(var i = markersLength; i--;) {
+
+                // If any of the marker's images matches a 'selected' image
+                // End the function
+                if(markers[i].icon === "img/marker_selected.svg" || markers[i].icon === "img/marker_selectedFav.svg") {
+                    return;
+                };
+            };
+
+            console.log('manage location frames');
+
+            // Clear the visible location frames
+            self.locationGrid.removeAll();
+
+            // Iterate backwards through the markers array, so that their
+            // location frames when matched are add back to the location grid
+            // in the same order
+            for(var i = markersLength; i--;) {
+
+
+                // Cache the title of the marker not including the location
+                var markerName = markers[i].title.replace(/ *\([^)]*\) */g, "");
+
+                // Get map bounds and determine which markers are within them
+                // Display the location frames of only those markers found
+                // within the maps boundaries
+                if(map.getBounds().contains(markers[i].getPosition())) {
+
+                    // If the search container is visible, only display the
+                    // frames of those markers that match the current search
+                    // query
+                    if ($('.search-container').is(":visible")) {
+
+                        // Cache the current search query
+                        var search = self.Query().toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
+
+                        // Compare the search query with the title of the
+                        // markers found within the map's boundaries
+                        if (markers[i].title.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) > -1) {
+
+                            // Display only the frames of the markers that
+                            // match the search query and fall within the
+                            // maps boundaries
+                            updateFrames(markerName);
+                        };
+
+                    // If the search container isn't visible, display only the
+                    // location frame's of the markers that fall within the
+                    // map's current boundaries
+                    } else {
+
+                        // Update the visible frames
+                        updateFrames(markerName);
+                    };
+                };
+            };
+
+            // Remove or display the location frames of those markers found
+            // within the map's current boundaries
+            function updateFrames (markerName) {
+
+                // Iterate through the array of locations
+                self.locationArray.forEach(function(obj) {
+
+                    // If a marker within the map's boundaries matches a
+                    // location, display it
+                    if (markerName === obj.breakName) {
+                          self.locationGrid.push(obj);
+                    };
+                });
+            };
+
+            // If in mobile view, do not reset the location frame's styling
+            // Otherwise, alter their styling for map view
+            if(!mobileView) {
+                self.resetLocationFrames();
+            };
+
+            // Re-add rollover effects
+            self.addRolloverEffect();
+
+            // Re-render the location frame's 'favorite' status
+            self.renderFavoriteOnLocationFrame();
+
+        };
+    };
 };
 
 // Get current location
@@ -3821,7 +3950,7 @@ function getInfoWindow (marker, breakName) {
     infoWindow.open(map, marker);
 };
 
-// Check to see if the info window object is alreay open
+// Check to see if the info window object is already open
 function isInfoWindowOpen(infoWindow){
     var map = infoWindow.getMap();
     return (map !== null && typeof map !== "undefined");
@@ -4143,5 +4272,7 @@ function updateFavMarkers (favorites) {
         };
     });
 };
+
+
 
 ko.applyBindings(new AppViewModel);

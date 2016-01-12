@@ -1818,6 +1818,21 @@ function AppViewModel () {
 
     self.closeSurfGuide = function () {
 
+        // Cache the markers array length
+        var markersLength = markers.length;
+
+        // Iterate through the markers array
+        // It's important to show the markers again so that when the map
+        // bounds are set, the whole map is shown instead of the previously
+        // viewed markers provided in the surf guide
+        for(var i = markersLength; i--;) {
+
+            // Show all markers
+            // If a search has been made, show only markers that match the
+            // current search
+            self.showMarkers(markers[i]);
+        };
+
         // Find last selected marker and make pin small again
         makeMarkerSmall();
 
@@ -3491,7 +3506,7 @@ function AppViewModel () {
         google.maps.event.addListener(map, 'click', self.clickMap);
 
         // Display markers found in the markers array on the map
-        showMarkers(map);
+        displayMarkers(map);
 
         // Set initial map bounds based on location of markers
         setMapBounds();
@@ -3691,30 +3706,11 @@ function AppViewModel () {
                 // Get map bounds and determine which markers are within them
                 if(map.getBounds().contains(markers[i].getPosition())) {
 
-                    // If the search container is visible, only display the
-                    // markers that match the current search query
-                    if ($('.search-container').is(":visible")) {
-
-                        // Cache the current search query
-                        var search = self.Query().toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
-
-                        // Compare the search query with the title of the
-                        // markers found within the map's boundaries
-                        if (markers[i].title.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) > -1) {
-
-                            // If there is a match, make the marker visible
-                            markers[i].setVisible(true);
-                        };
-
-                    // If the search container isn't visible, display only the
-                    // markers that fall within the map's current boundaries
-                    } else {
-
-                        // Make the markers that are within the maps bounds
-                        // visible
-                        markers[i].setVisible(true);
-
-                    };
+                    // Show any markers that fall within the current map bounds
+                    // If a search has been made, show only those markers that
+                    // not only fall within the map bounds, but also match the
+                    // search query
+                    self.showMarkers(markers[i]);
 
                 // If the markers are not within the current map bounds,
                 // hide them
@@ -3828,6 +3824,33 @@ function AppViewModel () {
             // Re-render the location frame's 'favorite' status
             self.renderFavoriteOnLocationFrame();
 
+        };
+    };
+
+    // Show all of the map's markers
+    // If a search has been made, show only those markers that match the search
+    // query
+    self.showMarkers = function (marker) {
+
+        // If the search container is visible, only display the
+        // markers that match the current search query
+        if ($('.search-container').is(":visible")) {
+
+            // Cache the current search query
+            var search = self.Query().toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
+
+            // Compare the search query with the title of the marker
+            if (marker.title.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) > -1) {
+
+                // If there is a match, make the marker visible
+                marker.setVisible(true);
+            };
+
+        // If the search container isn't visible, show all markers
+        } else {
+
+            // Make all markers visible
+            marker.setVisible(true);
         };
     };
 };
@@ -3964,7 +3987,7 @@ function initMap() {
 
 }
 
-function showMarkers(map) {
+function displayMarkers(map) {
 
     // Loop through the markers array and display on the map
     var markersLength = markers.length;

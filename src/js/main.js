@@ -1146,24 +1146,30 @@ function AppViewModel () {
 
     };
 
-    // Display only favorite from the locations array
+    // Display only favorites from the locations array
     self.filterFavorites = function () {
 
         // Cache reference to DOM
         var $favoriteSymbol = $('.favorite-filter-symbol');
 
-        // Clear the observable array
-        self.locationGrid.removeAll();
+        // If map is hidden do not execute. This is task is already performed
+        // in the manageFrames function for the map view
+        // If not in map view, execute this function
+        if($('#map').is(":hidden")) {
 
-        /* Iterate throught the locations array and update the location grid
-        with any matching locations to the user's favorites */
-        locationArray.forEach(function(obj) {
-            var breakName = obj.breakName;
+            // Clear the observable array
+            self.locationGrid.removeAll();
 
-            if(userFavorites.indexOf(breakName) > -1) {
-                self.locationGrid.push(obj);
-            };
-        });
+            /* Iterate through the locations array and update the location grid
+            with any matching locations to the user's favorites */
+            locationArray.forEach(function(obj) {
+                var breakName = obj.breakName;
+
+                if(userFavorites.indexOf(breakName) > -1) {
+                    self.locationGrid.push(obj);
+                };
+            });
+        };
 
         // Close open info windows
         infoWindow.close();
@@ -1187,15 +1193,7 @@ function AppViewModel () {
 
         console.log('update map with favorites');
 
-        /* If the map is visible, set the map bounds and map position. If it is
-        instead hidden, do nothing. This is because that a bug is created when
-        map bounds are invoked on the hidden map: the map, markers and info-
-        windows skew left for some unknown reason. Because a search results
-        in location frames being filtered and eventually one being selected,
-        centering and map bounds will be set by the clicking of the location
-        frame. Also, if the map is opened (and if the surf guide isn't in view)
-        the map will be centered and the bounds will also be set whichever
-        location frames have or haven't been filtered into view. */
+        // Set map bounds
         if ($('#map').is(":visible")) {
             // Set the map bounds & map position
             setMapBounds();
@@ -1249,20 +1247,22 @@ function AppViewModel () {
                 // Add & remove relevant classes
                 $favoriteSymbol.removeClass("favorite-filter-default").addClass("favorite-filter-selected");
 
-                /* After filtering the favorites, there are new versions of the location frames and they need to be updated */
-                /* If the map and search container are visible and 'mobile
-                view' is false, adjust the layout after the search container
-                has been toggled. Toggling the layout before the search
-                container has been toggled results in a gap between the
-                location grid and the bottom of the map container. Toggling
-                the layout after the search container has completely
-                disappeared adjusts the layout appropriately */
+                /* After filtering the favorites, there are new versions of
+                the location frames and they need to be updated */
+                /* If the map and search container are visible, adjust the
+                layout after the search container has been toggled. Toggling
+                the layout before the search container has been toggled
+                results in a styling error. Toggling the layout after the
+                search container has completely disappeared, adjusts the
+                layout appropriately */
                 /* Also, filter favorites after the search container
                 has been toggled and before adjusting the layout. Filtering
-                the favorites before results in a flash of unstyled content
-                while waiting for the search container to close in order to
-                adjust the layout and styling */
-                if($('.map-container-map-view-style').length && $('.search-container').is(":visible")) {
+                the favorites before results in a flash of unstyled content*/
+                /* There is no need to add rollover effects or render favs
+                on the location frames for the first two options because
+                in these cases the manage frames function will take care
+                if it*/
+                if($('#map').is(":visible") && $('.search-container').is(":visible")) {
 
                     // Toggle the layout after the search container is hidden
                     setTimeout( function () {
@@ -1273,13 +1273,15 @@ function AppViewModel () {
                         // Adjust the layout
                         self.toggleLayout();
 
-                        // Add rollover effects to the new list of objects
-                        self.addRolloverEffect();
-
-                        // Display 'favorite' icons on the relevant location frames
-                        self.renderFavoriteOnLocationFrame();
-
                     }, 600);
+
+                } else if ($('#map').is(":visible")) {
+
+                        // Filter the locations to find favorites
+                        self.filterFavorites();
+
+                        // Adjust the layout
+                        self.toggleLayout();
 
                 // If the search container is hidden, toggle layout normally
                 } else {
@@ -1300,7 +1302,7 @@ function AppViewModel () {
                 // Show the filters container
                 // If the map is visible, fade in the filters container
                 // If it isn't visible, slide the filters container down
-                if($('.map-container-map-view-style').length) {
+                if($('#map').is(":visible")) {
                     $filtersContainer.fadeIn(500);
                 } else {
                     $filtersContainer.slideDown(500);
@@ -3780,15 +3782,26 @@ function AppViewModel () {
                         // markers found within the map's boundaries
                         if (markers[i].title.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) > -1) {
 
-                            // Display only the frames of the markers that
-                            // match the search query and fall within the
-                            // maps boundaries
+                            // If there is a match, make the frame visible
                             updateFrames(markerName);
                         };
 
-                    // If the search container isn't visible, display only the
-                    // location frame's of the markers that fall within the
-                    // map's current boundaries
+                    // If the favorites filter button is selected, only display
+                    // the frames of those markers that are within the user's
+                    // favorites
+                    } else if ($('.favorite-filter-selected').length) {
+
+                        // Compare the marker title to the user's favs
+                        if (userFavorites.indexOf(markerName) > -1) {
+
+                            // If there is a match, make the frame visible
+                            updateFrames(markerName);
+                        };
+
+                    // If the search container isn't visible and the favorites
+                    // filter isn't selected, display only the location
+                    // frame's of the markers that fall within the map's
+                    // current boundaries
                     } else {
 
                         // Update the visible frames
@@ -3830,7 +3843,12 @@ function AppViewModel () {
     // Show all of the map's markers
     // If a search has been made, show only those markers that match the search
     // query
+    // If the favorites filter is selected, show only those markers that match
+    // the user's favorites
     self.showMarkers = function (marker) {
+
+        // Shorten the marker title to just the break name
+        var markerTitle = marker.title.replace(/ *\([^)]*\) */g, "");
 
         // If the search container is visible, only display the
         // markers that match the current search query
@@ -3840,7 +3858,18 @@ function AppViewModel () {
             var search = self.Query().toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
 
             // Compare the search query with the title of the marker
-            if (marker.title.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) > -1) {
+            if (markerTitle.indexOf(search) > -1) {
+
+                // If there is a match, make the marker visible
+                marker.setVisible(true);
+            };
+
+        // If the favorites button is selected, only display the markers
+        // that are within the users's favorites
+        } else if ($('.favorite-filter-selected').length) {
+
+            // Compare the marker title to the user's favs
+            if (userFavorites.indexOf(markerTitle) > -1) {
 
                 // If there is a match, make the marker visible
                 marker.setVisible(true);

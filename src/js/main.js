@@ -213,7 +213,7 @@ function AppViewModel () {
               console.log('generate map markers');
 
               // Populate Google map with markers based on location data
-              generateMarkers(data);
+              self.generateMarkers(data);
 
               // Add map event listener the detects when the map is idle
               // Make markers within the viewport/map bounds visible and those
@@ -3448,6 +3448,195 @@ function AppViewModel () {
         return cl;
     };
 
+    self.generateMarkers = function(locationData) {
+
+        /* Loop through locationData and filter out the coordinates
+        & break name for each break. Save the break's coordinates and name
+        in their own variables for easy referencing */
+        var locationDataLength = locationData.length;
+
+        for(var i = locationDataLength; i--;) {
+
+            var obj = locationData[i];
+
+            // Create a variable to hold each break's coordinates
+            var breakCoordinates = ({lat: obj.lat, lng: obj.lng});
+
+            // Create a variable to hold the name of the break
+            var breakName = obj.breakName;
+
+            // Create a variable to hold the name of the break location
+            var breakLocation = obj.location;
+
+            /* Create a marker and set its position. Pass the variables
+            created above as arguments*/
+            self.addMarker(breakName, breakCoordinates, breakLocation, obj);
+        };
+
+        // Display markers found in the markers array on the map
+        showMarkers(map);
+
+        // Set initial map bounds based on location of markers
+        setMapBounds();
+    };
+
+    self.addMarker = function(breakName, breakCoordinates, breakLocation, obj) {
+
+        /* If markers load after updateMarkers function has run, update
+        markers' imgs that match the user's favorites */
+        if(favoritesUpdated) {
+
+            console.log('error: marker favorites not updated! --update again');
+
+            if(userFavorites.indexOf(breakName) > -1) {
+                var markerImg = 'img/marker_smallFav.svg';
+            } else {
+                var markerImg = 'img/marker_small.svg';
+            };
+        } else {
+            var markerImg = 'img/marker_small.svg';
+        };
+
+        var marker = new google.maps.Marker({
+
+            // Set position using the newly created variable
+            position: breakCoordinates,
+            map: map,
+            icon: markerImg,
+
+            /* Set the title for the break marker as the name of the
+            wave/location of the break. This way it can be searched/filtered
+            in the ViewModel*/
+            title: breakName + ' ' + '(' + breakLocation + ')'
+        });
+
+        // Add a text box that displays the break name and location when
+        // clicked
+        self.addListeners(marker, breakName, obj);
+    };
+
+    self.addListeners = function(marker, breakName, obj) {
+
+        google.maps.event.addListener(marker, 'dblclick', (function(marker) {
+
+            /* Create an inner function what will at the time of iteration save
+            a double-click event to the relevant marker. When the user double-
+            clicks, the map will zoom in on the marker*/
+            return function() {
+
+                // Center the map
+                map.setCenter(marker.getPosition());
+
+                /* Set zoom if marker is clicked and not already zoomed in at
+                14 or above*/
+                if(map.getZoom() < 14) {
+                    map.setZoom(14);
+                };
+            };
+
+        /* Pass the relevant marker for the current iteration as an argument
+        into the function*/
+        })(marker));
+
+        google.maps.event.addListener(marker, 'click', (function(marker, breakName, obj) {
+
+            /* Create an inner function what will at the time of iteration save
+            the individual break's name (breakName) within the infoWindow and
+            attach it to the relevant marker */
+            return function() {
+
+                // Find last selected marker and make pin small again
+                makeMarkerSmall();
+
+                // Update the visible frames
+                self.manageFrames();
+
+                // Cache the title of the marker not including the location
+                var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
+
+                if (marker.icon === 'img/marker_small.svg') {
+                    console.log('make ' + markerName + "'" + 's marker big');
+                    marker.setIcon('img/marker_selected.svg');
+                } else if (marker.icon === 'img/marker_smallFav.svg') {
+                    console.log('make ' + markerName + "'" + 's marker big');
+                    marker.setIcon('img/marker_selectedFav.svg');
+                };
+
+                getInfoWindow(marker, breakName);
+
+                // Bounce marker upon clicking
+                animateMarker(marker);
+
+                /* Show surf guide (only if surf guide is already open) when
+                the marker is clicked */
+                if ($('.surf-guide-container').is(":visible")) {
+                    /* Remove any visible surf conditions so they aren't still
+                    displayed when the new surf guide renders */
+                    $('.surf-conditions').remove();
+                    renderSurfGuide(obj);
+                } else {
+                    /* If the surf guide isn't open, hide all location frames
+                    except the one related to the marker */
+                    showLocationFrame(breakName);
+                };
+            };
+
+        /* Pass the relevant marker and break name (breakName) for the current
+        iteration as an argument into the function*/
+        })(marker, breakName, obj));
+
+        // Location frame pulsates when it's corresponding marker is hovered
+        // over
+        google.maps.event.addListener(marker, 'mouseover', (function(breakName) {
+
+            /* Create an inner function what will at the time of iteration save
+            the breakName and any behavior to the current marker */
+            return function() {
+
+                var $numFramesVisible = $('.location-frame:visible').length;
+
+                // If the surf guide is open do nothing
+                if (!$('.surf-guide-container').length) {
+
+                    // Pulsate the associated location frame
+                    pulsateLocationFrame(breakName);
+
+                    // If more than one location frame is in view and
+                    // not in mobile view, execute code
+                    if($numFramesVisible !== 1 && window.outerWidth >= 768) {
+
+                        // Scroll to specific location frame
+                        scrollToFrame(breakName);
+                    };
+                };
+            };
+
+        /* Pass the relevant marker and break name (breakName) for the current
+        iteration as an argument into the function*/
+        })(breakName));
+
+        google.maps.event.addListener(marker, 'mouseout', (function(breakName) {
+
+            /* Create an inner function what will at the time of iteration save
+            the breakName and any behavior to the current marker */
+            return function() {
+
+                // If the surf guide is open do nothing
+                if (!$('.surf-guide-container').length) {
+
+                    // Reverse pulstate the associated location frame
+                    pulsateLocationFrame(breakName);
+                };
+            };
+
+        /* Pass the relevant marker and break name (breakName) for the current
+        iteration as an argument into the function*/
+        })(breakName));
+
+        // Add each marker to the markers array
+        markers.push(marker);
+    };
+
     self.clickMap = function () {
 
         // Find last selected marker and make pin small again
@@ -3698,187 +3887,6 @@ function initMap() {
     infoWindow = new google.maps.InfoWindow();
 
 }
-
-function generateMarkers (locationData) {
-
-    /* Loop through locationData and filter out the coordinates
-    & break name for each break. Save the break's coordinates and name
-    in their own variables for easy referencing */
-    var locationDataLength = locationData.length;
-
-    for(var i = locationDataLength; i--;) {
-
-        var obj = locationData[i];
-
-        // Create a variable to hold each break's coordinates
-        var breakCoordinates = ({lat: obj.lat, lng: obj.lng});
-
-        // Create a variable to hold the name of the break
-        var breakName = obj.breakName;
-
-        // Create a variable to hold the name of the break location
-        var breakLocation = obj.location;
-
-        /* Create a marker and set its position. Pass the variables
-        created above as arguments*/
-        addMarker(breakName, breakCoordinates, breakLocation, obj);
-    };
-
-    // Display markers found in the markers array on the map
-    showMarkers(map);
-
-    // Set initial map bounds based on location of markers
-    setMapBounds();
-};
-
-function addMarker(breakName, breakCoordinates, breakLocation, obj) {
-
-    /* If markers load after updateMarkers function has run, update
-    markers' imgs that match the user's favorites */
-    if(favoritesUpdated) {
-
-        console.log('error: marker favorites not updated! --update again');
-
-        if(userFavorites.indexOf(breakName) > -1) {
-            var markerImg = 'img/marker_smallFav.svg';
-        } else {
-            var markerImg = 'img/marker_small.svg';
-        };
-    } else {
-        var markerImg = 'img/marker_small.svg';
-    };
-
-    var marker = new google.maps.Marker({
-
-        // Set position using the newly created variable
-        position: breakCoordinates,
-        map: map,
-        icon: markerImg,
-
-        /* Set the title for the break marker as the name of the wave/location
-        of the break. This way it can be searched/filtered in the ViewModel*/
-        title: breakName + ' ' + '(' + breakLocation + ')'
-    });
-
-    // Add a text box that displays the break name and location when clicked
-    addListeners(marker, breakName, obj);
-};
-
-function addListeners(marker, breakName, obj) {
-
-    google.maps.event.addListener(marker, 'dblclick', (function(marker) {
-
-        /* Create an inner function what will at the time of iteration save
-        a double-click event to the relevant marker. When the user double-
-        clicks, the map will zoom in on the marker*/
-        return function() {
-            // Center the map
-            map.setCenter(marker.getPosition());
-
-            /* Set zoom if marker is clicked and not already zoomed in at 14
-            or above*/
-            if(map.getZoom() < 14) {
-                map.setZoom(14);
-            };
-        };
-
-    /* Pass the relevant marker for the current iteration as an argument
-    into the function*/
-    })(marker));
-
-    google.maps.event.addListener(marker, 'click', (function(marker, breakName, obj) {
-
-        /* Create an inner function what will at the time of iteration save
-        the individual break's name (breakName) within the infoWindow and
-        attach it to the relevant marker */
-        return function() {
-
-            // Find last selected marker and make pin small again
-            makeMarkerSmall();
-
-            // Cache the title of the marker not including the location
-            var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
-
-            if (marker.icon === 'img/marker_small.svg') {
-                console.log('make ' + markerName + "'" + 's marker big');
-                marker.setIcon('img/marker_selected.svg');
-            } else if (marker.icon === 'img/marker_smallFav.svg') {
-                console.log('make ' + markerName + "'" + 's marker big');
-                marker.setIcon('img/marker_selectedFav.svg');
-            };
-
-            getInfoWindow(marker, breakName);
-
-            // Bounce marker upon clicking
-            animateMarker(marker);
-
-            /* Show surf guide (only if surf guide is already open) when the
-            marker is clicked */
-            if ($('.surf-guide-container').is(":visible")) {
-                /* Remove any visible surf conditions so they aren't still
-                displayed when the new surf guide renders */
-                $('.surf-conditions').remove();
-                renderSurfGuide(obj);
-            } else {
-                /* If the surf guide isn't open, hide all location frames
-                except the one related to the marker */
-                showLocationFrame(breakName);
-            };
-        };
-
-    /* Pass the relevant marker and break name (breakName) for the current
-    iteration as an argument into the function*/
-    })(marker, breakName, obj));
-
-    // Location frame pulsates when it's corresponding marker is hovered over
-    google.maps.event.addListener(marker, 'mouseover', (function(breakName) {
-
-        /* Create an inner function what will at the time of iteration save
-        the breakName and any behavior to the current marker */
-        return function() {
-
-            var $numFramesVisible = $('.location-frame:visible').length;
-
-            // If the surf guide is open do nothing
-            if (!$('.surf-guide-container').length) {
-
-                // Pulsate the associated location frame
-                pulsateLocationFrame(breakName);
-
-                // If more than one location frame is in view and
-                // not in mobile view, execute code
-                if($numFramesVisible !== 1 && window.outerWidth >= 768) {
-                    // Scroll to specific location frame
-                    scrollToFrame(breakName);
-                };
-            };
-        };
-
-    /* Pass the relevant marker and break name (breakName) for the current
-    iteration as an argument into the function*/
-    })(breakName));
-
-    google.maps.event.addListener(marker, 'mouseout', (function(breakName) {
-
-        /* Create an inner function what will at the time of iteration save
-        the breakName and any behavior to the current marker */
-        return function() {
-
-            // If the surf guide is open do nothing
-            if (!$('.surf-guide-container').length) {
-
-                // Reverse pulstate the associated location frame
-                pulsateLocationFrame(breakName);
-            };
-        };
-
-    /* Pass the relevant marker and break name (breakName) for the current
-    iteration as an argument into the function*/
-    })(breakName));
-
-    // Add each marker to the markers array
-    markers.push(marker);
-};
 
 function showMarkers(map) {
 

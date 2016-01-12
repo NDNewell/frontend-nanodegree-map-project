@@ -214,20 +214,6 @@ function AppViewModel () {
 
               // Populate Google map with markers based on location data
               self.generateMarkers(data);
-
-              // Add map event listener the detects when the map is idle
-              // Make markers within the viewport/map bounds visible and those
-              // that aren't invisible
-              // Show only the location frames whose markers are within view
-              // port's map bounds
-              google.maps.event.addListener(map, 'idle', self.manageFrames);
-
-              // When the map is clicked, location frames are made visible.
-              // This is useful if they were hidden as a result of a marker
-              // being clicked.
-              // In addition, all open info windows are closed and any selected
-              // markers are made small again
-              google.maps.event.addListener(map, 'click', self.clickMap);
           };
         }
     });
@@ -3472,6 +3458,20 @@ function AppViewModel () {
             created above as arguments*/
             self.addMarker(breakName, breakCoordinates, breakLocation, obj);
         };
+
+        // Add map event listener the detects when the map is idle
+        // Make markers within the viewport/map bounds visible and those
+        // that aren't invisible
+        // Show only the location frames whose markers are within view
+        // port's map bounds
+        google.maps.event.addListener(map, 'idle', self.manageFrames);
+
+        // When the map is clicked, location frames are made visible.
+        // This is useful if they were hidden as a result of a marker being
+        // clicked.
+        // In addition, all open info windows are closed and any selected
+        // markers are made small again
+        google.maps.event.addListener(map, 'click', self.clickMap);
 
         // Display markers found in the markers array on the map
         showMarkers(map);

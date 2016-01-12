@@ -3858,7 +3858,7 @@ function AppViewModel () {
             var search = self.Query().toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
 
             // Compare the search query with the title of the marker
-            if (markerTitle.indexOf(search) > -1) {
+            if (marker.title.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) > -1) {
 
                 // If there is a match, make the marker visible
                 marker.setVisible(true);

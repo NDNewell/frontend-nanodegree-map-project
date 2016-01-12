@@ -548,19 +548,31 @@ function AppViewModel () {
     self.resetLocationFrames = function () {
 
         // Cache DOM elements
-        var $locationFrame = $('.location-frame'),
+        var $allLocationFrames = $('.location-frame'),
             $locationName = $('.location-name'),
             $breakName = $('.break-name'),
             $favorite = $('.favorite');
 
-        // Change the location frame's style to map view
-        $locationFrame.addClass("location-frame-map-view-style").removeClass("location-frame-default-style");
+        // Change all location frames style to map view
+        $allLocationFrames.addClass("location-frame-map-view-style").removeClass("location-frame-default-style");
 
-        // Make sure display is inline
-        $locationFrame.css("display", "inline-block");
+        // Loop through all of the location frames
+        $allLocationFrames.each(function() {
+
+            // Cache the current location frame's reference and text
+            var $locationFrame = $(this);
+
+            // If the location frame is visible, format it for map view
+            // If not, keep it hidden
+            if($locationFrame.is(":visible")) {
+
+                // Make sure display is inline
+                $locationFrame.css("display", "inline-block");
+            };
+        });
 
         // Remove the Bootstrap settings
-        $locationFrame.removeClass("col-xs-12 col-sm-6 col-md-4");
+        $allLocationFrames.removeClass("col-xs-12 col-sm-6 col-md-4");
 
         // Change break name style to map view style
         $breakName.removeClass("break-name-default-style").addClass("break-name-map-view-style");

@@ -191,8 +191,8 @@ function AppViewModel () {
           } else {
               var checkGoogle = setInterval(function() {
 
-                  console.log('Error: Google maps api NOT loaded');
-                  console.log('Load Google maps api again');
+                  console.log('error: Google maps api NOT loaded');
+                  console.log('load Google maps api again');
 
                   // Check if Google maps api has loaded
                   if(typeof google === 'object' && typeof google.maps === 'object') {
@@ -3462,9 +3462,12 @@ function AppViewModel () {
         // Add map event listener the detects when the map is idle
         // Make markers within the viewport/map bounds visible and those
         // that aren't invisible
-        // Show only the location frames whose markers are within view
-        // port's map bounds
-        google.maps.event.addListener(map, 'idle', self.manageFrames);
+        // Show only the location frames and markers whose markers are within
+        // view port's map bounds
+        google.maps.event.addListener(map, 'idle', function() {
+              self.manageFrames();
+              self.manageMarkers();
+        });
 
         // When the map is clicked, location frames are made visible.
         // This is useful if they were hidden as a result of a marker being
@@ -3653,6 +3656,59 @@ function AppViewModel () {
 
         // Update visible frames
         self.manageFrames();
+    };
+
+    // Update visible markers depending on which ones fall within the current
+    // map bounds
+    self.manageMarkers = function () {
+
+        // Only execute the following code if the map is visible
+        if($('#map').is(":visible")) {
+
+            console.log('manage markers');
+
+            // Cache the length of the markers array
+            var markersLength = markers.length;
+
+            // Iterate through the markers array to check which markers fall
+            // within the current map bounds
+            for(var i = markersLength; i--;) {
+
+                // Get map bounds and determine which markers are within them
+                if(map.getBounds().contains(markers[i].getPosition())) {
+
+                    // If the search container is visible, only display the
+                    // markers that match the current search query
+                    if ($('.search-container').is(":visible")) {
+
+                        // Cache the current search query
+                        var search = self.Query().toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
+
+                        // Compare the search query with the title of the
+                        // markers found within the map's boundaries
+                        if (markers[i].title.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) > -1) {
+
+                            // If there is a match, make the marker visible
+                            markers[i].setVisible(true);
+                        };
+
+                    // If the search container isn't visible, display only the
+                    // markers that fall within the map's current boundaries
+                    } else {
+
+                        // Make the markers that are within the maps bounds
+                        // visible
+                        markers[i].setVisible(true);
+
+                    };
+
+                // If the markers are not within the current map bounds,
+                // hide them
+                } else {
+                    markers[i].setVisible(false);
+                };
+            };
+        };
     };
 
     // Update visible frames depending on markers visible in the view port

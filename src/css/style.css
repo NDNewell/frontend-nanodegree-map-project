@@ -209,9 +209,10 @@ body, html {
     bottom: -2%;
     left: 50%;
     margin-right: -50%;
+    padding-left: 15px;
+    padding-right: 15px;
     transform: translate(-50%, -50%);
     text-align: center;
-    width: 250px;
     border-radius: 12.5px;
 }
 
@@ -1015,9 +1016,10 @@ body, html {
         bottom: -7%;
         left: 50%;
         margin-right: -50%;
+        padding-left: 15px;
+        padding-right: 15px;
         transform: translate(-50%, -50%);
         text-align: center;
-        width: 250px;
         border-radius: 12.5px;
     }
 

@@ -640,6 +640,10 @@ function AppViewModel () {
 
                     mapView = false;
 
+                    if(!gridView) {
+                        console.log('first time in Grid View');
+                    };
+
                     gridView = true;
                     console.log('view is grid');
                 };
@@ -3305,7 +3309,6 @@ function AppViewModel () {
         /* If clicking the button from map view, close the map and show the
          grid view of the location frames */
         if(mapView) {
-
 
             // Show all of the relevant location frames after the map is closed
             // Also set all of the relevant markers to visible

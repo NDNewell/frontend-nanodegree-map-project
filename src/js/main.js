@@ -326,8 +326,9 @@ function AppViewModel () {
         // Adjust the height of the map container
         $mapContainer.css("height", $newMapHeight);
 
-        // If the Google map and its locations have loaded, set the map bounds
-        if(markers.length !== 0 && $('#map').is(":visible")) {
+        // If the Google map and its locations have loaded and the frame
+        // and marker managers aren't disabled, set the map bounds
+        if(markers.length !== 0 && $('#map').is(":visible") && !resizeInProgress) {
             google.maps.event.trigger(map, 'resize');
             setMapBounds();
         };
@@ -421,9 +422,10 @@ function AppViewModel () {
               scroll) */
             $locationGrid.off();
 
-            /* If the Google map and its locations have loaded and the surf
-            guide is hidden, set the map bounds */
-            if(markers.length !== 0 && $map.is(":visible") && (!guideView)) {
+            /* If the Google map and its locations have loaded, the frame
+            and marker managers aren't disabled, and the surf guide is hidden,
+            set the map bounds */
+            if(markers.length !== 0 && $map.is(":visible") && !guideView && !resizeInProgress) {
                 console.log('map is visible');
                 setMapBounds();
 
@@ -650,9 +652,44 @@ function AppViewModel () {
     // Check the width of the window
     self.checkView();
 
-    // Whenever the window is resized, check the width of the window
+    // Set variables for resizing
+    var resizeTimer,
+        resizeInProgress;
+
+    // Whenever the window is resized, check the view (size of the window)
+    // Also, disable the marker and frame managers. Not doing so will result
+    // in a blank map and location grid.
+    // Once resizing has stopped, set the map bounds
     $(window).resize(function() {
+
+        // Check the current view and update the page's styling
         self.checkView();
+
+            console.log('resize window');
+
+            // Disable the frame and marker managers
+            resizeInProgress = true;
+
+            console.log('disable frame and marker managers');
+
+            // Clear the last time out and start new
+            // Once resizing is stopped, the timer will be allowed to
+            // fully count down to zero
+            clearTimeout(resizeTimer);
+
+            // When this timer reaches zero, the map's bounds are set
+            // using the visible markers except during guide view
+            // If in guide view, the map will be centered on the selected
+            // marker. This is executed in the toggle layout function.
+            resizeTimer = setTimeout(function() {
+                if(!guideView) {
+                    setMapBounds();
+                };
+
+                // enable the frame and marker managers
+                resizeInProgress = false;
+                console.log('enable frame and marker managers');
+            }, 100);
     });
 
     // Modifiy navbar to sticky navbar upon scrolling down
@@ -3489,8 +3526,13 @@ function AppViewModel () {
         // Show only the location frames and markers whose markers are within
         // view port's map bounds
         google.maps.event.addListener(map, 'idle', function() {
-              self.manageFrames();
-              self.manageMarkers();
+
+            // Only execute the following code if the map is visible and
+            // managers aren't disabled (window isn't being resized)
+            if($('#map').is(":visible") && !resizeInProgress) {
+                self.manageFrames();
+                self.manageMarkers();
+            };
         });
 
         // When the map is clicked, location frames are made visible.
@@ -3504,7 +3546,9 @@ function AppViewModel () {
         displayMarkers(map);
 
         // Set initial map bounds based on location of markers
-        setMapBounds();
+        if($('#map').is(":visible")) {
+            setMapBounds();
+        };
     };
 
     self.addMarker = function(breakName, breakCoordinates, breakLocation, obj) {
@@ -3686,39 +3730,36 @@ function AppViewModel () {
     // map bounds
     self.manageMarkers = function () {
 
-        // Only execute the following code if the map is visible
-        if($('#map').is(":visible")) {
+        console.log('manage markers');
 
-            console.log('manage markers');
+        // Cache the length of the markers array
+        var markersLength = markers.length,
+            numMarkersVisible = 0;
 
-            // Cache the length of the markers array
-            var markersLength = markers.length;
+        // Iterate through the markers array to check which markers fall
+        // within the current map bounds
+        for(var i = markersLength; i--;) {
 
-            // Iterate through the markers array to check which markers fall
-            // within the current map bounds
-            for(var i = markersLength; i--;) {
+            var marker = markers[i];
 
-                var marker = markers[i];
+            // Get map bounds and determine which markers are within them
+            if(map.getBounds().contains(marker.getPosition())) {
 
-                // Get map bounds and determine which markers are within them
-                if(map.getBounds().contains(marker.getPosition())) {
+                // Show any markers that fall within the current map bounds
+                // If a search has been made, show only those markers that
+                // not only fall within the map bounds, but also match the
+                // search query
+                self.showMarkers(marker);
 
-                    // Show any markers that fall within the current map bounds
-                    // If a search has been made, show only those markers that
-                    // not only fall within the map bounds, but also match the
-                    // search query
-                    self.showMarkers(marker);
+            // If the markers are not within the current map bounds,
+            // hide them
+            } else {
 
-                // If the markers are not within the current map bounds,
-                // hide them
+                // If a marker is selected, don't hide it
+                if(marker.icon === "img/marker_selected.svg" || marker.icon === "img/marker_selectedFav.svg") {
+                    marker.setVisible(true);
                 } else {
-
-                    // If a marker is selected, don't hide it
-                    if(marker.icon === "img/marker_selected.svg" || marker.icon === "img/marker_selectedFav.svg") {
-                        marker.setVisible(true);
-                    } else {
-                        marker.setVisible(false);
-                    };
+                    marker.setVisible(false);
                 };
             };
         };
@@ -3727,112 +3768,107 @@ function AppViewModel () {
     // Update visible frames depending on markers visible in the view port
     self.manageFrames = function () {
 
-        // Only execute the following code if the map is visible
-        if($('#map').is(":visible")) {
+        // Cache the length of the markers array
+        var markersLength = markers.length;
 
-            // Cache the length of the markers array
-            var markersLength = markers.length;
+        // Check if any markers are selected, if so do not adjust visible
+        // frames. Otherwise, the selected marker's frame will not be the
+        // only frame visible as others would be added whenever the map is
+        // adjusted
+        for(var i = markersLength; i--;) {
 
-            // Check if any markers are selected, if so do not adjust visible
-            // frames. Otherwise, the selected marker's frame will not be the
-            // only frame visible as others would be added whenever the map is
-            // adjusted
-            for(var i = markersLength; i--;) {
-
-                // If any of the marker's images matches a 'selected' image
-                // End the function
-                if(markers[i].icon === "img/marker_selected.svg" || markers[i].icon === "img/marker_selectedFav.svg") {
-                    return;
-                };
+            // If any of the marker's images matches a 'selected' image
+            // End the function
+            if(markers[i].icon === "img/marker_selected.svg" || markers[i].icon === "img/marker_selectedFav.svg") {
+                return;
             };
+        };
 
-            console.log('manage location frames');
+        console.log('manage location frames');
 
-            // Clear the visible location frames
-            self.locationGrid.removeAll();
+        // Clear the visible location frames
+        self.locationGrid.removeAll();
 
-            // Iterate backwards through the markers array, so that their
-            // location frames when matched are add back to the location grid
-            // in the same order
-            for(var i = markersLength; i--;) {
+        // Iterate backwards through the markers array, so that their
+        // location frames when matched are add back to the location grid
+        // in the same order
+        for(var i = markersLength; i--;) {
 
 
-                // Cache the title of the marker not including the location
-                var markerName = markers[i].title.replace(/ *\([^)]*\) */g, "");
+            // Cache the title of the marker not including the location
+            var markerName = markers[i].title.replace(/ *\([^)]*\) */g, "");
 
-                // Get map bounds and determine which markers are within them
-                // Display the location frames of only those markers found
-                // within the maps boundaries
-                if(map.getBounds().contains(markers[i].getPosition())) {
+            // Get map bounds and determine which markers are within them
+            // Display the location frames of only those markers found
+            // within the maps boundaries
+            if(map.getBounds().contains(markers[i].getPosition())) {
 
-                    // If the search container is visible, only display the
-                    // frames of those markers that match the current search
-                    // query
-                    if ($('.search-container').is(":visible")) {
+                // If the search container is visible, only display the
+                // frames of those markers that match the current search
+                // query
+                if ($('.search-container').is(":visible")) {
 
-                        // Cache the current search query
-                        var search = self.Query().toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
+                    // Cache the current search query
+                    var search = self.Query().toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
 
-                        // Compare the search query with the title of the
-                        // markers found within the map's boundaries
-                        if (markers[i].title.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) > -1) {
+                    // Compare the search query with the title of the
+                    // markers found within the map's boundaries
+                    if (markers[i].title.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) > -1) {
 
-                            // If there is a match, make the frame visible
-                            updateFrames(markerName);
-                        };
-
-                    // If the favorites filter button is selected, only display
-                    // the frames of those markers that are within the user's
-                    // favorites
-                    } else if ($('.favorite-filter-selected').length) {
-
-                        // Compare the marker title to the user's favs
-                        if (userFavorites.indexOf(markerName) > -1) {
-
-                            // If there is a match, make the frame visible
-                            updateFrames(markerName);
-                        };
-
-                    // If the search container isn't visible and the favorites
-                    // filter isn't selected, display only the location
-                    // frame's of the markers that fall within the map's
-                    // current boundaries
-                    } else {
-
-                        // Update the visible frames
+                        // If there is a match, make the frame visible
                         updateFrames(markerName);
                     };
+
+                // If the favorites filter button is selected, only display
+                // the frames of those markers that are within the user's
+                // favorites
+                } else if ($('.favorite-filter-selected').length) {
+
+                    // Compare the marker title to the user's favs
+                    if (userFavorites.indexOf(markerName) > -1) {
+
+                        // If there is a match, make the frame visible
+                        updateFrames(markerName);
+                    };
+
+                // If the search container isn't visible and the favorites
+                // filter isn't selected, display only the location
+                // frame's of the markers that fall within the map's
+                // current boundaries
+                } else {
+
+                    // Update the visible frames
+                    updateFrames(markerName);
                 };
             };
-
-            // Remove or display the location frames of those markers found
-            // within the map's current boundaries
-            function updateFrames (markerName) {
-
-                // Iterate through the array of locations
-                self.locationArray.forEach(function(obj) {
-
-                    // If a marker within the map's boundaries matches a
-                    // location, display it
-                    if (markerName === obj.breakName) {
-                          self.locationGrid.push(obj);
-                    };
-                });
-            };
-
-            // If in mobile view, do not reset the location frame's styling
-            // Otherwise, alter their styling for map view
-            if(!mobileView) {
-                self.resetLocationFrames();
-            };
-
-            // Re-add rollover effects
-            self.addRolloverEffect();
-
-            // Re-render the location frame's 'favorite' status
-            self.renderFavoriteOnLocationFrame();
-
         };
+
+        // Remove or display the location frames of those markers found
+        // within the map's current boundaries
+        function updateFrames (markerName) {
+
+            // Iterate through the array of locations
+            self.locationArray.forEach(function(obj) {
+
+                // If a marker within the map's boundaries matches a
+                // location, display it
+                if (markerName === obj.breakName) {
+                      self.locationGrid.push(obj);
+                };
+            });
+        };
+
+        // If in mobile view, do not reset the location frame's styling
+        // Otherwise, alter their styling for map view
+        if(!mobileView) {
+            self.resetLocationFrames();
+        };
+
+        // Re-add rollover effects
+        self.addRolloverEffect();
+
+        // Re-render the location frame's 'favorite' status
+        self.renderFavoriteOnLocationFrame();
     };
 
     // Show all of the map's markers

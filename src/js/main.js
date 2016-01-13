@@ -2,7 +2,6 @@
 
 var imagesLoaded,
     locationsLoaded,
-    favoritesUpdated = false,
     images = {};
 
 $(document).ready(function() {
@@ -640,10 +639,6 @@ function AppViewModel () {
 
                     mapView = false;
 
-                    if(!gridView) {
-                        console.log('first time in Grid View');
-                    };
-
                     gridView = true;
                     console.log('view is grid');
                 };
@@ -752,8 +747,9 @@ function AppViewModel () {
     };
 
     /* Cache Firebase database references to all and user data */
-    var allData = new Firebase("https://dazzling-torch-4012.firebaseio.com");
-    var users = new Firebase('https://dazzling-torch-4012.firebaseio.com/users');
+    var allData = new Firebase("https://dazzling-torch-4012.firebaseio.com"),
+        locationData = new Firebase("https://dazzling-torch-4012.firebaseio.com/locationData"),
+        users = new Firebase('https://dazzling-torch-4012.firebaseio.com/users');
 
     /* Create write/read error messages to be used as callbacks */
     var fireBaseWriteError = function(error) {
@@ -798,7 +794,7 @@ function AppViewModel () {
     };
 
     /* Create an empty local array (globally accessible for use with the
-      Google API) to hold the user's favorites collected from the firebase's
+      Google API) to hold the user's favorites collected from firebase's
       database */
     userFavorites = [];
 
@@ -809,49 +805,97 @@ function AppViewModel () {
             console.log('cannot find favorites because there are no logged in users');
         } else {
 
-            /* Get the user's favorites */
-            users.child(authData.uid).child("favorites").on("value", function(snapshot) {
+            // Save ref to number of locations in data
+            var numLocations = 0;
 
-                // Save the Firebase snapshot of the user's favorites
-                var favorites = snapshot.val();
+            // Count the number of locations in data
+            locationData.on("value", function(snapshot) {
+                var data = snapshot.val();
 
-                /* Clear any existing favorites in the local favorites array
-                so it can be filled with updated information. */
-                userFavorites = [];
+                data.forEach(function(obj) {
+                    numLocations++;
+                });
+            });
 
-                // If the user has no favorites, log msg in console
-                if(favorites === null) {
+            // Save length of the markers array
+            var markersLength = markers.length;
 
-                    console.log('user has no favorites');
+            // If all locations are loaded in the markers array,
+            // update the markers and location frames of each favorite
+            if(numLocations === markersLength) {
 
-                    // Cache an empty array to replace 'null'
-                    var favorites = [];
+                  console.log('markers loaded');
+                  console.log('update favorites');
 
-                    /* Reset all of the marker images using the empty array*/
-                    updateFavMarkers(favorites);
-                } else {
+                  updateFavs();
 
-                    /* Update the marker image of any markers that match the
-                    user's favorites */
-                    updateFavMarkers(favorites);
+            // If the markers array isn't fully loaded, keep checking
+            // until it is, then update the markers and location frames
+            // of each favorite
+            } else {
 
-                    /* Push each favorite found in the Firebase array into the
-                    local favorites array */
-                    favorites.forEach(function(obj) {
-                      userFavorites.push(obj);
-                    });
-                    console.log("the user's favorite(s) is/are: " + userFavorites.join(', '));
+                // Set the interval
+                var favsTimer = setInterval(function () {
 
-                    // Update DOM elements (location frames)
-                    /* Fill in the hearts of any locations which are the user's
-                    favorites */
-                    self.renderFavoriteOnLocationFrame();
-                };
+                    console.log('error: markers not loaded');
+                    console.log('cannot update favorites');
+                    console.log('check again if markers loaded');
 
-                console.log('favorites updated');
-                favoritesUpdated = true;
+                    if(numLocations === markersLength) {
 
-            }, fireBaseReadError);
+                      console.log('success: markers loaded');
+                      console.log('update favorites');
+
+                      updateFavs();
+
+                      clearInterval(favsTimer);
+                    };
+                }, 1000);
+            };
+
+            function updateFavs () {
+
+                /* Get the user's favorites */
+                users.child(authData.uid).child("favorites").on("value", function(snapshot) {
+
+                    // Save the Firebase snapshot of the user's favorites
+                    var favorites = snapshot.val();
+
+                    /* Clear any existing favorites in the local favorites array
+                    so it can be filled with updated information. */
+                    userFavorites = [];
+
+                    // If the user has no favorites, log msg in console
+                    if(favorites === null) {
+
+                        console.log('user has no favorites');
+
+                        // Cache an empty array to replace 'null'
+                        var favorites = [];
+
+                        /* Reset all of the marker images using the empty array*/
+                        updateFavMarkers(favorites);
+                    } else {
+
+                        /* Update the marker image of any markers that match the
+                        user's favorites */
+                        updateFavMarkers(favorites);
+
+                        /* Push each favorite found in the Firebase array into the
+                        local favorites array */
+                        favorites.forEach(function(obj) {
+                          userFavorites.push(obj);
+                        });
+                        console.log("the user's favorite(s) is/are: " + userFavorites.join(', '));
+
+                        // Update DOM elements (location frames)
+                        /* Fill in the hearts of any locations which are the user's
+                        favorites */
+                        self.renderFavoriteOnLocationFrame();
+                    };
+
+                }, fireBaseReadError);
+            };
         };
     };
 
@@ -3575,27 +3619,12 @@ function AppViewModel () {
 
     self.addMarker = function(breakName, breakCoordinates, breakLocation, obj) {
 
-        /* If markers load after updateMarkers function has run, update
-        markers' imgs that match the user's favorites */
-        if(favoritesUpdated) {
-
-            console.log('error: marker favorites not updated! --update again');
-
-            if(userFavorites.indexOf(breakName) > -1) {
-                var markerImg = 'img/marker_smallFav.svg';
-            } else {
-                var markerImg = 'img/marker_small.svg';
-            };
-        } else {
-            var markerImg = 'img/marker_small.svg';
-        };
-
         var marker = new google.maps.Marker({
 
             // Set position using the newly created variable
             position: breakCoordinates,
             map: map,
-            icon: markerImg,
+            icon: 'img/marker_small.svg',
 
             /* Set the title for the break marker as the name of the
             wave/location of the break. This way it can be searched/filtered

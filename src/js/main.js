@@ -685,6 +685,9 @@ function AppViewModel () {
             // If in guide view, the map will be centered on the selected
             // marker. This is executed in the toggle layout function.
             resizeTimer = setTimeout(function() {
+
+                self.checkView();
+
                 if(!guideView) {
                     setMapBounds();
                 };

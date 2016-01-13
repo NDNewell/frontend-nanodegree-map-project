@@ -3231,7 +3231,7 @@ function AppViewModel () {
                 $errorCloseButton.on('click', function(e) {
 
                     // Remove conditions row from DOM
-                    $errorContainer.remove();
+                    $errorFrame.remove();
 
                     // Remove the close conditions button
                     $closeConditionsButton.remove();

@@ -376,20 +376,16 @@ function AppViewModel () {
 
             console.log('update mobile/grid/guide view layout');
 
-            // If changing from map view to guide view, leave the map open
-            // check if the guide view is true and if the map is visible.
-            // If both are true change the map container to default style
-            // but set the map to visible instead of default display:none
-            if(guideView && $('#map').is(':visible')) {
+            // Set the map to default
+            $mapContainer.removeClass("map-container-map-view-style").addClass("map-container-default-style");
 
-                $mapContainer.removeClass("map-container-map-view-style").addClass("map-container-default-style");
+            // In the mobile view, set the map container away from 100%
+            $mapContainer.css("height", "245px");
 
-                $('.map-container-default-style').css("display", "block");
-
-            // Set the map to default in all other cases
-            } else {
-
-                $mapContainer.removeClass("map-container-map-view-style").addClass("map-container-default-style");
+            // If map icon is selected, set the map to visible instead of
+            // default display:none
+            if($('.map-selected').length) {
+                $mapContainer.show();
             };
 
             $searchForm.removeClass("search-form-map-view-style").addClass("search-form-default-style");
@@ -401,9 +397,6 @@ function AppViewModel () {
             $locationGrid.removeClass("location-grid-map-view-style");
 
             $locationFrame.removeClass("location-frame-map-view-style").addClass("location-frame-default-style");
-
-            // In the mobile view, set the map container away from 100%
-            $mapContainer.css("height", "245px");
 
             // Change the container away from Bootstrap's 'fluid' class
             $container.removeClass("container-fluid").addClass("container");
@@ -3705,24 +3698,26 @@ function AppViewModel () {
             // within the current map bounds
             for(var i = markersLength; i--;) {
 
+                var marker = markers[i];
+
                 // Get map bounds and determine which markers are within them
-                if(map.getBounds().contains(markers[i].getPosition())) {
+                if(map.getBounds().contains(marker.getPosition())) {
 
                     // Show any markers that fall within the current map bounds
                     // If a search has been made, show only those markers that
                     // not only fall within the map bounds, but also match the
                     // search query
-                    self.showMarkers(markers[i]);
+                    self.showMarkers(marker);
 
                 // If the markers are not within the current map bounds,
                 // hide them
                 } else {
 
                     // If a marker is selected, don't hide it
-                    if(markers[i].icon === "img/marker_selected.svg" || markers[i].icon === "img/marker_selectedFav.svg") {
-                        markers[i].setVisible(true);
+                    if(marker.icon === "img/marker_selected.svg" || marker.icon === "img/marker_selectedFav.svg") {
+                        marker.setVisible(true);
                     } else {
-                        markers[i].setVisible(false);
+                        marker.setVisible(false);
                     };
                 };
             };

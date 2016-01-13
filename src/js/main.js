@@ -667,6 +667,9 @@ function AppViewModel () {
 
             console.log('resize window');
 
+        // Only execute if the map is visible
+        if($("#map").is(":visible")) {
+
             // Disable the frame and marker managers
             resizeInProgress = true;
 
@@ -690,6 +693,7 @@ function AppViewModel () {
                 resizeInProgress = false;
                 console.log('enable frame and marker managers');
             }, 100);
+        };
     });
 
     // Modifiy navbar to sticky navbar upon scrolling down

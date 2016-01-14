@@ -731,16 +731,22 @@ body, html {
     }
 
     .clear-favorites-button-default-style {
-        height: 70px;
-        width: 90%;
-
+        height: 100%;
+        width: 100%;
         background-color: #ffffff;
         border: 2px solid;
         border-color: #E8E8E8;
-        border-radius: 10px;
-        font-size: 2em;
+        border-radius: 0px;
+        font-size: 1.5em;
         color: #b3b3b3;
         font-family: Arial, Verdana;
+    }
+
+    .filters-container {
+        text-align: center;
+        padding: 0;
+        margin-top: -22px;
+        margin-bottom: -15px;
     }
 
     .clear-favorites-button-default-style:hover {

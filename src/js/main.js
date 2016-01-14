@@ -770,14 +770,14 @@ function AppViewModel () {
     that match the user's favorites */
     self.renderFavoriteOnLocationFrame = function () {
 
-        // Checkt to make sure the favorite icon has been converted to an
+        // Check to make sure the favorite icon has been converted to an
         // inline svg before displaying it on the relevant location frames
         var checkFavIcon = setInterval(function() {
             if($('.favorite').is("svg")) {
                 processLocationFrames();
                 clearInterval(checkFavIcon);
             };
-        }, 1000);
+        }, 100);
 
         function processLocationFrames () {
 

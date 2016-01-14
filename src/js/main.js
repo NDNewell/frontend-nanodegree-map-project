@@ -727,10 +727,10 @@ function AppViewModel () {
         var imgClass = $img.attr('class');
         var imgURL = $img.attr('src');
 
-        jQuery.get(imgURL, function(data) {
+        $.get(imgURL, function(data) {
 
             // Get the SVG tag, ignore the rest
-            var $svg = jQuery(data).find('svg');
+            var $svg = $(data).find('svg');
 
             // Add replaced image's classes to the new SVG
             if(typeof imgClass !== 'undefined') {
@@ -763,34 +763,46 @@ function AppViewModel () {
         console.log("the read failed: " + errorObject.code);
     };
 
+    // Make the 'favorite' symbol an inline img for easy styling via CSS
+    self.makeSVGInline($('.favorite'));
+
     /* Iterate through the location frame displayed and fill in any locations
     that match the user's favorites */
     self.renderFavoriteOnLocationFrame = function () {
 
-        console.log("display 'favorite' icons on relevant location frames");
-
-        // Make the 'favorite' symbol an inline img for easy styling via CSS
-        self.makeSVGInline($('.favorite'));
-
-        $('.location-frame').each(function () {
-
-            // Cache references to location frame, favorite symbol, & break name
-            var $locationFrame = $(this);
-            var $favoriteWrapper = $(this).find('.favorite-wrapper');
-            var $breakName = $(this).find('.break-name')[0].innerText;
-
-            // Filter locations that match the user's favorites
-            // When a match is found, add a class to style it as 'selected'
-            if(userFavorites.indexOf($breakName) > -1) {
-                $favoriteWrapper.removeClass('not-a-favorite');
-                $favoriteWrapper.addClass('is-a-favorite');
-            } else {
-                if($favoriteWrapper.hasClass('is-a-favorite')) {
-                    $favoriteWrapper.addClass('not-a-favorite');
-                    $favoriteWrapper.removeClass('is-a-favorite');
-                };
+        // Checkt to make sure the favorite icon has been converted to an
+        // inline svg before displaying it on the relevant location frames
+        var checkFavIcon = setInterval(function() {
+            if($('.favorite').is("svg")) {
+                processLocationFrames();
+                clearInterval(checkFavIcon);
             };
-        });
+        }, 1000);
+
+        function processLocationFrames () {
+
+            console.log("display 'favorite' icons on relevant location frames");
+
+            $('.location-frame').each(function () {
+
+                // Cache references to location frame, favorite symbol, & break name
+                var $locationFrame = $(this);
+                var $favoriteWrapper = $(this).find('.favorite-wrapper');
+                var $breakName = $(this).find('.break-name')[0].innerText;
+
+                // Filter locations that match the user's favorites
+                // When a match is found, add a class to style it as 'selected'
+                if(userFavorites.indexOf($breakName) > -1) {
+                    $favoriteWrapper.removeClass('not-a-favorite');
+                    $favoriteWrapper.addClass('is-a-favorite');
+                } else {
+                    if($favoriteWrapper.hasClass('is-a-favorite')) {
+                        $favoriteWrapper.addClass('not-a-favorite');
+                        $favoriteWrapper.removeClass('is-a-favorite');
+                    };
+                };
+            });
+        };
     };
 
     /* Create an empty local array (globally accessible for use with the

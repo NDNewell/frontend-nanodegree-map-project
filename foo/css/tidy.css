@@ -154,9 +154,10 @@ html {
   bottom: -2%;
   left: 50%;
   margin-right: -50%;
+  padding-left: 15px;
+  padding-right: 15px;
   transform: translate(-50%, -50%);
   text-align: center;
-  width: 250px;
   border-radius: 12.5px;
 }
 
@@ -261,6 +262,28 @@ html {
     border-color: #E8E8E8;
     margin-top: 1px;
     padding: 0px;
+  }
+
+  .clear-favorites-button-default-style {
+    height: 70px;
+    width: 90%;
+    background-color: #ffffff;
+    border: 2px solid;
+    border-color: #E8E8E8;
+    border-radius: 10px;
+    font-size: 2em;
+    color: #b3b3b3;
+    font-family: Arial, Verdana;
+  }
+
+  .clear-favorites-button-default-style:hover {
+    color: white;
+    background-color: #b3b3b3;
+    border-color: #b3b3b3;
+  }
+
+  .clear-favorites-button-default-style:focus {
+    outline: 0 !important;
   }
 
   .break-name-default-style {

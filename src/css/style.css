@@ -730,6 +730,29 @@ body, html {
         font-size: 3em;
     }
 
+    .clear-favorites-button-default-style {
+        height: 70px;
+        width: 90%;
+
+        background-color: #ffffff;
+        border: 2px solid;
+        border-color: #E8E8E8;
+        border-radius: 10px;
+        font-size: 2em;
+        color: #b3b3b3;
+        font-family: Arial, Verdana;
+    }
+
+    .clear-favorites-button-default-style:hover {
+        color: white;
+        background-color: #b3b3b3;
+        border-color: #b3b3b3;
+    }
+
+    .clear-favorites-button-default-style:focus {
+        outline: 0 !important;
+    }
+
     .skill-level-hover-default-style {
         left: 18%;
         height: 38%;

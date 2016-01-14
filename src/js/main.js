@@ -696,7 +696,7 @@ function AppViewModel () {
                 // enable the frame and marker managers
                 resizeInProgress = false;
                 console.log('enable frame and marker managers');
-            }, 100);
+            }, 1000);
         };
     });
 
@@ -817,41 +817,24 @@ function AppViewModel () {
                 });
             });
 
-            // Save length of the markers array
-            var markersLength = markers.length;
+            // If the markers array is fully loaded, update the markers and
+            // location frames. If it isn't loaded, keep checking until it is.
+            // Once loaded update the location frame of each favorite
+            var favsTimer = setInterval(function () {
 
-            // If all locations are loaded in the markers array,
-            // update the markers and location frames of each favorite
-            if(numLocations === markersLength) {
+                // If the number of locations matches the markers array length
+                // and the markers array length is at least greater than zero,
+                // update the location frame of each favorite
+                if(numLocations === markers.length && markers.length > 0) {
 
-                  console.log('markers loaded');
+                  console.log(markers.length + ' out of ' + numLocations + ' markers loaded');
                   console.log('update favorites');
 
                   updateFavs();
 
-            // If the markers array isn't fully loaded, keep checking
-            // until it is, then update the markers and location frames
-            // of each favorite
-            } else {
-
-                // Set the interval
-                var favsTimer = setInterval(function () {
-
-                    console.log('error: markers not loaded');
-                    console.log('cannot update favorites');
-                    console.log('check again if markers loaded');
-
-                    if(numLocations === markersLength) {
-
-                      console.log('success: markers loaded');
-                      console.log('update favorites');
-
-                      updateFavs();
-
-                      clearInterval(favsTimer);
-                    };
-                }, 1000);
-            };
+                  clearInterval(favsTimer);
+                };
+            }, 1000);
 
             function updateFavs () {
 

@@ -763,46 +763,31 @@ function AppViewModel () {
         console.log("the read failed: " + errorObject.code);
     };
 
-    // Make the 'favorite' symbol an inline img for easy styling via CSS
-    self.makeSVGInline($('.favorite'));
-
     /* Iterate through the location frame displayed and fill in any locations
     that match the user's favorites */
     self.renderFavoriteOnLocationFrame = function () {
 
-        // Check to make sure the favorite icon has been converted to an
-        // inline svg before displaying it on the relevant location frames
-        var checkFavIcon = setInterval(function() {
-            if($('.favorite').is("svg")) {
-                processLocationFrames();
-                clearInterval(checkFavIcon);
-            };
-        }, 100);
+        console.log("display 'favorite' icons on relevant location frames");
 
-        function processLocationFrames () {
+        $('.location-frame').each(function () {
 
-            console.log("display 'favorite' icons on relevant location frames");
+            // Cache references to location frame, favorite symbol, & break name
+            var $locationFrame = $(this);
+            var $favoriteWrapper = $(this).find('.favorite-wrapper');
+            var $breakName = $(this).find('.break-name')[0].innerText;
 
-            $('.location-frame').each(function () {
-
-                // Cache references to location frame, favorite symbol, & break name
-                var $locationFrame = $(this);
-                var $favoriteWrapper = $(this).find('.favorite-wrapper');
-                var $breakName = $(this).find('.break-name')[0].innerText;
-
-                // Filter locations that match the user's favorites
-                // When a match is found, add a class to style it as 'selected'
-                if(userFavorites.indexOf($breakName) > -1) {
-                    $favoriteWrapper.removeClass('not-a-favorite');
-                    $favoriteWrapper.addClass('is-a-favorite');
-                } else {
-                    if($favoriteWrapper.hasClass('is-a-favorite')) {
-                        $favoriteWrapper.addClass('not-a-favorite');
-                        $favoriteWrapper.removeClass('is-a-favorite');
-                    };
+            // Filter locations that match the user's favorites
+            // When a match is found, add a class to style it as 'selected'
+            if(userFavorites.indexOf($breakName) > -1) {
+                $favoriteWrapper.removeClass('not-a-favorite');
+                $favoriteWrapper.addClass('is-a-favorite');
+            } else {
+                if($favoriteWrapper.hasClass('is-a-favorite')) {
+                    $favoriteWrapper.addClass('not-a-favorite');
+                    $favoriteWrapper.removeClass('is-a-favorite');
                 };
-            });
-        };
+            };
+        });
     };
 
     /* Create an empty local array (globally accessible for use with the

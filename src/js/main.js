@@ -426,6 +426,7 @@ function AppViewModel () {
             set the map bounds */
             if(markers.length !== 0 && $map.is(":visible") && !guideView && !resizeInProgress) {
                 console.log('map is visible');
+                google.maps.event.trigger(map, 'resize');
                 setMapBounds();
 
             /* If the surf guide is open, reset the map size, then center the map on the selected location's marker */
@@ -690,6 +691,7 @@ function AppViewModel () {
                 self.checkView();
 
                 if(!guideView) {
+                    google.maps.event.trigger(map, 'resize');
                     setMapBounds();
                 };
 

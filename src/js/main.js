@@ -746,7 +746,7 @@ function AppViewModel () {
         }, 'xml');
     };
 
-    /* Cache Firebase database references to all and user data */
+    /* Cache Firebase database references to all, location, and user data */
     var allData = new Firebase("https://dazzling-torch-4012.firebaseio.com"),
         locationData = new Firebase("https://dazzling-torch-4012.firebaseio.com/locationData"),
         users = new Firebase('https://dazzling-torch-4012.firebaseio.com/users');
@@ -760,17 +760,17 @@ function AppViewModel () {
         };
     };
     var fireBaseReadError = function (errorObject) {
-      console.log("the read failed: " + errorObject.code);
+        console.log("the read failed: " + errorObject.code);
     };
-
-    // Make the 'favorite' symbol an inline img for easy styling via CSS
-    self.makeSVGInline($('.favorite'));
 
     /* Iterate through the location frame displayed and fill in any locations
     that match the user's favorites */
     self.renderFavoriteOnLocationFrame = function () {
 
         console.log("display 'favorite' icons on relevant location frames");
+
+        // Make the 'favorite' symbol an inline img for easy styling via CSS
+        self.makeSVGInline($('.favorite'));
 
         $('.location-frame').each(function () {
 

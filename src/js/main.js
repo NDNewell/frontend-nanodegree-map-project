@@ -698,7 +698,7 @@ function AppViewModel () {
                 // enable the frame and marker managers
                 resizeInProgress = false;
                 console.log('enable frame and marker managers');
-            }, 400);
+            }, 100);
         };
     });
 

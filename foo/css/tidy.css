@@ -112,10 +112,9 @@ html {
   border-bottom-width: 1px;
 }
 
-.favorite-default-style {
-  position: absolute;
-  left: 6%;
-  top: 8%;
+.not-a-favorite path {
+  fill-opacity: 0;
+  stroke-opacity: 0;
 }
 
 .filters-container {
@@ -265,15 +264,22 @@ html {
   }
 
   .clear-favorites-button-default-style {
-    height: 70px;
-    width: 90%;
+    height: 100%;
+    width: 100%;
     background-color: #ffffff;
     border: 2px solid;
     border-color: #E8E8E8;
-    border-radius: 10px;
-    font-size: 2em;
+    border-radius: 0px;
+    font-size: 1.5em;
     color: #b3b3b3;
     font-family: Arial, Verdana;
+  }
+
+  .filters-container {
+    text-align: center;
+    padding: 0;
+    margin-top: -22px;
+    margin-bottom: -15px;
   }
 
   .clear-favorites-button-default-style:hover {
@@ -296,20 +302,9 @@ html {
     padding: 0px 0px 0px 0px;
     cursor: pointer;
   }
-
-  .favorite-default-style {
-    top: 7%;
-    left: 5%;
-  }
 }
 
 @media (min-width: 560px) and (max-width: 767px) {
-  .favorite-default-style {
-    top: 7%;
-    width: 60px;
-    height: 60px;
-  }
-
   .break-name-default-style {
     font-size: 4.9vw;
   }
@@ -334,6 +329,12 @@ html {
   input[type=text]:focus {
     width: 365px;
   }
+
+  .favorite-map-view-style {
+    position: absolute;
+    left: 2.5%;
+    top: 3.5%;
+  }
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
@@ -349,10 +350,6 @@ html {
 @media (min-width: 1200px) {
   .clear-default-style {
     margin-left: 95.5%;
-  }
-
-  .favorite-default-style {
-    left: 7%;
   }
 }
 
@@ -398,6 +395,10 @@ strong {
 
 img {
   border: 0;
+}
+
+svg:not(:root) {
+  overflow: hidden;
 }
 
 button,

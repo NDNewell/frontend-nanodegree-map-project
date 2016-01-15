@@ -776,7 +776,7 @@ function AppViewModel () {
             // Cache references to location frame, favorite symbol, & break name
             var $locationFrame = $(this);
             var $favoriteWrapper = $(this).find('.favorite-wrapper');
-            var $breakName = $(this).find('.break-name')[0].innerText;
+            var $breakName = $(this).find('.break-name')[0].textContent;
 
             // Filter locations that match the user's favorites
             // When a match is found, add a class to style it as 'selected'
@@ -1506,7 +1506,7 @@ function AppViewModel () {
 
                 /* Get identifying information from the hovered over
                 locaton frame */
-                var frameBreakName = e.currentTarget.children[1].innerText;
+                var frameBreakName = e.currentTarget.children[1].textContent;
 
                 console.log('hover over ' + frameBreakName);
 
@@ -4302,7 +4302,7 @@ function pulsateLocationFrame (breakName) {
         // Cache DOM refs to the visible location frame
         // Capture the location name of the visible location frame
         var $locationFrame = $('.location-frame:visible'),
-            $locationName = $locationFrame[0].children[1].innerText;
+            $locationName = $locationFrame[0].children[1].textContent;
 
         console.log("make " + $locationName + "'s location frame small");
 

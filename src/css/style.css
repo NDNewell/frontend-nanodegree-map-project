@@ -613,9 +613,9 @@ body, html {
 
 .guide-close-button {
     position: absolute;
+    left: 0;
     z-index: 500;
     margin-top: 12px;
-    margin-left: 10px;
     padding: 0;
     border: none;
     background: none;

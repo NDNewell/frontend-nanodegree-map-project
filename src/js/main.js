@@ -79,6 +79,8 @@ $(document).ready(function() {
           attireWetsuitSix: 'img/water_attire_6mm_wetsuit.svg',
           swellPointer: 'img/compass_swell_pointer.svg',
           windPointer: 'img/compass_wind_pointer.svg',
+          smallSwellPointer: 'img/compass_swell_pointer_guide.svg',
+          smallWindPointer: 'img/compass_wind_pointer_guide.svg',
           smallCompass: 'img/compass_guide.svg' };
 
     var roIconsSkillLevel =
@@ -2176,12 +2178,12 @@ function AppViewModel () {
 
               $iconContainer.append('<div class=" small-compass-guide card" title="Best Swell & Best Wind"><canvas id="compass-small" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas></div>');
 
-              var elementPointer = images.swellPointer;
+              var elementPointer = images.smallSwellPointer;
               var img = images.smallCompass;
 
           } else if (wind) {
               wind = false;
-              var elementPointer = images.windPointer;
+              var elementPointer = images.smallWindPointer;
           };
 
           var Canvas = document.getElementById('compass-small');
@@ -3202,11 +3204,9 @@ function AppViewModel () {
                     var Canvas = document.getElementById('compass');
                     var ctx = Canvas.getContext('2d');
 
-                    var windPointer = new Image();
-                    windPointer.src = 'img/windPointer.svg';
+                    var windPointer = images.windPointer;
 
-                    var swellPointer = new Image();
-                    swellPointer.src = 'img/swellPointer.svg';
+                    var swellPointer = images.swellPointer;
 
                     var img = new Image();
                     img.src = 'img/compass.svg';

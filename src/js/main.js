@@ -1530,7 +1530,10 @@ function AppViewModel () {
                 show unique information about that location */
                 function importInfo(obj) {
 
-                    $img.css('-webkit-filter', 'blur(4px) brightness(80%)' );
+                    $img.css({
+                        "-webkit-filter" : "blur(4px) brightness(80%)",
+                        "filter" : "blur(4px) brightness(80%)"
+                    });
                     $location.hide()
                     $breakName.hide();
                     $favoriteWrapper.hide();
@@ -1608,7 +1611,10 @@ function AppViewModel () {
                     self.toggleRolloverClasses();
                 };
 
-                $img.css('-webkit-filter', 'blur(0px) brightness(100%)');
+                $img.css({
+                    "-webkit-filter" : "blur(0px) brightness(100%)",
+                    "filter" : "blur(0px) brightness(100%)"
+                });
                 $location.show();
                 $breakName.show();
                 $favoriteWrapper.show();

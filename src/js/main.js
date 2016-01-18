@@ -688,10 +688,6 @@ function AppViewModel () {
             // marker. This is executed in the toggle layout function.
             resizeTimer = setTimeout(function() {
 
-                // Sometimes the layout isn't detected properly
-                // Check again
-                //self.checkView();
-
                 if(!guideView) {
                     google.maps.event.trigger(map, 'resize');
                     setMapBounds();
@@ -3765,6 +3761,55 @@ function AppViewModel () {
         self.manageFrames();
     };
 
+    self.showMapReset = function () {
+
+        // Cache DOM elements
+        var resetMap = '<div class="reset-map-container"></div>',
+            $locationGrid = $('.location-grid');
+
+        // Add the container for the reset button
+        $locationGrid.append(resetMap);
+
+        // Cache DOM elements
+        var $resetMapContainer = $('.reset-map-container'),
+            $resetMapIcon = '<img src="img/reset_button.svg" class="reset-button" alt="reload location frames and markers button" title="Click to center the map">';
+
+        // Add the reset map button
+        $resetMapContainer.append($resetMapIcon);
+
+        // Cache a ref to the reset button
+        $resetButton = $('.reset-button');
+
+        // Add event listener
+        // When the button is clicked, recenter the map
+        $resetButton.on("click", function() {
+            resetMarkersAndFrames();
+        });
+
+        // Make all of the map markers visible and set the map bounds
+        function resetMarkersAndFrames () {
+
+            console.log('set markers to visible');
+            console.log('center map');
+
+            // Remove the reset button
+            $resetMapContainer.remove();
+
+            // Set a ref to the length of the markers array
+            var markersLength = markers.length;
+
+            // Loop through the maps markers and set each one to visible
+            for(var i = markersLength; i--;) {
+                var marker = markers[i];
+
+                marker.setVisible(true);
+            };
+
+            // Set map bounds
+            setMapBounds();
+        };
+    };
+
     // Show all of the map's markers
     // If a search has been made, show only those markers that match the search
     // query
@@ -3847,23 +3892,23 @@ function AppViewModel () {
         };
 
         // If no markers are visible (map has been moved to an empty area),
-        // reset the map by showing all markers and setting the map bounds
+        // display button that centers the map again.
+        // If clicked, all markers are made visible and map is recentered
         if(numMarkersVisible < 1) {
 
-            console.log('no markers visible');
-            console.log('set markers to visible');
-            console.log('center map');
+            // If the reset button is already visible, do nothing
+            if(!$('.reset-map-container').length && !guideView) {
 
-            // Loop through the maps markers and set each one to visible
-            for(var i = markersLength; i--;) {
-                var marker = markers[i];
+                console.log('no markers visible');
 
-                marker.setVisible(true);
-                numMarkersVisible++;
+                // Render reset map button
+                self.showMapReset();
             };
 
-            // Set map bounds
-            setMapBounds();
+        // If there is more than one marker visible, and the reset button is
+        // visible, remove it
+        } else if ($('.reset-map-container').length) {
+            $('.reset-map-container').remove();
         };
     };
 

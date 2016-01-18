@@ -592,7 +592,7 @@ function AppViewModel () {
     self.checkView = function () {
 
         // Set refs to DOM elems
-        var $winWidth = window.outerWidth;
+        var $winWidth = window.innerWidth;
 
         if($('.surf-guide-container').is(":visible") && $winWidth < 768) {
 
@@ -3713,7 +3713,7 @@ function AppViewModel () {
 
                     // If more than one location frame is in view and
                     // not in mobile view, execute code
-                    if($numFramesVisible !== 1 && window.outerWidth >= 768) {
+                    if($numFramesVisible !== 1 && window.innerWidth >= 768) {
 
                         // Scroll to specific location frame
                         scrollToFrame(breakName);
@@ -4266,7 +4266,7 @@ function pulsateLocationFrame (breakName) {
 
     // If more than one location frame is in view and not in mobile view,
     // execute code
-    if($numFramesVisible !== 1 && window.outerWidth >= 768) {
+    if($numFramesVisible !== 1 && window.innerWidth >= 768) {
 
         // Loop through all of the location frames
         $allLocationFrames.each(function() {

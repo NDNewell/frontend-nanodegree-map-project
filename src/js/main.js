@@ -3814,7 +3814,7 @@ function AppViewModel () {
 
         console.log('manage markers');
 
-        // Cache the length of the markers array
+        // Cache the length of the markers array and set another variable
         var markersLength = markers.length,
             numMarkersVisible = 0;
 
@@ -3826,6 +3826,9 @@ function AppViewModel () {
 
             // Get map bounds and determine which markers are within them
             if(map.getBounds().contains(marker.getPosition())) {
+
+                // Count the number of markers visible
+                numMarkersVisible++;
 
                 // Show any markers that fall within the current map bounds
                 self.showMarkers(marker);
@@ -3841,6 +3844,26 @@ function AppViewModel () {
                     marker.setVisible(false);
                 };
             };
+        };
+
+        // If no markers are visible (map has been moved to an empty area),
+        // reset the map by showing all markers and setting the map bounds
+        if(numMarkersVisible < 1) {
+
+            console.log('no markers visible');
+            console.log('set markers to visible');
+            console.log('center map');
+
+            // Loop through the maps markers and set each one to visible
+            for(var i = markersLength; i--;) {
+                var marker = markers[i];
+
+                marker.setVisible(true);
+                numMarkersVisible++;
+            };
+
+            // Set map bounds
+            setMapBounds();
         };
     };
 

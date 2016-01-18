@@ -690,7 +690,7 @@ function AppViewModel () {
 
                 // Sometimes the layout isn't detected properly
                 // Check again
-                self.checkView();
+                //self.checkView();
 
                 if(!guideView) {
                     google.maps.event.trigger(map, 'resize');

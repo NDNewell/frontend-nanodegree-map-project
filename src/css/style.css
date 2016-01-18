@@ -332,6 +332,7 @@ body, html {
 
 .favorite-guide {
     margin-right: 5px;
+    margin-bottom: 4px;
     cursor: pointer;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -905,8 +906,9 @@ body, html {
     }
 
     .favorite-guide {
-        margin-bottom: -3px;
+        margin-bottom: -2px;
     }
+
     .xs-icon-container {
         width: 306px;
         height: 605px;

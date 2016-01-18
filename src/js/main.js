@@ -4387,8 +4387,8 @@ function scrollToFrame(breakName) {
           // Create a global variable to indicate the scrolling is in progress
           scrollRightRunning = true;
 
-          // Increase the scrollLeft position 30px for each 1/1000 of second
-          transitionRight+=50;
+          // Increase the scrollLeft position 70px for each 1/1000 of second
+          transitionRight+=70;
 
           // If the scrollLeft position is less than the new position
           // move the scrollLeft position incrementally closer to it
@@ -4415,8 +4415,8 @@ function scrollToFrame(breakName) {
           // Create a global variable to indicate the scrolling is in progress
           scrollLeftRunning = true;
 
-          // Increase the scrollLeft position 30px for each 1/1000 of second
-          transitionLeft-=50;
+          // Increase the scrollLeft position 70px for each 1/1000 of second
+          transitionLeft-=70;
 
           // If the scrollLeft position is greater than the new position
           // move the scrollLeft position incrementally closer to it

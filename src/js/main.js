@@ -6,14 +6,6 @@ var imagesLoaded,
 
 $(document).ready(function() {
 
-    // Load tooltips
-    $('[title]').tooltip({
-        show: true,
-        hide: 'fade'
-    });
-
-    console.log('tooltips loaded');
-
     // Load images
     var numImages = 0;
     var loadedImages = 0;
@@ -297,6 +289,155 @@ function AppViewModel () {
         $('.reload-button').on('click', function(e) {
             location = location;
         });
+    };
+
+    // Add event listeners for each icon
+    // When an icon is clicked, the description of the icon is shown
+    self.addToolTips = function () {
+
+        // Save a ref to all icons
+        var $elements = $('[title]');
+
+        // Iterate through all of the icons
+        $elements.each(function() {
+
+            // Save ref to current icon being iterated over
+            var $this = $(this);
+
+            if(!$this.hasClass("tooltip-loaded")) {
+
+                var $titleText = $this.attr('title');
+
+                $this.addClass("tooltip-loaded");
+
+                // Create a listener for when the icon is clicked on
+                $this.on("click mouseover mouseleave", function(e) {
+
+                    if(typeof toolTipDelay !== 'undefined') {
+                        clearTimeout(toolTipDelay);
+                    };
+
+                    // Render the text found in the icon's title on the page
+                    // The text describes what the symbol stand for
+                    if(e.type === 'mouseover') {
+
+                        $this.removeAttr('title');
+
+                        $this.on('mousemove', function(e) {
+                            newEventRef = e;
+                        });
+
+                        toolTipDelay = setTimeout(function (){
+
+                            renderToolTips($titleText, newEventRef, $this);
+                            $this.off('mousemove');
+
+                        }, 2000);
+
+                        console.log("before: " + $this.attr('title'));
+
+                    } else if (e.type === 'mouseleave') {
+
+                        if($('.element-info').length) {
+                            clearInterval(textTimer);
+                            $('.element-info').remove();
+                        };
+
+                        var $checkTitleText = $this.attr('title');
+
+                        console.log('check title: ' + $checkTitleText);
+                        console.log('saved title text: ' + $titleText);
+
+                        if(typeof $checkTitleText === 'undefined') {
+
+                            console.log('stop tooltip');
+                            reAddTitle($titleText, $this);
+                        };
+
+                    } else {
+
+                        $this.removeAttr('title');
+
+                        renderToolTips($titleText, e, $this);
+
+                        console.log("before: " + $this.attr('title'));
+                    };
+
+                });
+            } else {
+               console.log($this + 'already has a listener');
+            };
+        });
+
+        // Render text that describes icon clicked
+        function renderToolTips (text, eventRef, currentElem) {
+
+            if($('.element-info').length) {
+                clearInterval(textTimer);
+                $('.element-info').remove();
+            };
+
+            // Save new text elem and coordinates of mouse at time of click
+            var description = '<p class="element-info">' + text + '</p>',
+                paddingTop = 20,
+                x = eventRef.pageX,
+                y = eventRef.pageY + paddingTop;
+
+            // Add the icon's descriptive text
+            $('body').append(description);
+
+            // Cache a ref to the icon info
+            var $elementInfo = $('.element-info');
+
+            $elementInfo.offset({ top: y, left: x });
+
+            var viewportWidth = window.innerWidth,
+                viewportWidthRange = viewportWidth - 20,
+                $elementInfoX = $elementInfo.offset().left,
+                $elementInfoWidth = $elementInfo.outerWidth(),
+                $elementInfoRightCorner = $elementInfoX + $elementInfoWidth;
+
+            if($elementInfoRightCorner >= viewportWidthRange) {
+                console.log('tooltip width is on the edge of screen: ' + $elementInfoRightCorner + ' : ' + viewportWidth);
+                console.log('adjust tooltip size');
+                $elementInfo.outerWidth(220);
+
+                var $elementInfoX = $elementInfo.offset().left,
+                    $elementInfoWidth = $elementInfo.outerWidth(),
+                    $elementInfoRightCorner = $elementInfoX + $elementInfoWidth;
+
+                console.log('new tooltip width is: ' + $elementInfoWidth + 'px');
+            };
+
+            if ($elementInfoRightCorner >= viewportWidth) {
+
+                var paddingRight = -20,
+                    adjustX = $elementInfoRightCorner - viewportWidth,
+                    newX = (x - adjustX) + paddingRight;
+
+                $elementInfo.offset({ top: y, left: newX });
+            };
+
+            // Set the time for displaying the icon info
+            // When the time runs out, remove the icon info
+            textTimer = setTimeout(function() {
+
+                // Clear timer
+                clearTimeout(textTimer);
+
+                // Remove the previously added icon info
+                $elementInfo.fadeOut(500, function () {
+                    $elementInfo.remove();
+                });
+            }, 2000);
+        };
+
+        function reAddTitle (titleText, currentElem) {
+
+                currentElem.attr("title", titleText);
+
+                console.log("after: " + currentElem.attr('title'));
+        };
     };
 
     /* When the map is in view on a screen larger than 767px, the height is
@@ -1820,7 +1961,7 @@ function AppViewModel () {
 
         // Add listeners for each icon
         // When clicked, text descriptions for the icon appear/disappear
-        self.addIconListeners();
+        self.addToolTips();
     };
 
     /* Create buttons for opening closing surf guide / view current break
@@ -1894,75 +2035,6 @@ function AppViewModel () {
             self.closeSurfGuide();
         });
     };
-
-    // Add event listeners for each icon
-    // When an icon is clicked, the description of the icon is shown
-    self.addIconListeners = function () {
-
-        // Save a ref to all icons
-        var $icons = $('.card');
-
-        // Iterate through all of the icons
-        $icons.each(function() {
-
-            // Save ref to current icon being iterated over
-            // Save a ref to its title
-            var $this = $(this),
-                $titleText = $this.children('img').prop('title');
-
-            // If the title comes back 'undefined' (no img prop),
-            // get the title from its parent (the current icon)
-            if(typeof $titleText === 'undefined') {
-                $titleText = $this.attr('title');
-            };
-
-            // Create a listener for when the icon is clicked on
-            $this.on("click", function() {
-
-                // Render the text found in the icon's title on the page
-                // The text describes what the symbol stand for
-                // Only execute the function if the icon's text isn't already
-                // showing
-                if(!$('.icon-text').length) {
-                    renderIconText($this, $titleText);
-                };
-            });
-        });
-
-        // Render text that describes icon clicked
-        function renderIconText (card, text) {
-
-            // Save new text elem
-            var description = '<p class="icon-text">' + text + '</p>';
-
-            // Hide any existing children found in the card
-            card.children().hide();
-
-            // Add the icon's descriptive text
-            card.append(description);
-
-            // Cache a ref to the descriptive text
-            var $iconText = $('.icon-text');
-
-            // Set the time for displaying the text
-            // When the time runs out, reset the card
-            var textTimer = setTimeout(function() {
-                clearTimeout(textTimer);
-                resetCard();
-            }, 1000);
-
-            // Reset the card
-            function resetCard () {
-
-                // Remove the previously added icon text
-                $iconText.remove();
-
-                // Show the card's original child elements
-                card.children().show();
-            };
-        };
-    };
-
 
     self.closeSurfGuide = function () {
 
@@ -3330,6 +3402,9 @@ function AppViewModel () {
                     $showConditionsButton.toggle();
 
                 });
+
+                // Add tool tips
+                self.addToolTips();
 
             } else {
 

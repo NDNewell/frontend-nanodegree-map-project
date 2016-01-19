@@ -33,7 +33,7 @@ html {
 }
 
 .favorite-filter-symbol-desktop {
-  margin-top: 10.5px;
+  margin-top: 13px;
 }
 
 .search-symbol-mobile,
@@ -189,7 +189,7 @@ html {
 
 @media (max-width: 767px) {
   .logo {
-    font-size: 1.31em;
+    font-size: 1.29em;
     color: #00B8E6;
   }
 
@@ -212,7 +212,7 @@ html {
   }
 
   .favorite-filter-symbol-mobile {
-    margin-top: 10.5px;
+    margin-top: 13px;
   }
 
   .navbar-right {

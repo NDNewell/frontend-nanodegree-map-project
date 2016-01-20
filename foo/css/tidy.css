@@ -919,11 +919,11 @@ ul {
 
 /*** uncss> filename: src/css/jquery-ui.css ***/
 
-/*! jQuery UI - v1.11.4 - 2015-11-17
+/*! jQuery UI - v1.11.4 - 2016-01-19
 * http://jqueryui.com
-* Includes: core.css, autocomplete.css, datepicker.css, menu.css, progressbar.css, slider.css, tooltip.css, theme.css
+* Includes: core.css, draggable.css, autocomplete.css, datepicker.css, menu.css, theme.css
 * To view and modify this theme, visit http://jqueryui.com/themeroller/
-* Copyright jQuery Foundation and other contributors; Licensed MIT */
+* Copyright 2016 jQuery Foundation and other contributors; Licensed MIT */
 
 /* Layout helpers
 ----------------------------------*/
@@ -950,8 +950,6 @@ ul {
 /* left-aligned */
 
 /* right-aligned */
-
-/* support: IE8 - See #6727 */
 
 /* Component containers
 ----------------------------------*/

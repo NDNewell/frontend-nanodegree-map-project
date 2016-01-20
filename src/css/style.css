@@ -659,18 +659,22 @@ body, html {
     color: #D1D1D1;
 }
 
-.element-info {
+.tooltip-info {
     position: absolute;
     display: inline-block;
     background: #333;
     background: rgba(0,0,0,.7);
     border-radius: 5px;
     padding: 5px 15px;
-    z-index: 98;
+    z-index: 999;
     font-size: 1.2em !important;
     color: #fff;
     font-weight: normal !important;
-    font-family: Arial, Verdana;
+    font-family: Arial, Verdana !important;
+}
+
+.tooltip-loaded {
+    cursor: pointer;
 }
 
 @media (max-width: 767px) {

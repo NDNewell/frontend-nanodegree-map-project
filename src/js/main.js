@@ -3961,6 +3961,7 @@ function AppViewModel () {
         self.manageFrames();
     };
 
+    // Bring map markers back into view
     self.showMapReset = function () {
 
         // Cache DOM elements
@@ -3998,15 +3999,57 @@ function AppViewModel () {
             // Set a ref to the length of the markers array
             var markersLength = markers.length;
 
-            // Loop through the maps markers and set each one to visible
+            // Loop through the maps markers
             for(var i = markersLength; i--;) {
                 var marker = markers[i];
 
-                marker.setVisible(true);
+                // Make markers visible
+                self.showMarkers(marker);
             };
 
             // Set map bounds
             setMapBounds();
+
+            // Remove the reset map button
+            $('.reset-map-container').remove();
+        };
+    };
+
+    // Count the number of visible markers
+    self.checkVisibleMarkers = function () {
+
+        // Cache the length of the markers array and set another variable
+        var markersLength = markers.length;
+            numMarkersVisible = 0;
+
+        // Loop through the markers array
+        for(var i = markersLength; i--;) {
+
+            // Save a ref to the marker
+            var marker = markers[i];
+
+            // Check if the current marker is visible
+            if(marker.getVisible()) {
+
+                // Iterate the number of visible markers
+                numMarkersVisible++;
+            };
+        };
+
+        // If no markers are visible (map has been moved to an empty area),
+        // display button that centers the map again.
+        // If clicked, all markers are made visible and map is recentered
+        if(numMarkersVisible < 1) {
+
+            // If the reset button isn't already visible and not in guide view,
+            // display the rest map button
+            if(!$('.reset-map-container').length && !guideView) {
+
+                console.log('no markers visible');
+
+                // Render reset map button
+                self.showMapReset();
+            };
         };
     };
 
@@ -4059,9 +4102,8 @@ function AppViewModel () {
 
         console.log('manage markers');
 
-        // Cache the length of the markers array and set another variable
-        var markersLength = markers.length,
-            numMarkersVisible = 0;
+        // Cache the length of the markers array
+        var markersLength = markers.length;
 
         // Iterate through the markers array to check which markers fall
         // within the current map bounds
@@ -4071,9 +4113,6 @@ function AppViewModel () {
 
             // Get map bounds and determine which markers are within them
             if(map.getBounds().contains(marker.getPosition())) {
-
-                // Count the number of markers visible
-                numMarkersVisible++;
 
                 // Show any markers that fall within the current map bounds
                 self.showMarkers(marker);
@@ -4091,25 +4130,8 @@ function AppViewModel () {
             };
         };
 
-        // If no markers are visible (map has been moved to an empty area),
-        // display button that centers the map again.
-        // If clicked, all markers are made visible and map is recentered
-        if(numMarkersVisible < 1) {
-
-            // If the reset button is already visible, do nothing
-            if(!$('.reset-map-container').length && !guideView) {
-
-                console.log('no markers visible');
-
-                // Render reset map button
-                self.showMapReset();
-            };
-
-        // If there is more than one marker visible, and the reset button is
-        // visible, remove it
-        } else if ($('.reset-map-container').length) {
-            $('.reset-map-container').remove();
-        };
+        // Check the number of visible markers
+        self.checkVisibleMarkers();
     };
 
     self.showFrames = function (marker) {

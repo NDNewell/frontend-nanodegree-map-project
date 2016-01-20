@@ -32,27 +32,27 @@ $(document).ready(function() {
 
         switch (source) {
             case roIconsSkillLevel:
-                images[src].className = "rollover-info skill-level-rollover skill-level-hover-default-style";
+                images[src].className = "rollover-info skill-level-rollover skill-level-hover-default-style hover-tooltip-only";
             break;
 
             case roIconsBreak:
-                images[src].className = "rollover-info break-type-rollover break-type-hover-default-style";
+                images[src].className = "rollover-info break-type-rollover break-type-hover-default-style hover-tooltip-only";
             break;
 
             case roIconsDirection:
-                images[src].className = "rollover-info wave-direction-rollover wave-direction-hover-default-style";
+                images[src].className = "rollover-info wave-direction-rollover wave-direction-hover-default-style hover-tooltip-only";
             break;
 
             case roIconsBestSeason:
-                images[src].className = "rollover-info best-season-rollover best-season-hover-default-style";
+                images[src].className = "rollover-info best-season-rollover best-season-hover-default-style hover-tooltip-only";
             break;
 
             case roIconsMiscOne:
-                images[src].className = "rollover-info misc-info-one-rollover misc-info-one-hover-default-style";
+                images[src].className = "rollover-info misc-info-one-rollover misc-info-one-hover-default-style hover-tooltip-only";
             break;
 
             case roIconsMiscTwo:
-                images[src].className = "rollover-info misc-info-two-rollover misc-info-two-hover-default-style";
+                images[src].className = "rollover-info misc-info-two-rollover misc-info-two-hover-default-style hover-tooltip-only";
             break;
         };
       };
@@ -373,20 +373,33 @@ function AppViewModel () {
                                 newEventRef = e;
                             });
 
+                            // Determine time to pass before displaying a
+                            // tooltip.
+                            // If it is for a hover element, it is faster
+                            if($element.hasClass("hover-tooltip-only")) {
+
+                                // Set the time variable for hover elements
+                                var time = 500;
+                            } else {
+
+                                // Set the time variable for all other elements
+                                var time = 2000;
+                            };
+
                             // Delay invoking the tooltip renderer so that the
                             // tooltip does not appear immediately
                             toolTipDelay = setTimeout(function (){
 
                                 console.log('show tooltip');
 
-                                // Show the element's tooltip
-                                renderToolTips($titleText, newEventRef);
-
                                 // Remove the listener added above, to avoid
                                 // duplicates if this tooltip is invoked again
                                 $element.off('mousemove');
 
-                            }, 2000);
+                                // Show the element's tooltip
+                                renderToolTips($titleText, newEventRef, $element);
+
+                            }, time);
 
                         break;
 
@@ -399,14 +412,20 @@ function AppViewModel () {
 
                         case 'click':
 
-                            console.log('show tooltip');
+                            // If the tooltip is only meant to be displayed
+                            // during a hover event, do not show the tooltip
+                            // on click
+                            if(!$element.hasClass("hover-tooltip-only")) {
 
-                            // Remove the element's title to disable the native
-                            // tooltips
-                            $element.removeAttr('title');
+                                console.log('show tooltip');
 
-                            // Show the element's tooltip
-                            renderToolTips($titleText, eventRef);
+                                // Remove the element's title to disable the
+                                // native tooltips
+                                $element.removeAttr('title');
+
+                                // Show the element's tooltip
+                                renderToolTips($titleText, eventRef, $element);
+                            };
 
                         break
                     };
@@ -415,7 +434,7 @@ function AppViewModel () {
         });
 
         // Render the element's tooltip
-        function renderToolTips ($titleText, eventRef) {
+        function renderToolTips ($titleText, eventRef, $element) {
 
             // Save tooltip text elem and coordinates, mouse at time of click,
             // and padding between the cursor and the tooltip
@@ -490,6 +509,38 @@ function AppViewModel () {
                     $tooltip.remove();
                 });
             }, 2000);
+
+            // Add listener to detect mouse movements over the element
+            $element.on('mousemove', function () {
+
+                // Remove the mousemove listener to avoid duplicates on element
+                $element.off('mousemove');
+
+                // If mouse moves, clear the other timer that closes the
+                // the tooltip
+                clearTimeout(textTimer);
+
+                // Determine time to pass before closing the tooltip
+                // If it is for a hover element, it is faster
+                if($element.hasClass("hover-tooltip-only")) {
+
+                    // Set the time variable for hover elements
+                    var time = 0;
+
+                } else {
+
+                    // Set the time variable for all other elements
+                    var time = 500;
+                };
+
+                // Remove the tooltip
+                $tooltip.fadeOut(time, function () {
+
+                    console.log('hide tooltip');
+
+                    $tooltip.remove();
+                });
+            });
         };
     };
 
@@ -1789,6 +1840,8 @@ function AppViewModel () {
                 if(!mobileView && !gridView) {
                     self.toggleRolloverClasses();
                 };
+
+                self.addToolTips();
             });
 
             /* Remove all imported info when the mouse stops hovering */
@@ -1796,6 +1849,14 @@ function AppViewModel () {
 
                 // Set rollover to false
                 rollover = false;
+
+                // Cache a ref to all of the hover icons
+                var $allHoverIcons = $('.rollover-info');
+
+                // Remove the tooltips loaded status so they can be loaded
+                // again during the next hover (any element that has the class
+                // below will not load tooltips)
+                $allHoverIcons.removeClass("tooltip-loaded");
 
                 /* If screen is larger than mobile view adjust the icons'
                 styling back to default if the the map view is enabled */
@@ -1822,7 +1883,7 @@ function AppViewModel () {
                     makeMarkerSmall();
                 };
 
-                $('.rollover-info').remove();
+                $allHoverIcons.remove();
             });
         });
     };
@@ -2293,6 +2354,7 @@ function AppViewModel () {
           case 'left':
               if(rollover) {
                   var directionIcon = images.roIconDirectionLeft;
+                  directionIcon.title = "Wave Direction: Left";
               } else {
                   var directionIcon = '<div class="direction card" title="Wave Direction: Left">' + '<img src="img/direction_left.svg" class="wave-direction-guide">' + '</div>';
               };
@@ -2301,6 +2363,8 @@ function AppViewModel () {
           case 'right':
               if(rollover) {
                   var directionIcon = images.roIconDirectionRight;
+                  directionIcon.title = "";
+                  directionIcon.title = "Wave Direction: Right";
               } else {
                   var directionIcon = '<div class="direction card" title="Wave Direction: Right">' + '<img src="img/direction_right.svg" class="wave-direction-guide">' + '</div>';
               };
@@ -2309,6 +2373,8 @@ function AppViewModel () {
           case 'left & right':
               if(rollover) {
                   var directionIcon = images.roIconDirectionBoth;
+                  directionIcon.title = "";
+                  directionIcon.title = "Wave Direction: Left & Right";
               } else {
                   var directionIcon = '<div class="direction card" title="Wave Direction: Left & Right">' + '<img src="img/direction_both.svg" class="wave-direction-guide">' + '</div>';
               };

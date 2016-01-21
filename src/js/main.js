@@ -1929,7 +1929,7 @@ function AppViewModel () {
                 getInfoWindow(marker, breakName);
 
                 // Animate marker
-                animateMarker(marker);
+                self.animateMarker(marker);
             };
         });
     };
@@ -3977,7 +3977,7 @@ function AppViewModel () {
                 getInfoWindow(marker, breakName);
 
                 // Bounce marker upon clicking
-                animateMarker(marker);
+                self.animateMarker(marker);
 
                 /* Show surf guide (only if surf guide is already open) when
                 the marker is clicked */
@@ -4047,6 +4047,14 @@ function AppViewModel () {
 
         // Add each marker to the markers array
         markers.push(marker);
+    };
+
+    // Set the animation for the selected marker
+    self.animateMarker = function (marker) {
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+        window.setTimeout(function() {
+            marker.setAnimation(null);
+        }, 730);
     };
 
     self.makeMarkerBig = function (marker, markerName) {
@@ -4910,14 +4918,6 @@ function getInfoWindow (marker, breakName) {
 function isInfoWindowOpen(infoWindow){
     var map = infoWindow.getMap();
     return (map !== null && typeof map !== "undefined");
-};
-
-// Set the animation for the selected marker
-function animateMarker (marker) {
-    marker.setAnimation(google.maps.Animation.BOUNCE);
-    window.setTimeout(function() {
-        marker.setAnimation(null);
-    }, 730);
 };
 
 

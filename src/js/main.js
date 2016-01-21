@@ -1173,8 +1173,8 @@ function AppViewModel () {
         // Open the surf guide
         self.renderSurfGuide(obj);
 
-        // Check view to change the layout for the surf guide
-        self.checkView();
+        // Manage the view to change the layout for the surf guide
+        self.manageView();
     };
 
     // Automatically scroll to the location frame whose marker is being hovered
@@ -2326,7 +2326,8 @@ function AppViewModel () {
     accommodate the appearence of a horizontal scroll bar for screen widths
     >= 768px and reverse these effects when the screen width falls below 768px
      */
-    self.toggleLayout = function () {
+
+    self.manageLayout = function () {
 
         // Cache DOM refs to key elements
         var $locationGrid = $('.location-grid'),
@@ -2446,7 +2447,7 @@ function AppViewModel () {
         guideView;
 
     // Check the width of the screen
-    self.checkView = function () {
+    self.manageView = function () {
 
         // Set refs to DOM elems
         var $winWidth = window.innerWidth;
@@ -2505,11 +2506,11 @@ function AppViewModel () {
         };
 
         // Change the site's current layout depending on the above's outcome
-        toggleLayout();
+        self.manageLayout();
     };
 
     // Check the width of the window
-    self.checkView();
+    self.manageView();
 
     // Set variables for resizing
     var resizeTimer,
@@ -2522,7 +2523,7 @@ function AppViewModel () {
     $(window).resize(function() {
 
         // Check the current view and update the page's styling
-        self.checkView();
+        self.manageView();
 
             console.log('resize window');
 
@@ -2626,7 +2627,7 @@ function AppViewModel () {
         map is visible, the layout must be adjusted */
         if($('.map-container').is(":visible")) {
             // Update layout
-            self.toggleLayout();
+            self.manageLayout();
         };
 
         /* After a search, there are new objects in the locationGrid, so the
@@ -2906,7 +2907,7 @@ function AppViewModel () {
                         self.filterFavorites();
 
                         // Adjust the layout
-                        self.toggleLayout();
+                        self.manageLayout();
 
                     }, 600);
 
@@ -2916,7 +2917,7 @@ function AppViewModel () {
                         self.filterFavorites();
 
                         // Adjust the layout
-                        self.toggleLayout();
+                        self.manageLayout();
 
                 // If the search container is hidden, toggle layout normally
                 } else {
@@ -2925,7 +2926,7 @@ function AppViewModel () {
                         self.filterFavorites();
 
                         // Adjust the layout
-                        self.toggleLayout();
+                        self.manageLayout();
 
                         // Add rollover effects to the new list of objects
                         self.addRolloverEffect();
@@ -3018,9 +3019,9 @@ function AppViewModel () {
             $map.hide();
 
             /* Update the layout (do this after toggling the map symbol)
-             because 'checkView' uses it to determine if map view is
+             because 'manageView' uses it to determine if map view is
              enabled */
-            self.checkView();
+            self.manageView();
 
             // After checking view, map container is set back to default
             // Default is display:none, which means the slide toggle below
@@ -3060,9 +3061,9 @@ function AppViewModel () {
             };
 
             /* Update the layout (do this after toggling the map symbol)
-             because 'checkView' uses it to determine if map view is
+             because 'manageView' uses it to determine if map view is
              enabled */
-            self.checkView();
+            self.manageView();
 
             console.log('open map');
 
@@ -3235,7 +3236,7 @@ function AppViewModel () {
         };
 
         /* On each reset new versions of the location frames are added, so the view must be checked in case layout needs adjusting */
-        self.checkView();
+        self.manageView();
 
         // Make all map markers visible
         markers.forEach(function(marker) {
@@ -4562,7 +4563,7 @@ function AppViewModel () {
         $('.surf-guide-container').remove();
 
         // Adjust the layout
-        self.checkView();
+        self.manageView();
 
         /* Make both the location grid and the location frames
         within it visible. The location frames need to be made

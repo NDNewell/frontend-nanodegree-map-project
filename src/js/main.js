@@ -5,113 +5,138 @@ var map, infoWindow;
 function initMap() {
 
   // Create an array of styles for the surf map
-    var surfMapStyles = [
-      {
-        featureType:"all",
-        elemntType: "geometry",
-        stylers: [
-         { visibility: "off" }
-        ]
-      },{
-        featureType:"all",
-        elemntType: "labels",
-        stylers: [
-         { visibility: "off" }
-        ]
-      },{
-        featureType:"water",
-        elemntType: "geometry",
-        stylers: [
-         { color: "#FFFFFF" },
-         { visibility: "on" }
-        ]
-      },{
-        featureType:"landscape",
-        elemntType: "geometry",
-        stylers: [
-         { visibility: "on" },
-         { color: "#99EB99" }
-        ]
-      }
-    ];
+    var mapStyle = [{
+        "featureType": "administrative",
+        "elementType": "all",
+        "stylers": [{
+            "color": "#525252"
+        }, {
+            "visibility": "off"
+        }]
+    }, {
+        "featureType": "administrative",
+        "elementType": "labels",
+        "stylers": [{
+            "visibility": "off"
+        }]
+    }, {
+        "featureType": "landscape",
+        "elementType": "all",
+        "stylers": [{
+            "visibility": "simplified"
+        }, {
+            "color": "#525252"
+        }]
+    }, {
+        "featureType": "landscape",
+        "elementType": "labels",
+        "stylers": [{
+            "visibility": "off"
+        }]
+    }, {
+        "featureType": "landscape.man_made",
+        "elementType": "all",
+        "stylers": [{
+            "visibility": "simplified"
+        }, {
+            "color": "#525252"
+        }]
+    }, {
+        "featureType": "poi",
+        "elementType": "all",
+        "stylers": [{
+            "color": "#525252"
+        }]
+    }, {
+        "featureType": "poi",
+        "elementType": "labels",
+        "stylers": [{
+            "visibility": "off"
+        }]
+    }, {
+        "featureType": "road",
+        "elementType": "labels",
+        "stylers": [
+          { "visibility": "simplified"
+        }]
+    }, {
+        "featureType": "road.local",
+        "elementType": "geometry",
+        "stylers": [
+          { "visibility": "simplified"
+        }]
+    }, {
+        "featureType": "road",
+        "elementType": "geometry",
+        "stylers": [
+          { "lightness": 50 },
+          { "color": "#e8e7e7"
+        }]
+    }, {
+        "featureType": "transit",
+        "elementType": "labels",
+        "stylers": [{
+            "visibility": "off"
+        }]
+    }, {
+        "featureType": "transit.line",
+        "elementType": "all",
+        "stylers": [{
+            "visibility": "simplified"
+        }, {
+            "color": "#e8e7e7"
+        }]
+    }, {
+        "featureType": "transit.station.airport",
+        "elementType": "all",
+        "stylers": [{
+            "visibility": "off"
+        }]
+    }, {
+        "featureType": "water",
+        "elementType": "all",
+        "stylers": [{
+            "color": "#56c4d1"
+        }]
+    }, {
+        "featureType": "water",
+        "elementType": "labels",
+        "stylers": [{
+            "visibility": "off"
+        }]
+    }];
 
-    // Create an array of styles for the driving map
-    var driveMapStyles = [
-      {
-        stylers: [
-          { hue: "#99EB99" },
-          { saturation: -20 }
-        ]
-      },{
-        featureType:"water",
-        elemntType: "geometry",
-        stylers: [
-         { color: "#FFFFFF" }
-        ]
-      },{
-        featureType: "road",
-        elementType: "labels",
-        stylers: [
-          { visibility: "simplified" }
-        ]
-      },{
-        featureType: "road.local",
-        elementType: "geometry",
-        stylers: [
-          { visibility: "off" },
-        ]
-      },{
-        featureType: "road",
-        elementType: "geometry",
-        stylers: [
-          { lightness: 50 },
-          { color: "#00B8E6" }
-        ]
-      },{
-        featureType: "poi",
-        elementType: "geometry",
-        stylers: [
-          { visibility: "none" }
-        ]
-      },{
-        featureType: "poi",
-        elementType: "labels",
-        stylers: [
-          { visibility: "none" }
-        ]
-      }
-    ];
+    // Create custom map style
+    var customStyle = new google.maps.StyledMapType(mapStyle,
+      {name: "Map"});
 
-    /* Create StyledMapType objects and pass the corresponding array of
-    styles and name to each one. The name will be displayed in the map
-    controls.*/
-    var surfMapStyled = new google.maps.StyledMapType(surfMapStyles,
-      {name: "Surf"});
-
-    var driveMapStyled = new google.maps.StyledMapType(driveMapStyles,
-      {name: "Drive"});
+    // Create the map
+    map = new google.maps.Map(document.getElementById('map'), {
 
     // Set the options for the map
-    var mapOptions = {
-        center: new google.maps.LatLng(20.67,-157.505),
-                mapTypeControlOptions: {
-                    mapTypeIds: ['drive_map_style', 'surf_map_style']
-                },
+        mapTypeControlOptions: {
+            mapTypeIds: [
+                'custom_style',
+                google.maps.MapTypeId.SATELLITE
+            ]
+        },
         disableDefaultUI: true,
         zoomControl: true,
+        rotateControl: true,
+        streetViewControl: true,
         mapTypeControl: true,
         scrollwheel: false
-    };
+    });
 
-    // Create the map and center on the Hawaiian Islands
-    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    // Enable 45 degree tilting of imagery when zoomed in at close levels for
+    // certain cities
+    map.setTilt(45);
 
-    // Associate the styled maps with the corresponding MapTypeId
-    map.mapTypes.set('surf_map_style', surfMapStyled);
-    map.mapTypes.set('drive_map_style', driveMapStyled);
+    // Associate the styled map with the corresponding MapTypeId
+    map.mapTypes.set('custom_style', customStyle);
 
-    // Set the surf map to display
-    map.setMapTypeId('surf_map_style');
+    // Set the custom map to display
+    map.setMapTypeId('custom_style');
 
     // Create an info window object for displaying the break name
     infoWindow = new google.maps.InfoWindow();

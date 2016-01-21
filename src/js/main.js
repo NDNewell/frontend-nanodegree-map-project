@@ -1098,12 +1098,12 @@ function AppViewModel () {
                         var favorites = [];
 
                         /* Reset all of the marker images using the empty array*/
-                        updateFavMarkers(favorites);
+                        self.updateFavMarkers(favorites);
                     } else {
 
                         /* Update the marker image of any markers that match the
                         user's favorites */
-                        updateFavMarkers(favorites);
+                        self.updateFavMarkers(favorites);
 
                         /* Push each favorite found in the Firebase array into the
                         local favorites array */
@@ -4121,6 +4121,35 @@ function AppViewModel () {
         };
     };
 
+    // Change any map markers that match/don't match the user's favorites
+     self.updateFavMarkers = function (favorites) {
+        markers.forEach(function(marker) {
+
+            // Cache the title of the marker not including the location
+            var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
+
+            /* If the name matches a user's favorite, change the image */
+            /* Any markers that don't match the user's favs or were never a
+            fav remain unaltered */
+            if (favorites.indexOf(markerName) > -1) {
+                if(marker.icon === 'img/marker_small.svg') {
+                    console.log("make " + markerName + "'s marker a favorite!");
+                    marker.setIcon('img/marker_smallFav.svg');
+                } else if (marker.icon === 'img/marker_selected.svg') {
+                    console.log("make " + markerName + "'s marker a favorite!");
+                    marker.setIcon('img/marker_selectedFav.svg');
+                };
+            // If the name doesn't match, but was a fav, change the img back
+            } else if (marker.icon === 'img/marker_smallFav.svg') {
+                console.log("unfavorite " + markerName + "'s marker!");
+                marker.setIcon('img/marker_small.svg');
+            } else if (marker.icon === 'img/marker_selectedFav.svg') {
+                console.log("unfavorite " + markerName + "'s marker!");
+                marker.setIcon('img/marker_selected.svg');
+            };
+        });
+    };
+
     // Count the number of visible markers
     self.checkVisibleMarkers = function () {
 
@@ -4891,34 +4920,7 @@ function makeMarkerBig (marker, markerName) {
     };
 };
 
-// Change any map markers that match/don't match the user's favorites
-function updateFavMarkers (favorites) {
-    markers.forEach(function(marker) {
 
-        // Cache the title of the marker not including the location
-        var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
-
-        /* If the name matches a user's favorite, change the image */
-        /* Any markers that don't match the user's favs or were never a
-        fav remain unaltered */
-        if (favorites.indexOf(markerName) > -1) {
-            if(marker.icon === 'img/marker_small.svg') {
-                console.log("make " + markerName + "'s marker a favorite!");
-                marker.setIcon('img/marker_smallFav.svg');
-            } else if (marker.icon === 'img/marker_selected.svg') {
-                console.log("make " + markerName + "'s marker a favorite!");
-                marker.setIcon('img/marker_selectedFav.svg');
-            };
-        // If the name doesn't match, but was a fav, change the img back
-        } else if (marker.icon === 'img/marker_smallFav.svg') {
-            console.log("unfavorite " + markerName + "'s marker!");
-            marker.setIcon('img/marker_small.svg');
-        } else if (marker.icon === 'img/marker_selectedFav.svg') {
-            console.log("unfavorite " + markerName + "'s marker!");
-            marker.setIcon('img/marker_selected.svg');
-        };
-    });
-};
 
 
 

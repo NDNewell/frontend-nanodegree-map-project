@@ -575,7 +575,7 @@ function AppViewModel () {
         // and marker managers aren't disabled, set the map bounds
         if(markers.length !== 0 && $('#map').is(":visible") && !resizeInProgress) {
             google.maps.event.trigger(map, 'resize');
-            setMapBounds();
+            self.setMapBounds();
         };
     };
 
@@ -673,7 +673,7 @@ function AppViewModel () {
             if(markers.length !== 0 && $map.is(":visible") && !guideView && !resizeInProgress) {
                 console.log('map is visible');
                 google.maps.event.trigger(map, 'resize');
-                setMapBounds();
+                self.setMapBounds();
 
             /* If the surf guide is open, reset the map size, then center the map on the selected location's marker */
             } else if (guideView && $map.is(":visible")) {
@@ -934,7 +934,7 @@ function AppViewModel () {
 
                 if(!guideView) {
                     google.maps.event.trigger(map, 'resize');
-                    setMapBounds();
+                    self.setMapBounds();
                 };
 
                 // enable the frame and marker managers
@@ -1436,7 +1436,7 @@ function AppViewModel () {
         location frames have or haven't been filtered into view. */
         if (!$('#map').is(":hidden")) {
             // Set the map bounds & map position
-            setMapBounds();
+            self.setMapBounds();
         };
 
         /* On each search new versions of the location frames are added. If the
@@ -1507,7 +1507,7 @@ function AppViewModel () {
         // Set map bounds
         if ($('#map').is(":visible")) {
             // Set the map bounds & map position
-            setMapBounds();
+            self.setMapBounds();
         };
     };
 
@@ -1711,7 +1711,7 @@ function AppViewModel () {
         // If the map is visible, reset the bounds
         if (!$('#map').is(":hidden")) {
             // Set the map bounds & map position
-            setMapBounds();
+            self.setMapBounds();
         };
 
         // Add the hover effects for each location frame
@@ -3717,7 +3717,7 @@ function AppViewModel () {
             google.maps.event.trigger(map, 'resize');
 
             // Set the map bounds after map size has been adjusted
-            setMapBounds();
+            self.setMapBounds();
 
         /* The guide view toggling of the map handles both opening and closing
         the map */
@@ -3809,7 +3809,7 @@ function AppViewModel () {
 
                         // Resize map and set bounds to adapt to window size
                         google.maps.event.trigger(map, 'resize');
-                        setMapBounds();
+                        self.setMapBounds();
                     };
 
                 // When map is closed and surf guide is visible/hidden:
@@ -3903,7 +3903,7 @@ function AppViewModel () {
 
         // Set initial map bounds based on location of markers
         if($('#map').is(":visible")) {
-            setMapBounds();
+            self.setMapBounds();
         };
     };
 
@@ -4682,7 +4682,7 @@ function AppViewModel () {
             };
 
             // Set map bounds
-            setMapBounds();
+            self.setMapBounds();
 
             // Remove the reset map button
             $('.reset-map-container').remove();
@@ -4731,6 +4731,33 @@ function AppViewModel () {
         });
     };
 
+     self.setMapBounds = function () {
+
+        console.log('set map bounds');
+
+        /* Create map bounds rectangle using the most SW / NE locations
+        to calculate the size*/
+        var bounds = new google.maps.LatLngBounds();
+
+        /* Loop through markers and extend bounds to only those markers
+        that are visible*/
+        var markersLength = markers.length;
+
+        for (var i = markersLength; i--;) {
+            if(markers[i].visible) {
+                bounds.extend(markers[i].getPosition());
+            };
+        };
+
+        // Fit the map to the bounds calcuated above
+        map.fitBounds(bounds);
+
+        /* If there's only one marker (i.e. zoom is very high/too close), reset
+        zoom to lower level*/
+        if(map.getZoom() > 12) {
+            map.setZoom(12);
+        };
+    };
 
     // Activate the info window for the selected marker
     self.getInfoWindow = function (marker, breakName) {
@@ -4893,33 +4920,7 @@ function displayMarkers(map) {
     };
 };
 
-function setMapBounds () {
 
-    console.log('set map bounds');
-
-    /* Create map bounds rectangle using the most SW / NE locations
-    to calculate the size*/
-    var bounds = new google.maps.LatLngBounds();
-
-    /* Loop through markers and extend bounds to only those markers
-    that are visible*/
-    var markersLength = markers.length;
-
-    for (var i = markersLength; i--;) {
-        if(markers[i].visible) {
-            bounds.extend(markers[i].getPosition());
-        };
-    };
-
-    // Fit the map to the bounds calcuated above
-    map.fitBounds(bounds);
-
-    /* If there's only one marker (i.e. zoom is very high/too close), reset
-    zoom to lower level*/
-    if(map.getZoom() > 12) {
-        map.setZoom(12);
-    };
-};
 
 
 

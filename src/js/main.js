@@ -678,7 +678,7 @@ function AppViewModel () {
             /* If the surf guide is open, reset the map size, then center the map on the selected location's marker */
             } else if (guideView && $map.is(":visible")) {
                 google.maps.event.trigger(map, 'resize');
-                centerOnGuideMarker();
+                self.centerOnGuideMarker();
             };
 
         /* If the screen width is larger than a 'mobile' view, alter the
@@ -3745,7 +3745,7 @@ function AppViewModel () {
                     google.maps.event.trigger(map, 'resize');
 
                     // Center the map over the relevant marker
-                    centerOnGuideMarker();
+                    self.centerOnGuideMarker();
 
                 } else {
 
@@ -3800,7 +3800,7 @@ function AppViewModel () {
                         google.maps.event.trigger(map, 'resize');
 
                         // Center the map over the relevant marker
-                        centerOnGuideMarker();
+                        self.centerOnGuideMarker();
 
                     // When map is opened and the surf guide is hidden:
                     } else {
@@ -4047,78 +4047,6 @@ function AppViewModel () {
 
         // Add each marker to the markers array
         markers.push(marker);
-    };
-
-    self.clickMap = function () {
-
-        // Find last selected marker and make pin small again
-        makeMarkerSmall();
-
-        /* If the surf guide isn't visible show the locations, otherwise
-        do nothing (just close the info windows) */
-        if (!$('.surf-guide-container').is(":visible")) {
-            $('.location-frame').show();
-        };
-
-        // Close any open info windows
-        infoWindow.close();
-
-        // Update visible frames
-        self.manageFrames();
-    };
-
-    // Bring map markers back into view
-    self.showMapReset = function () {
-
-        // Cache DOM elements
-        var resetMap = '<div class="reset-map-container"></div>',
-            $locationGrid = $('.location-grid');
-
-        // Add the container for the reset button
-        $locationGrid.append(resetMap);
-
-        // Cache DOM elements
-        var $resetMapContainer = $('.reset-map-container'),
-            $resetMapIcon = '<img src="img/reset_button.svg" class="reset-button" alt="reload location frames and markers button">';
-
-        // Add the reset map button
-        $resetMapContainer.append($resetMapIcon);
-
-        // Cache a ref to the reset button
-        $resetButton = $('.reset-button');
-
-        // Add event listener
-        // When the button is clicked, recenter the map
-        $resetButton.on("click", function() {
-            resetMarkersAndFrames();
-        });
-
-        // Make all of the map markers visible and set the map bounds
-        function resetMarkersAndFrames () {
-
-            console.log('set markers to visible');
-            console.log('center map');
-
-            // Remove the reset button
-            $resetMapContainer.remove();
-
-            // Set a ref to the length of the markers array
-            var markersLength = markers.length;
-
-            // Loop through the maps markers
-            for(var i = markersLength; i--;) {
-                var marker = markers[i];
-
-                // Make markers visible
-                self.showMarkers(marker);
-            };
-
-            // Set map bounds
-            setMapBounds();
-
-            // Remove the reset map button
-            $('.reset-map-container').remove();
-        };
     };
 
     // Change any map markers that match/don't match the user's favorites
@@ -4418,6 +4346,120 @@ function AppViewModel () {
         // Re-render the location frame's 'favorite' status
         self.renderFavoriteOnLocationFrame();
     };
+
+    self.clickMap = function () {
+
+        // Find last selected marker and make pin small again
+        makeMarkerSmall();
+
+        /* If the surf guide isn't visible show the locations, otherwise
+        do nothing (just close the info windows) */
+        if (!$('.surf-guide-container').is(":visible")) {
+            $('.location-frame').show();
+        };
+
+        // Close any open info windows
+        infoWindow.close();
+
+        // Update visible frames
+        self.manageFrames();
+    };
+
+    // Bring map markers back into view
+    self.showMapReset = function () {
+
+        // Cache DOM elements
+        var resetMap = '<div class="reset-map-container"></div>',
+            $locationGrid = $('.location-grid');
+
+        // Add the container for the reset button
+        $locationGrid.append(resetMap);
+
+        // Cache DOM elements
+        var $resetMapContainer = $('.reset-map-container'),
+            $resetMapIcon = '<img src="img/reset_button.svg" class="reset-button" alt="reload location frames and markers button">';
+
+        // Add the reset map button
+        $resetMapContainer.append($resetMapIcon);
+
+        // Cache a ref to the reset button
+        $resetButton = $('.reset-button');
+
+        // Add event listener
+        // When the button is clicked, recenter the map
+        $resetButton.on("click", function() {
+            resetMarkersAndFrames();
+        });
+
+        // Make all of the map markers visible and set the map bounds
+        function resetMarkersAndFrames () {
+
+            console.log('set markers to visible');
+            console.log('center map');
+
+            // Remove the reset button
+            $resetMapContainer.remove();
+
+            // Set a ref to the length of the markers array
+            var markersLength = markers.length;
+
+            // Loop through the maps markers
+            for(var i = markersLength; i--;) {
+                var marker = markers[i];
+
+                // Make markers visible
+                self.showMarkers(marker);
+            };
+
+            // Set map bounds
+            setMapBounds();
+
+            // Remove the reset map button
+            $('.reset-map-container').remove();
+        };
+    };
+
+    // Center the map on the selected marker
+    self.centerOnGuideMarker = function () {
+
+        console.log('center map to relevant marker');
+
+        // Cache DOM ref
+        var breakName = $('#guide-break-name').text();
+
+        // Iterate through the markers array
+        markers.forEach(function(marker) {
+
+            // Cache the title of the marker not including the location
+            var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
+
+            // If the currently selected surf guide's break name matches
+            // a marker's break name:
+            if (breakName === markerName) {
+
+                // If info window isn't open
+                // Also, make the marker big if it isn't
+                // If the info window/marker are already open/big, do nothing
+                // This avoids repeating these tasks everytime window is resized
+                if (!isInfoWindowOpen(infoWindow)){
+
+                    console.log('info window & marker not activated');
+
+                    // Make the relevant marker big
+                    makeMarkerBig(marker, markerName);
+
+                    // Open info window
+                    getInfoWindow(marker, breakName);
+                };
+
+                // Center the map over the marker
+                map.setCenter(marker.getPosition());
+
+                // Zoom in on the relevant marker
+                map.setZoom(10);
+            };
+        });
+    };
 };
 
 // Get current location
@@ -4588,48 +4630,6 @@ function setMapBounds () {
     if(map.getZoom() > 12) {
         map.setZoom(12);
     };
-};
-
-// Center the map on the selected marker
-function centerOnGuideMarker () {
-
-    console.log('center map to relevant marker');
-
-    // Cache DOM ref
-    var breakName = $('#guide-break-name').text();
-
-    // Iterate through the markers array
-    markers.forEach(function(marker) {
-
-        // Cache the title of the marker not including the location
-        var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
-
-        // If the currently selected surf guide's break name matches
-        // a marker's break name:
-        if (breakName === markerName) {
-
-            // If info window isn't open
-            // Also, make the marker big if it isn't
-            // If the info window/marker are already open/big, do nothing
-            // This avoids repeating these tasks everytime window is resized
-            if (!isInfoWindowOpen(infoWindow)){
-
-                console.log('info window & marker not activated');
-
-                // Make the relevant marker big
-                makeMarkerBig(marker, markerName);
-
-                // Open info window
-                getInfoWindow(marker, breakName);
-            };
-
-            // Center the map over the marker
-            map.setCenter(marker.getPosition());
-
-            // Zoom in on the relevant marker
-            map.setZoom(10);
-        };
-    });
 };
 
 // Activate the info window for the selected marker

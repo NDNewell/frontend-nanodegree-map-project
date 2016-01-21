@@ -1878,7 +1878,7 @@ function AppViewModel () {
                 selection, should stay big. If a marker is selected, it also
                 prevents the locaiton frames from being managed (keeps only
                 one location frame visible) */
-                if(!$('.surf-guide-container').length && !isInfoWindowOpen(infoWindow) && !gridView) {
+                if(!$('.surf-guide-container').length && !self.isInfoWindowOpen(infoWindow) && !gridView) {
                     self.makeMarkerSmall();
                 };
 
@@ -1926,7 +1926,7 @@ function AppViewModel () {
                 self.makeMarkerBig(marker, markerName);
 
                 // Open info window
-                getInfoWindow(marker, breakName);
+                self.getInfoWindow(marker, breakName);
 
                 // Animate marker
                 self.animateMarker(marker);
@@ -3974,7 +3974,7 @@ function AppViewModel () {
                     marker.setIcon('img/marker_selectedFav.svg');
                 };
 
-                getInfoWindow(marker, breakName);
+                self.getInfoWindow(marker, breakName);
 
                 // Bounce marker upon clicking
                 self.animateMarker(marker);
@@ -4711,7 +4711,7 @@ function AppViewModel () {
                 // Also, make the marker big if it isn't
                 // If the info window/marker are already open/big, do nothing
                 // This avoids repeating these tasks everytime window is resized
-                if (!isInfoWindowOpen(infoWindow)){
+                if (!self.isInfoWindowOpen(infoWindow)){
 
                     console.log('info window & marker not activated');
 
@@ -4719,7 +4719,7 @@ function AppViewModel () {
                     self.makeMarkerBig(marker, markerName);
 
                     // Open info window
-                    getInfoWindow(marker, breakName);
+                    self.getInfoWindow(marker, breakName);
                 };
 
                 // Center the map over the marker
@@ -4729,6 +4729,25 @@ function AppViewModel () {
                 map.setZoom(10);
             };
         });
+    };
+
+
+    // Activate the info window for the selected marker
+    self.getInfoWindow = function (marker, breakName) {
+
+        console.log('show ' + breakName + "'s info window");
+
+        // Assign content to InfoWindow object
+        infoWindow.setContent(breakName);
+
+        // Assign the InfoWindow object the appropriate marker
+        infoWindow.open(map, marker);
+    };
+
+    // Check to see if the info window object is already open
+    self.isInfoWindowOpen = function (infoWindow){
+        var map = infoWindow.getMap();
+        return (map !== null && typeof map !== "undefined");
     };
 };
 
@@ -4902,23 +4921,6 @@ function setMapBounds () {
     };
 };
 
-// Activate the info window for the selected marker
-function getInfoWindow (marker, breakName) {
-
-    console.log('show ' + breakName + "'s info window");
-
-    // Assign content to InfoWindow object
-    infoWindow.setContent(breakName);
-
-    // Assign the InfoWindow object the appropriate marker
-    infoWindow.open(map, marker);
-};
-
-// Check to see if the info window object is already open
-function isInfoWindowOpen(infoWindow){
-    var map = infoWindow.getMap();
-    return (map !== null && typeof map !== "undefined");
-};
 
 
 ko.applyBindings(new AppViewModel);

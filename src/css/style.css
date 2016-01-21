@@ -143,12 +143,6 @@ body, html {
     height: 100%;
 }
 
-.horizontal-rule {
-    border-bottom-style: solid;
-    border-bottom-color: #E8E8E8;
-    border-bottom-width: 1px;
-}
-
 .favorite-default-style {
     position: absolute;
     left: 6%;
@@ -763,10 +757,6 @@ body, html {
     .map-container-default-style {
         display: none;
         height: 245px;
-        border-bottom: 1px dashed;
-        border-color: #E8E8E8;
-        margin-top: 1px;
-        padding: 0px;
     }
 
     .hide-map-button {

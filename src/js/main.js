@@ -3899,7 +3899,7 @@ function AppViewModel () {
         google.maps.event.addListener(map, 'click', self.clickMap);
 
         // Display markers found in the markers array on the map
-        displayMarkers(map);
+        self.displayMarkers(map);
 
         // Set initial map bounds based on location of markers
         if($('#map').is(":visible")) {
@@ -4047,6 +4047,16 @@ function AppViewModel () {
 
         // Add each marker to the markers array
         markers.push(marker);
+    };
+
+    self.displayMarkers = function(map) {
+
+        // Loop through the markers array and display on the map
+        var markersLength = markers.length;
+
+        for (var i = markersLength; i--;) {
+            markers[i].setMap(map);
+        };
     };
 
     // Set the animation for the selected marker
@@ -4909,16 +4919,6 @@ function initMap() {
     infoWindow = new google.maps.InfoWindow();
 
 }
-
-function displayMarkers(map) {
-
-    // Loop through the markers array and display on the map
-    var markersLength = markers.length;
-
-    for (var i = markersLength; i--;) {
-        markers[i].setMap(map);
-    };
-};
 
 
 

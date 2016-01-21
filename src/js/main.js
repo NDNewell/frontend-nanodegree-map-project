@@ -1,12 +1,140 @@
+// Declare global variables map and infoWindow
+var map, infoWindow;
 
+// Create Google Map
+function initMap() {
 
-var imagesLoaded,
-    locationsLoaded,
-    images = {};
+  // Create an array of styles for the surf map
+    var surfMapStyles = [
+      {
+        featureType:"all",
+        elemntType: "geometry",
+        stylers: [
+         { visibility: "off" }
+        ]
+      },{
+        featureType:"all",
+        elemntType: "labels",
+        stylers: [
+         { visibility: "off" }
+        ]
+      },{
+        featureType:"water",
+        elemntType: "geometry",
+        stylers: [
+         { color: "#FFFFFF" },
+         { visibility: "on" }
+        ]
+      },{
+        featureType:"landscape",
+        elemntType: "geometry",
+        stylers: [
+         { visibility: "on" },
+         { color: "#99EB99" }
+        ]
+      }
+    ];
+
+    // Create an array of styles for the driving map
+    var driveMapStyles = [
+      {
+        stylers: [
+          { hue: "#99EB99" },
+          { saturation: -20 }
+        ]
+      },{
+        featureType:"water",
+        elemntType: "geometry",
+        stylers: [
+         { color: "#FFFFFF" }
+        ]
+      },{
+        featureType: "road",
+        elementType: "labels",
+        stylers: [
+          { visibility: "simplified" }
+        ]
+      },{
+        featureType: "road.local",
+        elementType: "geometry",
+        stylers: [
+          { visibility: "off" },
+        ]
+      },{
+        featureType: "road",
+        elementType: "geometry",
+        stylers: [
+          { lightness: 50 },
+          { color: "#00B8E6" }
+        ]
+      },{
+        featureType: "poi",
+        elementType: "geometry",
+        stylers: [
+          { visibility: "none" }
+        ]
+      },{
+        featureType: "poi",
+        elementType: "labels",
+        stylers: [
+          { visibility: "none" }
+        ]
+      }
+    ];
+
+    /* Create StyledMapType objects and pass the corresponding array of
+    styles and name to each one. The name will be displayed in the map
+    controls.*/
+    var surfMapStyled = new google.maps.StyledMapType(surfMapStyles,
+      {name: "Surf"});
+
+    var driveMapStyled = new google.maps.StyledMapType(driveMapStyles,
+      {name: "Drive"});
+
+    // Set the options for the map
+    var mapOptions = {
+        center: new google.maps.LatLng(20.67,-157.505),
+                mapTypeControlOptions: {
+                    mapTypeIds: ['drive_map_style', 'surf_map_style']
+                },
+        disableDefaultUI: true,
+        zoomControl: true,
+        mapTypeControl: true,
+        scrollwheel: false
+    };
+
+    // Create the map and center on the Hawaiian Islands
+    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+    // Associate the styled maps with the corresponding MapTypeId
+    map.mapTypes.set('surf_map_style', surfMapStyled);
+    map.mapTypes.set('drive_map_style', driveMapStyled);
+
+    // Set the surf map to display
+    map.setMapTypeId('surf_map_style');
+
+    // Create an info window object for displaying the break name
+    infoWindow = new google.maps.InfoWindow();
+};
+
+// Get current location
+navigator.geolocation.getCurrentPosition(success);
+
+function success(position) {
+
+    console.log("get user's location");
+
+    currentLat = position.coords.latitude;
+    currentLng = position.coords.longitude;
+};
 
 function AppViewModel () {
 
     this.self = this;
+
+    var imagesLoaded,
+        locationsLoaded,
+        images = {};
 
     var guideIcons =
         { attireSpring: 'img/water_temp_spring.svg',
@@ -149,6 +277,41 @@ function AppViewModel () {
     self.loadImages(roIconsMiscOne);
     self.loadImages(roIconsMiscTwo);
 
+    /* Replace specific SVG images with inline SVG in order to make CSS
+    styling possible */
+    self.makeSVGInline = function (oldSvg) {
+        var $img = oldSvg;
+        var imgClass = $img.attr('class');
+        var imgURL = $img.attr('src');
+
+        $.get(imgURL, function(data) {
+
+            // Get the SVG tag, ignore the rest
+            var $svg = $(data).find('svg');
+
+            // Add replaced image's classes to the new SVG
+            if(typeof imgClass !== 'undefined') {
+                $svg = $svg.attr('class', imgClass);
+            }
+
+            // Remove any invalid XML tags as per http://validator.w3.org
+            $svg = $svg.removeAttr('xmlns:a');
+
+            // Replace image with new SVG
+            $img.replaceWith($svg);
+
+        }, 'xml');
+    };
+
+    /* Convert the imgs to inline svgs so hover effects my be applied
+    through css styling */
+    self.makeSVGInline($('.search-symbol-desktop'));
+    self.makeSVGInline($('.search-symbol-mobile'));
+    self.makeSVGInline($('.favorite-filter-symbol-desktop'));
+    self.makeSVGInline($('.favorite-filter-symbol-mobile'));
+    self.makeSVGInline($('.map-symbol-desktop'));
+    self.makeSVGInline($('.map-symbol-mobile'));
+
     /* If no location data is returned within 10 seconds, show error */
     var locationDataTimeout = setTimeout (function() {
         showLocationsLoadError();
@@ -284,6 +447,1553 @@ function AppViewModel () {
         $('.data-load-error-container').append(reloadButton);
         $('.reload-button').on('click', function(e) {
             location = location;
+        });
+    };
+
+    /* Cache Firebase database references to all, location, and user data */
+    var allData = new Firebase("https://dazzling-torch-4012.firebaseio.com"),
+        locationData = new Firebase("https://dazzling-torch-4012.firebaseio.com/locationData"),
+        users = new Firebase('https://dazzling-torch-4012.firebaseio.com/users');
+
+    /* Create write/read error messages to be used as callbacks */
+    var fireBaseWriteError = function(error) {
+        if (error) {
+          console.log("data could not be saved." + error);
+        } else {
+          console.log("data saved successfully.");
+        };
+    };
+    var fireBaseReadError = function (errorObject) {
+        console.log("the read failed: " + errorObject.code);
+    };
+
+    /* Iterate through the location frame displayed and fill in any locations
+    that match the user's favorites */
+    self.renderFavoriteOnLocationFrame = function () {
+
+        console.log("display 'favorite' icons on relevant location frames");
+
+        $('.location-frame').each(function () {
+
+            // Cache references to location frame, favorite symbol, & break name
+            var $locationFrame = $(this);
+            var $favoriteWrapper = $(this).find('.favorite-wrapper');
+            var $breakName = $(this).find('.break-name')[0].textContent;
+
+            // Filter locations that match the user's favorites
+            // When a match is found, add a class to style it as 'selected'
+            if(userFavorites.indexOf($breakName) > -1) {
+                $favoriteWrapper.removeClass('not-a-favorite');
+                $favoriteWrapper.addClass('is-a-favorite');
+            } else {
+                if($favoriteWrapper.hasClass('is-a-favorite')) {
+                    $favoriteWrapper.addClass('not-a-favorite');
+                    $favoriteWrapper.removeClass('is-a-favorite');
+                };
+            };
+        });
+    };
+
+    /* Create an empty local array (globally accessible for use with the
+      Google API) to hold the user's favorites collected from firebase's
+      database */
+    userFavorites = [];
+
+    self.getFavorites = function (authData) {
+
+        // If there are no users logged in, authData will be null
+        if(authData === null) {
+            console.log('cannot find favorites because there are no logged in users');
+        } else {
+
+            // Save ref to number of locations in data
+            var numLocations = 0;
+
+            // Count the number of locations in data
+            locationData.on("value", function(snapshot) {
+                var data = snapshot.val();
+
+                data.forEach(function(obj) {
+                    numLocations++;
+                });
+            });
+
+            // If the markers array is fully loaded, update the markers and
+            // location frames. If it isn't loaded, keep checking until it is.
+            // Once loaded update the location frame of each favorite
+            var favsTimer = setInterval(function () {
+
+                // If the number of locations matches the markers array length
+                // and the markers array length is at least greater than zero,
+                // update the location frame of each favorite
+                if(numLocations === markers.length && markers.length > 0) {
+
+                  console.log(markers.length + ' out of ' + numLocations + ' markers loaded');
+                  console.log('update favorites');
+
+                  updateFavs();
+
+                  clearInterval(favsTimer);
+                };
+            }, 1000);
+
+            function updateFavs () {
+
+                /* Get the user's favorites */
+                users.child(authData.uid).child("favorites").on("value", function(snapshot) {
+
+                    // Save the Firebase snapshot of the user's favorites
+                    var favorites = snapshot.val();
+
+                    /* Clear any existing favorites in the local favorites array
+                    so it can be filled with updated information. */
+                    userFavorites = [];
+
+                    // If the user has no favorites, log msg in console
+                    if(favorites === null) {
+
+                        console.log('user has no favorites');
+
+                        // Cache an empty array to replace 'null'
+                        var favorites = [];
+
+                        /* Reset all of the marker images using the empty array*/
+                        self.updateFavMarkers(favorites);
+                    } else {
+
+                        /* Update the marker image of any markers that match the
+                        user's favorites */
+                        self.updateFavMarkers(favorites);
+
+                        /* Push each favorite found in the Firebase array into the
+                        local favorites array */
+                        favorites.forEach(function(obj) {
+                          userFavorites.push(obj);
+                        });
+                        console.log("the user's favorite(s) is/are: " + userFavorites.join(', '));
+
+                        // Update DOM elements (location frames)
+                        /* Fill in the hearts of any locations which are the user's
+                        favorites */
+                        self.renderFavoriteOnLocationFrame();
+                    };
+
+                }, fireBaseReadError);
+            };
+        };
+    };
+
+    // Set variable for determining if a user is new or not
+    var isNewUser;
+
+    // Create a callback which logs the current auth state
+    self.checkAuthentication = function (authData) {
+
+        if(authData) {
+        /* When user is already logged in, notify in console and update
+           favorites */
+            console.log("user " + authData.uid + " is logged in with " + authData.provider);
+            isNewUser = false;
+            self.getFavorites(authData);
+
+        // If user is logged in notify via console and set new user to true
+        } else {
+            console.log("user is logged out");
+            isNewUser = true;
+        };
+    };
+
+    /* Monitor user authentication state, when there is a change check
+       which user is logged in / logged out */
+    allData.onAuth(self.checkAuthentication);
+
+    /* If the visiter is a new user, get details and write data to Firebase */
+    if(isNewUser) {
+
+      // Log new user in anonymously (tokens last 5 years)
+      allData.authAnonymously(function(error, authData) {
+        if (error) {
+              console.log("login Failed!", error);
+        } else {
+
+          // Save the user's favorites and name in the database
+          allData.child("users").child(authData.uid).set({
+              favorites: [],
+              name: prompt("Please enter your name")
+          });
+        };
+      });
+    };
+
+    self.showUser = function () {
+
+          // cache user data
+          var authData = allData.getAuth();
+
+          // get the user's name saved in the Firebase database and log in console
+          users.child(authData.uid).child("name").on("value", function(snapshot) {
+          var name = snapshot.val();
+            console.log(name + " is currently logged in");
+      }, fireBaseReadError);
+    };
+
+    // Display which user is logged in the console every minute
+    setInterval(self.showUser, 60000);
+
+    // Add a location to the local favorites array and update Firebase version
+    self.addFavorite = function (newFav) {
+
+        // Add location to local array
+        userFavorites.push(newFav);
+
+        // Update Firebase
+        users.child(allData.getAuth().uid).update({"favorites":userFavorites}, fireBaseWriteError);
+    };
+
+
+    // Remove a location from the local favorites array and update Firebase version
+    self.removeFavorite = function (removeFav) {
+
+        /* Create a temporary array to hold any locations that do not match the
+        array that is to be removed */
+        var updatedFavs = [];
+
+        /* Filter any matching locations to the deleted location out of the local
+        favorites array */
+        userFavorites.forEach(function(keepFav) {
+            if(removeFav !== keepFav) {
+                updatedFavs.push(keepFav);
+            };
+        });
+
+        // Update Firebase with the locations from the temporary array above
+        // When Firebase updates, the local favorites array will be replaced
+        users.child(allData.getAuth().uid).update({"favorites":updatedFavs}, fireBaseWriteError);
+    };
+
+    // Delete all locations from the local favorites array and update Firebase
+    self.removeAllFavorites = function () {
+
+        // Clear the user's existing favorites
+        userFavorites = [];
+
+        // Update Firebase
+        users.child(allData.getAuth().uid).update({"favorites":userFavorites}, fireBaseWriteError);
+    };
+
+    // Create array of map markers
+    var markers = [];
+
+    self.generateMarkers = function(locationData) {
+
+        /* Loop through locationData and filter out the coordinates
+        & break name for each break. Save the break's coordinates and name
+        in their own variables for easy referencing */
+        var locationDataLength = locationData.length;
+
+        for(var i = locationDataLength; i--;) {
+
+            var obj = locationData[i];
+
+            // Create a variable to hold each break's coordinates
+            var breakCoordinates = ({lat: obj.lat, lng: obj.lng});
+
+            // Create a variable to hold the name of the break
+            var breakName = obj.breakName;
+
+            // Create a variable to hold the name of the break location
+            var breakLocation = obj.location;
+
+            /* Create a marker and set its position. Pass the variables
+            created above as arguments*/
+            self.addMarker(breakName, breakCoordinates, breakLocation, obj);
+        };
+
+        // Add map event listener the detects when the map is idle
+        // Make markers within the viewport/map bounds visible and those
+        // that aren't invisible
+        // Show only the location frames and markers whose markers are within
+        // view port's map bounds
+        google.maps.event.addListener(map, 'idle', function() {
+
+            // Only execute the following code if the map is visible and
+            // managers aren't disabled (window isn't being resized)
+            if($('#map').is(":visible") && !resizeInProgress) {
+                self.manageFrames();
+                self.manageMarkers();
+            };
+        });
+
+        // When the map is clicked, location frames are made visible.
+        // This is useful if they were hidden as a result of a marker being
+        // clicked.
+        // In addition, all open info windows are closed and any selected
+        // markers are made small again
+        google.maps.event.addListener(map, 'click', self.clickMap);
+
+        // Display markers found in the markers array on the map
+        self.displayMarkers(map);
+
+        // Set initial map bounds based on location of markers
+        if($('#map').is(":visible")) {
+            self.setMapBounds();
+        };
+    };
+
+    self.addMarker = function(breakName, breakCoordinates, breakLocation, obj) {
+
+        var marker = new google.maps.Marker({
+
+            // Set position using the newly created variable
+            position: breakCoordinates,
+            map: map,
+            icon: 'img/marker_small.svg',
+
+            /* Set the title for the break marker as the name of the
+            wave/location of the break. This way it can be searched/filtered
+            in the ViewModel*/
+            title: breakName + ' ' + '(' + breakLocation + ')'
+        });
+
+        // Add a text box that displays the break name and location when
+        // clicked
+        self.addListeners(marker, breakName, obj);
+    };
+
+    self.addListeners = function(marker, breakName, obj) {
+
+        google.maps.event.addListener(marker, 'dblclick', (function(marker) {
+
+            /* Create an inner function what will at the time of iteration save
+            a double-click event to the relevant marker. When the user double-
+            clicks, the map will zoom in on the marker*/
+            return function() {
+
+                // Center the map
+                map.setCenter(marker.getPosition());
+
+                /* Set zoom if marker is clicked and not already zoomed in at
+                14 or above*/
+                if(map.getZoom() < 14) {
+                    map.setZoom(14);
+                };
+            };
+
+        /* Pass the relevant marker for the current iteration as an argument
+        into the function*/
+        })(marker));
+
+        google.maps.event.addListener(marker, 'click', (function(marker, breakName, obj) {
+
+            /* Create an inner function what will at the time of iteration save
+            the individual break's name (breakName) within the infoWindow and
+            attach it to the relevant marker */
+            return function() {
+
+                // Find last selected marker and make pin small again
+                self.makeMarkerSmall();
+
+                // Update the visible frames
+                self.manageFrames();
+
+                // Cache the title of the marker not including the location
+                var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
+
+                if (marker.icon === 'img/marker_small.svg') {
+                    console.log('make ' + markerName + "'" + 's marker big');
+                    marker.setIcon('img/marker_selected.svg');
+                } else if (marker.icon === 'img/marker_smallFav.svg') {
+                    console.log('make ' + markerName + "'" + 's marker big');
+                    marker.setIcon('img/marker_selectedFav.svg');
+                };
+
+                self.getInfoWindow(marker, breakName);
+
+                // Bounce marker upon clicking
+                self.animateMarker(marker);
+
+                /* Show surf guide (only if surf guide is already open) when
+                the marker is clicked */
+                if ($('.surf-guide-container').is(":visible")) {
+                    /* Remove any visible surf conditions so they aren't still
+                    displayed when the new surf guide renders */
+                    $('.surf-conditions').remove();
+                    renderSurfGuide(obj);
+                } else {
+                    /* If the surf guide isn't open, hide all location frames
+                    except the one related to the marker */
+                    self.showLocationFrame(breakName);
+                };
+            };
+
+        /* Pass the relevant marker and break name (breakName) for the current
+        iteration as an argument into the function*/
+        })(marker, breakName, obj));
+
+        // Location frame pulsates when it's corresponding marker is hovered
+        // over
+        google.maps.event.addListener(marker, 'mouseover', (function(breakName) {
+
+            /* Create an inner function what will at the time of iteration save
+            the breakName and any behavior to the current marker */
+            return function() {
+
+                var $numFramesVisible = $('.location-frame:visible').length;
+
+                // If the surf guide is open do nothing
+                if (!$('.surf-guide-container').length) {
+
+                    // Pulsate the associated location frame
+                    self.pulsateLocationFrame(breakName);
+
+                    // If more than one location frame is in view and
+                    // not in mobile view, execute code
+                    if($numFramesVisible !== 1 && window.innerWidth >= 768) {
+
+                        // Scroll to specific location frame
+                        self.scrollToFrame(breakName);
+                    };
+                };
+            };
+
+        /* Pass the relevant marker and break name (breakName) for the current
+        iteration as an argument into the function*/
+        })(breakName));
+
+        google.maps.event.addListener(marker, 'mouseout', (function(breakName) {
+
+            /* Create an inner function what will at the time of iteration save
+            the breakName and any behavior to the current marker */
+            return function() {
+
+                // If the surf guide is open do nothing
+                if (!$('.surf-guide-container').length) {
+
+                    // Reverse pulstate the associated location frame
+                    self.pulsateLocationFrame(breakName);
+                };
+            };
+
+        /* Pass the relevant marker and break name (breakName) for the current
+        iteration as an argument into the function*/
+        })(breakName));
+
+        // Add each marker to the markers array
+        markers.push(marker);
+    };
+
+    self.displayMarkers = function(map) {
+
+        // Loop through the markers array and display on the map
+        var markersLength = markers.length;
+
+        for (var i = markersLength; i--;) {
+            markers[i].setMap(map);
+        };
+    };
+
+    // Set the animation for the selected marker
+    self.animateMarker = function (marker) {
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+        window.setTimeout(function() {
+            marker.setAnimation(null);
+        }, 730);
+    };
+
+    self.makeMarkerBig = function (marker, markerName) {
+
+        /* If marker wasn't previously activated, make it big for
+        normal and fav icons */
+        if (marker.icon === 'img/marker_small.svg') {
+
+            console.log('make ' + markerName + "'" + 's marker big');
+
+            // Change the marker's image
+            marker.setIcon('img/marker_selected.svg');
+
+        } else if (marker.icon === 'img/marker_smallFav.svg') {
+
+            console.log('make ' + markerName + "'" + 's marker big');
+
+            // Change the marker's image
+            marker.setIcon('img/marker_selectedFav.svg');
+
+        };
+    };
+
+    // Find last selected marker and make pin small again
+    self.makeMarkerSmall = function () {
+        markers.forEach(function(marker) {
+
+            // Cache the title of the marker not including the location
+            var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
+
+            if (marker.icon === 'img/marker_selected.svg') {
+                console.log('make ' + markerName + "'" + 's marker small');
+                marker.setIcon('img/marker_small.svg');
+            } else if (marker.icon === 'img/marker_selectedFav.svg') {
+                console.log('make ' + markerName + "'" + 's marker small');
+                marker.setIcon('img/marker_smallFav.svg');
+            };
+        });
+    };
+
+    /* Select each marker related to a location object from
+    the View. This is accomplished using ko's click binding*/
+    self.goToMarker = function(breakName) {
+
+        // Find last selected marker and make it small
+        self.makeMarkerSmall();
+
+        // Iterate through the markers array
+        markers.forEach(function(marker) {
+
+            // Cache the title of the marker not including the location
+            var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
+
+            /* Filter markers that match the location object. When a match is
+            found, zoom in and display the relevant info window*/
+            if (markerName === breakName) {
+
+                // Make the matching marker's icon big
+                self.makeMarkerBig(marker, markerName);
+
+                // Open info window
+                self.getInfoWindow(marker, breakName);
+
+                // Animate marker
+                self.animateMarker(marker);
+            };
+        });
+    };
+
+    /* When a location frame is hovered over, the associated marker and
+    info window is activated */
+    self.activateMarker = function(breakName) {
+
+        // Iterate through the markers array
+        markers.forEach(function(marker) {
+
+            // Cache the title of the marker not including the location
+            var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
+
+            // Filter markers that match the location frame
+            if (markerName === breakName) {
+
+                self.makeMarkerBig(marker, markerName);
+
+            };
+        });
+    };
+
+    // Change any map markers that match/don't match the user's favorites
+     self.updateFavMarkers = function (favorites) {
+        markers.forEach(function(marker) {
+
+            // Cache the title of the marker not including the location
+            var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
+
+            /* If the name matches a user's favorite, change the image */
+            /* Any markers that don't match the user's favs or were never a
+            fav remain unaltered */
+            if (favorites.indexOf(markerName) > -1) {
+                if(marker.icon === 'img/marker_small.svg') {
+                    console.log("make " + markerName + "'s marker a favorite");
+                    marker.setIcon('img/marker_smallFav.svg');
+                } else if (marker.icon === 'img/marker_selected.svg') {
+                    console.log("make " + markerName + "'s marker a favorite");
+                    marker.setIcon('img/marker_selectedFav.svg');
+                };
+            // If the name doesn't match, but was a fav, change the img back
+            } else if (marker.icon === 'img/marker_smallFav.svg') {
+                console.log("unfavorite " + markerName + "'s marker");
+                marker.setIcon('img/marker_small.svg');
+            } else if (marker.icon === 'img/marker_selectedFav.svg') {
+                console.log("unfavorite " + markerName + "'s marker");
+                marker.setIcon('img/marker_selected.svg');
+            };
+        });
+    };
+
+    // Count the number of visible markers
+    self.checkVisibleMarkers = function () {
+
+        // Cache the length of the markers array and set another variable
+        var markersLength = markers.length;
+            numMarkersVisible = 0;
+
+        // Loop through the markers array
+        for(var i = markersLength; i--;) {
+
+            // Save a ref to the marker
+            var marker = markers[i];
+
+            // Check if the current marker is visible
+            if(marker.getVisible()) {
+
+                // Iterate the number of visible markers
+                numMarkersVisible++;
+            };
+        };
+
+        // If no markers are visible (map has been moved to an empty area),
+        // display button that centers the map again.
+        // If clicked, all markers are made visible and map is recentered
+        if(numMarkersVisible < 1) {
+
+            // If the reset button isn't already visible and not in guide view,
+            // display the rest map button
+            if(!$('.reset-map-container').length && !guideView) {
+
+                console.log('no markers visible');
+
+                // Render reset map button
+                self.showMapReset();
+            };
+        };
+    };
+
+    // Show all of the map's markers
+    // If a search has been made, show only those markers that match the search
+    // query
+    // If the favorites filter is selected, show only those markers that match
+    // the user's favorites
+    self.showMarkers = function (marker) {
+
+        // Shorten the marker title to just the break name
+        var markerTitle = marker.title.replace(/ *\([^)]*\) */g, "");
+
+        // If the search container is visible, only display the
+        // markers that match the current search query
+        if ($('.search-container').is(":visible")) {
+
+            // Cache the current search query
+            var search = self.Query().toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
+
+            // Compare the search query with the title of the marker
+            if (marker.title.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) > -1) {
+
+                // If there is a match, make the marker visible
+                marker.setVisible(true);
+            };
+
+        // If the favorites button is selected, only display the markers
+        // that are within the users's favorites
+        } else if ($('.favorite-filter-selected').length) {
+
+            // Compare the marker title to the user's favs
+            if (userFavorites.indexOf(markerTitle) > -1) {
+
+                // If there is a match, make the marker visible
+                marker.setVisible(true);
+            };
+
+        // If the search container isn't visible, show all markers
+        } else {
+
+            // Make all markers visible
+            marker.setVisible(true);
+        };
+    };
+
+    // Update visible markers depending on which ones fall within the current
+    // map bounds
+    self.manageMarkers = function () {
+
+        console.log('manage markers');
+
+        // Cache the length of the markers array
+        var markersLength = markers.length;
+
+        // Iterate through the markers array to check which markers fall
+        // within the current map bounds
+        for(var i = markersLength; i--;) {
+
+            var marker = markers[i];
+
+            // Get map bounds and determine which markers are within them
+            if(map.getBounds().contains(marker.getPosition())) {
+
+                // Show any markers that fall within the current map bounds
+                self.showMarkers(marker);
+
+            // If the markers are not within the current map bounds,
+            // hide them
+            } else {
+
+                // If a marker is selected, don't hide it
+                if(marker.icon === "img/marker_selected.svg" || marker.icon === "img/marker_selectedFav.svg") {
+                    marker.setVisible(true);
+                } else {
+                    marker.setVisible(false);
+                };
+            };
+        };
+
+        // Check the number of visible markers
+        self.checkVisibleMarkers();
+    };
+
+    /* Go to specific marker and open the surf guide */
+    self.clickLocationFrame = function(obj) {
+
+        // Disable rollover effects so the correct icon loads in surf guide
+        rollover = false;
+
+        // Highlight the location's marker if the map is visible
+        if($('.map-container').is(":visible")) {
+            self.goToMarker(obj.breakName);
+        };
+
+        // Open the surf guide
+        self.renderSurfGuide(obj);
+
+        // Check view to change the layout for the surf guide
+        self.checkView();
+    };
+
+    // Automatically scroll to the location frame whose marker is being hovered
+    // over
+    self.scrollToFrame = function (breakName) {
+
+        // Cache DOM refs
+        var $locationsContainer = $('.location-grid'),
+            $locationFrame = $('.location-frame'),
+            $pulsatingLocation = $('.pulse-location-frame'),
+            $oldPosition = $locationsContainer.scrollLeft();
+
+        // Check if autoscroll is already engaged
+        // If it is, clear the interval
+        if (typeof scrollRightRunning !== 'undefined' && scrollRightRunning) {
+            console.log('clear right scrolling in progress');
+            clearInterval(scrollRight);
+        } else if (typeof scrollLeftRunning !== 'undefined' && scrollLeftRunning) {
+            console.log('clear left scrolling in progress');
+            clearInterval(scrollLeft);
+        };
+
+        // Cache the width of the outer container for the locations
+        var $locationsCountainerWidth = $locationsContainer.width();
+
+        // Get and cache the outer width of the location frame
+        var $frameWidth = $locationFrame.outerWidth(true);
+
+        // Get the space needed on both sides of a location frame to center it
+        var spaceLeftNRight = ($locationsCountainerWidth - $frameWidth)/2;
+
+        // Get and cache a ref to the position (index) of frame that is being
+        // hovered over
+        var $targetIndex = $pulsatingLocation.index();
+
+        // Calculate the amount of space preceding the location being hovered over
+        // This is done by multiplying the number of the frames preceding the said
+        // location by the location frame width
+        var spacePreceding = $frameWidth * $targetIndex;
+
+        // Subtract the space needed on the left/right of the frame
+        // from the space that preceeds the targeted frame
+        var newPosition = spacePreceding - spaceLeftNRight;
+
+        console.log("auto scroll to " + breakName + "'s location frame");
+
+        // Scroll to the new location using the new position
+        // Scroll right if the new scrollLeft position is greater than current pos.
+        if(newPosition > $oldPosition) {
+
+          // Set the beginning scollLeft position on which to iterate
+          var transitionRight = $oldPosition;
+
+          // Create a loop that moves the scroll bar from left to right
+          var scrollRight = setInterval(function() {
+
+              // Create a global variable to indicate the scrolling is in progress
+              scrollRightRunning = true;
+
+              // Increase the scrollLeft position 70px for each 1/1000 of second
+              transitionRight+=70;
+
+              // If the scrollLeft position is less than the new position
+              // move the scrollLeft position incrementally closer to it
+              if(transitionRight < newPosition) {
+                  $locationsContainer.scrollLeft(transitionRight);
+
+              // If the scrollLeft position is greater/equal to the new position,
+              // stop the loop
+              } else {
+                  stopScrolling();
+              };
+
+          }, 1);
+
+        // Scroll left if the new scrollLeft position is less than current position
+        } else {
+
+          // Set the beginning scollLeft position on which to iterate
+          var transitionLeft = $oldPosition;
+
+          // Create a loop that moves the scroll bar from right to left
+          var scrollLeft = setInterval(function() {
+
+              // Create a global variable to indicate the scrolling is in progress
+              scrollLeftRunning = true;
+
+              // Increase the scrollLeft position 70px for each 1/1000 of second
+              transitionLeft-=70;
+
+              // If the scrollLeft position is greater than the new position
+              // move the scrollLeft position incrementally closer to it
+              if(transitionLeft >  newPosition) {
+                  $locationsContainer.scrollLeft(transitionLeft);
+
+              // If the scrollLeft position is less/equal to the new position,
+              // stop the loop
+              } else {
+                  stopScrolling();
+              };
+
+          }, 1);
+
+        };
+
+        // Stop auto scrolling
+        function stopScrolling () {
+
+            // If scrolling left or right, stop the loop
+            if(typeof scrollLeftRunning !== 'undefined' && scrollLeftRunning) {
+                clearInterval(scrollLeft);
+                scrollLeftRunning = false;
+            } else if (typeof scrollRightRunning !== 'undefined' && scrollRightRunning) {
+                clearInterval(scrollRight);
+                scrollRightRunning = false;
+            };
+
+            // Since each iteration towards the new position increments by 30px
+            // each time, it will never quite reach the exact goal, which leaves
+            // the location frame off center. To avoid this, set the scrollLeft
+            // position to the new position at the end of scrolling
+            $locationsContainer.scrollLeft(newPosition);
+
+            console.log('move scroll position from ' + $oldPosition + ' toward ' + newPosition);
+            console.log('stop scrolling');
+            console.log('scroll position at: ' + $locationsContainer.scrollLeft());
+        };
+    };
+
+    self.pulsateLocationFrame = function (breakName) {
+
+        // Cache DOM references
+        var $allLocationFrames = $('.location-frame'),
+            $numFramesVisible = $('.location-frame:visible').length;
+
+        // If more than one location frame is in view and not in mobile view,
+        // execute code
+        if($numFramesVisible !== 1 && window.innerWidth >= 768) {
+
+            // Loop through all of the location frames
+            $allLocationFrames.each(function() {
+
+                // Cache the current location frame's reference and text
+                var $locationFrame = $(this),
+                    $locationFrameText = $locationFrame.text();
+
+                /* If a specific location frame's text matches the currently hovered/unhovered marker, pulsate or reverse pulsate it */
+                if($locationFrameText.indexOf(breakName) > -1) {
+
+                    /* If hovering away from the marker, reverse pulsate its
+                    location frame */
+                    if($('.pulse-location-frame').length) {
+
+                        console.log("make " + breakName + "'s location frame small");
+
+                        // Add/remove necessary classes to animate
+                        $locationFrame.removeClass("pulse-location-frame").addClass("reverse-pulse");
+
+                        // Remove the reverse pulse effect
+                        removePulse($locationFrame);
+
+                    // If hovering over the marker, pulsate its location frame
+                    } else {
+
+                        console.log("make " + breakName + "'s location frame big");
+
+                        // Add necessary class to animate
+                        $locationFrame.removeClass("reverse-pulse").addClass("pulse-location-frame");
+                    };
+                };
+            });
+
+        /* If only one location is in view, do nothing unless hovering away from
+        its marker */
+        } else if ($numFramesVisible === 1 && $('.pulse-location-frame').length) {
+
+            // Cache DOM refs to the visible location frame
+            // Capture the location name of the visible location frame
+            var $locationFrame = $('.location-frame:visible'),
+                $locationName = $locationFrame[0].children[1].textContent;
+
+            console.log("make " + $locationName + "'s location frame small");
+
+            // Add/remove necessary classes to animate
+            $locationFrame.removeClass("pulse-location-frame").addClass("reverse-pulse");
+
+            // Remove the reverse pulse effect
+            removePulse($locationFrame);
+        };
+
+        // Remove the reverse pulse effect
+        function removePulse ($locationFrame) {
+
+            /* Set a time to remove the effect just after the reverse pulse effect
+             finishes its animation on the previous marker's location frame */
+            var timer = setTimeout (function() {
+                $locationFrame.removeClass("reverse-pulse");
+            }, 400);
+        };
+    };
+
+    // Set the style on the location frames for map view
+    self.resetLocationFrames = function () {
+
+        // Cache DOM elements
+        var $allLocationFrames = $('.location-frame'),
+            $locationName = $('.location-name'),
+            $breakName = $('.break-name'),
+            $favorite = $('.favorite');
+
+        // Change all location frames style to map view
+        $allLocationFrames.addClass("location-frame-map-view-style").removeClass("location-frame-default-style");
+
+        // Loop through all of the location frames
+        $allLocationFrames.each(function() {
+
+            // Cache the current location frame's reference and text
+            var $locationFrame = $(this);
+
+            // If the location frame is visible, format it for map view
+            // If not, keep it hidden
+            if($locationFrame.is(":visible")) {
+
+                // Make sure display is inline
+                $locationFrame.css("display", "inline-block");
+            };
+        });
+
+        // Remove the Bootstrap settings
+        $allLocationFrames.removeClass("col-xs-12 col-sm-6 col-md-4");
+
+        // Change break name style to map view style
+        $breakName.removeClass("break-name-default-style").addClass("break-name-map-view-style");
+
+        // Change location name style to map view style
+        $locationName.removeClass("location-name-default-style").addClass("location-name-map-view-style");
+
+        /* Change 'favorite' symbol style to map view style *must change
+        via attr in order to change the class of an inline svg */
+        $favorite.attr("class", "favorite favorite-map-view-style");
+    };
+
+    self.showLocationFrame = function (breakName) {
+
+        // Cache DOM reference to all location frames
+        var $allLocationFrames = $('.location-frame');
+
+        // Hide all location frames
+        $allLocationFrames.hide();
+
+        // Loop through all of the location frames
+        $allLocationFrames.each(function() {
+
+            // Cache the current location frame's reference and text
+            var $locationFrame = $(this);
+            var $locationFrameText = $locationFrame.text();
+
+            /* If a specific location frame's text matches the currenlty selected
+            break, show it*/
+            if($locationFrameText.indexOf(breakName) > -1) {
+
+                console.log('show only ' + breakName + "'s location frame");
+                $locationFrame.show();
+            };
+        });
+    };
+
+    self.showFrames = function (marker) {
+
+        // Cache the break name of the marker not including the location
+        var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
+
+        // If the search container is visible, only display the
+        // frames of those markers that match the current search
+        // query
+        if ($('.search-container').is(":visible")) {
+
+            // Cache the current search query
+            var search = self.Query().toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, ""),
+            markerTitle = marker.title.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
+
+            // Compare the search query with the title of the
+            // markers found within the map's boundaries
+            if (markerTitle.indexOf(search) > -1) {
+
+                // If there is a match, make the frame visible
+                updateFrames(markerName);
+            };
+
+        // If the favorites filter button is selected, only display
+        // the frames of those markers that are within the user's
+        // favorites
+        } else if ($('.favorite-filter-selected').length) {
+
+            // Compare the marker title to the user's favs
+            if (userFavorites.indexOf(markerName) > -1) {
+
+                // If there is a match, make the frame visible
+                updateFrames(markerName);
+            };
+
+        // If the search container isn't visible and the favorites
+        // filter isn't selected, display only the location
+        // frame's of the markers that fall within the map's
+        // current boundaries
+        } else {
+
+            // Update the visible frames
+            updateFrames(markerName);
+        };
+
+        // Remove or display the location frames of those markers found
+        // within the map's current boundaries
+        function updateFrames (markerName) {
+
+            // Iterate through the array of locations
+            self.locationArray.forEach(function(obj) {
+
+                // If a marker within the map's boundaries matches a
+                // location, display it
+                if (markerName === obj.breakName) {
+                      self.locationGrid.push(obj);
+                };
+            });
+        };
+    };
+
+    // Update visible frames depending on markers visible in the view port
+    self.manageFrames = function () {
+
+        // Cache the length of the markers array
+        var markersLength = markers.length;
+
+        // Check if any markers are selected, if so do not adjust visible
+        // frames. Otherwise, the selected marker's frame will not be the
+        // only frame visible as others would be added whenever the map is
+        // adjusted
+        for(var i = markersLength; i--;) {
+
+            // If any of the marker's images matches a 'selected' image
+            // End the function
+            if(markers[i].icon === "img/marker_selected.svg" || markers[i].icon === "img/marker_selectedFav.svg") {
+                return;
+            };
+        };
+
+        console.log('manage location frames');
+
+        // Clear the visible location frames
+        self.locationGrid.removeAll();
+
+        // Iterate backwards through the markers array, so that their
+        // location frames when matched are add back to the location grid
+        // in the same order
+        for(var i = markersLength; i--;) {
+
+            var marker = markers[i];
+
+            // Get map bounds and determine which markers are within them
+            // Display the location frames of only those markers found
+            // within the maps boundaries
+            if(map.getBounds().contains(marker.getPosition())) {
+
+                // Display the frames
+                self.showFrames(marker);
+            };
+        };
+
+        // If in mobile view, do not reset the location frame's styling
+        // Otherwise, alter their styling for map view
+        if(!mobileView) {
+            self.resetLocationFrames();
+        };
+
+        // Re-add rollover effects
+        self.addRolloverEffect();
+
+        // Re-render the location frame's 'favorite' status
+        self.renderFavoriteOnLocationFrame();
+    };
+
+    // Show all of the relevant location frames
+    // Set all of the relevant markers to visible
+    self.resetFramesAndMarkers = function () {
+
+        // Save ref to array length
+        var markersLength = markers.length;
+
+        // Clear the visible location frames
+        self.locationGrid.removeAll();
+
+        // Iterate through the markers array
+        for(var i = markersLength; i--;) {
+
+            // Cache a ref to the marker
+            var marker = markers[i];
+
+            // Show all relevant locaiton frames
+            self.showFrames(marker);
+
+            // Set all relevant markers to visible
+            self.showMarkers(marker);
+        };
+
+        // If in mobile view, do not reset the location frame's styling
+        // Otherwise, alter their styling for map view
+        if(!mobileView) {
+            self.resetLocationFrames();
+        };
+
+        // Re-add rollover effects
+        self.addRolloverEffect();
+
+        // Re-render the location frame's 'favorite' status
+        self.renderFavoriteOnLocationFrame();
+    };
+
+    self.clickMap = function () {
+
+        // Find last selected marker and make pin small again
+        self.makeMarkerSmall();
+
+        /* If the surf guide isn't visible show the locations, otherwise
+        do nothing (just close the info windows) */
+        if (!$('.surf-guide-container').is(":visible")) {
+            $('.location-frame').show();
+        };
+
+        // Close any open info windows
+        infoWindow.close();
+
+        // Update visible frames
+        self.manageFrames();
+    };
+
+    // Bring map markers back into view
+    self.showMapReset = function () {
+
+        // Cache DOM elements
+        var resetMap = '<div class="reset-map-container"></div>',
+            $locationGrid = $('.location-grid');
+
+        // Add the container for the reset button
+        $locationGrid.append(resetMap);
+
+        // Cache DOM elements
+        var $resetMapContainer = $('.reset-map-container'),
+            $resetMapIcon = '<img src="img/reset_button.svg" class="reset-button" alt="reload location frames and markers button">';
+
+        // Add the reset map button
+        $resetMapContainer.append($resetMapIcon);
+
+        // Cache a ref to the reset button
+        $resetButton = $('.reset-button');
+
+        // Add event listener
+        // When the button is clicked, recenter the map
+        $resetButton.on("click", function() {
+            resetMarkersAndFrames();
+        });
+
+        // Make all of the map markers visible and set the map bounds
+        function resetMarkersAndFrames () {
+
+            console.log('set markers to visible');
+            console.log('center map');
+
+            // Remove the reset button
+            $resetMapContainer.remove();
+
+            // Set a ref to the length of the markers array
+            var markersLength = markers.length;
+
+            // Loop through the maps markers
+            for(var i = markersLength; i--;) {
+                var marker = markers[i];
+
+                // Make markers visible
+                self.showMarkers(marker);
+            };
+
+            // Set map bounds
+            self.setMapBounds();
+
+            // Remove the reset map button
+            $('.reset-map-container').remove();
+        };
+    };
+
+    // Center the map on the selected marker
+    self.centerMapOnGuideMarker = function () {
+
+        console.log('center map over relevant marker');
+
+        // Cache DOM ref
+        var breakName = $('#guide-break-name').text();
+
+        // Iterate through the markers array
+        markers.forEach(function(marker) {
+
+            // Cache the title of the marker not including the location
+            var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
+
+            // If the currently selected surf guide's break name matches
+            // a marker's break name:
+            if (breakName === markerName) {
+
+                // If info window isn't open
+                // Also, make the marker big if it isn't
+                // If the info window/marker are already open/big, do nothing
+                // This avoids repeating these tasks everytime window is resized
+                if (!self.isInfoWindowOpen(infoWindow)){
+
+                    console.log('info window & marker not activated');
+
+                    // Make the relevant marker big
+                    self.makeMarkerBig(marker, markerName);
+
+                    // Open info window
+                    self.getInfoWindow(marker, breakName);
+                };
+
+                // Center the map over the marker
+                map.setCenter(marker.getPosition());
+
+                // Zoom in on the relevant marker
+                map.setZoom(10);
+            };
+        });
+    };
+
+     self.setMapBounds = function () {
+
+        console.log('set map bounds');
+
+        /* Create map bounds rectangle using the most SW / NE locations
+        to calculate the size*/
+        var bounds = new google.maps.LatLngBounds();
+
+        /* Loop through markers and extend bounds to only those markers
+        that are visible*/
+        var markersLength = markers.length;
+
+        for (var i = markersLength; i--;) {
+            if(markers[i].visible) {
+                bounds.extend(markers[i].getPosition());
+            };
+        };
+
+        // Fit the map to the bounds calcuated above
+        map.fitBounds(bounds);
+
+        /* If there's only one marker (i.e. zoom is very high/too close), reset
+        zoom to lower level*/
+        if(map.getZoom() > 12) {
+            map.setZoom(12);
+        };
+    };
+
+    /* When the map is in view on a screen larger than 767px, the height is
+    adjusted*/
+    self.adjustMapSize = function () {
+
+        // Save references to DOM elements and heights
+        var $locationGridHeight = $('.location-grid').outerHeight(),
+        $navbarHeight = $('#myNavbar').outerHeight(),
+        $windowHeight = $(window).height(),
+        $mapContainer = $('.map-container'),
+        $searchContainer = $('.search-container');
+
+        /* If the search container is visible, set a new map height that
+        accounts for the search container height */
+        if($searchContainer.is(":visible")) {
+
+            // Save the search container height and set a new map height
+            var $searchContainerHeight = $searchContainer.outerHeight(),
+            $newMapHeight = $windowHeight - ($locationGridHeight + $searchContainerHeight + $navbarHeight);
+
+        /* If the search container isn't visible, set a new map height without
+        accounting for the search container height */
+        } else {
+            var $newMapHeight = $windowHeight - ($locationGridHeight + $navbarHeight);
+        };
+
+        // Adjust the height of the map container
+        $mapContainer.css("height", $newMapHeight);
+
+        // If the Google map and its locations have loaded and the frame
+        // and marker managers aren't disabled, set the map bounds
+        if(markers.length !== 0 && $('#map').is(":visible") && !resizeInProgress) {
+            google.maps.event.trigger(map, 'resize');
+            self.setMapBounds();
+        };
+    };
+
+    // Activate the info window for the selected marker
+    self.getInfoWindow = function (marker, breakName) {
+
+        console.log('show ' + breakName + "'s info window");
+
+        // Assign content to InfoWindow object
+        infoWindow.setContent(breakName);
+
+        // Assign the InfoWindow object the appropriate marker
+        infoWindow.open(map, marker);
+    };
+
+    // Check to see if the info window object is already open
+    self.isInfoWindowOpen = function (infoWindow){
+        var map = infoWindow.getMap();
+        return (map !== null && typeof map !== "undefined");
+    };
+
+    /* When screen size is larger than mobile and map is in view, adjust the
+    rollover icons' positioning/size when hovering over a location frame */
+    self.toggleRolloverClasses = function () {
+
+        // Cache refs to selected DOM elements
+        var $skillLevelIcon = $('.skill-level-rollover'),
+            $breakTypeIcon = $('.break-type-rollover'),
+            $waveDirectionIcon = $('.wave-direction-rollover')
+            $bestSeasonIcon = $('.best-season-rollover'),
+            $miscInfoOneIcon = $('.misc-info-one-rollover'),
+            $miscInfoTwoIcon = $('.misc-info-two-rollover'),
+            $distanceInfo = $('.distance-rollover'),
+            $waterTempInfo = $('.water-temp-rollover'),
+            $waveSizeInfo = $('.wave-size-rollover'),
+            $costInfo = $('.cost-rollover');
+
+        /* Whilst hovering over a location add/remove the appropriate classes
+        in order to change the icons' styling */
+        if(rollover) {
+
+            console.log('adjust hover icons and info to map view style');
+
+            $skillLevelIcon.addClass("skill-level-hover-map-view-style").removeClass("skill-level-hover-default-style");
+
+            $breakTypeIcon.addClass("break-type-hover-map-view-style").removeClass("break-type-hover-default-style");
+
+            $waveDirectionIcon.addClass("wave-direction-hover-map-view-style").removeClass("wave-direction-hover-default-style");
+
+            $bestSeasonIcon.addClass("best-season-hover-map-view-style").removeClass("best-season-hover-default-style");
+
+            $miscInfoOneIcon.addClass("misc-info-one-hover-map-view-style").removeClass("misc-info-one-hover-default-style");
+
+            $miscInfoTwoIcon.addClass("misc-info-two-hover-map-view-style").removeClass("misc-info-two-hover-default-style");
+
+            $distanceInfo.addClass("distance-hover-map-view-style").removeClass("distance-hover-default-style");
+
+            $waterTempInfo.addClass("water-temp-hover-map-view-style").removeClass("water-temp-hover-default-style");
+
+            $waveSizeInfo.addClass("wave-size-hover-map-view-style").removeClass("wave-size-hover-default-style");
+
+            $costInfo.addClass("cost-hover-map-view-style").removeClass("cost-hover-default-style");
+
+
+        /* When hovering over a location is finished, add/remove the appropriate classes in order to change the icons' styling back to the
+        default style */
+        } else {
+
+            console.log('revert hover icons and info back to default style');
+
+            $skillLevelIcon.addClass("skill-level-hover-default-style").removeClass("skill-level-hover-map-view-style");
+
+            $breakTypeIcon.addClass("break-type-hover-default-style").removeClass("break-type-hover-map-view-style");
+
+            $waveDirectionIcon.addClass("wave-direction-hover-default-style").removeClass("wave-direction-hover-map-view-style");
+
+            $bestSeasonIcon.addClass("best-season-hover-default-style").removeClass("best-season-hover-map-view-style");
+
+            $miscInfoOneIcon.addClass("misc-info-one-hover-default-style").removeClass("misc-info-one-hover-map-view-style");
+
+            $miscInfoTwoIcon.addClass("misc-info-two-hover-default-style").removeClass("misc-info-two-hover-map-view-style");
+
+            $distanceInfo.addClass("distance-hover-default-style").removeClass("distance-hover-map-view-style");
+
+            $waterTempInfo.addClass("water-temp-hover-default-style").removeClass("water-temp-hover-map-view-style");
+
+            $waveSizeInfo.addClass("wave-size-hover-default-style").removeClass("wave-size-hover-map-view-style");
+
+            $costInfo.addClass("cost-hover-default-style").removeClass("cost-hover-map-view-style");
+        };
+    };
+
+    /* When the cursor hovers over a location, remove the text and add
+    a gaussian blur. Wait until the locations have been loaded */
+    var rollover;
+
+    self.addRolloverEffect = function () {
+
+        console.log('enable hover effect');
+
+        // For each location set variables and add hover effects
+        $('.location-frame').each(function () {
+            var $locationFrame = $(this),
+                $breakName = $(this).find('.break-name'),
+                $location = $(this).find('.location-name'),
+                $img = $(this).find('img.location-image'),
+                $favoriteWrapper = $(this).find('.favorite-wrapper'),
+                $mapContainer = $('.map-container');
+
+            $locationFrame.on('mouseenter', function (e) {
+
+                // Enable rollover effects
+                rollover = true;
+
+                /* Get identifying information from the hovered over
+                locaton frame */
+                var frameBreakName = e.currentTarget.children[1].textContent;
+
+                console.log('hover over ' + frameBreakName);
+
+                /* If gridView is not enabled, activate the location frame's
+                 associated marker and info window */
+                if($mapContainer.is(":visible")) {
+                    activateMarker(frameBreakName);
+                };
+
+                // Iterate through the location array
+                self.locationArray.forEach(function(obj) {
+
+                    // Filter locations that match the location frame
+                    // Bounce the location frame's associated marker
+                    if (frameBreakName === obj.breakName) {
+                        importInfo(obj);
+                    };
+                });
+
+                /* When the mouse is hovering over a location frame
+                show unique information about that location */
+                function importInfo(obj) {
+
+                    $img.css({
+                        "-webkit-filter" : "blur(4px) brightness(80%)",
+                        "filter" : "blur(4px) brightness(80%)"
+                    });
+                    $location.hide()
+                    $breakName.hide();
+                    $favoriteWrapper.hide();
+
+                    /* Display icon associated with the skill level
+                    needed to surf the break */
+                    var skillLevelIcon = displaySkillIcon(obj.skillLevel);
+                    $locationFrame.append(skillLevelIcon);
+
+                    /* Display the icon associated with the type of
+                    break it is (i.e. what kind of surface is beneath
+                    it */
+                    var breakIcon = displayBreakIcon(obj.breakDetails);
+                    $locationFrame.append(breakIcon);
+
+                    /* Display the icon associated with the direction
+                    the wave breaks */
+                    var directionIcon = displayDirectionIcon(obj.waveDirection);
+                    $locationFrame.append(directionIcon);
+
+                    /* Display the icon for the best month in which to
+                    surf at the specific break*/
+                    var bestSeasonIcon = displayBestSeasonIcon(obj.optimalTime);
+                    $locationFrame.append(bestSeasonIcon);
+
+                    /* If there is big wave surfing at this break
+                    display big wave icon. If not, display the
+                    suggested swim attire icon for current season */
+                    var miscIconOne = displayBigWaveIcon(obj);
+                    $locationFrame.append(miscIconOne);
+
+                    /* If the wave is well known display the well
+                    known icon, otherwise display a random hazard
+                    icon */
+                    var miscIconTwo = displayWellKnownIcon(obj);
+                    $locationFrame.append(miscIconTwo);
+
+                    /* Display the budget cost for the location */
+                    var costInfo = displayCost(obj.cost);
+                    $locationFrame.append(costInfo);
+
+                    /* Check if current location is available, if it is
+                    render the distance to the hovered over location in
+                    the top right corner of the picture */
+                    if(typeof currentLat !== 'undefined') {
+                        var distanceInfo = displayDistance(obj.lat, obj.lng);
+                        $locationFrame.append(distanceInfo);
+                    };
+
+                    // Display average water temp for current season
+                    var waterTempInfo = displayCurrentWaterTemp(obj.avgWaterTemp);
+                    $locationFrame.append(waterTempInfo);
+
+                    // Display avg wave height for the break
+                    var waveSizeInfo = displayWaveSize(obj.avgSize);
+                    $locationFrame.append(waveSizeInfo);
+                };
+
+                /* If screen is larger than mobile view adjust the icons'
+                styling for the map view if enabled */
+                if(!mobileView && !gridView) {
+                    self.toggleRolloverClasses();
+                };
+
+                self.addToolTips();
+            });
+
+            /* Remove all imported info when the mouse stops hovering */
+            $locationFrame.on('mouseleave', function () {
+
+                // Set rollover to false
+                rollover = false;
+
+                // Cache a ref to all of the hover icons
+                var $allHoverIcons = $('.rollover-info');
+
+                // Remove the tooltips loaded status so they can be loaded
+                // again during the next hover (any element that has the class
+                // below will not load tooltips)
+                $allHoverIcons.removeClass("tooltip-loaded");
+
+                /* If screen is larger than mobile view adjust the icons'
+                styling back to default if the the map view is enabled */
+                if(!mobileView && !gridView) {
+                    self.toggleRolloverClasses();
+                };
+
+                $img.css({
+                    "-webkit-filter" : "blur(0px) brightness(100%)",
+                    "filter" : "blur(0px) brightness(100%)"
+                });
+                $location.show();
+                $breakName.show();
+                $favoriteWrapper.show();
+
+                /* If gridView is not enabled, deactivate the location frame's
+                associated marker. Make its pin small again only if its
+                info window isn't open. If it's info window were open, that
+                would mean that it is selected, which for the purposes of
+                selection, should stay big. If a marker is selected, it also
+                prevents the locaiton frames from being managed (keeps only
+                one location frame visible) */
+                if(!$('.surf-guide-container').length && !self.isInfoWindowOpen(infoWindow) && !gridView) {
+                    self.makeMarkerSmall();
+                };
+
+                $allHoverIcons.remove();
+            });
         });
     };
 
@@ -539,40 +2249,34 @@ function AppViewModel () {
         };
     };
 
-    /* When the map is in view on a screen larger than 767px, the height is
-    adjusted*/
-    self.adjustMapSize = function () {
+    // Modifiy navbar to sticky navbar upon scrolling down
+    var $navbar = $('#navbar-main'),
+        $distance = $navbar.offset().top,
+        $window = $(window),
+        $body = $('body');
 
-        // Save references to DOM elements and heights
-        var $locationGridHeight = $('.location-grid').outerHeight(),
-        $navbarHeight = $('#myNavbar').outerHeight(),
-        $windowHeight = $(window).height(),
-        $mapContainer = $('.map-container'),
-        $searchContainer = $('.search-container');
-
-        /* If the search container is visible, set a new map height that
-        accounts for the search container height */
-        if($searchContainer.is(":visible")) {
-
-            // Save the search container height and set a new map height
-            var $searchContainerHeight = $searchContainer.outerHeight(),
-            $newMapHeight = $windowHeight - ($locationGridHeight + $searchContainerHeight + $navbarHeight);
-
-        /* If the search container isn't visible, set a new map height without
-        accounting for the search container height */
+    $window.scroll(function () {
+        if($window.scrollTop() > $distance) {
+            $navbar.addClass('navbar-fixed-top');
+            $body.css("padding-top", "50px");
         } else {
-            var $newMapHeight = $windowHeight - ($locationGridHeight + $navbarHeight);
+            $navbar.removeClass('navbar-fixed-top');
+            $body.css("padding-top", "0px");
         };
+    });
 
-        // Adjust the height of the map container
-        $mapContainer.css("height", $newMapHeight);
+    self.loadProgressIndicator = function () {
 
-        // If the Google map and its locations have loaded and the frame
-        // and marker managers aren't disabled, set the map bounds
-        if(markers.length !== 0 && $('#map').is(":visible") && !resizeInProgress) {
-            google.maps.event.trigger(map, 'resize');
-            self.setMapBounds();
-        };
+        var cl = new CanvasLoader('progressBarContainer');
+        cl.setColor('#00b8e6'); // default is '#000000'
+        cl.setShape('spiral'); // default is 'oval'
+        cl.setDiameter(72); // default is 40
+        cl.setDensity(33); // default is 40
+        cl.setRange(1); // default is 1.3
+        cl.setFPS(23); // default is 24
+        cl.show(); // Hidden by default
+
+        return cl;
     };
 
     /* In screen sizes greater than 767px horizontal scrolling is enabled
@@ -674,7 +2378,7 @@ function AppViewModel () {
             /* If the surf guide is open, reset the map size, then center the map on the selected location's marker */
             } else if (guideView && $map.is(":visible")) {
                 google.maps.event.trigger(map, 'resize');
-                self.centerOnGuideMarker();
+                self.centerMapOnGuideMarker();
             };
 
         /* If the screen width is larger than a 'mobile' view, alter the
@@ -708,118 +2412,6 @@ function AppViewModel () {
             // Enable horizontal scrolling
             self.enableHorizontalScrolling();
         };
-    };
-
-    /* When screen size is larger than mobile and map is in view, adjust the
-    rollover icons' positioning/size when hovering over a location frame */
-    self.toggleRolloverClasses = function () {
-
-        // Cache refs to selected DOM elements
-        var $skillLevelIcon = $('.skill-level-rollover'),
-            $breakTypeIcon = $('.break-type-rollover'),
-            $waveDirectionIcon = $('.wave-direction-rollover')
-            $bestSeasonIcon = $('.best-season-rollover'),
-            $miscInfoOneIcon = $('.misc-info-one-rollover'),
-            $miscInfoTwoIcon = $('.misc-info-two-rollover'),
-            $distanceInfo = $('.distance-rollover'),
-            $waterTempInfo = $('.water-temp-rollover'),
-            $waveSizeInfo = $('.wave-size-rollover'),
-            $costInfo = $('.cost-rollover');
-
-        /* Whilst hovering over a location add/remove the appropriate classes
-        in order to change the icons' styling */
-        if(rollover) {
-
-            console.log('adjust hover icons and info to map view style');
-
-            $skillLevelIcon.addClass("skill-level-hover-map-view-style").removeClass("skill-level-hover-default-style");
-
-            $breakTypeIcon.addClass("break-type-hover-map-view-style").removeClass("break-type-hover-default-style");
-
-            $waveDirectionIcon.addClass("wave-direction-hover-map-view-style").removeClass("wave-direction-hover-default-style");
-
-            $bestSeasonIcon.addClass("best-season-hover-map-view-style").removeClass("best-season-hover-default-style");
-
-            $miscInfoOneIcon.addClass("misc-info-one-hover-map-view-style").removeClass("misc-info-one-hover-default-style");
-
-            $miscInfoTwoIcon.addClass("misc-info-two-hover-map-view-style").removeClass("misc-info-two-hover-default-style");
-
-            $distanceInfo.addClass("distance-hover-map-view-style").removeClass("distance-hover-default-style");
-
-            $waterTempInfo.addClass("water-temp-hover-map-view-style").removeClass("water-temp-hover-default-style");
-
-            $waveSizeInfo.addClass("wave-size-hover-map-view-style").removeClass("wave-size-hover-default-style");
-
-            $costInfo.addClass("cost-hover-map-view-style").removeClass("cost-hover-default-style");
-
-
-        /* When hovering over a location is finished, add/remove the appropriate classes in order to change the icons' styling back to the
-        default style */
-        } else {
-
-            console.log('revert hover icons and info back to default style');
-
-            $skillLevelIcon.addClass("skill-level-hover-default-style").removeClass("skill-level-hover-map-view-style");
-
-            $breakTypeIcon.addClass("break-type-hover-default-style").removeClass("break-type-hover-map-view-style");
-
-            $waveDirectionIcon.addClass("wave-direction-hover-default-style").removeClass("wave-direction-hover-map-view-style");
-
-            $bestSeasonIcon.addClass("best-season-hover-default-style").removeClass("best-season-hover-map-view-style");
-
-            $miscInfoOneIcon.addClass("misc-info-one-hover-default-style").removeClass("misc-info-one-hover-map-view-style");
-
-            $miscInfoTwoIcon.addClass("misc-info-two-hover-default-style").removeClass("misc-info-two-hover-map-view-style");
-
-            $distanceInfo.addClass("distance-hover-default-style").removeClass("distance-hover-map-view-style");
-
-            $waterTempInfo.addClass("water-temp-hover-default-style").removeClass("water-temp-hover-map-view-style");
-
-            $waveSizeInfo.addClass("wave-size-hover-default-style").removeClass("wave-size-hover-map-view-style");
-
-            $costInfo.addClass("cost-hover-default-style").removeClass("cost-hover-map-view-style");
-        };
-    };
-
-    // Set the style on the location frames for map view
-    self.resetLocationFrames = function () {
-
-        // Cache DOM elements
-        var $allLocationFrames = $('.location-frame'),
-            $locationName = $('.location-name'),
-            $breakName = $('.break-name'),
-            $favorite = $('.favorite');
-
-        // Change all location frames style to map view
-        $allLocationFrames.addClass("location-frame-map-view-style").removeClass("location-frame-default-style");
-
-        // Loop through all of the location frames
-        $allLocationFrames.each(function() {
-
-            // Cache the current location frame's reference and text
-            var $locationFrame = $(this);
-
-            // If the location frame is visible, format it for map view
-            // If not, keep it hidden
-            if($locationFrame.is(":visible")) {
-
-                // Make sure display is inline
-                $locationFrame.css("display", "inline-block");
-            };
-        });
-
-        // Remove the Bootstrap settings
-        $allLocationFrames.removeClass("col-xs-12 col-sm-6 col-md-4");
-
-        // Change break name style to map view style
-        $breakName.removeClass("break-name-default-style").addClass("break-name-map-view-style");
-
-        // Change location name style to map view style
-        $locationName.removeClass("location-name-default-style").addClass("location-name-map-view-style");
-
-        /* Change 'favorite' symbol style to map view style *must change
-        via attr in order to change the class of an inline svg */
-        $favorite.attr("class", "favorite favorite-map-view-style");
     };
 
     // Set intitial variables for map, grid, guide, and mobile views
@@ -940,298 +2532,88 @@ function AppViewModel () {
         };
     });
 
-    // Modifiy navbar to sticky navbar upon scrolling down
-    self.stickyNavBar = function() {
-        var $navbar = $('#navbar-main'),
-            $distance = $navbar.offset().top,
-            $window = $(window),
-            $body = $('body');
-
-        $window.scroll(function () {
-            if($window.scrollTop() > $distance) {
-                $navbar.addClass('navbar-fixed-top');
-                $body.css("padding-top", "50px");
-            } else {
-                $navbar.removeClass('navbar-fixed-top');
-                $body.css("padding-top", "0px");
-            };
-        });
-    };
-
-    self.stickyNavBar();
-
-    /* Replace specific SVG images with inline SVG in order to make CSS
-    styling possible */
-    self.makeSVGInline = function (oldSvg) {
-        var $img = oldSvg;
-        var imgClass = $img.attr('class');
-        var imgURL = $img.attr('src');
-
-        $.get(imgURL, function(data) {
-
-            // Get the SVG tag, ignore the rest
-            var $svg = $(data).find('svg');
-
-            // Add replaced image's classes to the new SVG
-            if(typeof imgClass !== 'undefined') {
-                $svg = $svg.attr('class', imgClass);
-            }
-
-            // Remove any invalid XML tags as per http://validator.w3.org
-            $svg = $svg.removeAttr('xmlns:a');
-
-            // Replace image with new SVG
-            $img.replaceWith($svg);
-
-        }, 'xml');
-    };
-
-    /* Cache Firebase database references to all, location, and user data */
-    var allData = new Firebase("https://dazzling-torch-4012.firebaseio.com"),
-        locationData = new Firebase("https://dazzling-torch-4012.firebaseio.com/locationData"),
-        users = new Firebase('https://dazzling-torch-4012.firebaseio.com/users');
-
-    /* Create write/read error messages to be used as callbacks */
-    var fireBaseWriteError = function(error) {
-        if (error) {
-          console.log("data could not be saved." + error);
-        } else {
-          console.log("data saved successfully.");
-        };
-    };
-    var fireBaseReadError = function (errorObject) {
-        console.log("the read failed: " + errorObject.code);
-    };
-
-    /* Iterate through the location frame displayed and fill in any locations
-    that match the user's favorites */
-    self.renderFavoriteOnLocationFrame = function () {
-
-        console.log("display 'favorite' icons on relevant location frames");
-
-        $('.location-frame').each(function () {
-
-            // Cache references to location frame, favorite symbol, & break name
-            var $locationFrame = $(this);
-            var $favoriteWrapper = $(this).find('.favorite-wrapper');
-            var $breakName = $(this).find('.break-name')[0].textContent;
-
-            // Filter locations that match the user's favorites
-            // When a match is found, add a class to style it as 'selected'
-            if(userFavorites.indexOf($breakName) > -1) {
-                $favoriteWrapper.removeClass('not-a-favorite');
-                $favoriteWrapper.addClass('is-a-favorite');
-            } else {
-                if($favoriteWrapper.hasClass('is-a-favorite')) {
-                    $favoriteWrapper.addClass('not-a-favorite');
-                    $favoriteWrapper.removeClass('is-a-favorite');
-                };
-            };
-        });
-    };
-
-    /* Create an empty local array (globally accessible for use with the
-      Google API) to hold the user's favorites collected from firebase's
-      database */
-    userFavorites = [];
-
-    self.getFavorites = function (authData) {
-
-        // If there are no users logged in, authData will be null
-        if(authData === null) {
-            console.log('cannot find favorites because there are no logged in users');
-        } else {
-
-            // Save ref to number of locations in data
-            var numLocations = 0;
-
-            // Count the number of locations in data
-            locationData.on("value", function(snapshot) {
-                var data = snapshot.val();
-
-                data.forEach(function(obj) {
-                    numLocations++;
-                });
-            });
-
-            // If the markers array is fully loaded, update the markers and
-            // location frames. If it isn't loaded, keep checking until it is.
-            // Once loaded update the location frame of each favorite
-            var favsTimer = setInterval(function () {
-
-                // If the number of locations matches the markers array length
-                // and the markers array length is at least greater than zero,
-                // update the location frame of each favorite
-                if(numLocations === markers.length && markers.length > 0) {
-
-                  console.log(markers.length + ' out of ' + numLocations + ' markers loaded');
-                  console.log('update favorites');
-
-                  updateFavs();
-
-                  clearInterval(favsTimer);
-                };
-            }, 1000);
-
-            function updateFavs () {
-
-                /* Get the user's favorites */
-                users.child(authData.uid).child("favorites").on("value", function(snapshot) {
-
-                    // Save the Firebase snapshot of the user's favorites
-                    var favorites = snapshot.val();
-
-                    /* Clear any existing favorites in the local favorites array
-                    so it can be filled with updated information. */
-                    userFavorites = [];
-
-                    // If the user has no favorites, log msg in console
-                    if(favorites === null) {
-
-                        console.log('user has no favorites');
-
-                        // Cache an empty array to replace 'null'
-                        var favorites = [];
-
-                        /* Reset all of the marker images using the empty array*/
-                        self.updateFavMarkers(favorites);
-                    } else {
-
-                        /* Update the marker image of any markers that match the
-                        user's favorites */
-                        self.updateFavMarkers(favorites);
-
-                        /* Push each favorite found in the Firebase array into the
-                        local favorites array */
-                        favorites.forEach(function(obj) {
-                          userFavorites.push(obj);
-                        });
-                        console.log("the user's favorite(s) is/are: " + userFavorites.join(', '));
-
-                        // Update DOM elements (location frames)
-                        /* Fill in the hearts of any locations which are the user's
-                        favorites */
-                        self.renderFavoriteOnLocationFrame();
-                    };
-
-                }, fireBaseReadError);
-            };
-        };
-    };
-
-    // Set variable for determining if a user is new or not
-    var isNewUser;
-
-    // Create a callback which logs the current auth state
-    self.checkAuthentication = function (authData) {
-
-        if(authData) {
-        /* When user is already logged in, notify in console and update
-           favorites */
-            console.log("user " + authData.uid + " is logged in with " + authData.provider);
-            isNewUser = false;
-            self.getFavorites(authData);
-
-        // If user is logged in notify via console and set new user to true
-        } else {
-            console.log("user is logged out");
-            isNewUser = true;
-        };
-    };
-
-    /* Monitor user authentication state, when there is a change check
-       which user is logged in / logged out */
-    allData.onAuth(self.checkAuthentication);
-
-    /* If the visiter is a new user, get details and write data to Firebase */
-    if(isNewUser) {
-
-      // Log new user in anonymously (tokens last 5 years)
-      allData.authAnonymously(function(error, authData) {
-        if (error) {
-              console.log("login Failed!", error);
-        } else {
-
-          // Save the user's favorites and name in the database
-          allData.child("users").child(authData.uid).set({
-              favorites: [],
-              name: prompt("Please enter your name")
-          });
-        };
-      });
-    };
-
-
-    self.showUser = function () {
-
-          // cache user data
-          var authData = allData.getAuth();
-
-          // get the user's name saved in the Firebase database and log in console
-          users.child(authData.uid).child("name").on("value", function(snapshot) {
-          var name = snapshot.val();
-            console.log(name + " is currently logged in");
-      }, fireBaseReadError);
-    };
-
-    // Display which user is logged in the console every minute
-    setInterval(self.showUser, 60000);
-
-    // Add a location to the local favorites array and update Firebase version
-    self.addFavorite = function (newFav) {
-
-        // Add location to local array
-        userFavorites.push(newFav);
-
-        // Update Firebase
-        users.child(allData.getAuth().uid).update({"favorites":userFavorites}, fireBaseWriteError);
-    };
-
-
-    // Remove a location from the local favorites array and update Firebase version
-    self.removeFavorite = function (removeFav) {
-
-        /* Create a temporary array to hold any locations that do not match the
-        array that is to be removed */
-        var updatedFavs = [];
-
-        /* Filter any matching locations to the deleted location out of the local
-        favorites array */
-        userFavorites.forEach(function(keepFav) {
-            if(removeFav !== keepFav) {
-                updatedFavs.push(keepFav);
-            };
-        });
-
-        // Update Firebase with the locations from the temporary array above
-        // When Firebase updates, the local favorites array will be replaced
-        users.child(allData.getAuth().uid).update({"favorites":updatedFavs}, fireBaseWriteError);
-    };
-
-    // Delete all locations from the local favorites array and update Firebase
-    self.removeAllFavorites = function () {
-
-        // Clear the user's existing favorites
-        userFavorites = [];
-
-        // Update Firebase
-        users.child(allData.getAuth().uid).update({"favorites":userFavorites}, fireBaseWriteError);
-    };
-
     /* self.Query is bound to the input on the View. Because it is an
      observable variable, it's value will be updated whenever the input on the
      View is altered*/
     self.Query = ko.observable("");
 
-    /* Convert the imgs to inline svgs so hover effects my be applied
-    through css styling */
-    self.makeSVGInline($('.search-symbol-desktop'));
-    self.makeSVGInline($('.search-symbol-mobile'));
-    self.makeSVGInline($('.favorite-filter-symbol-desktop'));
-    self.makeSVGInline($('.favorite-filter-symbol-mobile'));
-    self.makeSVGInline($('.map-symbol-desktop'));
-    self.makeSVGInline($('.map-symbol-mobile'));
+    /* Filter through the location objects and compare each one to the
+    search terms (value of self.Query). If there is a match, the matching
+    object is re-added to the locationGrid (observ. array bound to the View). */
+    self.searchLocations = function () {
 
+        /* Convert search input to lowercase, remove spaces, remove
+        apostrophes, and remove commas in order to compare like
+        characters in each break and location name & store in a new var*/
+        var search = self.Query().toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
+
+        /* Remove all location objects from obs. array, so that only objects
+        which match the search can be re-added to the array and subsequently
+        rendered in the View*/
+        self.locationGrid.removeAll();
+
+        /* Compare each object's break name and location to the search terms.
+         If it matches, re-add it to the obs. array and render in the View.
+         If it doesn't match, then it isnt re-added.*/
+        self.locationArray.forEach(function(obj) {
+
+            // Convert break names (remove spaces, commas, apostrophes etc.)
+            if (obj.breakName.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) > -1) {
+
+              self.locationGrid.push(obj);
+
+            // Convert locations (remove spaces, commas, apostrophes etc.)
+            } else if (obj.location.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) > -1) {
+
+              self.locationGrid.push(obj);
+            }
+        });
+
+        /* Compare each marker's title, which holds the break and location name, to the search terms. If it matches, set the marker as visible.
+        If it doesn't match, make setVisible false*/
+        markers.forEach(function(marker) {
+
+            // Convert marker titles (remove spaces, commas, apostrophes etc.)
+            if (marker.title.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) > -1) {
+
+              marker.setVisible(true);
+            } else {
+              marker.setVisible(false);
+            }
+
+        });
+
+        /* If the map is visible, set the map bounds and map position. If it is
+        instead hidden, do nothing. This is because that a bug is created when
+        map bounds are invoked on the hidden map: the map, markers and info-
+        windows skew left for some unknown reason. Because a search results
+        in location frames being filtered and eventually one being selected,
+        centering and map bounds will be set by the clicking of the location
+        frame. Also, if the map is opened (and if the surf guide isn't in view)
+        the map will be centered and the bounds will also be set whichever
+        location frames have or haven't been filtered into view. */
+        if (!$('#map').is(":hidden")) {
+            // Set the map bounds & map position
+            self.setMapBounds();
+        };
+
+        /* On each search new versions of the location frames are added. If the
+        map is visible, the layout must be adjusted */
+        if($('.map-container').is(":visible")) {
+            // Update layout
+            self.toggleLayout();
+        };
+
+        /* After a search, there are new objects in the locationGrid, so the
+        rollover effects that were added before need to be re-added */
+        self.addRolloverEffect();
+
+        // Update DOM elements (location frames)
+        /* Fill in the hearts of any locations which are the user's
+        favorites */
+        self.renderFavoriteOnLocationFrame();
+
+    };
 
     // Set variables to be used in the functions to follow
     var $clear = $('.clear'),
@@ -1239,6 +2621,30 @@ function AppViewModel () {
         $searchSymbol = $('.search-symbol'),
         $searchContainer = $('.search-container');
 
+    /* Call the jQuery-UI auto complete widget.*/
+    $searchForm.autocomplete({
+        /* All keywords come from the above array */
+        source: searchKeywords,
+        /* Highlight the pop-up menu item that matches what is currently in
+         the search input field */
+        autoFocus: true,
+        /* A search must be at least two characters long before the pop-up
+        window shows */
+        minLength: 2,
+        // Delay the pop-up window from displaying for (x) milliseconds
+        delay: 250,
+        /* The a selection has been made, change the ko variable that
+        represents the search and then activate the search filtering
+        below */
+        select: function (event, ui) {
+            self.Query(ui.item.value);
+            self.searchLocations();
+        },
+        /* Remove focus from search field after selection is made */
+        close: function(){
+            $(this).blur();
+        }
+    });
 
     // Toggle the appearance of the search container
     self.toggleSearch = function () {
@@ -1349,109 +2755,6 @@ function AppViewModel () {
         self.resetPage();
         $searchForm.focus();
     });
-
-    /* Call the jQuery-UI auto complete widget.*/
-    $searchForm.autocomplete({
-        /* All keywords come from the above array */
-        source: searchKeywords,
-        /* Highlight the pop-up menu item that matches what is currently in
-         the search input field */
-        autoFocus: true,
-        /* A search must be at least two characters long before the pop-up
-        window shows */
-        minLength: 2,
-        // Delay the pop-up window from displaying for (x) milliseconds
-        delay: 250,
-        /* The a selection has been made, change the ko variable that
-        represents the search and then activate the search filtering
-        below */
-        select: function (event, ui) {
-            self.Query(ui.item.value);
-            self.searchLocations();
-        },
-        /* Remove focus from search field after selection is made */
-        close: function(){
-            $(this).blur();
-        }
-    });
-
-    /* Filter through the location objects and compare each one to the
-    search terms (value of self.Query). If there is a match, the matching
-    object is re-added to the locationGrid (observ. array bound to the View). */
-    self.searchLocations = function () {
-
-        /* Convert search input to lowercase, remove spaces, remove
-        apostrophes, and remove commas in order to compare like
-        characters in each break and location name & store in a new var*/
-        var search = self.Query().toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
-
-        /* Remove all location objects from obs. array, so that only objects
-        which match the search can be re-added to the array and subsequently
-        rendered in the View*/
-        self.locationGrid.removeAll();
-
-        /* Compare each object's break name and location to the search terms.
-         If it matches, re-add it to the obs. array and render in the View.
-         If it doesn't match, then it isnt re-added.*/
-        self.locationArray.forEach(function(obj) {
-
-            // Convert break names (remove spaces, commas, apostrophes etc.)
-            if (obj.breakName.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) > -1) {
-
-              self.locationGrid.push(obj);
-
-            // Convert locations (remove spaces, commas, apostrophes etc.)
-            } else if (obj.location.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) > -1) {
-
-              self.locationGrid.push(obj);
-            }
-        });
-
-        /* Compare each marker's title, which holds the break and location name, to the search terms. If it matches, set the marker as visible.
-        If it doesn't match, make setVisible false*/
-        markers.forEach(function(marker) {
-
-            // Convert marker titles (remove spaces, commas, apostrophes etc.)
-            if (marker.title.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) > -1) {
-
-              marker.setVisible(true);
-            } else {
-              marker.setVisible(false);
-            }
-
-        });
-
-        /* If the map is visible, set the map bounds and map position. If it is
-        instead hidden, do nothing. This is because that a bug is created when
-        map bounds are invoked on the hidden map: the map, markers and info-
-        windows skew left for some unknown reason. Because a search results
-        in location frames being filtered and eventually one being selected,
-        centering and map bounds will be set by the clicking of the location
-        frame. Also, if the map is opened (and if the surf guide isn't in view)
-        the map will be centered and the bounds will also be set whichever
-        location frames have or haven't been filtered into view. */
-        if (!$('#map').is(":hidden")) {
-            // Set the map bounds & map position
-            self.setMapBounds();
-        };
-
-        /* On each search new versions of the location frames are added. If the
-        map is visible, the layout must be adjusted */
-        if($('.map-container').is(":visible")) {
-            // Update layout
-            self.toggleLayout();
-        };
-
-        /* After a search, there are new objects in the locationGrid, so the
-        rollover effects that were added before need to be re-added */
-        self.addRolloverEffect();
-
-        // Update DOM elements (location frames)
-        /* Fill in the hearts of any locations which are the user's
-        favorites */
-        self.renderFavoriteOnLocationFrame();
-
-    };
 
     // Display only favorites from the locations array
     self.filterFavorites = function () {
@@ -1628,7 +2931,6 @@ function AppViewModel () {
             };
     });
 
-
     // Bind click event to button
     /* When button's clicked, hide the filters container, remove/add
     the necessary classes, delete the user's favorites and reset the
@@ -1658,6 +2960,217 @@ function AppViewModel () {
         // Close the surf guide and reset the page
         self.resetPage();
 
+    });
+
+    // When the map close symbol is clicked, hide or show the map
+    $('.map-symbol').on('click', function(e) {
+
+        // Cache refs to DOM
+        var $mapSymbol = $('.map-symbol'),
+            $mapContainer = $('.map-container'),
+            $map = $('#map'),
+            $surfGuide = $('.surf-guide-container'),
+            $searchContainer = $('.search-container'),
+            $topOfWindow = $(window).scrollTop(),
+            $bottomOfMap = $('.map-section').height(),
+            $locationFrames = $('.location-frame'),
+            $numLocations = $('.location-frame:visible').length;
+
+        /* If clicking the button from map view, close the map and show the
+         grid view of the location frames */
+        if(mapView) {
+
+            // Show all of the relevant location frames after the map is closed
+            // Also set all of the relevant markers to visible
+            self.resetFramesAndMarkers();
+
+            // Select/deselect the map symbol
+            $mapSymbol.toggleClass("map-default map-selected");
+
+            // Hide the map immediately
+            // When view is checked the map bounds won't be set
+            // Map must be hidden immediately to avoid this
+            $map.hide();
+
+            /* Update the layout (do this after toggling the map symbol)
+             because 'checkView' uses it to determine if map view is
+             enabled */
+            self.checkView();
+
+            // After checking view, map container is set back to default
+            // Default is display:none, which means the slide toggle below
+            // will have the opposite effect (it will reopen the map) unless
+            // the map is reshown beforehand
+            $mapContainer.show();
+
+            /* Show all location frames if only one is visible.
+               However, if only one frame is visible due to a search, then do
+               nothing */
+            if($numLocations == 1 && $locationFrames.length > 1) {
+                $locationFrames.show();
+            };
+
+            /* Close the map container. Once fully closed, make all markers
+            small & close any open info windows */
+            $mapContainer.slideToggle(200, function() {
+
+                console.log('close map & any open infowindows');
+
+                self.makeMarkerSmall();
+                infoWindow.close();
+            });
+
+        /* If clicking the button from grid view, close the grid and show the map view of the locations */
+        } else if(gridView) {
+
+            // Scroll to top of the page
+            document.body.scrollTop = document.documentElement.scrollTop = 0;
+
+            // Select/deselect the map symbol
+            $mapSymbol.toggleClass("map-default map-selected");
+
+            // Show the map immediately if it was hidden in map view
+            if($map.is(":hidden")) {
+                $map.show();
+            };
+
+            /* Update the layout (do this after toggling the map symbol)
+             because 'checkView' uses it to determine if map view is
+             enabled */
+            self.checkView();
+
+            console.log('open map');
+
+            // Opens the map view by slowly fading into view
+            $mapContainer.fadeIn(1000);
+
+            console.log('resize map');
+
+            // Resize the map immediately after it begins to fade in
+            // Sometimes the window size is toggled while the map is hidden
+            // Or the map size may change between different views
+            // This resizes the map to adjust to the windows new dimensions
+            google.maps.event.trigger(map, 'resize');
+
+            // Set the map bounds after map size has been adjusted
+            self.setMapBounds();
+
+        /* The guide view toggling of the map handles both opening and closing
+        the map */
+        } else if (guideView && !mobileView) {
+
+            // Scroll to top of the page
+            document.body.scrollTop = document.documentElement.scrollTop = 0;
+
+            // Select/deselect the map symbol
+            $mapSymbol.toggleClass("map-default map-selected");
+
+            // Show the map immediately if it was hidden in map view
+            if($map.is(":hidden")) {
+                $map.show();
+            };
+
+            // Toggle the map
+            $mapContainer.slideToggle(200, function() {
+                if($map.is(":visible")) {
+
+                    console.log('open map');
+                    console.log('resize map');
+
+                    // Resize the map to adapt to new window size
+                    google.maps.event.trigger(map, 'resize');
+
+                    // Center the map over the relevant marker
+                    self.centerMapOnGuideMarker();
+
+                } else {
+
+                    console.log('close map & any open infowindows');
+
+                    // Close open info window and make marker small
+                    self.makeMarkerSmall();
+                    infoWindow.close();
+                };
+            });
+
+        /* The mobile view toggling of the map view handles both opening
+        and closing of the map.
+        ** If the user's scroll position is above the
+        bottom of the map container, map toggling is enabled.
+        ** If the user's scroll position is below this, only enable
+        toggling of the map if it's not already visible.
+        ** If it is visible, instead of hiding it, the window is scrolled
+        to the top of the page so the user can make use of the map */
+        } else if (mobileView && $topOfWindow < $bottomOfMap || $topOfWindow >= $bottomOfMap && $mapContainer.is(":hidden")) {
+
+            // Scroll to top of the page
+            document.body.scrollTop = document.documentElement.scrollTop = 0;
+
+            // Select/deselect the map symbol
+            $mapSymbol.toggleClass("map-default map-selected");
+
+            // Show the map immediately if it was hidden in map view
+            if($map.is(":hidden")) {
+                $map.show();
+            };
+
+            /* Show all location frames if only one is visible.
+               However, ff only one frame is visible due to a search, then do
+               nothing */
+            if($numLocations == 1 && $locationFrames.length > 1) {
+                $locationFrames.show();
+            };
+
+            // Toggle the map.
+            $mapContainer.slideToggle(200, function() {
+                if($map.is(":visible")) {
+
+                  console.log('open map');
+
+                  // When map is open and surf guide is visible:
+                    if($surfGuide.is(":visible")) {
+
+                        console.log('resize map');
+
+                        // Resize the map to adapt to new window size
+                        google.maps.event.trigger(map, 'resize');
+
+                        // Center the map over the relevant marker
+                        self.centerMapOnGuideMarker();
+
+                    // When map is opened and the surf guide is hidden:
+                    } else {
+
+                        console.log('resize map');
+
+                        // Resize map and set bounds to adapt to window size
+                        google.maps.event.trigger(map, 'resize');
+                        self.setMapBounds();
+                    };
+
+                // When map is closed and surf guide is visible/hidden:
+                } else {
+
+                    // Show all of the relevant location frames after the map
+                    // is closed
+                    // Also set all of the relevant markers to visible
+                    self.resetFramesAndMarkers();
+
+                    console.log('close map & any open infowindows');
+
+                    // Close open info window and make marker small
+                    self.makeMarkerSmall();
+                    infoWindow.close();
+                };
+            });
+        } else {
+
+            console.log('scroll to map');
+
+            /* Scroll to top of the page if the map is already open in
+            mobile view */
+            document.body.scrollTop = document.documentElement.scrollTop = 0;
+        };
     });
 
     // Resets the the page
@@ -1718,235 +3231,6 @@ function AppViewModel () {
         if(userFavorites.length > 0) {
             self.renderFavoriteOnLocationFrame();
         };
-    };
-
-    /* When the cursor hovers over a location, remove the text and add
-    a gaussian blur. Wait until the locations have been loaded */
-    var rollover;
-
-    self.addRolloverEffect = function () {
-
-        console.log('enable hover effect');
-
-        // For each location set variables and add hover effects
-        $('.location-frame').each(function () {
-            var $locationFrame = $(this),
-                $breakName = $(this).find('.break-name'),
-                $location = $(this).find('.location-name'),
-                $img = $(this).find('img.location-image'),
-                $favoriteWrapper = $(this).find('.favorite-wrapper'),
-                $mapContainer = $('.map-container');
-
-            $locationFrame.on('mouseenter', function (e) {
-
-                // Enable rollover effects
-                rollover = true;
-
-                /* Get identifying information from the hovered over
-                locaton frame */
-                var frameBreakName = e.currentTarget.children[1].textContent;
-
-                console.log('hover over ' + frameBreakName);
-
-                /* If gridView is not enabled, activate the location frame's
-                 associated marker and info window */
-                if($mapContainer.is(":visible")) {
-                    activateMarker(frameBreakName);
-                };
-
-                // Iterate through the location array
-                self.locationArray.forEach(function(obj) {
-
-                    // Filter locations that match the location frame
-                    // Bounce the location frame's associated marker
-                    if (frameBreakName === obj.breakName) {
-                        importInfo(obj);
-                    };
-                });
-
-                /* When the mouse is hovering over a location frame
-                show unique information about that location */
-                function importInfo(obj) {
-
-                    $img.css({
-                        "-webkit-filter" : "blur(4px) brightness(80%)",
-                        "filter" : "blur(4px) brightness(80%)"
-                    });
-                    $location.hide()
-                    $breakName.hide();
-                    $favoriteWrapper.hide();
-
-                    /* Display icon associated with the skill level
-                    needed to surf the break */
-                    var skillLevelIcon = displaySkillIcon(obj.skillLevel);
-                    $locationFrame.append(skillLevelIcon);
-
-                    /* Display the icon associated with the type of
-                    break it is (i.e. what kind of surface is beneath
-                    it */
-                    var breakIcon = displayBreakIcon(obj.breakDetails);
-                    $locationFrame.append(breakIcon);
-
-                    /* Display the icon associated with the direction
-                    the wave breaks */
-                    var directionIcon = displayDirectionIcon(obj.waveDirection);
-                    $locationFrame.append(directionIcon);
-
-                    /* Display the icon for the best month in which to
-                    surf at the specific break*/
-                    var bestSeasonIcon = displayBestSeasonIcon(obj.optimalTime);
-                    $locationFrame.append(bestSeasonIcon);
-
-                    /* If there is big wave surfing at this break
-                    display big wave icon. If not, display the
-                    suggested swim attire icon for current season */
-                    var miscIconOne = displayBigWaveIcon(obj);
-                    $locationFrame.append(miscIconOne);
-
-                    /* If the wave is well known display the well
-                    known icon, otherwise display a random hazard
-                    icon */
-                    var miscIconTwo = displayWellKnownIcon(obj);
-                    $locationFrame.append(miscIconTwo);
-
-                    /* Display the budget cost for the location */
-                    var costInfo = displayCost(obj.cost);
-                    $locationFrame.append(costInfo);
-
-                    /* Check if current location is available, if it is
-                    render the distance to the hovered over location in
-                    the top right corner of the picture */
-                    if(typeof currentLat !== 'undefined') {
-                        var distanceInfo = displayDistance(obj.lat, obj.lng);
-                        $locationFrame.append(distanceInfo);
-                    };
-
-                    // Display average water temp for current season
-                    var waterTempInfo = displayCurrentWaterTemp(obj.avgWaterTemp);
-                    $locationFrame.append(waterTempInfo);
-
-                    // Display avg wave height for the break
-                    var waveSizeInfo = displayWaveSize(obj.avgSize);
-                    $locationFrame.append(waveSizeInfo);
-                };
-
-                /* If screen is larger than mobile view adjust the icons'
-                styling for the map view if enabled */
-                if(!mobileView && !gridView) {
-                    self.toggleRolloverClasses();
-                };
-
-                self.addToolTips();
-            });
-
-            /* Remove all imported info when the mouse stops hovering */
-            $locationFrame.on('mouseleave', function () {
-
-                // Set rollover to false
-                rollover = false;
-
-                // Cache a ref to all of the hover icons
-                var $allHoverIcons = $('.rollover-info');
-
-                // Remove the tooltips loaded status so they can be loaded
-                // again during the next hover (any element that has the class
-                // below will not load tooltips)
-                $allHoverIcons.removeClass("tooltip-loaded");
-
-                /* If screen is larger than mobile view adjust the icons'
-                styling back to default if the the map view is enabled */
-                if(!mobileView && !gridView) {
-                    self.toggleRolloverClasses();
-                };
-
-                $img.css({
-                    "-webkit-filter" : "blur(0px) brightness(100%)",
-                    "filter" : "blur(0px) brightness(100%)"
-                });
-                $location.show();
-                $breakName.show();
-                $favoriteWrapper.show();
-
-                /* If gridView is not enabled, deactivate the location frame's
-                associated marker. Make its pin small again only if its
-                info window isn't open. If it's info window were open, that
-                would mean that it is selected, which for the purposes of
-                selection, should stay big. If a marker is selected, it also
-                prevents the locaiton frames from being managed (keeps only
-                one location frame visible) */
-                if(!$('.surf-guide-container').length && !self.isInfoWindowOpen(infoWindow) && !gridView) {
-                    self.makeMarkerSmall();
-                };
-
-                $allHoverIcons.remove();
-            });
-        });
-    };
-
-    /* Go to specific marker and open the surf guide */
-    self.clickLocationFrame = function(obj) {
-
-        // Disable rollover effects so the correct icon loads in surf guide
-        rollover = false;
-
-        // Highlight the location's marker if the map is visible
-        if($('.map-container').is(":visible")) {
-            self.goToMarker(obj.breakName);
-        };
-
-        // Open the surf guide
-        self.renderSurfGuide(obj);
-
-        // Check view to change the layout for the surf guide
-        self.checkView();
-    };
-
-    /* Select each marker related to a location object from
-    the View. This is accomplished using ko's click binding*/
-    self.goToMarker = function(breakName) {
-
-        // Find last selected marker and make it small
-        self.makeMarkerSmall();
-
-        // Iterate through the markers array
-        markers.forEach(function(marker) {
-
-            // Cache the title of the marker not including the location
-            var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
-
-            /* Filter markers that match the location object. When a match is
-            found, zoom in and display the relevant info window*/
-            if (markerName === breakName) {
-
-                // Make the matching marker's icon big
-                self.makeMarkerBig(marker, markerName);
-
-                // Open info window
-                self.getInfoWindow(marker, breakName);
-
-                // Animate marker
-                self.animateMarker(marker);
-            };
-        });
-    };
-
-    /* When a location frame is hovered over, the associated marker and
-    info window is activated */
-    self.activateMarker = function(breakName) {
-
-        // Iterate through the markers array
-        markers.forEach(function(marker) {
-
-            // Cache the title of the marker not including the location
-            var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
-
-            // Filter markers that match the location frame
-            if (markerName === breakName) {
-
-                self.makeMarkerBig(marker, markerName);
-
-            };
-        });
     };
 
     /* Set up boolean variables for wind and swell compasses in local
@@ -2120,7 +3404,7 @@ function AppViewModel () {
                     };
 
                     // Load indicator
-                    var cl = loadProgressBar();
+                    var cl = loadProgressIndicator();
 
                     // Pass info to API function and initiate request
                     getMagicSeaweed(obj.spotID, obj.breakName, cl);
@@ -2143,45 +3427,6 @@ function AppViewModel () {
 
             self.closeSurfGuide();
         });
-    };
-
-    self.closeSurfGuide = function () {
-
-        // Cache the markers array length
-        var markersLength = markers.length;
-
-        // Iterate through the markers array
-        // It's important to show the markers again so that when the map
-        // bounds are set, the whole map is shown instead of the previously
-        // viewed markers provided in the surf guide
-        for(var i = markersLength; i--;) {
-
-            // Show all markers
-            // If a search has been made, show only markers that match the
-            // current search
-            self.showMarkers(markers[i]);
-        };
-
-        // Find last selected marker and make pin small again
-        self.makeMarkerSmall();
-
-        // Remove both surf conditions and surf guide from DOM
-        $('.surf-guide-container').remove();
-
-        // Adjust the layout
-        self.checkView();
-
-        /* Make both the location grid and the location frames
-        within it visible. The location frames need to be made
-        visible again in case a marker has been selected. */
-        $('.location-frame').show();
-        $('.location-grid').toggle();
-
-        // Close any info windows that remain open
-        infoWindow.close();
-
-        // Scroll to the top of the page
-        document.body.scrollTop = document.documentElement.scrollTop = 0;
     };
 
     self.addFavoriteListener = function (breakName) {
@@ -3268,6 +4513,45 @@ function AppViewModel () {
         };
     };
 
+    self.closeSurfGuide = function () {
+
+        // Cache the markers array length
+        var markersLength = markers.length;
+
+        // Iterate through the markers array
+        // It's important to show the markers again so that when the map
+        // bounds are set, the whole map is shown instead of the previously
+        // viewed markers provided in the surf guide
+        for(var i = markersLength; i--;) {
+
+            // Show all markers
+            // If a search has been made, show only markers that match the
+            // current search
+            self.showMarkers(markers[i]);
+        };
+
+        // Find last selected marker and make pin small again
+        self.makeMarkerSmall();
+
+        // Remove both surf conditions and surf guide from DOM
+        $('.surf-guide-container').remove();
+
+        // Adjust the layout
+        self.checkView();
+
+        /* Make both the location grid and the location frames
+        within it visible. The location frames need to be made
+        visible again in case a marker has been selected. */
+        $('.location-frame').show();
+        $('.location-grid').toggle();
+
+        // Close any info windows that remain open
+        infoWindow.close();
+
+        // Scroll to the top of the page
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
+    };
+
     self.getMagicSeaweed = function (spotID, breakName, cl) {
 
         console.log('get current conditions');
@@ -3621,1302 +4905,6 @@ function AppViewModel () {
 
         };
     };
-
-    // When the map close symbol is clicked, hide or show the map
-    $('.map-symbol').on('click', function(e) {
-
-        // Cache refs to DOM
-        var $mapSymbol = $('.map-symbol'),
-            $mapContainer = $('.map-container'),
-            $map = $('#map'),
-            $surfGuide = $('.surf-guide-container'),
-            $searchContainer = $('.search-container'),
-            $topOfWindow = $(window).scrollTop(),
-            $bottomOfMap = $('.map-section').height(),
-            $locationFrames = $('.location-frame'),
-            $numLocations = $('.location-frame:visible').length;
-
-        /* If clicking the button from map view, close the map and show the
-         grid view of the location frames */
-        if(mapView) {
-
-            // Show all of the relevant location frames after the map is closed
-            // Also set all of the relevant markers to visible
-            self.resetGridAndMarkers();
-
-            // Select/deselect the map symbol
-            $mapSymbol.toggleClass("map-default map-selected");
-
-            // Hide the map immediately
-            // When view is checked the map bounds won't be set
-            // Map must be hidden immediately to avoid this
-            $map.hide();
-
-            /* Update the layout (do this after toggling the map symbol)
-             because 'checkView' uses it to determine if map view is
-             enabled */
-            self.checkView();
-
-            // After checking view, map container is set back to default
-            // Default is display:none, which means the slide toggle below
-            // will have the opposite effect (it will reopen the map) unless
-            // the map is reshown beforehand
-            $mapContainer.show();
-
-            /* Show all location frames if only one is visible.
-               However, if only one frame is visible due to a search, then do
-               nothing */
-            if($numLocations == 1 && $locationFrames.length > 1) {
-                $locationFrames.show();
-            };
-
-            /* Close the map container. Once fully closed, make all markers
-            small & close any open info windows */
-            $mapContainer.slideToggle(200, function() {
-
-                console.log('close map & any open infowindows');
-
-                self.makeMarkerSmall();
-                infoWindow.close();
-            });
-
-        /* If clicking the button from grid view, close the grid and show the map view of the locations */
-        } else if(gridView) {
-
-            // Scroll to top of the page
-            document.body.scrollTop = document.documentElement.scrollTop = 0;
-
-            // Select/deselect the map symbol
-            $mapSymbol.toggleClass("map-default map-selected");
-
-            // Show the map immediately if it was hidden in map view
-            if($map.is(":hidden")) {
-                $map.show();
-            };
-
-            /* Update the layout (do this after toggling the map symbol)
-             because 'checkView' uses it to determine if map view is
-             enabled */
-            self.checkView();
-
-            console.log('open map');
-
-            // Opens the map view by slowly fading into view
-            $mapContainer.fadeIn(1000);
-
-            console.log('resize map');
-
-            // Resize the map immediately after it begins to fade in
-            // Sometimes the window size is toggled while the map is hidden
-            // Or the map size may change between different views
-            // This resizes the map to adjust to the windows new dimensions
-            google.maps.event.trigger(map, 'resize');
-
-            // Set the map bounds after map size has been adjusted
-            self.setMapBounds();
-
-        /* The guide view toggling of the map handles both opening and closing
-        the map */
-        } else if (guideView && !mobileView) {
-
-            // Scroll to top of the page
-            document.body.scrollTop = document.documentElement.scrollTop = 0;
-
-            // Select/deselect the map symbol
-            $mapSymbol.toggleClass("map-default map-selected");
-
-            // Show the map immediately if it was hidden in map view
-            if($map.is(":hidden")) {
-                $map.show();
-            };
-
-            // Toggle the map
-            $mapContainer.slideToggle(200, function() {
-                if($map.is(":visible")) {
-
-                    console.log('open map');
-                    console.log('resize map');
-
-                    // Resize the map to adapt to new window size
-                    google.maps.event.trigger(map, 'resize');
-
-                    // Center the map over the relevant marker
-                    self.centerOnGuideMarker();
-
-                } else {
-
-                    console.log('close map & any open infowindows');
-
-                    // Close open info window and make marker small
-                    self.makeMarkerSmall();
-                    infoWindow.close();
-                };
-            });
-
-        /* The mobile view toggling of the map view handles both opening
-        and closing of the map.
-        ** If the user's scroll position is above the
-        bottom of the map container, map toggling is enabled.
-        ** If the user's scroll position is below this, only enable
-        toggling of the map if it's not already visible.
-        ** If it is visible, instead of hiding it, the window is scrolled
-        to the top of the page so the user can make use of the map */
-        } else if (mobileView && $topOfWindow < $bottomOfMap || $topOfWindow >= $bottomOfMap && $mapContainer.is(":hidden")) {
-
-            // Scroll to top of the page
-            document.body.scrollTop = document.documentElement.scrollTop = 0;
-
-            // Select/deselect the map symbol
-            $mapSymbol.toggleClass("map-default map-selected");
-
-            // Show the map immediately if it was hidden in map view
-            if($map.is(":hidden")) {
-                $map.show();
-            };
-
-            /* Show all location frames if only one is visible.
-               However, ff only one frame is visible due to a search, then do
-               nothing */
-            if($numLocations == 1 && $locationFrames.length > 1) {
-                $locationFrames.show();
-            };
-
-            // Toggle the map.
-            $mapContainer.slideToggle(200, function() {
-                if($map.is(":visible")) {
-
-                  console.log('open map');
-
-                  // When map is open and surf guide is visible:
-                    if($surfGuide.is(":visible")) {
-
-                        console.log('resize map');
-
-                        // Resize the map to adapt to new window size
-                        google.maps.event.trigger(map, 'resize');
-
-                        // Center the map over the relevant marker
-                        self.centerOnGuideMarker();
-
-                    // When map is opened and the surf guide is hidden:
-                    } else {
-
-                        console.log('resize map');
-
-                        // Resize map and set bounds to adapt to window size
-                        google.maps.event.trigger(map, 'resize');
-                        self.setMapBounds();
-                    };
-
-                // When map is closed and surf guide is visible/hidden:
-                } else {
-
-                    // Show all of the relevant location frames after the map
-                    // is closed
-                    // Also set all of the relevant markers to visible
-                    self.resetGridAndMarkers();
-
-                    console.log('close map & any open infowindows');
-
-                    // Close open info window and make marker small
-                    self.makeMarkerSmall();
-                    infoWindow.close();
-                };
-            });
-        } else {
-
-            console.log('scroll to map');
-
-            /* Scroll to top of the page if the map is already open in
-            mobile view */
-            document.body.scrollTop = document.documentElement.scrollTop = 0;
-        };
-    });
-
-    self.loadProgressBar = function () {
-
-        var cl = new CanvasLoader('progressBarContainer');
-        cl.setColor('#00b8e6'); // default is '#000000'
-        cl.setShape('spiral'); // default is 'oval'
-        cl.setDiameter(72); // default is 40
-        cl.setDensity(33); // default is 40
-        cl.setRange(1); // default is 1.3
-        cl.setFPS(23); // default is 24
-        cl.show(); // Hidden by default
-
-        return cl;
-    };
-
-    self.generateMarkers = function(locationData) {
-
-        /* Loop through locationData and filter out the coordinates
-        & break name for each break. Save the break's coordinates and name
-        in their own variables for easy referencing */
-        var locationDataLength = locationData.length;
-
-        for(var i = locationDataLength; i--;) {
-
-            var obj = locationData[i];
-
-            // Create a variable to hold each break's coordinates
-            var breakCoordinates = ({lat: obj.lat, lng: obj.lng});
-
-            // Create a variable to hold the name of the break
-            var breakName = obj.breakName;
-
-            // Create a variable to hold the name of the break location
-            var breakLocation = obj.location;
-
-            /* Create a marker and set its position. Pass the variables
-            created above as arguments*/
-            self.addMarker(breakName, breakCoordinates, breakLocation, obj);
-        };
-
-        // Add map event listener the detects when the map is idle
-        // Make markers within the viewport/map bounds visible and those
-        // that aren't invisible
-        // Show only the location frames and markers whose markers are within
-        // view port's map bounds
-        google.maps.event.addListener(map, 'idle', function() {
-
-            // Only execute the following code if the map is visible and
-            // managers aren't disabled (window isn't being resized)
-            if($('#map').is(":visible") && !resizeInProgress) {
-                self.manageFrames();
-                self.manageMarkers();
-            };
-        });
-
-        // When the map is clicked, location frames are made visible.
-        // This is useful if they were hidden as a result of a marker being
-        // clicked.
-        // In addition, all open info windows are closed and any selected
-        // markers are made small again
-        google.maps.event.addListener(map, 'click', self.clickMap);
-
-        // Display markers found in the markers array on the map
-        self.displayMarkers(map);
-
-        // Set initial map bounds based on location of markers
-        if($('#map').is(":visible")) {
-            self.setMapBounds();
-        };
-    };
-
-    self.addMarker = function(breakName, breakCoordinates, breakLocation, obj) {
-
-        var marker = new google.maps.Marker({
-
-            // Set position using the newly created variable
-            position: breakCoordinates,
-            map: map,
-            icon: 'img/marker_small.svg',
-
-            /* Set the title for the break marker as the name of the
-            wave/location of the break. This way it can be searched/filtered
-            in the ViewModel*/
-            title: breakName + ' ' + '(' + breakLocation + ')'
-        });
-
-        // Add a text box that displays the break name and location when
-        // clicked
-        self.addListeners(marker, breakName, obj);
-    };
-
-    self.addListeners = function(marker, breakName, obj) {
-
-        google.maps.event.addListener(marker, 'dblclick', (function(marker) {
-
-            /* Create an inner function what will at the time of iteration save
-            a double-click event to the relevant marker. When the user double-
-            clicks, the map will zoom in on the marker*/
-            return function() {
-
-                // Center the map
-                map.setCenter(marker.getPosition());
-
-                /* Set zoom if marker is clicked and not already zoomed in at
-                14 or above*/
-                if(map.getZoom() < 14) {
-                    map.setZoom(14);
-                };
-            };
-
-        /* Pass the relevant marker for the current iteration as an argument
-        into the function*/
-        })(marker));
-
-        google.maps.event.addListener(marker, 'click', (function(marker, breakName, obj) {
-
-            /* Create an inner function what will at the time of iteration save
-            the individual break's name (breakName) within the infoWindow and
-            attach it to the relevant marker */
-            return function() {
-
-                // Find last selected marker and make pin small again
-                self.makeMarkerSmall();
-
-                // Update the visible frames
-                self.manageFrames();
-
-                // Cache the title of the marker not including the location
-                var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
-
-                if (marker.icon === 'img/marker_small.svg') {
-                    console.log('make ' + markerName + "'" + 's marker big');
-                    marker.setIcon('img/marker_selected.svg');
-                } else if (marker.icon === 'img/marker_smallFav.svg') {
-                    console.log('make ' + markerName + "'" + 's marker big');
-                    marker.setIcon('img/marker_selectedFav.svg');
-                };
-
-                self.getInfoWindow(marker, breakName);
-
-                // Bounce marker upon clicking
-                self.animateMarker(marker);
-
-                /* Show surf guide (only if surf guide is already open) when
-                the marker is clicked */
-                if ($('.surf-guide-container').is(":visible")) {
-                    /* Remove any visible surf conditions so they aren't still
-                    displayed when the new surf guide renders */
-                    $('.surf-conditions').remove();
-                    renderSurfGuide(obj);
-                } else {
-                    /* If the surf guide isn't open, hide all location frames
-                    except the one related to the marker */
-                    self.showLocationFrame(breakName);
-                };
-            };
-
-        /* Pass the relevant marker and break name (breakName) for the current
-        iteration as an argument into the function*/
-        })(marker, breakName, obj));
-
-        // Location frame pulsates when it's corresponding marker is hovered
-        // over
-        google.maps.event.addListener(marker, 'mouseover', (function(breakName) {
-
-            /* Create an inner function what will at the time of iteration save
-            the breakName and any behavior to the current marker */
-            return function() {
-
-                var $numFramesVisible = $('.location-frame:visible').length;
-
-                // If the surf guide is open do nothing
-                if (!$('.surf-guide-container').length) {
-
-                    // Pulsate the associated location frame
-                    self.pulsateLocationFrame(breakName);
-
-                    // If more than one location frame is in view and
-                    // not in mobile view, execute code
-                    if($numFramesVisible !== 1 && window.innerWidth >= 768) {
-
-                        // Scroll to specific location frame
-                        self.scrollToFrame(breakName);
-                    };
-                };
-            };
-
-        /* Pass the relevant marker and break name (breakName) for the current
-        iteration as an argument into the function*/
-        })(breakName));
-
-        google.maps.event.addListener(marker, 'mouseout', (function(breakName) {
-
-            /* Create an inner function what will at the time of iteration save
-            the breakName and any behavior to the current marker */
-            return function() {
-
-                // If the surf guide is open do nothing
-                if (!$('.surf-guide-container').length) {
-
-                    // Reverse pulstate the associated location frame
-                    self.pulsateLocationFrame(breakName);
-                };
-            };
-
-        /* Pass the relevant marker and break name (breakName) for the current
-        iteration as an argument into the function*/
-        })(breakName));
-
-        // Add each marker to the markers array
-        markers.push(marker);
-    };
-
-    self.displayMarkers = function(map) {
-
-        // Loop through the markers array and display on the map
-        var markersLength = markers.length;
-
-        for (var i = markersLength; i--;) {
-            markers[i].setMap(map);
-        };
-    };
-
-    // Set the animation for the selected marker
-    self.animateMarker = function (marker) {
-        marker.setAnimation(google.maps.Animation.BOUNCE);
-        window.setTimeout(function() {
-            marker.setAnimation(null);
-        }, 730);
-    };
-
-    self.makeMarkerBig = function (marker, markerName) {
-
-        /* If marker wasn't previously activated, make it big for
-        normal and fav icons */
-        if (marker.icon === 'img/marker_small.svg') {
-
-            console.log('make ' + markerName + "'" + 's marker big');
-
-            // Change the marker's image
-            marker.setIcon('img/marker_selected.svg');
-
-        } else if (marker.icon === 'img/marker_smallFav.svg') {
-
-            console.log('make ' + markerName + "'" + 's marker big');
-
-            // Change the marker's image
-            marker.setIcon('img/marker_selectedFav.svg');
-
-        };
-    };
-
-    // Find last selected marker and make pin small again
-    self.makeMarkerSmall = function () {
-        markers.forEach(function(marker) {
-
-            // Cache the title of the marker not including the location
-            var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
-
-            if (marker.icon === 'img/marker_selected.svg') {
-                console.log('make ' + markerName + "'" + 's marker small');
-                marker.setIcon('img/marker_small.svg');
-            } else if (marker.icon === 'img/marker_selectedFav.svg') {
-                console.log('make ' + markerName + "'" + 's marker small');
-                marker.setIcon('img/marker_smallFav.svg');
-            };
-        });
-    };
-
-    // Change any map markers that match/don't match the user's favorites
-     self.updateFavMarkers = function (favorites) {
-        markers.forEach(function(marker) {
-
-            // Cache the title of the marker not including the location
-            var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
-
-            /* If the name matches a user's favorite, change the image */
-            /* Any markers that don't match the user's favs or were never a
-            fav remain unaltered */
-            if (favorites.indexOf(markerName) > -1) {
-                if(marker.icon === 'img/marker_small.svg') {
-                    console.log("make " + markerName + "'s marker a favorite");
-                    marker.setIcon('img/marker_smallFav.svg');
-                } else if (marker.icon === 'img/marker_selected.svg') {
-                    console.log("make " + markerName + "'s marker a favorite");
-                    marker.setIcon('img/marker_selectedFav.svg');
-                };
-            // If the name doesn't match, but was a fav, change the img back
-            } else if (marker.icon === 'img/marker_smallFav.svg') {
-                console.log("unfavorite " + markerName + "'s marker");
-                marker.setIcon('img/marker_small.svg');
-            } else if (marker.icon === 'img/marker_selectedFav.svg') {
-                console.log("unfavorite " + markerName + "'s marker");
-                marker.setIcon('img/marker_selected.svg');
-            };
-        });
-    };
-
-    // Count the number of visible markers
-    self.checkVisibleMarkers = function () {
-
-        // Cache the length of the markers array and set another variable
-        var markersLength = markers.length;
-            numMarkersVisible = 0;
-
-        // Loop through the markers array
-        for(var i = markersLength; i--;) {
-
-            // Save a ref to the marker
-            var marker = markers[i];
-
-            // Check if the current marker is visible
-            if(marker.getVisible()) {
-
-                // Iterate the number of visible markers
-                numMarkersVisible++;
-            };
-        };
-
-        // If no markers are visible (map has been moved to an empty area),
-        // display button that centers the map again.
-        // If clicked, all markers are made visible and map is recentered
-        if(numMarkersVisible < 1) {
-
-            // If the reset button isn't already visible and not in guide view,
-            // display the rest map button
-            if(!$('.reset-map-container').length && !guideView) {
-
-                console.log('no markers visible');
-
-                // Render reset map button
-                self.showMapReset();
-            };
-        };
-    };
-
-    // Show all of the map's markers
-    // If a search has been made, show only those markers that match the search
-    // query
-    // If the favorites filter is selected, show only those markers that match
-    // the user's favorites
-    self.showMarkers = function (marker) {
-
-        // Shorten the marker title to just the break name
-        var markerTitle = marker.title.replace(/ *\([^)]*\) */g, "");
-
-        // If the search container is visible, only display the
-        // markers that match the current search query
-        if ($('.search-container').is(":visible")) {
-
-            // Cache the current search query
-            var search = self.Query().toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
-
-            // Compare the search query with the title of the marker
-            if (marker.title.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) > -1) {
-
-                // If there is a match, make the marker visible
-                marker.setVisible(true);
-            };
-
-        // If the favorites button is selected, only display the markers
-        // that are within the users's favorites
-        } else if ($('.favorite-filter-selected').length) {
-
-            // Compare the marker title to the user's favs
-            if (userFavorites.indexOf(markerTitle) > -1) {
-
-                // If there is a match, make the marker visible
-                marker.setVisible(true);
-            };
-
-        // If the search container isn't visible, show all markers
-        } else {
-
-            // Make all markers visible
-            marker.setVisible(true);
-        };
-    };
-
-    // Update visible markers depending on which ones fall within the current
-    // map bounds
-    self.manageMarkers = function () {
-
-        console.log('manage markers');
-
-        // Cache the length of the markers array
-        var markersLength = markers.length;
-
-        // Iterate through the markers array to check which markers fall
-        // within the current map bounds
-        for(var i = markersLength; i--;) {
-
-            var marker = markers[i];
-
-            // Get map bounds and determine which markers are within them
-            if(map.getBounds().contains(marker.getPosition())) {
-
-                // Show any markers that fall within the current map bounds
-                self.showMarkers(marker);
-
-            // If the markers are not within the current map bounds,
-            // hide them
-            } else {
-
-                // If a marker is selected, don't hide it
-                if(marker.icon === "img/marker_selected.svg" || marker.icon === "img/marker_selectedFav.svg") {
-                    marker.setVisible(true);
-                } else {
-                    marker.setVisible(false);
-                };
-            };
-        };
-
-        // Check the number of visible markers
-        self.checkVisibleMarkers();
-    };
-
-    self.showLocationFrame = function (breakName) {
-
-        // Cache DOM reference to all location frames
-        var $allLocationFrames = $('.location-frame');
-
-        // Hide all location frames
-        $allLocationFrames.hide();
-
-        // Loop through all of the location frames
-        $allLocationFrames.each(function() {
-
-            // Cache the current location frame's reference and text
-            var $locationFrame = $(this);
-            var $locationFrameText = $locationFrame.text();
-
-            /* If a specific location frame's text matches the currenlty selected
-            break, show it*/
-            if($locationFrameText.indexOf(breakName) > -1) {
-
-                console.log('show only ' + breakName + "'s location frame");
-                $locationFrame.show();
-            };
-        });
-    };
-
-    self.showFrames = function (marker) {
-
-        // Cache the break name of the marker not including the location
-        var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
-
-        // If the search container is visible, only display the
-        // frames of those markers that match the current search
-        // query
-        if ($('.search-container').is(":visible")) {
-
-            // Cache the current search query
-            var search = self.Query().toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, ""),
-            markerTitle = marker.title.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
-
-            // Compare the search query with the title of the
-            // markers found within the map's boundaries
-            if (markerTitle.indexOf(search) > -1) {
-
-                // If there is a match, make the frame visible
-                updateFrames(markerName);
-            };
-
-        // If the favorites filter button is selected, only display
-        // the frames of those markers that are within the user's
-        // favorites
-        } else if ($('.favorite-filter-selected').length) {
-
-            // Compare the marker title to the user's favs
-            if (userFavorites.indexOf(markerName) > -1) {
-
-                // If there is a match, make the frame visible
-                updateFrames(markerName);
-            };
-
-        // If the search container isn't visible and the favorites
-        // filter isn't selected, display only the location
-        // frame's of the markers that fall within the map's
-        // current boundaries
-        } else {
-
-            // Update the visible frames
-            updateFrames(markerName);
-        };
-
-        // Remove or display the location frames of those markers found
-        // within the map's current boundaries
-        function updateFrames (markerName) {
-
-            // Iterate through the array of locations
-            self.locationArray.forEach(function(obj) {
-
-                // If a marker within the map's boundaries matches a
-                // location, display it
-                if (markerName === obj.breakName) {
-                      self.locationGrid.push(obj);
-                };
-            });
-        };
-    };
-
-    // Update visible frames depending on markers visible in the view port
-    self.manageFrames = function () {
-
-        // Cache the length of the markers array
-        var markersLength = markers.length;
-
-        // Check if any markers are selected, if so do not adjust visible
-        // frames. Otherwise, the selected marker's frame will not be the
-        // only frame visible as others would be added whenever the map is
-        // adjusted
-        for(var i = markersLength; i--;) {
-
-            // If any of the marker's images matches a 'selected' image
-            // End the function
-            if(markers[i].icon === "img/marker_selected.svg" || markers[i].icon === "img/marker_selectedFav.svg") {
-                return;
-            };
-        };
-
-        console.log('manage location frames');
-
-        // Clear the visible location frames
-        self.locationGrid.removeAll();
-
-        // Iterate backwards through the markers array, so that their
-        // location frames when matched are add back to the location grid
-        // in the same order
-        for(var i = markersLength; i--;) {
-
-            var marker = markers[i];
-
-            // Get map bounds and determine which markers are within them
-            // Display the location frames of only those markers found
-            // within the maps boundaries
-            if(map.getBounds().contains(marker.getPosition())) {
-
-                // Display the frames
-                self.showFrames(marker);
-            };
-        };
-
-        // If in mobile view, do not reset the location frame's styling
-        // Otherwise, alter their styling for map view
-        if(!mobileView) {
-            self.resetLocationFrames();
-        };
-
-        // Re-add rollover effects
-        self.addRolloverEffect();
-
-        // Re-render the location frame's 'favorite' status
-        self.renderFavoriteOnLocationFrame();
-    };
-
-    // Automatically scroll to the location frame whose marker is being hovered
-    // over
-    self.scrollToFrame = function (breakName) {
-
-        // Cache DOM refs
-        var $locationsContainer = $('.location-grid'),
-            $locationFrame = $('.location-frame'),
-            $pulsatingLocation = $('.pulse-location-frame'),
-            $oldPosition = $locationsContainer.scrollLeft();
-
-        // Check if autoscroll is already engaged
-        // If it is, clear the interval
-        if (typeof scrollRightRunning !== 'undefined' && scrollRightRunning) {
-            console.log('clear right scrolling in progress');
-            clearInterval(scrollRight);
-        } else if (typeof scrollLeftRunning !== 'undefined' && scrollLeftRunning) {
-            console.log('clear left scrolling in progress');
-            clearInterval(scrollLeft);
-        };
-
-        // Cache the width of the outer container for the locations
-        var $locationsCountainerWidth = $locationsContainer.width();
-
-        // Get and cache the outer width of the location frame
-        var $frameWidth = $locationFrame.outerWidth(true);
-
-        // Get the space needed on both sides of a location frame to center it
-        var spaceLeftNRight = ($locationsCountainerWidth - $frameWidth)/2;
-
-        // Get and cache a ref to the position (index) of frame that is being
-        // hovered over
-        var $targetIndex = $pulsatingLocation.index();
-
-        // Calculate the amount of space preceding the location being hovered over
-        // This is done by multiplying the number of the frames preceding the said
-        // location by the location frame width
-        var spacePreceding = $frameWidth * $targetIndex;
-
-        // Subtract the space needed on the left/right of the frame
-        // from the space that preceeds the targeted frame
-        var newPosition = spacePreceding - spaceLeftNRight;
-
-        console.log("auto scroll to " + breakName + "'s location frame");
-
-        // Scroll to the new location using the new position
-        // Scroll right if the new scrollLeft position is greater than current pos.
-        if(newPosition > $oldPosition) {
-
-          // Set the beginning scollLeft position on which to iterate
-          var transitionRight = $oldPosition;
-
-          // Create a loop that moves the scroll bar from left to right
-          var scrollRight = setInterval(function() {
-
-              // Create a global variable to indicate the scrolling is in progress
-              scrollRightRunning = true;
-
-              // Increase the scrollLeft position 70px for each 1/1000 of second
-              transitionRight+=70;
-
-              // If the scrollLeft position is less than the new position
-              // move the scrollLeft position incrementally closer to it
-              if(transitionRight < newPosition) {
-                  $locationsContainer.scrollLeft(transitionRight);
-
-              // If the scrollLeft position is greater/equal to the new position,
-              // stop the loop
-              } else {
-                  stopScrolling();
-              };
-
-          }, 1);
-
-        // Scroll left if the new scrollLeft position is less than current position
-        } else {
-
-          // Set the beginning scollLeft position on which to iterate
-          var transitionLeft = $oldPosition;
-
-          // Create a loop that moves the scroll bar from right to left
-          var scrollLeft = setInterval(function() {
-
-              // Create a global variable to indicate the scrolling is in progress
-              scrollLeftRunning = true;
-
-              // Increase the scrollLeft position 70px for each 1/1000 of second
-              transitionLeft-=70;
-
-              // If the scrollLeft position is greater than the new position
-              // move the scrollLeft position incrementally closer to it
-              if(transitionLeft >  newPosition) {
-                  $locationsContainer.scrollLeft(transitionLeft);
-
-              // If the scrollLeft position is less/equal to the new position,
-              // stop the loop
-              } else {
-                  stopScrolling();
-              };
-
-          }, 1);
-
-        };
-
-        // Stop auto scrolling
-        function stopScrolling () {
-
-            // If scrolling left or right, stop the loop
-            if(typeof scrollLeftRunning !== 'undefined' && scrollLeftRunning) {
-                clearInterval(scrollLeft);
-                scrollLeftRunning = false;
-            } else if (typeof scrollRightRunning !== 'undefined' && scrollRightRunning) {
-                clearInterval(scrollRight);
-                scrollRightRunning = false;
-            };
-
-            // Since each iteration towards the new position increments by 30px
-            // each time, it will never quite reach the exact goal, which leaves
-            // the location frame off center. To avoid this, set the scrollLeft
-            // position to the new position at the end of scrolling
-            $locationsContainer.scrollLeft(newPosition);
-
-            console.log('move scroll position from ' + $oldPosition + ' toward ' + newPosition);
-            console.log('stop scrolling');
-            console.log('scroll position at: ' + $locationsContainer.scrollLeft());
-        };
-    };
-
-    self.pulsateLocationFrame = function (breakName) {
-
-        // Cache DOM references
-        var $allLocationFrames = $('.location-frame'),
-            $numFramesVisible = $('.location-frame:visible').length;
-
-        // If more than one location frame is in view and not in mobile view,
-        // execute code
-        if($numFramesVisible !== 1 && window.innerWidth >= 768) {
-
-            // Loop through all of the location frames
-            $allLocationFrames.each(function() {
-
-                // Cache the current location frame's reference and text
-                var $locationFrame = $(this),
-                    $locationFrameText = $locationFrame.text();
-
-                /* If a specific location frame's text matches the currently hovered/unhovered marker, pulsate or reverse pulsate it */
-                if($locationFrameText.indexOf(breakName) > -1) {
-
-                    /* If hovering away from the marker, reverse pulsate its
-                    location frame */
-                    if($('.pulse-location-frame').length) {
-
-                        console.log("make " + breakName + "'s location frame small");
-
-                        // Add/remove necessary classes to animate
-                        $locationFrame.removeClass("pulse-location-frame").addClass("reverse-pulse");
-
-                        // Remove the reverse pulse effect
-                        removePulse($locationFrame);
-
-                    // If hovering over the marker, pulsate its location frame
-                    } else {
-
-                        console.log("make " + breakName + "'s location frame big");
-
-                        // Add necessary class to animate
-                        $locationFrame.removeClass("reverse-pulse").addClass("pulse-location-frame");
-                    };
-                };
-            });
-
-        /* If only one location is in view, do nothing unless hovering away from
-        its marker */
-        } else if ($numFramesVisible === 1 && $('.pulse-location-frame').length) {
-
-            // Cache DOM refs to the visible location frame
-            // Capture the location name of the visible location frame
-            var $locationFrame = $('.location-frame:visible'),
-                $locationName = $locationFrame[0].children[1].textContent;
-
-            console.log("make " + $locationName + "'s location frame small");
-
-            // Add/remove necessary classes to animate
-            $locationFrame.removeClass("pulse-location-frame").addClass("reverse-pulse");
-
-            // Remove the reverse pulse effect
-            removePulse($locationFrame);
-        };
-
-        // Remove the reverse pulse effect
-        function removePulse ($locationFrame) {
-
-            /* Set a time to remove the effect just after the reverse pulse effect
-             finishes its animation on the previous marker's location frame */
-            var timer = setTimeout (function() {
-                $locationFrame.removeClass("reverse-pulse");
-            }, 400);
-        };
-    };
-
-    // Show all of the relevant location frames
-    // Set all of the relevant markers to visible
-    self.resetGridAndMarkers = function () {
-
-        // Save ref to array length
-        var markersLength = markers.length;
-
-        // Clear the visible location frames
-        self.locationGrid.removeAll();
-
-        // Iterate through the markers array
-        for(var i = markersLength; i--;) {
-
-            // Cache a ref to the marker
-            var marker = markers[i];
-
-            // Show all relevant locaiton frames
-            self.showFrames(marker);
-
-            // Set all relevant markers to visible
-            self.showMarkers(marker);
-        };
-
-        // If in mobile view, do not reset the location frame's styling
-        // Otherwise, alter their styling for map view
-        if(!mobileView) {
-            self.resetLocationFrames();
-        };
-
-        // Re-add rollover effects
-        self.addRolloverEffect();
-
-        // Re-render the location frame's 'favorite' status
-        self.renderFavoriteOnLocationFrame();
-    };
-
-    self.clickMap = function () {
-
-        // Find last selected marker and make pin small again
-        self.makeMarkerSmall();
-
-        /* If the surf guide isn't visible show the locations, otherwise
-        do nothing (just close the info windows) */
-        if (!$('.surf-guide-container').is(":visible")) {
-            $('.location-frame').show();
-        };
-
-        // Close any open info windows
-        infoWindow.close();
-
-        // Update visible frames
-        self.manageFrames();
-    };
-
-    // Bring map markers back into view
-    self.showMapReset = function () {
-
-        // Cache DOM elements
-        var resetMap = '<div class="reset-map-container"></div>',
-            $locationGrid = $('.location-grid');
-
-        // Add the container for the reset button
-        $locationGrid.append(resetMap);
-
-        // Cache DOM elements
-        var $resetMapContainer = $('.reset-map-container'),
-            $resetMapIcon = '<img src="img/reset_button.svg" class="reset-button" alt="reload location frames and markers button">';
-
-        // Add the reset map button
-        $resetMapContainer.append($resetMapIcon);
-
-        // Cache a ref to the reset button
-        $resetButton = $('.reset-button');
-
-        // Add event listener
-        // When the button is clicked, recenter the map
-        $resetButton.on("click", function() {
-            resetMarkersAndFrames();
-        });
-
-        // Make all of the map markers visible and set the map bounds
-        function resetMarkersAndFrames () {
-
-            console.log('set markers to visible');
-            console.log('center map');
-
-            // Remove the reset button
-            $resetMapContainer.remove();
-
-            // Set a ref to the length of the markers array
-            var markersLength = markers.length;
-
-            // Loop through the maps markers
-            for(var i = markersLength; i--;) {
-                var marker = markers[i];
-
-                // Make markers visible
-                self.showMarkers(marker);
-            };
-
-            // Set map bounds
-            self.setMapBounds();
-
-            // Remove the reset map button
-            $('.reset-map-container').remove();
-        };
-    };
-
-    // Center the map on the selected marker
-    self.centerOnGuideMarker = function () {
-
-        console.log('center map to relevant marker');
-
-        // Cache DOM ref
-        var breakName = $('#guide-break-name').text();
-
-        // Iterate through the markers array
-        markers.forEach(function(marker) {
-
-            // Cache the title of the marker not including the location
-            var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
-
-            // If the currently selected surf guide's break name matches
-            // a marker's break name:
-            if (breakName === markerName) {
-
-                // If info window isn't open
-                // Also, make the marker big if it isn't
-                // If the info window/marker are already open/big, do nothing
-                // This avoids repeating these tasks everytime window is resized
-                if (!self.isInfoWindowOpen(infoWindow)){
-
-                    console.log('info window & marker not activated');
-
-                    // Make the relevant marker big
-                    self.makeMarkerBig(marker, markerName);
-
-                    // Open info window
-                    self.getInfoWindow(marker, breakName);
-                };
-
-                // Center the map over the marker
-                map.setCenter(marker.getPosition());
-
-                // Zoom in on the relevant marker
-                map.setZoom(10);
-            };
-        });
-    };
-
-     self.setMapBounds = function () {
-
-        console.log('set map bounds');
-
-        /* Create map bounds rectangle using the most SW / NE locations
-        to calculate the size*/
-        var bounds = new google.maps.LatLngBounds();
-
-        /* Loop through markers and extend bounds to only those markers
-        that are visible*/
-        var markersLength = markers.length;
-
-        for (var i = markersLength; i--;) {
-            if(markers[i].visible) {
-                bounds.extend(markers[i].getPosition());
-            };
-        };
-
-        // Fit the map to the bounds calcuated above
-        map.fitBounds(bounds);
-
-        /* If there's only one marker (i.e. zoom is very high/too close), reset
-        zoom to lower level*/
-        if(map.getZoom() > 12) {
-            map.setZoom(12);
-        };
-    };
-
-    // Activate the info window for the selected marker
-    self.getInfoWindow = function (marker, breakName) {
-
-        console.log('show ' + breakName + "'s info window");
-
-        // Assign content to InfoWindow object
-        infoWindow.setContent(breakName);
-
-        // Assign the InfoWindow object the appropriate marker
-        infoWindow.open(map, marker);
-    };
-
-    // Check to see if the info window object is already open
-    self.isInfoWindowOpen = function (infoWindow){
-        var map = infoWindow.getMap();
-        return (map !== null && typeof map !== "undefined");
-    };
 };
-
-// Declare global variables map and infoWindow
-var map, infoWindow;
-
-/* Create array of map markers that is globally accessible, particularly by
-the ViewModel */
-var markers = [];
-
-// Create Google Map
-function initMap() {
-
-  // Create an array of styles for the surf map
-    var surfMapStyles = [
-      {
-        featureType:"all",
-        elemntType: "geometry",
-        stylers: [
-         { visibility: "off" }
-        ]
-      },{
-        featureType:"all",
-        elemntType: "labels",
-        stylers: [
-         { visibility: "off" }
-        ]
-      },{
-        featureType:"water",
-        elemntType: "geometry",
-        stylers: [
-         { color: "#FFFFFF" },
-         { visibility: "on" }
-        ]
-      },{
-        featureType:"landscape",
-        elemntType: "geometry",
-        stylers: [
-         { visibility: "on" },
-         { color: "#99EB99" }
-        ]
-      }
-    ];
-
-    // Create an array of styles for the driving map
-    var driveMapStyles = [
-      {
-        stylers: [
-          { hue: "#99EB99" },
-          { saturation: -20 }
-        ]
-      },{
-        featureType:"water",
-        elemntType: "geometry",
-        stylers: [
-         { color: "#FFFFFF" }
-        ]
-      },{
-        featureType: "road",
-        elementType: "labels",
-        stylers: [
-          { visibility: "simplified" }
-        ]
-      },{
-        featureType: "road.local",
-        elementType: "geometry",
-        stylers: [
-          { visibility: "off" },
-        ]
-      },{
-        featureType: "road",
-        elementType: "geometry",
-        stylers: [
-          { lightness: 50 },
-          { color: "#00B8E6" }
-        ]
-      },{
-        featureType: "poi",
-        elementType: "geometry",
-        stylers: [
-          { visibility: "none" }
-        ]
-      },{
-        featureType: "poi",
-        elementType: "labels",
-        stylers: [
-          { visibility: "none" }
-        ]
-      }
-    ];
-
-    /* Create StyledMapType objects and pass the corresponding array of
-    styles and name to each one. The name will be displayed in the map
-    controls.*/
-    var surfMapStyled = new google.maps.StyledMapType(surfMapStyles,
-      {name: "Surf"});
-
-    var driveMapStyled = new google.maps.StyledMapType(driveMapStyles,
-      {name: "Drive"});
-
-    // Set the options for the map
-    var mapOptions = {
-        center: new google.maps.LatLng(20.67,-157.505),
-                mapTypeControlOptions: {
-                    mapTypeIds: ['drive_map_style', 'surf_map_style']
-                },
-        disableDefaultUI: true,
-        zoomControl: true,
-        mapTypeControl: true,
-        scrollwheel: false
-    };
-
-    // Create the map and center on the Hawaiian Islands
-    map = new google.maps.Map(document.getElementById('map'), mapOptions);
-
-    // Associate the styled maps with the corresponding MapTypeId
-    map.mapTypes.set('surf_map_style', surfMapStyled);
-    map.mapTypes.set('drive_map_style', driveMapStyled);
-
-    // Set the surf map to display
-    map.setMapTypeId('surf_map_style');
-
-    // Create an info window object for displaying the break name
-    infoWindow = new google.maps.InfoWindow();
-};
-
-// Get current location
-navigator.geolocation.getCurrentPosition(success);
-
-function success(position) {
-    currentLat = position.coords.latitude;
-    currentLng = position.coords.longitude;
-};
-
-
-
-
 
 ko.applyBindings(new AppViewModel);

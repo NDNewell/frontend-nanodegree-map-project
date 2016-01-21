@@ -4,59 +4,9 @@ var imagesLoaded,
     locationsLoaded,
     images = {};
 
-$(document).ready(function() {
+function AppViewModel () {
 
-    // Load images
-    var numImages = 0;
-    var loadedImages = 0;
-
-    function loadImages(source) {
-
-      for(var src in source) {
-        numImages++;
-      };
-
-      for(var src in source) {
-        images[src] = new Image();
-        images[src].onload = function () {
-            if(++loadedImages >= numImages) {
-              console.log('images loaded');
-              imagesLoaded = true;
-
-              if(locationsLoaded){
-                  addRolloverEffect();
-              };
-            };
-        };
-        images[src].src = source[src];
-
-        switch (source) {
-            case roIconsSkillLevel:
-                images[src].className = "rollover-info skill-level-rollover skill-level-hover-default-style hover-tooltip-only";
-            break;
-
-            case roIconsBreak:
-                images[src].className = "rollover-info break-type-rollover break-type-hover-default-style hover-tooltip-only";
-            break;
-
-            case roIconsDirection:
-                images[src].className = "rollover-info wave-direction-rollover wave-direction-hover-default-style hover-tooltip-only";
-            break;
-
-            case roIconsBestSeason:
-                images[src].className = "rollover-info best-season-rollover best-season-hover-default-style hover-tooltip-only";
-            break;
-
-            case roIconsMiscOne:
-                images[src].className = "rollover-info misc-info-one-rollover misc-info-one-hover-default-style hover-tooltip-only";
-            break;
-
-            case roIconsMiscTwo:
-                images[src].className = "rollover-info misc-info-two-rollover misc-info-two-hover-default-style hover-tooltip-only";
-            break;
-        };
-      };
-    };
+    this.self = this;
 
     var guideIcons =
         { attireSpring: 'img/water_temp_spring.svg',
@@ -139,19 +89,65 @@ $(document).ready(function() {
           roIconMiscTwoUrchins: 'img/hazards_ro_urchins.svg',
           roIconMiscTwoWellknown: 'img/well_known_ro.svg' };
 
-    loadImages(guideIcons);
-    loadImages(roIconsSkillLevel);
-    loadImages(roIconsBreak);
-    loadImages(roIconsDirection);
-    loadImages(roIconsBestSeason);
-    loadImages(roIconsMiscOne);
-    loadImages(roIconsMiscTwo);
+    // Load images
+    var numImages = 0;
+    var loadedImages = 0;
 
-});
+    self.loadImages = function(source) {
 
-function AppViewModel () {
+      for(var src in source) {
+        numImages++;
+      };
 
-    this.self = this;
+      for(var src in source) {
+        images[src] = new Image();
+        images[src].onload = function () {
+            if(++loadedImages >= numImages) {
+              console.log('images loaded');
+              imagesLoaded = true;
+
+              if(locationsLoaded){
+                  addRolloverEffect();
+              };
+            };
+        };
+        images[src].src = source[src];
+
+        switch (source) {
+            case roIconsSkillLevel:
+                images[src].className = "rollover-info skill-level-rollover skill-level-hover-default-style hover-tooltip-only";
+            break;
+
+            case roIconsBreak:
+                images[src].className = "rollover-info break-type-rollover break-type-hover-default-style hover-tooltip-only";
+            break;
+
+            case roIconsDirection:
+                images[src].className = "rollover-info wave-direction-rollover wave-direction-hover-default-style hover-tooltip-only";
+            break;
+
+            case roIconsBestSeason:
+                images[src].className = "rollover-info best-season-rollover best-season-hover-default-style hover-tooltip-only";
+            break;
+
+            case roIconsMiscOne:
+                images[src].className = "rollover-info misc-info-one-rollover misc-info-one-hover-default-style hover-tooltip-only";
+            break;
+
+            case roIconsMiscTwo:
+                images[src].className = "rollover-info misc-info-two-rollover misc-info-two-hover-default-style hover-tooltip-only";
+            break;
+        };
+      };
+    };
+
+    self.loadImages(guideIcons);
+    self.loadImages(roIconsSkillLevel);
+    self.loadImages(roIconsBreak);
+    self.loadImages(roIconsDirection);
+    self.loadImages(roIconsBestSeason);
+    self.loadImages(roIconsMiscOne);
+    self.loadImages(roIconsMiscTwo);
 
     /* If no location data is returned within 10 seconds, show error */
     var locationDataTimeout = setTimeout (function() {
@@ -4117,18 +4113,18 @@ function AppViewModel () {
             fav remain unaltered */
             if (favorites.indexOf(markerName) > -1) {
                 if(marker.icon === 'img/marker_small.svg') {
-                    console.log("make " + markerName + "'s marker a favorite!");
+                    console.log("make " + markerName + "'s marker a favorite");
                     marker.setIcon('img/marker_smallFav.svg');
                 } else if (marker.icon === 'img/marker_selected.svg') {
-                    console.log("make " + markerName + "'s marker a favorite!");
+                    console.log("make " + markerName + "'s marker a favorite");
                     marker.setIcon('img/marker_selectedFav.svg');
                 };
             // If the name doesn't match, but was a fav, change the img back
             } else if (marker.icon === 'img/marker_smallFav.svg') {
-                console.log("unfavorite " + markerName + "'s marker!");
+                console.log("unfavorite " + markerName + "'s marker");
                 marker.setIcon('img/marker_small.svg');
             } else if (marker.icon === 'img/marker_selectedFav.svg') {
-                console.log("unfavorite " + markerName + "'s marker!");
+                console.log("unfavorite " + markerName + "'s marker");
                 marker.setIcon('img/marker_selected.svg');
             };
         });
@@ -4788,14 +4784,6 @@ function AppViewModel () {
     };
 };
 
-// Get current location
-navigator.geolocation.getCurrentPosition(success);
-
-function success(position) {
-    currentLat = position.coords.latitude;
-    currentLng = position.coords.longitude;
-};
-
 // Declare global variables map and infoWindow
 var map, infoWindow;
 
@@ -4917,8 +4905,15 @@ function initMap() {
 
     // Create an info window object for displaying the break name
     infoWindow = new google.maps.InfoWindow();
+};
 
-}
+// Get current location
+navigator.geolocation.getCurrentPosition(success);
+
+function success(position) {
+    currentLat = position.coords.latitude;
+    currentLng = position.coords.longitude;
+};
 
 
 

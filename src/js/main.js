@@ -1486,7 +1486,7 @@ function AppViewModel () {
         infoWindow.close();
 
         // Find last selected marker and make pin small again
-        makeMarkerSmall();
+        self.makeMarkerSmall();
 
         /* Iterate through the markers array and update the map markers
         with any matching locations to the user's favorites */
@@ -1684,7 +1684,7 @@ function AppViewModel () {
         infoWindow.close();
 
         // Find last selected marker and make pin small again
-        makeMarkerSmall();
+        self.makeMarkerSmall();
 
         // Clear the objects in the array
         locationGrid.removeAll();
@@ -1879,7 +1879,7 @@ function AppViewModel () {
                 prevents the locaiton frames from being managed (keeps only
                 one location frame visible) */
                 if(!$('.surf-guide-container').length && !isInfoWindowOpen(infoWindow) && !gridView) {
-                    makeMarkerSmall();
+                    self.makeMarkerSmall();
                 };
 
                 $allHoverIcons.remove();
@@ -1910,7 +1910,7 @@ function AppViewModel () {
     self.goToMarker = function(breakName) {
 
         // Find last selected marker and make it small
-        makeMarkerSmall();
+        self.makeMarkerSmall();
 
         // Iterate through the markers array
         markers.forEach(function(marker) {
@@ -1923,7 +1923,7 @@ function AppViewModel () {
             if (markerName === breakName) {
 
                 // Make the matching marker's icon big
-                makeMarkerBig(marker, markerName);
+                self.makeMarkerBig(marker, markerName);
 
                 // Open info window
                 getInfoWindow(marker, breakName);
@@ -1947,7 +1947,7 @@ function AppViewModel () {
             // Filter markers that match the location frame
             if (markerName === breakName) {
 
-                makeMarkerBig(marker, markerName);
+                self.makeMarkerBig(marker, markerName);
 
             };
         });
@@ -2167,7 +2167,7 @@ function AppViewModel () {
         };
 
         // Find last selected marker and make pin small again
-        makeMarkerSmall();
+        self.makeMarkerSmall();
 
         // Remove both surf conditions and surf guide from DOM
         $('.surf-guide-container').remove();
@@ -3680,7 +3680,7 @@ function AppViewModel () {
 
                 console.log('close map & any open infowindows');
 
-                makeMarkerSmall();
+                self.makeMarkerSmall();
                 infoWindow.close();
             });
 
@@ -3752,7 +3752,7 @@ function AppViewModel () {
                     console.log('close map & any open infowindows');
 
                     // Close open info window and make marker small
-                    makeMarkerSmall();
+                    self.makeMarkerSmall();
                     infoWindow.close();
                 };
             });
@@ -3823,7 +3823,7 @@ function AppViewModel () {
                     console.log('close map & any open infowindows');
 
                     // Close open info window and make marker small
-                    makeMarkerSmall();
+                    self.makeMarkerSmall();
                     infoWindow.close();
                 };
             });
@@ -3958,7 +3958,7 @@ function AppViewModel () {
             return function() {
 
                 // Find last selected marker and make pin small again
-                makeMarkerSmall();
+                self.makeMarkerSmall();
 
                 // Update the visible frames
                 self.manageFrames();
@@ -4047,6 +4047,44 @@ function AppViewModel () {
 
         // Add each marker to the markers array
         markers.push(marker);
+    };
+
+    self.makeMarkerBig = function (marker, markerName) {
+
+        /* If marker wasn't previously activated, make it big for
+        normal and fav icons */
+        if (marker.icon === 'img/marker_small.svg') {
+
+            console.log('make ' + markerName + "'" + 's marker big');
+
+            // Change the marker's image
+            marker.setIcon('img/marker_selected.svg');
+
+        } else if (marker.icon === 'img/marker_smallFav.svg') {
+
+            console.log('make ' + markerName + "'" + 's marker big');
+
+            // Change the marker's image
+            marker.setIcon('img/marker_selectedFav.svg');
+
+        };
+    };
+
+    // Find last selected marker and make pin small again
+    self.makeMarkerSmall = function () {
+        markers.forEach(function(marker) {
+
+            // Cache the title of the marker not including the location
+            var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
+
+            if (marker.icon === 'img/marker_selected.svg') {
+                console.log('make ' + markerName + "'" + 's marker small');
+                marker.setIcon('img/marker_small.svg');
+            } else if (marker.icon === 'img/marker_selectedFav.svg') {
+                console.log('make ' + markerName + "'" + 's marker small');
+                marker.setIcon('img/marker_smallFav.svg');
+            };
+        });
     };
 
     // Change any map markers that match/don't match the user's favorites
@@ -4350,7 +4388,7 @@ function AppViewModel () {
     self.clickMap = function () {
 
         // Find last selected marker and make pin small again
-        makeMarkerSmall();
+        self.makeMarkerSmall();
 
         /* If the surf guide isn't visible show the locations, otherwise
         do nothing (just close the info windows) */
@@ -4446,7 +4484,7 @@ function AppViewModel () {
                     console.log('info window & marker not activated');
 
                     // Make the relevant marker big
-                    makeMarkerBig(marker, markerName);
+                    self.makeMarkerBig(marker, markerName);
 
                     // Open info window
                     getInfoWindow(marker, breakName);
@@ -4881,47 +4919,6 @@ function scrollToFrame(breakName) {
         console.log('scroll position at: ' + $locationsContainer.scrollLeft());
     };
 };
-
-// Find last selected marker and make pin small again
-function makeMarkerSmall () {
-    markers.forEach(function(marker) {
-
-        // Cache the title of the marker not including the location
-        var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
-
-        if (marker.icon === 'img/marker_selected.svg') {
-            console.log('make ' + markerName + "'" + 's marker small');
-            marker.setIcon('img/marker_small.svg');
-        } else if (marker.icon === 'img/marker_selectedFav.svg') {
-            console.log('make ' + markerName + "'" + 's marker small');
-            marker.setIcon('img/marker_smallFav.svg');
-        };
-    });
-};
-
-function makeMarkerBig (marker, markerName) {
-
-    /* If marker wasn't previously activated, make it big for
-    normal and fav icons */
-    if (marker.icon === 'img/marker_small.svg') {
-
-        console.log('make ' + markerName + "'" + 's marker big');
-
-        // Change the marker's image
-        marker.setIcon('img/marker_selected.svg');
-
-    } else if (marker.icon === 'img/marker_smallFav.svg') {
-
-        console.log('make ' + markerName + "'" + 's marker big');
-
-        // Change the marker's image
-        marker.setIcon('img/marker_selectedFav.svg');
-
-    };
-};
-
-
-
 
 
 ko.applyBindings(new AppViewModel);

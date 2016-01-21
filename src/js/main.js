@@ -3989,7 +3989,7 @@ function AppViewModel () {
                 } else {
                     /* If the surf guide isn't open, hide all location frames
                     except the one related to the marker */
-                    showLocationFrame(breakName);
+                    self.showLocationFrame(breakName);
                 };
             };
 
@@ -4233,6 +4233,31 @@ function AppViewModel () {
 
         // Check the number of visible markers
         self.checkVisibleMarkers();
+    };
+
+    self.showLocationFrame = function (breakName) {
+
+        // Cache DOM reference to all location frames
+        var $allLocationFrames = $('.location-frame');
+
+        // Hide all location frames
+        $allLocationFrames.hide();
+
+        // Loop through all of the location frames
+        $allLocationFrames.each(function() {
+
+            // Cache the current location frame's reference and text
+            var $locationFrame = $(this);
+            var $locationFrameText = $locationFrame.text();
+
+            /* If a specific location frame's text matches the currenlty selected
+            break, show it*/
+            if($locationFrameText.indexOf(breakName) > -1) {
+
+                console.log('show only ' + breakName + "'s location frame");
+                $locationFrame.show();
+            };
+        });
     };
 
     self.showFrames = function (marker) {
@@ -4893,31 +4918,6 @@ function animateMarker (marker) {
     window.setTimeout(function() {
         marker.setAnimation(null);
     }, 730);
-};
-
-function showLocationFrame (breakName) {
-
-    // Cache DOM reference to all location frames
-    var $allLocationFrames = $('.location-frame');
-
-    // Hide all location frames
-    $allLocationFrames.hide();
-
-    // Loop through all of the location frames
-    $allLocationFrames.each(function() {
-
-        // Cache the current location frame's reference and text
-        var $locationFrame = $(this);
-        var $locationFrameText = $locationFrame.text();
-
-        /* If a specific location frame's text matches the currenlty selected
-        break, show it*/
-        if($locationFrameText.indexOf(breakName) > -1) {
-
-            console.log('show only ' + breakName + "'s location frame");
-            $locationFrame.show();
-        };
-    });
 };
 
 

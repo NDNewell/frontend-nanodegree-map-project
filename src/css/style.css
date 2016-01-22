@@ -8,7 +8,7 @@ body, html {
 
 .logo {
     font-size: 1.5em;
-    color: #00B8E6;
+    color: #56c4d1;
 }
 
 .search-symbol-desktop, .map-symbol-desktop, .favorite-filter-symbol-desktop {
@@ -398,7 +398,7 @@ body, html {
 .conditions-button {
     height: 40px;
     width: 200px;
-    background-color: #00B8E6;
+    background-color: #56c4d1;
     color: white;
     font-size: .4em;
     font-family: Arial, Verdana;
@@ -406,7 +406,7 @@ body, html {
 
 .conditions-button:hover {
     color: white;
-    background-color: #2FC5EA;
+    background-color: #35ABBB;
     border-color: #adadad;
 }
 
@@ -498,8 +498,8 @@ body, html {
     border: solid 1px;
     border-color: #E8E8E8;
     border-radius: 10px;
-    background-color: #E8E8E8;
-    color: #00B8E6;
+    background-color: #E1DFDF;
+    color: #35ABBB;
 }
 
 .surf-conditions-swell > p:first-child + p + p {
@@ -589,7 +589,7 @@ body, html {
 }
 
 .highlight-attire {
-    border-color: #00B8E6;
+    border-color: #35ABBB;
     border-style: solid;
     border-width: 2px;
 }
@@ -668,7 +668,7 @@ body, html {
 
     .logo {
         font-size: 1.29em;
-        color: #00B8E6;
+        color: #56c4d1;
     }
 
     .search-symbol-mobile, .map-symbol-mobile, .favorite-filter-symbol-mobile {
@@ -844,7 +844,7 @@ body, html {
     .conditions-button {
         height: 70px;
         width: 90%;
-        background-color: #00B8E6;
+        background-color: #56c4d1;
         border-radius: 10px;
         color: white;
         font-size: .6em;

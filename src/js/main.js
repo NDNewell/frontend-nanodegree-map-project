@@ -2293,7 +2293,7 @@ function AppViewModel () {
     self.loadProgressIndicator = function () {
 
         var cl = new CanvasLoader('progressBarContainer');
-        cl.setColor('#00b8e6'); // default is '#000000'
+        cl.setColor('#35ABBB'); // default is '#000000'
         cl.setShape('spiral'); // default is 'oval'
         cl.setDiameter(72); // default is 40
         cl.setDensity(33); // default is 40

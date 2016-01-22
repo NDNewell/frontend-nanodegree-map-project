@@ -28,7 +28,7 @@ body, html {
 }
 
 .favorite-filter-symbol-desktop {
-    margin-top: 13px;
+    margin-top: 11px;
 }
 
 .search-symbol-mobile, .map-symbol-mobile, .favorite-filter-symbol-mobile {
@@ -155,7 +155,7 @@ body, html {
 }
 
 .is-a-favorite path{
-    fill: #ff33ff;
+    fill: #ffff1f;
     stroke-width: 1;
 }
 
@@ -329,19 +329,20 @@ body, html {
 }
 
 .is-a-favorite-guide path {
-    fill: #ff33ff;
-    stroke-opacity: 0;
-}
+    fill: #ffff1f;
+    stroke: #9d9d9d;
+    stroke-width: 1.25;}
 
 .not-a-favorite-guide path {
     fill: #ffffff;
-    stroke: #b3b3b3;
-    stroke-width: 1;
+    stroke: #9d9d9d;
+    stroke-width: 1.25;}
 }
 
 .not-a-favorite-guide:hover path {
-    fill: #ff80ff;
-    stroke-opacity: 0;
+    fill: #ffff1f;
+    stroke: #9d9d9d;
+    stroke-width: 1.25;}
 }
 
 .reset-map-container {
@@ -687,7 +688,7 @@ body, html {
     }
 
     .favorite-filter-symbol-mobile {
-        margin-top: 13px;
+        margin-top: 11px;
     }
 
     .navbar-right {
@@ -1019,23 +1020,23 @@ body, html {
 
     .clear-favorites-button-map-view-style {
         position: absolute;
-        height: 40px;
-        width: 100px;
-        top: 5px;
-        right: 25px;
+        height: 33px;
+        width: 80px;
+        top: 8px;
+        right: 8px;
         background-color: #ffffff;
-        border: 2px solid;
-        border-color: #E8E8E8;
-        border-radius: 15px;
-        font-size: 1.2em;
-        color: #b3b3b3;
+        border-radius: 3px;
+        font-size: 1em;
+        color: #525252;
         font-family: Arial, Verdana;
+        -webkit-box-shadow:0 0 3px rgba(0, 0, 0, 0.5);
+        -moz-box-shadow:0 0 3px rgba(0, 0, 0, 0.5);
+        box-shadow:0 0 3px rgba(0, 0, 0, 0.5);
     }
 
     .clear-favorites-button-map-view-style:hover {
-        color: white;
-        background-color: #b3b3b3;
-        border-color: #b3b3b3;
+        color: #333333;
+        background-color: #E1DFDF;
     }
 
     .clear-favorites-button-map-view-style:focus {

@@ -3488,9 +3488,9 @@ function AppViewModel () {
         };
 
         if(favorite) {
-            var icon = '<span class="favorite-wrapper-guide is-a-favorite-guide"><img class="favorite-guide"  src="img/heart.svg"></span>';
+            var icon = '<span class="favorite-wrapper-guide is-a-favorite-guide"><img class="favorite-guide"  src="img/star.svg"></span>';
         } else {
-            var icon = '<span class="favorite-wrapper-guide not-a-favorite-guide"><img class="favorite-guide" src="img/heart.svg"></span>';
+            var icon = '<span class="favorite-wrapper-guide not-a-favorite-guide"><img class="favorite-guide" src="img/star.svg"></span>';
         };
 
         return icon;

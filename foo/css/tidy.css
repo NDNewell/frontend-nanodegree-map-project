@@ -106,12 +106,6 @@ html {
   height: 100%;
 }
 
-.horizontal-rule {
-  border-bottom-style: solid;
-  border-bottom-color: #E8E8E8;
-  border-bottom-width: 1px;
-}
-
 .not-a-favorite path {
   fill-opacity: 0;
   stroke-opacity: 0;
@@ -257,10 +251,6 @@ html {
   .map-container-default-style {
     display: none;
     height: 245px;
-    border-bottom: 1px dashed;
-    border-color: #E8E8E8;
-    margin-top: 1px;
-    padding: 0px;
   }
 
   .clear-favorites-button-default-style {

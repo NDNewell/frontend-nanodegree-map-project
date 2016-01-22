@@ -143,6 +143,16 @@ body, html {
     height: 100%;
 }
 
+.info-window > p:first-child {
+    background: #333;
+    background: rgba(0,0,0,.7);
+    border-radius: 5px;
+    padding: 2px 4px;
+    font-size: 1.2em;
+    color: #fff;
+    font-family: Arial, Verdana;
+}
+
 .favorite-default-style {
     position: absolute;
     left: 6%;

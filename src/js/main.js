@@ -1775,11 +1775,41 @@ function AppViewModel () {
 
         console.log('show ' + breakName + "'s info window");
 
+        // Cache the content to be added to the info window
+        var iwContent = '<div class="info-window">' + '<p>' + breakName + '</p>' + '<div>';
+
         // Assign content to InfoWindow object
-        infoWindow.setContent(breakName);
+        infoWindow.setContent(iwContent);
 
         // Assign the InfoWindow object the appropriate marker
         infoWindow.open(map, marker);
+
+        // Cache refs to to elements related to the info window
+        // Use .gm-style-iw to transverse to needed elements
+        var $iwOuter = $('.gm-style-iw');
+            $iwFrame = $iwOuter.parent(),
+            $iwContainer = $iwOuter.parent().parent();
+
+        // Hide point at bottom of info window
+        $iwFrame.children(':nth-child(1)').children(':nth-child(3)').css("display", "none");
+
+        // Hide the bottom point's background shadow
+        $iwFrame.children(':nth-child(1)').children(':nth-child(1)').css("display", "none");
+
+        // Hide info window background
+        $iwFrame.children(':nth-child(1)').children(':nth-child(4)').css("display", "none");
+
+        // Hide info window background shadow
+        $iwFrame.children(':nth-child(1)').children(':nth-child(2)').css("display", "none");
+
+        // Hide close button
+        $iwFrame.children(':nth-child(3)').css("display", "none");
+
+        // Change the position of the info window
+        $iwContainer.css({
+              left: '11px',
+              top: '48px'
+        });
     };
 
     // Check to see if the info window object is already open

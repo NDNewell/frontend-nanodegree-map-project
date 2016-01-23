@@ -763,10 +763,10 @@ function AppViewModel () {
 
         // Add a text box that displays the break name and location when
         // clicked
-        self.addMarkerListeners(marker, breakName, obj);
+        self.addMarkerListeners(marker, obj);
     };
 
-    self.addMarkerListeners = function(marker, breakName, obj) {
+    self.addMarkerListeners = function(marker, obj) {
 
         google.maps.event.addListener(marker, 'dblclick', (function(e) {
 
@@ -822,13 +822,13 @@ function AppViewModel () {
 
                     /* If the surf guide isn't open, hide all location frames
                     except the one related to the marker */
-                    self.showLocationFrame(breakName);
+                    self.showLocationFrame(marker);
                 };
             };
 
         /* Pass the relevant marker and break name (breakName) for the current
         iteration as an argument into the function*/
-        })(marker, breakName, obj));
+        })(marker, obj));
 
         // Location frame pulsates when it's corresponding marker is hovered
         // over
@@ -844,21 +844,21 @@ function AppViewModel () {
                 if (!$('.surf-guide-container').length) {
 
                     // Pulsate the associated location frame
-                    self.pulsateLocationFrame(breakName);
+                    self.pulsateLocationFrame(marker);
 
                     // If more than one location frame is in view and
                     // not in mobile view, execute code
                     if($numFramesVisible !== 1 && window.innerWidth >= 768) {
 
                         // Scroll to specific location frame
-                        self.scrollToFrame(breakName);
+                        self.scrollToFrame(marker);
                     };
                 };
             };
 
         /* Pass the relevant marker and break name (breakName) for the current
         iteration as an argument into the function*/
-        })(breakName));
+        })());
 
         google.maps.event.addListener(marker, 'mouseout', (function(e) {
 
@@ -870,14 +870,14 @@ function AppViewModel () {
                 if (!$('.surf-guide-container').length) {
 
                     // Reverse pulstate the associated location frame
-                    self.pulsateLocationFrame(breakName);
+                    self.pulsateLocationFrame(marker);
 
                 };
             };
 
         /* Pass the relevant marker and break name (breakName) for the current
         iteration as an argument into the function*/
-        })(breakName));
+        })());
 
         // Add each marker to the markers array
         markers.push(marker);
@@ -1157,13 +1157,16 @@ function AppViewModel () {
 
     // Automatically scroll to the location frame whose marker is being hovered
     // over
-    self.scrollToFrame = function (breakName) {
+    self.scrollToFrame = function (marker) {
 
         // Cache DOM refs
         var $locationsContainer = $('.location-grid'),
             $locationFrame = $('.location-frame'),
             $pulsatingLocation = $('.pulse-location-frame'),
-            $oldPosition = $locationsContainer.scrollLeft();
+            $oldPosition = $locationsContainer.scrollLeft(),
+
+            // Cache the title of the marker not including the location
+            markerName = marker.title.replace(/ *\([^)]*\) */g, "");
 
         // Check if autoscroll is already engaged
         // If it is, clear the interval
@@ -1188,8 +1191,8 @@ function AppViewModel () {
         // hovered over
         var $targetIndex = $pulsatingLocation.index();
 
-        // Calculate the amount of space preceding the location being hovered over
-        // This is done by multiplying the number of the frames preceding the said
+        // Calculate the amt of space preceding the location being hovered over
+        // This is done by multiplying the # of the frames preceding the said
         // location by the location frame width
         var spacePreceding = $frameWidth * $targetIndex;
 
@@ -1197,7 +1200,7 @@ function AppViewModel () {
         // from the space that preceeds the targeted frame
         var newPosition = spacePreceding - spaceLeftNRight;
 
-        console.log("auto scroll to " + breakName + "'s location frame");
+        console.log("auto scroll to " + markerName + "'s location frame");
 
         // Scroll to the new location using the new position
         // Scroll right if the new scrollLeft position is greater than current pos.
@@ -1237,10 +1240,10 @@ function AppViewModel () {
           // Create a loop that moves the scroll bar from right to left
           var scrollLeft = setInterval(function() {
 
-              // Create a global variable to indicate the scrolling is in progress
+              // Create a global var to indicate the scrolling is in progress
               scrollLeftRunning = true;
 
-              // Increase the scrollLeft position 70px for each 1/1000 of second
+              // Increase the scrollLeft pos 70px for each 1/1000 of second
               transitionLeft-=70;
 
               // If the scrollLeft position is greater than the new position
@@ -1271,7 +1274,7 @@ function AppViewModel () {
             };
 
             // Since each iteration towards the new position increments by 30px
-            // each time, it will never quite reach the exact goal, which leaves
+            // each time, it will never quite reach the goal, which leaves
             // the location frame off center. To avoid this, set the scrollLeft
             // position to the new position at the end of scrolling
             $locationsContainer.scrollLeft(newPosition);
@@ -1282,11 +1285,14 @@ function AppViewModel () {
         };
     };
 
-    self.pulsateLocationFrame = function (breakName) {
+    self.pulsateLocationFrame = function (marker) {
 
         // Cache DOM references
         var $allLocationFrames = $('.location-frame'),
-            $numFramesVisible = $('.location-frame:visible').length;
+            $numFramesVisible = $('.location-frame:visible').length,
+
+            // Cache the title of the marker not including the location
+            markerName = marker.title.replace(/ *\([^)]*\) */g, "");
 
         // If more than one location frame is in view and not in mobile view,
         // execute code
@@ -1300,13 +1306,13 @@ function AppViewModel () {
                     $locationFrameText = $locationFrame.text();
 
                 /* If a specific location frame's text matches the currently hovered/unhovered marker, pulsate or reverse pulsate it */
-                if($locationFrameText.indexOf(breakName) > -1) {
+                if($locationFrameText.indexOf(markerName) > -1) {
 
                     /* If hovering away from the marker, reverse pulsate its
                     location frame */
                     if($('.pulse-location-frame').length) {
 
-                        console.log("make " + breakName + "'s location frame small");
+                        console.log("make " + markerName + "'s location frame small");
 
                         // Add/remove necessary classes to animate
                         $locationFrame.removeClass("pulse-location-frame").addClass("reverse-pulse");
@@ -1317,7 +1323,7 @@ function AppViewModel () {
                     // If hovering over the marker, pulsate its location frame
                     } else {
 
-                        console.log("make " + breakName + "'s location frame big");
+                        console.log("make " + markerName + "'s location frame big");
 
                         // Add necessary class to animate
                         $locationFrame.removeClass("reverse-pulse").addClass("pulse-location-frame");
@@ -1346,7 +1352,7 @@ function AppViewModel () {
         // Remove the reverse pulse effect
         function removePulse ($locationFrame) {
 
-            /* Set a time to remove the effect just after the reverse pulse effect
+            /* Set a time to rm the effect just after the reverse pulse effect
              finishes its animation on the previous marker's location frame */
             var timer = setTimeout (function() {
                 $locationFrame.removeClass("reverse-pulse");
@@ -1395,7 +1401,10 @@ function AppViewModel () {
         $favorite.attr("class", "favorite favorite-map-view-style");
     };
 
-    self.showLocationFrame = function (breakName) {
+    self.showLocationFrame = function (marker) {
+
+        // Cache the title of the marker not including the location
+        var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
 
         // Cache DOM reference to all location frames
         var $allLocationFrames = $('.location-frame');
@@ -1412,9 +1421,9 @@ function AppViewModel () {
 
             /* If a specific location frame's text matches the currenlty selected
             break, show it*/
-            if($locationFrameText.indexOf(breakName) > -1) {
+            if($locationFrameText.indexOf(markerName) > -1) {
 
-                console.log('show only ' + breakName + "'s location frame");
+                console.log('show only ' + markerName + "'s location frame");
                 $locationFrame.show();
             };
         });

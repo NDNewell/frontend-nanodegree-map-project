@@ -4,7 +4,7 @@ var map, infoWindow;
 // Create Google Map
 function initMap() {
 
-  // Create an array of styles for the surf map
+  // Create custom style for the map
     var mapStyle = [{
         "featureType": "administrative",
         "elementType": "all",
@@ -115,6 +115,7 @@ function initMap() {
 
     // Set the options for the map
         mapTypeControlOptions: {
+            style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
             mapTypeIds: [
                 'custom_style',
                 google.maps.MapTypeId.SATELLITE
@@ -125,7 +126,8 @@ function initMap() {
         rotateControl: true,
         streetViewControl: true,
         mapTypeControl: true,
-        scrollwheel: false
+        scrollwheel: false,
+        scaleControl: true
     });
 
     // Enable 45 degree tilting of imagery when zoomed in at close levels for
@@ -391,6 +393,9 @@ function AppViewModel () {
 
               // Populate Google map with markers based on location data
               self.generateMarkers(data);
+
+              // Add map listeners
+              self.addMapListeners();
           };
         }
     });
@@ -732,28 +737,6 @@ function AppViewModel () {
             self.addMarker(breakName, breakCoordinates, breakLocation, obj);
         };
 
-        // Add map event listener the detects when the map is idle
-        // Make markers within the viewport/map bounds visible and those
-        // that aren't invisible
-        // Show only the location frames and markers whose markers are within
-        // view port's map bounds
-        google.maps.event.addListener(map, 'idle', function() {
-
-            // Only execute the following code if the map is visible and
-            // managers aren't disabled (window isn't being resized)
-            if($('#map').is(":visible") && !resizeInProgress) {
-                self.manageFrames();
-                self.manageMarkers();
-            };
-        });
-
-        // When the map is clicked, location frames are made visible.
-        // This is useful if they were hidden as a result of a marker being
-        // clicked.
-        // In addition, all open info windows are closed and any selected
-        // markers are made small again
-        google.maps.event.addListener(map, 'click', self.clickMap);
-
         // Display markers found in the markers array on the map
         self.displayMarkers(map);
 
@@ -780,10 +763,10 @@ function AppViewModel () {
 
         // Add a text box that displays the break name and location when
         // clicked
-        self.addListeners(marker, breakName, obj);
+        self.addMarkerListeners(marker, breakName, obj);
     };
 
-    self.addListeners = function(marker, breakName, obj) {
+    self.addMarkerListeners = function(marker, breakName, obj) {
 
         google.maps.event.addListener(marker, 'dblclick', (function(e) {
 
@@ -1592,20 +1575,51 @@ function AppViewModel () {
 
     self.clickMap = function () {
 
-        // Find last selected marker and make pin small again
-        self.makeMarkerSmall();
 
-        /* If the surf guide isn't visible show the locations, otherwise
-        do nothing (just close the info windows) */
-        if (!$('.surf-guide-container').is(":visible")) {
-            $('.location-frame').show();
-        };
+    };
 
-        // Close any open info windows
-        infoWindow.close();
+    self.addMapListeners = function () {
 
-        // Update visible frames
-        self.manageFrames();
+        // Add map event listener the detects when the map is idle
+        // Make markers within the viewport/map bounds visible and those
+        // that aren't invisible
+        // Show only the location frames and markers whose markers are within
+        // view port's map bounds
+        google.maps.event.addListener(map, 'idle', function() {
+
+            // Only execute the following code if the map is visible and
+            // managers aren't disabled (window isn't being resized)
+            if($('#map').is(":visible") && !resizeInProgress) {
+                self.manageFrames();
+                self.manageMarkers();
+            };
+        });
+
+        // When the map is clicked, location frames are made visible.
+        // This is useful if they were hidden as a result of a marker being
+        // clicked.
+        // In addition, all open info windows are closed and any selected
+        // markers are made small again
+        google.maps.event.addListener(map, 'click', function() {
+
+            // Find last selected marker and make pin small again
+            self.makeMarkerSmall();
+
+            /* If the surf guide isn't visible show the locations, otherwise
+            do nothing (just close the info windows) */
+            if (!$('.surf-guide-container').is(":visible")) {
+                $('.location-frame').show();
+            };
+
+            // Close any open info windows
+            infoWindow.close();
+
+            // Update visible markers
+            self.manageMarkers();
+
+            // Update visible frames
+            self.manageFrames();
+        });
     };
 
     // Bring map markers back into view

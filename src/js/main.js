@@ -1679,8 +1679,6 @@ function AppViewModel () {
     // Center the map on the selected marker
     self.centerMapOnGuideMarker = function () {
 
-        console.log('center map over relevant marker');
-
         // Cache DOM ref
         var breakName = $('#guide-break-name').text();
 
@@ -1709,11 +1707,20 @@ function AppViewModel () {
                     self.getInfoWindow(marker, breakName);
                 };
 
-                // Center the map over the marker
-                map.setCenter(marker.getPosition());
+                // Because it takes time to adjust the map size, delay the
+                // centering of the marker in order to avoid centering the
+                // map in the wrong place
+                var timer = setTimeout(function() {
 
-                // Zoom in on the relevant marker
-                map.setZoom(10);
+                    console.log('center map over ' + markerName);
+
+                    // Center the map over the marker
+                    map.setCenter(marker.getPosition());
+
+                    // Zoom in on the relevant marker
+                    map.setZoom(10);
+                }, 140);
+
             };
         });
     };

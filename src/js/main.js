@@ -802,16 +802,7 @@ function AppViewModel () {
                 // Update the visible frames
                 self.manageFrames();
 
-                // Cache the title of the marker not including the location
-                var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
-
-                if (marker.icon === 'img/marker_small.svg') {
-                    console.log('make ' + markerName + "'" + 's marker big');
-                    marker.setIcon('img/marker_selected.svg');
-                } else if (marker.icon === 'img/marker_smallFav.svg') {
-                    console.log('make ' + markerName + "'" + 's marker big');
-                    marker.setIcon('img/marker_selectedFav.svg');
-                };
+                self.makeMarkerBig(marker);
 
                 self.getInfoWindow(marker, breakName);
 
@@ -906,7 +897,10 @@ function AppViewModel () {
         }, 730);
     };
 
-    self.makeMarkerBig = function (marker, markerName) {
+    self.makeMarkerBig = function (marker) {
+
+        // Cache the title of the marker not including the location
+        var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
 
         /* If marker wasn't previously activated, make it big for
         normal and fav icons */
@@ -962,7 +956,7 @@ function AppViewModel () {
             if (markerName === breakName) {
 
                 // Make the matching marker's icon big
-                self.makeMarkerBig(marker, markerName);
+                self.makeMarkerBig(marker);
 
                 // Open info window
                 self.getInfoWindow(marker, breakName);
@@ -986,7 +980,7 @@ function AppViewModel () {
             // Filter markers that match the location frame
             if (markerName === breakName) {
 
-                self.makeMarkerBig(marker, markerName);
+                self.makeMarkerBig(marker);
 
             };
         });
@@ -1701,7 +1695,7 @@ function AppViewModel () {
                     console.log('info window & marker not activated');
 
                     // Make the relevant marker big
-                    self.makeMarkerBig(marker, markerName);
+                    self.makeMarkerBig(marker);
 
                     // Open info window
                     self.getInfoWindow(marker, breakName);

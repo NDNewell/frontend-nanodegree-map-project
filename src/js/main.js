@@ -1803,6 +1803,21 @@ function AppViewModel () {
         // Hide close button
         $iwFrame.children(':nth-child(3)').css("display", "none");
 
+        // Since the info window container takes up space despite not being
+        // visible, click the map is not possible
+        // To remedy this, enable clicking through a DIV to the underlying
+        // element(the Google map).
+        $iwContainer.css("pointer-events", "none");
+
+        // The above fix doesn't work for Opera and require the event to be
+        // forwarded manually
+        $iwContainer.on("mousemove", function(e) {
+
+              // Get the info window's immediately following sibling (Google
+              // map) and trigger its handler
+              $(this).next().trigger(e);
+        });
+
         // Change the position of the info window
         $iwContainer.css({
               left: '11px',

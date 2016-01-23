@@ -1712,6 +1712,11 @@ function AppViewModel () {
                 // map in the wrong place
                 var timer = setTimeout(function() {
 
+                    console.log('resize map');
+
+                    // Resize the map to adapt to new window size
+                    google.maps.event.trigger(map, 'resize');
+
                     console.log('center map over ' + markerName);
 
                     // Center the map over the marker
@@ -1719,8 +1724,8 @@ function AppViewModel () {
 
                     // Zoom in on the relevant marker
                     map.setZoom(10);
-                }, 140);
 
+                }, 140);
             };
         });
     };
@@ -2549,7 +2554,7 @@ function AppViewModel () {
 
             /* If the surf guide is open, reset the map size, then center the map on the selected location's marker */
             } else if (guideView && $map.is(":visible")) {
-                google.maps.event.trigger(map, 'resize');
+
                 self.centerMapOnGuideMarker();
             };
 
@@ -2755,16 +2760,9 @@ function AppViewModel () {
 
         });
 
-        /* If the map is visible, set the map bounds and map position. If it is
-        instead hidden, do nothing. This is because that a bug is created when
-        map bounds are invoked on the hidden map: the map, markers and info-
-        windows skew left for some unknown reason. Because a search results
-        in location frames being filtered and eventually one being selected,
-        centering and map bounds will be set by the clicking of the location
-        frame. Also, if the map is opened (and if the surf guide isn't in view)
-        the map will be centered and the bounds will also be set whichever
-        location frames have or haven't been filtered into view. */
+        // If the map is visible, set the map bounds
         if (!$('#map').is(":hidden")) {
+
             // Set the map bounds & map position
             self.setMapBounds();
         };
@@ -3247,10 +3245,6 @@ function AppViewModel () {
                 if($map.is(":visible")) {
 
                     console.log('open map');
-                    console.log('resize map');
-
-                    // Resize the map to adapt to new window size
-                    google.maps.event.trigger(map, 'resize');
 
                     // Center the map over the relevant marker
                     self.centerMapOnGuideMarker();
@@ -3301,11 +3295,6 @@ function AppViewModel () {
 
                   // When map is open and surf guide is visible:
                     if($surfGuide.is(":visible")) {
-
-                        console.log('resize map');
-
-                        // Resize the map to adapt to new window size
-                        google.maps.event.trigger(map, 'resize');
 
                         // Center the map over the relevant marker
                         self.centerMapOnGuideMarker();
@@ -3391,6 +3380,7 @@ function AppViewModel () {
 
         // If the map is visible, reset the bounds
         if (!$('#map').is(":hidden")) {
+
             // Set the map bounds & map position
             self.setMapBounds();
         };

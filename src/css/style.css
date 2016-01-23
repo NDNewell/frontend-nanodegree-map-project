@@ -151,6 +151,12 @@ body, html {
     font-size: 1.2em;
     color: #fff;
     font-family: Arial, Verdana;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .favorite-default-style {

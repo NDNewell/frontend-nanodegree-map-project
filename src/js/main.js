@@ -804,7 +804,7 @@ function AppViewModel () {
 
                 self.makeMarkerBig(marker);
 
-                self.getInfoWindow(marker, breakName);
+                self.getInfoWindow(marker);
 
                 // Bounce marker upon clicking
                 self.animateMarker(marker);
@@ -812,11 +812,14 @@ function AppViewModel () {
                 /* Show surf guide (only if surf guide is already open) when
                 the marker is clicked */
                 if ($('.surf-guide-container').is(":visible")) {
+
                     /* Remove any visible surf conditions so they aren't still
                     displayed when the new surf guide renders */
                     $('.surf-conditions').remove();
                     renderSurfGuide(obj);
+
                 } else {
+
                     /* If the surf guide isn't open, hide all location frames
                     except the one related to the marker */
                     self.showLocationFrame(breakName);
@@ -868,6 +871,7 @@ function AppViewModel () {
 
                     // Reverse pulstate the associated location frame
                     self.pulsateLocationFrame(breakName);
+
                 };
             };
 
@@ -917,7 +921,6 @@ function AppViewModel () {
 
             // Change the marker's image
             marker.setIcon('img/marker_selectedFav.svg');
-
         };
     };
 
@@ -959,7 +962,7 @@ function AppViewModel () {
                 self.makeMarkerBig(marker);
 
                 // Open info window
-                self.getInfoWindow(marker, breakName);
+                self.getInfoWindow(marker);
 
                 // Animate marker
                 self.animateMarker(marker);
@@ -1698,7 +1701,7 @@ function AppViewModel () {
                     self.makeMarkerBig(marker);
 
                     // Open info window
-                    self.getInfoWindow(marker, breakName);
+                    self.getInfoWindow(marker);
                 };
 
                 // Because it takes time to adjust the map size, delay the
@@ -1789,12 +1792,15 @@ function AppViewModel () {
     };
 
     // Activate the info window for the selected marker
-    self.getInfoWindow = function (marker, breakName) {
+    self.getInfoWindow = function (marker) {
 
-        console.log('show ' + breakName + "'s info window");
+        // Cache the title of the marker not including the location
+        var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
+
+        console.log('show ' + markerName + "'s info window");
 
         // Cache the content to be added to the info window
-        var iwContent = '<div class="info-window">' + '<p>' + breakName + '</p>' + '<div>';
+        var iwContent = '<div class="info-window">' + '<p>' + markerName + '</p>' + '<div>';
 
         // Assign content to InfoWindow object
         infoWindow.setContent(iwContent);

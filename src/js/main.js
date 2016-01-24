@@ -2777,7 +2777,7 @@ function AppViewModel () {
             console.log('resize window');
 
         // Only execute if the map is visible
-        if($("#map").is(":visible")) {
+        if($("#map").is(":visible") && !guideView) {
 
             // Disable the frame and marker managers
             resizeInProgress = true;

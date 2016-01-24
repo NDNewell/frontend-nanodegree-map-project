@@ -270,27 +270,27 @@ function AppViewModel () {
 
         switch (source) {
             case roIconsSkillLevel:
-                images[src].className = "rollover-info skill-level-rollover skill-level-hover-default-style hover-tooltip-only enable-tooltip";
+                images[src].className = "rollover-info skill-level-rollover skill-level-hover-default-style hover-tooltip-only ";
             break;
 
             case roIconsBreak:
-                images[src].className = "rollover-info break-type-rollover break-type-hover-default-style hover-tooltip-only enable-tooltip";
+                images[src].className = "rollover-info break-type-rollover break-type-hover-default-style hover-tooltip-only ";
             break;
 
             case roIconsDirection:
-                images[src].className = "rollover-info wave-direction-rollover wave-direction-hover-default-style hover-tooltip-only enable-tooltip";
+                images[src].className = "rollover-info wave-direction-rollover wave-direction-hover-default-style hover-tooltip-only ";
             break;
 
             case roIconsBestSeason:
-                images[src].className = "rollover-info best-season-rollover best-season-hover-default-style hover-tooltip-only enable-tooltip";
+                images[src].className = "rollover-info best-season-rollover best-season-hover-default-style hover-tooltip-only ";
             break;
 
             case roIconsMiscOne:
-                images[src].className = "rollover-info misc-info-one-rollover misc-info-one-hover-default-style hover-tooltip-only enable-tooltip";
+                images[src].className = "rollover-info misc-info-one-rollover misc-info-one-hover-default-style hover-tooltip-only ";
             break;
 
             case roIconsMiscTwo:
-                images[src].className = "rollover-info misc-info-two-rollover misc-info-two-hover-default-style hover-tooltip-only enable-tooltip";
+                images[src].className = "rollover-info misc-info-two-rollover misc-info-two-hover-default-style hover-tooltip-only ";
             break;
         };
       };
@@ -838,6 +838,10 @@ function AppViewModel () {
             the breakName and any behavior to the current marker */
             return function() {
 
+                // Remove the marker's title in order to disable the native
+                // tooltip from showing
+                self.removeTitle();
+
                 var $numFramesVisible = $('.location-frame:visible').length;
 
                 // If the surf guide is open do nothing
@@ -881,6 +885,9 @@ function AppViewModel () {
 
         // Add each marker to the markers array
         markers.push(marker);
+
+        // Add each marker's title to the marker titles array
+        markerTitles.push(marker.title);
     };
 
     self.displayMarkers = function(map) {
@@ -2159,7 +2166,7 @@ function AppViewModel () {
             var $element = $(this);
 
             // If the element has no tooltips already loaded, load the tooltip
-            if(!$element.hasClass("tooltip-loaded") && $element.hasClass("enable-tooltip")) {
+            if(!$element.hasClass("tooltip-loaded")) {
 
                 // In order to disable the native tooltip function, the class
                 // of the element must be removed while the mouse if hovered
@@ -2282,50 +2289,6 @@ function AppViewModel () {
             };
         });
 
-        // Cache Google map's element titles that are usually shown in a native
-        // tooltip when hovering over that element
-        var googleMapsTooltips = ['Report errors in the road map or imagery to Google', 'Zoom in', 'Zoom out', 'Rotate map 90 degrees', 'Show satellite imagery', 'Click to see this area on Google Maps'];
-
-        // When hovering over the Google map, check all available elements with
-        // a title
-        $("#map").on("mousemove", function() {
-
-            // For each element with a title found, execute the handler
-            $('[title]').each(function () {
-
-                // Cache the element
-                var $this = $(this);
-
-                // If the element has an 'allowed' tooltip i.e. not a 'native'
-                // tooltip, it will have the class 'enable-tooltip'.
-                // If the element doesn't have this class and it also does not
-                // have the class 'title-removed' i.e. its title hasn't already
-                // been removed, removed its title in order to disable its tool
-                // -tip from appearing.
-                if(!$this.hasClass('enable-tooltip') && !$this.hasClass('title-removed')) {
-
-                    console.log("disable native tooltips");
-
-                    // If the element's title matches any of Google's native
-                    // element titles, give it a class 'title-removed' so that
-                    // there are no future attempts to remove the title.
-                    // *This filtering method for some unknown reason doesn't
-                    // work when adding this status to a marker's title.
-                    // Despite removing the marker's title, it continues to
-                    // show in the tooltip, so it does not receive the below
-                    // class. This way any future title checks will ensure that
-                    // it is removed in order to prevent the tooltip from
-                    // appearing.
-                    if(googleMapsTooltips.indexOf($this.attr('title')) > -1) {
-                        $this.addClass('title-removed');
-                    };
-
-                    // Remove the element's title
-                    $this.removeAttr('title');
-                };
-            });
-        });
-
         // Render the element's tooltip
         function renderToolTips ($titleText, eventRef, $element) {
 
@@ -2434,6 +2397,78 @@ function AppViewModel () {
                 });
             });
         };
+    };
+
+    // Cache Google map's element titles that are usually shown in a native
+    // tooltip when hovering over that element
+    var googleElemTitles = ['Report errors in the road map or imagery to Google', 'Zoom in', 'Zoom out', 'Rotate map 90 degrees', 'Show satellite imagery', 'Change map style'];
+
+    // Save refs to each marker's title
+    var markerTitles = [];
+
+    // Remove each Google map elem's title in order to disable its native
+    // tooltip from appearing
+    self.removeGoogleElemTitles = function () {
+
+        // Save the length of the Google elems titles array and set the
+        // number of elem titles detected to zero
+        var googleElemTitlesLength = googleElemTitles.length,
+            googleTitleNum = 0;
+
+        // Before removing Google's elem titles, ensure they have all loaded
+        var checkElemsLoaded = setInterval(function() {
+
+            // Iterate over each elem that has a title attribute
+            $('[title]').each(function() {
+
+                // Save a ref to each individual elem
+                var $this = $(this);
+
+                // If the elem matches any of the Google map elems' titles
+                // count it
+                if(googleElemTitles.indexOf($this.attr('title')) > -1) {
+
+                    // Count the detected elem title
+                    googleTitleNum++
+
+                    // Once all of the Google elem titles have been loaded
+                    // remove them
+                    if(googleTitleNum === googleElemTitlesLength) {
+
+                        clearInterval(checkElemsLoaded);
+
+                        console.log('disable Google tooltips');
+
+                        self.removeTitle();
+                    };
+                };
+            });
+        }, 500);
+    };
+
+    // Remove elem titles in order to disable native tooltips from appearing
+    self.removeTitle = function () {
+
+        // Iterate over each available elem with a title
+        $('[title]').each(function() {
+
+            // Save a ref to the elem
+            var $this = $(this);
+
+            // If the elem's title matches a Google elem title, delete it
+            if(googleElemTitles.indexOf($this.attr('title')) > -1) {
+
+
+                $this.removeAttr('title');
+
+            // If the elem's title matches a marker's title, delete it
+            } else if (markerTitles.indexOf($this.attr('title')) > -1) {
+
+                console.log('disable marker tooltip');
+
+                $this.removeAttr('title');
+            };
+        });
     };
 
     // Modifiy navbar to sticky navbar upon scrolling down
@@ -3261,6 +3296,9 @@ function AppViewModel () {
 
             console.log('open map');
 
+            // Delete Google elem titles to avoid native tooltips from showing
+            self.removeGoogleElemTitles();
+
             // Opens the map view by slowly fading into view
             $mapContainer.fadeIn(1000);
 
@@ -3296,6 +3334,11 @@ function AppViewModel () {
 
                     console.log('open map');
 
+                    // Delete Google elem titles to avoid native tooltips from
+                    // showing
+                    self.removeGoogleElemTitles();
+
+                    // Center the map over the selected marker
                     self.centerGuideOnMarker();
 
                 } else {
@@ -3340,11 +3383,16 @@ function AppViewModel () {
             $mapContainer.slideToggle(200, function() {
                 if($map.is(":visible")) {
 
-                  console.log('open map');
+                    console.log('open map');
+
+                    // Delete Google elem titles to avoid native tooltips from
+                    // showing
+                    self.removeGoogleElemTitles();
 
                   // When map is open and surf guide is visible:
                     if($surfGuide.is(":visible")) {
 
+                        // Center the map over the selected marker
                         self.centerGuideOnMarker();
 
                     // When map is opened and the surf guide is hidden:
@@ -3690,7 +3738,7 @@ function AppViewModel () {
             };
         } else {
             if(obj.bigWave) {
-                var icon = '<div class=" big-wave card enable-tooltip" title="Known for big wave surfing">' + '<img src="img/big_wave.svg" class="big-wave-guide">' + '</div>';
+                var icon = '<div class=" big-wave card " title="Known for big wave surfing">' + '<img src="img/big_wave.svg" class="big-wave-guide">' + '</div>';
 
                 // Add big wave card to surf guide
                 $iconContainer.append(icon);
@@ -3716,7 +3764,7 @@ function AppViewModel () {
             };
         } else {
             if(obj.wellKnown) {
-                var icon = '<div class=" well-known card enable-tooltip" title="Well known wave">' + '<img src="img/well_known.svg" class="well-known-guide">' + '</div>';
+                var icon = '<div class=" well-known card " title="Well known wave">' + '<img src="img/well_known.svg" class="well-known-guide">' + '</div>';
 
                 $iconContainer.append(icon);
 
@@ -3757,7 +3805,7 @@ function AppViewModel () {
                 var skillLevelIcon = images.roIconSkillAll;
                 skillLevelIcon.title = "Difficulty: All levels";
             } else {
-                var skillLevelIcon = '<div class="skill-level card enable-tooltip" title="Difficulty: All levels">' + '<img src="img/skill_level_all.svg" class="skill-level-guide">' + '</div>';
+                var skillLevelIcon = '<div class="skill-level card " title="Difficulty: All levels">' + '<img src="img/skill_level_all.svg" class="skill-level-guide">' + '</div>';
             };
         } else if (beginner >= intermediate && beginner > advanced) {
             if(beginner === intermediate) {
@@ -3765,14 +3813,14 @@ function AppViewModel () {
                     var skillLevelIcon = images.roIconSkillBegInt;
                     skillLevelIcon.title = "Difficulty: Beginner to Intermediate";
                 } else {
-                    var skillLevelIcon = '<div class="skill-level card enable-tooltip" title="Difficulty: Beginner to Intermediate">' + '<img src="img/skill_level_beginner_intermediate.svg" class=" skill-level-guide">' + '</div>';
+                    var skillLevelIcon = '<div class="skill-level card " title="Difficulty: Beginner to Intermediate">' + '<img src="img/skill_level_beginner_intermediate.svg" class=" skill-level-guide">' + '</div>';
                 };
             } else {
                 if(rollover){
                     var skillLevelIcon = images.roIconSkillBeg;
                     skillLevelIcon.title = "Difficulty: Beginner";
                 } else {
-                    var skillLevelIcon = '<div class="skill-level card enable-tooltip" title="Difficulty: Beginner">' + '<img src="img/skill_level_beginner.svg" class=" skill-level-guide">' + '</div>';
+                    var skillLevelIcon = '<div class="skill-level card " title="Difficulty: Beginner">' + '<img src="img/skill_level_beginner.svg" class=" skill-level-guide">' + '</div>';
                 };
             };
         } else if (intermediate > beginner && intermediate >= advanced) {
@@ -3781,14 +3829,14 @@ function AppViewModel () {
                     var skillLevelIcon = images.roIconSkillIntAdv;
                     skillLevelIcon.title = "Difficulty: Intermediate to Advanced";
                 } else {
-                    var skillLevelIcon = '<div class="skill-level card enable-tooltip" title="Difficulty: Intermediate to Advanced">' + '<img src="img/skill_level_intermediate_advanced.svg" class=" skill-level-guide">' + '</div>';
+                    var skillLevelIcon = '<div class="skill-level card " title="Difficulty: Intermediate to Advanced">' + '<img src="img/skill_level_intermediate_advanced.svg" class=" skill-level-guide">' + '</div>';
                 };
             } else {
                 if(rollover){
                     var skillLevelIcon = images.roIconSkillInt;
                     skillLevelIcon.title = "Difficulty: Intermediate";
                 } else {
-                    var skillLevelIcon = '<div class="skill-level card enable-tooltip" title="Difficulty: Intermediate">' + '<img src="img/skill_level_intermediate.svg" class=" skill-level-guide">' + '</div>';
+                    var skillLevelIcon = '<div class="skill-level card " title="Difficulty: Intermediate">' + '<img src="img/skill_level_intermediate.svg" class=" skill-level-guide">' + '</div>';
                 };
             };
         } else {
@@ -3796,7 +3844,7 @@ function AppViewModel () {
                 var skillLevelIcon = images.roIconSkillAdv;
                 skillLevelIcon.title = "Difficulty: Advanced";
             } else {
-                var skillLevelIcon = '<div class="skill-level card enable-tooltip" title="Difficulty: Advanced">' + '<img src="img/skill_level_advanced.svg" class=" skill-level-guide">' + '</div>';
+                var skillLevelIcon = '<div class="skill-level card " title="Difficulty: Advanced">' + '<img src="img/skill_level_advanced.svg" class=" skill-level-guide">' + '</div>';
             };
         };
 
@@ -3811,7 +3859,7 @@ function AppViewModel () {
                   var directionIcon = images.roIconDirectionLeft;
                   directionIcon.title = "Wave Direction: Left";
               } else {
-                  var directionIcon = '<div class="direction card enable-tooltip" title="Wave Direction: Left">' + '<img src="img/direction_left.svg" class="wave-direction-guide">' + '</div>';
+                  var directionIcon = '<div class="direction card " title="Wave Direction: Left">' + '<img src="img/direction_left.svg" class="wave-direction-guide">' + '</div>';
               };
           break;
 
@@ -3820,7 +3868,7 @@ function AppViewModel () {
                   var directionIcon = images.roIconDirectionRight;
                   directionIcon.title = "Wave Direction: Right";
               } else {
-                  var directionIcon = '<div class="direction card enable-tooltip" title="Wave Direction: Right">' + '<img src="img/direction_right.svg" class="wave-direction-guide">' + '</div>';
+                  var directionIcon = '<div class="direction card " title="Wave Direction: Right">' + '<img src="img/direction_right.svg" class="wave-direction-guide">' + '</div>';
               };
           break;
 
@@ -3829,7 +3877,7 @@ function AppViewModel () {
                   var directionIcon = images.roIconDirectionBoth;
                   directionIcon.title = "Wave Direction: Left & Right";
               } else {
-                  var directionIcon = '<div class="direction card enable-tooltip" title="Wave Direction: Left & Right">' + '<img src="img/direction_both.svg" class="wave-direction-guide">' + '</div>';
+                  var directionIcon = '<div class="direction card " title="Wave Direction: Left & Right">' + '<img src="img/direction_both.svg" class="wave-direction-guide">' + '</div>';
               };
           break;
         }
@@ -3844,7 +3892,7 @@ function AppViewModel () {
                   var breakIcon = images.roIconBreakReef;
                   breakIcon.title = "Break Type: Reef";
               } else {
-                  var breakIcon = '<div class="break card enable-tooltip" title="Break Type: Reef">' + '<img src="img/break_reef.svg" class="break-type-guide">' + '</div>';
+                  var breakIcon = '<div class="break card " title="Break Type: Reef">' + '<img src="img/break_reef.svg" class="break-type-guide">' + '</div>';
               };
           break;
 
@@ -3853,7 +3901,7 @@ function AppViewModel () {
                   var breakIcon = images.roIconBreakBeach;
                   breakIcon.title = "Break Type: Beach";
               } else {
-                  var breakIcon = '<div class="break card enable-tooltip" title="Break Type: Beach">' + '<img src="img/break_beach.svg" class="break-type-guide">' + '</div>';
+                  var breakIcon = '<div class="break card " title="Break Type: Beach">' + '<img src="img/break_beach.svg" class="break-type-guide">' + '</div>';
               };
           break;
 
@@ -3862,7 +3910,7 @@ function AppViewModel () {
                   var breakIcon = images.roIconBreakPoint;
                   breakIcon.title = "Break Type: Point";
               } else {
-                  var breakIcon = '<div class="break card enable-tooltip" title="Break Type: Point">' + '<img src="img/break_point.svg" class="break-type-guide">' + '</div>';
+                  var breakIcon = '<div class="break card " title="Break Type: Point">' + '<img src="img/break_point.svg" class="break-type-guide">' + '</div>';
               };
           break;
 
@@ -3871,7 +3919,7 @@ function AppViewModel () {
                   var breakIcon = images.roIconBreakRiver;
                   breakIcon.title = "Break Type: River Mouth";
               } else {
-                  var breakIcon = '<div class="break card enable-tooltip" title="Break Type: River Mouth">' + '<img src="img/break_river_mouth.svg" class="break-type-guide">' + '</div>';
+                  var breakIcon = '<div class="break card " title="Break Type: River Mouth">' + '<img src="img/break_river_mouth.svg" class="break-type-guide">' + '</div>';
               };
           break;
         }
@@ -3892,7 +3940,7 @@ function AppViewModel () {
               swell = false;
               drawBackground = true;
 
-              $iconContainer.append('<div class="small-compass-guide card enable-tooltip" title="Best Swell & Best Wind"><canvas id="compass-small" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas></div>');
+              $iconContainer.append('<div class="small-compass-guide card " title="Best Swell & Best Wind"><canvas id="compass-small" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas></div>');
 
               var elementPointer = images.smallSwellPointer;
               var img = images.smallCompass;
@@ -4028,23 +4076,23 @@ function AppViewModel () {
         };
 
         if (low === mid && low === high) {
-            var tideIcon = '<div class="tide card enable-tooltip" title="Best Tide: All">' + '<img src="img/tide_all.svg" class="tide-guide">' + '</div>';
+            var tideIcon = '<div class="tide card " title="Best Tide: All">' + '<img src="img/tide_all.svg" class="tide-guide">' + '</div>';
         } else if (low >= mid && low >= high) {
               if(low === mid) {
-                  var tideIcon = '<div class="tide card enable-tooltip" title="Best Tide: Low & Mid">' + '<img src="img/tide_low_mid.svg" class="tide-guide">' + '</div>';
+                  var tideIcon = '<div class="tide card " title="Best Tide: Low & Mid">' + '<img src="img/tide_low_mid.svg" class="tide-guide">' + '</div>';
               } else if (low === high) {
-                  var tideIcon = '<div class="tide card enable-tooltip" title="Best Tide: Low & High">' + '<img src="img/tide_low_high.svg" class="tide-guide">' + '</div>';;
+                  var tideIcon = '<div class="tide card " title="Best Tide: Low & High">' + '<img src="img/tide_low_high.svg" class="tide-guide">' + '</div>';;
               } else {
-                  var tideIcon = '<div class="tide card enable-tooltip" title="Best Tide: Low">' + '<img src="img/tide_low.svg" class="tide-guide">' + '</div>';
+                  var tideIcon = '<div class="tide card " title="Best Tide: Low">' + '<img src="img/tide_low.svg" class="tide-guide">' + '</div>';
               };
         } else if (mid > low && mid >= high) {
               if(mid === high) {
-                  var tideIcon = '<div class="tide card enable-tooltip" title="Best Tide: Mid & High">' + '<img src="img/tide_high_mid.svg" class="tide-guide">' + '</div>';
+                  var tideIcon = '<div class="tide card " title="Best Tide: Mid & High">' + '<img src="img/tide_high_mid.svg" class="tide-guide">' + '</div>';
               } else {
-                  var tideIcon = '<div class="tide card enable-tooltip" title="Best Tide: Mid">' + '<img src="img/tide_mid.svg" class="tide-guide">' + '</div>';
+                  var tideIcon = '<div class="tide card " title="Best Tide: Mid">' + '<img src="img/tide_mid.svg" class="tide-guide">' + '</div>';
               };
         } else {
-            var tideIcon = '<div class="tide card enable-tooltip" title="Best Tide: High">' + '<img src="img/tide_high.svg" class="tide-guide">' + '</div>';
+            var tideIcon = '<div class="tide card " title="Best Tide: High">' + '<img src="img/tide_high.svg" class="tide-guide">' + '</div>';
         };
 
         return tideIcon;
@@ -4101,7 +4149,7 @@ function AppViewModel () {
                 var bestSeasonIcon = images.roIconBestSeasonAll;
                 bestSeasonIcon.title = "Best Season: All";
             } else {
-                var bestSeasonIcon = '<div class="time card enable-tooltip" title="Best Season: All">' + '<img src="img/season_all.svg" class="best-season-guide">' + '</div>';
+                var bestSeasonIcon = '<div class="time card " title="Best Season: All">' + '<img src="img/season_all.svg" class="best-season-guide">' + '</div>';
             };
         } else if(winter >= spring && winter >= summer && winter >= autumn) {
               if(winter === spring) {
@@ -4109,28 +4157,28 @@ function AppViewModel () {
                       var bestSeasonIcon = images.roIconBestSeasonWinSpr;
                       bestSeasonIcon.title = "Best Season: Winter & Spring";
                   } else {
-                      var bestSeasonIcon = '<div class="time card enable-tooltip" title="Best Season: Winter & Spring">' + '<img src="img/season_winter_spring.svg" class="best-season-guide">' + '</div>';
+                      var bestSeasonIcon = '<div class="time card " title="Best Season: Winter & Spring">' + '<img src="img/season_winter_spring.svg" class="best-season-guide">' + '</div>';
                   };
               } else if (winter === summer) {
                   if(rollover) {
                       var bestSeasonIcon = images.roIconBestSeasonWinSum;
                       bestSeasonIcon.title = "Best Season: Winter & Summer";
                   } else {
-                      var bestSeasonIcon = '<div class="time card enable-tooltip" title="Best Season: Winter & Summer">' + '<img src="img/season_winter_summer.svg" class="best-season-guide">' + '</div>';
+                      var bestSeasonIcon = '<div class="time card " title="Best Season: Winter & Summer">' + '<img src="img/season_winter_summer.svg" class="best-season-guide">' + '</div>';
                   };
               } else if (winter === autumn) {
                   if(rollover) {
                       var bestSeasonIcon = images.roIconBestSeasonWinAut;
                       bestSeasonIcon.title = "Best Season: Winter & Autumn";
                   } else {
-                      var bestSeasonIcon = '<div class="time card enable-tooltip" title="Best Season: Winter & Autumn">' + '<img src="img/season_winter_autumn.svg" class="best-season-guide">' + '</div>';
+                      var bestSeasonIcon = '<div class="time card " title="Best Season: Winter & Autumn">' + '<img src="img/season_winter_autumn.svg" class="best-season-guide">' + '</div>';
                   };
               } else {
                   if(rollover) {
                       var bestSeasonIcon = images.roIconBestSeasonWin;
                       bestSeasonIcon.title = "Best Season: Winter";
                   } else {
-                      var bestSeasonIcon = '<div class="time card enable-tooltip" title="Best Season: Winter">' + '<img src="img/season_winter.svg" class="best-season-guide">' + '</div>';
+                      var bestSeasonIcon = '<div class="time card " title="Best Season: Winter">' + '<img src="img/season_winter.svg" class="best-season-guide">' + '</div>';
                   };
               };
         } else if (spring >= summer && spring >= autumn && spring > winter) {
@@ -4139,21 +4187,21 @@ function AppViewModel () {
                       var bestSeasonIcon = images.roIconBestSeasonSpgSum;
                       bestSeasonIcon.title = "Best Season: Spring & Summer";
                   } else {
-                      var bestSeasonIcon = '<div class="time card enable-tooltip" title="Best Season: Spring & Summer">' + '<img src="img/season_spring_summer.svg" class="best-season-guide">' + '</div>';
+                      var bestSeasonIcon = '<div class="time card " title="Best Season: Spring & Summer">' + '<img src="img/season_spring_summer.svg" class="best-season-guide">' + '</div>';
                   };
               } else if (spring === autumn) {
                   if(rollover) {
                       var bestSeasonIcon = images.roIconBestSeasonSpgAut;
                       bestSeasonIcon.title = "Best Season: Spring & Autumn";
                   } else {
-                      var bestSeasonIcon = '<div class="time card enable-tooltip" title="Best Season: Spring & Autumn">' + '<img src="img/season_spring_autumn.svg" class="best-season-guide">' + '</div>';
+                      var bestSeasonIcon = '<div class="time card " title="Best Season: Spring & Autumn">' + '<img src="img/season_spring_autumn.svg" class="best-season-guide">' + '</div>';
                   };
               } else {
                   if(rollover) {
                       var bestSeasonIcon = images.roIconBestSeasonSpg;
                       bestSeasonIcon.title = "Best Season: Spring";
                   } else {
-                      var bestSeasonIcon = '<div class="time card enable-tooltip" title="Best Season: Spring">' + '<img src="img/season_spring.svg" class="best-season-guide">' + '</div>';
+                      var bestSeasonIcon = '<div class="time card " title="Best Season: Spring">' + '<img src="img/season_spring.svg" class="best-season-guide">' + '</div>';
                   };
               };
         } else if (summer >= autumn && summer > winter && summer > spring) {
@@ -4162,14 +4210,14 @@ function AppViewModel () {
                       var bestSeasonIcon = images.roIconBestSeasonSumAut;
                       bestSeasonIcon.title = "Best Season: Summer & Autumn";
                   } else {
-                      var bestSeasonIcon = '<div class="time card enable-tooltip" title="Best Season: Summer & Autumn">' + '<img src="img/season_summer_autumn.svg" class="best-season-guide">' + '</div>';
+                      var bestSeasonIcon = '<div class="time card " title="Best Season: Summer & Autumn">' + '<img src="img/season_summer_autumn.svg" class="best-season-guide">' + '</div>';
                   };
               } else {
                   if(rollover) {
                       var bestSeasonIcon = images.roIconBestSeasonSum;
                       bestSeasonIcon.title = "Best Season: Summer";
                   } else {
-                      var bestSeasonIcon = '<div class="time card enable-tooltip" title="Best Season: Summer">' + '<img src="img/season_summer.svg" class="best-season-guide">' + '</div>';
+                      var bestSeasonIcon = '<div class="time card " title="Best Season: Summer">' + '<img src="img/season_summer.svg" class="best-season-guide">' + '</div>';
                   };
               };
         } else {
@@ -4177,7 +4225,7 @@ function AppViewModel () {
                       var bestSeasonIcon = images.roIconBestSeasonAut;
                       bestSeasonIcon.title = "Best Season: Autumn";
                   } else {
-                      var bestSeasonIcon = '<div class="time card enable-tooltip" title="Best Season: Autumn">' + '<img src="img/season_autumn.svg" class="best-season-guide">' + '</div>';
+                      var bestSeasonIcon = '<div class="time card " title="Best Season: Autumn">' + '<img src="img/season_autumn.svg" class="best-season-guide">' + '</div>';
                   };
         };
 
@@ -4187,13 +4235,13 @@ function AppViewModel () {
     self.displaySuggestedAttireIcons = function (obj, canvasWidth, canvasHeight, $iconContainer) {
 
         if(!rollover) {
-            $iconContainer.append('<div class="water-temp spring card enable-tooltip" title="Suggested Spring Attire">' + '<canvas id="spring" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas>');
+            $iconContainer.append('<div class="water-temp spring card " title="Suggested Spring Attire">' + '<canvas id="spring" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas>');
 
-            $iconContainer.append('<div class="water-temp summer card enable-tooltip" title="Suggested Summer Attire">' + '<canvas id="summer" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas>');
+            $iconContainer.append('<div class="water-temp summer card " title="Suggested Summer Attire">' + '<canvas id="summer" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas>');
 
-            $iconContainer.append('<div class="water-temp autumn card enable-tooltip" title="Suggested Autumn Attire">' + '<canvas id="autumn" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas>');
+            $iconContainer.append('<div class="water-temp autumn card " title="Suggested Autumn Attire">' + '<canvas id="autumn" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas>');
 
-            $iconContainer.append('<div class="water-temp winter card enable-tooltip" title="Suggested Winter Attire">' + '<canvas id="winter" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas>');
+            $iconContainer.append('<div class="water-temp winter card " title="Suggested Winter Attire">' + '<canvas id="winter" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas>');
 
             var season = 0;
             /* Loop through the average water temps for each time of year. Designate specific water attire for each time of year */
@@ -4312,7 +4360,7 @@ function AppViewModel () {
 
     self.displayClimateIcon = function (obj) {
 
-        var climateIcon = '<div class="climate card enable-tooltip" title="Köppen Climate Classification">' + '<p>' + obj  + '</p>' + '</div>';
+        var climateIcon = '<div class="climate card " title="Köppen Climate Classification">' + '<p>' + obj  + '</p>' + '</div>';
 
         return climateIcon;
     };
@@ -4321,13 +4369,13 @@ function AppViewModel () {
 
       if(rollover) {
 
-          var costInfo = '<p class="rollover-info cost-rollover cost-hover-default-style enable-tooltip" title="Estimated minimum daily budget allowance">' + '$' + obj.budget + '</p>';
+          var costInfo = '<p class="rollover-info cost-rollover cost-hover-default-style " title="Estimated minimum daily budget allowance">' + '$' + obj.budget + '</p>';
 
       } else {
 
           var midRange = Math.floor((obj.highEnd - obj.budget)/2 + obj.budget);
 
-          var costInfo = $iconContainer.append('<div class="cost card">' + '<img src="img/cost.svg" class="cost-guide enable-tooltip" title="Estimated daily budget allowance: Low, Mid, High">' + '<p>' + obj.budget + '</p>' + '<p>' + midRange + '</p>' + '<p>' + obj.highEnd +'</p>' + '</div>');
+          var costInfo = $iconContainer.append('<div class="cost card">' + '<img src="img/cost.svg" class="cost-guide " title="Estimated daily budget allowance: Low, Mid, High">' + '<p>' + obj.budget + '</p>' + '<p>' + midRange + '</p>' + '<p>' + obj.highEnd +'</p>' + '</div>');
       };
 
       return costInfo;
@@ -4392,13 +4440,13 @@ function AppViewModel () {
 
             if(rollover) {
                 // Cache distance element with distance
-                var distance = '<p class="rollover-info distance-rollover distance-hover-default-style enable-tooltip" title="Estimated flight duration from your location">' + distanceFly + 'h' + '</p>';
+                var distance = '<p class="rollover-info distance-rollover distance-hover-default-style " title="Estimated flight duration from your location">' + distanceFly + 'h' + '</p>';
 
                 return distance;
 
             } else {
 
-                var distanceIcon = '<img src="img/distance_plane.svg" class="icon distance-guide enable-tooltip" title="Estimated flight duration from your location">' + '<p class="distance-guide-hours">' + distanceFly + 'h' +'</p>';
+                var distanceIcon = '<img src="img/distance_plane.svg" class="icon distance-guide " title="Estimated flight duration from your location">' + '<p class="distance-guide-hours">' + distanceFly + 'h' +'</p>';
 
                 return distanceIcon;
             };
@@ -4408,13 +4456,13 @@ function AppViewModel () {
 
             if(rollover) {
                 // Cache distance element with distance
-                var distance = '<p class="rollover-info distance-rollover distance-hover-default-style enable-tooltip" title="Estimated distance in miles from your location">' + distanceDrive + 'mi' + '</p>';
+                var distance = '<p class="rollover-info distance-rollover distance-hover-default-style " title="Estimated distance in miles from your location">' + distanceDrive + 'mi' + '</p>';
 
                 return distance;
 
             } else {
 
-                var distanceIcon = '<img src="img/distance.svg" class="icon distance-guide enable-tooltip" title="Estimated (straight line) distance in miles from your location (actual distance via roads will be greater) ">' + '<p class="distance-guide-miles">' + distanceDrive + 'mi' +'</p>';
+                var distanceIcon = '<img src="img/distance.svg" class="icon distance-guide " title="Estimated (straight line) distance in miles from your location (actual distance via roads will be greater) ">' + '<p class="distance-guide-miles">' + distanceDrive + 'mi' +'</p>';
 
                 return distanceIcon;
             };
@@ -4448,7 +4496,7 @@ function AppViewModel () {
           break
         };
 
-        var waterTempInfo = '<p class="rollover-info water-temp-rollover water-temp-hover-default-style enable-tooltip" title="Average ' + currentSeason + ' water temperature">' + waterTemp + '℉' + '</p>';
+        var waterTempInfo = '<p class="rollover-info water-temp-rollover water-temp-hover-default-style " title="Average ' + currentSeason + ' water temperature">' + waterTemp + '℉' + '</p>';
 
         return waterTempInfo;
     };
@@ -4464,9 +4512,9 @@ function AppViewModel () {
 
         if(rollover) {
             /* Cache the average wave height */
-            var waveSizeInfo = '<p class="rollover-info wave-size-rollover wave-size-hover-default-style enable-tooltip" title="Average wave size">' + obj.min + "-" + obj.max + "'" +'</p>';
+            var waveSizeInfo = '<p class="rollover-info wave-size-rollover wave-size-hover-default-style " title="Average wave size">' + obj.min + "-" + obj.max + "'" +'</p>';
         } else {
-            var waveSizeInfo = '<div class=" wave-size card enable-tooltip" title="Average wave size">' + '<img src="img/wave_range.svg" class"wave-size-guide">' + '<p>' + obj.min + "-" + obj.max + plus + "ft" + '</p>' + '</div>';
+            var waveSizeInfo = '<div class=" wave-size card " title="Average wave size">' + '<img src="img/wave_range.svg" class"wave-size-guide">' + '<p>' + obj.min + "-" + obj.max + plus + "ft" + '</p>' + '</div>';
         };
 
         return waveSizeInfo;
@@ -4540,7 +4588,7 @@ function AppViewModel () {
                         var hazardIcon = images.roIconMiscTwoBeginners;
                         hazardIcon.title = "Hazard: Beginners";
                     } else {
-                        $iconContainer.append('<div class="hazard card enable-tooltip" title="Hazard: Beginners">' + '<img src="img/hazards_beginners.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Beginners">' + '<img src="img/hazards_beginners.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -4549,7 +4597,7 @@ function AppViewModel () {
                         var hazardIcon = images.roIconMiscTwoBoats;
                         hazardIcon.title = "Hazard: Boats";
                     } else {
-                        $iconContainer.append('<div class="hazard card enable-tooltip" title="Hazard: Boats">' + '<img src="img/hazards_boats.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Boats">' + '<img src="img/hazards_boats.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -4558,7 +4606,7 @@ function AppViewModel () {
                         var hazardIcon = images.roIconMiscTwoCrocs;
                         hazardIcon.title = "Hazard: Crocodiles";
                     } else {
-                        $iconContainer.append('<div class="hazard card enable-tooltip" title="Hazard: Crocodiles">' + '<img src="img/hazards_crocs.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Crocodiles">' + '<img src="img/hazards_crocs.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -4567,7 +4615,7 @@ function AppViewModel () {
                         var hazardIcon = images.roIconMiscTwoCrowded;
                         hazardIcon.title = "Hazard: Crowded";
                     } else {
-                        $iconContainer.append('<div class="hazard card enable-tooltip" title="Hazard: Crowded">' + '<img src="img/hazards_crowded.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Crowded">' + '<img src="img/hazards_crowded.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -4576,7 +4624,7 @@ function AppViewModel () {
                         var hazardIcon = images.roIconMiscTwoDgrBreak;
                         hazardIcon.title = "Hazard: Dangerous Break";
                     } else {
-                        $iconContainer.append('<div class="hazard card enable-tooltip" title="Hazard: Dangerous Break">' + '<img src="img/hazards_dangerous_break.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Dangerous Break">' + '<img src="img/hazards_dangerous_break.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -4585,7 +4633,7 @@ function AppViewModel () {
                         var hazardIcon = images.roIconMiscTwoFar;
                         hazardIcon.title = "Hazard: Far From Shore";
                     } else {
-                        $iconContainer.append('<div class="hazard card enable-tooltip" title="Hazard: Far From Shore">' + '<img src="img/hazards_far_from_shore.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Far From Shore">' + '<img src="img/hazards_far_from_shore.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -4594,7 +4642,7 @@ function AppViewModel () {
                         var hazardIcon = images.roIconMiscTwoPollution;
                         hazardIcon.title = "Hazard: Pollution";
                     } else {
-                        $iconContainer.append('<div class="hazard card enable-tooltip" title="Hazard: Pollution">' + '<img src="img/hazards_pollution.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Pollution">' + '<img src="img/hazards_pollution.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -4603,7 +4651,7 @@ function AppViewModel () {
                         var hazardIcon = images.roIconMiscTwoRocky;
                         hazardIcon.title = "Hazard: Rocky Bottom";
                     } else {
-                        $iconContainer.append('<div class="hazard card enable-tooltip" title="Hazard: Rocky Bottom">' + '<img src="img/hazards_rocky_bottom.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Rocky Bottom">' + '<img src="img/hazards_rocky_bottom.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -4612,7 +4660,7 @@ function AppViewModel () {
                         var hazardIcon = images.roIconMiscTwoSnakes;
                         hazardIcon.title = "Hazard: Sea Snakes";
                     } else {
-                        $iconContainer.append('<div class="hazard card enable-tooltip" title="Hazard: Sea Snakes">' + '<img src="img/hazards_sea_snakes.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Sea Snakes">' + '<img src="img/hazards_sea_snakes.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -4621,7 +4669,7 @@ function AppViewModel () {
                         var hazardIcon = images.roIconMiscTwoSeals;
                         hazardIcon.title = "Hazard: Seals";
                     } else {
-                        $iconContainer.append('<div class="hazard card enable-tooltip" title="Hazard: Seals">' + '<img src="img/hazards_seals.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Seals">' + '<img src="img/hazards_seals.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -4630,7 +4678,7 @@ function AppViewModel () {
                         var hazardIcon = images.roIconMiscTwoSeaweed;
                         hazardIcon.title = "Hazard: Seaweed";
                     } else {
-                        $iconContainer.append('<div class="hazard card enable-tooltip" title="Hazard: Seaweed">' + '<img src="img/hazards_seaweed.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Seaweed">' + '<img src="img/hazards_seaweed.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -4639,7 +4687,7 @@ function AppViewModel () {
                         var hazardIcon = images.roIconMiscTwoSewage;
                         hazardIcon.title = "Hazard: Sewage";
                     } else {
-                        $iconContainer.append('<div class="hazard card enable-tooltip" title="Hazard: Sewage">' + '<img src="img/hazards_sewage.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Sewage">' + '<img src="img/hazards_sewage.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -4648,7 +4696,7 @@ function AppViewModel () {
                         var hazardIcon = images.roIconMiscTwoShallow;
                         hazardIcon.title = "Hazard: Shallow Break";
                     } else {
-                        $iconContainer.append('<div class="hazard card enable-tooltip" title="Hazard: Shallow Break">' + '<img src="img/hazards_shallow.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Shallow Break">' + '<img src="img/hazards_shallow.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -4657,7 +4705,7 @@ function AppViewModel () {
                         var hazardIcon = images.roIconMiscTwoSharks;
                         hazardIcon.title = "Hazard: Sharks";
                     } else {
-                        $iconContainer.append('<div class="hazard card enable-tooltip" title="Hazard: Sharks">' + '<img src="img/hazards_sharks.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Sharks">' + '<img src="img/hazards_sharks.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -4666,7 +4714,7 @@ function AppViewModel () {
                         var hazardIcon = images.roIconMiscTwoStrCurrent;
                         hazardIcon.title = "Hazard: Strong Currents";
                     } else {
-                        $iconContainer.append('<div class="hazard card enable-tooltip" title="Hazard: Strong Currents">' + '<img src="img/hazards_strong_currents.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Strong Currents">' + '<img src="img/hazards_strong_currents.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -4675,7 +4723,7 @@ function AppViewModel () {
                         var hazardIcon = images.roIconMiscTwoStrRips;
                         hazardIcon.title = "Hazard: Strong Rips";
                     } else {
-                        $iconContainer.append('<div class="hazard card enable-tooltip" title="Hazard: Strong Rips">' + '<img src="img/hazards_strong_rips.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Strong Rips">' + '<img src="img/hazards_strong_rips.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -4684,7 +4732,7 @@ function AppViewModel () {
                         var hazardIcon = images.roIconMiscTwoTheft;
                         hazardIcon.title = "Hazard: Theft";
                     } else {
-                        $iconContainer.append('<div class="hazard card enable-tooltip" title="Hazard: Theft">' + '<img src="img/hazards_theft.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Theft">' + '<img src="img/hazards_theft.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -4693,7 +4741,7 @@ function AppViewModel () {
                         var hazardIcon = images.roIconMiscTwoUndertow;
                         hazardIcon.title = "Hazard: Strong Undertow";
                     } else {
-                        $iconContainer.append('<div class="hazard card enable-tooltip" title="Hazard: Strong Undertow">' + '<img src="img/hazards_undertow.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Strong Undertow">' + '<img src="img/hazards_undertow.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -4702,7 +4750,7 @@ function AppViewModel () {
                         var hazardIcon = images.roIconMiscTwoUnfriendly;
                         hazardIcon.title = "Hazard: Unfriendly Locals";
                     } else {
-                        $iconContainer.append('<div class="hazard card enable-tooltip" title="Hazard: Unfriendly Locals">' + '<img src="img/hazards_unfriendly.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Unfriendly Locals">' + '<img src="img/hazards_unfriendly.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -4711,7 +4759,7 @@ function AppViewModel () {
                         var hazardIcon = images.roIconMiscTwoUrchins;
                         hazardIcon.title = "Hazard: Urchins";
                     } else {
-                        $iconContainer.append('<div class="hazard card enable-tooltip" title="Hazard: Urchins">' + '<img src="img/hazards_urchins.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Urchins">' + '<img src="img/hazards_urchins.svg" class="hazard-guide">' + '</div>');
                     };
                 break;
 
@@ -4917,7 +4965,7 @@ function AppViewModel () {
                 /* Render containers to hold the compass and live conditions
                 containers */
                 var liveConditionsElem = '<div class="col-xs-12 surf-conditions-container live-surf-conditions"></div>';
-                var compassContainer = '<div class="col-xs-12 col-sm-4 col-md-6 live-surf-conditions live-compass enable-tooltip" title="Live wind & swell conditions (swell: blue | wind: white)"><canvas id="compass" width="300" height="300"></canvas></div>';
+                var compassContainer = '<div class="col-xs-12 col-sm-4 col-md-6 live-surf-conditions live-compass " title="Live wind & swell conditions (swell: blue | wind: white)"><canvas id="compass" width="300" height="300"></canvas></div>';
 
                 // Add compass container
                 $surfGuideTitleContainer.after(compassContainer);
@@ -4934,7 +4982,7 @@ function AppViewModel () {
                 var $surfConditionsContainer = $('.surf-conditions-container');
                 var waveStatsContainer = '<div class="col-xs-12 col-sm-6 surf-conditions-small surf-conditions-waves"></div>';
                 var swellStatsContainer = '<div class="col-xs-6 col-sm-3 surf-conditions-small surf-conditions-swell"></div>';
-                var windStatsContainer = '<div class="col-xs-6 col-sm-3 surf-conditions-small surf-conditions-wind enable-tooltip" title="Wind direction & speed"></div>';
+                var windStatsContainer = '<div class="col-xs-6 col-sm-3 surf-conditions-small surf-conditions-wind " title="Wind direction & speed"></div>';
 
                 // Add live conditions containers
                 $surfConditionsContainer.append(waveStatsContainer);
@@ -4942,7 +4990,7 @@ function AppViewModel () {
                 $surfConditionsContainer.append(windStatsContainer);
 
                 var $locationName = $('.title');
-                var liveTemp = '<p class="live-temp live-surf-conditions enable-tooltip" title="Live weather conditions">' + temperature + " ℉" + '<img class="live-weather" src="' + weatherImg + '" alt="Symbol for current weather">' + '</p>';
+                var liveTemp = '<p class="live-temp live-surf-conditions " title="Live weather conditions">' + temperature + " ℉" + '<img class="live-weather" src="' + weatherImg + '" alt="Symbol for current weather">' + '</p>';
                 var accreditMSW = '<a href="http://magicseaweed.com" target="_blank"><img src="img/msw_powered_by.png" class="live-surf-conditions msw-banner"></a>';
 
                 /* Render MSW accreditation */
@@ -4968,16 +5016,16 @@ function AppViewModel () {
                 $surfConditionsWind.append(cardinalDirection);
 
                 var swellHeightInfo = '<p>' + swellHeight + "ft" + '</p>';
-                var primarySwellInfo = '<p class="enable-tooltip enable-tooltip" title="The main swell generating waves">' + "primary" + '</p>';
-                var swellPeriodInfo = '<p class="enable-tooltip enable-tooltip" title="Live period between waves & current direction">' + "@" + ' ' + swellPeriod + 's' + ' ' + swellCompassDirection + '</p>';
+                var primarySwellInfo = '<p class=" " title="The main swell generating waves">' + "primary" + '</p>';
+                var swellPeriodInfo = '<p class=" " title="Live period between waves & current direction">' + "@" + ' ' + swellPeriod + 's' + ' ' + swellCompassDirection + '</p>';
 
                 /* Render the swell height and period */
                 $surfConditionsSwell.append(swellHeightInfo);
                 $surfConditionsSwell.append(primarySwellInfo);
                 $surfConditionsSwell.append(swellPeriodInfo);
 
-                var waveHeightInfo = '<p class="live-wave-height enable-tooltip" title="Live wave height">' + waveHeight + "ft" + '</p>';
-                var waveRatingInfo = '<p class="star-rating enable-tooltip" title="Magic Seaweed Rating: The more solid stars, the better. Unfavorable wind conditions change a solid star to a faded star">' + waveRating + '</p>';
+                var waveHeightInfo = '<p class="live-wave-height " title="Live wave height">' + waveHeight + "ft" + '</p>';
+                var waveRatingInfo = '<p class="star-rating " title="Magic Seaweed Rating: The more solid stars, the better. Unfavorable wind conditions change a solid star to a faded star">' + waveRating + '</p>';
 
                 /* Render the breaking wave height, and wave rating from above
                 in the center of the conditions window */

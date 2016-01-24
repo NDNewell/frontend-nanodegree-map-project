@@ -893,7 +893,7 @@ function AppViewModel () {
         };
     };
 
-    // Get a marker's name not including the location (breakName)
+    // Get a marker's name (breakName) not including the location
     self.getMarkerName = function (marker) {
 
         var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
@@ -912,7 +912,7 @@ function AppViewModel () {
     self.makeMarkerBig = function (marker) {
 
         // Cache the title of the marker not including the location
-        var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
+        var markerName = getMarkerName(marker);
 
         /* If marker wasn't previously activated, make it big for
         normal and fav icons */
@@ -937,7 +937,7 @@ function AppViewModel () {
         markers.forEach(function(marker) {
 
             // Cache the title of the marker not including the location
-            var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
+            var markerName = getMarkerName(marker);
 
             if (marker.icon === 'img/marker_selected.svg') {
                 console.log('make ' + markerName + "'" + 's marker small');
@@ -987,7 +987,7 @@ function AppViewModel () {
         markers.forEach(function(marker) {
 
             // Cache the title of the marker not including the location
-            var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
+            var markerName = getMarkerName(marker);
 
             /* Filter markers that match the location object. When a match is
             found, zoom in and display the relevant info window*/
@@ -1013,7 +1013,7 @@ function AppViewModel () {
         markers.forEach(function(marker) {
 
             // Cache the title of the marker not including the location
-            var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
+            var markerName = getMarkerName(marker);
 
             // Filter markers that match the location frame
             if (markerName === breakName) {
@@ -1029,7 +1029,7 @@ function AppViewModel () {
         markers.forEach(function(marker) {
 
             // Cache the title of the marker not including the location
-            var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
+            var markerName = getMarkerName(marker);
 
             /* If the name matches a user's favorite, change the image */
             /* Any markers that don't match the user's favs or were never a
@@ -1099,7 +1099,7 @@ function AppViewModel () {
     self.showMarkers = function (marker) {
 
         // Shorten the marker title to just the break name
-        var markerTitle = marker.title.replace(/ *\([^)]*\) */g, "");
+        var markerTitle = getMarkerName(marker);
 
         // If the search container is visible, only display the
         // markers that match the current search query
@@ -1201,7 +1201,7 @@ function AppViewModel () {
             $oldPosition = $locationsContainer.scrollLeft(),
 
             // Cache the title of the marker not including the location
-            markerName = marker.title.replace(/ *\([^)]*\) */g, "");
+            markerName = getMarkerName(marker);
 
         // Check if autoscroll is already engaged
         // If it is, clear the interval
@@ -1327,7 +1327,7 @@ function AppViewModel () {
             $numFramesVisible = $('.location-frame:visible').length,
 
             // Cache the title of the marker not including the location
-            markerName = marker.title.replace(/ *\([^)]*\) */g, "");
+            markerName = getMarkerName(marker);
 
         // If more than one location frame is in view and not in mobile view,
         // execute code
@@ -1439,7 +1439,7 @@ function AppViewModel () {
     self.showLocationFrame = function (marker) {
 
         // Cache the title of the marker not including the location
-        var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
+        var markerName = getMarkerName(marker);
 
         // Cache DOM reference to all location frames
         var $allLocationFrames = $('.location-frame');
@@ -1467,7 +1467,7 @@ function AppViewModel () {
     self.showFrames = function (marker) {
 
         // Cache the break name of the marker not including the location
-        var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
+        var markerName = getMarkerName(marker);
 
         // If the search container is visible, only display the
         // frames of those markers that match the current search
@@ -1844,7 +1844,7 @@ function AppViewModel () {
     self.getInfoWindow = function (marker) {
 
         // Cache the title of the marker not including the location
-        var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
+        var markerName = getMarkerName(marker);
 
         console.log('show ' + markerName + "'s info window");
 
@@ -3012,7 +3012,7 @@ function AppViewModel () {
         markers.forEach(function(marker) {
 
             // Shorten the marker title to just the break name
-            var markerTitle = marker.title.replace(/ *\([^)]*\) */g, "");
+            var markerTitle = getMarkerName(marker);
 
             if (userFavorites.indexOf(markerTitle) > -1) {
                 marker.setVisible(true);

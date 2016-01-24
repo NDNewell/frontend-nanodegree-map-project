@@ -1628,7 +1628,7 @@ function AppViewModel () {
 
             // Only execute the following code if the map is visible and
             // managers aren't disabled (window isn't being resized)
-            if($('#map').is(":visible") && !resizeInProgress) {
+            if($('#map').is(":visible") && !resizeInProgress && !guideView) {
 
                 self.manageFrames();
                 self.manageMarkers();
@@ -1645,20 +1645,21 @@ function AppViewModel () {
             // Find last selected marker and make pin small again
             self.makeMarkerSmall();
 
-            /* If the surf guide isn't visible show the locations, otherwise
-            do nothing (just close the info windows) */
-            if (!$('.surf-guide-container').is(":visible")) {
-                $('.location-frame').show();
-            };
-
             // Close any open info windows
             infoWindow.close();
 
-            // Update visible markers
-            self.manageMarkers();
+            // If the surf guide isn't visible show the locations and manage
+            // markers and frames
+            if (!guideView) {
 
-            // Update visible frames
-            self.manageFrames();
+                $('.location-frame').show();
+
+                // Update visible markers
+                self.manageMarkers();
+
+                // Update visible frames
+                self.manageFrames();
+            };
         });
 
         // When map is zoomed in, center over the selected marker if there

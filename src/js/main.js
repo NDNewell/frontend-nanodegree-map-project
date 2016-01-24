@@ -893,6 +893,14 @@ function AppViewModel () {
         };
     };
 
+    // Get a marker's name not including the location (breakName)
+    self.getMarkerName = function (marker) {
+
+        var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
+
+        return markerName;
+    };
+
     // Set the animation for the selected marker
     self.animateMarker = function (marker) {
         marker.setAnimation(google.maps.Animation.BOUNCE);
@@ -939,6 +947,33 @@ function AppViewModel () {
                 marker.setIcon('img/marker_smallFav.svg');
             };
         });
+    };
+
+    // Get the marker that matches the currently opened surf guide
+    self.getGuideMarker = function () {
+
+        // Cache DOM ref
+        var breakName = $('#guide-break-name').text();
+
+        // Cache the length of the markers array
+        var markersLength = markers.length;
+
+        // Iterate through the markers array
+        for(var i = markersLength; i--;) {
+
+            // Save ref to indiv markers
+            var marker = markers[i];
+
+            // Get the marker's name
+            var markerName = getMarkerName(marker);
+
+            // If the currently selected surf guide's break name matches
+            // a marker's break name return the marker
+            if (breakName === markerName) {
+
+                return marker;
+            };
+        };
     };
 
     /* Select each marker related to a location object from
@@ -1579,11 +1614,6 @@ function AppViewModel () {
         self.renderFavoriteOnLocationFrame();
     };
 
-    self.clickMap = function () {
-
-
-    };
-
     self.addMapListeners = function () {
 
         // Add map event listener the detects when the map is idle
@@ -1596,6 +1626,7 @@ function AppViewModel () {
             // Only execute the following code if the map is visible and
             // managers aren't disabled (window isn't being resized)
             if($('#map').is(":visible") && !resizeInProgress) {
+
                 self.manageFrames();
                 self.manageMarkers();
             };
@@ -1625,6 +1656,28 @@ function AppViewModel () {
 
             // Update visible frames
             self.manageFrames();
+        });
+
+        // When map is zoomed in, center over the selected marker if there
+        // is one
+        google.maps.event.addListener(map, 'zoom_changed', function() {
+
+            // Cache the markers array length
+            var markersLength = markers.length;
+
+            // Loop through the markers array
+            for(var i = markersLength; i--;) {
+
+                // Save a ref to the marker
+                var marker = markers[i];
+
+                // Check if a marker is selected
+                if(marker.icon === 'img/marker_selectedFav.svg' && !guideView || marker.icon === 'img/marker_selected.svg' && !guideView) {
+
+                    // Center the map on the selected marker
+                    self.centerOnMarker(marker);
+                };
+            };
         });
     };
 
@@ -1682,61 +1735,48 @@ function AppViewModel () {
         };
     };
 
-    // Center the map on the selected marker
-    self.centerMapOnGuideMarker = function () {
+    // Center the map in guide view over the selected marker
+    self.centerGuideOnMarker = function () {
 
-        // Cache DOM ref
-        var breakName = $('#guide-break-name').text();
+        // Get the current guide's marker
+        var marker = self.getGuideMarker();
 
-        // Iterate through the markers array
-        markers.forEach(function(marker) {
+        // Make the relevant marker big
+        self.makeMarkerBig(marker);
 
-            // Cache the title of the marker not including the location
-            var markerName = marker.title.replace(/ *\([^)]*\) */g, "");
+        // Open info window
+        self.getInfoWindow(marker);
 
-            // If the currently selected surf guide's break name matches
-            // a marker's break name:
-            if (breakName === markerName) {
+        // Center the map on the specific marker after a given time
+        var timer = setTimeout(function() {
 
-                // If info window isn't open
-                // Also, make the marker big if it isn't
-                // If the info window/marker are already open/big, do nothing
-                // This avoids repeating these tasks everytime window is resized
-                if (!self.isInfoWindowOpen(infoWindow)){
+            // Center the map
+            self.centerOnMarker(marker);
 
-                    console.log('info window & marker not activated');
+            // Zoom in on the relevant marker
+            map.setZoom(10);
 
-                    // Make the relevant marker big
-                    self.makeMarkerBig(marker);
-
-                    // Open info window
-                    self.getInfoWindow(marker);
-                };
-
-                // Because it takes time to adjust the map size, delay the
-                // centering of the marker in order to avoid centering the
-                // map in the wrong place
-                var timer = setTimeout(function() {
-
-                    console.log('resize map');
-
-                    // Resize the map to adapt to new window size
-                    google.maps.event.trigger(map, 'resize');
-
-                    console.log('center map over ' + markerName);
-
-                    // Center the map over the marker
-                    map.setCenter(marker.getPosition());
-
-                    // Zoom in on the relevant marker
-                    map.setZoom(10);
-
-                }, 140);
-            };
-        });
+        }, 150);
     };
 
-     self.setMapBounds = function () {
+    // Center the map on a specific marker
+    self.centerOnMarker = function (marker) {
+
+          // Get the marker's name from its title
+          var markerName = self.getMarkerName(marker);
+
+          console.log('resize map');
+
+          // Resize the map to adapt to new window size
+          google.maps.event.trigger(map, 'resize');
+
+          console.log('center map over ' + markerName);
+
+          // Center the map over the marker
+          map.setCenter(marker.getPosition());
+    };
+
+    self.setMapBounds = function () {
 
         console.log('set map bounds');
 
@@ -2564,7 +2604,8 @@ function AppViewModel () {
             /* If the surf guide is open, reset the map size, then center the map on the selected location's marker */
             } else if (guideView && $map.is(":visible")) {
 
-                self.centerMapOnGuideMarker();
+                // Center the map on the selected marker
+                self.centerGuideOnMarker();
             };
 
         /* If the screen width is larger than a 'mobile' view, alter the
@@ -3255,8 +3296,7 @@ function AppViewModel () {
 
                     console.log('open map');
 
-                    // Center the map over the relevant marker
-                    self.centerMapOnGuideMarker();
+                    self.centerGuideOnMarker();
 
                 } else {
 
@@ -3305,8 +3345,7 @@ function AppViewModel () {
                   // When map is open and surf guide is visible:
                     if($surfGuide.is(":visible")) {
 
-                        // Center the map over the relevant marker
-                        self.centerMapOnGuideMarker();
+                        self.centerGuideOnMarker();
 
                     // When map is opened and the surf guide is hidden:
                     } else {

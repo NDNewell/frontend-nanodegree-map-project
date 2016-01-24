@@ -936,16 +936,11 @@ function AppViewModel () {
 
             // Change the marker's image
             marker.setIcon('img/marker_selectedFav.svg');
-        } else {
-
-            console.log(markerName + "'s marker is already big");
         };
     };
 
     // Find last selected marker and make pin small again
     self.makeMarkerSmall = function () {
-
-        var bigMarkers = false;
 
         markers.forEach(function(marker) {
 
@@ -954,26 +949,17 @@ function AppViewModel () {
 
             if (marker.icon === 'img/marker_selected.svg') {
 
-                bigMarkers = true;
-
                 console.log('make ' + markerName + "'" + 's marker small');
 
                 marker.setIcon('img/marker_small.svg');
 
             } else if (marker.icon === 'img/marker_selectedFav.svg') {
 
-                bigMarkers = true;
-
                 console.log('make ' + markerName + "'" + 's marker small');
 
                 marker.setIcon('img/marker_smallFav.svg');
             };
         });
-
-        if(!bigMarkers) {
-
-              console.log('there are no big markers');
-        };
     };
 
     // Get the marker that matches the currently opened surf guide
@@ -1768,8 +1754,6 @@ function AppViewModel () {
 
         // If the info window is already open, center the map immediately
         } else {
-
-            console.log('info window is already open');
 
             // Center the map
             self.centerOnMarker(marker);

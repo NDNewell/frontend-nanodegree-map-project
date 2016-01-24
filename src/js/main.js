@@ -936,24 +936,44 @@ function AppViewModel () {
 
             // Change the marker's image
             marker.setIcon('img/marker_selectedFav.svg');
+        } else {
+
+            console.log(markerName + "'s marker is already big");
         };
     };
 
     // Find last selected marker and make pin small again
     self.makeMarkerSmall = function () {
+
+        var bigMarkers = false;
+
         markers.forEach(function(marker) {
 
             // Cache the title of the marker not including the location
             var markerName = getMarkerName(marker);
 
             if (marker.icon === 'img/marker_selected.svg') {
+
+                bigMarkers = true;
+
                 console.log('make ' + markerName + "'" + 's marker small');
+
                 marker.setIcon('img/marker_small.svg');
+
             } else if (marker.icon === 'img/marker_selectedFav.svg') {
+
+                bigMarkers = true;
+
                 console.log('make ' + markerName + "'" + 's marker small');
+
                 marker.setIcon('img/marker_smallFav.svg');
             };
         });
+
+        if(!bigMarkers) {
+
+              console.log('there are no big markers');
+        };
     };
 
     // Get the marker that matches the currently opened surf guide
@@ -981,35 +1001,6 @@ function AppViewModel () {
                 return marker;
             };
         };
-    };
-
-    /* Select each marker related to a location object from
-    the View. This is accomplished using ko's click binding*/
-    self.goToMarker = function(breakName) {
-
-        // Find last selected marker and make it small
-        self.makeMarkerSmall();
-
-        // Iterate through the markers array
-        markers.forEach(function(marker) {
-
-            // Cache the title of the marker not including the location
-            var markerName = getMarkerName(marker);
-
-            /* Filter markers that match the location object. When a match is
-            found, zoom in and display the relevant info window*/
-            if (markerName === breakName) {
-
-                // Make the matching marker's icon big
-                self.makeMarkerBig(marker);
-
-                // Open info window
-                self.getInfoWindow(marker);
-
-                // Animate marker
-                self.animateMarker(marker);
-            };
-        });
     };
 
     /* When a location frame is hovered over, the associated marker and
@@ -1179,19 +1170,24 @@ function AppViewModel () {
         self.checkVisibleMarkers();
     };
 
-    /* Go to specific marker and open the surf guide */
+    // Open the location frame's relevant surf guide an animate its related
+    // marker
     self.clickLocationFrame = function(obj) {
 
         // Disable rollover effects so the correct icon loads in surf guide
         rollover = false;
 
-        // Highlight the location's marker if the map is visible
-        if($('.map-container').is(":visible")) {
-            self.goToMarker(obj.breakName);
-        };
-
         // Open the surf guide
         self.renderSurfGuide(obj);
+
+        // Animate the location's marker if the map is visible
+        if($('.map-container').is(":visible")) {
+
+            var marker = self.getGuideMarker();
+
+            // Animate marker
+            self.animateMarker(marker);
+        };
 
         // Manage the view to change the layout for the surf guide
         self.manageView();
@@ -1742,28 +1738,47 @@ function AppViewModel () {
         };
     };
 
-    // Center the map in guide view over the selected marker
-    self.centerGuideOnMarker = function () {
+    // Set up marker for the map display in guide view
+    self.setMarkerForGuide = function () {
 
         // Get the current guide's marker
         var marker = self.getGuideMarker();
 
-        // Make the relevant marker big
+        // Make the marker big if not done already
         self.makeMarkerBig(marker);
 
-        // Open info window
-        self.getInfoWindow(marker);
+        // If the info window isn't open, open it and delay the centering
+        // of the map over the guide's related marker
+        // Not delaying it results in the map jumping due to the info window's
+        // lagging effect on the centering of the map
+        // To avoid this, the info window must be fully loaded before centering
+        if(!isInfoWindowOpen(infoWindow)) {
 
-        // Center the map on the specific marker after a given time
-        var timer = setTimeout(function() {
+            // Open info window
+            self.getInfoWindow(marker);
+
+            // Center the map on the specific marker after a given time
+            var timer = setTimeout(function() {
+
+                // Center the map
+                self.centerOnMarker(marker);
+
+                // Zoom in on the relevant marker
+                map.setZoom(10);
+
+            }, 150);
+
+        // If the info window is already open, center the map immediately
+        } else {
+
+            console.log('info window is already open');
 
             // Center the map
             self.centerOnMarker(marker);
 
             // Zoom in on the relevant marker
             map.setZoom(10);
-
-        }, 150);
+        };
     };
 
     // Center the map on a specific marker
@@ -2640,7 +2655,7 @@ function AppViewModel () {
             } else if (guideView && $map.is(":visible")) {
 
                 // Center the map on the selected marker
-                self.centerGuideOnMarker();
+                self.setMarkerForGuide();
             };
 
         /* If the screen width is larger than a 'mobile' view, alter the
@@ -3269,10 +3284,13 @@ function AppViewModel () {
             small & close any open info windows */
             $mapContainer.slideToggle(200, function() {
 
-                console.log('close map & any open infowindows');
+                console.log('close map');
+
+                console.log('close any open info windows');
+
+                infoWindow.close();
 
                 self.makeMarkerSmall();
-                infoWindow.close();
             });
 
         /* If clicking the button from grid view, close the grid and show the map view of the locations */
@@ -3339,16 +3357,11 @@ function AppViewModel () {
                     self.removeGoogleElemTitles();
 
                     // Center the map over the selected marker
-                    self.centerGuideOnMarker();
+                    self.setMarkerForGuide();
 
                 } else {
 
-                    console.log('close map & any open infowindows');
-
-                    // Close open info window and make marker small
-                    self.makeMarkerSmall();
-                    infoWindow.close();
-                };
+                    console.log('close map');};
             });
 
         /* The mobile view toggling of the map view handles both opening
@@ -3393,7 +3406,7 @@ function AppViewModel () {
                     if($surfGuide.is(":visible")) {
 
                         // Center the map over the selected marker
-                        self.centerGuideOnMarker();
+                        self.setMarkerForGuide();
 
                     // When map is opened and the surf guide is hidden:
                     } else {
@@ -3413,11 +3426,18 @@ function AppViewModel () {
                     // Also set all of the relevant markers to visible
                     self.resetFramesAndMarkers();
 
-                    console.log('close map & any open infowindows');
+                    console.log('close map');
 
-                    // Close open info window and make marker small
-                    self.makeMarkerSmall();
-                    infoWindow.close();
+                    // If not in guide view, close any open info
+                    // windows and make any big markers small
+                    if(!guideView) {
+
+                        console.log('close any open info windows');
+
+                        infoWindow.close();
+
+                        self.makeMarkerSmall();
+                    };
                 };
             });
         } else {
@@ -4801,6 +4821,8 @@ function AppViewModel () {
         visible again in case a marker has been selected. */
         $('.location-frame').show();
         $('.location-grid').toggle();
+
+        console.log('close any open info windows');
 
         // Close any info windows that remain open
         infoWindow.close();

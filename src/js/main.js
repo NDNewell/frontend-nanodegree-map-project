@@ -1648,11 +1648,8 @@ function AppViewModel () {
             // Close any open info windows
             infoWindow.close();
 
-            // If the surf guide isn't visible show the locations and manage
-            // markers and frames
+            // If the surf guide isn't visible manage markers and frames
             if (!guideView) {
-
-                $('.location-frame').show();
 
                 // Update visible markers
                 self.manageMarkers();

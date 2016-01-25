@@ -807,9 +807,6 @@ function AppViewModel () {
                 // Find last selected marker and make pin small again
                 self.makeMarkerSmall();
 
-                // Update the visible frames
-                self.manageFrames();
-
                 self.makeMarkerBig(marker);
 
                 self.getInfoWindow(marker);
@@ -819,7 +816,7 @@ function AppViewModel () {
 
                 /* Show surf guide (only if surf guide is already open) when
                 the marker is clicked */
-                if ($('.surf-guide-container').is(":visible")) {
+                if (guideView) {
 
                     /* Remove any visible surf conditions so they aren't still
                     displayed when the new surf guide renders */
@@ -856,7 +853,7 @@ function AppViewModel () {
                 if (!$('.surf-guide-container').length) {
 
                     // Pulsate the associated location frame
-                    self.pulsateLocationFrame(marker);
+                    self.pulseFrame(marker);
 
                     // If more than one location frame is in view and
                     // not in mobile view, execute code
@@ -882,7 +879,7 @@ function AppViewModel () {
                 if (!$('.surf-guide-container').length) {
 
                     // Reverse pulstate the associated location frame
-                    self.pulsateLocationFrame(marker);
+                    self.pulseFrame(marker);
 
                 };
             };
@@ -1015,8 +1012,28 @@ function AppViewModel () {
         });
     };
 
+    // Set all of the relevant markers to visible
+    self.resetMarkers = function () {
+
+        console.log('reset markers');
+
+        // Save ref to array length
+        var markersLength = markers.length;
+
+        // Iterate through the markers array
+        for(var i = markersLength; i--;) {
+
+            // Cache a ref to the marker
+            var marker = markers[i];
+
+            // Set all relevant markers to visible if the map is visible
+            self.filterMarkers(marker);
+        };
+    };
+
     // Change any map markers that match/don't match the user's favorites
      self.updateFavMarkers = function (favorites) {
+
         markers.forEach(function(marker) {
 
             // Cache the title of the marker not including the location
@@ -1077,7 +1094,7 @@ function AppViewModel () {
                 console.log('no markers visible');
 
                 // Render reset map button
-                self.showMapReset();
+                self.repositionMap();
             };
 
         // If any map markers are visible (within the map's viewable area),
@@ -1093,7 +1110,7 @@ function AppViewModel () {
     // query
     // If the favorites filter is selected, show only those markers that match
     // the user's favorites
-    self.showMarkers = function (marker) {
+    self.filterMarkers = function (marker) {
 
         // Shorten the marker title to just the break name
         var markerTitle = getMarkerName(marker);
@@ -1150,7 +1167,7 @@ function AppViewModel () {
             if(map.getBounds().contains(marker.getPosition())) {
 
                 // Show any markers that fall within the current map bounds
-                self.showMarkers(marker);
+                self.filterMarkers(marker);
 
             // If the markers are not within the current map bounds,
             // hide them
@@ -1322,7 +1339,7 @@ function AppViewModel () {
         };
     };
 
-    self.pulsateLocationFrame = function (marker) {
+    self.pulseFrame = function (marker) {
 
         // Cache DOM references
         var $allLocationFrames = $('.location-frame'),
@@ -1398,7 +1415,7 @@ function AppViewModel () {
     };
 
     // Set the style on the location frames for map view
-    self.resetLocationFrames = function () {
+    self.adjustFrameStyle = function () {
 
         // Cache DOM elements
         var $allLocationFrames = $('.location-frame'),
@@ -1438,6 +1455,30 @@ function AppViewModel () {
         $favorite.attr("class", "favorite favorite-map-view-style");
     };
 
+    // Show all of the relevant location frames
+    self.resetFrames = function () {
+
+        console.log('reset location frames');
+
+        // Save ref to array length
+        var markersLength = markers.length;
+
+        var $allLocationFrames = $('.location-frame');
+
+        // Hide the visible location frames
+        $allLocationFrames.hide();
+
+        // Iterate through the markers array
+        for(var i = markersLength; i--;) {
+
+            // Cache a ref to the marker
+            var marker = markers[i];
+
+            // Show all relevant location frames
+            self.filterFrames(marker);
+        };
+    };
+
     self.focusOnFrame = function (marker) {
 
         // Cache the title of the marker not including the location
@@ -1467,7 +1508,7 @@ function AppViewModel () {
         });
     };
 
-    self.showFrames = function (marker) {
+    self.filterFrames = function (marker) {
 
         // Cache the break name of the marker not including the location
         var markerName = getMarkerName(marker);
@@ -1573,34 +1614,8 @@ function AppViewModel () {
             if(map.getBounds().contains(marker.getPosition())) {
 
                 // Display the frames
-                self.showFrames(marker);
+                self.filterFrames(marker);
             };
-        };
-    };
-
-    // Show all of the relevant location frames
-    // Set all of the relevant markers to visible
-    self.resetFramesAndMarkers = function () {
-
-        // Save ref to array length
-        var markersLength = markers.length;
-
-        var $allLocationFrames = $('.location-frame');
-
-        // Hide the visible location frames
-        $allLocationFrames.hide();
-
-        // Iterate through the markers array
-        for(var i = markersLength; i--;) {
-
-            // Cache a ref to the marker
-            var marker = markers[i];
-
-            // Show all relevant location frames
-            self.showFrames(marker);
-
-            // Set all relevant markers to visible
-            self.showMarkers(marker);
         };
     };
 
@@ -1708,7 +1723,7 @@ function AppViewModel () {
     };
 
     // Bring map markers back into view
-    self.showMapReset = function () {
+    self.repositionMap = function () {
 
         // Cache DOM elements
         var resetMap = '<div class="reset-map-container"></div>',
@@ -1730,34 +1745,30 @@ function AppViewModel () {
         // Add event listener
         // When the button is clicked, recenter the map
         $resetButton.on("click", function() {
-            resetMarkersAndFrames();
+            moveMap();
         });
 
         // Make all of the map markers visible and set the map bounds
-        function resetMarkersAndFrames () {
+        function moveMap () {
 
-            console.log('set markers to visible');
-            console.log('center map');
+            console.log('reposition map');
 
-            // Remove the reset button
+            // Remove the reset button if already rendered
             $resetMapContainer.remove();
 
             // Set a ref to the length of the markers array
             var markersLength = markers.length;
 
-            // Loop through the maps markers
-            for(var i = markersLength; i--;) {
-                var marker = markers[i];
-
-                // Make markers visible
-                self.showMarkers(marker);
-            };
+            // Just reset the markers since after the markers are made visible
+            // again, the map bounds are set, which triggers the markers AND
+            // frames managers
+            self.resetMarkers()
 
             // Set map bounds
             self.setMapBounds();
 
             // Remove the reset map button
-            $('.reset-map-container').remove();
+            $resetMapContainer.remove();
         };
     };
 
@@ -2668,8 +2679,11 @@ function AppViewModel () {
             and marker managers aren't disabled, and the surf guide is hidden,
             set the map bounds */
             if(markers.length !== 0 && $map.is(":visible") && !guideView && !resizeInProgress) {
+
                 console.log('map is visible');
+
                 google.maps.event.trigger(map, 'resize');
+
                 self.setMapBounds();
 
             /* If the surf guide is open, reset the map size, then center the map on the selected location's marker */
@@ -2702,7 +2716,7 @@ function AppViewModel () {
             $locationGrid.removeClass("row").addClass("row-fluid");
 
             // Reset location frame's elements
-            self.resetLocationFrames();
+            self.adjustFrameStyle();
 
             // Adjust the map height
             self.adjustMapSize();
@@ -3047,8 +3061,6 @@ function AppViewModel () {
         // If not in map view, execute this function
         if($('#map').is(":hidden")) {
 
-            console.log("!!!! filter favs mate !!!!");
-
             // Cache DOM reference to all location frames
             var $allLocationFrames = $('.location-frame');
 
@@ -3066,7 +3078,6 @@ function AppViewModel () {
                 // favorites, show it
                 if(userFavorites.indexOf($breakName) > -1) {
 
-                    console.log('!!!! match !!!!');
                     $locationFrame.show();
                 };
             });
@@ -3096,6 +3107,7 @@ function AppViewModel () {
 
         // Set map bounds
         if ($('#map').is(":visible")) {
+
             // Set the map bounds & map position
             self.setMapBounds();
         };
@@ -3250,10 +3262,6 @@ function AppViewModel () {
          grid view of the location frames */
         if(mapView) {
 
-            // Show all of the relevant location frames after the map is closed
-            // Also set all of the relevant markers to visible
-            self.resetFramesAndMarkers();
-
             // Select/deselect the map symbol
             $mapSymbol.toggleClass("map-default map-selected");
 
@@ -3273,12 +3281,10 @@ function AppViewModel () {
             // the map is reshown beforehand
             $mapContainer.show();
 
-            /* Show all location frames if only one is visible.
-               However, if only one frame is visible due to a search, then do
-               nothing */
-            if($numLocations == 1 && $locationFrames.length > 1) {
-                $locationFrames.show();
-            };
+            // Show relevant loc frames after the map is closed
+            // Also set all of the relevant markers to visible
+            self.resetFrames();
+            self.resetMarkers();
 
             /* Close the map container. Once fully closed, make all markers
             small & close any open info windows */
@@ -3436,7 +3442,8 @@ function AppViewModel () {
                     // Show all of the relevant location frames after the map
                     // is closed
                     // Also set all of the relevant markers to visible
-                    self.resetFramesAndMarkers();
+                    self.resetFrames();
+                    self.resetMarkers();
 
                     console.log('close map');
 
@@ -4796,18 +4803,6 @@ function AppViewModel () {
         // Cache the markers array length
         var markersLength = markers.length;
 
-        // Iterate through the markers array
-        // It's important to show the markers again so that when the map
-        // bounds are set, the whole map is shown instead of the previously
-        // viewed markers provided in the surf guide
-        for(var i = markersLength; i--;) {
-
-            // Show all markers
-            // If a search has been made, show only markers that match the
-            // current search
-            self.showMarkers(markers[i]);
-        };
-
         // Find last selected marker and make pin small again
         self.makeMarkerSmall();
 
@@ -4820,6 +4815,11 @@ function AppViewModel () {
         // Make both the location grid and the location frames
         // within it visible.
         $('.location-grid').show();
+
+        // If the map is hidden, reset the relevant location frames
+        if($('#map').is(":hidden")) {
+            self.resetFrames();
+        };
 
         console.log('close any open info windows');
 

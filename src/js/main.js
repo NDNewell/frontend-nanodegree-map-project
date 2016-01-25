@@ -2141,6 +2141,8 @@ function AppViewModel () {
                     self.toggleRolloverClasses();
                 };
 
+                console.log('add hover tooltips');
+
                 self.addToolTips();
             });
 
@@ -2191,8 +2193,6 @@ function AppViewModel () {
     // Add tooltips for those icons that have a title attribute
     // When the element is clicked or hovered over a tooltip is displayed
     self.addToolTips = function () {
-
-        console.log('add tooltips');
 
         // Save a ref to all elements, and setTimeout variables
         var $elements = $('[title]'),
@@ -3668,6 +3668,8 @@ function AppViewModel () {
         // Render buttons for guide
         self.addGuideButtons(obj);
 
+
+        console.log('add surf guide tooltips');
         // Add listeners for each icon
         // When clicked, text descriptions for the icon appear/disappear
         self.addToolTips();
@@ -5156,6 +5158,8 @@ function AppViewModel () {
                     $showConditionsButton.toggle();
 
                 });
+
+                console.log('add live conditions tooltips');
 
                 // Add tool tips
                 self.addToolTips();

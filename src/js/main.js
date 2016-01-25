@@ -4800,10 +4800,11 @@ function AppViewModel () {
 
         console.log('close surf guide');
 
-        // Cache the markers array length
-        var markersLength = markers.length;
+        console.log('close any open info windows');
 
-        // Find last selected marker and make pin small again
+        infoWindow.close();
+
+        // Make any big markers small
         self.makeMarkerSmall();
 
         // Remove both surf conditions and surf guide from DOM
@@ -4812,19 +4813,21 @@ function AppViewModel () {
         // Adjust the layout
         self.manageView();
 
-        // Make both the location grid and the location frames
-        // within it visible.
-        $('.location-grid').show();
-
         // If the map is hidden, reset the relevant location frames
         if($('#map').is(":hidden")) {
             self.resetFrames();
         };
 
-        console.log('close any open info windows');
+        // Show the location grid again
+        $('.location-grid').show();
 
-        // Close any info windows that remain open
-        infoWindow.close();
+        // Show any location frames that were visible before the surf guide
+        // was opened
+        // Set display to 'inline-block' to avoid styling problems arising
+        // from a div that wasn't set to inline before being hidden i.e.
+        // clicking a location frame in grid view, opening the map, then
+        // closing the guide
+        $('.location-frame:visible').css("display", "inline-block");
 
         // Scroll to the top of the page
         document.body.scrollTop = document.documentElement.scrollTop = 0;

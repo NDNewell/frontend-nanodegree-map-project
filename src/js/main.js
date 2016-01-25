@@ -2836,30 +2836,29 @@ function AppViewModel () {
         characters in each break and location name & store in a new var*/
         var search = self.Query().toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
 
-        /* Remove all location objects from obs. array, so that only objects
-        which match the search can be re-added to the array and subsequently
-        rendered in the View*/
-        self.locationGrid.removeAll();
+        // Cache DOM reference to all location frames
+        var $allLocationFrames = $('.location-frame');
 
-        /* Compare each object's break name and location to the search terms.
-         If it matches, re-add it to the obs. array and render in the View.
-         If it doesn't match, then it isnt re-added.*/
-        self.locationArray.forEach(function(obj) {
+        // Hide all location frames
+        $allLocationFrames.hide();
 
-            // Convert break names (remove spaces, commas, apostrophes etc.)
-            if (obj.breakName.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) > -1) {
+        // Loop through all of the location frames
+        $allLocationFrames.each(function() {
 
-              self.locationGrid.push(obj);
+            // Cache the current location frame's reference and text
+            var $locationFrame = $(this),
+                $locationFrameText = $locationFrame.text().toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
 
-            // Convert locations (remove spaces, commas, apostrophes etc.)
-            } else if (obj.location.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) > -1) {
+            // If a specific location frame's text matches the search,
+            // show it
+            if($locationFrameText.indexOf(search) > -1) {
 
-              self.locationGrid.push(obj);
-            }
+                $locationFrame.show();
+            };
         });
 
         /* Compare each marker's title, which holds the break and location name, to the search terms. If it matches, set the marker as visible.
-        If it doesn't match, make setVisible false*/
+        If not, hide it */
         markers.forEach(function(marker) {
 
             // Convert marker titles (remove spaces, commas, apostrophes etc.)
@@ -2885,16 +2884,6 @@ function AppViewModel () {
             // Update layout
             self.manageLayout();
         };
-
-        /* After a search, there are new objects in the locationGrid, so the
-        rollover effects that were added before need to be re-added */
-        self.addRolloverEffect();
-
-        // Update DOM elements (location frames)
-        /* Fill in the hearts of any locations which are the user's
-        favorites */
-        self.renderFavoriteOnLocationFrame();
-
     };
 
     // Set variables to be used in the functions to follow

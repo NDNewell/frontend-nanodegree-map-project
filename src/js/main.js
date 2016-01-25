@@ -822,7 +822,7 @@ function AppViewModel () {
 
                     /* If the surf guide isn't open, hide all location frames
                     except the one related to the marker */
-                    self.showLocationFrame(marker);
+                    self.focusOnFrame(marker);
                 };
             };
 
@@ -1003,7 +1003,6 @@ function AppViewModel () {
             if (markerName === breakName) {
 
                 self.makeMarkerBig(marker);
-
             };
         });
     };
@@ -1218,8 +1217,8 @@ function AppViewModel () {
         var spaceLeftNRight = ($locationsCountainerWidth - $frameWidth)/2;
 
         // Get and cache a ref to the position (index) of frame that is being
-        // hovered over
-        var $targetIndex = $pulsatingLocation.index();
+        // pulsated
+        var $targetIndex = $pulsatingLocation.siblings(":visible").addBack().index($pulsatingLocation);
 
         // Calculate the amt of space preceding the location being hovered over
         // This is done by multiplying the # of the frames preceding the said
@@ -1431,7 +1430,7 @@ function AppViewModel () {
         $favorite.attr("class", "favorite favorite-map-view-style");
     };
 
-    self.showLocationFrame = function (marker) {
+    self.focusOnFrame = function (marker) {
 
         // Cache the title of the marker not including the location
         var markerName = getMarkerName(marker);
@@ -1449,11 +1448,11 @@ function AppViewModel () {
             var $locationFrame = $(this);
             var $locationFrameText = $locationFrame.text();
 
-            /* If a specific location frame's text matches the currenlty selected
-            break, show it*/
+            /* If a specific location frame's text matches the currenlty selected break, show it*/
             if($locationFrameText.indexOf(markerName) > -1) {
 
                 console.log('show only ' + markerName + "'s location frame");
+
                 $locationFrame.show();
             };
         });
@@ -1507,13 +1506,20 @@ function AppViewModel () {
         // within the map's current boundaries
         function updateFrames (markerName) {
 
-            // Iterate through the array of locations
-            self.locationArray.forEach(function(obj) {
+            // Cache DOM reference to all location frames
+            var $allLocationFrames = $('.location-frame');
 
-                // If a marker within the map's boundaries matches a
-                // location, display it
-                if (markerName === obj.breakName) {
-                      self.locationGrid.push(obj);
+            // Loop through all of the location frames
+            $allLocationFrames.each(function() {
+
+                // Cache the current location frame's reference and text
+                var $locationFrame = $(this);
+                var $locationFrameText = $locationFrame.text();
+
+                /* If a specific location frame's text matches the currenlty selected break, show it*/
+                if($locationFrameText.indexOf(markerName) > -1) {
+
+                    $locationFrame.show();
                 };
             });
         };
@@ -1540,11 +1546,13 @@ function AppViewModel () {
 
         console.log('manage location frames');
 
-        // Clear the visible location frames
-        self.locationGrid.removeAll();
+        var $allLocationFrames = $('.location-frame');
+
+        // Hide the visible location frames
+        $allLocationFrames.hide();
 
         // Iterate backwards through the markers array, so that their
-        // location frames when matched are add back to the location grid
+        // location frames when matched are added back to the location grid
         // in the same order
         for(var i = markersLength; i--;) {
 
@@ -1559,18 +1567,6 @@ function AppViewModel () {
                 self.showFrames(marker);
             };
         };
-
-        // If in mobile view, do not reset the location frame's styling
-        // Otherwise, alter their styling for map view
-        if(!mobileView) {
-            self.resetLocationFrames();
-        };
-
-        // Re-add rollover effects
-        self.addRolloverEffect();
-
-        // Re-render the location frame's 'favorite' status
-        self.renderFavoriteOnLocationFrame();
     };
 
     // Show all of the relevant location frames
@@ -1580,8 +1576,10 @@ function AppViewModel () {
         // Save ref to array length
         var markersLength = markers.length;
 
-        // Clear the visible location frames
-        self.locationGrid.removeAll();
+        var $allLocationFrames = $('.location-frame');
+
+        // Hide the visible location frames
+        $allLocationFrames.hide();
 
         // Iterate through the markers array
         for(var i = markersLength; i--;) {
@@ -1589,24 +1587,12 @@ function AppViewModel () {
             // Cache a ref to the marker
             var marker = markers[i];
 
-            // Show all relevant locaiton frames
+            // Show all relevant location frames
             self.showFrames(marker);
 
             // Set all relevant markers to visible
             self.showMarkers(marker);
         };
-
-        // If in mobile view, do not reset the location frame's styling
-        // Otherwise, alter their styling for map view
-        if(!mobileView) {
-            self.resetLocationFrames();
-        };
-
-        // Re-add rollover effects
-        self.addRolloverEffect();
-
-        // Re-render the location frame's 'favorite' status
-        self.renderFavoriteOnLocationFrame();
     };
 
     self.addMapListeners = function () {
@@ -2053,9 +2039,9 @@ function AppViewModel () {
 
                 console.log('hover over ' + frameBreakName);
 
-                /* If gridView is not enabled, activate the location frame's
+                /* If in mapView, activate the location frame's
                  associated marker and info window */
-                if($mapContainer.is(":visible")) {
+                if(mapView) {
                     activateMarker(frameBreakName);
                 };
 

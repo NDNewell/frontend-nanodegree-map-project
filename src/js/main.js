@@ -499,23 +499,28 @@ function AppViewModel () {
 
     /* Iterate through the location frame displayed and fill in any locations
     that match the user's favorites */
-    self.renderFavoriteOnLocationFrame = function () {
+    self.updateFavsOnFrames = function () {
 
         console.log("display 'favorite' icons on relevant location frames");
 
-        $('.location-frame').each(function () {
+        var $allLocationFrames = $('.location-frame');
+
+        $allLocationFrames.each(function () {
 
             // Cache references to location frame, favorite symbol, & break name
-            var $locationFrame = $(this);
-            var $favoriteWrapper = $(this).find('.favorite-wrapper');
-            var $breakName = $(this).find('.break-name')[0].textContent;
+            var $locationFrame = $(this),
+                $favoriteWrapper = $locationFrame.children(":nth-child(3)"),
+                $breakName = $locationFrame.children(":nth-child(2)").text();
 
             // Filter locations that match the user's favorites
             // When a match is found, add a class to style it as 'selected'
             if(userFavorites.indexOf($breakName) > -1) {
+
                 $favoriteWrapper.removeClass('not-a-favorite').addClass('is-a-favorite');
             } else {
+
                 if($favoriteWrapper.hasClass('is-a-favorite')) {
+
                     $favoriteWrapper.addClass('not-a-favorite').removeClass('is-a-favorite');
                 };
             };
@@ -603,7 +608,7 @@ function AppViewModel () {
                         // Update DOM elements (location frames)
                         /* Fill in the hearts of any locations which are the user's
                         favorites */
-                        self.renderFavoriteOnLocationFrame();
+                        self.updateFavsOnFrames();
                     };
 
                 }, fireBaseReadError);
@@ -704,6 +709,9 @@ function AppViewModel () {
 
         // Clear the user's existing favorites
         userFavorites = [];
+
+        // Update favorite status
+        self.updateFavsOnFrames();
 
         // Update Firebase
         users.child(allData.getAuth().uid).update({"favorites":userFavorites}, fireBaseWriteError);
@@ -1332,10 +1340,10 @@ function AppViewModel () {
 
                 // Cache the current location frame's reference and text
                 var $locationFrame = $(this),
-                    $locationFrameText = $locationFrame.text();
+                    $breakName = $locationFrame.children(":nth-child(2)").text();
 
                 /* If a specific location frame's text matches the currently hovered/unhovered marker, pulsate or reverse pulsate it */
-                if($locationFrameText.indexOf(markerName) > -1) {
+                if($breakName === markerName) {
 
                     /* If hovering away from the marker, reverse pulsate its
                     location frame */
@@ -1445,11 +1453,12 @@ function AppViewModel () {
         $allLocationFrames.each(function() {
 
             // Cache the current location frame's reference and text
-            var $locationFrame = $(this);
-            var $locationFrameText = $locationFrame.text();
+            var $locationFrame = $(this),
+                $breakName = $locationFrame.children(":nth-child(2)").text();
 
-            /* If a specific location frame's text matches the currenlty selected break, show it*/
-            if($locationFrameText.indexOf(markerName) > -1) {
+            // If a specific location frame's text matches the currenlty
+            // selected break, show it
+            if($breakName === markerName) {
 
                 console.log('show only ' + markerName + "'s location frame");
 
@@ -1513,11 +1522,11 @@ function AppViewModel () {
             $allLocationFrames.each(function() {
 
                 // Cache the current location frame's reference and text
-                var $locationFrame = $(this);
-                var $locationFrameText = $locationFrame.text();
+                var $locationFrame = $(this),
+                    $breakName = $locationFrame.children(":nth-child(2)").text();
 
                 /* If a specific location frame's text matches the currenlty selected break, show it*/
-                if($locationFrameText.indexOf(markerName) > -1) {
+                if($breakName === markerName) {
 
                     $locationFrame.show();
                 };
@@ -3033,26 +3042,37 @@ function AppViewModel () {
         // Cache reference to DOM
         var $favoriteSymbol = $('.favorite-filter-symbol');
 
-        // If map is hidden do not execute. This is task is already performed
+        // If map is in view do not execute. This is task is already performed
         // in the manageFrames function for the map view
         // If not in map view, execute this function
         if($('#map').is(":hidden")) {
 
-            // Clear the observable array
-            self.locationGrid.removeAll();
+            console.log("!!!! filter favs mate !!!!");
 
-            /* Iterate through the locations array and update the location grid
-            with any matching locations to the user's favorites */
-            locationArray.forEach(function(obj) {
-                var breakName = obj.breakName;
+            // Cache DOM reference to all location frames
+            var $allLocationFrames = $('.location-frame');
 
-                if(userFavorites.indexOf(breakName) > -1) {
-                    self.locationGrid.push(obj);
+            // Hide all location frames
+            $allLocationFrames.hide();
+
+            // Loop through all of the location frames
+            $allLocationFrames.each(function() {
+
+                // Cache the current location frame's reference and break name
+                var $locationFrame = $(this),
+                    $breakName = $locationFrame.children(":nth-child(2)").text();
+
+                // If a location frame's break name match's once of the user's
+                // favorites, show it
+                if(userFavorites.indexOf($breakName) > -1) {
+
+                    console.log('!!!! match !!!!');
+                    $locationFrame.show();
                 };
             });
         };
 
-        // Close open info windows
+        // Close any open info windows
         infoWindow.close();
 
         // Find last selected marker and make pin small again
@@ -3128,8 +3148,6 @@ function AppViewModel () {
                 // Add & remove relevant classes
                 $favoriteSymbol.removeClass("favorite-filter-default").addClass("favorite-filter-selected");
 
-                /* After filtering the favorites, there are new versions of
-                the location frames and they need to be updated */
                 /* If the map and search container are visible, adjust the
                 layout after the search container has been toggled. Toggling
                 the layout before the search container has been toggled
@@ -3139,14 +3157,10 @@ function AppViewModel () {
                 /* Also, filter favorites after the search container
                 has been toggled and before adjusting the layout. Filtering
                 the favorites before results in a flash of unstyled content*/
-                /* There is no need to add rollover effects or render favs
-                on the location frames for the first two options because
-                in these cases the manage frames function will take care
-                if it*/
                 if($('#map').is(":visible") && $('.search-container').is(":visible")) {
 
                     // Toggle the layout after the search container is hidden
-                    setTimeout( function () {
+                    var timer = setTimeout( function () {
 
                         // Filter the locations to find favorites
                         self.filterFavorites();
@@ -3156,15 +3170,6 @@ function AppViewModel () {
 
                     }, 600);
 
-                } else if ($('#map').is(":visible")) {
-
-                        // Filter the locations to find favorites
-                        self.filterFavorites();
-
-                        // Adjust the layout
-                        self.manageLayout();
-
-                // If the search container is hidden, toggle layout normally
                 } else {
 
                         // Filter the locations to find favorites
@@ -3172,12 +3177,6 @@ function AppViewModel () {
 
                         // Adjust the layout
                         self.manageLayout();
-
-                        // Add rollover effects to the new list of objects
-                        self.addRolloverEffect();
-
-                        // Display 'favorite' icons on the relevant location frames
-                        self.renderFavoriteOnLocationFrame();
                 };
 
                 // Show the filters container
@@ -3485,13 +3484,9 @@ function AppViewModel () {
         // Find last selected marker and make pin small again
         self.makeMarkerSmall();
 
-        // Clear the objects in the array
-        locationGrid.removeAll();
+        var $allLocationFrames = $('.location-frame');
 
-        // Repopulate the objects in the location grid
-        locationArray.forEach(function (obj) {
-            locationGrid.push(obj);
-        });
+        $allLocationFrames.show();
 
         // If the location grid is hidden, show it
         if($('.location-grid').is(":hidden")) {
@@ -3512,15 +3507,6 @@ function AppViewModel () {
 
             // Set the map bounds & map position
             self.setMapBounds();
-        };
-
-        // Add the hover effects for each location frame
-        self.addRolloverEffect();
-
-        /* If the user has favorites, show a favorite symbol on each
-        relevant location frame */
-        if(userFavorites.length > 0) {
-            self.renderFavoriteOnLocationFrame();
         };
     };
 
@@ -3543,9 +3529,10 @@ function AppViewModel () {
         click. If it isn't, hide the location grid. If it is, the location
         grid is already hidden, so we don't want to make it visible! */
         if (!$('.surf-guide-container').is(":visible")) {
+
             // Hide the location grid
-            $('.location-grid').toggle();
-        }
+            $('.location-grid').hide();
+        };
 
         /* Remove any existing information from previous click */
         $('.surf-guide-container').remove();
@@ -3702,7 +3689,6 @@ function AppViewModel () {
                     // Pass info to API function and initiate request
                     getMagicSeaweed(obj.spotID, obj.breakName, cl);
             };
-
         });
 
         /* When the close surf guide button is clicked the surf guide is
@@ -3714,8 +3700,6 @@ function AppViewModel () {
                 // Show the filters container
                 $('.filters-container').toggle();
                 self.filterFavorites();
-                self.addRolloverEffect();
-                self.renderFavoriteOnLocationFrame();
             };
 
             self.closeSurfGuide();
@@ -4807,6 +4791,8 @@ function AppViewModel () {
 
     self.closeSurfGuide = function () {
 
+        console.log('close surf guide');
+
         // Cache the markers array length
         var markersLength = markers.length;
 
@@ -4831,11 +4817,9 @@ function AppViewModel () {
         // Adjust the layout
         self.manageView();
 
-        /* Make both the location grid and the location frames
-        within it visible. The location frames need to be made
-        visible again in case a marker has been selected. */
-        $('.location-frame').show();
-        $('.location-grid').toggle();
+        // Make both the location grid and the location frames
+        // within it visible.
+        $('.location-grid').show();
 
         console.log('close any open info windows');
 

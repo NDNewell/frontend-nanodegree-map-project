@@ -1072,6 +1072,12 @@ function AppViewModel () {
                 // Render reset map button
                 self.showMapReset();
             };
+
+        // If any map markers are visible (within the map's viewable area),
+        // remove the map reset button if previously shown
+        } else if ($('.reset-map-container').length) {
+
+            $('.reset-map-container').remove();
         };
     };
 

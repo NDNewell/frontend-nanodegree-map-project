@@ -1644,28 +1644,66 @@ function AppViewModel () {
                 self.manageFrames();
             };
         });
+    };
 
-        // When map is zoomed in, center over the selected marker if there
-        // is one
-        google.maps.event.addListener(map, 'zoom_changed', function() {
+    // Custom zoom listener that is only activated when the zoom controls are
+    // used as opposed to 'zoom_changed' provided by Google which is activated
+    // any time the zoom changes whether or not the controls were used.
+    // The custom listener avoids probs posed by Google's i.e. resizing the
+    // window doesn't activate the custom listener
+    self.addMapZoomListener = function () {
 
-            // Cache the markers array length
-            var markersLength = markers.length;
+        // Wait until the zoom controls have loaded
+        var timer = setInterval(function() {
 
-            // Loop through the markers array
-            for(var i = markersLength; i--;) {
+            // Save a ref to the Google zoom controls DOM elem
+            var $zoomControls = $('.gm-style').children(':nth-child(8)').children(':nth-child(1)');
 
-                // Save a ref to the marker
-                var marker = markers[i];
+            // If the controls have loaded add the listener
+            if($zoomControls.length) {
 
-                // Check if a marker is selected
-                if(marker.icon === 'img/marker_selectedFav.svg' && !guideView || marker.icon === 'img/marker_selected.svg' && !guideView) {
+                console.log('zoom listener loaded');
 
-                    // Center the map on the selected marker
-                    self.centerOnMarker(marker);
+                // Clear the interval
+                clearInterval(timer);
+
+                // If a listener has already been loaded (the map was
+                // previously opened) remove the old listener
+                if(typeof zoomListener !== 'undefined') {
+                    $zoomControls.off('click', zoomListener);
                 };
+
+                // Attach the zoom listener
+                $zoomControls.on('click', function zoomListener() {
+
+                    // If not in guide view zoom in a marker if selected when
+                    // zoom level is adjusted
+                    if(!guideView) {
+
+                        // Cache the markers array length
+                        var markersLength = markers.length;
+
+                        // Search for a selected marker
+                        for(var i = markersLength; i--;) {
+
+                            // Save a ref to the marker
+                            var marker = markers[i];
+
+                            // Check if a marker is selected
+                            if(marker.icon === 'img/marker_selectedFav.svg' || marker.icon === 'img/marker_selected.svg') {
+
+                                // Center the map on the selected marker
+                                self.centerOnMarker(marker);
+                            };
+                        };
+                    };
+                });
+
+            } else {
+
+                console.log('zoom listener not loaded');
             };
-        });
+        }, 1000);
     };
 
     // Bring map markers back into view
@@ -3299,6 +3337,10 @@ function AppViewModel () {
             // Delete Google elem titles to avoid native tooltips from showing
             self.removeGoogleElemTitles();
 
+            // Add custom listener to detect zoom in/out events initiated from
+            // map controls (+/-)
+            self.addMapZoomListener();
+
             // Opens the map view by slowly fading into view
             $mapContainer.fadeIn(1000);
 
@@ -3337,6 +3379,10 @@ function AppViewModel () {
                     // Delete Google elem titles to avoid native tooltips from
                     // showing
                     self.removeGoogleElemTitles();
+
+                    // Add custom listener to detect zoom in/out events
+                    // initiated from map controls (+/-)
+                    self.addMapZoomListener();
 
                     // Center the map over the selected marker
                     self.setMarkerForGuide();
@@ -3383,6 +3429,10 @@ function AppViewModel () {
                     // Delete Google elem titles to avoid native tooltips from
                     // showing
                     self.removeGoogleElemTitles();
+
+                    // Add custom listener to detect zoom in/out events
+                    // initiated from map controls (+/-)
+                    self.addMapZoomListener();
 
                   // When map is open and surf guide is visible:
                     if($surfGuide.is(":visible")) {

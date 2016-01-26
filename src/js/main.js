@@ -1120,10 +1120,11 @@ function AppViewModel () {
         if ($('.search-container').is(":visible")) {
 
             // Cache the current search query
-            var search = self.getSearchQuery();
+            var search = self.formatText(self.Query()),
+                markerTitle = self.formatText(marker.title);
 
             // Compare the search query with the title of the marker
-            if (marker.title.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) > -1) {
+            if (markerTitle.indexOf(search) > -1) {
 
                 // If there is a match, make the marker visible
                 marker.setVisible(true);
@@ -1519,8 +1520,8 @@ function AppViewModel () {
         if ($('.search-container').is(":visible")) {
 
             // Cache the current search query
-            var search = self.getSearchQuery(),
-            markerTitle = marker.title.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
+            var search = self.formatText(self.Query()),
+                markerTitle = self.formatText(marker.title);
 
             // Compare the search query with the title of the
             // markers found within the map's boundaries
@@ -2844,20 +2845,19 @@ function AppViewModel () {
         };
     });
 
+    // Convert input to lowercase, remove spaces, remove apostrophes, and
+    // remove commas in order to compare like characters & store in a new var
+    self.formatText = function (text) {
+
+      var formattedText = text.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
+
+      return formattedText;
+    };
+
     /* self.Query is bound to the input on the View. Because it is an
      observable variable, it's value will be updated whenever the input on the
      View is altered*/
     self.Query = ko.observable("");
-
-    self.getSearchQuery = function () {
-
-        /* Convert search input to lowercase, remove spaces, remove
-        apostrophes, and remove commas in order to compare like
-        characters in each break and location name & store in a new var*/
-        var search = self.Query().toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
-
-        return search;
-    };
 
     /* Filter through the location objects and compare each one to the
     search terms (value of self.Query). If there is a match, the matching
@@ -2865,7 +2865,7 @@ function AppViewModel () {
     self.searchLocations = function () {
 
         // Cache the current search query
-        var search = self.getSearchQuery();
+        var search = self.formatText(self.Query());
 
         // Cache DOM reference to all location frames
         var $allLocationFrames = $('.location-frame');
@@ -2878,7 +2878,7 @@ function AppViewModel () {
 
             // Cache the current location frame's reference and text
             var $locationFrame = $(this),
-                $locationFrameText = $locationFrame.text().toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
+                $locationFrameText = self.formatText($locationFrame.text());
 
             // If a specific location frame's text matches the search,
             // show it
@@ -2893,7 +2893,7 @@ function AppViewModel () {
         markers.forEach(function(marker) {
 
             // Convert marker titles (remove spaces, commas, apostrophes etc.)
-            if (marker.title.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) > -1) {
+            if (self.formatText(marker.title).indexOf(search) > -1) {
 
               marker.setVisible(true);
             } else {

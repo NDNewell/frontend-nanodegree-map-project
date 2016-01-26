@@ -1120,7 +1120,7 @@ function AppViewModel () {
         if ($('.search-container').is(":visible")) {
 
             // Cache the current search query
-            var search = self.Query().toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
+            var search = self.getSearchQuery();
 
             // Compare the search query with the title of the marker
             if (marker.title.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "").indexOf(search) > -1) {
@@ -1519,7 +1519,7 @@ function AppViewModel () {
         if ($('.search-container').is(":visible")) {
 
             // Cache the current search query
-            var search = self.Query().toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, ""),
+            var search = self.getSearchQuery(),
             markerTitle = marker.title.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
 
             // Compare the search query with the title of the
@@ -2849,15 +2849,23 @@ function AppViewModel () {
      View is altered*/
     self.Query = ko.observable("");
 
-    /* Filter through the location objects and compare each one to the
-    search terms (value of self.Query). If there is a match, the matching
-    object is re-added to the locationGrid (observ. array bound to the View). */
-    self.searchLocations = function () {
+    self.getSearchQuery = function () {
 
         /* Convert search input to lowercase, remove spaces, remove
         apostrophes, and remove commas in order to compare like
         characters in each break and location name & store in a new var*/
         var search = self.Query().toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
+
+        return search;
+    };
+
+    /* Filter through the location objects and compare each one to the
+    search terms (value of self.Query). If there is a match, the matching
+    object is re-added to the locationGrid (observ. array bound to the View). */
+    self.searchLocations = function () {
+
+        // Cache the current search query
+        var search = self.getSearchQuery();
 
         // Cache DOM reference to all location frames
         var $allLocationFrames = $('.location-frame');

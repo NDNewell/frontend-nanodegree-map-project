@@ -159,9 +159,83 @@ function AppViewModel () {
 
     this.self = this;
 
-    var imagesLoaded,
-        locationsLoaded,
-        images = {};
+    var images = {};
+
+    // Load images
+    var numImages = 0;
+    var loadedImages = 0;
+
+    self.loadImages = function(source) {
+
+        for(var src in source) {
+          numImages++;
+        };
+
+        for(var src in source) {
+
+            images[src] = new Image();
+
+            images[src].onload = function () {
+
+                if(++loadedImages >= numImages) {
+
+                    console.log('images loaded');
+
+                    if(self.locationArray.length > 1 ) {
+
+                        loadEffect();
+                    } else {
+
+                        checkLocations = setInterval(function() {
+
+                            if(self.locationArray.length > 1 ) {
+
+                                clearInterval(checkLocations);
+
+                                loadEffect();
+                            };
+                        }, 500);
+                    };
+
+                    function loadEffect () {
+
+                        console.log("locations loaded");
+                        console.log("add hover effects");
+
+                        self.addRolloverEffect();
+                    };
+                };
+            };
+
+            images[src].src = source[src];
+
+            switch (source) {
+                case roIconsSkillLevel:
+                    images[src].className = "rollover-info skill-level-rollover skill-level-hover-default-style hover-tooltip-only ";
+                break;
+
+                case roIconsBreak:
+                    images[src].className = "rollover-info break-type-rollover break-type-hover-default-style hover-tooltip-only ";
+                break;
+
+                case roIconsDirection:
+                    images[src].className = "rollover-info wave-direction-rollover wave-direction-hover-default-style hover-tooltip-only ";
+                break;
+
+                case roIconsBestSeason:
+                    images[src].className = "rollover-info best-season-rollover best-season-hover-default-style hover-tooltip-only ";
+                break;
+
+                case roIconsMiscOne:
+                    images[src].className = "rollover-info misc-info-one-rollover misc-info-one-hover-default-style hover-tooltip-only ";
+                break;
+
+                case roIconsMiscTwo:
+                    images[src].className = "rollover-info misc-info-two-rollover misc-info-two-hover-default-style hover-tooltip-only ";
+                break;
+            };
+        };
+    };
 
     var guideIcons =
         { attireSpring: 'img/water_temp_spring.svg',
@@ -244,58 +318,6 @@ function AppViewModel () {
           roIconMiscTwoUrchins: 'img/hazards_ro_urchins.svg',
           roIconMiscTwoWellknown: 'img/well_known_ro.svg' };
 
-    // Load images
-    var numImages = 0;
-    var loadedImages = 0;
-
-    self.loadImages = function(source) {
-
-      for(var src in source) {
-        numImages++;
-      };
-
-      for(var src in source) {
-        images[src] = new Image();
-        images[src].onload = function () {
-            if(++loadedImages >= numImages) {
-              console.log('images loaded');
-              imagesLoaded = true;
-
-              if(locationsLoaded){
-                  addRolloverEffect();
-              };
-            };
-        };
-        images[src].src = source[src];
-
-        switch (source) {
-            case roIconsSkillLevel:
-                images[src].className = "rollover-info skill-level-rollover skill-level-hover-default-style hover-tooltip-only ";
-            break;
-
-            case roIconsBreak:
-                images[src].className = "rollover-info break-type-rollover break-type-hover-default-style hover-tooltip-only ";
-            break;
-
-            case roIconsDirection:
-                images[src].className = "rollover-info wave-direction-rollover wave-direction-hover-default-style hover-tooltip-only ";
-            break;
-
-            case roIconsBestSeason:
-                images[src].className = "rollover-info best-season-rollover best-season-hover-default-style hover-tooltip-only ";
-            break;
-
-            case roIconsMiscOne:
-                images[src].className = "rollover-info misc-info-one-rollover misc-info-one-hover-default-style hover-tooltip-only ";
-            break;
-
-            case roIconsMiscTwo:
-                images[src].className = "rollover-info misc-info-two-rollover misc-info-two-hover-default-style hover-tooltip-only ";
-            break;
-        };
-      };
-    };
-
     self.loadImages(guideIcons);
     self.loadImages(roIconsSkillLevel);
     self.loadImages(roIconsBreak);
@@ -368,6 +390,7 @@ function AppViewModel () {
           // If it hasn't loaded, keep checking until it is
           // When it is loaded, generate map markers
           } else {
+
               var checkGoogle = setInterval(function() {
 
                   console.log('error: Google maps api NOT loaded');
@@ -382,7 +405,7 @@ function AppViewModel () {
                       // Stop checking if Google maps api is loaded
                       clearInterval(checkGoogle);
                   };
-              },1000);
+              }, 500);
           };
 
           // Sets up markers and listeners for Google map
@@ -435,20 +458,6 @@ function AppViewModel () {
                 self.searchKeywords.push(obj.location);
             };
         });
-
-        console.log("primary locations array (locationArray) loaded");
-        console.log("locations list (locationGrid) rendered");
-        console.log("autosearch keywords loaded");
-
-        /* Set to true. If images are still loading, rollover
-        effects will be enabled when they are finished */
-        locationsLoaded = true;
-
-        /* Load the rollover effects if the images load before location data
-        is parsed */
-        if(imagesLoaded) {
-            addRolloverEffect();
-        };
 
         // Disable error message
         clearTimeout(locationDataTimeout);
@@ -2447,6 +2456,31 @@ function AppViewModel () {
         };
     };
 
+    // Remove elem titles in order to disable native tooltips from appearing
+    self.removeTitle = function () {
+
+        // Iterate over each available elem with a title
+        $('[title]').each(function() {
+
+            // Save a ref to the elem
+            var $this = $(this);
+
+            // If the elem's title matches a Google elem title, delete it
+            if(googleElemTitles.indexOf($this.attr('title')) > -1) {
+
+
+                $this.removeAttr('title');
+
+            // If the elem's title matches a marker's title, delete it
+            } else if (markerTitles.indexOf($this.attr('title')) > -1) {
+
+                console.log('disable marker tooltip');
+
+                $this.removeAttr('title');
+            };
+        });
+    };
+
     // Cache Google map's element titles that are usually shown in a native
     // tooltip when hovering over that element
     var googleElemTitles = ['Report errors in the road map or imagery to Google', 'Zoom in', 'Zoom out', 'Rotate map 90 degrees', 'Show satellite imagery', 'Change map style'];
@@ -2492,31 +2526,6 @@ function AppViewModel () {
                 };
             });
         }, 500);
-    };
-
-    // Remove elem titles in order to disable native tooltips from appearing
-    self.removeTitle = function () {
-
-        // Iterate over each available elem with a title
-        $('[title]').each(function() {
-
-            // Save a ref to the elem
-            var $this = $(this);
-
-            // If the elem's title matches a Google elem title, delete it
-            if(googleElemTitles.indexOf($this.attr('title')) > -1) {
-
-
-                $this.removeAttr('title');
-
-            // If the elem's title matches a marker's title, delete it
-            } else if (markerTitles.indexOf($this.attr('title')) > -1) {
-
-                console.log('disable marker tooltip');
-
-                $this.removeAttr('title');
-            };
-        });
     };
 
     // Modifiy navbar to sticky navbar upon scrolling down
@@ -2612,6 +2621,8 @@ function AppViewModel () {
 
     self.manageLayout = function () {
 
+        console.log('manage layout');
+
         // Cache DOM refs to key elements
         var $locationGrid = $('.location-grid'),
             $locationFrame = $('.location-frame'),
@@ -2628,8 +2639,6 @@ function AppViewModel () {
         /* If the screen width signals a 'mobile' view, alter the layout
         accordingly*/
         if(mobileView || gridView || guideView) {
-
-            console.log('update mobile/grid/guide view layout');
 
             // Set the map to default
             $mapContainer.removeClass("map-container-map-view-style").addClass("map-container-default-style");
@@ -2812,7 +2821,7 @@ function AppViewModel () {
         // Check the current view and update the page's styling
         self.manageView();
 
-            console.log('resize window');
+        console.log('resize window');
 
         // Only execute if the map is visible
         if($("#map").is(":visible") && !guideView) {
@@ -2833,14 +2842,17 @@ function AppViewModel () {
             // marker. This is executed in the toggle layout function.
             resizeTimer = setTimeout(function() {
 
-                if(!guideView) {
+                // Only execute if the map is in view and not in guide view
+                if ($("#map").is(":visible") && !guideView) {
                     google.maps.event.trigger(map, 'resize');
                     self.setMapBounds();
                 };
 
                 // enable the frame and marker managers
                 resizeInProgress = false;
+
                 console.log('enable frame and marker managers');
+
             }, 100);
         };
     });
@@ -2903,9 +2915,8 @@ function AppViewModel () {
         });
 
         // If the map is visible, set the map bounds
-        if (!$('#map').is(":hidden")) {
+        if ($('#map').is(":visible")) {
 
-            // Set the map bounds & map position
             self.setMapBounds();
         };
 
@@ -3645,9 +3656,9 @@ function AppViewModel () {
         // Render buttons for guide
         self.addGuideButtons(obj);
 
-
         console.log('add surf guide tooltips');
-        // Add listeners for each icon
+
+        // Add tooltips & listeners for each icon
         // When clicked, text descriptions for the icon appear/disappear
         self.addToolTips();
     };
@@ -4417,6 +4428,7 @@ function AppViewModel () {
     };
 
     self.displayDistance = function (latDest,lngDest) {
+
         /* Get distance between both locations using
         the Haversine formula */
         /* Obtain current location from user */
@@ -4981,8 +4993,7 @@ function AppViewModel () {
                     rating.push(fadedStar);
                 };
 
-                /* Add empty stars to the array equal 5 minus the total amount of
-                filled and faded stars */
+                /* Add empty stars to the array equal 5 minus the total amount of filled and faded stars */
                 var fillEmptyStars = 5 - rating.length;
                 var emptyStar = '<img class="star" src="img/star_empty.svg"/>';
 

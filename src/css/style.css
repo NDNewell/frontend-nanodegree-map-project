@@ -170,6 +170,7 @@ body, html {
 
 .is-a-favorite path{
     fill: #ffff1f;
+    stroke: #9d9d9d;
     stroke-width: 1;
 }
 

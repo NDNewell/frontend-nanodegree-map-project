@@ -217,7 +217,7 @@ function AppViewModel () {
                         console.log("locations loaded");
                         console.log("add hover effects");
 
-                        self.addRolloverEffect();
+                        self.addHoverEffects();
                     };
                 };
             };
@@ -1251,16 +1251,6 @@ function AppViewModel () {
             // Cache the title of the marker not including the location
             markerName = getMarkerName(marker);
 
-        // Check if autoscroll is already engaged
-        // If it is, clear the interval
-        if (typeof scrollRightRunning !== 'undefined' && scrollRightRunning) {
-            console.log('clear right scrolling in progress');
-            clearInterval(scrollRight);
-        } else if (typeof scrollLeftRunning !== 'undefined' && scrollLeftRunning) {
-            console.log('clear left scrolling in progress');
-            clearInterval(scrollLeft);
-        };
-
         // Cache the width of the outer container for the locations
         var $locationsCountainerWidth = $locationsContainer.width();
 
@@ -1292,27 +1282,30 @@ function AppViewModel () {
           // Set the beginning scollLeft position on which to iterate
           var transitionRight = $oldPosition;
 
-          // Create a loop that moves the scroll bar from left to right
-          var scrollRight = setInterval(function() {
+          // Animate the scrolling
+          animateRight = requestAnimationFrame(scrollRight);
 
-              // Create a global variable to indicate the scrolling is in progress
-              scrollRightRunning = true;
+          // Create a loop that moves the scroll bar from left to right
+          function scrollRight () {
 
               // Increase the scrollLeft position 70px for each 1/1000 of second
-              transitionRight+=70;
+              transitionRight+=200;
 
               // If the scrollLeft position is less than the new position
               // move the scrollLeft position incrementally closer to it
               if(transitionRight < newPosition) {
+
                   $locationsContainer.scrollLeft(transitionRight);
+
+                  // Keep calling the loop until the above if statement is true
+                  animateRight = requestAnimationFrame(scrollRight);
 
               // If the scrollLeft position is greater/equal to the new position,
               // stop the loop
               } else {
                   stopScrolling();
               };
-
-          }, 1);
+          };
 
         // Scroll left if the new scrollLeft position is less than current position
         } else {
@@ -1320,46 +1313,40 @@ function AppViewModel () {
           // Set the beginning scollLeft position on which to iterate
           var transitionLeft = $oldPosition;
 
-          // Create a loop that moves the scroll bar from right to left
-          var scrollLeft = setInterval(function() {
+          // Animate the scrolling
+          animateLeft = requestAnimationFrame(scrollLeft);
 
-              // Create a global var to indicate the scrolling is in progress
-              scrollLeftRunning = true;
+          // Create a loop that moves the scroll bar from right to left
+          function scrollLeft () {
 
               // Increase the scrollLeft pos 70px for each 1/1000 of second
-              transitionLeft-=70;
+              transitionLeft-=200;
 
               // If the scrollLeft position is greater than the new position
               // move the scrollLeft position incrementally closer to it
               if(transitionLeft >  newPosition) {
+
                   $locationsContainer.scrollLeft(transitionLeft);
+
+                  // Keep calling the loop until the above if statement is true
+                  animateLeft = requestAnimationFrame(scrollLeft);
 
               // If the scrollLeft position is less/equal to the new position,
               // stop the loop
               } else {
                   stopScrolling();
               };
-
-          }, 1);
+          };
 
         };
 
         // Stop auto scrolling
         function stopScrolling () {
 
-            // If scrolling left or right, stop the loop
-            if(typeof scrollLeftRunning !== 'undefined' && scrollLeftRunning) {
-                clearInterval(scrollLeft);
-                scrollLeftRunning = false;
-            } else if (typeof scrollRightRunning !== 'undefined' && scrollRightRunning) {
-                clearInterval(scrollRight);
-                scrollRightRunning = false;
-            };
-
-            // Since each iteration towards the new position increments by 30px
-            // each time, it will never quite reach the goal, which leaves
-            // the location frame off center. To avoid this, set the scrollLeft
-            // position to the new position at the end of scrolling
+            // Since each iteration towards the new position increments by
+            // 200 each time, it will never quite reach the goal, which
+            // leaves the location frame off center. To avoid this, set the
+            // scrollLeft position to the new position at the end of scrolling
             $locationsContainer.scrollLeft(newPosition);
 
             console.log('move scroll position from ' + $oldPosition + ' toward ' + newPosition);
@@ -2061,7 +2048,7 @@ function AppViewModel () {
     a gaussian blur. Wait until the locations have been loaded */
     var rollover;
 
-    self.addRolloverEffect = function () {
+    self.addHoverEffects = function () {
 
         console.log('enable hover effect');
 

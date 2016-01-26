@@ -160,7 +160,6 @@ function AppViewModel () {
     this.self = this;
 
     // Set common variables
-
     var $window = $(window),
         $body = $('body'),
         $mapSection = $('.map-section'),
@@ -175,6 +174,7 @@ function AppViewModel () {
         $favFilterSym = $('.favorite-filter-symbol'),
         $clearFavsBtn = $('.clear-favorites-button');
 
+    // Set variables for image loading
     var images = {},
         numImages = 0,
         loadedImages = 0;
@@ -1888,7 +1888,7 @@ function AppViewModel () {
         // Save references to DOM elements and heights
         var $locationGridHeight = $locationGrid.outerHeight(),
         $navbarHeight = $('#myNavbar').outerHeight(),
-        $windowHeight = $(window).height();
+        $windowHeight = $window.height();
 
         /* If the search container is visible, set a new map height that
         accounts for the search container height */
@@ -2540,8 +2540,7 @@ function AppViewModel () {
 
     // Modifiy navbar to sticky navbar upon scrolling down
     var $navbar = $('#navbar-main'),
-        $distance = $navbar.offset().top,
-        $window = $(window);
+        $distance = $navbar.offset().top;
 
     $window.scroll(function () {
         if($window.scrollTop() > $distance) {
@@ -2816,7 +2815,7 @@ function AppViewModel () {
     // Also, disable the marker and frame managers. Not doing so will result
     // in a blank map and location grid.
     // Once resizing has stopped, set the map bounds
-    $(window).resize(function() {
+    $window.resize(function() {
 
         // Check the current view and update the page's styling
         self.manageView();
@@ -3016,9 +3015,6 @@ function AppViewModel () {
             $favFilterSym.removeClass("favorite-filter-selected");
             $favFilterSym.addClass("favorite-filter-default");
         };
-
-        // Set variables
-        var $window = $(window);
 
         /* Enable toggling of the search container if the user's scroll position is at the top of the page. If the user's scroll position is
         below this, only enable toggling of the search container if the search
@@ -3250,7 +3246,7 @@ function AppViewModel () {
 
         // Cache refs to DOM
         var $surfGuide = $('.surf-guide-container'),
-            $topOfWindow = $(window).scrollTop(),
+            $topOfWindow = $window.scrollTop(),
             $bottomOfMap = $mapSection.height(),
             $locationFrames = $('.location-frame'),
             $numLocations = $('.location-frame:visible').length;

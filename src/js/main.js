@@ -159,11 +159,25 @@ function AppViewModel () {
 
     this.self = this;
 
-    var images = {};
+    // Set common variables
 
-    // Load images
-    var numImages = 0;
-    var loadedImages = 0;
+    var $window = $(window),
+        $body = $('body'),
+        $mapSection = $('.map-section'),
+        $mapContainer = $('.map-container'),
+        $map = $('#map'),
+        $mapSymbol = $('.map-symbol'),
+        $locationGrid = $('.location-grid'),
+        $searchContainer = $('.search-container'),
+        $searchForm = $('.search-form'),
+        $clearSymbol = $('.clear'),
+        $filtersContainer = $('.filters-container'),
+        $favFilterSym = $('.favorite-filter-symbol'),
+        $clearFavsBtn = $('.clear-favorites-button');
+
+    var images = {},
+        numImages = 0,
+        loadedImages = 0;
 
     self.loadImages = function(source) {
 
@@ -469,11 +483,11 @@ function AppViewModel () {
         console.log('get location data unsuccessful');
 
         // Hide sections not able to render properly without location info
-        $('.search-container').toggle();
-        $('.search-section').toggle();
-        $('.map-section').toggle();
-        $('.surf-info-section').toggle();
-        $('.list-section').toggle();
+        $searchContainer.hide();
+        $('.search-section').hide();
+        $mapSection.hide();
+        $('.surf-info-section').hide();
+        $('.list-section').hide();
 
         // Cache error message, image, and container
         var locationLoadError = '<section class="error-section">' + '<div class="row">' + '<div class="col-xs-12 data-load-error-container">' + '<img src="img/no_connection.svg" class="no-connection">' + '<p>Dude! Really?! =(</p>' + '</div>' + '</div>' + '</section>';
@@ -758,7 +772,7 @@ function AppViewModel () {
         self.displayMarkers(map);
 
         // Set initial map bounds based on location of markers
-        if($('#map').is(":visible")) {
+        if($map.is(":visible")) {
             self.setMapBounds();
         };
     };
@@ -1126,7 +1140,7 @@ function AppViewModel () {
 
         // If the search container is visible, only display the
         // markers that match the current search query
-        if ($('.search-container').is(":visible")) {
+        if ($searchContainer.is(":visible")) {
 
             // Cache the current search query
             var search = self.formatText(self.Query()),
@@ -1207,7 +1221,7 @@ function AppViewModel () {
         self.renderSurfGuide(obj);
 
         // Animate the location's marker if the map is visible
-        if($('.map-container').is(":visible")) {
+        if($mapContainer.is(":visible")) {
 
             var marker = self.getGuideMarker();
 
@@ -1224,7 +1238,7 @@ function AppViewModel () {
     self.scrollToFrame = function (marker) {
 
         // Cache DOM refs
-        var $locationsContainer = $('.location-grid'),
+        var $locationsContainer = $locationGrid,
             $locationFrame = $('.location-frame'),
             $pulsatingLocation = $('.pulse-location-frame'),
             $oldPosition = $locationsContainer.scrollLeft(),
@@ -1526,7 +1540,7 @@ function AppViewModel () {
         // If the search container is visible, only display the
         // frames of those markers that match the current search
         // query
-        if ($('.search-container').is(":visible")) {
+        if ($searchContainer.is(":visible")) {
 
             // Cache the current search query
             var search = self.formatText(self.Query()),
@@ -1640,7 +1654,7 @@ function AppViewModel () {
 
             // Only execute the following code if the map is visible and
             // managers aren't disabled (window isn't being resized)
-            if($('#map').is(":visible") && !resizeInProgress && !guideView) {
+            if($map.is(":visible") && !resizeInProgress && !guideView) {
 
                 self.manageFrames();
                 self.manageMarkers();
@@ -1736,8 +1750,7 @@ function AppViewModel () {
     self.repositionMap = function () {
 
         // Cache DOM elements
-        var resetMap = '<div class="reset-map-container"></div>',
-            $locationGrid = $('.location-grid');
+        var resetMap = '<div class="reset-map-container"></div>';
 
         // Add the container for the reset button
         $locationGrid.append(resetMap);
@@ -1873,11 +1886,9 @@ function AppViewModel () {
     self.adjustMapSize = function () {
 
         // Save references to DOM elements and heights
-        var $locationGridHeight = $('.location-grid').outerHeight(),
+        var $locationGridHeight = $locationGrid.outerHeight(),
         $navbarHeight = $('#myNavbar').outerHeight(),
-        $windowHeight = $(window).height(),
-        $mapContainer = $('.map-container'),
-        $searchContainer = $('.search-container');
+        $windowHeight = $(window).height();
 
         /* If the search container is visible, set a new map height that
         accounts for the search container height */
@@ -1898,7 +1909,7 @@ function AppViewModel () {
 
         // If the Google map and its locations have loaded and the frame
         // and marker managers aren't disabled, set the map bounds
-        if(markers.length !== 0 && $('#map').is(":visible") && !resizeInProgress) {
+        if(markers.length !== 0 && $map.is(":visible") && !resizeInProgress) {
             google.maps.event.trigger(map, 'resize');
             self.setMapBounds();
         };
@@ -2055,8 +2066,7 @@ function AppViewModel () {
                 $breakName = $(this).find('.break-name'),
                 $location = $(this).find('.location-name'),
                 $img = $(this).find('img.location-image'),
-                $favoriteWrapper = $(this).find('.favorite-wrapper'),
-                $mapContainer = $('.map-container');
+                $favoriteWrapper = $(this).find('.favorite-wrapper');
 
             $locationFrame.on('mouseenter', function (e) {
 
@@ -2357,7 +2367,7 @@ function AppViewModel () {
                 y = eventRef.pageY + paddingTop;
 
             // Add the the tooltip's text to the page
-            $('body').append(tooltipText);
+            $body.append(tooltipText);
 
             // Cache a ref to the tooltip
             var $tooltip = $('.tooltip-info');
@@ -2531,8 +2541,7 @@ function AppViewModel () {
     // Modifiy navbar to sticky navbar upon scrolling down
     var $navbar = $('#navbar-main'),
         $distance = $navbar.offset().top,
-        $window = $(window),
-        $body = $('body');
+        $window = $(window);
 
     $window.scroll(function () {
         if($window.scrollTop() > $distance) {
@@ -2600,9 +2609,6 @@ function AppViewModel () {
     during map view */
     self.enableHorizontalScrolling = function () {
 
-        // Set a ref to the location grid that holds all of the locations
-        var $locationGrid = $('.location-grid');
-
         /* Remove any previous event handlers, so multiples of same handler
         aren't added */
         $locationGrid.off();
@@ -2624,17 +2630,11 @@ function AppViewModel () {
         console.log('manage layout');
 
         // Cache DOM refs to key elements
-        var $locationGrid = $('.location-grid'),
-            $locationFrame = $('.location-frame'),
+        var $locationFrame = $('.location-frame'),
             $container = $('#container'),
-            $mapContainer = $('.map-container'),
-            $map = $('#map'),
             $favoriteSymbol = $('.favorite'),
             $breakName = $('.break-name'),
-            $locationName = $('.location-name'),
-            $searchForm = $('.search-form'),
-            $clearSymbol = $('.clear'),
-            $clearFavsBtn = $('.clear-favorites-button');
+            $locationName = $('.location-name');
 
         /* If the screen width signals a 'mobile' view, alter the layout
         accordingly*/
@@ -2824,7 +2824,7 @@ function AppViewModel () {
         console.log('resize window');
 
         // Only execute if the map is visible
-        if($("#map").is(":visible") && !guideView) {
+        if($map.is(":visible") && !guideView) {
 
             // Disable the frame and marker managers
             resizeInProgress = true;
@@ -2843,7 +2843,7 @@ function AppViewModel () {
             resizeTimer = setTimeout(function() {
 
                 // Only execute if the map is in view and not in guide view
-                if ($("#map").is(":visible") && !guideView) {
+                if ($map.is(":visible") && !guideView) {
                     google.maps.event.trigger(map, 'resize');
                     self.setMapBounds();
                 };
@@ -2915,24 +2915,21 @@ function AppViewModel () {
         });
 
         // If the map is visible, set the map bounds
-        if ($('#map').is(":visible")) {
+        if ($map.is(":visible")) {
 
             self.setMapBounds();
         };
 
         /* On each search new versions of the location frames are added. If the
         map is visible, the layout must be adjusted */
-        if($('.map-container').is(":visible")) {
+        if($mapContainer.is(":visible")) {
             // Update layout
             self.manageLayout();
         };
     };
 
     // Set variables to be used in the functions to follow
-    var $clear = $('.clear'),
-        $searchForm = $('.search-form'),
-        $searchSymbol = $('.search-symbol'),
-        $searchContainer = $('.search-container');
+    var $searchSymbol = $('.search-symbol');
 
     /* Call the jQuery-UI auto complete widget.*/
     $searchForm.autocomplete({
@@ -2981,8 +2978,8 @@ function AppViewModel () {
             };
 
             // If 'clear search' button is visible, hide it
-            if ($clear.is(":visible")) {
-                $clear.toggle();
+            if ($clearSymbol.is(":visible")) {
+                $clearSymbol.toggle();
             };
 
             /* If the search container is visible, focus on search form and change class to indicate search is selected */
@@ -3010,18 +3007,14 @@ function AppViewModel () {
         filter symbol is 'deselected' */
         if($('.favorite-filter-selected').length) {
 
-            // Cache reference to DOM elements
-            var $favoriteSymbol = $('.favorite-filter-symbol'),
-                $filtersContainer = $('.filters-container');
-
             // Hide the filters container
             $filtersContainer.slideUp(500);
 
             console.log('hide filters container and favorites');
 
             // Add remove relevant classes
-            $favoriteSymbol.removeClass("favorite-filter-selected");
-            $favoriteSymbol.addClass("favorite-filter-default");
+            $favFilterSym.removeClass("favorite-filter-selected");
+            $favFilterSym.addClass("favorite-filter-default");
         };
 
         // Set variables
@@ -3051,11 +3044,11 @@ function AppViewModel () {
           self.resetPage();
     }).on( "focus", function() {
         if(!$($searchForm).val()){
-          $clear.toggle();
+          $clearSymbol.toggle();
         };
     }).on( "blur", function () {
         if(!$($searchForm).val()){
-          $clear.toggle();
+          $clearSymbol.toggle();
         };
     });
 
@@ -3063,8 +3056,8 @@ function AppViewModel () {
     or searches in the search field, close the surf guide if open, show
     searchable locations, close any open info windows and hide the 'clear
     search' button */
-    $clear.on( "click", function() {
-        $clear.toggle();
+    $clearSymbol.on( "click", function() {
+        $clearSymbol.toggle();
         self.resetPage();
         $searchForm.focus();
     });
@@ -3072,13 +3065,10 @@ function AppViewModel () {
     // Display only favorites from the locations array
     self.filterFavorites = function () {
 
-        // Cache reference to DOM
-        var $favoriteSymbol = $('.favorite-filter-symbol');
-
         // If map is in view do not execute. This is task is already performed
         // in the manageFrames function for the map view
         // If not in map view, execute this function
-        if($('#map').is(":hidden")) {
+        if($map.is(":hidden")) {
 
             // Cache DOM reference to all location frames
             var $allLocationFrames = $('.location-frame');
@@ -3125,7 +3115,7 @@ function AppViewModel () {
         console.log('update map with favorites');
 
         // Set map bounds
-        if ($('#map').is(":visible")) {
+        if ($map.is(":visible")) {
 
             // Set the map bounds & map position
             self.setMapBounds();
@@ -3133,11 +3123,7 @@ function AppViewModel () {
     };
 
     // Bind click event to the 'favorite' icon on the navbar
-    $('.favorite-filter-symbol').on( "click", function() {
-
-        // Cache reference to DOM elements
-        var $favoriteSymbol = $('.favorite-filter-symbol'),
-            $filtersContainer = $('.filters-container');
+    $favFilterSym.on( "click", function() {
 
             /* If favorites are already visible close the filters container
             and show all locations */
@@ -3155,7 +3141,7 @@ function AppViewModel () {
                 };
 
                 // Add & remove relevant classes
-                $favoriteSymbol.removeClass("favorite-filter-selected").addClass("favorite-filter-default");
+                $favFilterSym.removeClass("favorite-filter-selected").addClass("favorite-filter-default");
 
                 // Reset the locations etc.
                 self.resetPage();
@@ -3167,7 +3153,7 @@ function AppViewModel () {
                 console.log("show favorites only");
 
                 // If the search container is visible, hide it
-                if($('.search-container').is(":visible")) {
+                if($searchContainer.is(":visible")) {
                     self.toggleSearch();
                 };
 
@@ -3177,7 +3163,7 @@ function AppViewModel () {
                 };
 
                 // Add & remove relevant classes
-                $favoriteSymbol.removeClass("favorite-filter-default").addClass("favorite-filter-selected");
+                $favFilterSym.removeClass("favorite-filter-default").addClass("favorite-filter-selected");
 
                 /* If the map and search container are visible, adjust the
                 layout after the search container has been toggled. Toggling
@@ -3188,7 +3174,7 @@ function AppViewModel () {
                 /* Also, filter favorites after the search container
                 has been toggled and before adjusting the layout. Filtering
                 the favorites before results in a flash of unstyled content*/
-                if($('#map').is(":visible") && $('.search-container').is(":visible")) {
+                if($map.is(":visible") && $searchContainer.is(":visible")) {
 
                     // Toggle the layout after the search container is hidden
                     var timer = setTimeout( function () {
@@ -3213,7 +3199,7 @@ function AppViewModel () {
                 // Show the filters container
                 // If the map is visible, fade in the filters container
                 // If it isn't visible, slide the filters container down
-                if($('#map').is(":visible")) {
+                if($map.is(":visible")) {
                     $filtersContainer.fadeIn(500);
                 } else {
                     $filtersContainer.slideDown(500);
@@ -3236,11 +3222,7 @@ function AppViewModel () {
     /* When button's clicked, hide the filters container, remove/add
     the necessary classes, delete the user's favorites and reset the
     page (closes surf guide) */
-    $('.clear-favorites-button').on( "click", function () {
-
-        // Cache references to DOM elements
-        var $filtersContainer = $('.filters-container'),
-            $favoriteFilterSymbol = $('.favorite-filter-symbol');
+    $clearFavsBtn.on( "click", function () {
 
         // Hide the filters container
         // If the map is visible, fade only the button out
@@ -3252,8 +3234,8 @@ function AppViewModel () {
         };
 
         // Add/remove the classes
-        $favoriteFilterSymbol.removeClass("favorite-filter-selected");
-        $favoriteFilterSymbol.addClass("favorite-filter-default");
+        $favFilterSym.removeClass("favorite-filter-selected");
+        $favFilterSym.addClass("favorite-filter-default");
 
         // Clear the user's favorites
         self.removeAllFavorites();
@@ -3264,16 +3246,12 @@ function AppViewModel () {
     });
 
     // When the map close symbol is clicked, hide or show the map
-    $('.map-symbol').on('click', function(e) {
+    $mapSymbol.on('click', function(e) {
 
         // Cache refs to DOM
-        var $mapSymbol = $('.map-symbol'),
-            $mapContainer = $('.map-container'),
-            $map = $('#map'),
-            $surfGuide = $('.surf-guide-container'),
-            $searchContainer = $('.search-container'),
+        var $surfGuide = $('.surf-guide-container'),
             $topOfWindow = $(window).scrollTop(),
-            $bottomOfMap = $('.map-section').height(),
+            $bottomOfMap = $mapSection.height(),
             $locationFrames = $('.location-frame'),
             $numLocations = $('.location-frame:visible').length;
 
@@ -3515,9 +3493,9 @@ function AppViewModel () {
         $allLocationFrames.show();
 
         // If the location grid is hidden, show it
-        if($('.location-grid').is(":hidden")) {
+        if($locationGrid.is(":hidden")) {
             // Show the locations
-            $('.location-grid').show();
+            $locationGrid.show();
         };
 
         /* On each reset new versions of the location frames are added, so the view must be checked in case layout needs adjusting */
@@ -3529,7 +3507,7 @@ function AppViewModel () {
         });
 
         // If the map is visible, reset the bounds
-        if (!$('#map').is(":hidden")) {
+        if (!$map.is(":hidden")) {
 
             // Set the map bounds & map position
             self.setMapBounds();
@@ -3545,7 +3523,7 @@ function AppViewModel () {
 
         // Hide the filters section if favorites are in view
         if($('.favorite-filter-selected').length) {
-            $('.filters-container').toggle();
+            $filtersContainer.toggle();
         };
 
         // Scroll to top of the page
@@ -3557,7 +3535,7 @@ function AppViewModel () {
         if (!$('.surf-guide-container').is(":visible")) {
 
             // Hide the location grid
-            $('.location-grid').hide();
+            $locationGrid.hide();
         };
 
         /* Remove any existing information from previous click */
@@ -3724,7 +3702,7 @@ function AppViewModel () {
             if($('.favorite-filter-selected').length) {
 
                 // Show the filters container
-                $('.filters-container').toggle();
+                $filtersContainer.toggle();
                 self.filterFavorites();
             };
 
@@ -4834,12 +4812,12 @@ function AppViewModel () {
         self.manageView();
 
         // If the map is hidden, reset the relevant location frames
-        if($('#map').is(":hidden")) {
+        if($map.is(":hidden")) {
             self.resetFrames();
         };
 
         // Show the location grid again
-        $('.location-grid').show();
+        $locationGrid.show();
 
         // Show any location frames that were visible before the surf guide
         // was opened

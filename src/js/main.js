@@ -341,6 +341,12 @@ function AppViewModel () {
     self.loadImages(roIconsMiscOne);
     self.loadImages(roIconsMiscTwo);
 
+    // Save refs to marker imgs
+    var markerSmall = 'img/marker_small.svg',
+        markerSelected = 'img/marker_selected.svg',
+        markerSmallFav = 'img/marker_smallFav.svg',
+        markerSelectedFav = 'img/marker_selectedFav.svg';
+
     /* Replace specific SVG images with inline SVG in order to make CSS
     styling possible */
     self.makeSVGInline = function (oldSvg) {
@@ -785,7 +791,7 @@ function AppViewModel () {
             // Set position using the newly created variable
             position: breakCoordinates,
             map: map,
-            icon: 'img/marker_small.svg',
+            icon: markerSmall,
 
             /* Set the title for the break marker as the name of the
             wave/location of the break. This way it can be searched/filtered
@@ -950,19 +956,19 @@ function AppViewModel () {
 
         /* If marker wasn't previously activated, make it big for
         normal and fav icons */
-        if (marker.icon === 'img/marker_small.svg') {
+        if (marker.icon === markerSmall) {
 
             console.log('make ' + markerName + "'" + 's marker big');
 
             // Change the marker's image
-            marker.setIcon('img/marker_selected.svg');
+            marker.setIcon(markerSelected);
 
-        } else if (marker.icon === 'img/marker_smallFav.svg') {
+        } else if (marker.icon === markerSmallFav) {
 
             console.log('make ' + markerName + "'" + 's marker big');
 
             // Change the marker's image
-            marker.setIcon('img/marker_selectedFav.svg');
+            marker.setIcon(markerSelectedFav);
         };
     };
 
@@ -974,17 +980,17 @@ function AppViewModel () {
             // Cache the title of the marker not including the location
             var markerName = getMarkerName(marker);
 
-            if (marker.icon === 'img/marker_selected.svg') {
+            if (marker.icon === markerSelected) {
 
                 console.log('make ' + markerName + "'" + 's marker small');
 
-                marker.setIcon('img/marker_small.svg');
+                marker.setIcon(markerSmall);
 
-            } else if (marker.icon === 'img/marker_selectedFav.svg') {
+            } else if (marker.icon === markerSelectedFav) {
 
                 console.log('make ' + markerName + "'" + 's marker small');
 
-                marker.setIcon('img/marker_smallFav.svg');
+                marker.setIcon(markerSmallFav);
             };
         });
     };
@@ -1065,20 +1071,20 @@ function AppViewModel () {
             /* Any markers that don't match the user's favs or were never a
             fav remain unaltered */
             if (favorites.indexOf(markerName) > -1) {
-                if(marker.icon === 'img/marker_small.svg') {
+                if(marker.icon === markerSmall) {
                     console.log("make " + markerName + "'s marker a favorite");
-                    marker.setIcon('img/marker_smallFav.svg');
-                } else if (marker.icon === 'img/marker_selected.svg') {
+                    marker.setIcon(markerSmallFav);
+                } else if (marker.icon === markerSelected) {
                     console.log("make " + markerName + "'s marker a favorite");
-                    marker.setIcon('img/marker_selectedFav.svg');
+                    marker.setIcon(markerSelectedFav);
                 };
             // If the name doesn't match, but was a fav, change the img back
-            } else if (marker.icon === 'img/marker_smallFav.svg') {
+            } else if (marker.icon === markerSmallFav) {
                 console.log("unfavorite " + markerName + "'s marker");
-                marker.setIcon('img/marker_small.svg');
-            } else if (marker.icon === 'img/marker_selectedFav.svg') {
+                marker.setIcon(markerSmall);
+            } else if (marker.icon === markerSelectedFav) {
                 console.log("unfavorite " + markerName + "'s marker");
-                marker.setIcon('img/marker_selected.svg');
+                marker.setIcon(markerSelected);
             };
         });
     };
@@ -1197,7 +1203,7 @@ function AppViewModel () {
             } else {
 
                 // If a marker is selected, don't hide it
-                if(marker.icon === "img/marker_selected.svg" || marker.icon === "img/marker_selectedFav.svg") {
+                if(marker.icon === markerSelected || marker.icon === markerSelectedFav) {
                     marker.setVisible(true);
                 } else {
                     marker.setVisible(false);
@@ -1612,7 +1618,7 @@ function AppViewModel () {
 
             // If any of the marker's images matches a 'selected' image
             // End the function
-            if(markers[i].icon === "img/marker_selected.svg" || markers[i].icon === "img/marker_selectedFav.svg") {
+            if(markers[i].icon === markerSelected || markers[i].icon === markerSelectedFav) {
                 return;
             };
         };
@@ -1729,7 +1735,7 @@ function AppViewModel () {
                             var marker = markers[i];
 
                             // Check if a marker is selected
-                            if(marker.icon === 'img/marker_selectedFav.svg' || marker.icon === 'img/marker_selected.svg') {
+                            if(marker.icon === markerSelectedFav || marker.icon === markerSelected) {
 
                                 // Center the map on the selected marker
                                 self.centerOnMarker(marker);

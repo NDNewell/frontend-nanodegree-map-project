@@ -870,8 +870,9 @@ function AppViewModel () {
 
                 var $numFramesVisible = $('.location-frame:visible').length;
 
-                // If the surf guide is open do nothing
-                if (!$('.surf-guide-container').length) {
+                // Pulsate the marker's related location frame if guide isn't
+                // open
+                if (!guideView) {
 
                     // Pulsate the associated location frame
                     self.pulseFrame(marker);
@@ -896,10 +897,10 @@ function AppViewModel () {
             the breakName and any behavior to the current marker */
             return function() {
 
-                // If the surf guide is open do nothing
-                if (!$('.surf-guide-container').length) {
+                // Reverse pulstate the associated location frame if the guide
+                // isn't open
+                if (!guideView) {
 
-                    // Reverse pulstate the associated location frame
                     self.pulseFrame(marker);
 
                 };
@@ -2205,7 +2206,7 @@ function AppViewModel () {
                 selection, should stay big. If a marker is selected, it also
                 prevents the locaiton frames from being managed (keeps only
                 one location frame visible) */
-                if(!$('.surf-guide-container').length && !self.isInfoWindowOpen(infoWindow) && !gridView) {
+                if(!guideView && !self.isInfoWindowOpen(infoWindow) && !gridView) {
                     self.makeMarkerSmall();
                 };
 
@@ -2745,7 +2746,7 @@ function AppViewModel () {
         // Set refs to DOM elems
         var $winWidth = window.innerWidth;
 
-        if($('.surf-guide-container').is(":visible") && $winWidth < 768) {
+        if($('.surf-guide-container').length && $winWidth < 768) {
 
             mapView = false;
             gridView = false;
@@ -2756,7 +2757,7 @@ function AppViewModel () {
             console.log('view is surf guide/mobile');
 
         // If the screen width is the same size as mobile, set to true
-        } else if($('.surf-guide-container').is(":visible") && $winWidth >= 768) {
+        } else if($('.surf-guide-container').length && $winWidth >= 768) {
 
             mapView = false;
             gridView = false;
@@ -3152,7 +3153,7 @@ function AppViewModel () {
                 };
 
                 // If the surf guide is open, close it
-                if($('.surf-guide-container').length) {
+                if(guideView) {
                     self.closeSurfGuide();
                 };
 
@@ -3243,8 +3244,7 @@ function AppViewModel () {
     $mapSymbol.on('click', function(e) {
 
         // Cache refs to DOM
-        var $surfGuide = $('.surf-guide-container'),
-            $topOfWindow = $window.scrollTop(),
+        var $topOfWindow = $window.scrollTop(),
             $bottomOfMap = $mapSection.height(),
             $locationFrames = $('.location-frame'),
             $numLocations = $('.location-frame:visible').length;
@@ -3412,7 +3412,7 @@ function AppViewModel () {
                     self.addMapZoomListener();
 
                   // When map is open and surf guide is visible:
-                    if($surfGuide.is(":visible")) {
+                    if(guideView) {
 
                         // Center the map over the selected marker
                         self.setMarkerForGuide();
@@ -3466,7 +3466,7 @@ function AppViewModel () {
         console.log('reset locations & map, clear search, and close surf guide');
 
         // If the surf guide is open, close it
-        if($('.surf-guide-container').length) {
+        if(guideView) {
             self.closeSurfGuide();
         };
 
@@ -3637,6 +3637,8 @@ function AppViewModel () {
             // Add a button for closing the surf guide
             $surfGuideContainer.prepend('<button type="button" class="btn guide-close-button">✖</button>');
 
+            var $closeGuideBtn = $('.guide-close-button');
+
             // Add a button for displaying surf conditions
             $surfGuideHeader.append('<button type="button" class="btn conditions-button">Current Conditions</button>');
 
@@ -3691,7 +3693,7 @@ function AppViewModel () {
 
             /* When the close surf guide button is clicked the surf guide is
             removed */
-            $('.guide-close-button').on('click', function(e) {
+            $closeGuideBtn.on('click', function(e) {
 
                 if($('.favorite-filter-selected').length) {
 

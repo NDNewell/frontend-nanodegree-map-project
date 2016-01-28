@@ -402,8 +402,6 @@ function AppViewModel () {
           // Invoke function to parse the location data
           self.parseLocationData(data);
 
-          $('.location-frame').show();
-
           // Make sure Google maps api has loaded
           if (typeof google === 'object' && typeof google.maps === 'object') {
 
@@ -533,7 +531,7 @@ function AppViewModel () {
     that match the user's favorites */
     self.updateFavsOnFrames = function () {
 
-        console.log("display 'favorite' icons on relevant location frames");
+        console.log("update location frame favorites");
 
         var $allLocationFrames = $('.location-frame');
 
@@ -571,80 +569,57 @@ function AppViewModel () {
             console.log('cannot find favorites because there are no logged in users');
         } else {
 
-            // Save ref to number of locations in data
-            var numLocations = 0;
+            /* Get the user's favorites */
+            users.child(authData.uid).child("favorites").on("value", function(snapshot) {
 
-            // Count the number of locations in data
-            locationData.on("value", function(snapshot) {
-                var data = snapshot.val();
+                // Save the Firebase snapshot of the user's favorites
+                var favorites = snapshot.val(),
+                    $allLocationFrames = $('.location-frame');
 
-                data.forEach(function(obj) {
-                    numLocations++;
-                });
-            });
+                /* Clear any existing favorites in the local favorites array
+                so it can be filled with updated information. */
+                userFavorites = [];
 
-            // If the markers array is fully loaded, update the markers and
-            // location frames. If it isn't loaded, keep checking until it is.
-            // Once loaded update the location frame of each favorite
-            var favsTimer = setInterval(function () {
+                // If the user has no favorites, log msg in console
+                if(favorites === null) {
 
-                // If the number of locations matches the markers array length
-                // and the markers array length is at least greater than zero,
-                // update the location frame of each favorite
-                if(numLocations === markers.length && markers.length > 0) {
+                    console.log('user has no favorites');
 
-                  console.log(markers.length + ' out of ' + numLocations + ' markers loaded');
-                  console.log('update favorites');
+                    // Cache an empty array to replace 'null'
+                    var favorites = [];
 
-                  updateFavs();
+                    /* Reset all of the marker images using the empty array*/
+                    self.updateFavMarkers(favorites);
 
-                  clearInterval(favsTimer);
+                    // Show all location frames now since they don't need to
+                    // be updated with favorites
+                    $allLocationFrames.show();
+
+                } else {
+
+                    /* Update the marker image of any markers that match the
+                    user's favorites */
+                    self.updateFavMarkers(favorites);
+
+                    /* Push each favorite found in the Firebase array into the
+                    local favorites array */
+                    favorites.forEach(function(obj) {
+                        userFavorites.push(obj);
+                    });
+                    console.log("the user's favorite(s) is/are: " + userFavorites.join(', '));
+
+                    // Update DOM elements (location frames)
+                    /* Fill in the hearts of any locations which are the user's
+                    favorites */
+                    self.updateFavsOnFrames();
+
+                    // Show the location frames once they have been updated
+                    // with favorites
+                    self.showLocationFrames(favorites);
                 };
-            }, 1000);
 
-            function updateFavs () {
+            }, fireBaseReadError);
 
-                /* Get the user's favorites */
-                users.child(authData.uid).child("favorites").on("value", function(snapshot) {
-
-                    // Save the Firebase snapshot of the user's favorites
-                    var favorites = snapshot.val();
-
-                    /* Clear any existing favorites in the local favorites array
-                    so it can be filled with updated information. */
-                    userFavorites = [];
-
-                    // If the user has no favorites, log msg in console
-                    if(favorites === null) {
-
-                        console.log('user has no favorites');
-
-                        // Cache an empty array to replace 'null'
-                        var favorites = [];
-
-                        /* Reset all of the marker images using the empty array*/
-                        self.updateFavMarkers(favorites);
-                    } else {
-
-                        /* Update the marker image of any markers that match the
-                        user's favorites */
-                        self.updateFavMarkers(favorites);
-
-                        /* Push each favorite found in the Firebase array into the
-                        local favorites array */
-                        favorites.forEach(function(obj) {
-                          userFavorites.push(obj);
-                        });
-                        console.log("the user's favorite(s) is/are: " + userFavorites.join(', '));
-
-                        // Update DOM elements (location frames)
-                        /* Fill in the hearts of any locations which are the user's
-                        favorites */
-                        self.updateFavsOnFrames();
-                    };
-
-                }, fireBaseReadError);
-            };
         };
     };
 
@@ -1064,31 +1039,68 @@ function AppViewModel () {
     // Change any map markers that match/don't match the user's favorites
      self.updateFavMarkers = function (favorites) {
 
-        markers.forEach(function(marker) {
+        // Save ref to number of locations in data
+        var numLocations = 0;
 
-            // Cache the title of the marker not including the location
-            var markerName = getMarkerName(marker);
+        // Count the number of locations in data
+        locationData.on("value", function(snapshot) {
+            var data = snapshot.val();
 
-            /* If the name matches a user's favorite, change the image */
-            /* Any markers that don't match the user's favs or were never a
-            fav remain unaltered */
-            if (favorites.indexOf(markerName) > -1) {
-                if(marker.icon === markerSmall) {
-                    console.log("make " + markerName + "'s marker a favorite");
-                    marker.setIcon(markerSmallFav);
-                } else if (marker.icon === markerSelected) {
-                    console.log("make " + markerName + "'s marker a favorite");
-                    marker.setIcon(markerSelectedFav);
-                };
-            // If the name doesn't match, but was a fav, change the img back
-            } else if (marker.icon === markerSmallFav) {
-                console.log("unfavorite " + markerName + "'s marker");
-                marker.setIcon(markerSmall);
-            } else if (marker.icon === markerSelectedFav) {
-                console.log("unfavorite " + markerName + "'s marker");
-                marker.setIcon(markerSelected);
-            };
+            data.forEach(function(obj) {
+                numLocations++;
+            });
         });
+
+        // If the number of locations matches the markers array length
+        // and the markers array length is at least greater than zero,
+        // update the location frame of each favorite
+        if(numLocations === markers.length && markers.length > 0) {
+
+            updateMarkers();
+        } else {
+
+            var favsTimer = setInterval(function () {
+
+                if(numLocations === markers.length && markers.length > 0) {
+
+                    clearInterval(favsTimer);
+                    updateMarkers();
+                };
+            }, 250);
+        };
+
+        function updateMarkers () {
+
+            console.log('update marker favorites');
+
+            markers.forEach(function(marker) {
+
+                // Cache the title of the marker not including the location
+                var markerName = getMarkerName(marker);
+
+                /* If the name matches a user's favorite, change the image */
+                /* Any markers that don't match the user's favs or were never a
+                fav remain unaltered */
+                if (favorites.indexOf(markerName) > -1) {
+                    if(marker.icon === markerSmall) {
+
+                        marker.setIcon(markerSmallFav);
+                    } else if (marker.icon === markerSelected) {
+
+                        marker.setIcon(markerSelectedFav);
+                    };
+
+                // If the name doesn't match, but was a fav, change the img
+                // back
+                } else if (marker.icon === markerSmallFav) {
+
+                    marker.setIcon(markerSmall);
+                } else if (marker.icon === markerSelectedFav) {
+
+                    marker.setIcon(markerSelected);
+                };
+            });
+        };
     };
 
     // Count the number of visible markers
@@ -1217,6 +1229,38 @@ function AppViewModel () {
         self.checkVisibleMarkers();
     };
 
+    // Check if the user's favorites have loaded on the location frames
+    // Once they've been rendered or the user has no favorites, show the
+    // location frames
+    self.showLocationFrames = function(favorites) {
+
+        // Save a ref to all location frames
+        var $allLocationFrames = $('.location-frame'),
+            favoritesLength = favorites.length,
+            $frameFavs = $('.is-a-favorite').length;
+
+        if(favoritesLength === $frameFavs) {
+
+            console.log("show locations");
+
+            $allLocationFrames.show();
+
+        } else {
+
+            var checkLocFavsLoaded = setInterval(function() {
+
+                if(favoritesLength === $frameFavs) {
+
+                    console.log("show locations");
+
+                    clearInterval(checkLocFavsLoaded);
+
+                    $allLocationFrames.show();
+                };
+            }, 250);
+        };
+    };
+
     // Open the location frame's relevant surf guide an animate its related
     // marker
     self.clickLocationFrame = function(obj) {
@@ -1302,14 +1346,15 @@ function AppViewModel () {
                   // Keep calling the loop until the above if statement is true
                   animateRight = requestAnimationFrame(scrollRight);
 
-              // If the scrollLeft position is greater/equal to the new position,
-              // stop the loop
+              // If the scrollLeft position is greater/equal to the new
+              // position, stop the loop
               } else {
                   stopScrolling();
               };
           };
 
-        // Scroll left if the new scrollLeft position is less than current position
+        // Scroll left if the new scrollLeft position is less than current
+        // position
         } else {
 
           // Set the beginning scollLeft position on which to iterate

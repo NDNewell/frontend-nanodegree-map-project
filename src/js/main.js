@@ -573,8 +573,7 @@ function AppViewModel () {
             users.child(authData.uid).child("favorites").on("value", function(snapshot) {
 
                 // Save the Firebase snapshot of the user's favorites
-                var favorites = snapshot.val(),
-                    $allLocationFrames = $('.location-frame');
+                var favorites = snapshot.val();
 
                 /* Clear any existing favorites in the local favorites array
                 so it can be filled with updated information. */
@@ -591,9 +590,8 @@ function AppViewModel () {
                     /* Reset all of the marker images using the empty array*/
                     self.updateFavMarkers(favorites);
 
-                    // Show all location frames now since they don't need to
-                    // be updated with favorites
-                    $allLocationFrames.show();
+                    // Show the location frames
+                    self.showLocationFrames(favorites);
 
                 } else {
 
@@ -1230,34 +1228,50 @@ function AppViewModel () {
     };
 
     // Check if the user's favorites have loaded on the location frames
-    // Once they've been rendered or the user has no favorites, show the
-    // location frames
+    // and that the location data has been a parsed.
+    // Once the favs have been rendered or the user has no favorites, and the
+    // location data has been parsed, show the location frames
     self.showLocationFrames = function(favorites) {
 
         // Save a ref to all location frames
         var $allLocationFrames = $('.location-frame'),
             favoritesLength = favorites.length,
-            $frameFavs = $('.is-a-favorite').length;
+            $frameFavs = $('.is-a-favorite').length,
+            locationArrayLength = locationArray.length;
 
-        if(favoritesLength === $frameFavs) {
+        if(favoritesLength === $frameFavs && locationArrayLength > 0) {
 
-            console.log("show locations");
+            show();
 
-            $allLocationFrames.show();
+        } else if (favorites === null && locationArrayLength > 0) {
+
+            show();
 
         } else {
 
             var checkLocFavsLoaded = setInterval(function() {
 
-                if(favoritesLength === $frameFavs) {
-
-                    console.log("show locations");
+                if(favoritesLength === $frameFavs && locationArrayLength > 0) {
 
                     clearInterval(checkLocFavsLoaded);
 
-                    $allLocationFrames.show();
+                    show();
+
+                } else if (favorites === null && locationArrayLength > 0) {
+
+                    clearInterval(checkLocFavsLoaded);
+
+                    show();
+
                 };
             }, 250);
+        };
+
+        function show () {
+
+            console.log("show locations");
+
+            $allLocationFrames.show();
         };
     };
 

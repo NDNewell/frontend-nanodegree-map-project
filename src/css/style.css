@@ -6,6 +6,56 @@ body, html {
     height: 100%;
 }
 
+.logo {
+    font-size: 1.5em;
+    color: #56c4d1;
+}
+
+.search-symbol-desktop, .map-symbol-desktop, .favorite-filter-symbol-desktop {
+    display: block;
+    position: relative;
+    float: right;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.search-symbol-desktop {
+    margin-top: 10.5px;
+}
+
+.map-symbol-desktop {
+    margin-top: 13px;
+}
+
+.favorite-filter-symbol-desktop {
+    margin-top: 11px;
+}
+
+.search-symbol-mobile, .map-symbol-mobile, .favorite-filter-symbol-mobile {
+    display: none;
+}
+
+.search-symbol-desktop:hover path, .map-symbol-desktop:hover path, .favorite-filter-symbol-desktop:hover path {
+    fill: white;
+}
+
+.map-default path, .search-default path, .favorite-filter-default path {
+    fill: #9d9d9d;
+}
+
+.map-selected path, .search-selected path, .favorite-filter-selected path  {
+    fill: white;
+}
+
+.header {
+    background-color: white;
+    padding-bottom: 0px;
+}
+
+.navbar {
+    margin-bottom: 0px;
+}
+
 .data-load-error-container {
     padding-top: 30%;
     text-align: center;
@@ -68,10 +118,7 @@ body, html {
     border-radius: 50px;
 }
 
-.clear-default-style:hover,
-.clear-default-style:active,
-.clear-map-view-style:hover,
-.clear-map-view-style:active {
+.clear-default-style:hover, .clear-default-style:active, .clear-map-view-style:hover, .clear-map-view-style:active {
     cursor:pointer;
     background-color: #333333;
     border-color: #333333;
@@ -110,6 +157,23 @@ body, html {
     user-select: none;
 }
 
+.favorite-default-style {
+    position: absolute;
+    left: 6%;
+    top: 8%;
+}
+
+.not-a-favorite path {
+    fill-opacity: 0;
+    stroke-opacity: 0;
+}
+
+.is-a-favorite path{
+    fill: #ffff1f;
+    stroke: #9d9d9d;
+    stroke-width: 1;
+}
+
 .filters-container {
     display: none;
     position: relative;
@@ -136,6 +200,53 @@ body, html {
 
 .clear-favorites-button-default-style:focus {
     outline: 0 !important;
+}
+
+.location-name-default-style {
+    font-size: 1.5em;
+    background: none repeat 0 0 #FFffff;
+    opacity: 0.5;
+    position: absolute;
+    bottom: -2%;
+    left: 50%;
+    margin-right: -50%;
+    padding-left: 15px;
+    padding-right: 15px;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    border-radius: 12.5px;
+}
+
+.break-name-default-style {
+    font-size: 2em;
+    color: white;
+    text-shadow: 1px 1px 10px black;
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 250px;
+    border-radius: 12.5px;
+}
+
+.location-frame-default-style {
+    display: block;
+    text-align:center;
+    padding: 10px 10px;
+    cursor: pointer;
+}
+
+.location-image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 355px;
+    height: 194px;
+    -webkit-box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+    box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .skill-level-hover-default-style,
@@ -570,6 +681,39 @@ body, html {
 
 @media (max-width: 767px) {
 
+    .logo {
+        font-size: 1.29em;
+        color: #56c4d1;
+    }
+
+    .search-symbol-mobile, .map-symbol-mobile, .favorite-filter-symbol-mobile {
+        display: block;
+        position: relative;
+        float: right;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+    .search-symbol-mobile {
+        margin-top: 10.5px;
+    }
+
+    .map-symbol-mobile {
+        margin-top: 13px;
+    }
+
+    .favorite-filter-symbol-mobile {
+        margin-top: 11px;
+    }
+
+    .navbar-right {
+        display: none;
+    }
+
+    .header {
+        border-bottom: none;
+    }
+
     .data-load-error-container {
         padding-top: 30%;
         text-align: center;
@@ -695,10 +839,7 @@ body, html {
         height: 38%;
     }
 
-    .cost-hover-default-style,
-    .distance-hover-default-style,
-    .water-temp-hover-default-style,
-    .wave-size-hover-default-style {
+    .cost-hover-default-style, .distance-hover-default-style, .water-temp-hover-default-style, .wave-size-hover-default-style {
         font-size: 4.5vw;
     }
 
@@ -793,6 +934,28 @@ body, html {
     .error-close-button {
         margin-top: -6px;
     }
+
+    .location-frame-default-style {
+        text-align:center;
+        margin-bottom: 1px;
+        padding: 0px 0px 0px 0px;
+        cursor: pointer;
+    }
+
+    .favorite-default-style {
+        top: 7%;
+        left: 5%;
+    }
+
+    .location-image {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 0px;
+        width: 100%;
+        height: 100%;
+    }
+
     .favorite-guide {
         margin-bottom: -2px;
     }
@@ -802,6 +965,26 @@ body, html {
         height: 605px;
     }
 
+}
+
+@media (min-width: 560px) and (max-width: 767px) {
+    .col-xs-sm-misc {
+        width: 25%;
+    }
+
+    .favorite-default-style {
+        top: 7%;
+        width: 60px;
+        height: 60px;
+    }
+
+    .break-name-default-style {
+        font-size: 4.9vw;
+    }
+
+    .location-name {
+        font-size: 4vw;
+    }
 }
 
 @media (min-width: 768px) {
@@ -1130,6 +1313,10 @@ body, html {
     .clear-default-style {
         margin-left: 94.5%;
     }
+
+    .break-name-default-style {
+        font-size: 1.7em;
+    }
 }
 
 @media (min-width: 1200px) {
@@ -1175,6 +1362,10 @@ body, html {
 
     .clear-default-style {
         margin-left: 95.5%;
+    }
+
+    .favorite-default-style {
+        left: 7%;
     }
 }
 

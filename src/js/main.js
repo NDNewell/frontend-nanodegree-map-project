@@ -402,6 +402,8 @@ function AppViewModel () {
           // Invoke function to parse the location data
           self.parseLocationData(data);
 
+          $('.location-frame').show();
+
           // Make sure Google maps api has loaded
           if (typeof google === 'object' && typeof google.maps === 'object') {
 

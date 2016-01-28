@@ -202,6 +202,13 @@ body, html {
     outline: 0 !important;
 }
 
+.location-frame-default-style {
+    display: none;
+    text-align:center;
+    padding: 10px 10px;
+    cursor: pointer;
+}
+
 .location-name-default-style {
     font-size: 1.5em;
     background: none repeat 0 0 #FFffff;
@@ -229,13 +236,6 @@ body, html {
     text-align: center;
     width: 250px;
     border-radius: 12.5px;
-}
-
-.location-frame-default-style {
-    display: block;
-    text-align:center;
-    padding: 10px 10px;
-    cursor: pointer;
 }
 
 .location-image {

@@ -175,204 +175,11 @@ function AppViewModel () {
         $clearFavsBtn = $('.clear-favorites-button'),
         $surfInfoContainer = $('.surf-info-container');
 
-    // Set variables for image loading
-    var images = {},
-        numImages = 0,
-        loadedImages = 0;
-
-    self.loadImages = function(source) {
-
-        for(var src in source) {
-          numImages++;
-        };
-
-        for(var src in source) {
-
-            images[src] = new Image();
-
-            images[src].onload = function () {
-
-                if(++loadedImages >= numImages) {
-
-                    console.log('images loaded');
-
-                    if(self.locationArray.length > 1 ) {
-
-                        loadEffect();
-                    } else {
-
-                        checkLocations = setInterval(function() {
-
-                            if(self.locationArray.length > 1 ) {
-
-                                clearInterval(checkLocations);
-
-                                loadEffect();
-                            };
-                        }, 500);
-                    };
-
-                    function loadEffect () {
-
-                        console.log("locations loaded");
-                        console.log("add hover effects");
-
-                        self.addHoverEffects();
-                    };
-                };
-            };
-
-            images[src].src = source[src];
-
-            switch (source) {
-                case roIconsSkillLevel:
-                    images[src].className = "rollover-info skill-level-rollover skill-level-hover-default-style hover-tooltip-only ";
-                break;
-
-                case roIconsBreak:
-                    images[src].className = "rollover-info break-type-rollover break-type-hover-default-style hover-tooltip-only ";
-                break;
-
-                case roIconsDirection:
-                    images[src].className = "rollover-info wave-direction-rollover wave-direction-hover-default-style hover-tooltip-only ";
-                break;
-
-                case roIconsBestSeason:
-                    images[src].className = "rollover-info best-season-rollover best-season-hover-default-style hover-tooltip-only ";
-                break;
-
-                case roIconsMiscOne:
-                    images[src].className = "rollover-info misc-info-one-rollover misc-info-one-hover-default-style hover-tooltip-only ";
-                break;
-
-                case roIconsMiscTwo:
-                    images[src].className = "rollover-info misc-info-two-rollover misc-info-two-hover-default-style hover-tooltip-only ";
-                break;
-            };
-        };
-    };
-
-    var guideIcons =
-        { attireSpring: 'img/water_temp_spring.svg',
-          attireSummer: 'img/water_temp_summer.svg',
-          attireAutumn: 'img/water_temp_autumn.svg',
-          attireWinter: 'img/water_temp_winter.svg',
-          attireBoardies: 'img/water_attire_boardies.svg',
-          attireWetsuitTwo: 'img/water_attire_2mm_wetsuit.svg',
-          attireWetsuitThree: 'img/water_attire_3mm_wetsuit.svg',
-          attireWetsuitFour: 'img/water_attire_4mm_wetsuit.svg',
-          attireWetsuitFive: 'img/water_attire_5mm_wetsuit.svg',
-          attireWetsuitSix: 'img/water_attire_6mm_wetsuit.svg',
-          swellPointer: 'img/compass_swell_pointer.svg',
-          windPointer: 'img/compass_wind_pointer.svg',
-          smallSwellPointer: 'img/compass_swell_pointer_guide.svg',
-          smallWindPointer: 'img/compass_wind_pointer_guide.svg',
-          smallCompass: 'img/compass_guide.svg' };
-
-    var roIconsSkillLevel =
-        { roIconSkillAll: 'img/skill_level_ro_all.svg',
-          roIconSkillBegInt: 'img/skill_level_ro_beginner_intermediate.svg',
-          roIconSkillBeg: 'img/skill_level_ro_beginner.svg',
-          roIconSkillIntAdv: 'img/skill_level_ro_intermediate_advanced.svg',
-          roIconSkillInt: 'img/skill_level_ro_intermediate.svg',
-          roIconSkillAdv: 'img/skill_level_ro_advanced.svg' };
-
-    var roIconsBreak =
-        { roIconBreakReef: 'img/break_ro_reef.svg',
-          roIconBreakBeach: 'img/break_ro_beach.svg',
-          roIconBreakPoint: 'img/break_ro_point.svg',
-          roIconBreakRiver: 'img/break_ro_river_mouth.svg' };
-
-    var roIconsDirection =
-        { roIconDirectionLeft: 'img/direction_ro_left.svg',
-          roIconDirectionRight: 'img/direction_ro_right.svg',
-          roIconDirectionBoth: 'img/direction_ro_both.svg' };
-
-    var roIconsBestSeason =
-        { roIconBestSeasonAll: 'img/season_ro_all.svg',
-          roIconBestSeasonWinSpr: 'img/season_ro_winter_spring.svg',
-          roIconBestSeasonWinSum: 'img/season_ro_winter_summer.svg',
-          roIconBestSeasonWinAut: 'img/season_ro_winter_autumn.svg',
-          roIconBestSeasonWin: 'img/season_ro_winter.svg',
-          roIconBestSeasonSpgSum: 'img/season_ro_spring_summer.svg',
-          roIconBestSeasonSpgAut: 'img/season_ro_spring_autumn.svg',
-          roIconBestSeasonSpg: 'img/season_ro_spring.svg',
-          roIconBestSeasonSumAut: 'img/season_summer_autumn.svg',
-          roIconBestSeasonSum: 'img/season_summer.svg',
-          roIconBestSeasonAut: 'img/season_autumn.svg' };
-
-    var roIconsMiscOne =
-        { roIconMiscOneBoardies: 'img/water_attire_ro_boardies.svg',
-          roIconMiscOneWetSuitTwo: 'img/water_attire_ro_2mm_wetsuit.svg',
-          roIconMiscOneWetSuitThree: 'img/water_attire_ro_3mm_wetsuit.svg',
-          roIconMiscOneWetSuitFour: 'img/water_attire_ro_4mm_wetsuit.svg',
-          roIconMiscOneWetSuitFive: 'img/water_attire_ro_5mm_wetsuit.svg',
-          roIconMiscOneWetSuitSix: 'img/water_attire_ro_6mm_wetsuit.svg',
-          roIconMiscOneBigWave: 'img/big_wave_ro.svg' };
-
-    var roIconsMiscTwo =
-        { roIconMiscTwoBeginners: 'img/hazards_ro_beginners.svg',
-          roIconMiscTwoBoats: 'img/hazards_ro_boats.svg',
-          roIconMiscTwoCrocs: 'img/hazards_ro_crocs.svg',
-          roIconMiscTwoCrowded: 'img/hazards_ro_crowded.svg',
-          roIconMiscTwoDgrBreak: 'img/hazards_ro_dangerous_break.svg',
-          roIconMiscTwoFar: 'img/hazards_ro_far_from_shore.svg',
-          roIconMiscTwoPollution: 'img/hazards_ro_pollution.svg',
-          roIconMiscTwoRocky: 'img/hazards_ro_rocky_bottom.svg',
-          roIconMiscTwoSnakes: 'img/hazards_ro_sea_snakes.svg',
-          roIconMiscTwoSeals: 'img/hazards_ro_seals.svg',
-          roIconMiscTwoSeaweed: 'img/hazards_ro_seaweed.svg',
-          roIconMiscTwoSewage: 'img/hazards_ro_sewage.svg',
-          roIconMiscTwoShallow: 'img/hazards_ro_sharks.svg',
-          roIconMiscTwoSharks: 'img/hazards_ro_sharks.svg',
-          roIconMiscTwoStrCurrent: 'img/hazards_ro_strong_currents.svg',
-          roIconMiscTwoStrRips: 'img/hazards_ro_strong_rips.svg',
-          roIconMiscTwoTheft: 'img/hazards_ro_theft.svg',
-          roIconMiscTwoUndertow: 'img/hazards_ro_undertow.svg',
-          roIconMiscTwoUnfriendly: 'img/hazards_ro_unfriendly.svg',
-          roIconMiscTwoUrchins: 'img/hazards_ro_urchins.svg',
-          roIconMiscTwoWellknown: 'img/well_known_ro.svg' };
-
     // Save refs to marker imgs
     var markerSmall = 'img/marker_small.svg',
         markerSelected = 'img/marker_selected.svg',
         markerSmallFav = 'img/marker_smallFav.svg',
         markerSelectedFav = 'img/marker_selectedFav.svg';
-
-    /* Replace specific SVG images with inline SVG in order to make CSS
-    styling possible */
-    self.makeSVGInline = function (oldSvg) {
-        var $img = oldSvg;
-        var imgClass = $img.attr('class');
-        var imgURL = $img.attr('src');
-
-        $.get(imgURL, function(data) {
-
-            // Get the SVG tag, ignore the rest
-            var $svg = $(data).find('svg');
-
-            // Add replaced image's classes to the new SVG
-            if(typeof imgClass !== 'undefined') {
-                $svg = $svg.attr('class', imgClass);
-            }
-
-            // Remove any invalid XML tags as per http://validator.w3.org
-            $svg = $svg.removeAttr('xmlns:a');
-
-            // Replace image with new SVG
-            $img.replaceWith($svg);
-
-        }, 'xml');
-    };
-
-    /* Convert the imgs to inline svgs so hover effects my be applied
-    through css styling */
-    self.makeSVGInline($('.search-symbol-desktop'));
-    self.makeSVGInline($('.search-symbol-mobile'));
-    self.makeSVGInline($('.favorite-filter-symbol-desktop'));
-    self.makeSVGInline($('.favorite-filter-symbol-mobile'));
-    self.makeSVGInline($('.map-symbol-desktop'));
-    self.makeSVGInline($('.map-symbol-mobile'));
 
     /* If no location data is returned within 10 seconds, show error */
     var locationDataTimeout = setTimeout (function() {
@@ -585,13 +392,9 @@ function AppViewModel () {
                     // Show the location frames
                     self.showLocationFrames(favorites);
 
-                    self.loadImages(guideIcons);
-                    self.loadImages(roIconsSkillLevel);
-                    self.loadImages(roIconsBreak);
-                    self.loadImages(roIconsDirection);
-                    self.loadImages(roIconsBestSeason);
-                    self.loadImages(roIconsMiscOne);
-                    self.loadImages(roIconsMiscTwo);
+                    // Load all imgs needed for frame hover effects and surf
+                    // guide
+                    self.preloadImages();
 
                 } else {
 
@@ -615,13 +418,9 @@ function AppViewModel () {
                     // with favorites
                     self.showLocationFrames(favorites);
 
-                    self.loadImages(guideIcons);
-                    self.loadImages(roIconsSkillLevel);
-                    self.loadImages(roIconsBreak);
-                    self.loadImages(roIconsDirection);
-                    self.loadImages(roIconsBestSeason);
-                    self.loadImages(roIconsMiscOne);
-                    self.loadImages(roIconsMiscTwo);
+                    // Load all imgs needed for frame hover effects and surf
+                    // guide
+                    self.preloadImages();
                 };
 
             }, fireBaseReadError);
@@ -1268,7 +1067,7 @@ function AppViewModel () {
 
                     show();
                 };
-            }, 1000);
+            }, 250);
         };
 
         function show () {
@@ -5233,6 +5032,214 @@ function AppViewModel () {
 
         // Scroll to the top of the page
         document.body.scrollTop = document.documentElement.scrollTop = 0;
+    };
+
+    /* Replace specific SVG images with inline SVG in order to make CSS
+    styling possible */
+    self.makeSVGInline = function (oldSvg) {
+        var $img = oldSvg;
+        var imgClass = $img.attr('class');
+        var imgURL = $img.attr('src');
+
+        $.get(imgURL, function(data) {
+
+            // Get the SVG tag, ignore the rest
+            var $svg = $(data).find('svg');
+
+            // Add replaced image's classes to the new SVG
+            if(typeof imgClass !== 'undefined') {
+                $svg = $svg.attr('class', imgClass);
+            }
+
+            // Remove any invalid XML tags as per http://validator.w3.org
+            $svg = $svg.removeAttr('xmlns:a');
+
+            // Replace image with new SVG
+            $img.replaceWith($svg);
+
+        }, 'xml');
+    };
+
+    /* Convert the imgs to inline svgs so hover effects my be applied
+    through css styling */
+    self.makeSVGInline($('.search-symbol-desktop'));
+    self.makeSVGInline($('.search-symbol-mobile'));
+    self.makeSVGInline($('.favorite-filter-symbol-desktop'));
+    self.makeSVGInline($('.favorite-filter-symbol-mobile'));
+    self.makeSVGInline($('.map-symbol-desktop'));
+    self.makeSVGInline($('.map-symbol-mobile'));
+
+    // Set up image object for cached images
+    var images = {};
+
+    // Preload all icons needed for location hover effect and various surf
+    // guide icons
+    self.preloadImages = function () {
+
+        // Cache refs to loaded images
+        var numImages = 0,
+            loadedImages = 0;
+
+        function loadImages (source) {
+
+            for(var src in source) {
+              numImages++;
+            };
+
+            for(var src in source) {
+
+                images[src] = new Image();
+
+                images[src].onload = function () {
+
+                    if(++loadedImages >= numImages) {
+
+                        console.log('images loaded');
+
+                        if(self.locationArray.length > 1 ) {
+
+                            loadEffect();
+                        } else {
+
+                            checkLocations = setInterval(function() {
+
+                                if(self.locationArray.length > 1 ) {
+
+                                    clearInterval(checkLocations);
+
+                                    loadEffect();
+                                };
+                            }, 500);
+                        };
+
+                        function loadEffect () {
+
+                            console.log("locations loaded");
+                            console.log("add hover effects");
+
+                            self.addHoverEffects();
+                        };
+                    };
+                };
+
+                images[src].src = source[src];
+
+                switch (source) {
+                    case roIconsSkillLevel:
+                        images[src].className = "rollover-info skill-level-rollover skill-level-hover-default-style hover-tooltip-only ";
+                    break;
+
+                    case roIconsBreak:
+                        images[src].className = "rollover-info break-type-rollover break-type-hover-default-style hover-tooltip-only ";
+                    break;
+
+                    case roIconsDirection:
+                        images[src].className = "rollover-info wave-direction-rollover wave-direction-hover-default-style hover-tooltip-only ";
+                    break;
+
+                    case roIconsBestSeason:
+                        images[src].className = "rollover-info best-season-rollover best-season-hover-default-style hover-tooltip-only ";
+                    break;
+
+                    case roIconsMiscOne:
+                        images[src].className = "rollover-info misc-info-one-rollover misc-info-one-hover-default-style hover-tooltip-only ";
+                    break;
+
+                    case roIconsMiscTwo:
+                        images[src].className = "rollover-info misc-info-two-rollover misc-info-two-hover-default-style hover-tooltip-only ";
+                    break;
+                };
+            };
+        };
+
+        var guideIcons =
+            { attireSpring: 'img/water_temp_spring.svg',
+              attireSummer: 'img/water_temp_summer.svg',
+              attireAutumn: 'img/water_temp_autumn.svg',
+              attireWinter: 'img/water_temp_winter.svg',
+              attireBoardies: 'img/water_attire_boardies.svg',
+              attireWetsuitTwo: 'img/water_attire_2mm_wetsuit.svg',
+              attireWetsuitThree: 'img/water_attire_3mm_wetsuit.svg',
+              attireWetsuitFour: 'img/water_attire_4mm_wetsuit.svg',
+              attireWetsuitFive: 'img/water_attire_5mm_wetsuit.svg',
+              attireWetsuitSix: 'img/water_attire_6mm_wetsuit.svg',
+              swellPointer: 'img/compass_swell_pointer.svg',
+              windPointer: 'img/compass_wind_pointer.svg',
+              smallSwellPointer: 'img/compass_swell_pointer_guide.svg',
+              smallWindPointer: 'img/compass_wind_pointer_guide.svg',
+              smallCompass: 'img/compass_guide.svg' };
+
+        var roIconsSkillLevel =
+            { roIconSkillAll: 'img/skill_level_ro_all.svg',
+              roIconSkillBegInt: 'img/skill_level_ro_beginner_intermediate.svg',
+              roIconSkillBeg: 'img/skill_level_ro_beginner.svg',
+              roIconSkillIntAdv: 'img/skill_level_ro_intermediate_advanced.svg',
+              roIconSkillInt: 'img/skill_level_ro_intermediate.svg',
+              roIconSkillAdv: 'img/skill_level_ro_advanced.svg' };
+
+        var roIconsBreak =
+            { roIconBreakReef: 'img/break_ro_reef.svg',
+              roIconBreakBeach: 'img/break_ro_beach.svg',
+              roIconBreakPoint: 'img/break_ro_point.svg',
+              roIconBreakRiver: 'img/break_ro_river_mouth.svg' };
+
+        var roIconsDirection =
+            { roIconDirectionLeft: 'img/direction_ro_left.svg',
+              roIconDirectionRight: 'img/direction_ro_right.svg',
+              roIconDirectionBoth: 'img/direction_ro_both.svg' };
+
+        var roIconsBestSeason =
+            { roIconBestSeasonAll: 'img/season_ro_all.svg',
+              roIconBestSeasonWinSpr: 'img/season_ro_winter_spring.svg',
+              roIconBestSeasonWinSum: 'img/season_ro_winter_summer.svg',
+              roIconBestSeasonWinAut: 'img/season_ro_winter_autumn.svg',
+              roIconBestSeasonWin: 'img/season_ro_winter.svg',
+              roIconBestSeasonSpgSum: 'img/season_ro_spring_summer.svg',
+              roIconBestSeasonSpgAut: 'img/season_ro_spring_autumn.svg',
+              roIconBestSeasonSpg: 'img/season_ro_spring.svg',
+              roIconBestSeasonSumAut: 'img/season_summer_autumn.svg',
+              roIconBestSeasonSum: 'img/season_summer.svg',
+              roIconBestSeasonAut: 'img/season_autumn.svg' };
+
+        var roIconsMiscOne =
+            { roIconMiscOneBoardies: 'img/water_attire_ro_boardies.svg',
+              roIconMiscOneWetSuitTwo: 'img/water_attire_ro_2mm_wetsuit.svg',
+              roIconMiscOneWetSuitThree: 'img/water_attire_ro_3mm_wetsuit.svg',
+              roIconMiscOneWetSuitFour: 'img/water_attire_ro_4mm_wetsuit.svg',
+              roIconMiscOneWetSuitFive: 'img/water_attire_ro_5mm_wetsuit.svg',
+              roIconMiscOneWetSuitSix: 'img/water_attire_ro_6mm_wetsuit.svg',
+              roIconMiscOneBigWave: 'img/big_wave_ro.svg' };
+
+        var roIconsMiscTwo =
+            { roIconMiscTwoBeginners: 'img/hazards_ro_beginners.svg',
+              roIconMiscTwoBoats: 'img/hazards_ro_boats.svg',
+              roIconMiscTwoCrocs: 'img/hazards_ro_crocs.svg',
+              roIconMiscTwoCrowded: 'img/hazards_ro_crowded.svg',
+              roIconMiscTwoDgrBreak: 'img/hazards_ro_dangerous_break.svg',
+              roIconMiscTwoFar: 'img/hazards_ro_far_from_shore.svg',
+              roIconMiscTwoPollution: 'img/hazards_ro_pollution.svg',
+              roIconMiscTwoRocky: 'img/hazards_ro_rocky_bottom.svg',
+              roIconMiscTwoSnakes: 'img/hazards_ro_sea_snakes.svg',
+              roIconMiscTwoSeals: 'img/hazards_ro_seals.svg',
+              roIconMiscTwoSeaweed: 'img/hazards_ro_seaweed.svg',
+              roIconMiscTwoSewage: 'img/hazards_ro_sewage.svg',
+              roIconMiscTwoShallow: 'img/hazards_ro_sharks.svg',
+              roIconMiscTwoSharks: 'img/hazards_ro_sharks.svg',
+              roIconMiscTwoStrCurrent: 'img/hazards_ro_strong_currents.svg',
+              roIconMiscTwoStrRips: 'img/hazards_ro_strong_rips.svg',
+              roIconMiscTwoTheft: 'img/hazards_ro_theft.svg',
+              roIconMiscTwoUndertow: 'img/hazards_ro_undertow.svg',
+              roIconMiscTwoUnfriendly: 'img/hazards_ro_unfriendly.svg',
+              roIconMiscTwoUrchins: 'img/hazards_ro_urchins.svg',
+              roIconMiscTwoWellknown: 'img/well_known_ro.svg' };
+
+        loadImages(guideIcons);
+        loadImages(roIconsSkillLevel);
+        loadImages(roIconsBreak);
+        loadImages(roIconsDirection);
+        loadImages(roIconsBestSeason);
+        loadImages(roIconsMiscOne);
+        loadImages(roIconsMiscTwo);
     };
 };
 

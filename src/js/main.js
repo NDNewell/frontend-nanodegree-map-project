@@ -333,14 +333,6 @@ function AppViewModel () {
           roIconMiscTwoUrchins: 'img/hazards_ro_urchins.svg',
           roIconMiscTwoWellknown: 'img/well_known_ro.svg' };
 
-    self.loadImages(guideIcons);
-    self.loadImages(roIconsSkillLevel);
-    self.loadImages(roIconsBreak);
-    self.loadImages(roIconsDirection);
-    self.loadImages(roIconsBestSeason);
-    self.loadImages(roIconsMiscOne);
-    self.loadImages(roIconsMiscTwo);
-
     // Save refs to marker imgs
     var markerSmall = 'img/marker_small.svg',
         markerSelected = 'img/marker_selected.svg',
@@ -593,6 +585,14 @@ function AppViewModel () {
                     // Show the location frames
                     self.showLocationFrames(favorites);
 
+                    self.loadImages(guideIcons);
+                    self.loadImages(roIconsSkillLevel);
+                    self.loadImages(roIconsBreak);
+                    self.loadImages(roIconsDirection);
+                    self.loadImages(roIconsBestSeason);
+                    self.loadImages(roIconsMiscOne);
+                    self.loadImages(roIconsMiscTwo);
+
                 } else {
 
                     /* Update the marker image of any markers that match the
@@ -614,6 +614,14 @@ function AppViewModel () {
                     // Show the location frames once they have been updated
                     // with favorites
                     self.showLocationFrames(favorites);
+
+                    self.loadImages(guideIcons);
+                    self.loadImages(roIconsSkillLevel);
+                    self.loadImages(roIconsBreak);
+                    self.loadImages(roIconsDirection);
+                    self.loadImages(roIconsBestSeason);
+                    self.loadImages(roIconsMiscOne);
+                    self.loadImages(roIconsMiscTwo);
                 };
 
             }, fireBaseReadError);
@@ -1234,16 +1242,13 @@ function AppViewModel () {
     self.showLocationFrames = function(favorites) {
 
         // Save a ref to all location frames
-        var $allLocationFrames = $('.location-frame'),
-            favoritesLength = favorites.length,
-            $frameFavs = $('.is-a-favorite').length,
-            locationArrayLength = locationArray.length;
+        var $allLocationFrames = $('.location-frame');
 
-        if(favoritesLength === $frameFavs && locationArrayLength > 0) {
+        if(favorites.length === $('.is-a-favorite').length + 1 && locationArray.length > 0) {
 
             show();
 
-        } else if (favorites === null && locationArrayLength > 0) {
+        } else if (favorites === null && locationArray.length > 0) {
 
             show();
 
@@ -1251,20 +1256,19 @@ function AppViewModel () {
 
             var checkLocFavsLoaded = setInterval(function() {
 
-                if(favoritesLength === $frameFavs && locationArrayLength > 0) {
+                if(favorites.length === $('.is-a-favorite').length && locationArray.length > 0) {
 
                     clearInterval(checkLocFavsLoaded);
 
                     show();
 
-                } else if (favorites === null && locationArrayLength > 0) {
+                } else if (favorites === null && locationArray.length > 0) {
 
                     clearInterval(checkLocFavsLoaded);
 
                     show();
-
                 };
-            }, 250);
+            }, 1000);
         };
 
         function show () {

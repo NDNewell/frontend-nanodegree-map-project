@@ -159,28 +159,6 @@ function AppViewModel () {
 
     this.self = this;
 
-    // Cache common DOM refs
-    var $window = $(window),
-        $body = $('body'),
-        $mapSection = $('.map-section'),
-        $mapContainer = $('.map-container'),
-        $map = $('#map'),
-        $mapSymbol = $('.map-symbol'),
-        $locationGrid = $('.location-grid'),
-        $searchContainer = $('.search-container'),
-        $searchForm = $('.search-form'),
-        $clearSymbol = $('.clear'),
-        $filtersContainer = $('.filters-container'),
-        $favFilterSym = $('.favorite-filter-symbol'),
-        $clearFavsBtn = $('.clear-favorites-button'),
-        $surfInfoContainer = $('.surf-info-container');
-
-    // Save refs to marker imgs
-    var markerSmall = 'img/marker_small.svg',
-        markerSelected = 'img/marker_selected.svg',
-        markerSmallFav = 'img/marker_smallFav.svg',
-        markerSelectedFav = 'img/marker_selectedFav.svg';
-
     /* If no location data is returned within 10 seconds, show error */
     var locationDataTimeout = setTimeout (function() {
         showLocationsLoadError();
@@ -282,6 +260,28 @@ function AppViewModel () {
         // Disable error message
         clearTimeout(locationDataTimeout);
     };
+
+    // Cache common DOM refs
+    var $window = $(window),
+        $body = $('body'),
+        $mapSection = $('.map-section'),
+        $mapContainer = $('.map-container'),
+        $map = $('#map'),
+        $mapSymbol = $('.map-symbol'),
+        $locationGrid = $('.location-grid'),
+        $searchContainer = $('.search-container'),
+        $searchForm = $('.search-form'),
+        $clearSymbol = $('.clear'),
+        $filtersContainer = $('.filters-container'),
+        $favFilterSym = $('.favorite-filter-symbol'),
+        $clearFavsBtn = $('.clear-favorites-button'),
+        $surfInfoContainer = $('.surf-info-container');
+
+    // Save refs to marker imgs
+    var markerSmall = 'img/marker_small.svg',
+        markerSelected = 'img/marker_selected.svg',
+        markerSmallFav = 'img/marker_smallFav.svg',
+        markerSelectedFav = 'img/marker_selectedFav.svg';
 
     // Render the error msg when no location data is loaded
     self.showLocationsLoadError = function () {
@@ -5114,7 +5114,6 @@ function AppViewModel () {
 
                         function loadEffect () {
 
-                            console.log("locations loaded");
                             console.log("add hover effects");
 
                             self.addHoverEffects();

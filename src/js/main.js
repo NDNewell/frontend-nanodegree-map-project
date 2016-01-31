@@ -359,7 +359,10 @@ function AppViewModel () {
     /* Create an empty local array (globally accessible for use with the
       Google API) to hold the user's favorites collected from firebase's
       database */
-    userFavorites = [];
+    var userFavorites = [];
+
+    // Set initial loading of location frames to true
+    var initLoad = true;
 
     self.getFavorites = function (authData) {
 
@@ -386,21 +389,20 @@ function AppViewModel () {
                     // Cache an empty array to replace 'null'
                     var favorites = [];
 
-                    /* Reset all of the marker images using the empty array*/
-                    self.updateFavMarkers(favorites);
+                    // Show favs on loc frames and markers
+                    updateFavs();
 
-                    // Show the location frames
-                    self.showLocationFrames(favorites);
-
-                    // Load all imgs needed for frame hover effects and surf
-                    // guide
-                    self.preloadImages();
+                    // If loading favorites during initial page load, do not
+                    // show the frames and load their hover effects via pre-
+                    // loading their images.
+                    // If it's not the initial page load, the frames and imgs
+                    // should've already loaded, so do nothing (initial load =
+                    // false)
+                    if(initLoad) {
+                        loadFrames();
+                    };
 
                 } else {
-
-                    /* Update the marker image of any markers that match the
-                    user's favorites */
-                    self.updateFavMarkers(favorites);
 
                     /* Push each favorite found in the Firebase array into the
                     local favorites array */
@@ -409,13 +411,37 @@ function AppViewModel () {
                     });
                     console.log("the user's favorite(s) is/are: " + userFavorites.join(', '));
 
+                    // Show favs on loc frames and markers
+                    updateFavs();
+
+                    // If loading favorites during initial page load, do not
+                    // show the frames and load their hover effects via pre-
+                    // loading their images.
+                    // If it's not the initial page load, the frames and imgs
+                    // should've already loaded, so do nothing (initial load =
+                    // false)
+                    if(initLoad) {
+                        loadFrames();
+                    };
+                };
+
+                function updateFavs () {
+
                     // Update DOM elements (location frames)
                     /* Fill in the hearts of any locations which are the user's
                     favorites */
                     self.updateFavsOnFrames();
 
-                    // Show the location frames once they have been updated
-                    // with favorites
+                    /* Update the marker image of any markers that match the
+                    user's favorites */
+                    self.updateFavMarkers(favorites);
+                };
+
+                function loadFrames () {
+
+                    initDisplay = false;
+
+                    // Show the location frames
                     self.showLocationFrames(favorites);
 
                     // Load all imgs needed for frame hover effects and surf
@@ -1043,7 +1069,7 @@ function AppViewModel () {
         // Save a ref to all location frames
         var $allLocationFrames = $('.location-frame');
 
-        if(favorites.length === $('.is-a-favorite').length + 1 && locationArray.length > 0) {
+        if(favorites.length === $('.is-a-favorite').length && locationArray.length > 0) {
 
             show();
 

@@ -200,7 +200,7 @@ function AppViewModel () {
     };
 
     // Render the error msg when no location data is loaded
-    self.loadError = function (errorObject) {
+    var loadError = function (errorObject) {
 
         console.log('get location data unsuccessful');
 
@@ -227,8 +227,10 @@ function AppViewModel () {
         fireBaseReadError(errorObject);
     };
 
+    // Get the location data
     locationData.on("value", function(snapshot) {
 
+        // Save the location data snapshot
         var data = snapshot.val();
 
         console.log('get location data successful');
@@ -276,7 +278,7 @@ function AppViewModel () {
           self.addMapListeners();
         };
 
-    }, self.loadError);
+    }, loadError);
 
     /* This array holds the location objects that have been parsed from
      Firebase */
@@ -294,7 +296,7 @@ function AppViewModel () {
     /* Parse the location data obtained via the api request from Firebase */
     self.parseLocationData = function (data) {
 
-        console.log('parse data');
+        console.log('parse location data');
 
         // Clear any existing information
         self.locationArray = [];
@@ -318,36 +320,6 @@ function AppViewModel () {
             avoids having the same location listed multiple times in the pop-up window */
             if(searchKeywords.indexOf(obj.location) < 0) {
                 self.searchKeywords.push(obj.location);
-            };
-        });
-    };
-
-    /* Iterate through the location frame displayed and fill in any locations
-    that match the user's favorites */
-    self.updateFavsOnFrames = function () {
-
-        console.log("update location frame favorites");
-
-        var $allLocationFrames = $('.location-frame');
-
-        $allLocationFrames.each(function () {
-
-            // Cache references to location frame, favorite symbol, & break name
-            var $locationFrame = $(this),
-                $favoriteWrapper = $locationFrame.children(":nth-child(3)"),
-                $breakName = $locationFrame.children(":nth-child(2)").text();
-
-            // Filter locations that match the user's favorites
-            // When a match is found, add a class to style it as 'selected'
-            if(userFavorites.indexOf($breakName) > -1) {
-
-                $favoriteWrapper.removeClass('not-a-favorite').addClass('is-a-favorite');
-            } else {
-
-                if($favoriteWrapper.hasClass('is-a-favorite')) {
-
-                    $favoriteWrapper.addClass('not-a-favorite').removeClass('is-a-favorite');
-                };
             };
         });
     };
@@ -1098,6 +1070,36 @@ function AppViewModel () {
 
             $allLocationFrames.show();
         };
+    };
+
+    /* Iterate through the location frame displayed and fill in any locations
+    that match the user's favorites */
+    self.updateFavsOnFrames = function () {
+
+        console.log("update location frame favorites");
+
+        var $allLocationFrames = $('.location-frame');
+
+        $allLocationFrames.each(function () {
+
+            // Cache references to location frame, favorite symbol, & break name
+            var $locationFrame = $(this),
+                $favoriteWrapper = $locationFrame.children(":nth-child(3)"),
+                $breakName = $locationFrame.children(":nth-child(2)").text();
+
+            // Filter locations that match the user's favorites
+            // When a match is found, add a class to style it as 'selected'
+            if(userFavorites.indexOf($breakName) > -1) {
+
+                $favoriteWrapper.removeClass('not-a-favorite').addClass('is-a-favorite');
+            } else {
+
+                if($favoriteWrapper.hasClass('is-a-favorite')) {
+
+                    $favoriteWrapper.addClass('not-a-favorite').removeClass('is-a-favorite');
+                };
+            };
+        });
     };
 
     // Open the location frame's relevant surf guide an animate its related

@@ -407,7 +407,10 @@ function AppViewModel () {
 
                 function loadFrames () {
 
-                    initDisplay = false;
+                    console.log('!!! load frames !!!');
+                    console.log(initLoad);
+
+                    initLoad = false;
 
                     // Show the location frames
                     self.showLocationFrames(favorites);

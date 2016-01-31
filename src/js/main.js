@@ -159,108 +159,6 @@ function AppViewModel () {
 
     this.self = this;
 
-    /* If no location data is returned within 10 seconds, show error */
-    var locationDataTimeout = setTimeout (function() {
-        showLocationsLoadError();
-    }, 15000);
-
-    // Cache api request URL for location data
-    var fireBaseURL = 'https://dazzling-torch-4012.firebaseio.com/locationData.json?';
-
-    // Load location Data from Firebase using ajax request
-    console.log('get location data');
-
-    $.ajax({
-        url: fireBaseURL,
-        dataType: 'jsonp',
-        success: function(data) {
-          console.log('get location data successful');
-
-          // Invoke function to parse the location data
-          self.parseLocationData(data);
-
-          // Make sure Google maps api has loaded
-          if (typeof google === 'object' && typeof google.maps === 'object') {
-
-              // When loaded, set up Google map
-              setUpGoogleMap();
-
-          // If it hasn't loaded, keep checking until it is
-          // When it is loaded, generate map markers
-          } else {
-
-              var checkGoogle = setInterval(function() {
-
-                  console.log('error: Google maps api NOT loaded');
-                  console.log('load Google maps api again');
-
-                  // Check if Google maps api has loaded
-                  if(typeof google === 'object' && typeof google.maps === 'object') {
-
-                      // When loaded, set up Google map
-                      setUpGoogleMap();
-
-                      // Stop checking if Google maps api is loaded
-                      clearInterval(checkGoogle);
-                  };
-              }, 500);
-          };
-
-          // Sets up markers and listeners for Google map
-          function setUpGoogleMap () {
-
-              console.log('Google maps api loaded');
-              console.log('generate map markers');
-
-              // Populate Google map with markers based on location data
-              self.generateMarkers(data);
-
-              // Add map listeners
-              self.addMapListeners();
-          };
-        }
-    });
-
-    /* This array holds the location objects that have been parsed from
-     Firebase */
-    self.locationArray = [];
-
-    /* This obervable array holds filtered location objects from search
-    queries and the initital data entered into the location array. It is
-    automatically updated/rendered in the View */
-    self.locationGrid = ko.observableArray("");
-
-    /* Create an array that holds keywords that pop up in a small menu
-    within the search bar dynamically during searches */
-    self.searchKeywords = [];
-
-    /* Parse the location data obtained via the api request from Firebase */
-    self.parseLocationData = function (data) {
-
-        data.forEach(function(obj) {
-
-            /* Iterate through the location data from the data and push each object to the location array above */
-            self.locationArray.push(obj);
-
-            /* Iterate through the location data from the data and push each object to the location grid above */
-            self.locationGrid.push(obj);
-
-            /* Loop through the location array, obtain all of the break names
-            and add them to the search keywords array */
-            self.searchKeywords.push(obj.breakName);
-
-            /* If a location keyword already exists in the search keywords
-            array do not add it. If it doesn't, add it to the array. This
-            avoids having the same location listed multiple times in the pop-up window */
-            if(searchKeywords.indexOf(obj.location) < 0) {
-                self.searchKeywords.push(obj.location);
-            };
-        });
-
-        // Disable error message
-        clearTimeout(locationDataTimeout);
-    };
-
     // Cache common DOM refs
     var $window = $(window),
         $body = $('body'),
@@ -283,8 +181,26 @@ function AppViewModel () {
         markerSmallFav = 'img/marker_smallFav.svg',
         markerSelectedFav = 'img/marker_selectedFav.svg';
 
+    /* Cache Firebase database references to all, location, and user data */
+    var allData = new Firebase("https://dazzling-torch-4012.firebaseio.com"),
+        locationData = new Firebase("https://dazzling-torch-4012.firebaseio.com/locationData"),
+        users = new Firebase('https://dazzling-torch-4012.firebaseio.com/users');
+
+    /* Create write/read error messages to be used as callbacks */
+    var fireBaseWriteError = function(error) {
+        if (error) {
+          console.log("data could not be saved." + error);
+        } else {
+          console.log("data saved successfully.");
+        };
+    };
+
+    var fireBaseReadError = function (errorObject) {
+        console.log("the read failed: " + errorObject.code);
+    };
+
     // Render the error msg when no location data is loaded
-    self.showLocationsLoadError = function () {
+    self.loadError = function (errorObject) {
 
         console.log('get location data unsuccessful');
 
@@ -307,23 +223,103 @@ function AppViewModel () {
         $('.reload-button').on('click', function(e) {
             location = location;
         });
+
+        fireBaseReadError(errorObject);
     };
 
-    /* Cache Firebase database references to all, location, and user data */
-    var allData = new Firebase("https://dazzling-torch-4012.firebaseio.com"),
-        locationData = new Firebase("https://dazzling-torch-4012.firebaseio.com/locationData"),
-        users = new Firebase('https://dazzling-torch-4012.firebaseio.com/users');
+    locationData.on("value", function(snapshot) {
 
-    /* Create write/read error messages to be used as callbacks */
-    var fireBaseWriteError = function(error) {
-        if (error) {
-          console.log("data could not be saved." + error);
+        var data = snapshot.val();
+
+        console.log('get location data successful');
+
+        // Invoke function to parse the location data
+        self.parseLocationData(data);
+
+        // Make sure Google maps api has loaded
+        if (typeof google === 'object' && typeof google.maps === 'object') {
+
+          // When loaded, set up Google map
+          setUpGoogleMap();
+
+        // If it hasn't loaded, keep checking until it is
+        // When it is loaded, generate map markers
         } else {
-          console.log("data saved successfully.");
+
+          var checkGoogle = setInterval(function() {
+
+              console.log('error: Google maps api NOT loaded');
+              console.log('load Google maps api again');
+
+              // Check if Google maps api has loaded
+              if(typeof google === 'object' && typeof google.maps === 'object') {
+
+                  // When loaded, set up Google map
+                  setUpGoogleMap();
+
+                  // Stop checking if Google maps api is loaded
+                  clearInterval(checkGoogle);
+              };
+          }, 500);
         };
-    };
-    var fireBaseReadError = function (errorObject) {
-        console.log("the read failed: " + errorObject.code);
+
+        // Sets up markers and listeners for Google map
+        function setUpGoogleMap () {
+
+          console.log('Google maps api loaded');
+          console.log('generate map markers');
+
+          // Populate Google map with markers based on location data
+          self.generateMarkers(data);
+
+          // Add map listeners
+          self.addMapListeners();
+        };
+
+    }, self.loadError);
+
+    /* This array holds the location objects that have been parsed from
+     Firebase */
+    self.locationArray = [];
+
+    /* This obervable array holds filtered location objects from search
+    queries and the initital data entered into the location array. It is
+    automatically updated/rendered in the View */
+    self.locationGrid = ko.observableArray("");
+
+    /* Create an array that holds keywords that pop up in a small menu
+    within the search bar dynamically during searches */
+    self.searchKeywords = [];
+
+    /* Parse the location data obtained via the api request from Firebase */
+    self.parseLocationData = function (data) {
+
+        console.log('parse data');
+
+        // Clear any existing information
+        self.locationArray = [];
+        self.locationGrid.removeAll();
+        self.searchKeywords = [];
+
+        data.forEach(function(obj) {
+
+            /* Iterate through the location data from the data and push each object to the location array above */
+            self.locationArray.push(obj);
+
+            /* Iterate through the location data from the data and push each object to the location grid above */
+            self.locationGrid.push(obj);
+
+            /* Loop through the location array, obtain all of the break names
+            and add them to the search keywords array */
+            self.searchKeywords.push(obj.breakName);
+
+            /* If a location keyword already exists in the search keywords
+            array do not add it. If it doesn't, add it to the array. This
+            avoids having the same location listed multiple times in the pop-up window */
+            if(searchKeywords.indexOf(obj.location) < 0) {
+                self.searchKeywords.push(obj.location);
+            };
+        });
     };
 
     /* Iterate through the location frame displayed and fill in any locations

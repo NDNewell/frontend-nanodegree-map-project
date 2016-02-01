@@ -407,9 +407,6 @@ function AppViewModel () {
 
                 function loadFrames () {
 
-                    console.log('!!! load frames !!!');
-                    console.log(initLoad);
-
                     initLoad = false;
 
                     // Show the location frames
@@ -3425,7 +3422,6 @@ function AppViewModel () {
         // Add the 'favorite' icon to the beginning of the location name
         var favoriteIcon = displayFavoriteIcon(obj.breakName);
         $surfGuideHeader.children(":nth-child(1)").prepend(favoriteIcon);
-        self.makeSVGInline($('.favorite-guide'));
         addFavoriteListener(obj.breakName);
 
         // Create a frame to hold the icon container
@@ -3972,9 +3968,9 @@ function AppViewModel () {
         };
 
         if(favorite) {
-            var icon = '<span class="favorite-wrapper-guide is-a-favorite-guide"><img class="favorite-guide"  src="img/star.svg"></span>';
+            var icon = '<span class="favorite-wrapper-guide is-a-favorite-guide"><svg class="favorite-guide"><use xlink:href="#star"/></svg></span>';
         } else {
-            var icon = '<span class="favorite-wrapper-guide not-a-favorite-guide"><img class="favorite-guide" src="img/star.svg"></span>';
+            var icon = '<span class="favorite-wrapper-guide not-a-favorite-guide"><svg class="favorite-guide"><use xlink:href="#star"/></svg></span>';
         };
 
         return icon;
@@ -5060,41 +5056,6 @@ function AppViewModel () {
         // Scroll to the top of the page
         document.body.scrollTop = document.documentElement.scrollTop = 0;
     };
-
-    /* Replace specific SVG images with inline SVG in order to make CSS
-    styling possible */
-    self.makeSVGInline = function (oldSvg) {
-        var $img = oldSvg;
-        var imgClass = $img.attr('class');
-        var imgURL = $img.attr('src');
-
-        $.get(imgURL, function(data) {
-
-            // Get the SVG tag, ignore the rest
-            var $svg = $(data).find('svg');
-
-            // Add replaced image's classes to the new SVG
-            if(typeof imgClass !== 'undefined') {
-                $svg = $svg.attr('class', imgClass);
-            }
-
-            // Remove any invalid XML tags as per http://validator.w3.org
-            $svg = $svg.removeAttr('xmlns:a');
-
-            // Replace image with new SVG
-            $img.replaceWith($svg);
-
-        }, 'xml');
-    };
-
-    /* Convert the imgs to inline svgs so hover effects my be applied
-    through css styling */
-    self.makeSVGInline($('.search-symbol-desktop'));
-    self.makeSVGInline($('.search-symbol-mobile'));
-    self.makeSVGInline($('.favorite-filter-symbol-desktop'));
-    self.makeSVGInline($('.favorite-filter-symbol-mobile'));
-    self.makeSVGInline($('.map-symbol-desktop'));
-    self.makeSVGInline($('.map-symbol-mobile'));
 
     // Set up image object for cached images
     var images = {};

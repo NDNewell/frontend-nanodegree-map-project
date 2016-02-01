@@ -9,6 +9,28 @@ module.exports = function (grunt, config) {
                     dest: config.imgResDir
                 }],
             }
+        },
+        svgstore: {
+            options: {
+                includedemo: true,
+                cleanup: ['fill', 'stroke'],
+                includeTitleElement: false,
+                formatting : {
+                    indent_size : 2
+                }
+            },
+            default : {
+                files: {
+                    'dist/img/icons.svg': ['dist/img/SVGsprite/*.svg'],
+                }
+            }
+        }
+        ,
+        watch: {
+            svgstore: {
+                files: 'dist/img/SVGsprite/*.svg',
+                tasks: 'svgstore'
+            }
         }
     });
 };

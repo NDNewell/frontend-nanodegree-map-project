@@ -21,6 +21,9 @@ html {
   position: relative;
   float: right;
   margin-right: 10px;
+  height: 28px;
+  width: 28px;
+  fill: #9d9d9d;
   cursor: pointer;
 }
 
@@ -40,6 +43,18 @@ html {
 .map-symbol-mobile,
 .favorite-filter-symbol-mobile {
   display: none;
+}
+
+.search-symbol-desktop:hover,
+.map-symbol-desktop:hover,
+.favorite-filter-symbol-desktop:hover {
+  fill: white;
+}
+
+.map-default,
+.search-default,
+.favorite-filter-default {
+  fill: #9d9d9d;
 }
 
 .header {
@@ -106,7 +121,15 @@ html {
   height: 100%;
 }
 
-.not-a-favorite path {
+.favorite-default-style {
+  position: absolute;
+  width: 31.56px;
+  height: 29.528px;
+  left: 6%;
+  top: 8%;
+}
+
+.not-a-favorite {
   fill-opacity: 0;
   stroke-opacity: 0;
 }

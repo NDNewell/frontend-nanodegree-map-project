@@ -26,7 +26,8 @@ module.exports = function(grunt) {
         'processhtml',
         //'htmlmin',
         'svgstore',
-        'respimg',
+        'svgmin',
+        //'respimg',
         'watch'
     ]);
 };

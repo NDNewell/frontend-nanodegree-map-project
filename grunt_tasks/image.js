@@ -1,15 +1,5 @@
 module.exports = function (grunt, config) {
     grunt.config.merge({
-        respimg: {
-            default: {
-                files: [{
-                    expand: true,
-                    cwd: config.imgSrcDir,
-                    src: ['**/*.{gif,jpg,png,svg}'],
-                    dest: config.imgResDir
-                }],
-            }
-        },
         svgstore: {
             options: {
                 includedemo: false,
@@ -20,15 +10,33 @@ module.exports = function (grunt, config) {
             },
             default : {
                 files: {
-                    'dist/img/svg_sprites.svg': ['foo/img/*.svg'],
+                    'foo/img/svg_sprites.svg': 'src/img/svg/*.svg'
                 }
             }
-        }
-        ,
+        },
+        svgmin: {
+            options: {
+                plugins: [
+                    {
+                        removeViewBox: false
+                    }, {
+                        removeUselessStrokeAndFill: false
+                    }
+                ]
+            },
+            dist: {
+                files: {
+                    'dist/img/svg_sprites.svg': 'foo/img/*.svg'
+                }
+            }
+        },
         watch: {
-            svgstore: {
-                files: 'src/foo/img/*.svg',
-                tasks: 'svgstore'
+            svgs: {
+                files: 'src/img/svg/*.svg',
+                tasks: [
+                    'svgstore',
+                    'svgmin'
+                ]
             }
         }
     });

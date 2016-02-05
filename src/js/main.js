@@ -1867,10 +1867,11 @@ function AppViewModel () {
 
     /* When screen size is larger than mobile and map is in view, adjust the
     rollover icons' positioning/size when hovering over a location frame */
-    self.toggleRolloverClasses = function () {
+    self.toggleHoverClasses = function () {
 
         // Cache refs to selected DOM elements
         var skillLevelIcon = 'skill-level-hover',
+            skillLevelBGIcon = 'skill-level-bg-hover',
             breakTypeIcon = 'break-type-hover',
             waveDirectionIcon = 'wave-direction-hover',
             bestSeasonIcon = 'best-season-hover',
@@ -1889,6 +1890,9 @@ function AppViewModel () {
 
             $$(skillLevelIcon).classList.remove("skill-level-hover-default");
             $$(skillLevelIcon).classList.add("skill-level-hover-map");
+
+            $$(skillLevelBGIcon).classList.remove("skill-level-hover-default");
+            $$(skillLevelBGIcon).classList.add("skill-level-hover-map");
 
             $$(breakTypeIcon).classList.remove("break-type-hover-default")
             $$(breakTypeIcon).classList.add("break-type-hover-map");
@@ -1926,6 +1930,9 @@ function AppViewModel () {
 
             $$(skillLevelIcon).classList.remove("skill-level-hover-map")
             $$(skillLevelIcon).classList.add("skill-level-hover-default");
+
+            $$(skillLevelBGIcon).classList.remove("skill-level-hover-default");
+            $$(skillLevelBGIcon).classList.add("skill-level-hover-map");
 
             $$(breakTypeIcon).classList.remove("break-type-hover-map")
             $$(breakTypeIcon).classList.add("break-type-hover-default");
@@ -2068,7 +2075,7 @@ function AppViewModel () {
                 /* If screen is larger than mobile view adjust the icons'
                 styling for the map view if enabled */
                 if(!mobileView && !gridView) {
-                    self.toggleRolloverClasses();
+                    self.toggleHoverClasses();
                 };
 
                 console.log('add hover tooltips');
@@ -2093,7 +2100,7 @@ function AppViewModel () {
                 /* If screen is larger than mobile view adjust the icons'
                 styling back to default if the the map view is enabled */
                 if(!mobileView && !gridView) {
-                    self.toggleRolloverClasses();
+                    self.toggleHoverClasses();
                 };
 
                 $img.css({
@@ -4073,7 +4080,7 @@ function AppViewModel () {
 
         if (beginner === intermediate && beginner === advanced) {
             if(rollover){
-                var skillLevelIcon = '<svg class="hover-icon rollover-info skill-level-bg-hover skill-level-hover-default"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg id="skill-level-hover" class="hover-icon rollover-info skill-level-hover skill-level-hover-default hover-tooltip-only" title="Difficulty: All levels"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>';
+                var skillLevelIcon = '<svg id="skill-level-bg-hover" class="hover-icon rollover-info skill-level-bg-hover skill-level-hover-default"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg id="skill-level-hover" class="hover-icon rollover-info skill-level-hover skill-level-hover-default hover-tooltip-only" title="Difficulty: All levels"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>';
 
             } else {
                 var skillLevelIcon = '<div class="skill-level card " title="Difficulty: All levels">' + '<svg class="skill-level-bg-guide"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg class="skill-level-guide"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '</div>';
@@ -4081,14 +4088,14 @@ function AppViewModel () {
         } else if (beginner >= intermediate && beginner > advanced) {
             if(beginner === intermediate) {
                 if(rollover){
-                    var skillLevelIcon = '<svg class="hover-icon rollover-info skill-level-bg-hover skill-level-hover-default"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg id="skill-level-hover" class="hover-icon rollover-info skill-level-hover skill-level-hover-default hover-tooltip-only" title="Difficulty: Beginner to Intermediate"><use xlink:href="img/svg_sprites.svg#skill_level_beginner_intermediate"/></svg>';
+                    var skillLevelIcon = '<svg id="skill-level-bg-hover" class="hover-icon rollover-info skill-level-bg-hover skill-level-hover-default"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg id="skill-level-hover" class="hover-icon rollover-info skill-level-hover skill-level-hover-default hover-tooltip-only" title="Difficulty: Beginner to Intermediate"><use xlink:href="img/svg_sprites.svg#skill_level_beginner_intermediate"/></svg>';
 
                 } else {
                     var skillLevelIcon = '<div class="skill-level card" title="Difficulty: Beginner to Intermediate">' + '<svg class="skill-level-bg-guide"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg class="skill-level-guide"><use xlink:href="img/svg_sprites.svg#skill_level_beginner_intermediate"/></svg>' + '</div>';
                 };
             } else {
                 if(rollover){
-                    var skillLevelIcon = '<svg class="hover-icon rollover-info skill-level-bg-hover skill-level-hover-default"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg id="skill-level-hover" class="hover-icon rollover-info skill-level-hover skill-level-hover-default hover-tooltip-only" title="Difficulty: Beginner"><use xlink:href="img/svg_sprites.svg#skill_level_beginner"/></svg>';
+                    var skillLevelIcon = '<svg id="skill-level-bg-hover" class="hover-icon rollover-info skill-level-bg-hover skill-level-hover-default"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg id="skill-level-hover" class="hover-icon rollover-info skill-level-hover skill-level-hover-default hover-tooltip-only" title="Difficulty: Beginner"><use xlink:href="img/svg_sprites.svg#skill_level_beginner"/></svg>';
 
                 } else {
                     var skillLevelIcon = '<div class="skill-level card" title="Difficulty: Beginner">' + '<svg class="skill-level-bg-guide"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg class="skill-level-guide"><use xlink:href="img/svg_sprites.svg#skill_level_beginner"/></svg>' + '</div>';
@@ -4097,14 +4104,14 @@ function AppViewModel () {
         } else if (intermediate > beginner && intermediate >= advanced) {
             if(intermediate === advanced) {
                 if(rollover){
-                    var skillLevelIcon = '<svg class="hover-icon rollover-info skill-level-bg-hover skill-level-hover-default"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg id="skill-level-hover" class="hover-icon rollover-info skill-level-hover skill-level-hover-default hover-tooltip-only" title="Difficulty: Intermediate to Advanced"><use xlink:href="img/svg_sprites.svg#skill_level_intermediate_advanced"/></svg>';
+                    var skillLevelIcon = '<svg id="skill-level-bg-hover" class="hover-icon rollover-info skill-level-bg-hover skill-level-hover-default"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg id="skill-level-hover" class="hover-icon rollover-info skill-level-hover skill-level-hover-default hover-tooltip-only" title="Difficulty: Intermediate to Advanced"><use xlink:href="img/svg_sprites.svg#skill_level_intermediate_advanced"/></svg>';
 
                 } else {
                     var skillLevelIcon = '<div class="skill-level card" title="Difficulty: Intermediate to Advanced">' + '<svg class="skill-level-bg-guide"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg class="skill-level-guide"><use xlink:href="img/svg_sprites.svg#skill_level_intermediate_advanced"/></svg>' + '</div>';
                 };
             } else {
                 if(rollover){
-                    var skillLevelIcon = '<svg class="hover-icon rollover-info skill-level-bg-hover skill-level-hover-default"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg id="skill-level-hover" class="hover-icon rollover-info skill-level-hover skill-level-hover-default hover-tooltip-only" title="Difficulty: Intermediate"><use xlink:href="img/svg_sprites.svg#skill_level_intermediate"/></svg>';
+                    var skillLevelIcon = '<svg id="skill-level-bg-hover" class="hover-icon rollover-info skill-level-bg-hover skill-level-hover-default"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg id="skill-level-hover" class="hover-icon rollover-info skill-level-hover skill-level-hover-default hover-tooltip-only" title="Difficulty: Intermediate"><use xlink:href="img/svg_sprites.svg#skill_level_intermediate"/></svg>';
 
                 } else {
                     var skillLevelIcon = '<div class="skill-level card" title="Difficulty: Intermediate">' + '<svg class="skill-level-bg-guide"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg class="skill-level-guide"><use xlink:href="img/svg_sprites.svg#skill_level_intermediate"/></svg>' + '</div>';
@@ -4112,7 +4119,7 @@ function AppViewModel () {
             };
         } else {
             if(rollover){
-                var skillLevelIcon = '<svg class="hover-icon rollover-info skill-level-bg-hover skill-level-hover-default"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg id="skill-level-hover" class="hover-icon rollover-info skill-level-hover skill-level-hover-default hover-tooltip-only" title="Difficulty: Advanced"><use xlink:href="img/svg_sprites.svg#skill_level_advanced"/></svg>';
+                var skillLevelIcon = '<svg id="skill-level-bg-hover" class="hover-icon rollover-info skill-level-bg-hover skill-level-hover-default"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg id="skill-level-hover" class="hover-icon rollover-info skill-level-hover skill-level-hover-default hover-tooltip-only" title="Difficulty: Advanced"><use xlink:href="img/svg_sprites.svg#skill_level_advanced"/></svg>';
 
             } else {
                 var skillLevelIcon = '<div class="skill-level card" title="Difficulty: Advanced">' + '<svg class="skill-level-bg-guide"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg class="skill-level-guide"><use xlink:href="img/svg_sprites.svg#skill_level_advanced"/></svg>' + '</div>';

@@ -26,10 +26,6 @@ body, html {
     fill: white;
 }
 
-.nav-search {
-    margin-right: 0;
-}
-
 .map-default,
 .search-default,
 .favorite-filter-default {

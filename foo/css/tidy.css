@@ -14,47 +14,33 @@ html {
   color: #56c4d1;
 }
 
-.search-symbol-desktop,
-.map-symbol-desktop,
-.favorite-filter-symbol-desktop {
+.nav-symbol {
   display: block;
   position: relative;
   float: right;
-  margin-right: 10px;
-  height: 28px;
-  width: 28px;
-  fill: #9d9d9d;
+  margin-top: 11px;
+  height: 30px;
+  width: 30px;
+  margin-right: 7px;
   cursor: pointer;
 }
 
-.search-symbol-desktop {
-  margin-top: 10.5px;
-}
-
-.map-symbol-desktop {
-  margin-top: 13px;
-}
-
-.favorite-filter-symbol-desktop {
-  margin-top: 11px;
-}
-
-.search-symbol-mobile,
-.map-symbol-mobile,
-.favorite-filter-symbol-mobile {
-  display: none;
-}
-
-.search-symbol-desktop:hover,
-.map-symbol-desktop:hover,
-.favorite-filter-symbol-desktop:hover {
+.nav-symbol:hover {
   fill: white;
+}
+
+.nav-search {
+  margin-right: 0;
 }
 
 .map-default,
 .search-default,
 .favorite-filter-default {
   fill: #9d9d9d;
+}
+
+.nav-mobile {
+  display: none;
 }
 
 .header {
@@ -73,7 +59,7 @@ html {
   padding-bottom: 12px;
 }
 
-.search-form-default-style {
+.search-form-default {
   font-size: 1.35em;
   width: 250px;
   float: right;
@@ -87,7 +73,7 @@ html {
   border-radius: 15px;
 }
 
-.clear-default-style {
+.clear-default {
   display: none;
   position: absolute;
   right: 10px;
@@ -102,14 +88,14 @@ html {
   border-radius: 50px;
 }
 
-.clear-default-style:hover,
-.clear-default-style:active {
+.clear-default:hover,
+.clear-default:active {
   cursor: pointer;
   background-color: #333333;
   border-color: #333333;
 }
 
-.map-container-default-style {
+.map-container-default {
   display: none;
   height: 350px;
   width: 100%;
@@ -121,7 +107,7 @@ html {
   height: 100%;
 }
 
-.favorite-default-style {
+.favorite-default {
   position: absolute;
   width: 31.56px;
   height: 29.528px;
@@ -139,7 +125,7 @@ html {
   position: relative;
 }
 
-.clear-favorites-button-default-style {
+.clear-favorites-button-default {
   height: 40px;
   width: 100px;
   margin: 20px 15px 15px 0px;
@@ -152,24 +138,24 @@ html {
   font-family: Arial, Verdana;
 }
 
-.clear-favorites-button-default-style:hover {
+.clear-favorites-button-default:hover {
   color: white;
   background-color: #b3b3b3;
   border-color: #b3b3b3;
 }
 
-.clear-favorites-button-default-style:focus {
+.clear-favorites-button-default:focus {
   outline: 0 !important;
 }
 
-.location-frame-default-style {
+.location-frame-default {
   display: none;
   text-align: center;
   padding: 10px 10px;
   cursor: pointer;
 }
 
-.location-name-default-style {
+.location-name-default {
   font-size: 1.5em;
   background: none repeat 0 0 #FFffff;
   opacity: 0.5;
@@ -184,7 +170,7 @@ html {
   border-radius: 12.5px;
 }
 
-.break-name-default-style {
+.break-name-default {
   font-size: 2em;
   color: white;
   text-shadow: 1px 1px 10px black;

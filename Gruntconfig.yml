@@ -5,6 +5,6 @@ cssSrcDir: src/css/
 
 
 cssDir: dist/css/
-imgResDir: dist/img/
+imgResDir: foo/img/
 jsDir: dist/js/
 

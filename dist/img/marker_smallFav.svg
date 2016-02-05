@@ -2,8 +2,12 @@
 <!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="23.401px" height="21.897px" viewBox="-421.739 430.266 23.401 21.897"
-	 enable-background="new -421.739 430.266 23.401 21.897" xml:space="preserve">
-<path fill="#FFFF1F" stroke="#9D9D9D" stroke-width="0.75" stroke-miterlimit="10" d="M-410.038,431.508l2.815,7.416h7.558
-	l-6.167,4.354l2.206,7.644l-6.411-4.583l-6.41,4.583l2.204-7.644l-6.168-4.354h7.56L-410.038,431.508z"/>
+	 width="23.2px" height="21.4px" viewBox="-421.6 430.4 23.2 21.4" enable-background="new -421.6 430.4 23.2 21.4"
+	 xml:space="preserve">
+<g>
+	<polygon fill="#FFFF1F" points="-410,431.5 -407.2,438.9 -399.6,438.9 -405.8,443.3 -403.6,450.9 -410,446.3 -416.4,450.9 
+		-414.2,443.3 -420.4,438.9 -412.8,438.9 	"/>
+	<polygon fill="none" stroke="#9D9D9D" stroke-width="0.75" stroke-miterlimit="10" points="-410,431.5 -407.2,438.9 -399.6,438.9 
+		-405.8,443.3 -403.6,450.9 -410,446.3 -416.4,450.9 -414.2,443.3 -420.4,438.9 -412.8,438.9 	"/>
+</g>
 </svg>

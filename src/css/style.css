@@ -15,6 +15,10 @@ body, html {
     display: block;
     position: relative;
     float: right;
+    margin-top: 11px;
+    height: 30px;
+    width: 30px;
+    margin-right: 7px;
     cursor: pointer;
 }
 
@@ -23,24 +27,7 @@ body, html {
 }
 
 .nav-search {
-    margin-top: 8px;
-    height: 34px;
-    width: 34px;
     margin-right: 0;
-}
-
-.nav-map {
-    margin-top: 11px;
-    height: 28px;
-    width: 28px;
-    margin-right: 7px;
-}
-
-.nav-favorite {
-    margin-top: 10px;
-    height: 29px;
-    width: 29px;
-    margin-right: 10px;
 }
 
 .map-default,
@@ -79,10 +66,15 @@ body, html {
     margin-top: 10px;
 }
 
+.no-connection {
+    height: 152px;
+    width: 152px;
+}
+
 .reload-button {
     height: 40px;
     width: 200px;
-    background-color: #00B8E6;
+    background-color: #56c4d1;
     color: white;
     font-size: .7em;
     font-family: Arial, Verdana;
@@ -90,7 +82,7 @@ body, html {
 
 .reload-button:hover {
     color: white;
-    background-color: #2FC5EA;
+    background-color: #35ABBB;
     border-color: #adadad;
 }
 
@@ -101,7 +93,7 @@ body, html {
     padding-bottom: 12px;
 }
 
-.search-form-default-style {
+.search-form-default {
     font-size: 1.35em;
     width: 250px;
     float: right;
@@ -115,7 +107,7 @@ body, html {
     border-radius: 15px;
 }
 
-.clear-default-style {
+.clear-default {
     display: none;
     position: absolute;
     right: 10px;
@@ -130,7 +122,7 @@ body, html {
     border-radius: 50px;
 }
 
-.clear-default-style:hover, .clear-default-style:active, .clear-map-view-style:hover, .clear-map-view-style:active {
+.clear-default:hover, .clear-default:active, .clear-map:hover, .clear-map:active {
     cursor:pointer;
     background-color: #333333;
     border-color: #333333;
@@ -141,7 +133,7 @@ body, html {
     font-size: 1.2em;
 }
 
-.map-container-default-style {
+.map-container-default {
     display: none;
     height: 350px;
     width: 100%;
@@ -169,7 +161,7 @@ body, html {
     user-select: none;
 }
 
-.favorite-default-style {
+.favorite-default {
     position: absolute;
     width: 31.56px;
     height: 29.528px;
@@ -193,7 +185,7 @@ body, html {
     position: relative;
 }
 
-.clear-favorites-button-default-style {
+.clear-favorites-button-default {
     height: 40px;
     width: 100px;
     margin: 20px 15px 15px 0px;
@@ -206,24 +198,24 @@ body, html {
     font-family: Arial, Verdana;
 }
 
-.clear-favorites-button-default-style:hover {
+.clear-favorites-button-default:hover {
     color: white;
     background-color: #b3b3b3;
     border-color: #b3b3b3;
 }
 
-.clear-favorites-button-default-style:focus {
+.clear-favorites-button-default:focus {
     outline: 0 !important;
 }
 
-.location-frame-default-style {
+.location-frame-default {
     display: none;
     text-align:center;
     padding: 10px 10px;
     cursor: pointer;
 }
 
-.location-name-default-style {
+.location-name-default {
     font-size: 1.5em;
     background: none repeat 0 0 #FFffff;
     opacity: 0.5;
@@ -238,7 +230,7 @@ body, html {
     border-radius: 12.5px;
 }
 
-.break-name-default-style {
+.break-name-default {
     font-size: 2em;
     color: white;
     text-shadow: 1px 1px 10px black;
@@ -263,84 +255,107 @@ body, html {
     box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-.skill-level-hover-default-style,
-.break-type-hover-default-style,
-.wave-direction-hover-default-style,
-.best-season-hover-default-style,
-.misc-info-one-hover-default-style,
-.misc-info-two-hover-default-style {
+.hover-icon {
     position: absolute;
+    border: 3px solid white;
+    border-radius: 10px;
+    padding: 5px;
+    pointer-events: none;
 }
 
-.skill-level-hover-default-style,
-.break-type-hover-default-style,
-.wave-direction-hover-default-style {
+
+.break-type-hover,
+.wave-direction-hover,
+.misc-info-one-hover,
+.best-season-hover {
+    fill: white;
+}
+
+.skill-level-hover {
+    fill: #24d400;
+}
+
+.skill-level-bg-hover {
+    fill: white;
+}
+
+.misc-info-two-hover {
+    fill: #ffff66;
+}
+
+.well-known-hover {
+    fill: white !important;
+}
+
+.skill-level-hover-default,
+.break-type-hover-default,
+.wave-direction-hover-default,
+.best-season-hover-default,
+.misc-info-one-hover-default,
+.misc-info-two-hover-default {
+    height: 80px;
+    width: 80px;
+}
+
+.skill-level-hover-default,
+.break-type-hover-default,
+.wave-direction-hover-default {
     top: 11.5%;
 }
 
-.best-season-hover-default-style,
-.misc-info-one-hover-default-style,
-.misc-info-two-hover-default-style {
+.best-season-hover-default,
+.misc-info-one-hover-default,
+.misc-info-two-hover-default {
     bottom: 11.5%;
 }
 
-.skill-level-hover-default-style,
-.best-season-hover-default-style {
+.skill-level-hover-default,
+.best-season-hover-default {
     left: 17%;
 }
 
-.wave-direction-hover-default-style,
-.misc-info-two-hover-default-style {
+.wave-direction-hover-default,
+.misc-info-two-hover-default {
     right: 17%;
 }
 
-.break-type-hover-default-style,
-.misc-info-one-hover-default-style {
+.break-type-hover-default,
+.misc-info-one-hover-default {
     left: 0;
     right: 0;
     margin: 0 auto;
 }
 
-.skill-level-hover-default-style,
-.break-type-hover-default-style,
-.break-type-hover-default-style,
-.wave-direction-hover-default-style,
-.best-season-hover-default-style,
-.misc-info-one-hover-default-style,
-.misc-info-two-hover-default-style {
-    height: 80px;
-}
-
-.cost-hover-default-style,
-.distance-hover-default-style,
-.water-temp-hover-default-style,
-.wave-size-hover-default-style {
+.cost-hover-default,
+.distance-hover-default,
+.water-temp-hover-default,
+.wave-size-hover-default {
     font-size: 1.2em;
     color: white;
     text-shadow: 1px 1px 10px black;
     position: absolute;
 }
 
-.cost-hover-default-style,
-.distance-hover-default-style {
+.cost-hover-default,
+.distance-hover-default {
     top: 10px;
 }
 
-.water-temp-hover-default-style,
-.wave-size-hover-default-style {
+.water-temp-hover-default,
+.wave-size-hover-default {
     bottom: 0;
 }
 
-.distance-hover-default-style,
-.water-temp-hover-default-style {
+.distance-hover-default,
+.water-temp-hover-default {
     right: 15px;
 }
 
-.cost-hover-default-style {
+.cost-hover-default {
     left: 15px;
 }
 
-.wave-size-hover-default-style {
+.wave-size-hover-default {
     left: 17px;
 }
 
@@ -381,6 +396,8 @@ body, html {
 
 .reset-button {
     position: relative;
+    height: 66px;
+    width: 70px;
     padding: 5px 1px 5px 5px;
     margin-top: 60px;
     border-radius: 50px;
@@ -514,6 +531,11 @@ body, html {
     font-size: 2.6em;
 }
 
+.rating {
+    height: 63px;
+    width: 63px;
+}
+
 .surf-conditions-swell {
     text-align: center;
     padding-top: 10px;
@@ -583,33 +605,84 @@ body, html {
 }
 
 /** Icons **/
-.wave-size-guide,
+
 .big-wave-guide,
 .well-known-guide,
-.skill-level-guide,
 .wave-direction-guide,
 .break-type-guide,
 .tide-guide,
 .best-season-guide,
 .climate-guide,
 .cost-guide,
-.distance-guide,
-.hazard-guide {
+.distance-guide-plane,
+.distance-guide-drive,
+.hazard-guide,
+.wave-size-guide {
     position: relative;
-    height: 100px;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+    height: 100%;
+    width: 100%;
+    padding: 8px;
+    fill: #333333;
 }
 
-.wave-size > img:first-child + p {
+.skill-level-guide,
+.skill-level-bg-guide {
+    position: absolute;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    padding: 8px;
+}
+
+.skill-level-guide {
+    fill: #333333;
+}
+
+.skill-level-bg-guide {
+    fill: #ffffff;
+    stroke: #333333;
+    stroke-width: 1.25px;
+}
+
+.hazard-guide {
+    fill: #ff9999;
+}
+
+.water-temp {
+    position: relative;
+}
+
+.suggested-attire-guide {
+    position: absolute;
+    height: 90%;
+    width: 90%;
+    fill: #333333;
+}
+
+.suggested-attire-season-guide {
+    margin-left: -44px;
+    margin-top: 4px;
+}
+
+.suggested-attire-wetsuit-guide {
+    margin-top: 2px;
+    margin-left: -42px;
+}
+
+.suggested-attire-boardies-guide {
+    margin-top: 2px;
+    margin-left: -46px;
+}
+
+.wave-size-guide {
+    margin-top: 12px;
+}
+
+.wave-size > svg:first-child + p {
     font-size: 1.5em;
     font-weight: bolder;
     font-color: #333333;
-    margin-top: -75px;
+    margin-top: -85px;
 }
 
 .climate p {
@@ -625,43 +698,48 @@ body, html {
     border-width: 2px;
 }
 
-.cost > img:first-child + p {
+.cost > svg:first-child + p {
     font-size: 1em;
     font-weight: bolder;
     font-color: #333333;
-    margin-top: -86px;
+    margin-top: -89px;
     margin-left: -11px;
 }
 
-.cost > img:first-child + p + p{
-    font-size: 1em;
-    font-weight: bolder;
-    font-color: #333333;
-    margin-top: -8px;
-    margin-left: 12px;
-}
-
-.cost > img:first-child + p + p + p {
+.cost > svg:first-child + p + p{
     font-size: 1em;
     font-weight: bolder;
     font-color: #333333;
     margin-top: -7.5px;
+    margin-left: 12px;
+}
+
+.cost > svg:first-child + p + p + p {
+    font-size: 1em;
+    font-weight: bolder;
+    font-color: #333333;
+    margin-top: -6.5px;
     margin-left: 40px;
+}
+
+.distance-guide-plane {
+    margin-top: -7px;
+    margin-right: -4px;
 }
 
 .distance-guide-hours {
     font-size: 1.8em;
     font-weight: bolder;
     font-color: #333333;
-    margin-top: -40px;
-    margin-right: 40px;
+    margin-top: -33px;
+    margin-right: 30px;
 }
 
 .distance-guide-miles {
     font-size: 1.2em;
     font-weight: bolder;
     font-color: #333333;
-    margin-top: -85px;
+    margin-top: -87px;
     margin-left: 40px;
 }
 
@@ -757,7 +835,7 @@ body, html {
         outline: 0;
     }
 
-    .clear-default-style {
+    .clear-default {
         margin-top: 23px;
         margin-left: 84%;
     }
@@ -770,7 +848,7 @@ body, html {
         padding-bottom: 0px;
     }
 
-    .map-container-default-style {
+    .map-container-default {
         display: none;
         height: 245px;
     }
@@ -782,7 +860,7 @@ body, html {
         font-size: 3em;
     }
 
-    .clear-favorites-button-default-style {
+    .clear-favorites-button-default {
         height: 100%;
         width: 100%;
         background-color: #ffffff;
@@ -801,49 +879,77 @@ body, html {
         margin-bottom: -15px;
     }
 
-    .clear-favorites-button-default-style:hover {
+    .clear-favorites-button-default:hover {
         color: white;
         background-color: #b3b3b3;
         border-color: #b3b3b3;
     }
 
-    .clear-favorites-button-default-style:focus {
+    .clear-favorites-button-default:focus {
         outline: 0 !important;
     }
 
-    .skill-level-hover-default-style {
+    .skill-level-hover-default,
+    .break-type-hover-default,
+    .wave-direction-hover-default,
+    .best-season-hover-default,
+    .misc-info-one-hover-default,
+    .misc-info-two-hover-default {
+        height: 20vw;
+        width: 20vw;
+        border-width: .8vw;
+    }
+
+    .skill-level-hover-default,
+    .best-season-hover-default {
         left: 18%;
-        height: 38%;
     }
 
-    .break-type-hover-default-style {
-        height: 38%;
+    .skill-level-hover-default,
+    .wave-direction-hover-default,
+    .break-type-hover-default {
+        top: 11.25%;
     }
 
-    .wave-direction-hover-default-style {
+    .best-season-hover-default,
+    .misc-info-two-hover-default,
+    .misc-info-one-hover-default {
+        bottom: 11.25%;
+    }
+
+    .wave-direction-hover-default,
+    .misc-info-two-hover-default {
         right: 18%;
-        height: 38%;
     }
 
-    .best-season-hover-default-style {
-        left: 18%;
-        height: 38%;
-    }
-
-    .misc-info-one-hover-default-style {
-        height: 38%;
-    }
-
-    .misc-info-two-hover-default-style {
-        right: 18%;
-        height: 38%;
-    }
-
-    .cost-hover-default-style, .distance-hover-default-style, .water-temp-hover-default-style, .wave-size-hover-default-style {
+    .cost-hover-default,
+    .distance-hover-default,
+    .water-temp-hover-default,
+    .wave-size-hover-default {
         font-size: 4.5vw;
     }
 
-    .break-name-default-style {
+    .cost-hover-default,
+    .wave-size-hover-default {
+        left: 2%;
+    }
+
+    .cost-hover-default,
+    .distance-hover-default {
+        top: 0;
+    }
+
+    .wave-size-hover-default,
+    .water-temp-hover-default {
+        bottom: -3%;
+    }
+
+    .water-temp-hover-default,
+    .distance-hover-default {
+        right: 2%;
+    }
+
+    .break-name-default {
         font-size: 1.8em;
     }
 
@@ -914,7 +1020,7 @@ body, html {
         margin-left: 10px;
     }
 
-    .star {
+    .rating {
         height: 60px;
         width: 60px;
     }
@@ -935,14 +1041,14 @@ body, html {
         margin-top: -6px;
     }
 
-    .location-frame-default-style {
+    .location-frame-default {
         text-align:center;
         margin-bottom: 1px;
         padding: 0px 0px 0px 0px;
         cursor: pointer;
     }
 
-    .favorite-default-style {
+    .favorite-default {
         top: 7%;
         left: 5%;
     }
@@ -972,13 +1078,13 @@ body, html {
         width: 25%;
     }
 
-    .favorite-default-style {
+    .favorite-default {
         top: 7%;
         width: 60px;
         height: 60px;
     }
 
-    .break-name-default-style {
+    .break-name-default {
         font-size: 4.9vw;
     }
 
@@ -989,7 +1095,7 @@ body, html {
 
 @media (min-width: 768px) {
 
-    .search-form-map-view-style {
+    .search-form-map {
         font-size: 1.35em;
         width: 250px;
         float: right;
@@ -1003,12 +1109,12 @@ body, html {
         border-radius: 15px;
     }
 
-    .search-form-default-style:focus, .search-form-map-view-style:focus {
+    .search-form-default:focus, .search-form-map:focus {
         box-shadow: 0 0 15px 5px #b0e0ee;
         border: 2px solid #bebede;
     }
 
-    .clear-map-view-style {
+    .clear-map {
         display: none;
         position: absolute;
         right: 30px;
@@ -1033,7 +1139,7 @@ body, html {
         width: 365px;
     }
 
-    .clear-favorites-button-map-view-style {
+    .clear-favorites-button-map {
         position: absolute;
         height: 33px;
         width: 80px;
@@ -1049,22 +1155,22 @@ body, html {
         box-shadow:0 0 3px rgba(0, 0, 0, 0.5);
     }
 
-    .clear-favorites-button-map-view-style:hover {
+    .clear-favorites-button-map:hover {
         color: #333333;
         background-color: #E1DFDF;
     }
 
-    .clear-favorites-button-map-view-style:focus {
+    .clear-favorites-button-map:focus {
         outline: 0 !important;
     }
 
-    .map-container-map-view-style {
+    .map-container-map {
         position: absolute;
         height: 100%;
         padding: 0;
     }
 
-    .location-grid-map-view-style {
+    .location-grid-map {
         position: fixed;
         left: 0;
         bottom: 0;
@@ -1078,7 +1184,7 @@ body, html {
         margin: 0;
     }
 
-    .location-frame-map-view-style {
+    .location-frame-map {
         position: relative;
         display: inline-block;
         vertical-align: middle;
@@ -1091,7 +1197,7 @@ body, html {
         cursor: pointer;
     }
 
-    .location-name-map-view-style {
+    .location-name-map {
         font-size: 1.5em;
         background: none repeat 0 0 #FFffff;
         opacity: 0.5;
@@ -1106,7 +1212,7 @@ body, html {
         border-radius: 12.5px;
     }
 
-    .break-name-map-view-style {
+    .break-name-map {
         font-size: 2em;
         color: white;
         text-shadow: 1px 1px 10px black;
@@ -1120,7 +1226,7 @@ body, html {
         border-radius: 12.5px;
     }
 
-    .favorite-map-view-style {
+    .favorite-map {
         position: absolute;
         width: 31.56px;
         height: 29.528px;
@@ -1128,85 +1234,72 @@ body, html {
         top: 3.5%;
     }
 
-    .skill-level-hover-map-view-style {
-        position: absolute;
-        top: 7.5%;
-        left: 15%;
+    .skill-level-hover-map,
+    .break-type-hover-map,
+    .wave-direction-hover-map,
+    .best-season-hover-map,
+    .misc-info-one-hover-map,
+    .misc-info-two-hover-map {
         height: 80px;
+        width: 80px;
     }
 
-    .break-type-hover-map-view-style {
-        position: absolute;
+    .skill-level-hover-map,
+    .break-type-hover-map,
+    .wave-direction-hover-map {
         top: 7.5%;
+    }
+
+    .best-season-hover-map,
+    .misc-info-one-hover-map,
+    .misc-info-two-hover-map {
+        bottom: 7.5%;
+    }
+
+    .skill-level-hover-map,
+    .best-season-hover-map {
+        left: 15%;
+    }
+
+    .wave-direction-hover-map,
+    .misc-info-two-hover-map {
+        right: 15%;
+    }
+
+    .break-type-hover-map,
+    .misc-info-one-hover-map {
         left: 0;
         right: 0;
         margin: 0 auto;
-        height: 80px;
     }
 
-    .wave-direction-hover-map-view-style {
-        position: absolute;
-        top: 7.5%;
-        right: 15%;
-        height: 80px;
-    }
-
-    .best-season-hover-map-view-style {
-        position: absolute;
-        bottom: 7.5%;
-        left: 15%;
-        height: 80px;
-    }
-
-    .misc-info-one-hover-map-view-style {
-        position: absolute;
-        bottom: 7.5%;
-        left: 0;
-        right: 0;
-        margin: 0 auto;
-        height: 80px;
-    }
-
-    .misc-info-two-hover-map-view-style {
-        position: absolute;
-        bottom: 7.5%;
-        right: 15%;
-        height: 80px;
-    }
-
-    .cost-hover-map-view-style {
+    .cost-hover-map,
+    .distance-hover-map,
+    .water-temp-hover-map,
+    .wave-size-hover-map {
         font-size: 1.2em;
         color: white;
         text-shadow: 1px 1px 10px black;
         position: absolute;
-        top: 0px;
-        left: 5px;
     }
 
-    .distance-hover-map-view-style {
-        font-size: 1.2em;
-        color: white;
-        text-shadow: 1px 1px 10px black;
-        position:absolute;
+    .cost-hover-map,
+    .distance-hover-map {
         top: 0px;
+    }
+
+    .water-temp-hover-map ,
+    .wave-size-hover-map {
+        bottom: -12px;
+    }
+
+    .distance-hover-map,
+    .water-temp-hover-map {
         right: 5px;
     }
 
-    .water-temp-hover-map-view-style {
-        font-size: 1.2em;
-        color: white;
-        text-shadow: 1px 1px 10px black;
-        position: absolute;
-        bottom: -12px;
-        right: 5px;
-    }
-
-    .wave-size-hover-map-view-style {
-        font-size: 1.2em;
-        color: white;
-        text-shadow: 1px 1px 10px black;
-        position: absolute;
-        bottom: -12px;
+    .cost-hover-map,
+    .wave-size-hover-map {
         left: 5px;
     }
 
@@ -1278,95 +1371,79 @@ body, html {
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
-    .skill-level-hover-default-style {
-        top: 17%;
-        left: 17%;
-        height: 70px;
+
+    .skill-level-hover-default,
+    .break-type-hover-default,
+    .wave-direction-hover-default,
+    .best-season-hover-default,
+    .misc-info-one-hover-default,
+    .misc-info-two-hover-default {
+        height: 73px;
+        width: 73px;
     }
 
-    .break-type-hover-default-style {
-        top: 17%;
-        height: 70px;
+    .skill-level-hover-default,
+    .best-season-hover-default {
+        left: 15%;
     }
 
-    .wave-direction-hover-default-style {
-        top: 17%;
-        right: 17%;
-        height: 70px;
+    .skill-level-hover-default,
+    .wave-direction-hover-default,
+    .break-type-hover-default {
+        top: 15%;
     }
 
-    .best-season-hover-default-style {
-        bottom: 17%;
-        left: 17%;
-        height: 70px;
+    .misc-info-two-hover-default,
+    .wave-direction-hover-default {
+        right: 15%;
     }
 
-    .misc-info-one-hover-default-style {
-        bottom: 17%;
-        height: 70px;
+    .misc-info-two-hover-default,
+    .misc-info-one-hover-default,
+    .best-season-hover-default {
+        bottom: 15%;
     }
 
-    .misc-info-two-hover-default-style {
-        bottom: 17%;
-        right: 17%;
-        height: 70px;
-    }
-
-    .clear-default-style {
+    .clear-default {
         margin-left: 94.5%;
     }
 
-    .break-name-default-style {
+    .break-name-default {
         font-size: 1.7em;
     }
 }
 
 @media (min-width: 1200px) {
-    .skill-level-hover-default-style {
+
+    .best-season-hover-default,
+    .skill-level-hover-default {
         left: 18%;
-        height: 80px;
     }
 
-    .wave-direction-hover-default-style {
+    .misc-info-two-hover-default,
+    .wave-direction-hover-default {
         right: 18%;
-        height: 80px;
     }
 
-    .best-season-hover-default-style {
-        left: 18%;
-        height: 80px;
-    }
-
-    .misc-info-two-hover-default-style {
-        right: 18%;
-        height: 80px;
-    }
-
-    .cost-hover-default-style {
+    .wave-size-hover-default,
+    .cost-hover-default {
         left: 23px;
     }
 
-    .distance-hover-default-style {
+    .water-temp-hover-default,
+    .distance-hover-default {
         right: 23px;
-    }
-
-    .water-temp-hover-default-style {
-        right: 23px;
-    }
-
-    .wave-size-hover-default-style {
-        left: 23px;
     }
 
     .col-lg-misc {
         width: 12.5%;
     }
 
-    .clear-default-style {
+    .clear-default {
         margin-left: 95.5%;
     }
 
-    .favorite-default-style {
+    .favorite-default {
         left: 7%;
     }
 }

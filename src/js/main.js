@@ -159,6 +159,10 @@ function AppViewModel () {
 
     this.self = this;
 
+    var $$ = function (id) {
+        return document.getElementById(id);
+    };
+
     // Cache common DOM refs
     var $window = $(window),
         $body = $('body'),
@@ -212,7 +216,7 @@ function AppViewModel () {
         $('.list-section').hide();
 
         // Cache error message, image, and container
-        var locationLoadError = '<section class="error-section">' + '<div class="row">' + '<div class="col-xs-12 data-load-error-container">' + '<img src="img/no_connection.svg" class="no-connection">' + '<p>Dude! Really?! =(</p>' + '</div>' + '</div>' + '</section>';
+        var locationLoadError = '<section class="error-section">' + '<div class="row">' + '<div class="col-xs-12 data-load-error-container">' + '<svg class="no-connection"><use xlink:href="img/svg_sprites.svg#no_connection"/></svg>' + '<p>Dude! Really?! =(</p>' + '</div>' + '</div>' + '</section>';
 
         // Cache a reload button
         var reloadButton = '<button type="button" class="btn reload-button">Reload</button>';
@@ -1328,7 +1332,7 @@ function AppViewModel () {
             $favorite = $('.favorite');
 
         // Change all location frames style to map view
-        $allLocationFrames.addClass("location-frame-map-view-style").removeClass("location-frame-default-style");
+        $allLocationFrames.addClass("location-frame-map").removeClass("location-frame-default");
 
         // Loop through all of the location frames
         $allLocationFrames.each(function() {
@@ -1349,14 +1353,14 @@ function AppViewModel () {
         $allLocationFrames.removeClass("col-xs-12 col-sm-6 col-md-4");
 
         // Change break name style to map view style
-        $breakName.removeClass("break-name-default-style").addClass("break-name-map-view-style");
+        $breakName.removeClass("break-name-default").addClass("break-name-map");
 
         // Change location name style to map view style
-        $locationName.removeClass("location-name-default-style").addClass("location-name-map-view-style");
+        $locationName.removeClass("location-name-default").addClass("location-name-map");
 
         /* Change 'favorite' symbol style to map view style *must change
         via attr in order to change the class of an inline svg */
-        $favorite.attr("class", "favorite favorite-map-view-style");
+        $favorite.attr("class", "favorite favorite-map");
     };
 
     // Show all of the relevant location frames
@@ -1637,7 +1641,7 @@ function AppViewModel () {
 
         // Cache DOM elements
         var $resetMapContainer = $('.reset-map-container'),
-            $resetMapIcon = '<img src="img/reset_button.svg" class="reset-button" alt="reload location frames and markers button">';
+            $resetMapIcon = '<svg class="reset-button" alt="reload location frames and markers button"><use xlink:href="img/svg_sprites.svg#reset_button"/></svg>';
 
         // Add the reset map button
         $resetMapContainer.append($resetMapIcon);
@@ -1866,16 +1870,16 @@ function AppViewModel () {
     self.toggleRolloverClasses = function () {
 
         // Cache refs to selected DOM elements
-        var $skillLevelIcon = $('.skill-level-rollover'),
-            $breakTypeIcon = $('.break-type-rollover'),
-            $waveDirectionIcon = $('.wave-direction-rollover')
-            $bestSeasonIcon = $('.best-season-rollover'),
-            $miscInfoOneIcon = $('.misc-info-one-rollover'),
-            $miscInfoTwoIcon = $('.misc-info-two-rollover'),
-            $distanceInfo = $('.distance-rollover'),
-            $waterTempInfo = $('.water-temp-rollover'),
-            $waveSizeInfo = $('.wave-size-rollover'),
-            $costInfo = $('.cost-rollover');
+        var skillLevelIcon = 'skill-level-hover',
+            breakTypeIcon = 'break-type-hover',
+            waveDirectionIcon = 'wave-direction-hover',
+            bestSeasonIcon = 'best-season-hover',
+            miscInfoOneIcon = 'misc-info-one-hover',
+            miscInfoTwoIcon = 'misc-info-two-hover',
+            distanceInfo = 'distance-hover',
+            waterTempInfo = 'water-temp-hover',
+            waveSizeInfo = 'wave-size-hover',
+            costInfo = 'cost-hover';
 
         /* Whilst hovering over a location add/remove the appropriate classes
         in order to change the icons' styling */
@@ -1883,25 +1887,35 @@ function AppViewModel () {
 
             console.log('adjust hover icons and info to map view style');
 
-            $skillLevelIcon.addClass("skill-level-hover-map-view-style").removeClass("skill-level-hover-default-style");
+            $$(skillLevelIcon).classList.remove("skill-level-hover-default");
+            $$(skillLevelIcon).classList.add("skill-level-hover-map");
 
-            $breakTypeIcon.addClass("break-type-hover-map-view-style").removeClass("break-type-hover-default-style");
+            $$(breakTypeIcon).classList.remove("break-type-hover-default")
+            $$(breakTypeIcon).classList.add("break-type-hover-map");
 
-            $waveDirectionIcon.addClass("wave-direction-hover-map-view-style").removeClass("wave-direction-hover-default-style");
+            $$(waveDirectionIcon).classList.remove("wave-direction-hover-default")
+            $$(waveDirectionIcon).classList.add("wave-direction-hover-map");
 
-            $bestSeasonIcon.addClass("best-season-hover-map-view-style").removeClass("best-season-hover-default-style");
+            $$(bestSeasonIcon).classList.remove("best-season-hover-default")
+            $$(bestSeasonIcon).classList.add("best-season-hover-map");
 
-            $miscInfoOneIcon.addClass("misc-info-one-hover-map-view-style").removeClass("misc-info-one-hover-default-style");
+            $$(miscInfoOneIcon).classList.remove("misc-info-one-hover-default")
+            $$(miscInfoOneIcon).classList.add("misc-info-one-hover-map");
 
-            $miscInfoTwoIcon.addClass("misc-info-two-hover-map-view-style").removeClass("misc-info-two-hover-default-style");
+            $$(miscInfoTwoIcon).classList.remove("misc-info-two-hover-default")
+            $$(miscInfoTwoIcon).classList.add("misc-info-two-hover-map");
 
-            $distanceInfo.addClass("distance-hover-map-view-style").removeClass("distance-hover-default-style");
+            $$(distanceInfo).classList.remove("distance-hover-default")
+            $$(distanceInfo).classList.add("distance-hover-map");
 
-            $waterTempInfo.addClass("water-temp-hover-map-view-style").removeClass("water-temp-hover-default-style");
+            $$(waterTempInfo).classList.remove("water-temp-hover-default")
+            $$(waterTempInfo).classList.add("water-temp-hover-map");
 
-            $waveSizeInfo.addClass("wave-size-hover-map-view-style").removeClass("wave-size-hover-default-style");
+            $$(waveSizeInfo).classList.remove("wave-size-hover-default")
+            $$(waveSizeInfo).classList.add("wave-size-hover-map");
 
-            $costInfo.addClass("cost-hover-map-view-style").removeClass("cost-hover-default-style");
+            $$(costInfo).classList.remove("cost-hover-default")
+            $$(costInfo).classList.add("cost-hover-map");
 
 
         /* When hovering over a location is finished, add/remove the appropriate classes in order to change the icons' styling back to the
@@ -1910,25 +1924,35 @@ function AppViewModel () {
 
             console.log('revert hover icons and info back to default style');
 
-            $skillLevelIcon.addClass("skill-level-hover-default-style").removeClass("skill-level-hover-map-view-style");
+            $$(skillLevelIcon).classList.remove("skill-level-hover-map")
+            $$(skillLevelIcon).classList.add("skill-level-hover-default");
 
-            $breakTypeIcon.addClass("break-type-hover-default-style").removeClass("break-type-hover-map-view-style");
+            $$(breakTypeIcon).classList.remove("break-type-hover-map")
+            $$(breakTypeIcon).classList.add("break-type-hover-default");
 
-            $waveDirectionIcon.addClass("wave-direction-hover-default-style").removeClass("wave-direction-hover-map-view-style");
+            $$(waveDirectionIcon).classList.remove("wave-direction-hover-map")
+            $$(waveDirectionIcon).classList.add("wave-direction-hover-default");
 
-            $bestSeasonIcon.addClass("best-season-hover-default-style").removeClass("best-season-hover-map-view-style");
+            $$(bestSeasonIcon).classList.remove("best-season-hover-map")
+            $$(bestSeasonIcon).classList.add("best-season-hover-default");
 
-            $miscInfoOneIcon.addClass("misc-info-one-hover-default-style").removeClass("misc-info-one-hover-map-view-style");
+            $$(miscInfoOneIcon).classList.remove("misc-info-one-hover-map")
+            $$(miscInfoOneIcon).classList.add("misc-info-one-hover-default");
 
-            $miscInfoTwoIcon.addClass("misc-info-two-hover-default-style").removeClass("misc-info-two-hover-map-view-style");
+            $$(miscInfoTwoIcon).classList.remove("misc-info-two-hover-map")
+            $$(miscInfoTwoIcon).classList.add("misc-info-two-hover-default");
 
-            $distanceInfo.addClass("distance-hover-default-style").removeClass("distance-hover-map-view-style");
+            $$(distanceInfo).classList.remove("distance-hover-map")
+            $$(distanceInfo).classList.add("distance-hover-default");
 
-            $waterTempInfo.addClass("water-temp-hover-default-style").removeClass("water-temp-hover-map-view-style");
+            $$(waterTempInfo).classList.remove("water-temp-hover-map")
+            $$(waterTempInfo).classList.add("water-temp-hover-default");
 
-            $waveSizeInfo.addClass("wave-size-hover-default-style").removeClass("wave-size-hover-map-view-style");
+            $$(waveSizeInfo).classList.remove("wave-size-hover-map")
+            $$(waveSizeInfo).classList.add("wave-size-hover-default");
 
-            $costInfo.addClass("cost-hover-default-style").removeClass("cost-hover-map-view-style");
+            $$(costInfo).classList.remove("cost-hover-map")
+            $$(costInfo).classList.add("cost-hover-default");
         };
     };
 
@@ -2520,7 +2544,7 @@ function AppViewModel () {
         if(mobileView || gridView || guideView) {
 
             // Set the map to default
-            $mapContainer.removeClass("map-container-map-view-style").addClass("map-container-default-style");
+            $mapContainer.removeClass("map-container-map").addClass("map-container-default");
 
             // In the mobile view, set the map container away from 100%
             $mapContainer.css("height", "245px");
@@ -2531,15 +2555,15 @@ function AppViewModel () {
                 $mapContainer.show();
             };
 
-            $searchForm.removeClass("search-form-map-view-style").addClass("search-form-default-style");
+            $searchForm.removeClass("search-form-map").addClass("search-form-default");
 
-            $clearSymbol.removeClass("clear-map-view-style").addClass("clear-default-style");
+            $clearSymbol.removeClass("clear-map").addClass("clear-default");
 
-            $clearFavsBtn.removeClass("clear-favorites-button-map-view-style").addClass("clear-favorites-button-default-style");
+            $clearFavsBtn.removeClass("clear-favorites-button-map").addClass("clear-favorites-button-default");
 
-            $locationGrid.removeClass("location-grid-map-view-style");
+            $locationGrid.removeClass("location-grid-map");
 
-            $locationFrame.removeClass("location-frame-map-view-style").addClass("location-frame-default-style");
+            $locationFrame.removeClass("location-frame-map").addClass("location-frame-default");
 
             // Change the container away from Bootstrap's 'fluid' class
             $container.removeClass("container-fluid").addClass("container");
@@ -2551,14 +2575,14 @@ function AppViewModel () {
             $locationFrame.addClass("col-xs-12 col-sm-6 col-md-4");
 
             // Change break name style back to default
-            $breakName.removeClass("break-name-map-view-style").addClass("break-name-default-style");
+            $breakName.removeClass("break-name-map").addClass("break-name-default");
 
             // Change location name style back to default
-            $locationName.removeClass("location-name-map-view-style").addClass("location-name-default-style");
+            $locationName.removeClass("location-name-map").addClass("location-name-default");
 
             /* Change 'favorite' symbol style back to default *must change
             via attr in order to change the class of an inline svg */
-            $favoriteSymbol.attr("class", "favorite favorite-default-style");
+            $favoriteSymbol.attr("class", "favorite favorite-default");
 
             /* Remove any listeners attached to the location grid (horiz.
               scroll) */
@@ -2588,15 +2612,15 @@ function AppViewModel () {
 
             console.log('update map view layout');
 
-            $mapContainer.removeClass("map-container-default-style").addClass("map-container-map-view-style");
+            $mapContainer.removeClass("map-container-default").addClass("map-container-map");
 
-            $searchForm.addClass("search-form-map-view-style").removeClass("search-form-default-style");
+            $searchForm.addClass("search-form-map").removeClass("search-form-default");
 
-            $clearSymbol.addClass("clear-map-view-style").removeClass("clear-default-style");
+            $clearSymbol.addClass("clear-map").removeClass("clear-default");
 
-            $clearFavsBtn.removeClass("clear-favorites-button-default-style").addClass("clear-favorites-button-map-view-style");
+            $clearFavsBtn.removeClass("clear-favorites-button-default").addClass("clear-favorites-button-map");
 
-            $locationGrid.addClass("location-grid-map-view-style");
+            $locationGrid.addClass("location-grid-map");
 
             // Change the container to Bootstrap's 'fluid' class
             $container.removeClass("container").addClass("container-fluid");
@@ -3010,7 +3034,7 @@ function AppViewModel () {
                 // Hide the filters container
                 // If the map is visible, fade out the filters container
                 // If it isn't visible, slide the filters container up
-                if($('.map-container-map-view-style').length) {
+                if($('.map-container-map').length) {
                     $filtersContainer.fadeOut(500);
                 } else {
                     $filtersContainer.slideUp(500);
@@ -3088,7 +3112,7 @@ function AppViewModel () {
             };
 
             // Scroll to the top of the page only if 'map view' not enabled
-            if(!$('.map-container-map-view-style').length) {
+            if(!$('.map-container-map').length) {
                 // Scroll to top of the page
                 document.body.scrollTop = document.documentElement.scrollTop = 0;
             };
@@ -3103,7 +3127,7 @@ function AppViewModel () {
         // Hide the filters container
         // If the map is visible, fade only the button out
         // If it isn't visible, slide the filters container up
-        if($('.map-container-map-view-style').length) {
+        if($('.map-container-map').length) {
             $filtersContainer.fadeOut(500);
         } else {
             $filtersContainer.slideUp(500);
@@ -3475,7 +3499,7 @@ function AppViewModel () {
 
         /* Display icon associated for the suggested water attire for each
         season */
-        displaySuggestedAttireIcons(obj.avgWaterTemp, canvasWidth, canvasHeight, $iconContainer);
+        displaySuggestedAttireIcons(obj.avgWaterTemp, $iconContainer);
 
         // Display icon associated for the break's climate
         var climateIcon = displayClimateIcon(obj.climate);
@@ -3724,12 +3748,12 @@ function AppViewModel () {
                     var windImg = 'img/wind.svg'
 
                     /* Get wave and conditions ratings */
-                    var rating = [];
+                    rating = [];
 
                     /* Add solid stars to the array equal to number value
                     retrieved from MSW*/
                     var solidRatingLength = forecastData.solidRating;
-                    var solidStar = '<img class="star" src="img/star_filled.svg"/>';
+                    var solidStar = '<svg class="rating"><use xlink:href="img/svg_sprites.svg#star_filled"/></svg>';
 
                     for (var i = solidRatingLength; i--;) {
                         rating.push(solidStar);
@@ -3738,7 +3762,7 @@ function AppViewModel () {
                     /* Add faded stars to the array equal to number value
                     retrieved from MSW*/
                     var fadedRatingLength = forecastData.fadedRating;
-                    var fadedStar = '<img class="star" src="img/star_faded.svg"/>';
+                    var fadedStar = '<svg class="rating"><use xlink:href="img/svg_sprites.svg#star_faded"/></svg>';
 
                     for (var i = fadedRatingLength; i--;) {
                         rating.push(fadedStar);
@@ -3746,7 +3770,7 @@ function AppViewModel () {
 
                     /* Add empty stars to the array equal 5 minus the total amount of filled and faded stars */
                     var fillEmptyStars = 5 - rating.length;
-                    var emptyStar = '<img class="star" src="img/star_empty.svg"/>';
+                    var emptyStar = '<svg class="rating"><use xlink:href="img/svg_sprites.svg#star_empty"/></svg>';
 
                     for (var i = fillEmptyStars; i--;) {
                         rating.push(emptyStar);
@@ -3968,9 +3992,9 @@ function AppViewModel () {
         };
 
         if(favorite) {
-            var icon = '<span class="favorite-wrapper-guide is-a-favorite-guide"><svg class="favorite-guide"><use xlink:href="#star"/></svg></span>';
+            var icon = '<span class="favorite-wrapper-guide is-a-favorite-guide"><svg class="favorite-guide"><use xlink:href="img/svg_sprites.svg#star"/></svg></span>';
         } else {
-            var icon = '<span class="favorite-wrapper-guide not-a-favorite-guide"><svg class="favorite-guide"><use xlink:href="#star"/></svg></span>';
+            var icon = '<span class="favorite-wrapper-guide not-a-favorite-guide"><svg class="favorite-guide"><use xlink:href="img/svg_sprites.svg#star"/></svg></span>';
         };
 
         return icon;
@@ -3980,14 +4004,13 @@ function AppViewModel () {
 
         if(rollover) {
             if(obj.bigWave) {
-                var icon = images.roIconMiscOneBigWave;
-                icon.title = "Known for big wave surfing";
+                var icon = '<svg id="misc-info-one-hover" class="hover-icon rollover-info misc-info-one-hover misc-info-one-hover misc-info-one-hover-default hover-tooltip-only" title="Known for big wave surfing"><use xlink:href="img/svg_sprites.svg#big_wave"/></svg>';
             } else {
                 var icon = displaySuggestedAttireIcons(obj.avgWaterTemp);
             };
         } else {
             if(obj.bigWave) {
-                var icon = '<div class=" big-wave card " title="Known for big wave surfing">' + '<img src="img/big_wave.svg" class="big-wave-guide">' + '</div>';
+                var icon = '<div class=" big-wave card" title="Known for big wave surfing">' + '<svg class="big-wave-guide"><use xlink:href="img/svg_sprites.svg#big_wave"/></svg>' + '</div>';
 
                 // Add big wave card to surf guide
                 $iconContainer.append(icon);
@@ -4006,14 +4029,13 @@ function AppViewModel () {
 
         if(rollover) {
             if(obj.wellKnown) {
-                var icon = images.roIconMiscTwoWellknown;
-                icon.title = "Well known wave";
+                var icon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only well-known-hover" title="Well known wave"><use xlink:href="img/svg_sprites.svg#well_known"/></svg>';
             } else {
                 var icon = displayHazardIcons(obj.hazards, $iconContainer);
             };
         } else {
             if(obj.wellKnown) {
-                var icon = '<div class=" well-known card " title="Well known wave">' + '<img src="img/well_known.svg" class="well-known-guide">' + '</div>';
+                var icon = '<div class="well-known card" title="Well known wave">' + '<svg class="well-known-guide"><use xlink:href="img/svg_sprites.svg#well_known"/></svg>' + '</div>';
 
                 $iconContainer.append(icon);
 
@@ -4051,49 +4073,49 @@ function AppViewModel () {
 
         if (beginner === intermediate && beginner === advanced) {
             if(rollover){
-                var skillLevelIcon = images.roIconSkillAll;
-                skillLevelIcon.title = "Difficulty: All levels";
+                var skillLevelIcon = '<svg class="hover-icon rollover-info skill-level-bg-hover skill-level-hover-default"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg id="skill-level-hover" class="hover-icon rollover-info skill-level-hover skill-level-hover-default hover-tooltip-only" title="Difficulty: All levels"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>';
+
             } else {
-                var skillLevelIcon = '<div class="skill-level card " title="Difficulty: All levels">' + '<img src="img/skill_level_all.svg" class="skill-level-guide">' + '</div>';
+                var skillLevelIcon = '<div class="skill-level card " title="Difficulty: All levels">' + '<svg class="skill-level-bg-guide"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg class="skill-level-guide"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '</div>';
             };
         } else if (beginner >= intermediate && beginner > advanced) {
             if(beginner === intermediate) {
                 if(rollover){
-                    var skillLevelIcon = images.roIconSkillBegInt;
-                    skillLevelIcon.title = "Difficulty: Beginner to Intermediate";
+                    var skillLevelIcon = '<svg class="hover-icon rollover-info skill-level-bg-hover skill-level-hover-default"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg id="skill-level-hover" class="hover-icon rollover-info skill-level-hover skill-level-hover-default hover-tooltip-only" title="Difficulty: Beginner to Intermediate"><use xlink:href="img/svg_sprites.svg#skill_level_beginner_intermediate"/></svg>';
+
                 } else {
-                    var skillLevelIcon = '<div class="skill-level card " title="Difficulty: Beginner to Intermediate">' + '<img src="img/skill_level_beginner_intermediate.svg" class=" skill-level-guide">' + '</div>';
+                    var skillLevelIcon = '<div class="skill-level card" title="Difficulty: Beginner to Intermediate">' + '<svg class="skill-level-bg-guide"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg class="skill-level-guide"><use xlink:href="img/svg_sprites.svg#skill_level_beginner_intermediate"/></svg>' + '</div>';
                 };
             } else {
                 if(rollover){
-                    var skillLevelIcon = images.roIconSkillBeg;
-                    skillLevelIcon.title = "Difficulty: Beginner";
+                    var skillLevelIcon = '<svg class="hover-icon rollover-info skill-level-bg-hover skill-level-hover-default"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg id="skill-level-hover" class="hover-icon rollover-info skill-level-hover skill-level-hover-default hover-tooltip-only" title="Difficulty: Beginner"><use xlink:href="img/svg_sprites.svg#skill_level_beginner"/></svg>';
+
                 } else {
-                    var skillLevelIcon = '<div class="skill-level card " title="Difficulty: Beginner">' + '<img src="img/skill_level_beginner.svg" class=" skill-level-guide">' + '</div>';
+                    var skillLevelIcon = '<div class="skill-level card" title="Difficulty: Beginner">' + '<svg class="skill-level-bg-guide"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg class="skill-level-guide"><use xlink:href="img/svg_sprites.svg#skill_level_beginner"/></svg>' + '</div>';
                 };
             };
         } else if (intermediate > beginner && intermediate >= advanced) {
             if(intermediate === advanced) {
                 if(rollover){
-                    var skillLevelIcon = images.roIconSkillIntAdv;
-                    skillLevelIcon.title = "Difficulty: Intermediate to Advanced";
+                    var skillLevelIcon = '<svg class="hover-icon rollover-info skill-level-bg-hover skill-level-hover-default"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg id="skill-level-hover" class="hover-icon rollover-info skill-level-hover skill-level-hover-default hover-tooltip-only" title="Difficulty: Intermediate to Advanced"><use xlink:href="img/svg_sprites.svg#skill_level_intermediate_advanced"/></svg>';
+
                 } else {
-                    var skillLevelIcon = '<div class="skill-level card " title="Difficulty: Intermediate to Advanced">' + '<img src="img/skill_level_intermediate_advanced.svg" class=" skill-level-guide">' + '</div>';
+                    var skillLevelIcon = '<div class="skill-level card" title="Difficulty: Intermediate to Advanced">' + '<svg class="skill-level-bg-guide"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg class="skill-level-guide"><use xlink:href="img/svg_sprites.svg#skill_level_intermediate_advanced"/></svg>' + '</div>';
                 };
             } else {
                 if(rollover){
-                    var skillLevelIcon = images.roIconSkillInt;
-                    skillLevelIcon.title = "Difficulty: Intermediate";
+                    var skillLevelIcon = '<svg class="hover-icon rollover-info skill-level-bg-hover skill-level-hover-default"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg id="skill-level-hover" class="hover-icon rollover-info skill-level-hover skill-level-hover-default hover-tooltip-only" title="Difficulty: Intermediate"><use xlink:href="img/svg_sprites.svg#skill_level_intermediate"/></svg>';
+
                 } else {
-                    var skillLevelIcon = '<div class="skill-level card " title="Difficulty: Intermediate">' + '<img src="img/skill_level_intermediate.svg" class=" skill-level-guide">' + '</div>';
+                    var skillLevelIcon = '<div class="skill-level card" title="Difficulty: Intermediate">' + '<svg class="skill-level-bg-guide"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg class="skill-level-guide"><use xlink:href="img/svg_sprites.svg#skill_level_intermediate"/></svg>' + '</div>';
                 };
             };
         } else {
             if(rollover){
-                var skillLevelIcon = images.roIconSkillAdv;
-                skillLevelIcon.title = "Difficulty: Advanced";
+                var skillLevelIcon = '<svg class="hover-icon rollover-info skill-level-bg-hover skill-level-hover-default"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg id="skill-level-hover" class="hover-icon rollover-info skill-level-hover skill-level-hover-default hover-tooltip-only" title="Difficulty: Advanced"><use xlink:href="img/svg_sprites.svg#skill_level_advanced"/></svg>';
+
             } else {
-                var skillLevelIcon = '<div class="skill-level card " title="Difficulty: Advanced">' + '<img src="img/skill_level_advanced.svg" class=" skill-level-guide">' + '</div>';
+                var skillLevelIcon = '<div class="skill-level card" title="Difficulty: Advanced">' + '<svg class="skill-level-bg-guide"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg class="skill-level-guide"><use xlink:href="img/svg_sprites.svg#skill_level_advanced"/></svg>' + '</div>';
             };
         };
 
@@ -4105,28 +4127,29 @@ function AppViewModel () {
         switch(obj) {
           case 'left':
               if(rollover) {
-                  var directionIcon = images.roIconDirectionLeft;
-                  directionIcon.title = "Wave Direction: Left";
+                  var directionIcon = '<svg id="wave-direction-hover" class="hover-icon rollover-info wave-direction-hover wave-direction-hover-default hover-tooltip-only" title="Wave Direction: Left"><use xlink:href="img/svg_sprites.svg#direction_left"/></svg>';
+
               } else {
-                  var directionIcon = '<div class="direction card " title="Wave Direction: Left">' + '<img src="img/direction_left.svg" class="wave-direction-guide">' + '</div>';
+                  var directionIcon = '<div class="direction card" title="Wave Direction: Left">' + '<svg class="wave-direction-guide"><use xlink:href="img/svg_sprites.svg#direction_left"/></svg>' + '</div>';
               };
           break;
 
           case 'right':
               if(rollover) {
-                  var directionIcon = images.roIconDirectionRight;
-                  directionIcon.title = "Wave Direction: Right";
+                  var directionIcon = '<svg id="wave-direction-hover" class="hover-icon rollover-info wave-direction-hover wave-direction-hover-default hover-tooltip-only" title="Wave Direction: Right"><use xlink:href="img/svg_sprites.svg#direction_right"/></svg>';;
+
               } else {
-                  var directionIcon = '<div class="direction card " title="Wave Direction: Right">' + '<img src="img/direction_right.svg" class="wave-direction-guide">' + '</div>';
+                  var directionIcon = '<div class="direction card " title="Wave Direction: Right">' + '<svg class="wave-direction-guide"><use xlink:href="img/svg_sprites.svg#direction_right"/></svg>' + '</div>';
               };
           break;
 
           case 'left & right':
+
               if(rollover) {
-                  var directionIcon = images.roIconDirectionBoth;
-                  directionIcon.title = "Wave Direction: Left & Right";
+                  var directionIcon = '<svg id="wave-direction-hover" class="hover-icon rollover-info wave-direction-hover wave-direction-hover-default hover-tooltip-only" title="Wave Direction: Left & Right"><use xlink:href="img/svg_sprites.svg#direction_both"/></svg>';;
+
               } else {
-                  var directionIcon = '<div class="direction card " title="Wave Direction: Left & Right">' + '<img src="img/direction_both.svg" class="wave-direction-guide">' + '</div>';
+                  var directionIcon = '<div class="direction card " title="Wave Direction: Left & Right">' + '<svg class="wave-direction-guide"><use xlink:href="img/svg_sprites.svg#direction_both"/></svg>' + '</div>';
               };
           break;
         }
@@ -4138,37 +4161,34 @@ function AppViewModel () {
         switch(obj) {
           case 'reef':
               if(rollover) {
-                  var breakIcon = images.roIconBreakReef;
-                  breakIcon.title = "Break Type: Reef";
+                  var breakIcon = '<svg id="break-type-hover" class="hover-icon rollover-info break-type-hover break-type-hover-default hover-tooltip-only" title="Break Type: Reef"><use xlink:href="img/svg_sprites.svg#break_reef"/></svg>';
+
               } else {
-                  var breakIcon = '<div class="break card " title="Break Type: Reef">' + '<img src="img/break_reef.svg" class="break-type-guide">' + '</div>';
+                  var breakIcon = '<div class="break card" title="Break Type: Reef">' + '<svg class="break-type-guide"><use xlink:href="img/svg_sprites.svg#break_reef"/></svg>' + '</div>';
               };
           break;
 
           case 'beach':
               if(rollover) {
-                  var breakIcon = images.roIconBreakBeach;
-                  breakIcon.title = "Break Type: Beach";
+                  var breakIcon = '<svg id="break-type-hover" class="hover-icon rollover-info break-type-hover break-type-hover-default hover-tooltip-only" title="Break Type: Reef"><use xlink:href="img/svg_sprites.svg#break_beach"/></svg>';
               } else {
-                  var breakIcon = '<div class="break card " title="Break Type: Beach">' + '<img src="img/break_beach.svg" class="break-type-guide">' + '</div>';
+                  var breakIcon = '<div class="break card " title="Break Type: Beach">' + '<svg class="break-type-guide"><use xlink:href="img/svg_sprites.svg#break_beach"/></svg>' + '</div>';
               };
           break;
 
           case 'point':
               if(rollover) {
-                  var breakIcon = images.roIconBreakPoint;
-                  breakIcon.title = "Break Type: Point";
+                  var breakIcon = '<svg id="break-type-hover" class="hover-icon rollover-info break-type-hover break-type-hover-default hover-tooltip-only" title="Break Type: Reef"><use xlink:href="img/svg_sprites.svg#break_point"/></svg>';
               } else {
-                  var breakIcon = '<div class="break card " title="Break Type: Point">' + '<img src="img/break_point.svg" class="break-type-guide">' + '</div>';
+                  var breakIcon = '<div class="break card " title="Break Type: Point">' + '<svg class="break-type-guide"><use xlink:href="img/svg_sprites.svg#break_point"/></svg>' + '</div>';
               };
           break;
 
           case 'river mouth':
               if(rollover) {
-                  var breakIcon = images.roIconBreakRiver;
-                  breakIcon.title = "Break Type: River Mouth";
+                  var breakIcon = '<svg id="break-type-hover" class="hover-icon rollover-info break-type-hover break-type-hover-default hover-tooltip-only" title="Break Type: Reef"><use xlink:href="img/svg_sprites.svg#break_river_mouth"/></svg>';
               } else {
-                  var breakIcon = '<div class="break card " title="Break Type: River Mouth">' + '<img src="img/break_river_mouth.svg" class="break-type-guide">' + '</div>';
+                  var breakIcon = '<div class="break card " title="Break Type: River Mouth">' + '<svg class="break-type-guide"><use xlink:href="img/svg_sprites.svg#break_river_mouth"/></svg>' + '</div>';
               };
           break;
         }
@@ -4325,23 +4345,23 @@ function AppViewModel () {
         };
 
         if (low === mid && low === high) {
-            var tideIcon = '<div class="tide card " title="Best Tide: All">' + '<img src="img/tide_all.svg" class="tide-guide">' + '</div>';
+            var tideIcon = '<div class="tide card " title="Best Tide: All">' + '<svg class="tide-guide"><use xlink:href="img/svg_sprites.svg#tide_all"/></svg>' + '</div>';
         } else if (low >= mid && low >= high) {
               if(low === mid) {
-                  var tideIcon = '<div class="tide card " title="Best Tide: Low & Mid">' + '<img src="img/tide_low_mid.svg" class="tide-guide">' + '</div>';
+                  var tideIcon = '<div class="tide card " title="Best Tide: Low & Mid">' + '<svg class="tide-guide"><use xlink:href="img/svg_sprites.svg#tide_low_mid"/></svg>' + '</div>';
               } else if (low === high) {
-                  var tideIcon = '<div class="tide card " title="Best Tide: Low & High">' + '<img src="img/tide_low_high.svg" class="tide-guide">' + '</div>';;
+                  var tideIcon = '<div class="tide card " title="Best Tide: Low & High">' + '<svg class="tide-guide"><use xlink:href="img/svg_sprites.svg#tide_low_high"/></svg>' + '</div>';;
               } else {
-                  var tideIcon = '<div class="tide card " title="Best Tide: Low">' + '<img src="img/tide_low.svg" class="tide-guide">' + '</div>';
+                  var tideIcon = '<div class="tide card " title="Best Tide: Low">' + '<svg class="tide-guide"><use xlink:href="img/svg_sprites.svg#tide_low"/></svg>' + '</div>';
               };
         } else if (mid > low && mid >= high) {
               if(mid === high) {
-                  var tideIcon = '<div class="tide card " title="Best Tide: Mid & High">' + '<img src="img/tide_high_mid.svg" class="tide-guide">' + '</div>';
+                  var tideIcon = '<div class="tide card " title="Best Tide: Mid & High">' + '<svg class="tide-guide"><use xlink:href="img/svg_sprites.svg#tide_high_mid"/></svg>' + '</div>';
               } else {
-                  var tideIcon = '<div class="tide card " title="Best Tide: Mid">' + '<img src="img/tide_mid.svg" class="tide-guide">' + '</div>';
+                  var tideIcon = '<div class="tide card " title="Best Tide: Mid">' + '<svg class="tide-guide"><use xlink:href="img/svg_sprites.svg#tide_mid"/></svg>' + '</div>';
               };
         } else {
-            var tideIcon = '<div class="tide card " title="Best Tide: High">' + '<img src="img/tide_high.svg" class="tide-guide">' + '</div>';
+            var tideIcon = '<div class="tide card " title="Best Tide: High">' + '<svg class="tide-guide"><use xlink:href="img/svg_sprites.svg#tide_high"/></svg>' + '</div>';
         };
 
         return tideIcon;
@@ -4395,102 +4415,86 @@ function AppViewModel () {
         year */
         if (winter === spring && winter === summer && winter === autumn) {
             if(rollover) {
-                var bestSeasonIcon = images.roIconBestSeasonAll;
-                bestSeasonIcon.title = "Best Season: All";
+                var bestSeasonIcon = '<svg id="best-season-hover" class="hover-icon rollover-info best-season-hover best-season-hover-default hover-tooltip-only" title="Best Season: All"><use xlink:href="img/svg_sprites.svg#season_all"/></svg>';
+
             } else {
-                var bestSeasonIcon = '<div class="time card " title="Best Season: All">' + '<img src="img/season_all.svg" class="best-season-guide">' + '</div>';
+                var bestSeasonIcon = '<div class="time card" title="Best Season: All">' + '<svg class="best-season-guide"><use xlink:href="img/svg_sprites.svg#season_all"/></svg>' + '</div>';
             };
         } else if(winter >= spring && winter >= summer && winter >= autumn) {
               if(winter === spring) {
                   if(rollover) {
-                      var bestSeasonIcon = images.roIconBestSeasonWinSpr;
-                      bestSeasonIcon.title = "Best Season: Winter & Spring";
+                      var bestSeasonIcon = '<svg id="best-season-hover" class="hover-icon rollover-info best-season-hover best-season-hover-default hover-tooltip-only" title="Best Season: Winter & Spring"><use xlink:href="img/svg_sprites.svg#season_winter_spring"/></svg>';
+
                   } else {
-                      var bestSeasonIcon = '<div class="time card " title="Best Season: Winter & Spring">' + '<img src="img/season_winter_spring.svg" class="best-season-guide">' + '</div>';
+                      var bestSeasonIcon = '<div class="time card" title="Best Season: Winter & Spring">' + '<svg class="best-season-guide"><use xlink:href="img/svg_sprites.svg#season_winter_spring"/></svg>' + '</div>';
                   };
               } else if (winter === summer) {
                   if(rollover) {
-                      var bestSeasonIcon = images.roIconBestSeasonWinSum;
-                      bestSeasonIcon.title = "Best Season: Winter & Summer";
+                      var bestSeasonIcon = '<svg id="best-season-hover" class="hover-icon rollover-info best-season-hover best-season-hover-default hover-tooltip-only" title="Best Season: Winter & Summer"><use xlink:href="img/svg_sprites.svg#season_winter_summer"/></svg>';
                   } else {
-                      var bestSeasonIcon = '<div class="time card " title="Best Season: Winter & Summer">' + '<img src="img/season_winter_summer.svg" class="best-season-guide">' + '</div>';
+                      var bestSeasonIcon = '<div class="time card" title="Best Season: Winter & Summer">' + '<svg class="best-season-guide"><use xlink:href="img/svg_sprites.svg#season_winter_summer"/></svg>' + '</div>';
                   };
               } else if (winter === autumn) {
                   if(rollover) {
-                      var bestSeasonIcon = images.roIconBestSeasonWinAut;
-                      bestSeasonIcon.title = "Best Season: Winter & Autumn";
+                      var bestSeasonIcon = '<svg id="best-season-hover" class="hover-icon rollover-info best-season-hover best-season-hover-default hover-tooltip-only" title="Best Season: Winter & Autumn"><use xlink:href="img/svg_sprites.svg#season_winter_autumn"/></svg>';
                   } else {
-                      var bestSeasonIcon = '<div class="time card " title="Best Season: Winter & Autumn">' + '<img src="img/season_winter_autumn.svg" class="best-season-guide">' + '</div>';
+                      var bestSeasonIcon = '<div class="time card " title="Best Season: Winter & Autumn">' + '<svg class="best-season-guide"><use xlink:href="img/svg_sprites.svg#season_winter_autumn"/></svg>' + '</div>';
                   };
               } else {
                   if(rollover) {
-                      var bestSeasonIcon = images.roIconBestSeasonWin;
-                      bestSeasonIcon.title = "Best Season: Winter";
+                      var bestSeasonIcon = '<svg id="best-season-hover" class="hover-icon rollover-info best-season-hover best-season-hover-default hover-tooltip-only" title="Best Season: Winter"><use xlink:href="img/svg_sprites.svg#season_winter"/></svg>';
                   } else {
-                      var bestSeasonIcon = '<div class="time card " title="Best Season: Winter">' + '<img src="img/season_winter.svg" class="best-season-guide">' + '</div>';
+                      var bestSeasonIcon = '<div class="time card " title="Best Season: Winter">' + '<svg class="best-season-guide"><use xlink:href="img/svg_sprites.svg#season_winter"/></svg>' + '</div>';
                   };
               };
         } else if (spring >= summer && spring >= autumn && spring > winter) {
               if (spring === summer) {
                   if(rollover) {
-                      var bestSeasonIcon = images.roIconBestSeasonSpgSum;
-                      bestSeasonIcon.title = "Best Season: Spring & Summer";
+                      var bestSeasonIcon = '<svg id="best-season-hover" class="hover-icon rollover-info best-season-hover best-season-hover-default hover-tooltip-only" title="Best Season: Spring & Summer"><use xlink:href="img/svg_sprites.svg#season_spring_summer"/></svg>';
                   } else {
-                      var bestSeasonIcon = '<div class="time card " title="Best Season: Spring & Summer">' + '<img src="img/season_spring_summer.svg" class="best-season-guide">' + '</div>';
+                      var bestSeasonIcon = '<div class="time card " title="Best Season: Spring & Summer">' + '<svg class="best-season-guide"><use xlink:href="img/svg_sprites.svg#season_spring_summer"/></svg>' + '</div>';
                   };
               } else if (spring === autumn) {
                   if(rollover) {
-                      var bestSeasonIcon = images.roIconBestSeasonSpgAut;
-                      bestSeasonIcon.title = "Best Season: Spring & Autumn";
+                      var bestSeasonIcon = '<svg id="best-season-hover" class="hover-icon rollover-info best-season-hover best-season-hover-default hover-tooltip-only" title="Best Season: Spring & Autumn"><use xlink:href="img/svg_sprites.svg#season_spring_autumn"/></svg>';
                   } else {
-                      var bestSeasonIcon = '<div class="time card " title="Best Season: Spring & Autumn">' + '<img src="img/season_spring_autumn.svg" class="best-season-guide">' + '</div>';
+                      var bestSeasonIcon = '<div class="time card " title="Best Season: Spring & Autumn">' + '<svg class="best-season-guide"><use xlink:href="img/svg_sprites.svg#season_spring_autumn"/></svg>' + '</div>';
                   };
               } else {
                   if(rollover) {
-                      var bestSeasonIcon = images.roIconBestSeasonSpg;
-                      bestSeasonIcon.title = "Best Season: Spring";
+                      var bestSeasonIcon = '<svg id="best-season-hover" class="hover-icon rollover-info best-season-hover best-season-hover-default hover-tooltip-only" title="Best Season: Spring"><use xlink:href="img/svg_sprites.svg#season_spring"/></svg>';
                   } else {
-                      var bestSeasonIcon = '<div class="time card " title="Best Season: Spring">' + '<img src="img/season_spring.svg" class="best-season-guide">' + '</div>';
+                      var bestSeasonIcon = '<div class="time card " title="Best Season: Spring">' + '<svg class="best-season-guide"><use xlink:href="img/svg_sprites.svg#season_spring"/></svg>' + '</div>';
                   };
               };
         } else if (summer >= autumn && summer > winter && summer > spring) {
               if(summer === autumn) {
                   if(rollover) {
-                      var bestSeasonIcon = images.roIconBestSeasonSumAut;
-                      bestSeasonIcon.title = "Best Season: Summer & Autumn";
+                      var bestSeasonIcon = '<svg id="best-season-hover" class="hover-icon rollover-info best-season-hover best-season-hover-default hover-tooltip-only" title="Best Season: Summer & Autumn"><use xlink:href="img/svg_sprites.svg#season_summer_autumn"/></svg>';
                   } else {
-                      var bestSeasonIcon = '<div class="time card " title="Best Season: Summer & Autumn">' + '<img src="img/season_summer_autumn.svg" class="best-season-guide">' + '</div>';
+                      var bestSeasonIcon = '<div class="time card " title="Best Season: Summer & Autumn">' + '<svg class="best-season-guide"><use xlink:href="img/svg_sprites.svg#season_summer_autumn"/></svg>' + '</div>';
                   };
               } else {
                   if(rollover) {
-                      var bestSeasonIcon = images.roIconBestSeasonSum;
-                      bestSeasonIcon.title = "Best Season: Summer";
+                      var bestSeasonIcon = '<svg id="best-season-hover" class="hover-icon rollover-info best-season-hover best-season-hover-default hover-tooltip-only" title="Best Season: Summer"><use xlink:href="img/svg_sprites.svg#season_summer"/></svg>';
                   } else {
-                      var bestSeasonIcon = '<div class="time card " title="Best Season: Summer">' + '<img src="img/season_summer.svg" class="best-season-guide">' + '</div>';
+                      var bestSeasonIcon = '<div class="time card " title="Best Season: Summer">' + '<svg class="best-season-guide"><use xlink:href="img/svg_sprites.svg#season_summer"/></svg>' + '</div>';
                   };
               };
         } else {
                   if(rollover) {
-                      var bestSeasonIcon = images.roIconBestSeasonAut;
-                      bestSeasonIcon.title = "Best Season: Autumn";
+                      var bestSeasonIcon = '<svg id="best-season-hover" class="hover-icon rollover-info best-season-hover best-season-hover-default hover-tooltip-only" title="Best Season: Autumn"><use xlink:href="img/svg_sprites.svg#season_autumn"/></svg>';
                   } else {
-                      var bestSeasonIcon = '<div class="time card " title="Best Season: Autumn">' + '<img src="img/season_autumn.svg" class="best-season-guide">' + '</div>';
+                      var bestSeasonIcon = '<div class="time card " title="Best Season: Autumn">' + '<svg class="best-season-guide"><use xlink:href="img/svg_sprites.svg#season_autumn"/></svg>' + '</div>';
                   };
         };
 
         return bestSeasonIcon;
     };
 
-    self.displaySuggestedAttireIcons = function (obj, canvasWidth, canvasHeight, $iconContainer) {
+    self.displaySuggestedAttireIcons = function (obj, $iconContainer) {
 
         if(!rollover) {
-            $iconContainer.append('<div class="water-temp spring card " title="Suggested Spring Attire">' + '<canvas id="spring" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas>');
-
-            $iconContainer.append('<div class="water-temp summer card " title="Suggested Summer Attire">' + '<canvas id="summer" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas>');
-
-            $iconContainer.append('<div class="water-temp autumn card " title="Suggested Autumn Attire">' + '<canvas id="autumn" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas>');
-
-            $iconContainer.append('<div class="water-temp winter card " title="Suggested Winter Attire">' + '<canvas id="winter" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas>');
 
             var season = 0;
             /* Loop through the average water temps for each time of year. Designate specific water attire for each time of year */
@@ -4506,26 +4510,14 @@ function AppViewModel () {
             function drawSeasonIcon(gear, season) {
 
                 if(season === 1) {
-                    var Canvas = document.getElementById('spring');
-                    var seasonImg = images.attireSpring;
+                    $iconContainer.append('<div class="water-temp spring card " title="Suggested Spring Attire">' + '<svg class="suggested-attire-season-guide suggested-attire-guide"><use xlink:href="img/svg_sprites.svg#water_temp_spring"/></svg>' + gear + '</div>');
                 } else if (season === 2) {
-                    var Canvas = document.getElementById('summer');
-                    var seasonImg = images.attireSummer;
+                    $iconContainer.append('<div class="water-temp summer card " title="Suggested Summer Attire">' + '<svg class="suggested-attire-season-guide suggested-attire-guide"><use xlink:href="img/svg_sprites.svg#water_temp_summer"/></svg>' + gear + '</div>');
                 } else if (season === 3) {
-                    var Canvas = document.getElementById('autumn');
-                    var seasonImg = images.attireAutumn;
+                    $iconContainer.append('<div class="water-temp autumn card " title="Suggested Autumn Attire">' + '<svg class="suggested-attire-season-guide suggested-attire-guide"><use xlink:href="img/svg_sprites.svg#water_temp_autumn"/></svg>' + gear + '</div>');
                 } else {
-                    var Canvas = document.getElementById('winter');
-                    var seasonImg = images.attireWinter;
+                    $iconContainer.append('<div class="water-temp winter card " title="Suggested Winter Attire">' + '<svg class="suggested-attire-season-guide suggested-attire-guide"><use xlink:href="img/svg_sprites.svg#water_temp_winter"/></svg>' + gear + '</div>');
                 };
-
-                var ctx = Canvas.getContext('2d');
-                var attire = gear;
-                var seasonBackground = seasonImg;
-
-                ctx.drawImage(seasonBackground, 0, 0);
-                ctx.drawImage(attire, 0, 0);
-
             };
 
             // Highlight current season's attire
@@ -4564,41 +4556,41 @@ function AppViewModel () {
             if(temp > 59) {
                 if(temp > 72) {
                     if(rollover) {
-                      var gear = images.roIconMiscOneBoardies;
+                      var gear = '<svg id="misc-info-one-hover" class="hover-icon rollover-info misc-info-one-hover misc-info-one-hover-default hover-tooltip-only" title="Suggested attire for this season"><use xlink:href="img/svg_sprites.svg#ro_water_attire_boardies"/></svg>';
                     } else {
-                      var gear = images.attireBoardies;
+                      var gear = '<svg class="suggested-attire-boardies-guide suggested-attire-guide"><use xlink:href="img/svg_sprites.svg#water_attire_boardies"/></svg>';
                     };
                 } else if (temp > 66) {
                     if(rollover) {
-                      var gear = images.roIconMiscOneWetSuitTwo;
+                      var gear = '<svg id="misc-info-one-hover" class="hover-icon rollover-info misc-info-one-hover misc-info-one-hover-default hover-tooltip-only" title="Suggested attire for this season"><use xlink:href="img/svg_sprites.svg#ro_water_attire_2mm_wetsuit"/></svg>';
                     } else {
-                      var gear = images.attireWetsuitTwo;
+                      var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide"><use xlink:href="img/svg_sprites.svg#water_attire_2mm_wetsuit"/></svg>';
                     };
                 } else {
                     if(rollover) {
-                      var gear = images.roIconMiscOneWetSuitThree;
+                      var gear = '<svg id="misc-info-one-hover" class="hover-icon rollover-info misc-info-one-hover misc-info-one-hover-default hover-tooltip-only" title="Suggested attire for this season"><use xlink:href="img/svg_sprites.svg#ro_water_attire_3mm_wetsuit"/></svg>';
                     } else {
-                      var gear = images.attireWetsuitThree;
+                      var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide"><use xlink:href="img/svg_sprites.svg#water_attire_3mm_wetsuit"/></svg>';
                     };
                 };
             } else {
                 if (temp > 54) {
                     if(rollover) {
-                      var gear = images.roIconMiscOneWetSuitFour;
+                      var gear = '<svg id="misc-info-one-hover" class="hover-icon rollover-info misc-info-one-hover misc-info-one-hover-default hover-tooltip-only" title="Suggested attire for this season"><use xlink:href="img/svg_sprites.svg#ro_water_attire_4mm_wetsuit"/></svg>';
                     } else {
-                      var gear = images.attireWetsuitFour;
+                      var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide"><use xlink:href="img/svg_sprites.svg#water_attire_4mm_wetsuit"/></svg>';
                     };
                 } else if (temp > 48) {
                     if(rollover) {
-                      var gear = images.roIconMiscOneWetSuitFive;
+                      var gear = '<svg id="misc-info-one-hover" class="hover-icon rollover-info misc-info-one-hover misc-info-one-hover-default hover-tooltip-only" title="Suggested attire for this season"><use xlink:href="img/svg_sprites.svg#ro_water_attire_5mm_wetsuit"/></svg>';
                     } else {
-                      var gear = images.attireWetsuitFive;
+                      var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide"><use xlink:href="img/svg_sprites.svg#water_attire_5mm_wetsuit"/></svg>';
                     };
                 } else {
                     if(rollover) {
-                      var gear = images.roIconMiscOneWetSuitSix;
+                      var gear = '<svg id="misc-info-one-hover" class="hover-icon rollover-info misc-info-one-hover misc-info-one-hover-default hover-tooltip-only" title="Suggested attire for this season"><use xlink:href="img/svg_sprites.svg#ro_water_attire_6mm_wetsuit"/></svg>';
                     } else {
-                      var gear = images.attireWetsuitSix;
+                      var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide"><use xlink:href="img/svg_sprites.svg#water_attire_6mm_wetsuit"/></svg>';
                     };
                 };
             };
@@ -4618,13 +4610,13 @@ function AppViewModel () {
 
       if(rollover) {
 
-          var costInfo = '<p class="rollover-info cost-rollover cost-hover-default-style " title="Estimated minimum daily budget allowance">' + '$' + obj.budget + '</p>';
+          var costInfo = '<p id="cost-hover" class="rollover-info cost-hover-default " title="Estimated minimum daily budget allowance">' + '$' + obj.budget + '</p>';
 
       } else {
 
           var midRange = Math.floor((obj.highEnd - obj.budget)/2 + obj.budget);
 
-          var costInfo = $iconContainer.append('<div class="cost card">' + '<img src="img/cost.svg" class="cost-guide " title="Estimated daily budget allowance: Low, Mid, High">' + '<p>' + obj.budget + '</p>' + '<p>' + midRange + '</p>' + '<p>' + obj.highEnd +'</p>' + '</div>');
+          var costInfo = $iconContainer.append('<div class="cost card">' + '<svg class="cost-guide" title="Estimated daily budget allowance: Low, Mid, High"><use xlink:href="img/svg_sprites.svg#cost"/></svg>' + '<p>' + obj.budget + '</p>' + '<p>' + midRange + '</p>' + '<p>' + obj.highEnd +'</p>' + '</div>');
       };
 
       return costInfo;
@@ -4690,13 +4682,13 @@ function AppViewModel () {
 
             if(rollover) {
                 // Cache distance element with distance
-                var distance = '<p class="rollover-info distance-rollover distance-hover-default-style " title="Estimated flight duration from your location">' + distanceFly + 'h' + '</p>';
+                var distance = '<p id="distance-hover" class="rollover-info distance-hover-default " title="Estimated flight duration from your location">' + distanceFly + 'h' + '</p>';
 
                 return distance;
 
             } else {
 
-                var distanceIcon = '<img src="img/distance_plane.svg" class="icon distance-guide " title="Estimated flight duration from your location">' + '<p class="distance-guide-hours">' + distanceFly + 'h' +'</p>';
+                var distanceIcon = '<svg class="icon distance-guide-plane" title="Estimated flight duration from your location"><use xlink:href="img/svg_sprites.svg#distance_plane"/></svg>' + '<p class="distance-guide-hours">' + distanceFly + 'h' +'</p>';
 
                 return distanceIcon;
             };
@@ -4706,13 +4698,13 @@ function AppViewModel () {
 
             if(rollover) {
                 // Cache distance element with distance
-                var distance = '<p class="rollover-info distance-rollover distance-hover-default-style " title="Estimated distance in miles from your location">' + distanceDrive + 'mi' + '</p>';
+                var distance = '<p id="distance-hover" class="rollover-info distance-hover-default " title="Estimated distance in miles from your location">' + distanceDrive + 'mi' + '</p>';
 
                 return distance;
 
             } else {
 
-                var distanceIcon = '<img src="img/distance.svg" class="icon distance-guide " title="Estimated (straight line) distance in miles from your location (actual distance via roads will be greater) ">' + '<p class="distance-guide-miles">' + distanceDrive + 'mi' +'</p>';
+                var distanceIcon = '<svg class="icon distance-guide-drive" title="Estimated (straight line) distance in miles from your location (actual distance via roads will be greater)"><use xlink:href="img/svg_sprites.svg#distance"/></svg>' + '<p class="distance-guide-miles">' + distanceDrive + 'mi' +'</p>';
 
                 return distanceIcon;
             };
@@ -4746,7 +4738,7 @@ function AppViewModel () {
           break
         };
 
-        var waterTempInfo = '<p class="rollover-info water-temp-rollover water-temp-hover-default-style " title="Average ' + currentSeason + ' water temperature">' + waterTemp + '℉' + '</p>';
+        var waterTempInfo = '<p id="water-temp-hover" class="rollover-info water-temp-hover-default " title="Average ' + currentSeason + ' water temperature">' + waterTemp + '℉' + '</p>';
 
         return waterTempInfo;
     };
@@ -4762,9 +4754,9 @@ function AppViewModel () {
 
         if(rollover) {
             /* Cache the average wave height */
-            var waveSizeInfo = '<p class="rollover-info wave-size-rollover wave-size-hover-default-style " title="Average wave size">' + obj.min + "-" + obj.max + "'" +'</p>';
+            var waveSizeInfo = '<p id="wave-size-hover" class="rollover-info wave-size-hover-default " title="Average wave size">' + obj.min + "-" + obj.max + "'" +'</p>';
         } else {
-            var waveSizeInfo = '<div class=" wave-size card " title="Average wave size">' + '<img src="img/wave_range.svg" class"wave-size-guide">' + '<p>' + obj.min + "-" + obj.max + plus + "ft" + '</p>' + '</div>';
+            var waveSizeInfo = '<div class="wave-size card" title="Average wave size">' + '<svg class="wave-size-guide"><use xlink:href="img/svg_sprites.svg#wave_range"/></svg>' + '<p>' + obj.min + "-" + obj.max + plus + "ft" + '</p>' + '</div>';
         };
 
         return waveSizeInfo;
@@ -4835,181 +4827,161 @@ function AppViewModel () {
 
                 case 'beginners':
                     if(rollover) {
-                        var hazardIcon = images.roIconMiscTwoBeginners;
-                        hazardIcon.title = "Hazard: Beginners";
+                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Beginners"><use xlink:href="img/svg_sprites.svg#hazards_beginners"/></svg>';
                     } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Beginners">' + '<img src="img/hazards_beginners.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card" title="Hazard: Beginners">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_beginners"/></svg>' + '</div>');
                     };
                 break;
 
                 case 'boats':
                     if(rollover) {
-                        var hazardIcon = images.roIconMiscTwoBoats;
-                        hazardIcon.title = "Hazard: Boats";
+                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Boats"><use xlink:href="img/svg_sprites.svg#hazards_boats"/></svg>';
                     } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Boats">' + '<img src="img/hazards_boats.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Boats">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_boats"/></svg>' + '</div>');
                     };
                 break;
 
                 case 'crocs':
                     if(rollover) {
-                        var hazardIcon = images.roIconMiscTwoCrocs;
-                        hazardIcon.title = "Hazard: Crocodiles";
+                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Crocodiles"><use xlink:href="img/svg_sprites.svg#hazards_crocs"/></svg>';
                     } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Crocodiles">' + '<img src="img/hazards_crocs.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Crocodiles">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_crocs"/></svg>' + '</div>');
                     };
                 break;
 
                 case 'crowded':
                     if(rollover) {
-                        var hazardIcon = images.roIconMiscTwoCrowded;
-                        hazardIcon.title = "Hazard: Crowded";
+                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Crowded"><use xlink:href="img/svg_sprites.svg#hazards_crowded"/></svg>';
                     } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Crowded">' + '<img src="img/hazards_crowded.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Crowded">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_crowded"/></svg>' + '</div>');
                     };
                 break;
 
                 case 'dangerous break':
                     if(rollover) {
-                        var hazardIcon = images.roIconMiscTwoDgrBreak;
-                        hazardIcon.title = "Hazard: Dangerous Break";
+                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Dangerous Break"><use xlink:href="img/svg_sprites.svg#hazards_dangerous_break"/></svg>';
                     } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Dangerous Break">' + '<img src="img/hazards_dangerous_break.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Dangerous Break">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_dangerous_break"/></svg>' + '</div>');
                     };
                 break;
 
                 case 'far from shore':
                     if(rollover) {
-                        var hazardIcon = images.roIconMiscTwoFar;
-                        hazardIcon.title = "Hazard: Far From Shore";
+                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Far From Shore"><use xlink:href="img/svg_sprites.svg#hazards_far_from_shore"/></svg>';
                     } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Far From Shore">' + '<img src="img/hazards_far_from_shore.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Far From Shore">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_far_from_shore"/></svg>' + '</div>');
                     };
                 break;
 
                 case 'pollution':
                     if(rollover) {
-                        var hazardIcon = images.roIconMiscTwoPollution;
-                        hazardIcon.title = "Hazard: Pollution";
+                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Pollution"><use xlink:href="img/svg_sprites.svg#hazards_pollution"/></svg>';
                     } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Pollution">' + '<img src="img/hazards_pollution.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Pollution">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_pollution"/></svg>' + '</div>');
                     };
                 break;
 
                 case 'rocky bottom':
                     if(rollover) {
-                        var hazardIcon = images.roIconMiscTwoRocky;
-                        hazardIcon.title = "Hazard: Rocky Bottom";
+                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Rocky Bottom"><use xlink:href="img/svg_sprites.svg#hazards_rocky_bottom"/></svg>';
                     } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Rocky Bottom">' + '<img src="img/hazards_rocky_bottom.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Rocky Bottom">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_rocky_bottom"/></svg>' + '</div>');
                     };
                 break;
 
                 case 'sea snakes':
                     if(rollover) {
-                        var hazardIcon = images.roIconMiscTwoSnakes;
-                        hazardIcon.title = "Hazard: Sea Snakes";
+                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Sea Snakes"><use xlink:href="img/svg_sprites.svg#hazards_sea_snakes"/></svg>';
                     } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Sea Snakes">' + '<img src="img/hazards_sea_snakes.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Sea Snakes">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_sea_snakes"/></svg>' + '</div>');
                     };
                 break;
 
                 case 'seals':
                     if(rollover) {
-                        var hazardIcon = images.roIconMiscTwoSeals;
-                        hazardIcon.title = "Hazard: Seals";
+                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Seals"><use xlink:href="img/svg_sprites.svg#hazards_seals"/></svg>';
                     } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Seals">' + '<img src="img/hazards_seals.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Seals">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_seals"/></svg>' + '</div>');
                     };
                 break;
 
                 case 'seaweed':
                     if(rollover) {
-                        var hazardIcon = images.roIconMiscTwoSeaweed;
-                        hazardIcon.title = "Hazard: Seaweed";
+                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Seaweed"><use xlink:href="img/svg_sprites.svg#hazards_seaweed"/></svg>';
                     } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Seaweed">' + '<img src="img/hazards_seaweed.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Seaweed">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_seaweed"/></svg>' + '</div>');
                     };
                 break;
 
                 case 'sewage':
                     if(rollover) {
-                        var hazardIcon = images.roIconMiscTwoSewage;
-                        hazardIcon.title = "Hazard: Sewage";
+                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Sewage"><use xlink:href="img/svg_sprites.svg#hazards_sewage/></svg>';
                     } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Sewage">' + '<img src="img/hazards_sewage.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Sewage">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_sewage"/></svg>' + '</div>');
                     };
                 break;
 
                 case 'shallow':
                     if(rollover) {
-                        var hazardIcon = images.roIconMiscTwoShallow;
-                        hazardIcon.title = "Hazard: Shallow Break";
+                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Shallow Break"><use xlink:href="img/svg_sprites.svg#hazards_shallow"/></svg>';
                     } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Shallow Break">' + '<img src="img/hazards_shallow.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Shallow Break">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_shallow"/></svg>' + '</div>');
                     };
                 break;
 
                 case 'sharks':
                     if(rollover) {
-                        var hazardIcon = images.roIconMiscTwoSharks;
-                        hazardIcon.title = "Hazard: Sharks";
+                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Sharks"><use xlink:href="img/svg_sprites.svg#hazards_sharks"/></svg>';
                     } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Sharks">' + '<img src="img/hazards_sharks.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Sharks">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_sharks"/></svg>' + '</div>');
                     };
                 break;
 
                 case 'strong currents':
                     if(rollover) {
-                        var hazardIcon = images.roIconMiscTwoStrCurrent;
-                        hazardIcon.title = "Hazard: Strong Currents";
+                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Strong Currents"><use xlink:href="img/svg_sprites.svg#hazards_strong_currents"/></svg>';
                     } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Strong Currents">' + '<img src="img/hazards_strong_currents.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Strong Currents">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_strong_currents"/></svg>' + '</div>');
                     };
                 break;
 
                 case 'strong rips':
                     if(rollover) {
-                        var hazardIcon = images.roIconMiscTwoStrRips;
-                        hazardIcon.title = "Hazard: Strong Rips";
+                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Strong Rips"><use xlink:href="img/svg_sprites.svg#hazards_strong_rips"/></svg>';
                     } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Strong Rips">' + '<img src="img/hazards_strong_rips.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Strong Rips">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_strong_rips"/></svg>' + '</div>');
                     };
                 break;
 
                 case 'theft':
                     if(rollover) {
-                        var hazardIcon = images.roIconMiscTwoTheft;
-                        hazardIcon.title = "Hazard: Theft";
+                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Theft"><use xlink:href="img/svg_sprites.svg#hazards_theft"/></svg>';
                     } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Theft">' + '<img src="img/hazards_theft.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Theft">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_theft"/></svg>' + '</div>');
                     };
                 break;
 
                 case 'undertow':
                     if(rollover) {
-                        var hazardIcon = images.roIconMiscTwoUndertow;
-                        hazardIcon.title = "Hazard: Strong Undertow";
+                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Strong Undertow"><use xlink:href="img/svg_sprites.svg#hazards_undertow"/></svg>';
                     } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Strong Undertow">' + '<img src="img/hazards_undertow.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Strong Undertow">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_undertow"/></svg>' + '</div>');
                     };
                 break;
 
                 case 'unfriendly':
                     if(rollover) {
-                        var hazardIcon = images.roIconMiscTwoUnfriendly;
-                        hazardIcon.title = "Hazard: Unfriendly Locals";
+                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Territorial Locals"><use xlink:href="img/svg_sprites.svg#hazards_unfriendly"/></svg>';
                     } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Unfriendly Locals">' + '<img src="img/hazards_unfriendly.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Territorial Locals">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_unfriendly"/></svg>' + '</div>');
                     };
                 break;
 
                 case 'urchins':
                     if(rollover) {
-                        var hazardIcon = images.roIconMiscTwoUrchins;
-                        hazardIcon.title = "Hazard: Urchins";
+                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Urchins"><use xlink:href="img/svg_sprites.svg#hazards_urchins"/></svg>';
                     } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Urchins">' + '<img src="img/hazards_urchins.svg" class="hazard-guide">' + '</div>');
+                        $iconContainer.append('<div class="hazard card " title="Hazard: Urchins">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_urchins"/></svg>' + '</div>');
                     };
                 break;
 
@@ -5110,123 +5082,17 @@ function AppViewModel () {
                 };
 
                 images[src].src = source[src];
-
-                switch (source) {
-                    case roIconsSkillLevel:
-                        images[src].className = "rollover-info skill-level-rollover skill-level-hover-default-style hover-tooltip-only ";
-                    break;
-
-                    case roIconsBreak:
-                        images[src].className = "rollover-info break-type-rollover break-type-hover-default-style hover-tooltip-only ";
-                    break;
-
-                    case roIconsDirection:
-                        images[src].className = "rollover-info wave-direction-rollover wave-direction-hover-default-style hover-tooltip-only ";
-                    break;
-
-                    case roIconsBestSeason:
-                        images[src].className = "rollover-info best-season-rollover best-season-hover-default-style hover-tooltip-only ";
-                    break;
-
-                    case roIconsMiscOne:
-                        images[src].className = "rollover-info misc-info-one-rollover misc-info-one-hover-default-style hover-tooltip-only ";
-                    break;
-
-                    case roIconsMiscTwo:
-                        images[src].className = "rollover-info misc-info-two-rollover misc-info-two-hover-default-style hover-tooltip-only ";
-                    break;
-                };
             };
         };
 
-        var guideIcons =
-            { attireSpring: 'img/water_temp_spring.svg',
-              attireSummer: 'img/water_temp_summer.svg',
-              attireAutumn: 'img/water_temp_autumn.svg',
-              attireWinter: 'img/water_temp_winter.svg',
-              attireBoardies: 'img/water_attire_boardies.svg',
-              attireWetsuitTwo: 'img/water_attire_2mm_wetsuit.svg',
-              attireWetsuitThree: 'img/water_attire_3mm_wetsuit.svg',
-              attireWetsuitFour: 'img/water_attire_4mm_wetsuit.svg',
-              attireWetsuitFive: 'img/water_attire_5mm_wetsuit.svg',
-              attireWetsuitSix: 'img/water_attire_6mm_wetsuit.svg',
-              swellPointer: 'img/compass_swell_pointer.svg',
+        var compassIcons =
+            { swellPointer: 'img/compass_swell_pointer.svg',
               windPointer: 'img/compass_wind_pointer.svg',
               smallSwellPointer: 'img/compass_swell_pointer_guide.svg',
               smallWindPointer: 'img/compass_wind_pointer_guide.svg',
               smallCompass: 'img/compass_guide.svg' };
 
-        var roIconsSkillLevel =
-            { roIconSkillAll: 'img/skill_level_ro_all.svg',
-              roIconSkillBegInt: 'img/skill_level_ro_beginner_intermediate.svg',
-              roIconSkillBeg: 'img/skill_level_ro_beginner.svg',
-              roIconSkillIntAdv: 'img/skill_level_ro_intermediate_advanced.svg',
-              roIconSkillInt: 'img/skill_level_ro_intermediate.svg',
-              roIconSkillAdv: 'img/skill_level_ro_advanced.svg' };
-
-        var roIconsBreak =
-            { roIconBreakReef: 'img/break_ro_reef.svg',
-              roIconBreakBeach: 'img/break_ro_beach.svg',
-              roIconBreakPoint: 'img/break_ro_point.svg',
-              roIconBreakRiver: 'img/break_ro_river_mouth.svg' };
-
-        var roIconsDirection =
-            { roIconDirectionLeft: 'img/direction_ro_left.svg',
-              roIconDirectionRight: 'img/direction_ro_right.svg',
-              roIconDirectionBoth: 'img/direction_ro_both.svg' };
-
-        var roIconsBestSeason =
-            { roIconBestSeasonAll: 'img/season_ro_all.svg',
-              roIconBestSeasonWinSpr: 'img/season_ro_winter_spring.svg',
-              roIconBestSeasonWinSum: 'img/season_ro_winter_summer.svg',
-              roIconBestSeasonWinAut: 'img/season_ro_winter_autumn.svg',
-              roIconBestSeasonWin: 'img/season_ro_winter.svg',
-              roIconBestSeasonSpgSum: 'img/season_ro_spring_summer.svg',
-              roIconBestSeasonSpgAut: 'img/season_ro_spring_autumn.svg',
-              roIconBestSeasonSpg: 'img/season_ro_spring.svg',
-              roIconBestSeasonSumAut: 'img/season_summer_autumn.svg',
-              roIconBestSeasonSum: 'img/season_summer.svg',
-              roIconBestSeasonAut: 'img/season_autumn.svg' };
-
-        var roIconsMiscOne =
-            { roIconMiscOneBoardies: 'img/water_attire_ro_boardies.svg',
-              roIconMiscOneWetSuitTwo: 'img/water_attire_ro_2mm_wetsuit.svg',
-              roIconMiscOneWetSuitThree: 'img/water_attire_ro_3mm_wetsuit.svg',
-              roIconMiscOneWetSuitFour: 'img/water_attire_ro_4mm_wetsuit.svg',
-              roIconMiscOneWetSuitFive: 'img/water_attire_ro_5mm_wetsuit.svg',
-              roIconMiscOneWetSuitSix: 'img/water_attire_ro_6mm_wetsuit.svg',
-              roIconMiscOneBigWave: 'img/big_wave_ro.svg' };
-
-        var roIconsMiscTwo =
-            { roIconMiscTwoBeginners: 'img/hazards_ro_beginners.svg',
-              roIconMiscTwoBoats: 'img/hazards_ro_boats.svg',
-              roIconMiscTwoCrocs: 'img/hazards_ro_crocs.svg',
-              roIconMiscTwoCrowded: 'img/hazards_ro_crowded.svg',
-              roIconMiscTwoDgrBreak: 'img/hazards_ro_dangerous_break.svg',
-              roIconMiscTwoFar: 'img/hazards_ro_far_from_shore.svg',
-              roIconMiscTwoPollution: 'img/hazards_ro_pollution.svg',
-              roIconMiscTwoRocky: 'img/hazards_ro_rocky_bottom.svg',
-              roIconMiscTwoSnakes: 'img/hazards_ro_sea_snakes.svg',
-              roIconMiscTwoSeals: 'img/hazards_ro_seals.svg',
-              roIconMiscTwoSeaweed: 'img/hazards_ro_seaweed.svg',
-              roIconMiscTwoSewage: 'img/hazards_ro_sewage.svg',
-              roIconMiscTwoShallow: 'img/hazards_ro_sharks.svg',
-              roIconMiscTwoSharks: 'img/hazards_ro_sharks.svg',
-              roIconMiscTwoStrCurrent: 'img/hazards_ro_strong_currents.svg',
-              roIconMiscTwoStrRips: 'img/hazards_ro_strong_rips.svg',
-              roIconMiscTwoTheft: 'img/hazards_ro_theft.svg',
-              roIconMiscTwoUndertow: 'img/hazards_ro_undertow.svg',
-              roIconMiscTwoUnfriendly: 'img/hazards_ro_unfriendly.svg',
-              roIconMiscTwoUrchins: 'img/hazards_ro_urchins.svg',
-              roIconMiscTwoWellknown: 'img/well_known_ro.svg' };
-
-        loadImages(guideIcons);
-        loadImages(roIconsSkillLevel);
-        loadImages(roIconsBreak);
-        loadImages(roIconsDirection);
-        loadImages(roIconsBestSeason);
-        loadImages(roIconsMiscOne);
-        loadImages(roIconsMiscTwo);
+        loadImages(compassIcons);
     };
 };
 

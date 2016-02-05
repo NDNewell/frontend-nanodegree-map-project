@@ -25,8 +25,8 @@ module.exports = function(grunt) {
         'uglify',
         'processhtml',
         //'htmlmin',
-        //'respimg',
         'svgstore',
+        'respimg',
         'watch'
     ]);
 };

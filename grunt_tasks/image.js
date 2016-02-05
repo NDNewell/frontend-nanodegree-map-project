@@ -5,15 +5,14 @@ module.exports = function (grunt, config) {
                 files: [{
                     expand: true,
                     cwd: config.imgSrcDir,
-                    src: ['*.{gif,jpg,png,svg}'],
+                    src: ['**/*.{gif,jpg,png,svg}'],
                     dest: config.imgResDir
                 }],
             }
         },
         svgstore: {
             options: {
-                includedemo: true,
-                cleanup: ['fill', 'stroke'],
+                includedemo: false,
                 includeTitleElement: false,
                 formatting : {
                     indent_size : 2
@@ -21,14 +20,14 @@ module.exports = function (grunt, config) {
             },
             default : {
                 files: {
-                    'dist/img/icons.svg': ['dist/img/SVGsprite/*.svg'],
+                    'dist/img/svg_sprites.svg': ['foo/img/*.svg'],
                 }
             }
         }
         ,
         watch: {
             svgstore: {
-                files: 'dist/img/SVGsprite/*.svg',
+                files: 'src/foo/img/*.svg',
                 tasks: 'svgstore'
             }
         }

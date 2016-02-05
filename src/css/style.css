@@ -552,7 +552,7 @@ body, html {
 
 .surf-conditions-swell > p:first-child + p + p {
     margin-top: -3px;
-    font-size: .9em;
+    font-size: .8em;
 }
 
 .surf-conditions-wind {
@@ -562,14 +562,15 @@ body, html {
     font-size: 2em;
 }
 
-.surf-conditions-wind img {
+.surf-conditions-wind svg {
     margin: auto;
-    margin-top: 11px;
+    width: 67px;
+    height: 57px;
+    margin-bottom: -4px;
 }
 
-.surf-conditions-wind > p:first-child + img + p {
-    font-size: .9em;
-    margin-top: 6px;
+.surf-conditions-wind > p:first-child + svg + p {
+    font-size: .8em;
 }
 
 .conditions-close-button {

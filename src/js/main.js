@@ -3752,7 +3752,6 @@ function AppViewModel () {
                     var temperature = forecastData.condition.temperature;
                     var weather = forecastData.condition.weather;
                     var weatherImg = 'http://cdnimages.magicseaweed.com/30x30/' + weather + '.png'
-                    var windImg = 'img/wind.svg'
 
                     /* Get wave and conditions ratings */
                     rating = [];
@@ -3831,7 +3830,7 @@ function AppViewModel () {
                     var $surfConditionsWaves = $('.surf-conditions-waves');
 
                     var windSpeedInfo = '<p>' + windSpeed + "mph" + '</p>';
-                    var windIcon = '<img class="img-responsive" src="' + windImg + '" alt="Symbol for wind">';
+                    var windIcon = '<svg  alt="Symbol for wind"><use xlink:href="img/svg_sprites.svg#wind"/></svg>';
                     var cardinalDirection = '<p>' + compassDirection + " " + "wind" + '</p>';
 
                     /* Render the wind speed, direction, and wind image in the

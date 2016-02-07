@@ -2810,30 +2810,50 @@ function AppViewModel () {
     // Set variables to be used in the functions to follow
     var $searchSymbol = $('.search-symbol');
 
-    /* Call the jQuery-UI auto complete widget.*/
-    $searchForm.autocomplete({
-        /* All keywords come from the above array */
-        source: searchKeywords,
-        /* Highlight the pop-up menu item that matches what is currently in
-         the search input field */
-        autoFocus: true,
-        /* A search must be at least two characters long before the pop-up
-        window shows */
-        minLength: 2,
-        // Delay the pop-up window from displaying for (x) milliseconds
-        delay: 250,
-        /* The a selection has been made, change the ko variable that
-        represents the search and then activate the search filtering
-        below */
-        select: function (event, ui) {
-            self.Query(ui.item.value);
-            self.searchLocations();
-        },
-        /* Remove focus from search field after selection is made */
-        close: function(){
-            $(this).blur();
-        }
-    });
+    // Check if search keywords have loaded
+    // When they are loaded, load the auto complete listener
+    if(self.searchKeywords.length > 1) {
+
+        self.loadAutoComplete();
+    } else {
+
+        var interval = setInterval(function() {
+
+            if(self.searchKeywords.length > 1) {
+                clearInterval(interval);
+                self.loadAutoComplete();
+            };
+        }, 500);
+    };
+
+    // Load auto complete listener for search field
+    self.loadAutoComplete = function () {
+
+        /* Call the jQuery-UI auto complete widget.*/
+        $searchForm.autocomplete({
+            /* All keywords come from the above array */
+            source: self.searchKeywords,
+            /* Highlight the pop-up menu item that matches what is currently in
+             the search input field */
+            autoFocus: true,
+            /* A search must be at least two characters long before the pop-up
+            window shows */
+            minLength: 2,
+            // Delay the pop-up window from displaying for (x) milliseconds
+            delay: 0,
+            /* When a selection has been made, change the ko variable that
+            represents the search and then activate the search filtering
+            below */
+            select: function (event, ui) {
+                self.Query(ui.item.value);
+                self.searchLocations();
+            },
+            /* Remove focus from search field after selection is made */
+            close: function(){
+                $(this).blur();
+            }
+        });
+    };
 
     // Toggle the appearance of the search container
     self.toggleSearch = function () {

@@ -159,6 +159,15 @@ function AppViewModel () {
 
     this.self = this;
 
+    // Prevents back space navigating the page backwards unless input/textarea
+    // From Andrew Whitaker (https://stackoverflow.
+    // com/questions/11112127/prevent-backspace-from-navigating-back-with-
+    // jquery-like-googles-homepage)
+    $(document).on("keydown", function (e) {
+        if (e.which === 8 && !$(e.target).is("input, textarea")) {
+            e.preventDefault();
+        }
+    });
 
     // Cache common DOM refs
     var $window = $(window),
@@ -2829,6 +2838,9 @@ function AppViewModel () {
     // Load auto complete listener for search field
     self.loadAutoComplete = function () {
 
+        // Set blurring of search form to false
+        var blurOnEnter = false;
+
         /* Call the jQuery-UI auto complete widget.*/
         $searchForm.autocomplete({
             /* All keywords come from the above array */
@@ -2845,13 +2857,31 @@ function AppViewModel () {
             represents the search and then activate the search filtering
             below */
             select: function (event, ui) {
+
+                // Allow blurring even after the auto complete menu has been
+                // hidden
+                blurOnEnter = true;
+
+                console.log('select event');
                 self.Query(ui.item.value);
                 self.searchLocations();
-            },
-            /* Remove focus from search field after selection is made */
-            close: function(){
+
+                // Remove focus from search field after selection is made
                 $(this).blur();
             }
+        });
+
+        // Add listener to search form to listen for 'enter' key
+        // If it is pressed after the auto complete menu was shown but then
+        // hidden due to no matches, blur the search field.
+        // Normally, jQuery ui's autocomplete plugin will blur the field, but
+        // that's only when an item as been selected from the autocomplete
+        // menu
+        $searchForm.on("keydown", function(e) {
+            if(e.keyCode === 13 && blurOnEnter) {
+                console.log('enter was pressed, so let us move on');
+                $(this).blur();
+            };
         });
     };
 

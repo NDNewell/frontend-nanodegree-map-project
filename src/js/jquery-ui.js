@@ -3398,13 +3398,13 @@ $.widget( "ui.autocomplete", {
 					break;
 				case keyCode.ENTER:
 					// when menu is open and has focus
-					if ( this.menu.active ) {
+					//if ( this.menu.active ) {
 						// #6055 - Opera still allows the keypress to occur
 						// which causes forms to submit
 						suppressKeyPress = true;
 						event.preventDefault();
 						this.menu.select( event );
-					}
+					//}
 					break;
 				case keyCode.TAB:
 					if ( this.menu.active ) {

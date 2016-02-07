@@ -1871,16 +1871,16 @@ function AppViewModel () {
     self.toggleHoverClasses = function () {
 
         // Cache refs to selected DOM elements
-        var skillLevelIcon = 'skill-level-hover',
-            breakTypeIcon = 'break-type-hover',
-            waveDirectionIcon = 'wave-direction-hover',
-            bestSeasonIcon = 'best-season-hover',
-            miscInfoOneIcon = 'misc-info-one-hover',
+        var $skillLevelIcon = $('.skill-level-hover'),
+            $breakTypeIcon = $('.break-type-hover'),
+            $waveDirectionIcon = $('.wave-direction-hover'),
+            $bestSeasonIcon = $('.best-season-hover'),
+            $miscInfoOneIcon = $('.misc-info-one-hover'),
             $miscInfoTwoIcon = $('.misc-info-two-hover'),
-            distanceInfo = 'distance-hover',
-            waterTempInfo = 'water-temp-hover',
-            waveSizeInfo = 'wave-size-hover',
-            costInfo = 'cost-hover';
+            $distanceInfo = $('.distance-hover'),
+            $waterTempInfo = $('.water-temp-hover'),
+            $waveSizeInfo = $('.wave-size-hover'),
+            $costInfo = $('.cost-hover');
 
         /* Whilst hovering over a location add/remove the appropriate classes
         in order to change the icons' styling */
@@ -1888,35 +1888,25 @@ function AppViewModel () {
 
             console.log('adjust hover icons and info to map view style');
 
-            $$(skillLevelIcon).classList.remove("skill-level-hover-default");
-            $$(skillLevelIcon).classList.add("skill-level-hover-map");
+            $skillLevelIcon.removeClass("skill-level-hover-default").addClass("skill-level-hover-map");
 
-            $$(breakTypeIcon).classList.remove("break-type-hover-default")
-            $$(breakTypeIcon).classList.add("break-type-hover-map");
+            $breakTypeIcon.removeClass("break-type-hover-default").addClass("break-type-hover-map");
 
-            $$(waveDirectionIcon).classList.remove("wave-direction-hover-default")
-            $$(waveDirectionIcon).classList.add("wave-direction-hover-map");
+            $waveDirectionIcon.removeClass("wave-direction-hover-default").addClass("wave-direction-hover-map");
 
-            $$(bestSeasonIcon).classList.remove("best-season-hover-default")
-            $$(bestSeasonIcon).classList.add("best-season-hover-map");
+            $bestSeasonIcon.removeClass("best-season-hover-default").addClass("best-season-hover-map");
 
-            $$(miscInfoOneIcon).classList.remove("misc-info-one-hover-default")
-            $$(miscInfoOneIcon).classList.add("misc-info-one-hover-map");
+            $miscInfoOneIcon.removeClass("misc-info-one-hover-default").addClass("misc-info-one-hover-map");
 
             $miscInfoTwoIcon.removeClass("misc-info-two-hover-default").addClass("misc-info-two-hover-map");
 
-            $$(distanceInfo).classList.remove("distance-hover-default")
-            $$(distanceInfo).classList.add("distance-hover-map");
+            $distanceInfo.removeClass("distance-hover-default").addClass("distance-hover-map");
 
-            $$(waterTempInfo).classList.remove("water-temp-hover-default")
-            $$(waterTempInfo).classList.add("water-temp-hover-map");
+            $waterTempInfo.removeClass("water-temp-hover-default").addClass("water-temp-hover-map");
 
-            $$(waveSizeInfo).classList.remove("wave-size-hover-default")
-            $$(waveSizeInfo).classList.add("wave-size-hover-map");
+            $waveSizeInfo.removeClass("wave-size-hover-default").addClass("wave-size-hover-map");
 
-            $$(costInfo).classList.remove("cost-hover-default")
-            $$(costInfo).classList.add("cost-hover-map");
-
+            $costInfo.removeClass("cost-hover-default").addClass("cost-hover-map");
 
         /* When hovering over a location is finished, add/remove the appropriate classes in order to change the icons' styling back to the
         default style */
@@ -1924,34 +1914,25 @@ function AppViewModel () {
 
             console.log('revert hover icons and info back to default style');
 
-            $$(skillLevelIcon).classList.remove("skill-level-hover-map")
-            $$(skillLevelIcon).classList.add("skill-level-hover-default");
+            $skillLevelIcon.removeClass("skill-level-hover-map").addClass("skill-level-hover-default");
 
-            $$(breakTypeIcon).classList.remove("break-type-hover-map")
-            $$(breakTypeIcon).classList.add("break-type-hover-default");
+            $breakTypeIcon.removeClass("break-type-hover-map").addClass("break-type-hover-default");
 
-            $$(waveDirectionIcon).classList.remove("wave-direction-hover-map")
-            $$(waveDirectionIcon).classList.add("wave-direction-hover-default");
+            $waveDirectionIcon.removeClass("wave-direction-hover-map").addClass("wave-direction-hover-default");
 
-            $$(bestSeasonIcon).classList.remove("best-season-hover-map")
-            $$(bestSeasonIcon).classList.add("best-season-hover-default");
+            $bestSeasonIcon.removeClass("best-season-hover-map").addClass("best-season-hover-default");
 
-            $$(miscInfoOneIcon).classList.remove("misc-info-one-hover-map")
-            $$(miscInfoOneIcon).classList.add("misc-info-one-hover-default");
+            $miscInfoOneIcon.removeClass("misc-info-one-hover-map").addClass("misc-info-one-hover-default");
 
             $miscInfoTwoIcon.removeClass("misc-info-two-hover-map").addClass("misc-info-two-hover-default");
 
-            $$(distanceInfo).classList.remove("distance-hover-map")
-            $$(distanceInfo).classList.add("distance-hover-default");
+            $distanceInfo.removeClass("distance-hover-map").addClass("distance-hover-default");
 
-            $$(waterTempInfo).classList.remove("water-temp-hover-map")
-            $$(waterTempInfo).classList.add("water-temp-hover-default");
+            $waterTempInfo.removeClass("water-temp-hover-map").addClass("water-temp-hover-default");
 
-            $$(waveSizeInfo).classList.remove("wave-size-hover-map")
-            $$(waveSizeInfo).classList.add("wave-size-hover-default");
+            $waveSizeInfo.removeClass("wave-size-hover-map").addClass("wave-size-hover-default");
 
-            $$(costInfo).classList.remove("cost-hover-map")
-            $$(costInfo).classList.add("cost-hover-default");
+            $costInfo.removeClass("cost-hover-map").addClass("cost-hover-default");
         };
     };
 
@@ -4000,27 +3981,9 @@ function AppViewModel () {
         return icon;
     };
 
-    self.setUpIcons = function (rollover, frameClass, frameTitle, imgClass, img, frameID, bgImg, bgImgClass) {
+    self.setUpIcons = function (frameClass, frameTitle, imgClass, img, bgImg, bgImgClass) {
 
-            if(rollover && bgImg) {
-                var icon =
-                        '<div id="' + frameID + '" class="' + frameClass + '" title="' + frameTitle + '">' +
-                            '<svg class="' + bgImgClass + '"><use xlink:href="' + bgImg + '"/></svg>' +
-                            '<svg class="' + imgClass + '"><use xlink:href="' + img + '"/></svg>' +
-                        '</div>';
-            } else if (rollover) {
-                if(frameID) {
-                    var icon =
-                        '<div id="' + frameID + '" class="' + frameClass + '" title="' + frameTitle + '">' +
-                            '<svg class="' + imgClass + '"><use xlink:href="' + img + '"/></svg>' +
-                        '</div>';
-                } else {
-                    var icon =
-                        '<div class="' + frameClass + '" title="' + frameTitle + '">' +
-                            '<svg class="' + imgClass + '"><use xlink:href="' + img + '"/></svg>' +
-                        '</div>';
-                };
-            } else if (!rollover && bgImg) {
+            if (bgImg) {
                 var icon =
                     '<div class="' + frameClass + '" title="' + frameTitle + '">' +
                         '<svg class="' + bgImgClass + '"><use xlink:href="' + bgImg + '"/></svg>' +
@@ -4039,9 +4002,8 @@ function AppViewModel () {
     self.displayBigWaveIcon = function (obj, $iconContainer) {
 
         if(rollover) {
-            var frameID = "misc-info-one-hover",
-                frameClass = "hover-icon-frame rollover-info misc-info-one-hover-default hover-tooltip-only",
-                imgClass = "hover-icon misc-info-one-hover";
+            var frameClass = "hover-icon-frame rollover-info misc-info-one-hover-default misc-info-one-hover hover-tooltip-only",
+                imgClass = "hover-icon";
         } else {
             var frameClass = "big-wave card",
                 imgClass = "big-wave-guide";
@@ -4050,7 +4012,7 @@ function AppViewModel () {
         var frameTitle = "Known for big wave surfing",
             img = "img/svg_sprites.svg#big_wave";
 
-        var icon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
+        var icon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
         // If big wave and rollover, then the above icon stays set and is
         // returned below.
@@ -4083,8 +4045,8 @@ function AppViewModel () {
     self.displayWellKnownIcon = function (obj, $iconContainer) {
 
         if(rollover) {
-                frameClass = "misc-info-two-hover hover-icon-frame rollover-info misc-info-two-hover-default hover-tooltip-only",
-                imgClass = "hover-icon misc-info-two-hover-svg well-known-hover-svg";
+                frameClass = "misc-info-two-hover hover-icon-frame rollover-info misc-info-two-hover-default well-known-hover hover-tooltip-only",
+                imgClass = "hover-icon";
         } else {
             var frameClass = "well-known card",
                 imgClass = "well-known-guide";
@@ -4093,7 +4055,7 @@ function AppViewModel () {
         var frameTitle = "Well known around the world",
             img = "img/svg_sprites.svg#well_known";
 
-        var icon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+        var icon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
         // If well known and rollover, then the above icon stays set and is
         // returned below.
@@ -4147,9 +4109,8 @@ function AppViewModel () {
         };
 
         if(rollover) {
-            var frameID = "skill-level-hover",
-                frameClass = "hover-icon-frame rollover-info skill-level-hover-default hover-tooltip-only",
-                imgClass = "hover-icon skill-level-hover",
+            var frameClass = "hover-icon-frame rollover-info skill-level-hover-default skill-level-hover hover-tooltip-only",
+                imgClass = "hover-icon",
                 bgImgClass = "hover-icon skill-level-bg-hover";
         } else {
             var frameClass = "skill-level card",
@@ -4164,7 +4125,7 @@ function AppViewModel () {
             var frameTitle = "Difficulty: All levels",
                 img = "img/svg_sprites.svg#skill_level_all";
 
-            var skillLevelIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID, bgImg, bgImgClass);
+            var skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
 
         } else if (beginner >= intermediate && beginner > advanced) {
             if(beginner === intermediate) {
@@ -4172,7 +4133,7 @@ function AppViewModel () {
                 var frameTitle = "Difficulty: Beginner to Intermediate",
                     img = "img/svg_sprites.svg#skill_level_beginner_intermediate";
 
-                var skillLevelIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID, bgImg, bgImgClass);
+                var skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
 
                 return skillLevelIcon;
             } else {
@@ -4180,7 +4141,7 @@ function AppViewModel () {
                 var frameTitle = "Difficulty: Beginner",
                     img = "img/svg_sprites.svg#skill_level_beginner";
 
-                var skillLevelIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID, bgImg, bgImgClass);
+                var skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
             };
         } else if (intermediate > beginner && intermediate >= advanced) {
             if(intermediate === advanced) {
@@ -4188,20 +4149,20 @@ function AppViewModel () {
                 var frameTitle = "Difficulty: Intermediate to Advanced",
                     img = "img/svg_sprites.svg#skill_level_intermediate_advanced";
 
-                var skillLevelIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID, bgImg, bgImgClass);
+                var skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
             } else {
 
                 var frameTitle = "Difficulty: Intermediate",
                     img = "img/svg_sprites.svg#skill_level_intermediate";
 
-                var skillLevelIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID, bgImg, bgImgClass);
+                var skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
             };
         } else {
 
                 var frameTitle = "Difficulty: Advanced",
                     img = "img/svg_sprites.svg#skill_level_advanced";
 
-                var skillLevelIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID, bgImg, bgImgClass);
+                var skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
         };
 
         return skillLevelIcon;
@@ -4211,9 +4172,8 @@ function AppViewModel () {
     self.displayDirectionIcon = function (obj) {
 
         if(rollover) {
-            var frameID = "wave-direction-hover",
-                frameClass = "hover-icon-frame rollover-info wave-direction-hover-default hover-tooltip-only",
-                imgClass = "hover-icon wave-direction-hover";
+            var frameClass = "hover-icon-frame rollover-info wave-direction-hover-default wave-direction-hover hover-tooltip-only",
+                imgClass = "hover-icon";
         } else {
             var frameClass = "direction card",
                 imgClass = "wave-direction-guide";
@@ -4225,7 +4185,7 @@ function AppViewModel () {
                 var frameTitle = "Wave breaks left",
                         img = "img/svg_sprites.svg#direction_left";
 
-                var directionIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
+                var directionIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
             break;
 
@@ -4234,7 +4194,7 @@ function AppViewModel () {
                 var frameTitle = "Wave breaks right",
                         img = "img/svg_sprites.svg#direction_right";
 
-                var directionIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
+                var directionIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
             break;
 
             case 'left & right':
@@ -4242,7 +4202,7 @@ function AppViewModel () {
                 var frameTitle = "Wave breaks left & right",
                         img = "img/svg_sprites.svg#direction_both";
 
-                var directionIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
+                var directionIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
             break;
         }
 
@@ -4252,9 +4212,8 @@ function AppViewModel () {
     self.displayBreakIcon = function (obj) {
 
         if(rollover) {
-            var frameID = "break-type-hover",
-                frameClass = "hover-icon-frame rollover-info break-type-hover-default hover-tooltip-only",
-                imgClass = "hover-icon break-type-hover";
+            var frameClass = "hover-icon-frame rollover-info break-type-hover-default break-type-hover hover-tooltip-only",
+                imgClass = "hover-icon";
         } else {
             var frameClass = "break card",
                 imgClass = "break-type-guide";
@@ -4266,7 +4225,7 @@ function AppViewModel () {
                 var frameTitle = "Reef break",
                     img = "img/svg_sprites.svg#break_reef";
 
-                var breakIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
+                var breakIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
             break;
 
             case 'beach':
@@ -4274,7 +4233,7 @@ function AppViewModel () {
                 var frameTitle = "Beach break",
                     img = "img/svg_sprites.svg#break_beach";
 
-                var breakIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
+                var breakIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
             break;
 
             case 'point':
@@ -4282,7 +4241,7 @@ function AppViewModel () {
                 var frameTitle = "Point break",
                     img = "img/svg_sprites.svg#break_point";
 
-                var breakIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
+                var breakIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
             break;
 
             case 'river mouth':
@@ -4290,7 +4249,7 @@ function AppViewModel () {
                 var frameTitle = "Breaks at a river mouth",
                     img = "img/svg_sprites.svg#break_river_mouth";
 
-                var breakIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
+                var breakIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
             break;
         }
 
@@ -4511,9 +4470,8 @@ function AppViewModel () {
         }
 
         if(rollover) {
-            var frameID = "best-season-hover",
-                frameClass = "hover-icon-frame rollover-info best-season-hover-default hover-tooltip-only",
-                imgClass = "hover-icon best-season-hover";
+            var frameClass = "hover-icon-frame rollover-info best-season-hover-default best-season-hover hover-tooltip-only",
+                imgClass = "hover-icon";
         } else {
             var frameClass = "time card",
                 imgClass = "best-season-guide";
@@ -4528,7 +4486,7 @@ function AppViewModel () {
             var frameTitle = "Best Season: All",
                 img = "img/svg_sprites.svg#season_all";
 
-            var bestSeasonIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
+            var bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
         } else if(winter >= spring && winter >= summer && winter >= autumn) {
             if(winter === spring) {
@@ -4536,26 +4494,26 @@ function AppViewModel () {
                 var frameTitle = "Best Season: Winter & Spring",
                 img = "img/svg_sprites.svg#season_winter_spring";
 
-                var bestSeasonIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
+                var bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
             } else if (winter === summer) {
 
                 var frameTitle = "Best Season: Winter & Summer",
                 img = "img/svg_sprites.svg#season_winter_summer";
 
-                var bestSeasonIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
+                var bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
             } else if (winter === autumn) {
 
                 var frameTitle = "Best Season: Winter & Autumn",
                 img = "img/svg_sprites.svg#season_winter_autumn";
 
-                var bestSeasonIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
+                var bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
             } else {
 
                 var frameTitle = "Best Season: Winter",
                 img = "img/svg_sprites.svg#season_winter";
 
-                var bestSeasonIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
+                var bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
             };
         } else if (spring >= summer && spring >= autumn && spring > winter) {
             if (spring === summer) {
@@ -4563,19 +4521,19 @@ function AppViewModel () {
                 var frameTitle = "Best Season: Spring & Summer",
                 img = "img/svg_sprites.svg#season_spring_summer";
 
-                var bestSeasonIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
+                var bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
             } else if (spring === autumn) {
 
                 var frameTitle = "Best Season: Spring & Autumn",
                 img = "img/svg_sprites.svg#season_spring_autumn";
 
-                var bestSeasonIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
+                var bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
             } else {
 
                 var frameTitle = "Best Season: Spring",
                 img = "img/svg_sprites.svg#season_spring";
 
-                var bestSeasonIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
+                var bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
             };
         } else if (summer >= autumn && summer > winter && summer > spring) {
             if(summer === autumn) {
@@ -4583,20 +4541,20 @@ function AppViewModel () {
                 var frameTitle = "Best Season: Summer & Autumn",
                 img = "img/svg_sprites.svg#season_summer_autumn";
 
-                var bestSeasonIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
+                var bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
             } else {
 
                 var frameTitle = "Best Season: Summer",
                 img = "img/svg_sprites.svg#season_ummer";
 
-                var bestSeasonIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
+                var bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
             };
         } else {
 
                 var frameTitle = "Best Season: Autumn",
                 img = "img/svg_sprites.svg#season_autumn";
 
-                var bestSeasonIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
+                var bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
         };
 
         return bestSeasonIcon;
@@ -4663,9 +4621,8 @@ function AppViewModel () {
         function determineGear (temp) {
 
             // Cache details for the hover icons
-            var frameID = "misc-info-one-hover",
-                frameClass = "hover-icon-frame rollover-info misc-info-one-hover-default hover-tooltip-only",
-                imgClass = "hover-icon misc-info-one-hover";
+            var frameClass = "hover-icon-frame rollover-info misc-info-one-hover-default misc-info-one-hover hover-tooltip-only",
+                imgClass = "hover-icon";
 
             if(temp > 59) {
                 if(temp > 72) {
@@ -4676,7 +4633,7 @@ function AppViewModel () {
 
                         frameTitle = "It's currently warm enough for boardies =)";
 
-                        var gear = setUpGearHoverIcon(frameID, frameClass, imgClass, img, frameTitle);
+                        var gear = setUpGearHoverIcon(frameClass, imgClass, img, frameTitle);
 
                     } else {
                         var gear = '<svg class="suggested-attire-boardies-guide suggested-attire-guide"><use xlink:href="img/svg_sprites.svg#water_attire_boardies"/></svg>';
@@ -4689,7 +4646,7 @@ function AppViewModel () {
 
                         frameTitle = "A 2mm wetsuit is recommended for this time of year";
 
-                        var gear = setUpGearHoverIcon(frameID, frameClass, imgClass, img, frameTitle);
+                        var gear = setUpGearHoverIcon(frameClass, imgClass, img, frameTitle);
 
                     } else {
                         var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide"><use xlink:href="img/svg_sprites.svg#water_attire_2mm_wetsuit"/></svg>';
@@ -4702,7 +4659,7 @@ function AppViewModel () {
 
                         frameTitle = "A 3mm wetsuit is recommended for this time of year";
 
-                        var gear = setUpGearHoverIcon(frameID, frameClass, imgClass, img, frameTitle);
+                        var gear = setUpGearHoverIcon(frameClass, imgClass, img, frameTitle);
 
                     } else {
                         var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide"><use xlink:href="img/svg_sprites.svg#water_attire_3mm_wetsuit"/></svg>';
@@ -4717,7 +4674,7 @@ function AppViewModel () {
 
                         frameTitle = "A 4mm wetsuit and boots are recommended for this time of year";
 
-                        var gear = setUpGearHoverIcon(frameID, frameClass, imgClass, img, frameTitle);
+                        var gear = setUpGearHoverIcon(frameClass, imgClass, img, frameTitle);
 
                     } else {
                         var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide"><use xlink:href="img/svg_sprites.svg#water_attire_4mm_wetsuit"/></svg>';
@@ -4729,7 +4686,7 @@ function AppViewModel () {
 
                         frameTitle = "A 5mm wetsuit, gloves, and boots are recommended for this time of year";
 
-                        var gear = setUpGearHoverIcon(frameID, frameClass, imgClass, img, frameTitle);
+                        var gear = setUpGearHoverIcon(frameClass, imgClass, img, frameTitle);
 
                     } else {
                         var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide"><use xlink:href="img/svg_sprites.svg#water_attire_5mm_wetsuit"/></svg>';
@@ -4741,7 +4698,7 @@ function AppViewModel () {
 
                         frameTitle = "A 6mm wetsuit, gloves, boots, and a hood are recommended for this time of year";
 
-                        var gear = setUpGearHoverIcon(frameID, frameClass, imgClass, img, frameTitle);
+                        var gear = setUpGearHoverIcon(frameClass, imgClass, img, frameTitle);
 
                     } else {
                         var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide"><use xlink:href="img/svg_sprites.svg#water_attire_6mm_wetsuit"/></svg>';
@@ -4752,10 +4709,10 @@ function AppViewModel () {
             return gear;
         };
 
-        function setUpGearHoverIcon (frameID, frameClass, imgClass, img, frameTitle) {
+        function setUpGearHoverIcon(frameClass, imgClass, img, frameTitle) {
 
             var icon =
-                '<div id="' + frameID + '" class="' + frameClass + '" title="' + frameTitle + '">' +
+                '<div id="'  + '" class="' + frameClass + '" title="' + frameTitle + '">' +
                     '<svg class="' + imgClass + '"><use xlink:href="' + img + '"/></svg>' +
                 '</div>';
 
@@ -4774,7 +4731,7 @@ function AppViewModel () {
 
       if(rollover) {
 
-          var costInfo = '<p id="cost-hover" class="rollover-info cost-hover-default " title="Estimated minimum daily budget allowance">' + '$' + obj.budget + '</p>';
+          var costInfo = '<p class="rollover-info cost-hover-default cost-hover" title="Estimated minimum daily budget allowance">' + '$' + obj.budget + '</p>';
 
       } else {
 
@@ -4846,7 +4803,7 @@ function AppViewModel () {
 
             if(rollover) {
                 // Cache distance element with distance
-                var distance = '<p id="distance-hover" class="rollover-info distance-hover-default " title="Estimated flight duration from your location">' + distanceFly + 'h' + '</p>';
+                var distance = '<p class="rollover-info distance-hover-default distance-hover" title="Estimated flight duration from your location">' + distanceFly + 'h' + '</p>';
 
                 return distance;
 
@@ -4862,7 +4819,7 @@ function AppViewModel () {
 
             if(rollover) {
                 // Cache distance element with distance
-                var distance = '<p id="distance-hover" class="rollover-info distance-hover-default " title="Estimated distance in miles from your location">' + distanceDrive + 'mi' + '</p>';
+                var distance = '<p class="rollover-info distance-hover-default distance-hover" title="Estimated distance in miles from your location">' + distanceDrive + 'mi' + '</p>';
 
                 return distance;
 
@@ -4902,7 +4859,7 @@ function AppViewModel () {
           break
         };
 
-        var waterTempInfo = '<p id="water-temp-hover" class="rollover-info water-temp-hover-default " title="Average ' + currentSeason + ' water temperature">' + waterTemp + '℉' + '</p>';
+        var waterTempInfo = '<p class="rollover-info water-temp-hover-default water-temp-hover" title="Average ' + currentSeason + ' water temperature">' + waterTemp + '℉' + '</p>';
 
         return waterTempInfo;
     };
@@ -4918,7 +4875,7 @@ function AppViewModel () {
 
         if(rollover) {
             /* Cache the average wave height */
-            var waveSizeInfo = '<p id="wave-size-hover" class="rollover-info wave-size-hover-default " title="Average wave size">' + obj.min + "-" + obj.max + "'" +'</p>';
+            var waveSizeInfo = '<p class="rollover-info wave-size-hover-default wave-size-hover" title="Average wave size">' + obj.min + "-" + obj.max + "'" +'</p>';
         } else {
             var waveSizeInfo = '<div class="wave-size card" title="Average wave size">' + '<svg class="wave-size-guide"><use xlink:href="img/svg_sprites.svg#wave_range"/></svg>' + '<p>' + obj.min + "-" + obj.max + plus + "ft" + '</p>' + '</div>';
         };
@@ -5004,7 +4961,7 @@ function AppViewModel () {
                     var frameTitle = "Hazard: Beginners",
                         img = "img/svg_sprites.svg#hazards_beginners";
 
-                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
                 break;
 
@@ -5013,7 +4970,7 @@ function AppViewModel () {
                     var frameTitle = "Hazard: Boats",
                         img = "img/svg_sprites.svg#hazards_boats";
 
-                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'crocs':
@@ -5021,7 +4978,7 @@ function AppViewModel () {
                     var frameTitle = "Hazard: Crocodiles",
                         img = "img/svg_sprites.svg#hazards_crocs";
 
-                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'crowded':
@@ -5029,7 +4986,7 @@ function AppViewModel () {
                     var frameTitle = "Hazard: Crowded",
                         img = "img/svg_sprites.svg#hazards_pollution";
 
-                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'dangerous break':
@@ -5037,7 +4994,7 @@ function AppViewModel () {
                     var frameTitle = "Hazard: Dangerous break",
                         img = "img/svg_sprites.svg#hazards_crowded";
 
-                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'far from shore':
@@ -5045,7 +5002,7 @@ function AppViewModel () {
                     var frameTitle = "Hazard: Far from shore",
                         img = "img/svg_sprites.svg#hazards_far_from_shore";
 
-                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'pollution':
@@ -5053,7 +5010,7 @@ function AppViewModel () {
                     var frameTitle = "Hazard: Pollution",
                         img = "img/svg_sprites.svg#hazards_pollution";
 
-                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'rocky bottom':
@@ -5061,7 +5018,7 @@ function AppViewModel () {
                     var frameTitle = "Hazard: Rocky bottom",
                         img = "img/svg_sprites.svg#hazards_rocky_bottom";
 
-                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'sea snakes':
@@ -5069,7 +5026,7 @@ function AppViewModel () {
                     var frameTitle = "Hazard: Sea snakes",
                         img = "img/svg_sprites.svg#hazards_sea_snakes";
 
-                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'seals':
@@ -5077,7 +5034,7 @@ function AppViewModel () {
                     var frameTitle = "Hazard: Seals",
                         img = "img/svg_sprites.svg#hazards_seals";
 
-                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'seaweed':
@@ -5085,7 +5042,7 @@ function AppViewModel () {
                     var frameTitle = "Hazard: Seaweed",
                         img = "img/svg_sprites.svg#hazards_seaweed";
 
-                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'sewage':
@@ -5093,7 +5050,7 @@ function AppViewModel () {
                     var frameTitle = "Hazard: Sewage",
                         img = "img/svg_sprites.svg#hazards_sewage";
 
-                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'shallow':
@@ -5101,7 +5058,7 @@ function AppViewModel () {
                     var frameTitle = "Hazard: Shallow break",
                         img = "img/svg_sprites.svg#hazards_shallow";
 
-                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'sharks':
@@ -5109,7 +5066,7 @@ function AppViewModel () {
                     var frameTitle = "Hazard: Sharks",
                         img = "img/svg_sprites.svg#hazards_sharks";
 
-                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'strong currents':
@@ -5117,7 +5074,7 @@ function AppViewModel () {
                     var frameTitle = "Hazard: Strong currents",
                         img = "img/svg_sprites.svg#hazards_strong_currents";
 
-                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'strong rips':
@@ -5125,7 +5082,7 @@ function AppViewModel () {
                     var frameTitle = "Hazard: Strong rips",
                         img = "img/svg_sprites.svg#hazards_strong_rips";
 
-                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'theft':
@@ -5133,7 +5090,7 @@ function AppViewModel () {
                     var frameTitle = "Hazard: Theft",
                         img = "img/svg_sprites.svg#hazards_theft";
 
-                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'undertow':
@@ -5141,7 +5098,7 @@ function AppViewModel () {
                     var frameTitle = "Hazard: Strong undertow",
                         img = "img/svg_sprites.svg#hazards_undertow";
 
-                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'unfriendly':
@@ -5149,7 +5106,7 @@ function AppViewModel () {
                     var frameTitle = "Hazard: Unfriendly",
                         img = "img/svg_sprites.svg#hazards_pollution";
 
-                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'urchins':
@@ -5157,7 +5114,7 @@ function AppViewModel () {
                     var frameTitle = "Hazard: Urchins",
                         img = "img/svg_sprites.svg#hazards_unfriendly";
 
-                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
             }

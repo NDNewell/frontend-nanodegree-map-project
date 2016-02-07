@@ -1943,10 +1943,10 @@ function AppViewModel () {
         // For each location set variables and add hover effects
         $('.location-frame').each(function () {
             var $locationFrame = $(this),
-                $breakName = $(this).find('.break-name'),
-                $location = $(this).find('.location-name'),
-                $img = $(this).find('img.location-image'),
-                $favoriteWrapper = $(this).find('.favorite-wrapper');
+                $img = $(this).children(":nth-child(1)").children(":nth-child(1)"),
+                $breakName = $(this).children(":nth-child(2)"),
+                $favoriteWrapper = $(this).children(":nth-child(3)").children(":nth-child(1)"),
+                $location = $(this).children(":nth-child(4)");
 
             $locationFrame.on('mouseenter', function (e) {
 

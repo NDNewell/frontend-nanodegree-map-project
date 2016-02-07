@@ -4988,171 +4988,187 @@ function AppViewModel () {
         };
 
         function hazards (hazard, $iconContainer) {
+
+            if(rollover) {
+                var frameClass = "misc-info-two-hover hover-icon-frame rollover-info misc-info-two-hover-default hover-tooltip-only",
+                    imgClass = "hover-icon misc-info-two-hover-svg";
+            } else {
+                var frameClass = "hazard card",
+                    imgClass = "hazard-guide";
+            };
+
             switch (hazard) {
 
                 case 'beginners':
-                    if(rollover) {
-                        var hazardIcon = '<div title="Hazard: Beginners" class="misc-info-two-hover hover-icon-frame rollover-info misc-info-two-hover-default hover-tooltip-only"><svg class="hover-icon misc-info-two-hover-svg"><use xlink:href="img/svg_sprites.svg#hazards_beginners"/></svg></div>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card" title="Hazard: Beginners">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_beginners"/></svg>' + '</div>');
-                    };
+
+                    var frameTitle = "Hazard: Beginners",
+                        img = "img/svg_sprites.svg#hazards_beginners";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+
                 break;
 
                 case 'boats':
-                    if(rollover) {
-                        var hazardIcon = '<div title="Hazard: Boats" class="misc-info-two-hover hover-icon-frame rollover-info misc-info-two-hover-default hover-tooltip-only"><svg class="hover-icon misc-info-two-hover-svg"><use xlink:href="img/svg_sprites.svg#hazards_boats"/></svg></div>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Boats">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_boats"/></svg>' + '</div>');
-                    };
+
+                    var frameTitle = "Hazard: Boats",
+                        img = "img/svg_sprites.svg#hazards_boats";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'crocs':
-                    if(rollover) {
-                        var hazardIcon = '<div title="Hazard: Crocodiles" class="misc-info-two-hover hover-icon-frame rollover-info misc-info-two-hover-default hover-tooltip-only"><svg class="hover-icon misc-info-two-hover-svg"><use xlink:href="img/svg_sprites.svg#hazards_crocs"/></svg></div>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Crocodiles">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_crocs"/></svg>' + '</div>');
-                    };
+
+                    var frameTitle = "Hazard: Crocodiles",
+                        img = "img/svg_sprites.svg#hazards_crocs";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'crowded':
-                    if(rollover) {
-                        var hazardIcon = '<div title="Hazard: Crowded" class="misc-info-two-hover hover-icon-frame rollover-info misc-info-two-hover-default hover-tooltip-only"><svg class="hover-icon misc-info-two-hover-svg"><use xlink:href="img/svg_sprites.svg#hazards_crowded"/></svg></div>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Crowded">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_crowded"/></svg>' + '</div>');
-                    };
+
+                    var frameTitle = "Hazard: Crowded",
+                        img = "img/svg_sprites.svg#hazards_pollution";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'dangerous break':
-                    if(rollover) {
-                        var hazardIcon = '<div title="Hazard: Dangerous Break" class="misc-info-two-hover hover-icon-frame rollover-info misc-info-two-hover-default hover-tooltip-only"><svg class="hover-icon misc-info-two-hover-svg"><use xlink:href="img/svg_sprites.svg#hazards_dangerous_break"/></svg></div>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Dangerous Break">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_dangerous_break"/></svg>' + '</div>');
-                    };
+
+                    var frameTitle = "Hazard: Dangerous break",
+                        img = "img/svg_sprites.svg#hazards_crowded";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'far from shore':
-                    if(rollover) {
-                        var hazardIcon = '<div title="Hazard: Far From Shore" class="misc-info-two-hover hover-icon-frame rollover-info misc-info-two-hover-default hover-tooltip-only"><svg class="hover-icon misc-info-two-hover-svg"><use xlink:href="img/svg_sprites.svg#hazards_far_from_shore"/></svg></div>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Far From Shore">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_far_from_shore"/></svg>' + '</div>');
-                    };
+
+                    var frameTitle = "Hazard: Far from shore",
+                        img = "img/svg_sprites.svg#hazards_far_from_shore";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'pollution':
-                    if(rollover) {
-                        var hazardIcon = '<div title="Hazard: Pollution" class="misc-info-two-hover hover-icon-frame rollover-info misc-info-two-hover-default hover-tooltip-only"><svg class="hover-icon misc-info-two-hover-svg"><use xlink:href="img/svg_sprites.svg#hazards_pollution"/></svg></div>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Pollution">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_pollution"/></svg>' + '</div>');
-                    };
+
+                    var frameTitle = "Hazard: Pollution",
+                        img = "img/svg_sprites.svg#hazards_pollution";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'rocky bottom':
-                    if(rollover) {
-                        var hazardIcon = '<div title="Hazard: Rocky Bottom" class="misc-info-two-hover hover-icon-frame rollover-info misc-info-two-hover-default hover-tooltip-only"><svg class="hover-icon misc-info-two-hover-svg"><use xlink:href="img/svg_sprites.svg#hazards_rocky_bottom"/></svg></div>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Rocky Bottom">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_rocky_bottom"/></svg>' + '</div>');
-                    };
+
+                    var frameTitle = "Hazard: Rocky bottom",
+                        img = "img/svg_sprites.svg#hazards_rocky_bottom";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'sea snakes':
-                    if(rollover) {
-                        var hazardIcon = '<div title="Hazard: Sea Snakes" class="misc-info-two-hover hover-icon-frame rollover-info misc-info-two-hover-default hover-tooltip-only"><svg class="hover-icon misc-info-two-hover-svg"><use xlink:href="img/svg_sprites.svg#hazards_sea_snakes"/></svg></div>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Sea Snakes">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_sea_snakes"/></svg>' + '</div>');
-                    };
+
+                    var frameTitle = "Hazard: Sea snakes",
+                        img = "img/svg_sprites.svg#hazards_sea_snakes";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'seals':
-                    if(rollover) {
-                        var hazardIcon = '<div title="Hazard: Seals" class="misc-info-two-hover hover-icon-frame rollover-info misc-info-two-hover-default hover-tooltip-only"><svg class="hover-icon misc-info-two-hover-svg"><use xlink:href="img/svg_sprites.svg#hazards_seals"/></svg></div>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Seals">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_seals"/></svg>' + '</div>');
-                    };
+
+                    var frameTitle = "Hazard: Seals",
+                        img = "img/svg_sprites.svg#hazards_seals";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'seaweed':
-                    if(rollover) {
-                        var hazardIcon = '<div title="Hazard: Seaweed" class="misc-info-two-hover hover-icon-frame rollover-info misc-info-two-hover-default hover-tooltip-only"><svg class="hover-icon misc-info-two-hover-svg"><use xlink:href="img/svg_sprites.svg#hazards_seaweed"/></svg></div>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Seaweed">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_seaweed"/></svg>' + '</div>');
-                    };
+
+                    var frameTitle = "Hazard: Seaweed",
+                        img = "img/svg_sprites.svg#hazards_seaweed";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'sewage':
-                    if(rollover) {
-                        var hazardIcon = '<div title="Hazard: Sewage" class="misc-info-two-hover hover-icon-frame rollover-info misc-info-two-hover-default hover-tooltip-only"><svg class="hover-icon misc-info-two-hover-svg"><use xlink:href="img/svg_sprites.svg#hazards_sewage/></svg>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Sewage">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_sewage"/></svg>' + '</div>');
-                    };
+
+                    var frameTitle = "Hazard: Sewage",
+                        img = "img/svg_sprites.svg#hazards_sewage";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'shallow':
-                    if(rollover) {
-                        var hazardIcon = '<div title="Hazard: Shallow Break" class="misc-info-two-hover hover-icon-frame rollover-info misc-info-two-hover-default hover-tooltip-only"><svg class="hover-icon misc-info-two-hover-svg"><use xlink:href="img/svg_sprites.svg#hazards_shallow"/></svg></div>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Shallow Break">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_shallow"/></svg>' + '</div>');
-                    };
+
+                    var frameTitle = "Hazard: Shallow break",
+                        img = "img/svg_sprites.svg#hazards_shallow";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'sharks':
-                    if(rollover) {
-                        var hazardIcon = '<div title="Hazard: Sharks" class="misc-info-two-hover hover-icon-frame rollover-info misc-info-two-hover-default hover-tooltip-only"><svg class="hover-icon misc-info-two-hover-svg"><use xlink:href="img/svg_sprites.svg#hazards_sharks"/></svg></div>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Sharks">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_sharks"/></svg>' + '</div>');
-                    };
+
+                    var frameTitle = "Hazard: Sharks",
+                        img = "img/svg_sprites.svg#hazards_sharks";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'strong currents':
-                    if(rollover) {
-                        var hazardIcon = '<div title="Hazard: Strong Currents" class="misc-info-two-hover hover-icon-frame rollover-info misc-info-two-hover-default hover-tooltip-only"><svg class="hover-icon misc-info-two-hover-svg"><use xlink:href="img/svg_sprites.svg#hazards_strong_currents"/></svg></div>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Strong Currents">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_strong_currents"/></svg>' + '</div>');
-                    };
+
+                    var frameTitle = "Hazard: Strong currents",
+                        img = "img/svg_sprites.svg#hazards_strong_currents";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'strong rips':
-                    if(rollover) {
-                        var hazardIcon = '<div title="Hazard: Strong Rips" class="misc-info-two-hover hover-icon-frame rollover-info misc-info-two-hover-default hover-tooltip-only"><svg class="hover-icon misc-info-two-hover-svg"><use xlink:href="img/svg_sprites.svg#hazards_strong_rips"/></svg></div>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Strong Rips">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_strong_rips"/></svg>' + '</div>');
-                    };
+
+                    var frameTitle = "Hazard: Strong rips",
+                        img = "img/svg_sprites.svg#hazards_strong_rips";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'theft':
-                    if(rollover) {
-                        var hazardIcon = '<div title="Hazard: Theft" class="misc-info-two-hover hover-icon-frame rollover-info misc-info-two-hover-default hover-tooltip-only"><svg class="hover-icon misc-info-two-hover-svg"><use xlink:href="img/svg_sprites.svg#hazards_theft"/></svg></div>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Theft">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_theft"/></svg>' + '</div>');
-                    };
+
+                    var frameTitle = "Hazard: Theft",
+                        img = "img/svg_sprites.svg#hazards_theft";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'undertow':
-                    if(rollover) {
-                        var hazardIcon = '<div title="Hazard: Strong Undertow" class="misc-info-two-hover hover-icon-frame rollover-info misc-info-two-hover-default hover-tooltip-only"><svg class="hover-icon misc-info-two-hover-svg"><use xlink:href="img/svg_sprites.svg#hazards_undertow"/></svg></div>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Strong Undertow">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_undertow"/></svg>' + '</div>');
-                    };
+
+                    var frameTitle = "Hazard: Strong undertow",
+                        img = "img/svg_sprites.svg#hazards_undertow";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'unfriendly':
-                    if(rollover) {
-                        var hazardIcon = '<div title="Hazard: Territorial Locals" class="misc-info-two-hover hover-icon-frame rollover-info misc-info-two-hover-default hover-tooltip-only"><svg class="hover-icon misc-info-two-hover-svg"><use xlink:href="img/svg_sprites.svg#hazards_unfriendly"/></svg></div>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Territorial Locals">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_unfriendly"/></svg>' + '</div>');
-                    };
+
+                    var frameTitle = "Hazard: Unfriendly",
+                        img = "img/svg_sprites.svg#hazards_pollution";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'urchins':
-                    if(rollover) {
-                        var hazardIcon = '<div title="Hazard: Urchins" class="misc-info-two-hover hover-icon-frame rollover-info misc-info-two-hover-default hover-tooltip-only"><svg class="hover-icon misc-info-two-hover-svg"><use xlink:href="img/svg_sprites.svg#hazards_urchins"/></svg></div>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Urchins">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_urchins"/></svg>' + '</div>');
-                    };
+
+                    var frameTitle = "Hazard: Urchins",
+                        img = "img/svg_sprites.svg#hazards_unfriendly";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
                 break;
 
             }
 
-              return hazardIcon;
+            if(rollover) {
+
+                return hazardIcon;
+            } else {
+
+                $iconContainer.append(hazardIcon);
+            };
 
         };
     };

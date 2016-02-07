@@ -159,10 +159,6 @@ function AppViewModel () {
 
     this.self = this;
 
-    //
-    var $$ = function (id) {
-        return document.getElementById(id);
-    };
 
     // Cache common DOM refs
     var $window = $(window),
@@ -3497,7 +3493,7 @@ function AppViewModel () {
 
             var distanceIcon = displayDistance(obj.lat, obj.lng);
 
-            $iconContainer.append('<div class="distance card">' + distanceIcon + '</div>');
+            $iconContainer.append(distanceIcon);
         };
 
         // Display an icon for each hazard one might encounter at the break
@@ -4737,7 +4733,7 @@ function AppViewModel () {
 
           var midRange = Math.floor((obj.highEnd - obj.budget)/2 + obj.budget);
 
-          var costInfo = $iconContainer.append('<div class="cost card">' + '<svg class="cost-guide" title="Estimated daily budget allowance: Low, Mid, High"><use xlink:href="img/svg_sprites.svg#cost"/></svg>' + '<p>' + obj.budget + '</p>' + '<p>' + midRange + '</p>' + '<p>' + obj.highEnd +'</p>' + '</div>');
+          var costInfo = $iconContainer.append('<div class="cost card "title="Estimated daily budget allowance: Low, Mid, High">' + '<svg class="cost-guide"><use xlink:href="img/svg_sprites.svg#cost"/></svg>' + '<p>' + obj.budget + '</p>' + '<p>' + midRange + '</p>' + '<p>' + obj.highEnd +'</p>' + '</div>');
       };
 
       return costInfo;
@@ -4809,7 +4805,7 @@ function AppViewModel () {
 
             } else {
 
-                var distanceIcon = '<svg class="icon distance-guide-plane" title="Estimated flight duration from your location"><use xlink:href="img/svg_sprites.svg#distance_plane"/></svg>' + '<p class="distance-guide-hours">' + distanceFly + 'h' +'</p>';
+                var distanceIcon = '<div class="distance card" title="Estimated flight duration from your location"><svg class="distance-guide-plane"><use xlink:href="img/svg_sprites.svg#distance_plane"/></svg>' + '<p class="distance-guide-hours">' + distanceFly + 'h' +'</p></div>';
 
                 return distanceIcon;
             };
@@ -4825,7 +4821,7 @@ function AppViewModel () {
 
             } else {
 
-                var distanceIcon = '<svg class="icon distance-guide-drive" title="Estimated (straight line) distance in miles from your location (actual distance via roads will be greater)"><use xlink:href="img/svg_sprites.svg#distance"/></svg>' + '<p class="distance-guide-miles">' + distanceDrive + 'mi' +'</p>';
+                var distanceIcon = '<div class="distance card" title="Estimated (straight line) distance in miles from your location (actual distance via roads will be greater)"><svg class="distance-guide-drive"><use xlink:href="img/svg_sprites.svg#distance"/></svg>' + '<p class="distance-guide-miles">' + distanceDrive + 'mi' +'</p></div>';
 
                 return distanceIcon;
             };

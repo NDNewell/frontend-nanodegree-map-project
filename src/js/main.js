@@ -2055,8 +2055,6 @@ function AppViewModel () {
             /* Remove all imported info when the mouse stops hovering */
             $locationFrame.on('mouseleave', function () {
 
-                console.log('!!! hover off !!!');
-
                 // Set rollover to false
                 rollover = false;
 
@@ -4980,7 +4978,7 @@ function AppViewModel () {
                 case 'crowded':
 
                     var frameTitle = "Hazard: Crowded",
-                        img = "img/svg_sprites.svg#hazards_pollution";
+                        img = "img/svg_sprites.svg#hazards_crowded";
 
                     var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
@@ -4988,7 +4986,7 @@ function AppViewModel () {
                 case 'dangerous break':
 
                     var frameTitle = "Hazard: Dangerous break",
-                        img = "img/svg_sprites.svg#hazards_crowded";
+                        img = "img/svg_sprites.svg#hazards_dangerous_break";
 
                     var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
@@ -5100,7 +5098,7 @@ function AppViewModel () {
                 case 'unfriendly':
 
                     var frameTitle = "Hazard: Unfriendly",
-                        img = "img/svg_sprites.svg#hazards_pollution";
+                        img = "img/svg_sprites.svg#hazards_unfriendly";
 
                     var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
@@ -5108,7 +5106,7 @@ function AppViewModel () {
                 case 'urchins':
 
                     var frameTitle = "Hazard: Urchins",
-                        img = "img/svg_sprites.svg#hazards_unfriendly";
+                        img = "img/svg_sprites.svg#hazards_urchins";
 
                     var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;

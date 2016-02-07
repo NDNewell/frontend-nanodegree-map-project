@@ -205,6 +205,7 @@ body, html {
 }
 
 .location-frame-default {
+    position: relative;
     display: none;
     text-align:center;
     padding: 10px 10px;
@@ -251,14 +252,24 @@ body, html {
     box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-.hover-icon {
+.hover-icon-frame {
     position: absolute;
+    width: 80px;
+    height: 80px;
     border: 3px solid white;
     border-radius: 10px;
+}
+
+.hover-icon {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    border: none;
+    border-radius: 0px;
     padding: 5px;
     pointer-events: none;
 }
-
 
 .break-type-hover,
 .wave-direction-hover,
@@ -284,16 +295,7 @@ body, html {
 }
 
 .skill-level-hover-default,
-.break-type-hover-default,
-.wave-direction-hover-default,
-.best-season-hover-default,
-.misc-info-one-hover-default,
-.misc-info-two-hover-default {
-    height: 80px;
-    width: 80px;
-}
-
-.skill-level-hover-default,
+.skill-level-bg-hover-default,
 .break-type-hover-default,
 .wave-direction-hover-default {
     top: 11.5%;
@@ -306,6 +308,7 @@ body, html {
 }
 
 .skill-level-hover-default,
+.skill-level-bg-hover-default,
 .best-season-hover-default {
     left: 17%;
 }

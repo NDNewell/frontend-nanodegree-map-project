@@ -159,6 +159,7 @@ function AppViewModel () {
 
     this.self = this;
 
+    //
     var $$ = function (id) {
         return document.getElementById(id);
     };
@@ -1871,12 +1872,11 @@ function AppViewModel () {
 
         // Cache refs to selected DOM elements
         var skillLevelIcon = 'skill-level-hover',
-            skillLevelBGIcon = 'skill-level-bg-hover',
             breakTypeIcon = 'break-type-hover',
             waveDirectionIcon = 'wave-direction-hover',
             bestSeasonIcon = 'best-season-hover',
             miscInfoOneIcon = 'misc-info-one-hover',
-            miscInfoTwoIcon = 'misc-info-two-hover',
+            $miscInfoTwoIcon = $('.misc-info-two-hover'),
             distanceInfo = 'distance-hover',
             waterTempInfo = 'water-temp-hover',
             waveSizeInfo = 'wave-size-hover',
@@ -1891,9 +1891,6 @@ function AppViewModel () {
             $$(skillLevelIcon).classList.remove("skill-level-hover-default");
             $$(skillLevelIcon).classList.add("skill-level-hover-map");
 
-            $$(skillLevelBGIcon).classList.remove("skill-level-hover-default");
-            $$(skillLevelBGIcon).classList.add("skill-level-hover-map");
-
             $$(breakTypeIcon).classList.remove("break-type-hover-default")
             $$(breakTypeIcon).classList.add("break-type-hover-map");
 
@@ -1906,8 +1903,7 @@ function AppViewModel () {
             $$(miscInfoOneIcon).classList.remove("misc-info-one-hover-default")
             $$(miscInfoOneIcon).classList.add("misc-info-one-hover-map");
 
-            $$(miscInfoTwoIcon).classList.remove("misc-info-two-hover-default")
-            $$(miscInfoTwoIcon).classList.add("misc-info-two-hover-map");
+            $miscInfoTwoIcon.removeClass("misc-info-two-hover-default").addClass("misc-info-two-hover-map");
 
             $$(distanceInfo).classList.remove("distance-hover-default")
             $$(distanceInfo).classList.add("distance-hover-map");
@@ -1931,9 +1927,6 @@ function AppViewModel () {
             $$(skillLevelIcon).classList.remove("skill-level-hover-map")
             $$(skillLevelIcon).classList.add("skill-level-hover-default");
 
-            $$(skillLevelBGIcon).classList.remove("skill-level-hover-default");
-            $$(skillLevelBGIcon).classList.add("skill-level-hover-map");
-
             $$(breakTypeIcon).classList.remove("break-type-hover-map")
             $$(breakTypeIcon).classList.add("break-type-hover-default");
 
@@ -1946,8 +1939,7 @@ function AppViewModel () {
             $$(miscInfoOneIcon).classList.remove("misc-info-one-hover-map")
             $$(miscInfoOneIcon).classList.add("misc-info-one-hover-default");
 
-            $$(miscInfoTwoIcon).classList.remove("misc-info-two-hover-map")
-            $$(miscInfoTwoIcon).classList.add("misc-info-two-hover-default");
+            $miscInfoTwoIcon.removeClass("misc-info-two-hover-map").addClass("misc-info-two-hover-default");
 
             $$(distanceInfo).classList.remove("distance-hover-map")
             $$(distanceInfo).classList.add("distance-hover-default");
@@ -2085,6 +2077,8 @@ function AppViewModel () {
 
             /* Remove all imported info when the mouse stops hovering */
             $locationFrame.on('mouseleave', function () {
+
+                console.log('!!! hover off !!!');
 
                 // Set rollover to false
                 rollover = false;
@@ -4006,48 +4000,123 @@ function AppViewModel () {
         return icon;
     };
 
+    self.setUpIcons = function (rollover, frameClass, frameTitle, imgClass, img, frameID, bgImg, bgImgClass) {
+
+            if(rollover && bgImg) {
+                var icon =
+                        '<div id="' + frameID + '" class="' + frameClass + '" title="' + frameTitle + '">' +
+                            '<svg class="' + bgImgClass + '"><use xlink:href="' + bgImg + '"/></svg>' +
+                            '<svg class="' + imgClass + '"><use xlink:href="' + img + '"/></svg>' +
+                        '</div>';
+            } else if (rollover) {
+                if(frameID) {
+                    var icon =
+                        '<div id="' + frameID + '" class="' + frameClass + '" title="' + frameTitle + '">' +
+                            '<svg class="' + imgClass + '"><use xlink:href="' + img + '"/></svg>' +
+                        '</div>';
+                } else {
+                    var icon =
+                        '<div class="' + frameClass + '" title="' + frameTitle + '">' +
+                            '<svg class="' + imgClass + '"><use xlink:href="' + img + '"/></svg>' +
+                        '</div>';
+                };
+            } else if (!rollover && bgImg) {
+                var icon =
+                    '<div class="' + frameClass + '" title="' + frameTitle + '">' +
+                        '<svg class="' + bgImgClass + '"><use xlink:href="' + bgImg + '"/></svg>' +
+                        '<svg class="' + imgClass + '"><use xlink:href="' + img + '"/></svg>' +
+                    '</div>';
+            } else {
+                var icon =
+                    '<div class="' + frameClass + '" title="' + frameTitle + '">' +
+                        '<svg class="' + imgClass + '"><use xlink:href="' + img + '"/></svg>' +
+                    '</div>';
+            };
+
+        return icon;
+    };
+
     self.displayBigWaveIcon = function (obj, $iconContainer) {
 
         if(rollover) {
-            if(obj.bigWave) {
-                var icon = '<svg id="misc-info-one-hover" class="hover-icon rollover-info misc-info-one-hover misc-info-one-hover misc-info-one-hover-default hover-tooltip-only" title="Known for big wave surfing"><use xlink:href="img/svg_sprites.svg#big_wave"/></svg>';
-            } else {
-                var icon = displaySuggestedAttireIcons(obj.avgWaterTemp);
-            };
+            var frameID = "misc-info-one-hover",
+                frameClass = "hover-icon-frame rollover-info misc-info-one-hover-default hover-tooltip-only",
+                imgClass = "hover-icon misc-info-one-hover";
         } else {
-            if(obj.bigWave) {
-                var icon = '<div class=" big-wave card" title="Known for big wave surfing">' + '<svg class="big-wave-guide"><use xlink:href="img/svg_sprites.svg#big_wave"/></svg>' + '</div>';
+            var frameClass = "big-wave card",
+                imgClass = "big-wave-guide";
+        };
 
-                // Add big wave card to surf guide
-                $iconContainer.append(icon);
+        var frameTitle = "Known for big wave surfing",
+            img = "img/svg_sprites.svg#big_wave";
 
-            } else {
+        var icon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
 
-                return;
-            };
+        // If big wave and rollover, then the above icon stays set and is
+        // returned below.
+        // If big wave and not rollover, then the above icon stays set and is
+        // immediately rendered in the surf guide.
+        if (obj.bigWave && !rollover) {
+
+            // Add big wave card to surf guide
+            $iconContainer.append(icon);
+
+            return;
+
+        // If not big wave and rollover, the icon is switched out with the
+        // attire icon and returned below.
+        // If not big wave and not rollover, the function is returned as there
+        // is no need to render the suggested attire in the guide (this is
+        // done in the displaySuggestedAttire func)
+        } else if (!obj.bigWave && rollover) {
+
+            var icon = self.displaySuggestedAttireIcons(obj.avgWaterTemp);
+
+        } else if (!obj.bigWave && !rollover) {
+
+            return;
         };
 
         return icon;
-
     };
 
     self.displayWellKnownIcon = function (obj, $iconContainer) {
 
         if(rollover) {
-            if(obj.wellKnown) {
-                var icon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only well-known-hover" title="Well known wave"><use xlink:href="img/svg_sprites.svg#well_known"/></svg>';
-            } else {
-                var icon = displayHazardIcons(obj.hazards, $iconContainer);
-            };
+                frameClass = "misc-info-two-hover hover-icon-frame rollover-info misc-info-two-hover-default hover-tooltip-only",
+                imgClass = "hover-icon misc-info-two-hover-svg well-known-hover-svg";
         } else {
-            if(obj.wellKnown) {
-                var icon = '<div class="well-known card" title="Well known wave">' + '<svg class="well-known-guide"><use xlink:href="img/svg_sprites.svg#well_known"/></svg>' + '</div>';
+            var frameClass = "well-known card",
+                imgClass = "well-known-guide";
+        };
 
-                $iconContainer.append(icon);
+        var frameTitle = "Well known around the world",
+            img = "img/svg_sprites.svg#well_known";
 
-            } else {
-                return;
-            };
+        var icon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+
+        // If well known and rollover, then the above icon stays set and is
+        // returned below.
+        // If well known and not rollover, then the above icon stays set and is
+        // immediately rendered in the surf guide.
+        if (obj.wellKnown && !rollover) {
+
+            // Add well known card to surf guide
+            $iconContainer.append(icon);
+
+            return;
+
+        // If not well known and rollover, the icon is switched out with the
+        // attire icon and returned below.
+        // If not well known and not rollover, the function is returned as
+        // there is no need to render the suggested attire in the guide (this // is done in the displaySuggestedAttire func)
+        } else if (!obj.wellKnown && rollover) {
+
+            var icon = self.displayHazardIcons(obj.hazards, $iconContainer);
+
+        } else if (!obj.wellKnown && !rollover) {
+
+            return;
         };
 
         return icon;
@@ -4077,52 +4146,62 @@ function AppViewModel () {
             }
         };
 
-        if (beginner === intermediate && beginner === advanced) {
-            if(rollover){
-                var skillLevelIcon = '<svg id="skill-level-bg-hover" class="hover-icon rollover-info skill-level-bg-hover skill-level-hover-default"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg id="skill-level-hover" class="hover-icon rollover-info skill-level-hover skill-level-hover-default hover-tooltip-only" title="Difficulty: All levels"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>';
+        if(rollover) {
+            var frameID = "skill-level-hover",
+                frameClass = "hover-icon-frame rollover-info skill-level-hover-default hover-tooltip-only",
+                imgClass = "hover-icon skill-level-hover",
+                bgImgClass = "hover-icon skill-level-bg-hover";
+        } else {
+            var frameClass = "skill-level card",
+                imgClass = "skill-level-guide",
+                bgImgClass = "skill-level-bg-guide";
+        };
 
-            } else {
-                var skillLevelIcon = '<div class="skill-level card " title="Difficulty: All levels">' + '<svg class="skill-level-bg-guide"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg class="skill-level-guide"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '</div>';
-            };
+        var bgImg = "img/svg_sprites.svg#skill_level_all";
+
+        if (beginner === intermediate && beginner === advanced) {
+
+            var frameTitle = "Difficulty: All levels",
+                img = "img/svg_sprites.svg#skill_level_all";
+
+            var skillLevelIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID, bgImg, bgImgClass);
+
         } else if (beginner >= intermediate && beginner > advanced) {
             if(beginner === intermediate) {
-                if(rollover){
-                    var skillLevelIcon = '<svg id="skill-level-bg-hover" class="hover-icon rollover-info skill-level-bg-hover skill-level-hover-default"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg id="skill-level-hover" class="hover-icon rollover-info skill-level-hover skill-level-hover-default hover-tooltip-only" title="Difficulty: Beginner to Intermediate"><use xlink:href="img/svg_sprites.svg#skill_level_beginner_intermediate"/></svg>';
 
-                } else {
-                    var skillLevelIcon = '<div class="skill-level card" title="Difficulty: Beginner to Intermediate">' + '<svg class="skill-level-bg-guide"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg class="skill-level-guide"><use xlink:href="img/svg_sprites.svg#skill_level_beginner_intermediate"/></svg>' + '</div>';
-                };
+                var frameTitle = "Difficulty: Beginner to Intermediate",
+                    img = "img/svg_sprites.svg#skill_level_beginner_intermediate";
+
+                var skillLevelIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID, bgImg, bgImgClass);
+
+                return skillLevelIcon;
             } else {
-                if(rollover){
-                    var skillLevelIcon = '<svg id="skill-level-bg-hover" class="hover-icon rollover-info skill-level-bg-hover skill-level-hover-default"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg id="skill-level-hover" class="hover-icon rollover-info skill-level-hover skill-level-hover-default hover-tooltip-only" title="Difficulty: Beginner"><use xlink:href="img/svg_sprites.svg#skill_level_beginner"/></svg>';
 
-                } else {
-                    var skillLevelIcon = '<div class="skill-level card" title="Difficulty: Beginner">' + '<svg class="skill-level-bg-guide"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg class="skill-level-guide"><use xlink:href="img/svg_sprites.svg#skill_level_beginner"/></svg>' + '</div>';
-                };
+                var frameTitle = "Difficulty: Beginner",
+                    img = "img/svg_sprites.svg#skill_level_beginner";
+
+                var skillLevelIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID, bgImg, bgImgClass);
             };
         } else if (intermediate > beginner && intermediate >= advanced) {
             if(intermediate === advanced) {
-                if(rollover){
-                    var skillLevelIcon = '<svg id="skill-level-bg-hover" class="hover-icon rollover-info skill-level-bg-hover skill-level-hover-default"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg id="skill-level-hover" class="hover-icon rollover-info skill-level-hover skill-level-hover-default hover-tooltip-only" title="Difficulty: Intermediate to Advanced"><use xlink:href="img/svg_sprites.svg#skill_level_intermediate_advanced"/></svg>';
 
-                } else {
-                    var skillLevelIcon = '<div class="skill-level card" title="Difficulty: Intermediate to Advanced">' + '<svg class="skill-level-bg-guide"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg class="skill-level-guide"><use xlink:href="img/svg_sprites.svg#skill_level_intermediate_advanced"/></svg>' + '</div>';
-                };
+                var frameTitle = "Difficulty: Intermediate to Advanced",
+                    img = "img/svg_sprites.svg#skill_level_intermediate_advanced";
+
+                var skillLevelIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID, bgImg, bgImgClass);
             } else {
-                if(rollover){
-                    var skillLevelIcon = '<svg id="skill-level-bg-hover" class="hover-icon rollover-info skill-level-bg-hover skill-level-hover-default"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg id="skill-level-hover" class="hover-icon rollover-info skill-level-hover skill-level-hover-default hover-tooltip-only" title="Difficulty: Intermediate"><use xlink:href="img/svg_sprites.svg#skill_level_intermediate"/></svg>';
 
-                } else {
-                    var skillLevelIcon = '<div class="skill-level card" title="Difficulty: Intermediate">' + '<svg class="skill-level-bg-guide"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg class="skill-level-guide"><use xlink:href="img/svg_sprites.svg#skill_level_intermediate"/></svg>' + '</div>';
-                };
+                var frameTitle = "Difficulty: Intermediate",
+                    img = "img/svg_sprites.svg#skill_level_intermediate";
+
+                var skillLevelIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID, bgImg, bgImgClass);
             };
         } else {
-            if(rollover){
-                var skillLevelIcon = '<svg id="skill-level-bg-hover" class="hover-icon rollover-info skill-level-bg-hover skill-level-hover-default"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg id="skill-level-hover" class="hover-icon rollover-info skill-level-hover skill-level-hover-default hover-tooltip-only" title="Difficulty: Advanced"><use xlink:href="img/svg_sprites.svg#skill_level_advanced"/></svg>';
 
-            } else {
-                var skillLevelIcon = '<div class="skill-level card" title="Difficulty: Advanced">' + '<svg class="skill-level-bg-guide"><use xlink:href="img/svg_sprites.svg#skill_level_all"/></svg>' + '<svg class="skill-level-guide"><use xlink:href="img/svg_sprites.svg#skill_level_advanced"/></svg>' + '</div>';
-            };
+                var frameTitle = "Difficulty: Advanced",
+                    img = "img/svg_sprites.svg#skill_level_advanced";
+
+                var skillLevelIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID, bgImg, bgImgClass);
         };
 
         return skillLevelIcon;
@@ -4130,73 +4209,89 @@ function AppViewModel () {
     };
 
     self.displayDirectionIcon = function (obj) {
+
+        if(rollover) {
+            var frameID = "wave-direction-hover",
+                frameClass = "hover-icon-frame rollover-info wave-direction-hover-default hover-tooltip-only",
+                imgClass = "hover-icon wave-direction-hover";
+        } else {
+            var frameClass = "direction card",
+                imgClass = "wave-direction-guide";
+        };
+
         switch(obj) {
-          case 'left':
-              if(rollover) {
-                  var directionIcon = '<svg id="wave-direction-hover" class="hover-icon rollover-info wave-direction-hover wave-direction-hover-default hover-tooltip-only" title="Wave Direction: Left"><use xlink:href="img/svg_sprites.svg#direction_left"/></svg>';
+            case 'left':
 
-              } else {
-                  var directionIcon = '<div class="direction card" title="Wave Direction: Left">' + '<svg class="wave-direction-guide"><use xlink:href="img/svg_sprites.svg#direction_left"/></svg>' + '</div>';
-              };
-          break;
+                var frameTitle = "Wave breaks left",
+                        img = "img/svg_sprites.svg#direction_left";
 
-          case 'right':
-              if(rollover) {
-                  var directionIcon = '<svg id="wave-direction-hover" class="hover-icon rollover-info wave-direction-hover wave-direction-hover-default hover-tooltip-only" title="Wave Direction: Right"><use xlink:href="img/svg_sprites.svg#direction_right"/></svg>';;
+                var directionIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
 
-              } else {
-                  var directionIcon = '<div class="direction card " title="Wave Direction: Right">' + '<svg class="wave-direction-guide"><use xlink:href="img/svg_sprites.svg#direction_right"/></svg>' + '</div>';
-              };
-          break;
+            break;
 
-          case 'left & right':
+            case 'right':
 
-              if(rollover) {
-                  var directionIcon = '<svg id="wave-direction-hover" class="hover-icon rollover-info wave-direction-hover wave-direction-hover-default hover-tooltip-only" title="Wave Direction: Left & Right"><use xlink:href="img/svg_sprites.svg#direction_both"/></svg>';;
+                var frameTitle = "Wave breaks right",
+                        img = "img/svg_sprites.svg#direction_right";
 
-              } else {
-                  var directionIcon = '<div class="direction card " title="Wave Direction: Left & Right">' + '<svg class="wave-direction-guide"><use xlink:href="img/svg_sprites.svg#direction_both"/></svg>' + '</div>';
-              };
-          break;
+                var directionIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
+            break;
+
+            case 'left & right':
+
+                var frameTitle = "Wave breaks left & right",
+                        img = "img/svg_sprites.svg#direction_both";
+
+                var directionIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
+            break;
         }
 
         return directionIcon;
     };
 
     self.displayBreakIcon = function (obj) {
+
+        if(rollover) {
+            var frameID = "break-type-hover",
+                frameClass = "hover-icon-frame rollover-info break-type-hover-default hover-tooltip-only",
+                imgClass = "hover-icon break-type-hover";
+        } else {
+            var frameClass = "break card",
+                imgClass = "break-type-guide";
+        };
+
         switch(obj) {
-          case 'reef':
-              if(rollover) {
-                  var breakIcon = '<svg id="break-type-hover" class="hover-icon rollover-info break-type-hover break-type-hover-default hover-tooltip-only" title="Break Type: Reef"><use xlink:href="img/svg_sprites.svg#break_reef"/></svg>';
+            case 'reef':
 
-              } else {
-                  var breakIcon = '<div class="break card" title="Break Type: Reef">' + '<svg class="break-type-guide"><use xlink:href="img/svg_sprites.svg#break_reef"/></svg>' + '</div>';
-              };
-          break;
+                var frameTitle = "Reef break",
+                    img = "img/svg_sprites.svg#break_reef";
 
-          case 'beach':
-              if(rollover) {
-                  var breakIcon = '<svg id="break-type-hover" class="hover-icon rollover-info break-type-hover break-type-hover-default hover-tooltip-only" title="Break Type: Reef"><use xlink:href="img/svg_sprites.svg#break_beach"/></svg>';
-              } else {
-                  var breakIcon = '<div class="break card " title="Break Type: Beach">' + '<svg class="break-type-guide"><use xlink:href="img/svg_sprites.svg#break_beach"/></svg>' + '</div>';
-              };
-          break;
+                var breakIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
+            break;
 
-          case 'point':
-              if(rollover) {
-                  var breakIcon = '<svg id="break-type-hover" class="hover-icon rollover-info break-type-hover break-type-hover-default hover-tooltip-only" title="Break Type: Reef"><use xlink:href="img/svg_sprites.svg#break_point"/></svg>';
-              } else {
-                  var breakIcon = '<div class="break card " title="Break Type: Point">' + '<svg class="break-type-guide"><use xlink:href="img/svg_sprites.svg#break_point"/></svg>' + '</div>';
-              };
-          break;
+            case 'beach':
 
-          case 'river mouth':
-              if(rollover) {
-                  var breakIcon = '<svg id="break-type-hover" class="hover-icon rollover-info break-type-hover break-type-hover-default hover-tooltip-only" title="Break Type: Reef"><use xlink:href="img/svg_sprites.svg#break_river_mouth"/></svg>';
-              } else {
-                  var breakIcon = '<div class="break card " title="Break Type: River Mouth">' + '<svg class="break-type-guide"><use xlink:href="img/svg_sprites.svg#break_river_mouth"/></svg>' + '</div>';
-              };
-          break;
+                var frameTitle = "Beach break",
+                    img = "img/svg_sprites.svg#break_beach";
+
+                var breakIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
+            break;
+
+            case 'point':
+
+                var frameTitle = "Point break",
+                    img = "img/svg_sprites.svg#break_point";
+
+                var breakIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
+            break;
+
+            case 'river mouth':
+
+                var frameTitle = "Breaks at a river mouth",
+                    img = "img/svg_sprites.svg#break_river_mouth";
+
+                var breakIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
+            break;
         }
 
         return breakIcon;
@@ -4415,84 +4510,93 @@ function AppViewModel () {
             }
         }
 
+        if(rollover) {
+            var frameID = "best-season-hover",
+                frameClass = "hover-icon-frame rollover-info best-season-hover-default hover-tooltip-only",
+                imgClass = "hover-icon best-season-hover";
+        } else {
+            var frameClass = "time card",
+                imgClass = "best-season-guide";
+        };
+
         /* Filter which seasons are the best for the
         particular break */
         /* Display icon associated with best time of
         year */
         if (winter === spring && winter === summer && winter === autumn) {
-            if(rollover) {
-                var bestSeasonIcon = '<svg id="best-season-hover" class="hover-icon rollover-info best-season-hover best-season-hover-default hover-tooltip-only" title="Best Season: All"><use xlink:href="img/svg_sprites.svg#season_all"/></svg>';
 
-            } else {
-                var bestSeasonIcon = '<div class="time card" title="Best Season: All">' + '<svg class="best-season-guide"><use xlink:href="img/svg_sprites.svg#season_all"/></svg>' + '</div>';
-            };
+            var frameTitle = "Best Season: All",
+                img = "img/svg_sprites.svg#season_all";
+
+            var bestSeasonIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
+
         } else if(winter >= spring && winter >= summer && winter >= autumn) {
-              if(winter === spring) {
-                  if(rollover) {
-                      var bestSeasonIcon = '<svg id="best-season-hover" class="hover-icon rollover-info best-season-hover best-season-hover-default hover-tooltip-only" title="Best Season: Winter & Spring"><use xlink:href="img/svg_sprites.svg#season_winter_spring"/></svg>';
+            if(winter === spring) {
 
-                  } else {
-                      var bestSeasonIcon = '<div class="time card" title="Best Season: Winter & Spring">' + '<svg class="best-season-guide"><use xlink:href="img/svg_sprites.svg#season_winter_spring"/></svg>' + '</div>';
-                  };
-              } else if (winter === summer) {
-                  if(rollover) {
-                      var bestSeasonIcon = '<svg id="best-season-hover" class="hover-icon rollover-info best-season-hover best-season-hover-default hover-tooltip-only" title="Best Season: Winter & Summer"><use xlink:href="img/svg_sprites.svg#season_winter_summer"/></svg>';
-                  } else {
-                      var bestSeasonIcon = '<div class="time card" title="Best Season: Winter & Summer">' + '<svg class="best-season-guide"><use xlink:href="img/svg_sprites.svg#season_winter_summer"/></svg>' + '</div>';
-                  };
-              } else if (winter === autumn) {
-                  if(rollover) {
-                      var bestSeasonIcon = '<svg id="best-season-hover" class="hover-icon rollover-info best-season-hover best-season-hover-default hover-tooltip-only" title="Best Season: Winter & Autumn"><use xlink:href="img/svg_sprites.svg#season_winter_autumn"/></svg>';
-                  } else {
-                      var bestSeasonIcon = '<div class="time card " title="Best Season: Winter & Autumn">' + '<svg class="best-season-guide"><use xlink:href="img/svg_sprites.svg#season_winter_autumn"/></svg>' + '</div>';
-                  };
-              } else {
-                  if(rollover) {
-                      var bestSeasonIcon = '<svg id="best-season-hover" class="hover-icon rollover-info best-season-hover best-season-hover-default hover-tooltip-only" title="Best Season: Winter"><use xlink:href="img/svg_sprites.svg#season_winter"/></svg>';
-                  } else {
-                      var bestSeasonIcon = '<div class="time card " title="Best Season: Winter">' + '<svg class="best-season-guide"><use xlink:href="img/svg_sprites.svg#season_winter"/></svg>' + '</div>';
-                  };
-              };
+                var frameTitle = "Best Season: Winter & Spring",
+                img = "img/svg_sprites.svg#season_winter_spring";
+
+                var bestSeasonIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
+
+            } else if (winter === summer) {
+
+                var frameTitle = "Best Season: Winter & Summer",
+                img = "img/svg_sprites.svg#season_winter_summer";
+
+                var bestSeasonIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
+            } else if (winter === autumn) {
+
+                var frameTitle = "Best Season: Winter & Autumn",
+                img = "img/svg_sprites.svg#season_winter_autumn";
+
+                var bestSeasonIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
+            } else {
+
+                var frameTitle = "Best Season: Winter",
+                img = "img/svg_sprites.svg#season_winter";
+
+                var bestSeasonIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
+            };
         } else if (spring >= summer && spring >= autumn && spring > winter) {
-              if (spring === summer) {
-                  if(rollover) {
-                      var bestSeasonIcon = '<svg id="best-season-hover" class="hover-icon rollover-info best-season-hover best-season-hover-default hover-tooltip-only" title="Best Season: Spring & Summer"><use xlink:href="img/svg_sprites.svg#season_spring_summer"/></svg>';
-                  } else {
-                      var bestSeasonIcon = '<div class="time card " title="Best Season: Spring & Summer">' + '<svg class="best-season-guide"><use xlink:href="img/svg_sprites.svg#season_spring_summer"/></svg>' + '</div>';
-                  };
-              } else if (spring === autumn) {
-                  if(rollover) {
-                      var bestSeasonIcon = '<svg id="best-season-hover" class="hover-icon rollover-info best-season-hover best-season-hover-default hover-tooltip-only" title="Best Season: Spring & Autumn"><use xlink:href="img/svg_sprites.svg#season_spring_autumn"/></svg>';
-                  } else {
-                      var bestSeasonIcon = '<div class="time card " title="Best Season: Spring & Autumn">' + '<svg class="best-season-guide"><use xlink:href="img/svg_sprites.svg#season_spring_autumn"/></svg>' + '</div>';
-                  };
-              } else {
-                  if(rollover) {
-                      var bestSeasonIcon = '<svg id="best-season-hover" class="hover-icon rollover-info best-season-hover best-season-hover-default hover-tooltip-only" title="Best Season: Spring"><use xlink:href="img/svg_sprites.svg#season_spring"/></svg>';
-                  } else {
-                      var bestSeasonIcon = '<div class="time card " title="Best Season: Spring">' + '<svg class="best-season-guide"><use xlink:href="img/svg_sprites.svg#season_spring"/></svg>' + '</div>';
-                  };
-              };
+            if (spring === summer) {
+
+                var frameTitle = "Best Season: Spring & Summer",
+                img = "img/svg_sprites.svg#season_spring_summer";
+
+                var bestSeasonIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
+            } else if (spring === autumn) {
+
+                var frameTitle = "Best Season: Spring & Autumn",
+                img = "img/svg_sprites.svg#season_spring_autumn";
+
+                var bestSeasonIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
+            } else {
+
+                var frameTitle = "Best Season: Spring",
+                img = "img/svg_sprites.svg#season_spring";
+
+                var bestSeasonIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
+            };
         } else if (summer >= autumn && summer > winter && summer > spring) {
-              if(summer === autumn) {
-                  if(rollover) {
-                      var bestSeasonIcon = '<svg id="best-season-hover" class="hover-icon rollover-info best-season-hover best-season-hover-default hover-tooltip-only" title="Best Season: Summer & Autumn"><use xlink:href="img/svg_sprites.svg#season_summer_autumn"/></svg>';
-                  } else {
-                      var bestSeasonIcon = '<div class="time card " title="Best Season: Summer & Autumn">' + '<svg class="best-season-guide"><use xlink:href="img/svg_sprites.svg#season_summer_autumn"/></svg>' + '</div>';
-                  };
-              } else {
-                  if(rollover) {
-                      var bestSeasonIcon = '<svg id="best-season-hover" class="hover-icon rollover-info best-season-hover best-season-hover-default hover-tooltip-only" title="Best Season: Summer"><use xlink:href="img/svg_sprites.svg#season_summer"/></svg>';
-                  } else {
-                      var bestSeasonIcon = '<div class="time card " title="Best Season: Summer">' + '<svg class="best-season-guide"><use xlink:href="img/svg_sprites.svg#season_summer"/></svg>' + '</div>';
-                  };
-              };
+            if(summer === autumn) {
+
+                var frameTitle = "Best Season: Summer & Autumn",
+                img = "img/svg_sprites.svg#season_summer_autumn";
+
+                var bestSeasonIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
+            } else {
+
+                var frameTitle = "Best Season: Summer",
+                img = "img/svg_sprites.svg#season_ummer";
+
+                var bestSeasonIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
+            };
         } else {
-                  if(rollover) {
-                      var bestSeasonIcon = '<svg id="best-season-hover" class="hover-icon rollover-info best-season-hover best-season-hover-default hover-tooltip-only" title="Best Season: Autumn"><use xlink:href="img/svg_sprites.svg#season_autumn"/></svg>';
-                  } else {
-                      var bestSeasonIcon = '<div class="time card " title="Best Season: Autumn">' + '<svg class="best-season-guide"><use xlink:href="img/svg_sprites.svg#season_autumn"/></svg>' + '</div>';
-                  };
+
+                var frameTitle = "Best Season: Autumn",
+                img = "img/svg_sprites.svg#season_autumn";
+
+                var bestSeasonIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img, frameID);
         };
 
         return bestSeasonIcon;
@@ -4553,55 +4657,109 @@ function AppViewModel () {
                 var suggestedAttireIcon = determineGear(obj.autumn);
             };
 
-            suggestedAttireIcon.title = 'Suggested ' + currentSeason + ' attire';
-
             return suggestedAttireIcon;
         };
 
         function determineGear (temp) {
+
+            // Cache details for the hover icons
+            var frameID = "misc-info-one-hover",
+                frameClass = "hover-icon-frame rollover-info misc-info-one-hover-default hover-tooltip-only",
+                imgClass = "hover-icon misc-info-one-hover";
+
             if(temp > 59) {
                 if(temp > 72) {
+
                     if(rollover) {
-                      var gear = '<svg id="misc-info-one-hover" class="hover-icon rollover-info misc-info-one-hover misc-info-one-hover-default hover-tooltip-only" title="Suggested attire for this season"><use xlink:href="img/svg_sprites.svg#ro_water_attire_boardies"/></svg>';
+
+                        var img = "img/svg_sprites.svg#ro_water_attire_boardies",
+
+                        frameTitle = "It's currently warm enough for boardies =)";
+
+                        var gear = setUpGearHoverIcon(frameID, frameClass, imgClass, img, frameTitle);
+
                     } else {
-                      var gear = '<svg class="suggested-attire-boardies-guide suggested-attire-guide"><use xlink:href="img/svg_sprites.svg#water_attire_boardies"/></svg>';
+                        var gear = '<svg class="suggested-attire-boardies-guide suggested-attire-guide"><use xlink:href="img/svg_sprites.svg#water_attire_boardies"/></svg>';
                     };
                 } else if (temp > 66) {
+
                     if(rollover) {
-                      var gear = '<svg id="misc-info-one-hover" class="hover-icon rollover-info misc-info-one-hover misc-info-one-hover-default hover-tooltip-only" title="Suggested attire for this season"><use xlink:href="img/svg_sprites.svg#ro_water_attire_2mm_wetsuit"/></svg>';
+
+                        var img = "img/svg_sprites.svg#ro_water_attire_2mm_wetsuit",
+
+                        frameTitle = "A 2mm wetsuit is recommended for this time of year";
+
+                        var gear = setUpGearHoverIcon(frameID, frameClass, imgClass, img, frameTitle);
+
                     } else {
-                      var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide"><use xlink:href="img/svg_sprites.svg#water_attire_2mm_wetsuit"/></svg>';
+                        var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide"><use xlink:href="img/svg_sprites.svg#water_attire_2mm_wetsuit"/></svg>';
                     };
                 } else {
+
                     if(rollover) {
-                      var gear = '<svg id="misc-info-one-hover" class="hover-icon rollover-info misc-info-one-hover misc-info-one-hover-default hover-tooltip-only" title="Suggested attire for this season"><use xlink:href="img/svg_sprites.svg#ro_water_attire_3mm_wetsuit"/></svg>';
+
+                        var img = "img/svg_sprites.svg#ro_water_attire_3mm_wetsuit",
+
+                        frameTitle = "A 3mm wetsuit is recommended for this time of year";
+
+                        var gear = setUpGearHoverIcon(frameID, frameClass, imgClass, img, frameTitle);
+
                     } else {
-                      var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide"><use xlink:href="img/svg_sprites.svg#water_attire_3mm_wetsuit"/></svg>';
+                        var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide"><use xlink:href="img/svg_sprites.svg#water_attire_3mm_wetsuit"/></svg>';
                     };
                 };
             } else {
                 if (temp > 54) {
+
                     if(rollover) {
-                      var gear = '<svg id="misc-info-one-hover" class="hover-icon rollover-info misc-info-one-hover misc-info-one-hover-default hover-tooltip-only" title="Suggested attire for this season"><use xlink:href="img/svg_sprites.svg#ro_water_attire_4mm_wetsuit"/></svg>';
+
+                        var img = "img/svg_sprites.svg#ro_water_attire_4mm_wetsuit",
+
+                        frameTitle = "A 4mm wetsuit and boots are recommended for this time of year";
+
+                        var gear = setUpGearHoverIcon(frameID, frameClass, imgClass, img, frameTitle);
+
                     } else {
-                      var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide"><use xlink:href="img/svg_sprites.svg#water_attire_4mm_wetsuit"/></svg>';
+                        var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide"><use xlink:href="img/svg_sprites.svg#water_attire_4mm_wetsuit"/></svg>';
                     };
                 } else if (temp > 48) {
                     if(rollover) {
-                      var gear = '<svg id="misc-info-one-hover" class="hover-icon rollover-info misc-info-one-hover misc-info-one-hover-default hover-tooltip-only" title="Suggested attire for this season"><use xlink:href="img/svg_sprites.svg#ro_water_attire_5mm_wetsuit"/></svg>';
+
+                        var img = "img/svg_sprites.svg#ro_water_attire_5mm_wetsuit",
+
+                        frameTitle = "A 5mm wetsuit, gloves, and boots are recommended for this time of year";
+
+                        var gear = setUpGearHoverIcon(frameID, frameClass, imgClass, img, frameTitle);
+
                     } else {
-                      var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide"><use xlink:href="img/svg_sprites.svg#water_attire_5mm_wetsuit"/></svg>';
+                        var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide"><use xlink:href="img/svg_sprites.svg#water_attire_5mm_wetsuit"/></svg>';
                     };
                 } else {
                     if(rollover) {
-                      var gear = '<svg id="misc-info-one-hover" class="hover-icon rollover-info misc-info-one-hover misc-info-one-hover-default hover-tooltip-only" title="Suggested attire for this season"><use xlink:href="img/svg_sprites.svg#ro_water_attire_6mm_wetsuit"/></svg>';
+
+                        var img = "img/svg_sprites.svg#ro_water_attire_6mm_wetsuit",
+
+                        frameTitle = "A 6mm wetsuit, gloves, boots, and a hood are recommended for this time of year";
+
+                        var gear = setUpGearHoverIcon(frameID, frameClass, imgClass, img, frameTitle);
+
                     } else {
-                      var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide"><use xlink:href="img/svg_sprites.svg#water_attire_6mm_wetsuit"/></svg>';
+                        var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide"><use xlink:href="img/svg_sprites.svg#water_attire_6mm_wetsuit"/></svg>';
                     };
                 };
             };
 
             return gear;
+        };
+
+        function setUpGearHoverIcon (frameID, frameClass, imgClass, img, frameTitle) {
+
+            var icon =
+                '<div id="' + frameID + '" class="' + frameClass + '" title="' + frameTitle + '">' +
+                    '<svg class="' + imgClass + '"><use xlink:href="' + img + '"/></svg>' +
+                '</div>';
+
+            return icon;
         };
     };
 
@@ -4818,6 +4976,7 @@ function AppViewModel () {
             var miscInfoTwoIcon = hazards(randomHazard);
 
             return miscInfoTwoIcon;
+
         } else {
 
             var hazardsLength = obj.length;
@@ -4829,168 +4988,274 @@ function AppViewModel () {
         };
 
         function hazards (hazard, $iconContainer) {
+
+            if(rollover) {
+                    frameClass = "misc-info-two-hover hover-icon-frame rollover-info misc-info-two-hover-default hover-tooltip-only",
+                    imgClass = "hover-icon misc-info-two-hover-svg";
+            } else {
+                var frameClass = "hazard card",
+                    imgClass = "hazard-guide";
+            };
+
             switch (hazard) {
 
                 case 'beginners':
-                    if(rollover) {
-                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Beginners"><use xlink:href="img/svg_sprites.svg#hazards_beginners"/></svg>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card" title="Hazard: Beginners">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_beginners"/></svg>' + '</div>');
+
+                    var frameTitle = "Hazard: Beginners",
+                        img = "img/svg_sprites.svg#hazards_beginners";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+
+                    if(!rollover) {
+                        $iconContainer.append(hazardIcon);
                     };
+
                 break;
 
                 case 'boats':
-                    if(rollover) {
-                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Boats"><use xlink:href="img/svg_sprites.svg#hazards_boats"/></svg>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Boats">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_boats"/></svg>' + '</div>');
+
+                    var frameTitle = "Hazard: Boats",
+                        img = "img/svg_sprites.svg#hazards_boats";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+
+                    if(!rollover) {
+                        $iconContainer.append(hazardIcon);
                     };
+
                 break;
 
                 case 'crocs':
-                    if(rollover) {
-                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Crocodiles"><use xlink:href="img/svg_sprites.svg#hazards_crocs"/></svg>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Crocodiles">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_crocs"/></svg>' + '</div>');
+
+                    var frameTitle = "Hazard: Crocs",
+                        img = "img/svg_sprites.svg#hazards_crocs";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+
+                    if(!rollover) {
+                        $iconContainer.append(hazardIcon);
                     };
+
                 break;
 
                 case 'crowded':
-                    if(rollover) {
-                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Crowded"><use xlink:href="img/svg_sprites.svg#hazards_crowded"/></svg>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Crowded">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_crowded"/></svg>' + '</div>');
+
+                    var frameTitle = "Hazard: Crowded",
+                        img = "img/svg_sprites.svg#hazards_crowded";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+
+                    if(!rollover) {
+                        $iconContainer.append(hazardIcon);
                     };
+
                 break;
 
                 case 'dangerous break':
-                    if(rollover) {
-                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Dangerous Break"><use xlink:href="img/svg_sprites.svg#hazards_dangerous_break"/></svg>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Dangerous Break">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_dangerous_break"/></svg>' + '</div>');
+
+                    var frameTitle = "Hazard: Dangerous Break",
+                        img = "img/svg_sprites.svg#hazards_dangerous_break";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+
+                    if(!rollover) {
+                        $iconContainer.append(hazardIcon);
                     };
+
                 break;
 
                 case 'far from shore':
-                    if(rollover) {
-                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Far From Shore"><use xlink:href="img/svg_sprites.svg#hazards_far_from_shore"/></svg>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Far From Shore">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_far_from_shore"/></svg>' + '</div>');
+
+                    var frameTitle = "Hazard: Far from shore",
+                        img = "img/svg_sprites.svg#hazards_far_from_shore";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+
+                    if(!rollover) {
+                        $iconContainer.append(hazardIcon);
                     };
+
                 break;
 
                 case 'pollution':
-                    if(rollover) {
-                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Pollution"><use xlink:href="img/svg_sprites.svg#hazards_pollution"/></svg>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Pollution">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_pollution"/></svg>' + '</div>');
+
+                    var frameTitle = "Hazard: Pollution",
+                        img = "img/svg_sprites.svg#hazards_pollution";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+
+                    if(!rollover) {
+                        $iconContainer.append(hazardIcon);
                     };
+
                 break;
 
                 case 'rocky bottom':
-                    if(rollover) {
-                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Rocky Bottom"><use xlink:href="img/svg_sprites.svg#hazards_rocky_bottom"/></svg>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Rocky Bottom">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_rocky_bottom"/></svg>' + '</div>');
+
+                    var frameTitle = "Hazard: Rocky bottom",
+                        img = "img/svg_sprites.svg#hazards_rocky_bottom";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+
+                    if(!rollover) {
+                        $iconContainer.append(hazardIcon);
                     };
+
                 break;
 
                 case 'sea snakes':
-                    if(rollover) {
-                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Sea Snakes"><use xlink:href="img/svg_sprites.svg#hazards_sea_snakes"/></svg>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Sea Snakes">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_sea_snakes"/></svg>' + '</div>');
+
+                    var frameTitle = "Hazard: Sea Snakes",
+                        img = "img/svg_sprites.svg#hazards_sea_snakes";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+
+                    if(!rollover) {
+                        $iconContainer.append(hazardIcon);
                     };
+
                 break;
 
                 case 'seals':
-                    if(rollover) {
-                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Seals"><use xlink:href="img/svg_sprites.svg#hazards_seals"/></svg>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Seals">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_seals"/></svg>' + '</div>');
+
+                    var frameTitle = "Hazard: Seals",
+                        img = "img/svg_sprites.svg#hazards_seals";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+
+                    if(!rollover) {
+                        $iconContainer.append(hazardIcon);
                     };
+
                 break;
 
-                case 'seaweed':
-                    if(rollover) {
-                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Seaweed"><use xlink:href="img/svg_sprites.svg#hazards_seaweed"/></svg>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Seaweed">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_seaweed"/></svg>' + '</div>');
+                    var frameTitle = "Hazard: Seaweed",
+                        img = "img/svg_sprites.svg#hazards_seaweed";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+
+                    if(!rollover) {
+                        $iconContainer.append(hazardIcon);
                     };
+
                 break;
 
                 case 'sewage':
-                    if(rollover) {
-                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Sewage"><use xlink:href="img/svg_sprites.svg#hazards_sewage/></svg>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Sewage">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_sewage"/></svg>' + '</div>');
+
+                    var frameTitle = "Hazard: Sewage",
+                        img = "img/svg_sprites.svg#hazards_sewage";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+
+                    if(!rollover) {
+                        $iconContainer.append(hazardIcon);
                     };
+
                 break;
 
                 case 'shallow':
-                    if(rollover) {
-                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Shallow Break"><use xlink:href="img/svg_sprites.svg#hazards_shallow"/></svg>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Shallow Break">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_shallow"/></svg>' + '</div>');
+
+                    var frameTitle = "Hazard: Shallow",
+                        img = "img/svg_sprites.svg#hazards_shallow";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+
+                    if(!rollover) {
+                        $iconContainer.append(hazardIcon);
                     };
+
                 break;
 
                 case 'sharks':
-                    if(rollover) {
-                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Sharks"><use xlink:href="img/svg_sprites.svg#hazards_sharks"/></svg>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Sharks">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_sharks"/></svg>' + '</div>');
+
+                    var frameTitle = "Hazard: Sharks",
+                        img = "img/svg_sprites.svg#hazards_sharks";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+
+                    if(!rollover) {
+                        $iconContainer.append(hazardIcon);
                     };
+
                 break;
 
                 case 'strong currents':
-                    if(rollover) {
-                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Strong Currents"><use xlink:href="img/svg_sprites.svg#hazards_strong_currents"/></svg>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Strong Currents">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_strong_currents"/></svg>' + '</div>');
+
+                    var frameTitle = "Hazard: Strong currents",
+                        img = "img/svg_sprites.svg#hazards_strong_currents";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+
+                    if(!rollover) {
+                        $iconContainer.append(hazardIcon);
                     };
+
                 break;
 
                 case 'strong rips':
-                    if(rollover) {
-                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Strong Rips"><use xlink:href="img/svg_sprites.svg#hazards_strong_rips"/></svg>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Strong Rips">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_strong_rips"/></svg>' + '</div>');
+
+                    var frameTitle = "Hazard: Strong rips",
+                        img = "img/svg_sprites.svg#hazards_strong_rips";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+
+                    if(!rollover) {
+                        $iconContainer.append(hazardIcon);
                     };
+
                 break;
 
                 case 'theft':
-                    if(rollover) {
-                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Theft"><use xlink:href="img/svg_sprites.svg#hazards_theft"/></svg>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Theft">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_theft"/></svg>' + '</div>');
+
+                    var frameTitle = "Hazard: Theft",
+                        img = "img/svg_sprites.svg#hazards_theft";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+
+                    if(!rollover) {
+                        $iconContainer.append(hazardIcon);
                     };
+
                 break;
 
                 case 'undertow':
-                    if(rollover) {
-                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Strong Undertow"><use xlink:href="img/svg_sprites.svg#hazards_undertow"/></svg>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Strong Undertow">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_undertow"/></svg>' + '</div>');
+
+                    var frameTitle = "Hazard: Undertow",
+                        img = "img/svg_sprites.svg#hazards_undertow";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+
+                    if(!rollover) {
+                        $iconContainer.append(hazardIcon);
                     };
+
                 break;
 
                 case 'unfriendly':
-                    if(rollover) {
-                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Territorial Locals"><use xlink:href="img/svg_sprites.svg#hazards_unfriendly"/></svg>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Territorial Locals">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_unfriendly"/></svg>' + '</div>');
+
+                    var frameTitle = "Hazard: Unfriendly",
+                        img = "img/svg_sprites.svg#hazards_unfriendly";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+
+                    if(!rollover) {
+                        $iconContainer.append(hazardIcon);
                     };
+
                 break;
 
                 case 'urchins':
-                    if(rollover) {
-                        var hazardIcon = '<svg id="misc-info-two-hover" class="hover-icon rollover-info misc-info-two-hover misc-info-two-hover-default hover-tooltip-only" title="Hazard: Urchins"><use xlink:href="img/svg_sprites.svg#hazards_urchins"/></svg>';
-                    } else {
-                        $iconContainer.append('<div class="hazard card " title="Hazard: Urchins">' + '<svg class="hazard-guide"><use xlink:href="img/svg_sprites.svg#hazards_urchins"/></svg>' + '</div>');
-                    };
-                break;
 
+                    var frameTitle = "Hazard: Urchins",
+                        img = "img/svg_sprites.svg#hazards_urchins";
+
+                    var hazardIcon = self.setUpIcons(rollover, frameClass, frameTitle, imgClass, img);
+
+                    if(!rollover) {
+                        $iconContainer.append(hazardIcon);
+                    };
+
+                break;
             }
 
               return hazardIcon;

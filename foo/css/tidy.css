@@ -145,6 +145,7 @@ html {
 }
 
 .location-frame-default {
+  position: relative;
   display: none;
   text-align: center;
   padding: 10px 10px;

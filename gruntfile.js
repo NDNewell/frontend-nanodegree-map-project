@@ -28,6 +28,7 @@ module.exports = function(grunt) {
         'svgstore',
         'svgmin',
         'responsive_images',
+        'sprity',
         'imageoptim',
         'watch'
     ]);

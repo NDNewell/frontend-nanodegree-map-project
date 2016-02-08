@@ -1,5 +1,21 @@
 module.exports = function (grunt, config) {
     grunt.config.merge({
+        sprity: {
+          options: {
+            'cssPath': 'img/',
+            'processor': 'css',
+            'orientation': 'vertical',
+            'margin': 4,
+            'format': 'jpg'
+          },
+          sprite: {
+            options: {
+              'style': 'css/sprite.css'
+            },
+            src: ['foo/img/jpg/*', 'src/img/png/*'],
+            dest: 'dist/img/jpg/raster_sprites',
+          }
+        },
         responsive_images: {
             myTask: {
                 options: {
@@ -16,7 +32,7 @@ module.exports = function (grunt, config) {
                     expand: true,
                     cwd: 'src/img/jpg/',
                     src: ['*.jpg'],
-                    dest: 'dist/img/jpg/'
+                    dest: 'foo/img/jpg/'
                 }]
             }
         },
@@ -81,6 +97,7 @@ module.exports = function (grunt, config) {
                 files: 'src/img/jpg/*.jpg',
                 tasks: [
                     'responsive_images',
+                    'sprity',
                     'imageoptim',
                 ]
             }

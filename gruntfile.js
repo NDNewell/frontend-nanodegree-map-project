@@ -27,7 +27,8 @@ module.exports = function(grunt) {
         //'htmlmin',
         'svgstore',
         'svgmin',
-        //'respimg',
+        'responsive_images',
+        'imageoptim',
         'watch'
     ]);
 };

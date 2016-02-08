@@ -2,7 +2,7 @@ module.exports = function (grunt, config) {
     grunt.config.merge({
         sprity: {
           options: {
-            'cssPath': 'img/',
+            'cssPath': 'img/jpg/',
             'processor': 'css',
             'orientation': 'vertical',
             'margin': 4,
@@ -94,7 +94,7 @@ module.exports = function (grunt, config) {
                 ]
             },
             raster: {
-                files: 'src/img/jpg/*.jpg',
+                files: ['src/img/jpg/*.jpg', 'src/img/png/*.png'],
                 tasks: [
                     'responsive_images',
                     'sprity',

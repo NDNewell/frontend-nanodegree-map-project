@@ -18,9 +18,8 @@ module.exports = function(grunt) {
     // Register tasks
 
     grunt.registerTask('default', [
-        'uncss',
+        //'uncss',
         //'csslint',
-        'cssmin',
         //'jshint',
         'uglify',
         'processhtml',
@@ -30,6 +29,7 @@ module.exports = function(grunt) {
         'responsive_images',
         'sprity',
         'imageoptim',
+        'cssmin',
         'watch'
     ]);
 };

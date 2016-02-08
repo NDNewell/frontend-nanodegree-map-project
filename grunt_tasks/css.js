@@ -2,7 +2,7 @@ module.exports = function (grunt, config) {
     grunt.config.merge({
         cssmin: {
             dist: {
-                src: config.cssSrcDir + '*.css',
+                src: ['src/css/*.css', 'dist/img/jpg/css/*.css'],
                 dest: config.cssDir + 'style.min.css'
             }
         },
@@ -23,7 +23,7 @@ module.exports = function (grunt, config) {
         },
         watch: {
             cssmin: {
-                files: config.cssSrcDir + '*.css',
+                files: ['src/css/*.css', 'dist/img/jpg/css/*.css'],
                 tasks: [
                     //'csslint',
                     'cssmin'

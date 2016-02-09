@@ -1,14 +1,5 @@
 module.exports = function (grunt, config) {
     grunt.config.merge({
-        svg2png: {
-            all: {
-                // specify files in array format with multiple src-dest mapping
-                files: [
-                    // rasterize all SVG files in "img" and its subdirectories to "img/png"
-                    { cwd: 'src/img/svg2png', src: ['*.svg'], dest: 'src/img/png/' }
-                ]
-            }
-        },
         sprity: {
           options: {
             'cssPath': '../img/png/',

@@ -1,3 +1,4 @@
+
 body {
     font-family: Arial, Verdana;
 }
@@ -434,6 +435,10 @@ body, html {
     font-size: .6em;
     border: 2px solid #E8E8E8;
     border-radius: 10px;
+}
+
+.icon-msw_powered_by {
+    display: inline-block;
 }
 
 #progressBar {

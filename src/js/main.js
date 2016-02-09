@@ -3808,7 +3808,7 @@ function AppViewModel () {
                     /* Render containers to hold the compass and live conditions
                     containers */
                     var liveConditionsElem = '<div class="col-xs-12 surf-conditions-container live-surf-conditions"></div>';
-                    var compassContainer = '<div class="col-xs-12 col-sm-4 col-md-6 live-surf-conditions live-compass " title="Live wind & swell conditions (swell: blue | wind: white)"><canvas id="compass" width="300" height="300"></canvas></div>';
+                    var compassContainer = '<div class="col-xs-12 col-sm-4 col-md-6 live-surf-conditions live-compass "><canvas id="compass" width="300" height="300"></canvas></div>';
 
                     // Add compass container
                     $surfGuideHeader.after(compassContainer);
@@ -3834,7 +3834,7 @@ function AppViewModel () {
 
                     var $locationName = $('.title');
                     var liveTemp = '<p class="live-temp live-surf-conditions " title="Live weather conditions">' + temperature + " ℉" + '<img class="live-weather" src="' + weatherImg + '" alt="Symbol for current weather">' + '</p>';
-                    var accreditMSW = '<div class="icon icon-msw_powered_by live-surf-conditions msw-banner"></div>';
+                    var accreditMSW = '<a class="a-tag" href="http://magicseaweed.com" target="_blank"><div class="icon icon-msw_powered_by live-surf-conditions msw-banner"></div></a>';
 
                     /* Render MSW accreditation */
                     $locationName.after(accreditMSW);
@@ -3888,7 +3888,7 @@ function AppViewModel () {
                         var swellPointer = images.swellPointer;
 
                         var img = new Image();
-                        img.src = 'img/svg/compass.svg';
+                        img.src = 'img/png/compass.png';
                         img.onload = draw;
 
                         var windCompassRotation = windDirection * (Math.PI / 180);

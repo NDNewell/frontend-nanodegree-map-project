@@ -186,10 +186,10 @@ function AppViewModel () {
         $surfInfoContainer = $('.surf-info-container');
 
     // Save refs to marker imgs
-    var markerSmall = 'img/svg/marker_small.svg',
-        markerSelected = 'img/svg/marker_selected.svg',
-        markerSmallFav = 'img/svg/marker_smallFav.svg',
-        markerSelectedFav = 'img/svg/marker_selectedFav.svg';
+    var markerSmall = 'img/png/marker_small.png',
+        markerSelected = 'img/png/marker_selected.png',
+        markerSmallFav = 'img/png/marker_smallFav.png',
+        markerSelectedFav = 'img/png/marker_selectedFav.png';
 
     /* Cache Firebase database references to all, location, and user data */
     var allData = new Firebase("https://dazzling-torch-4012.firebaseio.com"),
@@ -3834,7 +3834,7 @@ function AppViewModel () {
 
                     var $locationName = $('.title');
                     var liveTemp = '<p class="live-temp live-surf-conditions " title="Live weather conditions">' + temperature + " ℉" + '<img class="live-weather" src="' + weatherImg + '" alt="Symbol for current weather">' + '</p>';
-                    var accreditMSW = '<a href="http://magicseaweed.com" target="_blank"><img src="img/png/msw_powered_by.png" class="live-surf-conditions msw-banner"></a>';
+                    var accreditMSW = '<div class="icon icon-msw_powered_by live-surf-conditions msw-banner"></div>';
 
                     /* Render MSW accreditation */
                     $locationName.after(accreditMSW);
@@ -5268,11 +5268,11 @@ function AppViewModel () {
         };
 
         var compassIcons =
-            { swellPointer: 'img/svg/compass_swell_pointer.svg',
-              windPointer: 'img/svg/compass_wind_pointer.svg',
-              smallSwellPointer: 'img/svg/compass_swell_pointer_guide.svg',
-              smallWindPointer: 'img/svg/compass_wind_pointer_guide.svg',
-              smallCompass: 'img/svg/compass_guide.svg' };
+            { swellPointer: 'img/png/compass_swell_pointer.png',
+              windPointer: 'img/png/compass_wind_pointer.png',
+              smallSwellPointer: 'img/png/compass_swell_pointer_guide.png',
+              smallWindPointer: 'img/png/compass_wind_pointer_guide.png',
+              smallCompass: 'img/png/compass_guide.png' };
 
         loadImages(compassIcons);
     };

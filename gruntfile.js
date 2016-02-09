@@ -26,10 +26,10 @@ module.exports = function(grunt) {
         //'htmlmin',
         'svgstore',
         'svgmin',
-        'responsive_images',
         'sprity',
-        'imageoptim',
         'cssmin',
+        'responsive_images',
+        'imageoptim',
         'watch'
     ]);
 };

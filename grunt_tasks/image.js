@@ -1,19 +1,28 @@
 module.exports = function (grunt, config) {
     grunt.config.merge({
+        svg2png: {
+            all: {
+                // specify files in array format with multiple src-dest mapping
+                files: [
+                    // rasterize all SVG files in "img" and its subdirectories to "img/png"
+                    { cwd: 'src/img/svg2png', src: ['*.svg'], dest: 'src/img/png/' }
+                ]
+            }
+        },
         sprity: {
           options: {
-            'cssPath': 'img/jpg/',
+            'cssPath': '../img/png/',
             'processor': 'css',
             'orientation': 'vertical',
             'margin': 4,
-            'format': 'jpg'
+            'format': 'png'
           },
           sprite: {
             options: {
-              'style': 'css/sprite.css'
+              'style': '../../../foo/css/sprite.css'
             },
-            src: ['foo/img/jpg/*', 'src/img/png/*'],
-            dest: 'dist/img/jpg/raster_sprites',
+            src: 'src/img/png/*',
+            dest: 'dist/img/png/png_sprites',
           }
         },
         responsive_images: {
@@ -32,7 +41,7 @@ module.exports = function (grunt, config) {
                     expand: true,
                     cwd: 'src/img/jpg/',
                     src: ['*.jpg'],
-                    dest: 'foo/img/jpg/'
+                    dest: 'dist/img/jpg/'
                 }]
             }
         },
@@ -97,8 +106,7 @@ module.exports = function (grunt, config) {
                 files: ['src/img/jpg/*.jpg', 'src/img/png/*.png'],
                 tasks: [
                     'responsive_images',
-                    'sprity',
-                    'imageoptim',
+                    'imageoptim'
                 ]
             }
         }

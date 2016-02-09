@@ -1,0 +1,58 @@
+.icon {
+  background-image: url('../img/png/png_sprites.png');
+}
+.icon-marker_smallFav {
+  background-position: -0px -0px;
+  width: 31px;
+  height: 29px;
+}
+.icon-marker_small {
+  background-position: -0px -29px;
+  width: 31px;
+  height: 31px;
+}
+.icon-msw_powered_by {
+  background-position: -0px -60px;
+  width: 208px;
+  height: 55px;
+}
+.icon-marker_selected {
+  background-position: -0px -115px;
+  width: 49px;
+  height: 61px;
+}
+.icon-marker_selectedFav {
+  background-position: -0px -176px;
+  width: 49px;
+  height: 61px;
+}
+.icon-compass_guide {
+  background-position: -0px -237px;
+  width: 108px;
+  height: 108px;
+}
+.icon-compass_swell_pointer_guide {
+  background-position: -0px -345px;
+  width: 108px;
+  height: 108px;
+}
+.icon-compass_wind_pointer_guide {
+  background-position: -0px -453px;
+  width: 108px;
+  height: 108px;
+}
+.icon-compass_wind_pointer {
+  background-position: -0px -561px;
+  width: 308px;
+  height: 308px;
+}
+.icon-compass_swell_pointer {
+  background-position: -0px -869px;
+  width: 308px;
+  height: 308px;
+}
+.icon-compass {
+  background-position: -0px -1177px;
+  width: 308px;
+  height: 308px;
+}

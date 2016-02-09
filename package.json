@@ -16,6 +16,7 @@
     "grunt-processhtml": "^0.3.8",
     "grunt-responsive-images": "^0.1.7",
     "grunt-sprity": "^1.0.0",
+    "grunt-svg2png": "^0.2.7",
     "grunt-svgmin": "^3.1.2",
     "grunt-svgstore": "^0.5.0",
     "grunt-uncss": "^0.4.3",

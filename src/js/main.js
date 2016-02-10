@@ -446,9 +446,8 @@ function AppViewModel () {
                     // Show the location frames
                     self.showLocationFrames(favorites);
 
-                    // Load all imgs needed for frame hover effects and surf
-                    // guide
-                    self.preloadImages();
+                    // Enable rollover effects for location frames
+                    self.addHoverEffects();
                 };
 
             }, fireBaseReadError);
@@ -4329,126 +4328,132 @@ function AppViewModel () {
 
     self.displayCompassIcon = function (objSwell, objWind, $iconContainer, canvasWidth, canvasHeight) {
 
-      if(objSwell) {
-        var swell = true;
-        buildCompass(objSwell);
-      };
+        if(objSwell) {
+            var swell = true;
+            buildCompass(objSwell);
+        };
 
-      function buildCompass(obj) {
+        function buildCompass(obj) {
 
-          if(swell) {
-              swell = false;
-              drawBackground = true;
 
-              $iconContainer.append('<div class="small-compass-guide card " title="Best Swell & Best Wind"><canvas id="compass-small" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas></div>');
+            var sprites = new Image();
+            sprites.src = 'img/png/png_sprites.png';
 
-              var elementPointer = images.smallSwellPointer;
-              var img = images.smallCompass;
+            if(swell) {
+                swell = false;
+                drawBackground = true;
 
-          } else if (wind) {
-              wind = false;
-              var elementPointer = images.smallWindPointer;
-          };
+                $iconContainer.append('<div class="small-compass-guide card " title="Best Swell & Best Wind"><canvas id="compass-small" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas></div>');
 
-          var Canvas = document.getElementById('compass-small');
-          var ctx = Canvas.getContext('2d');
+                var srcY = 345;
 
-          var pointer = elementPointer;
+            } else if (wind) {
+                wind = false;
 
-          if(drawBackground) {
-              ctx.drawImage(img, 0, 0);
-              ctx.save();
-          };
+                var srcY = 453;
+            };
 
-          var centerX = canvasWidth / 2;
-          var centerY = canvasHeight / 2;
+            var Canvas = document.getElementById('compass-small');
+            var ctx = Canvas.getContext('2d');
 
-          ctx.translate(centerX, centerY);
+            if(drawBackground) {
 
-          var directions = obj.length;
+                //(sprites,srcX,srcY,srcW,srcH,destX,destY,destW,destH)
+                ctx.drawImage(sprites, 0, 237, 108, 108, 0, 0, 100, 100);
+                ctx.save();
+            };
 
-          for (var i = directions; i--;) {
+            var destX = canvasWidth / 2;
+            var destY = canvasHeight / 2;
 
-              switch (obj[i]) {
-                  case 'N':
-                      var direction = 0;
-                  break;
+            ctx.translate(destX, destY);
 
-                  case 'NNE':
-                      var direction = 22.5;
-                  break;
+            var directions = obj.length;
 
-                  case 'NE':
-                      var direction = 45;
-                  break;
+            for (var i = directions; i--;) {
 
-                  case 'ENE':
-                      var direction = 67.5;
-                  break;
+                switch (obj[i]) {
 
-                  case 'E':
-                      var direction = 90;
-                  break;
+                    case 'N':
+                        var direction = 0;
+                    break;
 
-                  case 'ESE':
-                      var direction = 112.5;
-                  break;
+                    case 'NNE':
+                        var direction = 22.5;
+                    break;
 
-                  case 'SE':
-                      var direction = 135;
-                  break;
+                    case 'NE':
+                        var direction = 45;
+                    break;
 
-                  case 'SSE':
-                      var direction = 157.5;
-                  break;
+                    case 'ENE':
+                        var direction = 67.5;
+                    break;
 
-                  case 'S':
-                      var direction = 180;
-                  break;
+                    case 'E':
+                        var direction = 90;
+                    break;
 
-                  case 'SSW':
-                      var direction = 202.5;
-                  break;
+                    case 'ESE':
+                        var direction = 112.5;
+                    break;
 
-                  case 'SW':
-                      var direction = 225;
-                  break;
+                    case 'SE':
+                        var direction = 135;
+                    break;
 
-                  case 'WSW':
-                      var direction = 247.5;
-                  break;
+                    case 'SSE':
+                        var direction = 157.5;
+                    break;
 
-                  case 'W':
-                      var direction = 270;
-                  break;
+                    case 'S':
+                        var direction = 180;
+                    break;
 
-                  case 'WNW':
-                      var direction = 292.5;
-                  break;
+                    case 'SSW':
+                        var direction = 202.5;
+                    break;
 
-                  case 'NW':
-                      var direction = 315;
-                  break;
+                    case 'SW':
+                        var direction = 225;
+                    break;
 
-                  case 'NNW':
-                       var direction = 337.5;
-                  break;
-              }
-                  var pointerAngle = direction * (Math.PI / 180);
+                    case 'WSW':
+                        var direction = 247.5;
+                    break;
 
-                  ctx.rotate(pointerAngle);
-                  ctx.drawImage(pointer, -centerX, -centerY);
-                  ctx.rotate(-pointerAngle);
-          }
+                    case 'W':
+                        var direction = 270;
+                    break;
 
-          if(drawBackground) {
-              drawBackground = false;
-              ctx.restore();
-          };
-      };
+                    case 'WNW':
+                        var direction = 292.5;
+                    break;
 
-      var wind = true;
-      buildCompass(objWind);
+                    case 'NW':
+                        var direction = 315;
+                    break;
+
+                    case 'NNW':
+                        var direction = 337.5;
+                    break;
+                }
+
+                var pointerAngle = direction * (Math.PI / 180);
+
+                ctx.rotate(pointerAngle);
+                ctx.drawImage(sprites, 0, srcY, 108, 108, -destX, -destY, 100, 100);
+                ctx.rotate(-pointerAngle);
+            };
+
+            if(drawBackground) {
+                drawBackground = false;
+                ctx.restore();
+            };
+        };
+
+        var wind = true;
+        buildCompass(objWind);
     };
 
     self.displayTideIcon = function (obj) {
@@ -5236,72 +5241,6 @@ function AppViewModel () {
 
         // Scroll to the top of the page
         document.body.scrollTop = document.documentElement.scrollTop = 0;
-    };
-
-    // Set up image object for cached images
-    var images = {};
-
-    // Preload all icons needed for location hover effect and various surf
-    // guide icons
-    self.preloadImages = function () {
-
-        // Cache refs to loaded images
-        var numImages = 0,
-            loadedImages = 0;
-
-        function loadImages (source) {
-
-            for(var src in source) {
-              numImages++;
-            };
-
-            for(var src in source) {
-
-                images[src] = new Image();
-
-                images[src].onload = function () {
-
-                    if(++loadedImages >= numImages) {
-
-                        console.log('images loaded');
-
-                        if(self.locationArray.length > 1 ) {
-
-                            loadEffect();
-                        } else {
-
-                            checkLocations = setInterval(function() {
-
-                                if(self.locationArray.length > 1 ) {
-
-                                    clearInterval(checkLocations);
-
-                                    loadEffect();
-                                };
-                            }, 500);
-                        };
-
-                        function loadEffect () {
-
-                            console.log("add hover effects");
-
-                            self.addHoverEffects();
-                        };
-                    };
-                };
-
-                images[src].src = source[src];
-            };
-        };
-
-        var compassIcons =
-            { swellPointer: 'img/png/compass_swell_pointer.png',
-              windPointer: 'img/png/compass_wind_pointer.png',
-              smallSwellPointer: 'img/png/compass_swell_pointer_guide.png',
-              smallWindPointer: 'img/png/compass_wind_pointer_guide.png',
-              smallCompass: 'img/png/compass_guide.png' };
-
-        loadImages(compassIcons);
     };
 };
 

@@ -3907,27 +3907,30 @@ function AppViewModel () {
                         var Canvas = document.getElementById('compass');
                         var ctx = Canvas.getContext('2d');
 
-                        var windPointer = images.windPointer;
-
-                        var swellPointer = images.swellPointer;
-
-                        var img = new Image();
-                        img.src = 'img/png/compass.png';
-                        img.onload = draw;
+                        var sprites = new Image();
+                        sprites.src = 'img/png/png_sprites.png';
+                        sprites.onload = draw;
 
                         var windCompassRotation = windDirection * (Math.PI / 180);
                         var swellCompassRotation = direction * (Math.PI / 180);
 
+                        var srcW = 308,
+                            srcH = 308,
+                            destW = 300,
+                            destH = 300;
+
                         function draw() {
 
-                            ctx.drawImage(img, 0, 0);
+
+                        //(sprites,srcX,srcY,srcW,srcH,destX,destY,destW,destH)
+                            ctx.drawImage(sprites, 0, 1177, srcW, srcH, 0, 0, destW, destH);
                             ctx.save();
                             ctx.translate(150, 150);
                             ctx.rotate(windCompassRotation);
-                            ctx.drawImage(windPointer, -150, -150);
+                            ctx.drawImage(sprites, 0, 561, srcW, srcH, -150, -150, destW, destH);
                             ctx.rotate(-windCompassRotation);
                             ctx.rotate(swellCompassRotation);
-                            ctx.drawImage(swellPointer, -150, -150);
+                            ctx.drawImage(sprites, 4, 869, srcW, srcH, -150, -150, destW, destH);
                             ctx.restore();
                         };
                     };

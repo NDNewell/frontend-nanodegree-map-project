@@ -140,6 +140,36 @@ function initMap() {
     // Set the custom map to display
     map.setMapTypeId('custom_style');
 
+    var spriteSheet = "/img/png/png_sprites.png";
+
+    // Save refs to marker imgs
+    markerIcon = {
+        small : {
+            url: spriteSheet,
+            size: new google.maps.Size(19, 19),
+            origin: new google.maps.Point(6, 35),
+            anchor: new google.maps.Point(9.5, 9.5)
+        },
+        selected : {
+            url: spriteSheet,
+            size: new google.maps.Size(41, 52),
+            origin: new google.maps.Point(4, 120),
+            anchor: new google.maps.Point(20.5, 52)
+        },
+        smallFav : {
+            url: spriteSheet,
+            size: new google.maps.Size(23, 21),
+            origin: new google.maps.Point(4, 4),
+            anchor: new google.maps.Point(11.5, 10.5)
+        },
+        selectedFav : {
+            url: spriteSheet,
+            size: new google.maps.Size(41, 52),
+            origin: new google.maps.Point(4, 181),
+            anchor: new google.maps.Point(20.5, 52)
+        }
+    };
+
     // Create an info window object for displaying the break name
     infoWindow = new google.maps.InfoWindow();
 };
@@ -184,12 +214,6 @@ function AppViewModel () {
         $favFilterSym = $('.favorite-filter-symbol'),
         $clearFavsBtn = $('.clear-favorites-button'),
         $surfInfoContainer = $('.surf-info-container');
-
-    // Save refs to marker imgs
-    var markerSmall = 'img/png/marker_small.png',
-        markerSelected = 'img/png/marker_selected.png',
-        markerSmallFav = 'img/png/marker_smallFav.png',
-        markerSelectedFav = 'img/png/marker_selectedFav.png';
 
     /* Cache Firebase database references to all, location, and user data */
     var allData = new Firebase("https://dazzling-torch-4012.firebaseio.com"),
@@ -577,7 +601,7 @@ function AppViewModel () {
             // Set position using the newly created variable
             position: breakCoordinates,
             map: map,
-            icon: markerSmall,
+            icon: markerIcon.small,
 
             /* Set the title for the break marker as the name of the
             wave/location of the break. This way it can be searched/filtered
@@ -742,19 +766,19 @@ function AppViewModel () {
 
         /* If marker wasn't previously activated, make it big for
         normal and fav icons */
-        if (marker.icon === markerSmall) {
+        if (marker.icon.origin === markerIcon.small.origin) {
 
             console.log('make ' + markerName + "'" + 's marker big');
 
             // Change the marker's image
-            marker.setIcon(markerSelected);
+            marker.setIcon(markerIcon.selected);
 
-        } else if (marker.icon === markerSmallFav) {
+        } else if (marker.icon.origin === markerIcon.smallFav.origin) {
 
             console.log('make ' + markerName + "'" + 's marker big');
 
             // Change the marker's image
-            marker.setIcon(markerSelectedFav);
+            marker.setIcon(markerIcon.selectedFav);
         };
     };
 
@@ -766,17 +790,17 @@ function AppViewModel () {
             // Cache the title of the marker not including the location
             var markerName = getMarkerName(marker);
 
-            if (marker.icon === markerSelected) {
+            if (marker.icon.origin === markerIcon.selected.origin) {
 
                 console.log('make ' + markerName + "'" + 's marker small');
 
-                marker.setIcon(markerSmall);
+                marker.setIcon(markerIcon.small);
 
-            } else if (marker.icon === markerSelectedFav) {
+            } else if (marker.icon.origin === markerIcon.selectedFav.origin) {
 
                 console.log('make ' + markerName + "'" + 's marker small');
 
-                marker.setIcon(markerSmallFav);
+                marker.setIcon(markerIcon.smallFav);
             };
         });
     };
@@ -891,22 +915,22 @@ function AppViewModel () {
                 /* Any markers that don't match the user's favs or were never a
                 fav remain unaltered */
                 if (favorites.indexOf(markerName) > -1) {
-                    if(marker.icon === markerSmall) {
+                    if(marker.icon.origin === markerIcon.small.origin) {
 
-                        marker.setIcon(markerSmallFav);
-                    } else if (marker.icon === markerSelected) {
+                        marker.setIcon(markerIcon.smallFav);
+                    } else if (marker.icon.origin === markerIcon.selected.origin) {
 
-                        marker.setIcon(markerSelectedFav);
+                        marker.setIcon(markerIcon.selectedFav);
                     };
 
                 // If the name doesn't match, but was a fav, change the img
                 // back
-                } else if (marker.icon === markerSmallFav) {
+                } else if (marker.icon.origin === markerIcon.smallFav.origin) {
 
-                    marker.setIcon(markerSmall);
-                } else if (marker.icon === markerSelectedFav) {
+                    marker.setIcon(markerIcon.small);
+                } else if (marker.icon.origin === markerIcon.selectedFav.origin) {
 
-                    marker.setIcon(markerSelected);
+                    marker.setIcon(markerIcon.selected);
                 };
             });
         };
@@ -1026,7 +1050,7 @@ function AppViewModel () {
             } else {
 
                 // If a marker is selected, don't hide it
-                if(marker.icon === markerSelected || marker.icon === markerSelectedFav) {
+                if(marker.icon.origin === markerIcon.selected.origin || marker.icon.origin === markerIcon.selectedFav.origin) {
                     marker.setVisible(true);
                 } else {
                     marker.setVisible(false);
@@ -1503,7 +1527,7 @@ function AppViewModel () {
 
             // If any of the marker's images matches a 'selected' image
             // End the function
-            if(markers[i].icon === markerSelected || markers[i].icon === markerSelectedFav) {
+            if(markers[i].icon.origin === markerIcon.selected.origin || markers[i].icon.origin === markerIcon.selectedFav.origin) {
                 return;
             };
         };
@@ -1620,7 +1644,7 @@ function AppViewModel () {
                             var marker = markers[i];
 
                             // Check if a marker is selected
-                            if(marker.icon === markerSelectedFav || marker.icon === markerSelected) {
+                            if(marker.icon.origin === markerIcon.selectedFav.origin || marker.icon.origin === markerIcon.selected.origin) {
 
                                 // Center the map on the selected marker
                                 self.centerOnMarker(marker);
@@ -3808,7 +3832,7 @@ function AppViewModel () {
                     /* Render containers to hold the compass and live conditions
                     containers */
                     var liveConditionsElem = '<div class="col-xs-12 surf-conditions-container live-surf-conditions"></div>';
-                    var compassContainer = '<div class="col-xs-12 col-sm-4 col-md-6 live-surf-conditions live-compass "><canvas id="compass" width="300" height="300"></canvas></div>';
+                    var compassContainer = '<div class="col-xs-12 col-sm-4 col-md-6 live-surf-conditions live-compass" title="Live wind & swell conditions (swell: blue | wind: white)"><canvas id="compass" width="300" height="300"></canvas></div>';
 
                     // Add compass container
                     $surfGuideHeader.after(compassContainer);
@@ -3834,7 +3858,7 @@ function AppViewModel () {
 
                     var $locationName = $('.title');
                     var liveTemp = '<p class="live-temp live-surf-conditions " title="Live weather conditions">' + temperature + " ℉" + '<img class="live-weather" src="' + weatherImg + '" alt="Symbol for current weather">' + '</p>';
-                    var accreditMSW = '<a class="a-tag" href="http://magicseaweed.com" target="_blank"><div class="icon icon-msw_powered_by live-surf-conditions msw-banner"></div></a>';
+                    var accreditMSW = '<a href="http://magicseaweed.com" target="_blank"><div class="icon icon-msw_powered_by live-surf-conditions msw-banner"></div></a>';
 
                     /* Render MSW accreditation */
                     $locationName.after(accreditMSW);

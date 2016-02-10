@@ -189,6 +189,10 @@ function AppViewModel () {
 
     this.self = this;
 
+    // Cache svg sprites
+    svgSprites = new Image();
+    svgSprites.src = 'img/svg/svg_sprites.svg';
+
     // Prevents back space navigating the page backwards unless input/textarea
     // From Andrew Whitaker (https://stackoverflow.
     // com/questions/11112127/prevent-backspace-from-navigating-back-with-

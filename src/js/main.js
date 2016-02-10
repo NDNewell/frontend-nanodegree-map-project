@@ -190,8 +190,8 @@ function AppViewModel () {
     this.self = this;
 
     // Cache svg sprites
-    svgSprites = new Image();
-    svgSprites.src = 'img/svg/svg_sprites.svg';
+    //svgSprites = new Image();
+    //svgSprites.src = 'img/svg/svg_sprites.svg';
 
     // Prevents back space navigating the page backwards unless input/textarea
     // From Andrew Whitaker (https://stackoverflow.

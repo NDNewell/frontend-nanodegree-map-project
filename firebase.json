@@ -7,7 +7,7 @@
     "**/node_modules/**"
   ],
   "headers": [ {
-      "source" : "img/*.@(jpg|jpeg|png|svg)",
+      "source" : "img/**/*.@(jpg|jpeg|png|svg)",
       "headers" : [ {
           "key" : "Cache-Control",
           "value" : "max-age=7776000"

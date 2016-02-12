@@ -241,7 +241,7 @@ function AppViewModel () {
             // set the current version.
             var localStorage = window.localStorage,
                 svgVersionCached = localStorage.getItem('svgVersion'),
-                svgVersion = 1;
+                svgVersion = 2;
 
             // If the cached version of the external svg sprite sheet matches
             // the current one, load it into the DOM.

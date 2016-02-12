@@ -656,12 +656,16 @@ body, html {
     stroke-width: 1.5px;
 }
 
+.water-temp {
+    position: relative;
+}
+
 .hazard-guide {
     fill: #ff9999;
 }
 
-.water-temp {
-    position: relative;
+.cost-guide {
+    font-size: 43px;
 }
 
 .suggested-attire-guide {
@@ -678,7 +682,7 @@ body, html {
 
 .suggested-attire-wetsuit-guide {
     margin-top: 2px;
-    margin-left: -42px;
+    margin-left: -43px;
 }
 
 .suggested-attire-boardies-guide {

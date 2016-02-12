@@ -2,15 +2,7 @@
 <!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="47.8px" height="74.3px" viewBox="57.1 26 47.8 74.3" style="enable-background:new 57.1 26 47.8 74.3;"
-	 xml:space="preserve">
-<style type="text/css">
-<![CDATA[
-	.st0{font-size:18.75;}
-	.st1{fill:#333333;}
-	.st2{font-family:'ArialMT';}
-]]>
-</style>
+	 width="65px" height="107.6px" viewBox="20.8 -6.7 65 107.6" enable-background="new 20.8 -6.7 65 107.6" xml:space="preserve">
 <font horiz-adv-x="2048">
 <!-- Arial is a trademark of The Monotype Corporation in the United States and/or other countries. -->
 <!-- Copyright: Copyright 2016 Adobe System Incorporated. All rights reserved. -->
@@ -21,12 +13,12 @@
 </font>
 
 	<g>
-	<text transform="matrix(1 0 0 1 63.249 42.0557)" class="st1 st2 st0">3mm</text>
-	<path class="st1" d="M67.9,67.4l-4.7,8.5c-0.1,0.2-0.6,0.4-0.9,0.2l-4.9-2.7c-0.2-0.1-0.4-0.4-0.2-0.8l10.6-19.3
-		c0.1-0.2,0.2-0.3,0.6-0.3h4.3c0.4,0,0.7-0.3,0.7-0.8l-0.6-2.1c-0.1-0.4,0.1-0.8,0.6-0.8h9.7c0.4,0,0.7,0.3,0.7,0.8l-0.4,2.2
-		c-0.1,0.3,0.2,0.8,0.7,0.8h4.3c0.2,0,0.4,0.1,0.6,0.3l10.5,18.8c0.1,0.2,0.1,0.7-0.2,0.9l-4.9,3c-0.2,0.2-0.7,0.1-0.9-0.2l-4.7-8.5
-		c-0.2-0.6-1.2-0.3-1.2,0.2L86.8,75c0,0.2,0,0.4,0,0.8l3.4,23.6c0.1,0.3-0.2,0.7-0.7,0.7h-7.6c-0.2,0-0.6-0.2-0.7-0.4L79,84.9
-		c-0.1-0.7-1.2-0.7-1.2,0l-2.1,14.8c-0.1,0.2-0.2,0.6-0.7,0.6h-7.9c-0.3,0-0.7-0.3-0.7-0.7L70,75.8c0.1-0.2,0.1-0.6,0-0.9l-1-7.2
-		C69.1,67.1,68.3,67,67.9,67.4z"/>
+	<path d="M37.3,49.5l-7.2,13.3c-0.2,0.3-0.9,0.6-1.4,0.3l-7.5-4.2c-0.3-0.2-0.6-0.6-0.3-1.2l16.2-30.1c0.2-0.3,0.3-0.5,0.9-0.5h6.6
+		c0.6,0,1.1-0.5,1.1-1.2l-0.9-3.3c-0.2-0.6,0.2-1.2,0.9-1.2h14.9c0.6,0,1.1,0.5,1.1,1.2L61.1,26c-0.2,0.5,0.3,1.2,1.1,1.2h6.6
+		c0.3,0,0.6,0.2,0.9,0.5L85.7,57c0.2,0.3,0.2,1.1-0.3,1.4l-7.5,4.7c-0.3,0.3-1.1,0.2-1.4-0.3l-7.2-13.3c-0.3-0.9-1.8-0.5-1.8,0.3
+		l-1.2,11.5c0,0.3,0,0.6,0,1.2l5.2,36.8c0.2,0.5-0.3,1.1-1.1,1.1H58.8c-0.3,0-0.9-0.3-1.1-0.6l-3.4-23.1c-0.2-1.1-1.8-1.1-1.8,0
+		l-3.2,23.1c-0.2,0.3-0.3,0.9-1.1,0.9H36.1c-0.5,0-1.1-0.5-1.1-1.1l5.5-37.1c0.2-0.3,0.2-0.9,0-1.4L39,50
+		C39.2,49.1,37.9,48.9,37.3,49.5z"/>
+	<text transform="matrix(1 0 0 1 24.3171 16.1902)" font-family="'ArialMT'" font-size="26.6734">3mm</text>
 </g>
 </svg>

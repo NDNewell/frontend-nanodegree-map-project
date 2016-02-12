@@ -140,6 +140,7 @@ function initMap() {
     // Set the custom map to display
     map.setMapTypeId('custom_style');
 
+    // Sav a ref to the png sprite sheet
     var spriteSheet = "/img/png/png_sprites.png";
 
     // Save refs to marker imgs
@@ -206,86 +207,113 @@ function AppViewModel () {
         $clearFavsBtn = $('.clear-favorites-button'),
         $surfInfoContainer = $('.surf-info-container');
 
-    // When the DOM and imgs have loaded, check the local storage for a
-    // cached version of the external svg sprite sheet.
-    // If it exists and is the correct version, insert it into the DOM.
-    // If it doesn't exist, save a current version of the external svg sprite
-    // sheet.
-    $window.load(function () {
+    // Check if setting data to local storage is enabled
+    self.checkLocalStorage = function () {
 
-        // Use the try method to work with the local storage.
-        // If an error is thrown, the page is rendered as usual and all
-        // svg imgs fallback to the http requests when accessing the external
-        // svg sprite sheet
         try {
 
+            window.localStorage.test = 'test';
+            window.localStorage.removeItem('test');
+
+            return true;
+
+        } catch (e) {
+
+            console.log('local storage disabled (' + e + ')');
+
+            return false;
+        }
+    };
+
+    // Save the status of local storage availability
+    var localStorageEnabled = self.checkLocalStorage();
+
+    // Load the external sprite sheet into the DOM either from local storage
+    // or from the server
+    $window.load(function () {
+
+        // If local storage is enabled, see if there is an up-to-date local
+        // version of the external sprite sheet.
+        if(localStorageEnabled) {
+
             // Cache a ref to the local storage
-            // NOTE if setting data to local storage is disabled by the user,
-            // this will throw an error and skip to the catch method.
             // Get the cached version of the external svg sprite sheet and
             // set the current version.
             var localStorage = window.localStorage,
                 svgVersionCached = localStorage.getItem('svgVersion'),
-                svgVersionCurrent = 1;
+                svgVersion = 1;
 
-            // If this statement is being itereated over, then local storage
-            // is available (if it didn't an error wouldn't been thrown above).
             // If the cached version of the external svg sprite sheet matches
-            // the current one load it into the DOM
-            if(svgVersionCached == svgVersionCurrent) {
+            // the current one, load it into the DOM.
+            if(svgVersionCached == svgVersion) {
 
-                console.log('use saved inline svg sprites');
+                console.log('get external svg sprite sheet from local storage');
 
                 var data = localStorage.inlineSVGdata;
 
                 inlineSVGSprites(data);
 
-            // If the cached version of the external svg sprite sheet doesn't
-            // match the current one, replace it with the current one
+            // If it doesn't, get the external svg sprite sheet from the server
             } else {
 
-                console.log('add/update inline svg sprites');
-
-                // If the request to the external svg sprite sheet fails
-                // show the error in the console
-                var readError = setTimeout(function() {
-                    console.log('inline svg sprites failed');
-                }, 5000);
-
-                // Use an ajax request to obtain the contents of the external
-                // svg sprite sheet, load it into the DOM, save it to the
-                // local storage, and lastly save the current version number.
-                $.ajax({
-                    url: 'img/svg/svg_sprites_v1.svg',
-                    dataType: "html",
-                    success: function(data) {
-
-                        clearTimeout(readError);
-
-                        inlineSVGSprites(data);
-                        localStorage.inlineSVGdata = data;
-                        localStorage.svgVersion = svgVersionCurrent;
-                    }
-                });
+                getSVGData();
             };
 
-            // Load the external svg sprite sheet into the DOM so that it
-            // is an inlined svg sprite sheet
-            function inlineSVGSprites(data) {
+        // If local storage isn't enabled, load the external svg sprite sheet
+        // into the DOM without saving it locally
+        } else {
 
-                // After inlining, hide it
-                $body.prepend(data).children(":nth-child(1)").hide();
-            };
-        }
+            getSVGData();
+        };
 
-        // If local storage is not available or another unknown error is thrown
-        // show message in console
-        catch (e) {
-            console.log('inline svg sprites disabled (' + e + ')');
-        }
+        // Get the external svg sprite sheet data
+        function getSVGData() {
+
+            // If the request to the external svg sprite sheet fails,
+            // show the error in the console
+            var readError = setTimeout(function() {
+                console.log('get external svg sprite sheet failed');
+            }, 5000);
+
+            // Use an ajax request to obtain the contents of the external
+            // svg sprite sheet, and load it into the DOM
+            $.ajax({
+                url: 'img/svg/svg_sprites_v1.svg',
+                dataType: "html",
+                success: function(data) {
+
+                    clearTimeout(readError);
+
+                    console.log('get external svg sprite sheet from server');
+
+                    inlineSVGSprites(data);
+
+                    // If local storage is available save the external sprite
+                    // sheet as well as its current version number.
+                    if(localStorageEnabled) {saveSVGData(data)};
+                }
+            });
+        };
+
+        // Load the external svg sprite sheet into the DOM so that it
+        // is an inlined svg sprite sheet
+        function inlineSVGSprites(data) {
+
+            // After inlining, hide it
+            $body.prepend(data).children(":nth-child(1)").hide();
+        };
+
+        // Save the external svg sprite sheet to local storage
+        function saveSVGData(data) {
+
+            console.log('save external svg sprite sheet to local storage');
+
+            localStorage.inlineSVGdata = data;
+            localStorage.svgVersion = svgVersion;
+        };
     });
 
-    // Prevents back space navigating the page backwards unless input/textarea
+    // Prevents back space navigating the page backwards during input/textarea
     // From Andrew Whitaker (https://stackoverflow.
     // com/questions/11112127/prevent-backspace-from-navigating-back-with-
     // jquery-like-googles-homepage)
@@ -3901,12 +3929,12 @@ function AppViewModel () {
             };
 
             function renderSurfConditions(forecastData) {
-                /* Before rendering the surf conditions, check which surf guide is
-                currently open and make sure it matches the API request and that
-                there isn't an error already displayed. This ensures that an api
-                request that takes time to download isn't injected into another
-                surf guide if the user changed surf guides during the api request
-                processing */
+                /* Before rendering the surf conditions, check which surf
+                guide is currently open and make sure it matches the API
+                request and that there isn't an error already displayed. This
+                ensures that an api request that takes time to download isn't
+                injected into another surf guide if the user changed surf
+                guides during the api request processing */
 
                 if ($currentSurfGuide === breakName && !$('.conditions-error').length) {
 
@@ -3914,7 +3942,8 @@ function AppViewModel () {
                     var minBreakHeight = forecastData.swell.minBreakingHeight;
                     var maxBreakHeight = forecastData.swell.maxBreakingHeight;
 
-                    // If the min and max are the same, just save the min height
+                    // If the min and max are the same, just save the min
+                    // height
                     if (minBreakHeight === maxBreakHeight) {
                         var waveHeight = minBreakHeight;
 
@@ -3960,7 +3989,8 @@ function AppViewModel () {
                         rating.push(fadedStar);
                     };
 
-                    /* Add empty stars to the array equal 5 minus the total amount of filled and faded stars */
+                    /* Add empty stars to the array equal 5 minus the total
+                    amount of filled and faded stars */
                     var fillEmptyStars = 5 - rating.length;
                     var emptyStar = '<svg class="rating"><use xlink:href="#star_empty"/></svg>';
 
@@ -3968,12 +3998,13 @@ function AppViewModel () {
                         rating.push(emptyStar);
                     };
 
-                    /* Combine the array into one line of stars to form the overall rating of both the surfing conditions and wave
+                    /* Combine the array into one line of stars to form the
+                    overall rating of both the surfing conditions and wave
                     quality*/
                     var waveRating = rating.join("");
 
-                    /* Render containers to hold the compass and live conditions
-                    containers */
+                    /* Render containers to hold the compass and live
+                    conditions containers */
                     var liveConditionsElem = '<div class="col-xs-12 surf-conditions-container live-surf-conditions"></div>';
                     var compassContainer = '<div class="col-xs-12 col-sm-4 col-md-6 live-surf-conditions live-compass" title="Live wind & swell conditions (swell: blue | wind: white)"><canvas id="compass" width="300" height="300"></canvas></div>';
 
@@ -4197,18 +4228,18 @@ function AppViewModel () {
 
     self.setUpIcons = function (frameClass, frameTitle, imgClass, img, bgImg, bgImgClass) {
 
-            if (bgImg) {
-                var icon =
-                    '<div class="' + frameClass + '" title="' + frameTitle + '">' +
-                        '<svg class="' + bgImgClass + '"><use xlink:href="' + bgImg + '"/></svg>' +
-                        '<svg class="' + imgClass + '"><use xlink:href="' + img + '"/></svg>' +
-                    '</div>';
-            } else {
-                var icon =
-                    '<div class="' + frameClass + '" title="' + frameTitle + '">' +
-                        '<svg class="' + imgClass + '"><use xlink:href="' + img + '"/></svg>' +
-                    '</div>';
-            };
+        if(bgImg) {
+            var icon =
+                '<div class="' + frameClass + '" title="' + frameTitle + '">' +
+                    '<svg class="' + bgImgClass + '"><use xlink:href="' + bgImg + '"/></svg>' +
+                    '<svg class="' + imgClass + '"><use xlink:href="' + img + '"/></svg>' +
+                '</div>';
+        } else {
+            var icon =
+                '<div class="' + frameClass + '" title="' + frameTitle + '">' +
+                    '<svg class="' + imgClass + '"><use xlink:href="' + img + '"/></svg>' +
+                '</div>';
+        };
 
         return icon;
     };
@@ -4624,28 +4655,61 @@ function AppViewModel () {
             }
         };
 
+
+        var frameClass = "tide card",
+            imgClass = "tide-guide";
+
         if (low === mid && low === high) {
-            var tideIcon = '<div class="tide card " title="Best Tide: All">' + '<svg class="tide-guide"><use xlink:href="#tide_all"/></svg>' + '</div>';
+
+            var frameTitle = "Best Tide: All",
+                img = "#tide_all";
+
+            var tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+
         } else if (low >= mid && low >= high) {
-              if(low === mid) {
-                  var tideIcon = '<div class="tide card " title="Best Tide: Low & Mid">' + '<svg class="tide-guide"><use xlink:href="#tide_low_mid"/></svg>' + '</div>';
-              } else if (low === high) {
-                  var tideIcon = '<div class="tide card " title="Best Tide: Low & High">' + '<svg class="tide-guide"><use xlink:href="#tide_low_high"/></svg>' + '</div>';;
-              } else {
-                  var tideIcon = '<div class="tide card " title="Best Tide: Low">' + '<svg class="tide-guide"><use xlink:href="#tide_low"/></svg>' + '</div>';
-              };
+            if(low === mid) {
+
+                var frameTitle = "Best Tide: Low & Mid",
+                    img = "#tide_low_mid";
+
+                var tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+
+            } else if (low === high) {
+
+                var frameTitle = "Best Tide: Low & High",
+                    img = "#tide_low_high";
+
+                var tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+            } else {
+
+                var frameTitle = "Best Tide: Low",
+                    img = "#tide_low";
+
+                var tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+            };
         } else if (mid > low && mid >= high) {
-              if(mid === high) {
-                  var tideIcon = '<div class="tide card " title="Best Tide: Mid & High">' + '<svg class="tide-guide"><use xlink:href="#tide_high_mid"/></svg>' + '</div>';
-              } else {
-                  var tideIcon = '<div class="tide card " title="Best Tide: Mid">' + '<svg class="tide-guide"><use xlink:href="#tide_mid"/></svg>' + '</div>';
-              };
+            if(mid === high) {
+
+                var frameTitle = "Best Tide: High & Mid",
+                    img = "#tide_high_mid";
+
+                var tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+            } else {
+
+                var frameTitle = "Best Tide: Mid",
+                    img = "#tide_low_mid";
+
+                var tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+            };
         } else {
-            var tideIcon = '<div class="tide card " title="Best Tide: High">' + '<svg class="tide-guide"><use xlink:href="#tide_high"/></svg>' + '</div>';
+
+            var frameTitle = "Best Tide: High",
+                img = "#tide_high";
+
+            var tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
         };
 
         return tideIcon;
-
     };
 
     self.displayBestSeasonIcon = function (obj) {
@@ -4797,14 +4861,51 @@ function AppViewModel () {
 
             function drawSeasonIcon(gear, season) {
 
+                var imgClass = "suggested-attire-season-guide suggested-attire-guide";
+
                 if(season === 1) {
-                    $iconContainer.append('<div class="water-temp spring card " title="Suggested Spring Attire">' + '<svg class="suggested-attire-season-guide suggested-attire-guide"><use xlink:href="#water_temp_spring"/></svg>' + gear + '</div>');
+
+                    var frameClass = "water-temp spring card",
+                        frameTitle = "Suggested spring attire",
+                        img = "#water_temp_spring";
+
+                    var icon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+
+                    $iconContainer.append(icon);
+                    $('.spring').append(gear);
+
                 } else if (season === 2) {
-                    $iconContainer.append('<div class="water-temp summer card " title="Suggested Summer Attire">' + '<svg class="suggested-attire-season-guide suggested-attire-guide"><use xlink:href="#water_temp_summer"/></svg>' + gear + '</div>');
+
+                    var frameClass = "water-temp summer card",
+                        frameTitle = "Suggested summer attire",
+                        img = "#water_temp_summer";
+
+                    var icon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+
+                    $iconContainer.append(icon);
+                    $('.summer').append(gear);
+
                 } else if (season === 3) {
-                    $iconContainer.append('<div class="water-temp autumn card " title="Suggested Autumn Attire">' + '<svg class="suggested-attire-season-guide suggested-attire-guide"><use xlink:href="#water_temp_autumn"/></svg>' + gear + '</div>');
+
+                    var frameClass = "water-temp autumn card",
+                        frameTitle = "Suggested autumn attire",
+                        img = "#water_temp_autumn";
+
+                    var icon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+
+                    $iconContainer.append(icon);
+                    $('.autumn').append(gear);
+
                 } else {
-                    $iconContainer.append('<div class="water-temp winter card " title="Suggested Winter Attire">' + '<svg class="suggested-attire-season-guide suggested-attire-guide"><use xlink:href="#water_temp_winter"/></svg>' + gear + '</div>');
+
+                    var frameClass = "water-temp winter card",
+                        frameTitle = "Suggested winter attire",
+                        img = "#water_temp_winter";
+
+                    var icon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+
+                    $iconContainer.append(icon);
+                    $('.winter').append(gear);
                 };
             };
 
@@ -4853,9 +4954,10 @@ function AppViewModel () {
 
                         frameTitle = "It's currently warm enough for boardies =)";
 
-                        var gear = setUpGearHoverIcon(frameClass, imgClass, img, frameTitle);
+                        var gear = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
                     } else {
+
                         var gear = '<svg class="suggested-attire-boardies-guide suggested-attire-guide"><use xlink:href="#water_attire_boardies"/></svg>';
                     };
                 } else if (temp > 66) {
@@ -4866,7 +4968,7 @@ function AppViewModel () {
 
                         frameTitle = "A 2mm wetsuit is recommended for this time of year";
 
-                        var gear = setUpGearHoverIcon(frameClass, imgClass, img, frameTitle);
+                        var gear = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
                     } else {
                         var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide"><use xlink:href="#water_attire_2mm_wetsuit"/></svg>';
@@ -4879,7 +4981,7 @@ function AppViewModel () {
 
                         frameTitle = "A 3mm wetsuit is recommended for this time of year";
 
-                        var gear = setUpGearHoverIcon(frameClass, imgClass, img, frameTitle);
+                        var gear = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
                     } else {
                         var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide"><use xlink:href="#water_attire_3mm_wetsuit"/></svg>';
@@ -4894,7 +4996,7 @@ function AppViewModel () {
 
                         frameTitle = "A 4mm wetsuit and boots are recommended for this time of year";
 
-                        var gear = setUpGearHoverIcon(frameClass, imgClass, img, frameTitle);
+                        var gear = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
                     } else {
                         var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide"><use xlink:href="#water_attire_4mm_wetsuit"/></svg>';
@@ -4906,7 +5008,7 @@ function AppViewModel () {
 
                         frameTitle = "A 5mm wetsuit, gloves, and boots are recommended for this time of year";
 
-                        var gear = setUpGearHoverIcon(frameClass, imgClass, img, frameTitle);
+                        var gear = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
                     } else {
                         var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide"><use xlink:href="#water_attire_5mm_wetsuit"/></svg>';
@@ -4918,7 +5020,7 @@ function AppViewModel () {
 
                         frameTitle = "A 6mm wetsuit, gloves, boots, and a hood are recommended for this time of year";
 
-                        var gear = setUpGearHoverIcon(frameClass, imgClass, img, frameTitle);
+                        var gear = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
                     } else {
                         var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide"><use xlink:href="#water_attire_6mm_wetsuit"/></svg>';
@@ -4927,16 +5029,6 @@ function AppViewModel () {
             };
 
             return gear;
-        };
-
-        function setUpGearHoverIcon(frameClass, imgClass, img, frameTitle) {
-
-            var icon =
-                '<div id="'  + '" class="' + frameClass + '" title="' + frameTitle + '">' +
-                    '<svg class="' + imgClass + '"><use xlink:href="' + img + '"/></svg>' +
-                '</div>';
-
-            return icon;
         };
     };
 
@@ -4957,7 +5049,7 @@ function AppViewModel () {
 
           var midRange = Math.floor((obj.highEnd - obj.budget)/2 + obj.budget);
 
-          var costInfo = $iconContainer.append('<div class="cost card "title="Estimated daily budget allowance: Low, Mid, High">' + '<svg class="cost-guide"><use xlink:href="#cost"/></svg>' + '<p>' + obj.budget + '</p>' + '<p>' + midRange + '</p>' + '<p>' + obj.highEnd +'</p>' + '</div>');
+          var costInfo = $iconContainer.append('<div class="cost card "title="Estimated daily budget allowances: Low, Mid, High">' + '<svg class="cost-guide"><use xlink:href="#cost"/></svg>' + '<p>' + obj.budget + '</p>' + '<p>' + midRange + '</p>' + '<p>' + obj.highEnd +'</p>' + '</div>');
       };
 
       return costInfo;

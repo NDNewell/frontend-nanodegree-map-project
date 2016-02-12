@@ -57,6 +57,7 @@ module.exports = function (grunt, config) {
         },
         svgstore: {
             options: {
+                cleanup: false,
                 includedemo: false,
                 includeTitleElement: false,
                 formatting : {
@@ -81,7 +82,7 @@ module.exports = function (grunt, config) {
             },
             dist: {
                 files: {
-                    'dist/img/svg/svg_sprites.svg': 'foo/img/svg/*.svg'
+                    'dist/img/svg/svg_sprites_v1.svg': 'foo/img/svg/*.svg'
                 }
             }
         },

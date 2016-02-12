@@ -2,7 +2,14 @@
 <!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="121px" height="123.1px" viewBox="37.5 -1.4 121 123.1" enable-background="new 37.5 -1.4 121 123.1" xml:space="preserve">
+	 width="121px" height="123.1px" viewBox="37.5 -1.4 121 123.1" style="enable-background:new 37.5 -1.4 121 123.1;"
+	 xml:space="preserve">
+<style type="text/css">
+<![CDATA[
+	.st0{font-size:42.5519;}
+	.st1{font-family:'ArialMT';}
+]]>
+</style>
 <font horiz-adv-x="2048">
 <!-- Arial is a trademark of The Monotype Corporation in the United States and/or other countries. -->
 <!-- Copyright: Copyright 2016 Adobe System Incorporated. All rights reserved. -->
@@ -14,7 +21,7 @@
 	<g>
 	<polygon points="43.6,115.5 43.6,103.2 98.1,103.2 105.3,103.2 105.3,81.1 43.6,81.1 43.6,66.9 84.8,66.8 84.8,44.8 43.6,44.8 
 		43.6,32.2 65.5,32.2 65.5,10.2 43.6,10.2 43.6,4.3 37.5,4.3 37.5,121.7 158.3,121.7 158.3,115.5 	"/>
-	<text transform="matrix(1 0 0 1 134.8555 35.1218)" font-family="'ArialMT'" font-size="42.5519">$</text>
-	<text transform="matrix(1 0 0 1 134.8555 35.1218)" font-family="'ArialMT'" font-size="42.5519">$</text>
+	<text transform="matrix(1 0 0 1 134.8555 35.1223)" class="st1 st0">$</text>
+	<text transform="matrix(1 0 0 1 134.8555 35.1223)" class="st1 st0">$</text>
 </g>
 </svg>

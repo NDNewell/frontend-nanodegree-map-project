@@ -4,13 +4,8 @@
 <svg version="1.1" id="Heart" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="30px" height="30px" viewBox="-134.2 138.6 30 30" style="enable-background:new -134.2 138.6 30 30;" xml:space="preserve"
 	>
-<style type="text/css">
-<![CDATA[
-	.st0{fill:#FFFFFF;}
-]]>
-</style>
 <g>
-	<polygon class="st0" points="-119.1,138.6 -115.1,150.1 -104.2,150.1 -113.1,156.8 -109.9,168.6 -119.2,161.6 -128.5,168.6 
-		-125.3,156.8 -134.2,150.1 -123.3,150.1 	"/>
+	<polygon points="-119.1,138.6 -115.1,150.1 -104.2,150.1 -113.1,156.8 -109.9,168.6 -119.2,161.6 -128.5,168.6 -125.3,156.8 
+		-134.2,150.1 -123.3,150.1 	"/>
 </g>
 </svg>

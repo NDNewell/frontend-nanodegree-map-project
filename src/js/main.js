@@ -520,7 +520,6 @@ function AppViewModel () {
                     favorites.forEach(function(obj) {
                         userFavorites.push(obj);
                     });
-                    console.log("the user's favorite(s) is/are: " + userFavorites.join(', '));
 
                     // Show favs on loc frames and markers
                     updateFavs();
@@ -591,29 +590,46 @@ function AppViewModel () {
         // Add location to local array
         userFavorites.push(newFav);
 
-        // Update Firebase
-        users.child(allData.getAuth().uid).update({"favorites":userFavorites}, fireBaseWriteError);
+        // Update locations
+        if(isLoggedIn) {
+
+            // Update Firebase if logged in
+            users.child(allData.getAuth().uid).update({"favorites":userFavorites}, fireBaseWriteError);
+        } else {
+
+            self.updateFavsOnFrames();
+            self.updateFavMarkers(userFavorites);
+        };
     };
 
-
-    // Remove a location from the local favorites array and update Firebase version
+    // Remove a location from the local favorites array and update Firebase
+    // version
     self.removeFavorite = function (removeFav) {
 
         /* Create a temporary array to hold any locations that do not match the
         array that is to be removed */
         var updatedFavs = [];
 
-        /* Filter any matching locations to the deleted location out of the local
-        favorites array */
+        /* Filter any matching locations to the deleted location out of the
+        local favorites array */
         userFavorites.forEach(function(keepFav) {
             if(removeFav !== keepFav) {
                 updatedFavs.push(keepFav);
             };
         });
 
-        // Update Firebase with the locations from the temporary array above
-        // When Firebase updates, the local favorites array will be replaced
-        users.child(allData.getAuth().uid).update({"favorites":updatedFavs}, fireBaseWriteError);
+        // Update the locations from the temporary array above
+        if(isLoggedIn) {
+
+            // Update Firebase if logged in
+            // When Firebase updates, the local favorites array will be
+            // replaced
+            users.child(allData.getAuth().uid).update({"favorites":updatedFavs}, fireBaseWriteError);
+        } else {
+            userFavorites = updatedFavs;
+            self.updateFavsOnFrames();
+            self.updateFavMarkers(userFavorites);
+        };
     };
 
     // Delete all locations from the local favorites array and update Firebase
@@ -625,8 +641,16 @@ function AppViewModel () {
         // Update favorite status
         self.updateFavsOnFrames();
 
-        // Update Firebase
-        users.child(allData.getAuth().uid).update({"favorites":userFavorites}, fireBaseWriteError);
+        // Update favorites
+        if(isLoggedIn) {
+
+            // Update Firebase if logged in
+            users.child(allData.getAuth().uid).update({"favorites":userFavorites}, fireBaseWriteError);
+        } else {
+
+            // Just update the markers if not logged in
+            self.updateFavMarkers(userFavorites);
+        };
     };
 
     // Create array of map markers
@@ -1187,6 +1211,7 @@ function AppViewModel () {
     that match the user's favorites */
     self.updateFavsOnFrames = function () {
 
+        console.log("the user's favorite(s) is/are: " + userFavorites.join(', '));
         console.log("update location frame favorites");
 
         var $allLocationFrames = $('.location-frame');
@@ -1211,6 +1236,7 @@ function AppViewModel () {
                 };
             };
         });
+
     };
 
     // Open the location frame's relevant surf guide an animate its related
@@ -2218,47 +2244,66 @@ function AppViewModel () {
         }, fireBaseReadError);
     };
 
+    self.userLogin = function() {
+
+        /* If the visiter is a new user, get details and write data to Firebase */
+        // Log new user in anonymously (tokens last 5 years)
+        allData.authAnonymously(function(error, authData) {
+            if (error) {
+                console.log("login Failed!", error);
+            } else {
+
+                // Save the user's favorites and name in the database
+                allData.child("users").child(authData.uid).set({
+                  favorites: [],
+                  name: prompt("Please enter your name")
+                });
+
+                isLoggedIn = true;
+
+                // Display which user is logged in the console every minute
+                var displayUser = setInterval(self.showUser, 60000);
+            };
+        });
+    };
+
     // Set variable for determining if a user is new or not
-    var isNewUser;
+    var isLoggedIn;
 
     // Create a callback which logs the current auth state
     self.checkAuthentication = function (authData) {
 
-        try {
+        // Check user authentication only if local storage is available.
+        if(localStorageEnabled) {
 
-            // Check user authentication only if local storage is available.
-            // If it isn't available, an error will be thrown
-            if(window.localStorage) {
+            // When user is already logged in, notify in console and update
+            // favorites
+            if(authData) {
 
-                // When user is already logged in, notify in console and update
-                // favorites
-                if(authData) {
+                console.log("user " + authData.uid + " is logged in with " + authData.provider);
 
-                    console.log("user " + authData.uid + " is logged in with " + authData.provider);
+                isLoggedIn = true;
 
-                    isNewUser = false;
-
-                    self.getFavorites(authData);
-
-                // If user is logged out notify via console and set new user to
-                // true
-                } else {
-
-                    console.log("user is logged out");
-
-                    isNewUser = true;
-                };
+                self.getFavorites(authData);
 
                 // Display which user is logged in the console every minute
-                setInterval(self.showUser, 60000);
+                var displayUser = setInterval(self.showUser, 60000);
+
+            // If user is logged out notify via console and set new user to
+            // true
+            } else {
+
+                self.userLogin();
             };
-        }
 
-        // If local storage isn't available, show location frames and add their
-        // hover effects once all of the location data has been parsed
-        catch (e) {
+        // If local storage isn't available, show location frames and add
+        // their hover effects once all of the location data has been
+        // parsed
+        } else {
 
-            console.log('Firebase log in disabled because local storage unavailable (' + e + ')');
+            console.log('Firebase log in disabled because local storage unavailable');
+
+            var isLoggedIn = false;
 
             self.showLocationFrames();
 
@@ -2276,30 +2321,12 @@ function AppViewModel () {
                     };
                 }, 500);
             };
-        }
+        };
     };
 
     /* Monitor user authentication state, when there is a change check
        which user is logged in / logged out */
     allData.onAuth(self.checkAuthentication);
-
-    /* If the visiter is a new user, get details and write data to Firebase */
-    if(isNewUser) {
-
-        // Log new user in anonymously (tokens last 5 years)
-        allData.authAnonymously(function(error, authData) {
-            if (error) {
-                console.log("login Failed!", error);
-            } else {
-
-                // Save the user's favorites and name in the database
-                allData.child("users").child(authData.uid).set({
-                  favorites: [],
-                  name: prompt("Please enter your name")
-                });
-            };
-        });
-    };
 
     // Add tooltips for those icons that have a title attribute
     // When the element is clicked or hovered over a tooltip is displayed

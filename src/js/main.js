@@ -426,6 +426,27 @@ function AppViewModel () {
      Firebase */
     self.locationArray = [];
 
+    // Check if the above array has been loaded with locations before executing
+    // the callback function
+    self.onLocationsArrayLoad = function (callback) {
+
+        if(locationArray.length > 0) {
+
+                callback();
+        } else {
+
+            var interval = setInterval(function() {
+
+                if(locationArray.length > 0) {
+
+                    clearInterval(interval);
+
+                    callback();
+                };
+            }, 250);
+        };
+    };
+
     /* This obervable array holds filtered location objects from search
     queries and the initital data entered into the location array. It is
     automatically updated/rendered in the View */
@@ -510,7 +531,9 @@ function AppViewModel () {
                     // should've already loaded, so do nothing (initial load =
                     // false)
                     if(initLoad) {
-                        loadFrames();
+
+                        // Load frames after locations array has been loaded
+                        self.onLocationsArrayLoad(loadFrames);
                     };
 
                 } else {
@@ -531,7 +554,9 @@ function AppViewModel () {
                     // should've already loaded, so do nothing (initial load =
                     // false)
                     if(initLoad) {
-                        loadFrames();
+
+                        // Load frames after locations array has been loaded
+                        self.onLocationsArrayLoad(loadFrames);
                     };
                 };
 
@@ -553,30 +578,11 @@ function AppViewModel () {
                     // Set intial favs loading to false
                     initLoad = false;
 
-                    // Once the locations are parsed, show the location frame
-                    // and add the hover effects
-                    if(locationArray.length > 0) {
+                    // Show the location frames
+                    self.showLocationFrames(favorites);
 
-                        load();
-                    } else {
-                        var checkLocLoaded = setInterval(function() {
-
-                            if(locationArray.length > 0) {
-
-                                clearInterval(checkLocLoaded);
-                                load();
-                            };
-                        }, 500);
-                    };
-
-                    function load() {
-
-                        // Show the location frames
-                        self.showLocationFrames(favorites);
-
-                        // Enable rollover effects for location frames
-                        self.addHoverEffects();
-                    };
+                    // Enable rollover effects for location frames
+                    self.addHoverEffects();
                 };
 
             }, fireBaseReadError);
@@ -2239,8 +2245,8 @@ function AppViewModel () {
 
         // get the user's name saved in the Firebase database and log in console
         users.child(authData.uid).child("name").on("value", function(snapshot) {
-        var name = snapshot.val();
-        console.log(name + " is currently logged in");
+            var name = snapshot.val();
+            console.log(name + " is currently logged in");
         }, fireBaseReadError);
     };
 
@@ -2307,20 +2313,7 @@ function AppViewModel () {
 
             self.showLocationFrames();
 
-            if(locationArray.length > 0) {
-                self.addHoverEffects();
-
-            } else {
-
-                var checkLocLoaded = setInterval(function() {
-
-                    if(locationArray.length > 0) {
-
-                        clearInterval(checkLocLoaded);
-                        self.addHoverEffects();
-                    };
-                }, 500);
-            };
+            self.onLocationsArrayLoad(self.addHoverEffects);
         };
     };
 

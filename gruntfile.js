@@ -18,13 +18,10 @@ module.exports = function(grunt) {
     // Register tasks
 
     grunt.registerTask('default', [
-        //'uncss',
-        //'csslint',
-        //'jshint',
         'concat',
         'uglify',
         'processhtml',
-        //'htmlmin',
+        'htmlmin',
         'svgstore',
         'svgmin',
         'sprity',

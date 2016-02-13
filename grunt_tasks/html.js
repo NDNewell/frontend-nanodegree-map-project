@@ -3,7 +3,7 @@ module.exports = function (grunt, config) {
         processhtml: {
             dist: {
                 files: {
-                    'dist/index.html': 'src/index.html'
+                    'foo/processed.html': 'src/index.html'
                 }
             }
         },
@@ -11,22 +11,21 @@ module.exports = function (grunt, config) {
             dist: {
                 options: {
                     removeComments: true,
-                    collapseWhitespace: true
+                    collapseWhitespace: true,
                 },
                 files: {
-                    'dist/index.html' : 'foo/bar.html',
+                    'dist/index.html' : 'foo/processed.html',
                 }
             }
         },
         watch: {
-            processhtml: {
+            html: {
                 files: 'src/index.html',
-                tasks: 'processhtml'
-            },
-            /*htmlmin: {
-                files: 'foo/bar.html',
-                tasks: 'htmlmin'
-            }*/
+                tasks: [
+                    'processhtml',
+                    'htmlmin'
+                ]
+            }
         }
     });
 };

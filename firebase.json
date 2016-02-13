@@ -13,25 +13,7 @@
           "value" : "max-age=7776000"
       } ]
   }, {
-      "source" : "js/canvasloader.min.js",
-      "headers" : [ {
-          "key" : "Cache-Control",
-          "value" : "max-age=5184000"
-      } ]
-  }, {
-      "source" : "js/jquery.mousewheel.min.js",
-      "headers" : [ {
-          "key" : "Cache-Control",
-          "value" : "max-age=5184000"
-      } ]
-  }, {
-      "source" : "js/main.min.js",
-      "headers" : [ {
-          "key" : "Cache-Control",
-          "value" : "max-age=5184000"
-      } ]
-  }, {
-      "source" : "css/style.min.css",
+      "source" : ["js/*.js", "css/*.css"],
       "headers" : [ {
           "key" : "Cache-Control",
           "value" : "max-age=5184000"

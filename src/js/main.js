@@ -1,5 +1,7 @@
 // Declare global variables map and infoWindow
-var map, infoWindow;
+var map,
+    infoWindow,
+    spriteSheet = "/img/png/png_sprites.png";
 
 // Create Google Map
 function initMap() {
@@ -139,9 +141,6 @@ function initMap() {
 
     // Set the custom map to display
     map.setMapTypeId('custom_style');
-
-    // Sav a ref to the png sprite sheet
-    var spriteSheet = "/img/png/png_sprites.png";
 
     // Save refs to marker imgs
     markerIcon = {
@@ -4102,7 +4101,7 @@ function AppViewModel () {
                         var ctx = Canvas.getContext('2d');
 
                         var sprites = new Image();
-                        sprites.src = 'img/png/png_sprites.png';
+                        sprites.src = spriteSheet;
                         sprites.onload = draw;
 
                         var windCompassRotation = windDirection * (Math.PI / 180);
@@ -4124,7 +4123,7 @@ function AppViewModel () {
                             ctx.drawImage(sprites, 0, 561, srcW, srcH, -150, -150, destW, destH);
                             ctx.rotate(-windCompassRotation);
                             ctx.rotate(swellCompassRotation);
-                            ctx.drawImage(sprites, 4, 869, srcW, srcH, -150, -150, destW, destH);
+                            ctx.drawImage(sprites, 0, 869, srcW, srcH, -150, -150, destW, destH);
                             ctx.restore();
                         };
                     };
@@ -4532,7 +4531,7 @@ function AppViewModel () {
 
 
             var sprites = new Image();
-            sprites.src = 'img/png/png_sprites.png';
+            sprites.src = spriteSheet;
 
             if(swell) {
                 swell = false;

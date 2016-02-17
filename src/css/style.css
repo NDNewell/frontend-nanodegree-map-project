@@ -1319,7 +1319,7 @@ body, html {
         left: 5px;
     }
 
-    .pulse-location-frame {
+    .pulse-frame {
         z-index: 1;
         -webkit-animation-name: pulse;
         animation-name: pulse;
@@ -1339,7 +1339,7 @@ body, html {
         100% { transform: scale(1.1); }
     }
 
-    .reverse-pulse {
+    .pulse-frame-reverse {
         -webkit-animation-name: reverse-pulse;
         animation-name: reverse-pulse;
         -webkit-animation-duration: 350ms;

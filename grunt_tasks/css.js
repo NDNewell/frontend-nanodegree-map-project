@@ -12,7 +12,7 @@ module.exports = function (grunt, config) {
         watch: {
             cssfiles: {
                 files: [
-                    'src/css/*.css',
+                    'src/css/**/**/*.css',
                     'foo/css/*.css',
                     'grunt_tasks/css.js'
                 ],

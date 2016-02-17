@@ -206,122 +206,6 @@ function AppViewModel () {
         $clearFavsBtn = $('.clear-favorites-button'),
         $surfInfoContainer = $('.surf-info-container');
 
-    // Check if setting data to local storage is enabled
-    self.checkLocalStorage = function () {
-
-        try {
-
-            window.localStorage.test = 'test';
-            window.localStorage.removeItem('test');
-
-            return true;
-
-        } catch (e) {
-
-            console.log('local storage disabled (' + e + ')');
-
-            return false;
-        }
-    };
-
-    // Save the status of local storage availability
-    var localStorageEnabled = self.checkLocalStorage();
-
-    // Load the external sprite sheet into the DOM either from local storage
-    // or from the server
-    $window.load(function () {
-
-        // If local storage is enabled, see if there is an up-to-date local
-        // version of the external sprite sheet.
-        if(localStorageEnabled) {
-
-            // Cache a ref to the local storage
-            // Get the cached version of the external svg sprite sheet and
-            // set the current version.
-            var localStorage = window.localStorage,
-                svgVersionCached = localStorage.getItem('svgVersion'),
-                svgVersion = 1;
-
-            // If the cached version of the external svg sprite sheet matches
-            // the current one, load it into the DOM.
-            if(svgVersionCached == svgVersion) {
-
-                console.log('get external svg sprite sheet from local storage');
-
-                var data = localStorage.inlineSVGdata;
-
-                inlineSVGSprites(data);
-
-            // If it doesn't, get the external svg sprite sheet from the server
-            } else {
-
-                getSVGData();
-            };
-
-        // If local storage isn't enabled, load the external svg sprite sheet
-        // into the DOM without saving it locally
-        } else {
-
-            getSVGData();
-        };
-
-        // Get the external svg sprite sheet data
-        function getSVGData() {
-
-            // If the request to the external svg sprite sheet fails,
-            // show the error in the console
-            var readError = setTimeout(function() {
-                console.log('get external svg sprite sheet failed');
-            }, 5000);
-
-            // Use an ajax request to obtain the contents of the external
-            // svg sprite sheet, and load it into the DOM
-            $.ajax({
-                url: 'img/svg/svg_sprites_v1.svg',
-                dataType: "html",
-                success: function(data) {
-
-                    clearTimeout(readError);
-
-                    console.log('get external svg sprite sheet from server');
-
-                    inlineSVGSprites(data);
-
-                    // If local storage is available save the external sprite
-                    // sheet as well as its current version number.
-                    if(localStorageEnabled) {saveSVGData(data)};
-                }
-            });
-        };
-
-        // Load the external svg sprite sheet into the DOM so that it
-        // is an inlined svg sprite sheet
-        function inlineSVGSprites(data) {
-
-            // After inlining, hide it
-            $body.prepend(data).children(":nth-child(1)").hide();
-        };
-
-        // Save the external svg sprite sheet to local storage
-        function saveSVGData(data) {
-
-            console.log('save external svg sprite sheet to local storage');
-
-            localStorage.inlineSVGdata = data;
-            localStorage.svgVersion = svgVersion;
-        };
-    });
-
-    // Prevents back space navigating the page backwards during input/textarea
-    // From Andrew Whitaker (https://stackoverflow.
-    // com/questions/11112127/prevent-backspace-from-navigating-back-with-
-    // jquery-like-googles-homepage)
-    $document.on("keydown", function (e) {
-        if (e.which === 8 && !$(e.target).is("input, textarea")) {
-            e.preventDefault();
-        };
-    });
-
     /* Cache Firebase database references to all, location, and user data */
     var allData = new Firebase("https://dazzling-torch-4012.firebaseio.com"),
         locationData = new Firebase("https://dazzling-torch-4012.firebaseio.com/locationData"),
@@ -658,6 +542,122 @@ function AppViewModel () {
         };
     };
 
+    // Check if setting data to local storage is enabled
+    self.checkLocalStorage = function () {
+
+        try {
+
+            window.localStorage.test = 'test';
+            window.localStorage.removeItem('test');
+
+            return true;
+
+        } catch (e) {
+
+            console.log('local storage disabled (' + e + ')');
+
+            return false;
+        }
+    };
+
+    // Save the status of local storage availability
+    var localStorageEnabled = self.checkLocalStorage();
+
+    // Load the external sprite sheet into the DOM either from local storage
+    // or from the server
+    $window.load(function () {
+
+        // If local storage is enabled, see if there is an up-to-date local
+        // version of the external sprite sheet.
+        if(localStorageEnabled) {
+
+            // Cache a ref to the local storage
+            // Get the cached version of the external svg sprite sheet and
+            // set the current version.
+            var localStorage = window.localStorage,
+                svgVersionCached = localStorage.getItem('svgVersion'),
+                svgVersion = 1;
+
+            // If the cached version of the external svg sprite sheet matches
+            // the current one, load it into the DOM.
+            if(svgVersionCached == svgVersion) {
+
+                console.log('get external svg sprite sheet from local storage');
+
+                var data = localStorage.inlineSVGdata;
+
+                inlineSVGSprites(data);
+
+            // If it doesn't, get the external svg sprite sheet from the server
+            } else {
+
+                getSVGData();
+            };
+
+        // If local storage isn't enabled, load the external svg sprite sheet
+        // into the DOM without saving it locally
+        } else {
+
+            getSVGData();
+        };
+
+        // Get the external svg sprite sheet data
+        function getSVGData() {
+
+            // If the request to the external svg sprite sheet fails,
+            // show the error in the console
+            var readError = setTimeout(function() {
+                console.log('get external svg sprite sheet failed');
+            }, 5000);
+
+            // Use an ajax request to obtain the contents of the external
+            // svg sprite sheet, and load it into the DOM
+            $.ajax({
+                url: 'img/svg/svg_sprites_v1.svg',
+                dataType: "html",
+                success: function(data) {
+
+                    clearTimeout(readError);
+
+                    console.log('get external svg sprite sheet from server');
+
+                    inlineSVGSprites(data);
+
+                    // If local storage is available save the external sprite
+                    // sheet as well as its current version number.
+                    if(localStorageEnabled) {saveSVGData(data)};
+                }
+            });
+        };
+
+        // Load the external svg sprite sheet into the DOM so that it
+        // is an inlined svg sprite sheet
+        function inlineSVGSprites(data) {
+
+            // After inlining, hide it
+            $body.prepend(data).children(":nth-child(1)").hide();
+        };
+
+        // Save the external svg sprite sheet to local storage
+        function saveSVGData(data) {
+
+            console.log('save external svg sprite sheet to local storage');
+
+            localStorage.inlineSVGdata = data;
+            localStorage.svgVersion = svgVersion;
+        };
+    });
+
+    // Prevents back space navigating the page backwards during input/textarea
+    // From Andrew Whitaker (https://stackoverflow.
+    // com/questions/11112127/prevent-backspace-from-navigating-back-with-
+    // jquery-like-googles-homepage)
+    $document.on("keydown", function (e) {
+        if (e.which === 8 && !$(e.target).is("input, textarea")) {
+            e.preventDefault();
+        };
+    });
+
     // Create array of map markers
     var markers = [];
 
@@ -863,18 +863,19 @@ function AppViewModel () {
     self.makeMarkerBig = function (marker) {
 
         // Cache the title of the marker not including the location
-        var markerName = getMarkerName(marker);
+        var markerName = getMarkerName(marker),
+            markerIconOrigin = marker.icon.origin;
 
         /* If marker wasn't previously activated, make it big for
         normal and fav icons */
-        if (marker.icon.origin === markerIcon.small.origin) {
+        if (markerIconOrigin === markerIcon.small.origin) {
 
             console.log('make ' + markerName + "'" + 's marker big');
 
             // Change the marker's image
             marker.setIcon(markerIcon.selected);
 
-        } else if (marker.icon.origin === markerIcon.smallFav.origin) {
+        } else if (markerIconOrigin === markerIcon.smallFav.origin) {
 
             console.log('make ' + markerName + "'" + 's marker big');
 
@@ -889,15 +890,16 @@ function AppViewModel () {
         markers.forEach(function(marker) {
 
             // Cache the title of the marker not including the location
-            var markerName = getMarkerName(marker);
+            var markerName = getMarkerName(marker),
+                markerIconOrigin = marker.icon.origin;
 
-            if (marker.icon.origin === markerIcon.selected.origin) {
+            if (markerIconOrigin === markerIcon.selected.origin) {
 
                 console.log('make ' + markerName + "'" + 's marker small');
 
                 marker.setIcon(markerIcon.small);
 
-            } else if (marker.icon.origin === markerIcon.selectedFav.origin) {
+            } else if (markerIconOrigin === markerIcon.selectedFav.origin) {
 
                 console.log('make ' + markerName + "'" + 's marker small');
 
@@ -971,7 +973,7 @@ function AppViewModel () {
     };
 
     // Change any map markers that match/don't match the user's favorites
-     self.updateFavMarkers = function (favorites) {
+    self.updateFavMarkers = function (favorites) {
 
         // Save ref to number of locations in data
         var numLocations = 0;
@@ -1010,26 +1012,27 @@ function AppViewModel () {
             markers.forEach(function(marker) {
 
                 // Cache the title of the marker not including the location
-                var markerName = getMarkerName(marker);
+                var markerName = getMarkerName(marker),
+                    markerIconOrigin = marker.icon.origin;
 
                 /* If the name matches a user's favorite, change the image */
                 /* Any markers that don't match the user's favs or were never a
                 fav remain unaltered */
                 if (favorites.indexOf(markerName) > -1) {
-                    if(marker.icon.origin === markerIcon.small.origin) {
+                    if(markerIconOrigin === markerIcon.small.origin) {
 
                         marker.setIcon(markerIcon.smallFav);
-                    } else if (marker.icon.origin === markerIcon.selected.origin) {
+                    } else if (markerIconOrigin === markerIcon.selected.origin) {
 
                         marker.setIcon(markerIcon.selectedFav);
                     };
 
                 // If the name doesn't match, but was a fav, change the img
                 // back
-                } else if (marker.icon.origin === markerIcon.smallFav.origin) {
+                } else if (markerIconOrigin === markerIcon.smallFav.origin) {
 
                     marker.setIcon(markerIcon.small);
-                } else if (marker.icon.origin === markerIcon.selectedFav.origin) {
+                } else if (markerIconOrigin === markerIcon.selectedFav.origin) {
 
                     marker.setIcon(markerIcon.selected);
                 };
@@ -1138,7 +1141,8 @@ function AppViewModel () {
         // within the current map bounds
         for(var i = markersLength; i--;) {
 
-            var marker = markers[i];
+            var marker = markers[i],
+                markerIconOrigin = marker.icon.origin;
 
             // Get map bounds and determine which markers are within them
             if(map.getBounds().contains(marker.getPosition())) {
@@ -1151,7 +1155,7 @@ function AppViewModel () {
             } else {
 
                 // If a marker is selected, don't hide it
-                if(marker.icon.origin === markerIcon.selected.origin || marker.icon.origin === markerIcon.selectedFav.origin) {
+                if(markerIconOrigin === markerIcon.selected.origin || markerIconOrigin === markerIcon.selectedFav.origin) {
                     marker.setVisible(true);
                 } else {
                     marker.setVisible(false);
@@ -1274,7 +1278,7 @@ function AppViewModel () {
         // Cache DOM refs
         var $locationsContainer = $locationGrid,
             $locationFrame = $('.location-frame'),
-            $pulsatingLocation = $('.pulse-location-frame'),
+            $pulsatingLocation = $('.pulse-frame'),
             $oldPosition = $locationsContainer.scrollLeft(),
 
             // Cache the title of the marker not including the location
@@ -1410,12 +1414,12 @@ function AppViewModel () {
 
                     /* If hovering away from the marker, reverse pulsate its
                     location frame */
-                    if($('.pulse-location-frame').length) {
+                    if($('.pulse-frame').length) {
 
                         console.log("make " + markerName + "'s location frame small");
 
                         // Add/remove necessary classes to animate
-                        $locationFrame.removeClass("pulse-location-frame").addClass("reverse-pulse");
+                        $locationFrame.removeClass("pulse-frame").addClass("pulse-frame-reverse");
 
                         // Remove the reverse pulse effect
                         removePulse($locationFrame);
@@ -1426,14 +1430,14 @@ function AppViewModel () {
                         console.log("make " + markerName + "'s location frame big");
 
                         // Add necessary class to animate
-                        $locationFrame.removeClass("reverse-pulse").addClass("pulse-location-frame");
+                        $locationFrame.removeClass("pulse-frame-reverse").addClass("pulse-frame");
                     };
                 };
             });
 
         /* If only one location is in view, do nothing unless hovering away from
         its marker */
-        } else if ($numFramesVisible === 1 && $('.pulse-location-frame').length) {
+        } else if ($numFramesVisible === 1 && $('.pulse-frame').length) {
 
             // Cache DOM refs to the visible location frame
             // Capture the location name of the visible location frame
@@ -1443,7 +1447,7 @@ function AppViewModel () {
             console.log("make " + $locationName + "'s location frame small");
 
             // Add/remove necessary classes to animate
-            $locationFrame.removeClass("pulse-location-frame").addClass("reverse-pulse");
+            $locationFrame.removeClass("pulse-frame").addClass("pulse-frame-reverse");
 
             // Remove the reverse pulse effect
             removePulse($locationFrame);
@@ -1455,7 +1459,7 @@ function AppViewModel () {
             /* Set a time to rm the effect just after the reverse pulse effect
              finishes its animation on the previous marker's location frame */
             var timer = setTimeout (function() {
-                $locationFrame.removeClass("reverse-pulse");
+                $locationFrame.removeClass("pulse-frame-reverse");
             }, 400);
         };
     };
@@ -1667,7 +1671,7 @@ function AppViewModel () {
 
     self.addMapListeners = function () {
 
-        // Add map event listener the detects when the map is idle
+        // Add map event listener that detects when the map is idle
         // Make markers within the viewport/map bounds visible and those
         // that aren't invisible
         // Show only the location frames and markers whose markers are within
@@ -1749,10 +1753,11 @@ function AppViewModel () {
                         for(var i = markersLength; i--;) {
 
                             // Save a ref to the marker
-                            var marker = markers[i];
+                            var marker = markers[i],
+                                markerIconOrigin = marker.icon.origin;
 
                             // Check if a marker is selected
-                            if(marker.icon.origin === markerIcon.selectedFav.origin || marker.icon.origin === markerIcon.selected.origin) {
+                            if(markerIconOrigin === markerIcon.selectedFav.origin || markerIconOrigin === markerIcon.selected.origin) {
 
                                 // Center the map on the selected marker
                                 self.centerOnMarker(marker);

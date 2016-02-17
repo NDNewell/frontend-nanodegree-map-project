@@ -13,7 +13,13 @@
           "value" : "max-age=7776000"
       } ]
   }, {
-      "source" : ["js/*.js", "css/*.css"],
+      "source" : "js/*.js",
+      "headers" : [ {
+          "key" : "Cache-Control",
+          "value" : "max-age=5184000"
+      } ]
+  }, {
+      "source" : "css/*.css",
       "headers" : [ {
           "key" : "Cache-Control",
           "value" : "max-age=5184000"

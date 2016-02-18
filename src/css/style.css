@@ -12,6 +12,10 @@ body, html {
     color: #56c4d1;
 }
 
+.navbar-greeting {
+    color: white;
+}
+
 .nav-symbol {
     display: block;
     position: relative;

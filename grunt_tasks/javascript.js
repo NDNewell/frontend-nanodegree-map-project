@@ -6,8 +6,8 @@ module.exports = function (grunt, config) {
             },
             basic: {
                 src: [
-                    'src/js/main.js',
-                    'src/js/plugins/*.js'
+                    'src/js/plugins/*.js',
+                    'src/js/main.js'
                 ],
                 dest: 'foo/js/main.js',
             },

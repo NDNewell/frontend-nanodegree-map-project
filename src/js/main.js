@@ -479,12 +479,18 @@ function AppViewModel () {
         // Add location to local array
         userFavorites.push(newFav);
 
+        console.log(isLoggedIn);
+
         // Update locations
         if(isLoggedIn) {
+
+            console.log('!!! user is logged in !!!');
 
             // Update Firebase if logged in
             users.child(allData.getAuth().uid).update({"favorites":userFavorites}, fireBaseWriteError);
         } else {
+
+            console.log('!!! user is NOT logged in !!!');
 
             self.updateFavsOnFrames();
             self.updateFavMarkers(userFavorites);
@@ -2254,6 +2260,8 @@ function AppViewModel () {
         }, fireBaseReadError);
     };
 
+    var isLoggedIn = false;
+
     self.userLogin = function() {
 
         /* If the visiter is a new user, get details and write data to Firebase */
@@ -2277,9 +2285,6 @@ function AppViewModel () {
         });
     };
 
-    // Set variable for determining if a user is new or not
-    var isLoggedIn;
-
     // Create a callback which logs the current auth state
     self.checkAuthentication = function (authData) {
 
@@ -2292,12 +2297,12 @@ function AppViewModel () {
 
                 console.log("user " + authData.uid + " is logged in with " + authData.provider);
 
-                isLoggedIn = true;
-
                 self.getFavorites(authData);
 
                 // Display which user is logged in the console every minute
                 var displayUser = setInterval(self.showUser, 60000);
+
+                isLoggedIn = true;
 
             // If user is logged out notify via console and set new user to
             // true
@@ -2313,7 +2318,7 @@ function AppViewModel () {
 
             console.log('Firebase log in disabled because local storage unavailable');
 
-            var isLoggedIn = false;
+            isLoggedIn = false;
 
             self.showLocationFrames();
 

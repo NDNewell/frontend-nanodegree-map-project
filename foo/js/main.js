@@ -3115,11 +3115,7 @@ function AppViewModel () {
         // cache user data
         var authData = allData.getAuth();
 
-        // get the user's name saved in the Firebase database and log in console
-        users.child(authData.uid).child("name").on("value", function(snapshot) {
-            var name = snapshot.val();
-            console.log(name + " is currently logged in");
-        }, fireBaseReadError);
+        console.log(authData.uid + " is currently logged in");
     };
 
     var isLoggedIn = false;
@@ -3135,8 +3131,7 @@ function AppViewModel () {
 
                 // Save the user's favorites and name in the database
                 allData.child("users").child(authData.uid).set({
-                  favorites: [],
-                  name: prompt("Please enter your name")
+                  favorites: []
                 });
 
                 isLoggedIn = true;

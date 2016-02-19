@@ -3703,8 +3703,8 @@ function AppViewModel () {
             // Add Bootstrap's 'fluid' class setting to the row
             $locationGrid.removeClass("row").addClass("row-fluid");
 
-            // Reset location frame's elements
-            self.adjustFrameStyle();
+            // Reset location frame's elements if locations have loaded
+            self.onLocationsArrayLoad(self.adjustFrameStyle);
 
             // Adjust the map height
             self.adjustMapSize();
@@ -4263,6 +4263,12 @@ function AppViewModel () {
 
     // When the map close symbol is clicked, hide or show the map
     $mapSymbol.on('click', function(e) {
+
+        // remove page loader if it is visible
+        if($pageLoader.is(":visible")) {
+            console.log('!!! remove page loader !!!');
+            $pageLoader.remove();
+        };
 
         // Cache refs to DOM
         var $topOfWindow = $window.scrollTop(),

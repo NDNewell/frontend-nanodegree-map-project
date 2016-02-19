@@ -1069,7 +1069,7 @@ function AppViewModel () {
         $surfInfoContainer = $('.surf-info-container');
 
     /* Cache Firebase database references to all, location, and user data */
-    var allData = new Firebase("https://dazzling-torch-4012.firebaseio.com"),
+     allData = new Firebase("https://dazzling-torch-4012.firebaseio.com"),
         locationData = new Firebase("https://dazzling-torch-4012.firebaseio.com/locationData"),
         users = new Firebase('https://dazzling-torch-4012.firebaseio.com/users');
 

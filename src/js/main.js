@@ -142,7 +142,7 @@ function initMap() {
     // Set the custom map to display
     map.setMapTypeId('custom_style');
 
-    // Save refs to marker imgs
+    // Save global refs to marker imgs
     markerIcon = {
         small : {
             url: spriteSheet,
@@ -206,12 +206,12 @@ function AppViewModel () {
         $clearFavsBtn = $('.clear-favorites-button'),
         $surfInfoContainer = $('.surf-info-container');
 
-    /* Cache Firebase database references to all, location, and user data */
-     allData = new Firebase("https://dazzling-torch-4012.firebaseio.com"),
+    // Cache Firebase database references to all, location, and user data
+    var allData = new Firebase("https://dazzling-torch-4012.firebaseio.com"),
         locationData = new Firebase("https://dazzling-torch-4012.firebaseio.com/locationData"),
         users = new Firebase('https://dazzling-torch-4012.firebaseio.com/users');
 
-    /* Create write/read error messages to be used as callbacks */
+    // Create write/read error messages to be used as callbacks
     var fireBaseWriteError = function(error) {
         if (error) {
           console.log("data could not be saved." + error);
@@ -275,9 +275,6 @@ function AppViewModel () {
 
           var checkGoogle = setInterval(function() {
 
-              console.log('error: Google maps api NOT loaded');
-              console.log('load Google maps api again');
-
               // Check if Google maps api has loaded
               if(typeof google === 'object' && typeof google.maps === 'object') {
 
@@ -305,8 +302,8 @@ function AppViewModel () {
 
     }, loadError);
 
-    /* This array holds the location objects that have been parsed from
-     Firebase */
+    // This array holds the location objects that have been parsed from
+    // Firebase
     self.locationArray = [];
 
     // Check if the above array has been loaded with locations before executing
@@ -330,16 +327,16 @@ function AppViewModel () {
         };
     };
 
-    /* This obervable array holds filtered location objects from search
-    queries and the initital data entered into the location array. It is
-    automatically updated/rendered in the View */
+    // This obervable array holds filtered location objects from search
+    // queries and the initital data entered into the location array. It is
+    // automatically updated/rendered in the View via Knockout
     self.locationGrid = ko.observableArray("");
 
-    /* Create an array that holds keywords that pop up in a small menu
-    within the search bar dynamically during searches */
+    // Create an array that holds keywords that pop up in a small menu
+    // within the search bar dynamically during searches
     self.searchKeywords = [];
 
-    /* Parse the location data obtained via the api request from Firebase */
+    // Parse the location data obtained via the api request from Firebase
     self.parseLocationData = function (data) {
 
         console.log('parse location data');
@@ -370,9 +367,8 @@ function AppViewModel () {
         });
     };
 
-    /* Create an empty local array (globally accessible for use with the
-      Google API) to hold the user's favorites collected from firebase's
-      database */
+    /* Create an empty local array to hold the user's favorites collected from
+    firebase's database */
     var userFavorites = [];
 
     // Set initial loading of location frames to true
@@ -404,21 +400,11 @@ function AppViewModel () {
                     // Cache an empty array to replace 'null'
                     var favorites = [];
 
-                    // Show favs on loc frames and markers
                     updateFavs();
+                    loadFrames();
 
-                    // If loading favorites during initial page load, do not
-                    // show the frames and load their hover effects via pre-
-                    // loading their images.
-                    // If it's not the initial page load, the frames and imgs
-                    // should've already loaded, so do nothing (initial load =
-                    // false)
-                    if(initLoad) {
-
-                        // Load frames after locations array has been loaded
-                        self.onLocationsArrayLoad(loadFrames);
-                    };
-
+                // If the user does have favorites saved in Firebase
+                // load them
                 } else {
 
                     /* Push each favorite found in the Firebase array into the
@@ -427,22 +413,12 @@ function AppViewModel () {
                         userFavorites.push(obj);
                     });
 
-                    // Show favs on loc frames and markers
                     updateFavs();
+                    loadFrames();
 
-                    // If loading favorites during initial page load, do not
-                    // show the frames and load their hover effects via pre-
-                    // loading their images.
-                    // If it's not the initial page load, the frames and imgs
-                    // should've already loaded, so do nothing (initial load =
-                    // false)
-                    if(initLoad) {
-
-                        // Load frames after locations array has been loaded
-                        self.onLocationsArrayLoad(loadFrames);
-                    };
                 };
 
+                // Load location frames
                 function updateFavs () {
 
                     // Update DOM elements (location frames)
@@ -458,17 +434,20 @@ function AppViewModel () {
                 // Load location frames
                 function loadFrames () {
 
-                    // remove page loader
-                    $pageLoader.remove();
+                    // If it's the initial page load, show the location frames
+                    // If it's not the initial page load, the frames should've // already loaded, so do nothing (initial load = false)
+                    if(initLoad) {
 
-                    // Set intial favs loading to false
-                    initLoad = false;
+                        // Set intial favs loading to false
+                        initLoad = false;
 
-                    // Show the location frames
-                    self.showLocationFrames(favorites);
+                        // Show frames after locations array has been loaded
+                        self.onLocationsArrayLoad(showFrames);
 
-                    // Enable rollover effects for location frames
-                    self.addHoverEffects();
+                        function showFrames() {
+                            self.showLocationFrames(favorites);
+                        };
+                    };
                 };
 
             }, fireBaseReadError);
@@ -481,8 +460,6 @@ function AppViewModel () {
 
         // Add location to local array
         userFavorites.push(newFav);
-
-        console.log(isLoggedIn);
 
         // Update locations
         if(isLoggedIn) {
@@ -1177,10 +1154,15 @@ function AppViewModel () {
     // location frames
     self.showLocationFrames = function(favorites) {
 
+        // remove page loader if it is visible
+        if($pageLoader.is(":visible")) {
+            $pageLoader.remove();
+        };
+
         // Save a ref to all location frames
         var $allLocationFrames = $('.location-frame');
 
-        // If favorites is undefined, show locations
+        // If favorites isn't undefined, show locations
         if(typeof favorites !== 'undefined') {
 
             if(favorites.length === $('.is-a-favorite').length) {
@@ -1218,6 +1200,8 @@ function AppViewModel () {
             console.log("show locations");
 
             $allLocationFrames.show();
+
+            self.addHoverEffects();
         };
     };
 
@@ -2314,9 +2298,7 @@ function AppViewModel () {
 
             isLoggedIn = false;
 
-            self.showLocationFrames();
-
-            self.onLocationsArrayLoad(self.addHoverEffects);
+            self.onLocationsArrayLoad(self.showLocationFrames);
         };
     };
 
@@ -3117,7 +3099,7 @@ function AppViewModel () {
     self.toggleSearch = function () {
 
         // Make the search container visible or hidden
-        $searchContainer.slideToggle(500);
+        $searchContainer.slideToggle(200);
 
         // Delay focusing on the search field until it has fully expanded
         setTimeout(function() {
@@ -3151,7 +3133,7 @@ function AppViewModel () {
                 $searchSymbol.addClass("search-default");
             };
 
-        }, 600);
+        }, 300);
     };
 
     /* When the search symbol is clicked, the search field is displayed with
@@ -3165,7 +3147,7 @@ function AppViewModel () {
         if($('.favorite-filter-selected').length) {
 
             // Hide the filters container
-            $filtersContainer.slideUp(500);
+            $filtersContainer.slideUp(200);
 
             console.log('hide filters container and favorites');
 
@@ -3289,9 +3271,9 @@ function AppViewModel () {
                 // If the map is visible, fade out the filters container
                 // If it isn't visible, slide the filters container up
                 if($('.map-container-map').length) {
-                    $filtersContainer.fadeOut(500);
+                    $filtersContainer.fadeOut(200);
                 } else {
-                    $filtersContainer.slideUp(500);
+                    $filtersContainer.slideUp(200);
                 };
 
                 // Add & remove relevant classes
@@ -3339,7 +3321,7 @@ function AppViewModel () {
                         // Adjust the layout
                         self.manageLayout();
 
-                    }, 600);
+                    }, 300);
 
                 } else {
 
@@ -3354,9 +3336,9 @@ function AppViewModel () {
                 // If the map is visible, fade in the filters container
                 // If it isn't visible, slide the filters container down
                 if($map.is(":visible")) {
-                    $filtersContainer.fadeIn(500);
+                    $filtersContainer.fadeIn(200);
                 } else {
-                    $filtersContainer.slideDown(500);
+                    $filtersContainer.slideDown(200);
                 };
 
             // If the user has no favorites, simply return the function
@@ -3382,9 +3364,9 @@ function AppViewModel () {
         // If the map is visible, fade only the button out
         // If it isn't visible, slide the filters container up
         if($('.map-container-map').length) {
-            $filtersContainer.fadeOut(500);
+            $filtersContainer.fadeOut(200);
         } else {
-            $filtersContainer.slideUp(500);
+            $filtersContainer.slideUp(200);
         };
 
         // Add/remove the classes
@@ -3404,7 +3386,6 @@ function AppViewModel () {
 
         // remove page loader if it is visible
         if($pageLoader.is(":visible")) {
-            console.log('!!! remove page loader !!!');
             $pageLoader.remove();
         };
 

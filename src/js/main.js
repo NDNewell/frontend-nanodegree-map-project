@@ -489,13 +489,16 @@ function AppViewModel () {
             };
         });
 
-        // Update the locations from the temporary array above
+        // Update the locations from the temporary array above if logged in
         if(isLoggedIn) {
 
-            // Update Firebase if logged in
+            // Update Firebase
             // When Firebase updates, the local favorites array will be
             // replaced
             users.child(allData.getAuth().uid).update({"favorites":updatedFavs}, fireBaseWriteError);
+
+        // If not logged in replace userFavorites with the updateFavs array
+        // and update favorites on frames and markers
         } else {
             userFavorites = updatedFavs;
             self.updateFavsOnFrames();
@@ -570,8 +573,9 @@ function AppViewModel () {
 
                 inlineSVGSprites(data);
 
-            // If it doesn't, get the external svg sprite sheet from the server
-            } else {
+            // If it doesn't or it is null, get the external svg sprite sheet
+            // from the server
+            } else if (svgVersionCached !== svgVersion || svgVersionCached === null) {
 
                 getSVGData();
             };

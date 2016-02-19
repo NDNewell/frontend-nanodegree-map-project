@@ -1320,6 +1320,7 @@ function AppViewModel () {
                 // Load location frames
                 function loadFrames () {
 
+                    // remove page loader
                     $pageLoader.remove();
 
                     // Set intial favs loading to false
@@ -3535,9 +3536,10 @@ function AppViewModel () {
         return cl;
     };
 
+    // Show canvas loader at initial page load
     $('header').append('<div id="pageLoader"></div>');
 
-    // Save global ref to progress indicator
+    // Save global ref to loader
     $pageLoader = $('#pageLoader');
 
     // Load indicator

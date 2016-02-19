@@ -1320,6 +1320,8 @@ function AppViewModel () {
                 // Load location frames
                 function loadFrames () {
 
+                    $pageLoader.remove();
+
                     // Set intial favs loading to false
                     initLoad = false;
 
@@ -1346,13 +1348,9 @@ function AppViewModel () {
         // Update locations
         if(isLoggedIn) {
 
-            console.log('!!! user is logged in !!!');
-
             // Update Firebase if logged in
             users.child(allData.getAuth().uid).update({"favorites":userFavorites}, fireBaseWriteError);
         } else {
-
-            console.log('!!! user is NOT logged in !!!');
 
             self.updateFavsOnFrames();
             self.updateFavMarkers(userFavorites);
@@ -3523,19 +3521,27 @@ function AppViewModel () {
         };
     });
 
-    self.loadProgressIndicator = function () {
+    self.loadconditionsLoader = function (id, shape, diameter, density, range, FPS) {
 
-        var cl = new CanvasLoader('progressBarContainer');
+        var cl = new CanvasLoader(id);
         cl.setColor('#35ABBB'); // default is '#000000'
-        cl.setShape('spiral'); // default is 'oval'
-        cl.setDiameter(72); // default is 40
-        cl.setDensity(33); // default is 40
-        cl.setRange(1); // default is 1.3
-        cl.setFPS(23); // default is 24
+        cl.setShape(shape); // default is 'oval'
+        cl.setDiameter(diameter); // default is 40
+        cl.setDensity(density); // default is 40
+        cl.setRange(range); // default is 1.3
+        cl.setFPS(FPS); // default is 24
         cl.show(); // Hidden by default
 
         return cl;
     };
+
+    $('header').append('<div id="pageLoader"></div>');
+
+    // Save global ref to progress indicator
+    $pageLoader = $('#pageLoader');
+
+    // Load indicator
+    var cl = self.loadconditionsLoader('pageLoader', 'square', 117, 72, 1.1, 60);
 
     /**
     * Converts :hover CSS to :active CSS on mobile devices.
@@ -4687,16 +4693,16 @@ function AppViewModel () {
                         // Load the progress indicator
                         /* Check if indicator was already loaded, if not create
                         its container */
-                        if(!$('#progressBarContainer').length) {
+                        if(!$('#conditionsLoader').length) {
                             // Insert container to hold indicator
-                            $surfGuideHeader.append('<div id="progressBarContainer"></div>');
+                            $surfGuideHeader.append('<div id="conditionsLoader"></div>');
                         };
 
                         // Save global ref to progress indicator
-                        $progressIndicator = $('#progressBarContainer');
+                        $conditionsLoader = $('#conditionsLoader');
 
                         // Load indicator
-                        var cl = self.loadProgressIndicator();
+                        var cl = self.loadconditionsLoader('conditionsLoader', 'spiral', 72, 33, 1, 23);
 
                         // Pass info to API function and initiate request
                         getMagicSeaweed(obj.spotID, obj.breakName);
@@ -4750,7 +4756,7 @@ function AppViewModel () {
             if(spotID === 'none') {
 
                 // Disable progress indicator by removing it
-                $progressIndicator.remove();
+                $conditionsLoader.remove();
                 showError();
 
             } else {
@@ -4760,7 +4766,7 @@ function AppViewModel () {
                 var msRequestTimeout = setTimeout (function() {
 
                     // Disable progress indicator by removing it
-                    $progressIndicator.remove();
+                    $conditionsLoader.remove();
                     showError();
 
                 }, 8000);
@@ -4807,7 +4813,7 @@ function AppViewModel () {
                         clearTimeout(msRequestTimeout);
 
                         // Disable progress indicator by removing it
-                        $progressIndicator.remove();
+                        $conditionsLoader.remove();
 
                     }
                 });

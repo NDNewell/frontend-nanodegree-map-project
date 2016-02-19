@@ -57,6 +57,11 @@ body, html {
     margin-bottom: 0px;
 }
 
+#pageLoader {
+    text-align: center;
+    margin-top: 20%;
+}
+
 .data-load-error-container {
     padding-top: 30%;
     text-align: center;

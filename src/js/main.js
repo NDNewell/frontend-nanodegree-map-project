@@ -569,8 +569,10 @@ function AppViewModel () {
 
                 console.log('get external svg sprite sheet from local storage');
 
+                // Save locally save external svg sprite sheet
                 var data = localStorage.inlineSVGdata;
 
+                // Load sprites into the DOM
                 inlineSVGSprites(data);
 
             // If it doesn't or it is null, get the external svg sprite sheet
@@ -581,7 +583,7 @@ function AppViewModel () {
             };
 
         // If local storage isn't enabled, load the external svg sprite sheet
-        // into the DOM without saving it locally
+        // into the DOM from the server without saving it locally
         } else {
 
             getSVGData();
@@ -607,6 +609,7 @@ function AppViewModel () {
 
                     console.log('get external svg sprite sheet from server');
 
+                    // Load sprites into the DOM
                     inlineSVGSprites(data);
 
                     // If local storage is available save the external sprite
@@ -649,9 +652,9 @@ function AppViewModel () {
 
     self.generateMarkers = function(locationData) {
 
-        /* Loop through locationData and filter out the coordinates
-        & break name for each break. Save the break's coordinates and name
-        in their own variables for easy referencing */
+        // Loop through locationData and filter out the coordinates
+        // & break name for each break. Save the break's coordinates and name
+        // in their own variables for easy referencing
         var locationDataLength = locationData.length;
 
         for(var i = locationDataLength; i--;) {
@@ -667,8 +670,8 @@ function AppViewModel () {
             // Create a variable to hold the name of the break location
             var breakLocation = obj.location;
 
-            /* Create a marker and set its position. Pass the variables
-            created above as arguments*/
+            // Create a marker and set its position. Pass the variables
+            // created above as arguments
             self.addMarker(breakName, breakCoordinates, breakLocation, obj);
         };
 
@@ -685,19 +688,17 @@ function AppViewModel () {
 
         var marker = new google.maps.Marker({
 
-            // Set position using the newly created variable
             position: breakCoordinates,
             map: map,
             icon: markerIcon.small,
 
-            /* Set the title for the break marker as the name of the
-            wave/location of the break. This way it can be searched/filtered
-            in the ViewModel*/
+            // Set the title for the break marker as the name of the
+            // wave/location of the break. This way it can be more easily
+            // searched for
             title: breakName + ' ' + '(' + breakLocation + ')'
         });
 
-        // Add a text box that displays the break name and location when
-        // clicked
+        // Add marker event listeners
         self.addMarkerListeners(marker, obj);
     };
 
@@ -705,30 +706,27 @@ function AppViewModel () {
 
         google.maps.event.addListener(marker, 'dblclick', (function(e) {
 
-            /* Create an inner function what will at the time of iteration save
-            a double-click event to the relevant marker. When the user double-
-            clicks, the map will zoom in on the marker*/
+            // Create an inner function what will at the time of iteration save
+            // a double-click event to the relevant marker. When the user
+            // double- clicks, the map will zoom in on it
             return function() {
 
                 // Center the map
                 map.setCenter(marker.getPosition());
 
-                /* Set zoom if marker is clicked and not already zoomed in at
-                14 or above*/
+                // Set zoom if marker is clicked and not already zoomed in at
+                // 14 or above
                 if(map.getZoom() < 14) {
                     map.setZoom(14);
                 };
             };
-
-        /* Pass the relevant marker for the current iteration as an argument
-        into the function*/
         })(marker));
 
         google.maps.event.addListener(marker, 'click', (function(e) {
 
-            /* Create an inner function what will at the time of iteration save
-            the individual break's name (breakName) within the infoWindow and
-            attach it to the relevant marker */
+            // Create an inner function what will at the time of iteration save
+            // the individual break's name (breakName) within the infoWindow
+            // and attach it to the relevant marker
             return function() {
 
                 // Find last selected marker and make pin small again
@@ -741,82 +739,66 @@ function AppViewModel () {
                 // Bounce marker upon clicking
                 self.animateMarker(marker);
 
-                /* Show surf guide (only if surf guide is already open) when
-                the marker is clicked */
+                // Show surf guide (only if surf guide is already open) when
+                // the marker is clicked
                 if (guideView) {
-
                     self.renderSurfGuide(obj);
-
                 } else {
 
-                    /* If the surf guide isn't open, hide all location frames
-                    except the one related to the marker */
+                    // If the surf guide isn't open, hide all location frames
+                    // except the one related to the marker
                     self.focusOnFrame(marker);
                 };
             };
-
-        /* Pass the relevant marker and break name (breakName) for the current
-        iteration as an argument into the function*/
         })(marker, obj));
 
         // Location frame pulsates when it's corresponding marker is hovered
         // over
         google.maps.event.addListener(marker, 'mouseover', (function(e) {
 
-            /* Create an inner function what will at the time of iteration save
-            the breakName and any behavior to the current marker */
             return function() {
 
                 // Remove the marker's title in order to disable the native
-                // tooltip from showing
+                // tooltip from showing (it's ugly!)
                 self.removeTitle();
 
+                // Save the current number of visible location frames
                 var $numFramesVisible = $('.location-frame:visible').length;
 
                 // Pulsate the marker's related location frame if guide isn't
                 // open
-                if (!guideView) {
+                if (!guideView && !mobileView) {
 
                     // Pulsate the associated location frame
                     self.pulseFrame(marker);
 
-                    // If more than one location frame is in view and
-                    // not in mobile view, execute code
-                    if($numFramesVisible !== 1 && window.innerWidth >= 768) {
-
-                        // Scroll to specific location frame
+                    // If more than one location frame is in view scroll to the
+                    // location frame
+                    if($numFramesVisible !== 1) {
                         self.scrollToFrame(marker);
                     };
                 };
             };
-
-        /* Pass the relevant marker and break name (breakName) for the current
-        iteration as an argument into the function*/
         })());
 
         google.maps.event.addListener(marker, 'mouseout', (function(e) {
 
-            /* Create an inner function what will at the time of iteration save
-            the breakName and any behavior to the current marker */
+            // Create an inner function that will at the time of iteration save
+            // the behavior to the current marker
             return function() {
 
-                // Reverse pulstate the associated location frame if the guide
-                // isn't open
-                if (!guideView) {
-
+                // Reverse pulsate the associated location frame if not in
+                // guide or mobile view
+                if (!guideView && !mobileView) {
                     self.pulseFrame(marker);
-
                 };
             };
-
-        /* Pass the relevant marker and break name (breakName) for the current
-        iteration as an argument into the function*/
         })());
 
-        // Add each marker to the markers array
+        // Add marker to the markers array
         markers.push(marker);
 
-        // Add each marker's title to the marker titles array
+        // Add marker's title to the marker titles array
         markerTitles.push(marker.title);
     };
 

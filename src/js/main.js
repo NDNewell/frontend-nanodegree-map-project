@@ -2507,7 +2507,7 @@ function AppViewModel () {
             // corner of the tooltip.
             // Also set a buffer of 20px from the edge of the screen
             var viewportWidth = window.innerWidth,
-                viewportWidthRange = viewportWidth - 20,
+                viewportWidthBuffer = viewportWidth - 20,
                 $tooltipX = $tooltip.offset().left,
                 $tooltipWidth = $tooltip.outerWidth(),
                 $tooltipRightCorner = $tooltipX + $tooltipWidth;
@@ -2519,7 +2519,7 @@ function AppViewModel () {
             // Without a set width, the tooltip extends only as far as the edge
             // of the screen, which can result in compressed tooltips.
             // If this is the case, the tooltip is adjusted to a wider width.
-            if($tooltipRightCorner >= viewportWidthRange) {
+            if($tooltipRightCorner >= viewportWidthBuffer) {
 
                 // Adjust tooltip width
                 $tooltip.outerWidth(220);
@@ -2547,7 +2547,7 @@ function AppViewModel () {
                 $tooltip.offset({ top: y, left: newX });
             };
 
-            // Set the time for displaying the tooltip
+            // Set a global ref to the time for displaying the tooltip
             // When the time runs out, remove the tooltip
             toolTipTimer = setTimeout(function() {
 

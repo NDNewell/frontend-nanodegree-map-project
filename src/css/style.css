@@ -93,7 +93,7 @@ body, html {
     border-color: #adadad;
 }
 
-.search-container {
+.search-container-default {
     position: relative;
     display: none;
     padding-top: 20px;
@@ -838,7 +838,7 @@ body, html {
         font-family: Arial, Verdana;
     }
 
-    .search-container {
+    .search-container-default {
         padding-top: 0px;
         padding-bottom: 0px;
         border-color: #E8E8E8;
@@ -1119,6 +1119,14 @@ body, html {
 }
 
 @media (min-width: 768px) {
+
+    .search-container-map {
+        position: absolute;
+        z-index: 999;
+        display: none;
+        padding-top: 20px;
+        padding-bottom: 12px;
+    }
 
     .search-form-map {
         font-size: 1.35em;

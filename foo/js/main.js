@@ -2231,23 +2231,25 @@ function AppViewModel () {
                   stopScrolling();
               };
           };
-
         };
 
         // Stop auto scrolling
         function stopScrolling () {
 
             // Since each iteration towards the new position increments by
-            // 200 each time, it will tend to over shoot or fall shy of the
-            // target, which leaves the location frame off center. To avoid
-            // this, set the scrollLeft position to the target position at the
-            // end of scrolling. It's a negligible distance and unlikely to be // noticed by the user.
+            // 200 each time, it will tend to over shoot or fall shy (actually
+            // due to the positioning of the container) of the target, which
+            // leaves the location frame off center. To avoid this, set the
+            // scrollLeft position to the target position at the end of
+            // scrolling.It's a negligible distance and unlikely to be noticed
+            // by the user.
             $locationsContainer.scrollLeft(newPosition);
             console.log('stop auto scroll');
             console.log('scroll position at: ' + $locationsContainer.scrollLeft());
         };
     };
 
+    // Animates the location frame of a hovered map marker
     self.pulseFrame = function (marker) {
 
         // Cache DOM references
@@ -2257,9 +2259,8 @@ function AppViewModel () {
             // Cache the title of the marker not including the location
             markerName = getMarkerName(marker);
 
-        // If more than one location frame is in view and not in mobile view,
-        // execute code
-        if($numFramesVisible !== 1 && window.innerWidth >= 768) {
+        // If more than one location frame is in view pulsate the frame
+        if($numFramesVisible > 1) {
 
             // Loop through all of the location frames
             $allLocationFrames.each(function() {
@@ -2268,34 +2269,26 @@ function AppViewModel () {
                 var $locationFrame = $(this),
                     $breakName = $locationFrame.children(":nth-child(2)").text();
 
-                /* If a specific location frame's text matches the currently hovered/unhovered marker, pulsate or reverse pulsate it */
+                // If a specific location frame's text matches the currently
+                // hovered/unhovered marker, pulsate or reverse pulsate it
                 if($breakName === markerName) {
 
-                    /* If hovering away from the marker, reverse pulsate its
-                    location frame */
+                    // If hovering away from the marker, reverse pulsate its
+                    // location frame
                     if($('.pulse-frame').length) {
 
-                        console.log("make " + markerName + "'s location frame small");
-
-                        // Add/remove necessary classes to animate
-                        $locationFrame.removeClass("pulse-frame").addClass("pulse-frame-reverse");
-
-                        // Remove the reverse pulse effect
-                        removePulse($locationFrame);
+                        makeFrameSmall($locationFrame);
 
                     // If hovering over the marker, pulsate its location frame
                     } else {
 
-                        console.log("make " + markerName + "'s location frame big");
-
-                        // Add necessary class to animate
-                        $locationFrame.removeClass("pulse-frame-reverse").addClass("pulse-frame");
+                        makeFrameBig($locationFrame);
                     };
                 };
             });
 
-        /* If only one location is in view, do nothing unless hovering away from
-        its marker */
+        // If only one location is in view, do nothing unless hovering away
+        // from its marker i.e. the frame needs to be made small again.
         } else if ($numFramesVisible === 1 && $('.pulse-frame').length) {
 
             // Cache DOM refs to the visible location frame
@@ -2312,11 +2305,32 @@ function AppViewModel () {
             removePulse($locationFrame);
         };
 
+        function makeFrameBig ($locationFrame) {
+
+            console.log("make " + markerName + "'s location frame big");
+
+            // Add necessary class to animate
+            $locationFrame.removeClass("pulse-frame-reverse").addClass("pulse-frame");
+        };
+
+        function makeFrameSmall ($locationFrame) {
+
+            console.log("make " + markerName + "'s location frame small");
+
+            // Add/remove necessary classes to animate
+            $locationFrame.removeClass("pulse-frame").addClass("pulse-frame-reverse");
+
+            // Remove the reverse pulse effect after its animation
+            // finishes
+            removePulse($locationFrame);
+        };
+
         // Remove the reverse pulse effect
         function removePulse ($locationFrame) {
 
-            /* Set a time to rm the effect just after the reverse pulse effect
-             finishes its animation on the previous marker's location frame */
+            // Set a time to remove the effect just after the reverse pulse
+            // effect finishes its animation on the previous marker's location
+            // frame
             var timer = setTimeout (function() {
                 $locationFrame.removeClass("pulse-frame-reverse");
             }, 400);

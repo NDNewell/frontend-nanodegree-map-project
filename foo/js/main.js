@@ -2350,6 +2350,7 @@ function AppViewModel () {
         $allLocationFrames.addClass("location-frame-map").removeClass("location-frame-default");
 
         // Loop through all of the location frames
+        // Make sure display for each location frame is inline block
         $allLocationFrames.each(function() {
 
             // Cache the current location frame's reference and text
@@ -2358,8 +2359,6 @@ function AppViewModel () {
             // If the location frame is visible, format it for map view
             // If not, keep it hidden
             if($locationFrame.is(":visible")) {
-
-                // Make sure display is inline
                 $locationFrame.css("display", "inline-block");
             };
         });
@@ -2373,12 +2372,13 @@ function AppViewModel () {
         // Change location name style to map view style
         $locationName.removeClass("location-name-default").addClass("location-name-map");
 
-        /* Change 'favorite' symbol style to map view style *must change
-        via attr in order to change the class of an inline svg */
+        // Change 'favorite' symbol style to map view style *must change
+        // via attr in order to change the class of an inline svg
         $favorite.attr("class", "favorite favorite-map");
     };
 
-    // Show all of the relevant location frames
+    // Show all of the relevant location frames after resetting the map via
+    // the reset button when no markers are visible
     self.resetFrames = function () {
 
         console.log('reset location frames');
@@ -2402,6 +2402,7 @@ function AppViewModel () {
         };
     };
 
+    // Show only the frame of the map marker that was clicked on
     self.focusOnFrame = function (marker) {
 
         // Cache the title of the marker not including the location
@@ -2416,11 +2417,11 @@ function AppViewModel () {
         // Loop through all of the location frames
         $allLocationFrames.each(function() {
 
-            // Cache the current location frame's reference and text
+            // Cache the current location frame's reference and break name
             var $locationFrame = $(this),
                 $breakName = $locationFrame.children(":nth-child(2)").text();
 
-            // If a specific location frame's text matches the currenlty
+            // If a specific location frame's break name matches the currenlty
             // selected break, show it
             if($breakName === markerName) {
 
@@ -2431,6 +2432,7 @@ function AppViewModel () {
         });
     };
 
+    // Filter the location frames relevant to the map markers visible
     self.filterFrames = function (marker) {
 
         // Cache the break name of the marker not including the location
@@ -2441,7 +2443,7 @@ function AppViewModel () {
         // query
         if ($searchContainer.is(":visible")) {
 
-            // Cache the current search query
+            // Cache the current search query and marker title
             var search = self.formatText(self.Query()),
                 markerTitle = self.formatText(marker.title);
 
@@ -2466,17 +2468,15 @@ function AppViewModel () {
             };
 
         // If the search container isn't visible and the favorites
-        // filter isn't selected, display only the location
-        // frame's of the markers that fall within the map's
-        // current boundaries
+        // filter isn't selected, display all frames
         } else {
 
             // Update the visible frames
             updateFrames(markerName);
         };
 
-        // Remove or display the location frames of those markers found
-        // within the map's current boundaries
+        // Display the location frames of those markers found
+        // within the map's current boundaries and remove those that do not
         function updateFrames (markerName) {
 
             // Cache DOM reference to all location frames
@@ -2485,11 +2485,12 @@ function AppViewModel () {
             // Loop through all of the location frames
             $allLocationFrames.each(function() {
 
-                // Cache the current location frame's reference and text
+                // Cache the current location frame's reference and break name
                 var $locationFrame = $(this),
                     $breakName = $locationFrame.children(":nth-child(2)").text();
 
-                /* If a specific location frame's text matches the currenlty selected break, show it*/
+                // If a specific location frame's text matches the currenlty
+                // selected break, show it
                 if($breakName === markerName) {
 
                     $locationFrame.show();
@@ -2501,8 +2502,11 @@ function AppViewModel () {
     // Update visible frames depending on markers visible in the view port
     self.manageFrames = function () {
 
-        // Cache the length of the markers array
-        var markersLength = markers.length;
+        // Cache the length of the markers array and refs to selected sprite
+        // origins
+        var markersLength = markers.length,
+            markerIconSelectedOrigin = markerIcon.selected.origin,
+            markerIconSelectedFavOrigin = markerIcon.selectedFav.origin;
 
         // Check if any markers are selected, if so do not adjust visible
         // frames. Otherwise, the selected marker's frame will not be the
@@ -2510,9 +2514,11 @@ function AppViewModel () {
         // adjusted
         for(var i = markersLength; i--;) {
 
+            var markerIconOrigin = markers[i].icon.origin;
+
             // If any of the marker's images matches a 'selected' image
             // End the function
-            if(markers[i].icon.origin === markerIcon.selected.origin || markers[i].icon.origin === markerIcon.selectedFav.origin) {
+            if(markerIconOrigin === markerIconSelectedOrigin || markerIconOrigin === markerIconSelectedFavOrigin) {
                 return;
             };
         };
@@ -2542,6 +2548,7 @@ function AppViewModel () {
         };
     };
 
+    // Add event listeners for when the map is idle and when a user clicks
     self.addMapListeners = function () {
 
         // Add map event listener that detects when the map is idle
@@ -2551,8 +2558,8 @@ function AppViewModel () {
         // view port's map bounds
         google.maps.event.addListener(map, 'idle', function() {
 
-            // Only execute the following code if the map is visible and
-            // managers aren't disabled (window isn't being resized)
+            // Only execute the following code if the map is visible, the surf // guide isn't open, and the managers aren't disabled (window
+            // isn't being resized)
             if($map.is(":visible") && !resizeInProgress && !guideView) {
 
                 self.manageFrames();
@@ -2585,11 +2592,11 @@ function AppViewModel () {
         });
     };
 
-    // Custom zoom listener that is only activated when the zoom controls are
-    // used as opposed to 'zoom_changed' provided by Google which is activated
-    // any time the zoom changes whether or not the controls were used.
-    // The custom listener avoids probs posed by Google's i.e. resizing the
-    // window doesn't activate the custom listener
+    // Custom zoom listener that is ONLY ACTIVATED WHEN THE ZOOM CONTROLS ARE
+    // USED as opposed to 'zoom_changed' provided by Google which is activated
+    // any time the zoom changes whether or not the controls were used (i.e.
+    // window/map resizing).
+    // The custom listener avoids probs posed by Google's native listener
     self.addMapZoomListener = function () {
 
         // Wait until the zoom controls have loaded
@@ -2615,22 +2622,28 @@ function AppViewModel () {
                 // Attach the zoom listener
                 $zoomControls.on('click', function zoomListener() {
 
-                    // If not in guide view zoom in a marker if selected when
-                    // zoom level is adjusted
+                    // If not in guide view zoom in on a marker if selected
+                    // when zoom level is adjusted.
+                    // This assumes that in guide view, a user may want to pan
+                    // and zoom in on locations around the selected location.
                     if(!guideView) {
 
-                        // Cache the markers array length
-                        var markersLength = markers.length;
+                        // Cache the markers array length and ref to selected
+                        // sprite origins
+                        var markersLength = markers.length,
+                            markerIconSelectedFavOrigin = markerIcon.selectedFav.origin,
+                            markerIconSelectedOrigin = markerIcon.selected.origin;
 
                         // Search for a selected marker
                         for(var i = markersLength; i--;) {
 
-                            // Save a ref to the marker
+                            // Save a ref to the current marker and it's
+                            // sprite origin
                             var marker = markers[i],
                                 markerIconOrigin = marker.icon.origin;
 
                             // Check if a marker is selected
-                            if(markerIconOrigin === markerIcon.selectedFav.origin || markerIconOrigin === markerIcon.selected.origin) {
+                            if(markerIconOrigin === markerIconSelectedFavOrigin || markerIconOrigin === markerIconSelectedOrigin) {
 
                                 // Center the map on the selected marker
                                 self.centerOnMarker(marker);

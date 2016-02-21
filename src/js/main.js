@@ -1172,7 +1172,7 @@ function AppViewModel () {
                 show();
 
             // If the number of favorites is not equal to the number of
-            // locatoin frames with the fav icon filled in, keep checking
+            // location frames with the fav icon filled in, keep checking
             // until the they have the same value
             } else {
 
@@ -1183,7 +1183,6 @@ function AppViewModel () {
                         clearInterval(checkLocFavsLoaded);
 
                         show();
-
                     };
                 }, 250);
             };
@@ -1200,28 +1199,32 @@ function AppViewModel () {
 
             $allLocationFrames.show();
 
+            // Add the hover effects for each location frame
             self.addHoverEffects();
         };
     };
 
-    /* Iterate through the location frame displayed and fill in any locations
-    that match the user's favorites */
+    // Iterate through the location frames and fill in the fav icon of any
+    // whose break name matches the user's favorites
     self.updateFavsOnFrames = function () {
 
         console.log("the user's favorite(s) is/are: " + userFavorites.join(', '));
         console.log("update location frame favorites");
 
+        // Cache available location frame references
         var $allLocationFrames = $('.location-frame');
 
         $allLocationFrames.each(function () {
 
-            // Cache references to location frame, favorite symbol, & break name
+            // Cache references to location frame, favorite symbol, &
+            // break name
             var $locationFrame = $(this),
                 $favoriteWrapper = $locationFrame.children(":nth-child(3)"),
                 $breakName = $locationFrame.children(":nth-child(2)").text();
 
             // Filter locations that match the user's favorites
-            // When a match is found, add a class to style it as 'selected'
+            // When a match is found, add a class to style its fav icon to
+            // appear filled in on the frame
             if(userFavorites.indexOf($breakName) > -1) {
 
                 $favoriteWrapper.removeClass('not-a-favorite').addClass('is-a-favorite');
@@ -1233,14 +1236,14 @@ function AppViewModel () {
                 };
             };
         });
-
     };
 
-    // Open the location frame's relevant surf guide an animate its related
-    // marker
+    // Open the location frame's relevant surf guide and animate its related
+    // marker.
+    // This function is called from the View using Knockout
     self.clickLocationFrame = function(obj) {
 
-        // Disable rollover effects so the correct icon loads in surf guide
+        // Disable rollover effects on clicking the frame
         rollover = false;
 
         // Open the surf guide
@@ -1249,9 +1252,10 @@ function AppViewModel () {
         // Animate the location's marker if the map is visible
         if($mapContainer.is(":visible")) {
 
+            // Get the marker that is relevant to the surf guide location
             var marker = self.getGuideMarker();
 
-            // Animate marker
+            // Animate the marker
             self.animateMarker(marker);
         };
 
@@ -1282,7 +1286,7 @@ function AppViewModel () {
         var spaceLeftNRight = ($locationsCountainerWidth - $frameWidth)/2;
 
         // Get and cache a ref to the position (index) of frame that is being
-        // pulsated
+        // pulsated (the index doesn't include hidden frames)
         var $targetIndex = $pulsatingLocation.siblings(":visible").addBack().index($pulsatingLocation);
 
         // Calculate the amt of space preceding the location being hovered over
@@ -1291,13 +1295,19 @@ function AppViewModel () {
         var spacePreceding = $frameWidth * $targetIndex;
 
         // Subtract the space needed on the left/right of the frame
-        // from the space that preceeds the targeted frame
+        // from the space that precedes the targeted frame
         var newPosition = spacePreceding - spaceLeftNRight;
 
         console.log("auto scroll to " + markerName + "'s location frame");
 
+        console.log('move scroll position from ' + $oldPosition + ' to ' + newPosition);
+
+        // Set the number by which scrolling will increment left/right
+        var scollIncrem = 200;
+
         // Scroll to the new location using the new position
-        // Scroll right if the new scrollLeft position is greater than current pos.
+        // Scroll right if the new scrollLeft position is greater than current
+        // position
         if(newPosition > $oldPosition) {
 
           // Set the beginning scollLeft position on which to iterate
@@ -1309,8 +1319,8 @@ function AppViewModel () {
           // Create a loop that moves the scroll bar from left to right
           function scrollRight () {
 
-              // Increase the scrollLeft position 70px for each 1/1000 of second
-              transitionRight+=200;
+              // Increase the scrollLeft position 200px per loop
+              transitionRight+=scollIncrem;
 
               // If the scrollLeft position is less than the new position
               // move the scrollLeft position incrementally closer to it
@@ -1341,8 +1351,8 @@ function AppViewModel () {
           // Create a loop that moves the scroll bar from right to left
           function scrollLeft () {
 
-              // Increase the scrollLeft pos 70px for each 1/1000 of second
-              transitionLeft-=200;
+              // Increase the scrollLeft 200px per loop
+              transitionLeft-=scollIncrem;
 
               // If the scrollLeft position is greater than the new position
               // move the scrollLeft position incrementally closer to it
@@ -1366,13 +1376,12 @@ function AppViewModel () {
         function stopScrolling () {
 
             // Since each iteration towards the new position increments by
-            // 200 each time, it will never quite reach the goal, which
-            // leaves the location frame off center. To avoid this, set the
-            // scrollLeft position to the new position at the end of scrolling
+            // 200 each time, it will tend to over shoot or fall shy of the
+            // target, which leaves the location frame off center. To avoid
+            // this, set the scrollLeft position to the target position at the
+            // end of scrolling. It's a negligible distance and unlikely to be // noticed by the user.
             $locationsContainer.scrollLeft(newPosition);
-
-            console.log('move scroll position from ' + $oldPosition + ' toward ' + newPosition);
-            console.log('stop scrolling');
+            console.log('stop auto scroll');
             console.log('scroll position at: ' + $locationsContainer.scrollLeft());
         };
     };

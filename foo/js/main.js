@@ -3210,7 +3210,7 @@ function AppViewModel () {
 
         // Save a ref to all elements, and setTimeout variables
         var $elements = $('[title]'),
-            textTimer,
+            toolTipTimer,
             toolTipDelay,
             newEventRef;
 
@@ -3224,48 +3224,47 @@ function AppViewModel () {
             if(!$element.hasClass("tooltip-loaded")) {
 
                 // In order to disable the native tooltip function, the class
-                // of the element must be removed while the mouse if hovered
+                // of the element must be removed while the mouse is hovered
                 // over it.
-                // The title needs to first be saved so that it can be added
-                // later.
+                // The title needs to first be saved so that it can be used
+                // for the tooltip and then re-added.
                 var $titleText = $element.attr('title');
 
                 // Indicate that a tooltip has been added to the element
                 $element.addClass("tooltip-loaded");
 
-                // Add a listener to the element for when it is clicked and
+                // Add a listener to the element for when it is clicked or
                 // hovered over/off of
-                $element.on("click mouseover mouseleave", function(e) {
+                $element.on("click mouseover mouseleave", function(eventRef) {
 
-                    // Save ref to event reference
-                    var eventRef = e;
-
-                    // If a tooltip is already open, cancel the textTimer
-                    // which fades the tooltip out and remove the tooltip
+                    // If a tooltip is already open, cancel the tool tip timer
+                    // (which fades the tooltip out) and remove it.
                     // *This is placed before the mouseout/mouseover case
                     // as sometimes when the cursor moves to another very
                     // close element, the mouseover case is detected before
                     // the cursor moves off of the current element, which
-                    // results in mouseout not being detected until after
+                    // results in mouseout not being detected until after.
                     // Putting this in front of both, catches both types of
                     // events
                     if($('.tooltip-info').length) {
 
                         console.log('hide tooltip');
 
-                        clearInterval(textTimer);
+                        // Cancel the tool tip timer and remove it
+                        clearInterval(toolTipTimer);
                         $('.tooltip-info').remove();
                     };
 
                     // If the toolTipDelay timer is running from a previous
                     // tooltip, cancel it and disable the mousemove listener
+                    // (which positions the tooltip in the same location as the
+                    // cursor).
                     // *As noted above, this in placed in front of both cases
                     // to ensure detected when appropriate
                     clearTimeout(toolTipDelay);
                     $element.off('mousemove');
 
-                    // Determine the type of event and execute the necessary
-                    // code
+                    // Determine the type of event
                     switch (eventRef.type) {
                         case 'mouseover':
 
@@ -3273,20 +3272,24 @@ function AppViewModel () {
                             // tooltips
                             $element.removeAttr('title');
 
-                            // Add another event listener to element that
+                            // Add another event listener to the element that
                             // detects mouse movement.
                             // This updates the mouse's position so that when
                             // the tooltip is rendered, it is placed next to
                             // the cursor
                             $element.on('mousemove', function(e) {
 
-                                // Save a new ref to be passed as an argument
+                                // Save a new global ref to be passed as an
+                                // argument
                                 newEventRef = e;
                             });
 
-                            // Determine time to pass before displaying a
+                            // Determine the time to pass before displaying a
                             // tooltip.
-                            // If it is for a hover element, it is slower
+                            // If it is for a hover element (i.e. a rollover
+                            // icon that is displayed when hovering the cursor
+                            // over the location frame on the  main page), it
+                            // is slower.
                             if($element.hasClass("hover-tooltip-only")) {
 
                                 // Set the time variable for hover elements
@@ -3309,7 +3312,6 @@ function AppViewModel () {
 
                                 // Show the element's tooltip
                                 renderToolTips($titleText, newEventRef, $element);
-
                             }, time);
 
                         break;
@@ -3337,7 +3339,6 @@ function AppViewModel () {
                                 // Show the element's tooltip
                                 renderToolTips($titleText, eventRef, $element);
                             };
-
                         break
                     };
                 });
@@ -3410,7 +3411,7 @@ function AppViewModel () {
 
             // Set the time for displaying the tooltip
             // When the time runs out, remove the tooltip
-            textTimer = setTimeout(function() {
+            toolTipTimer = setTimeout(function() {
 
                 // Remove the tooltip
                 $tooltip.fadeOut(500, function () {
@@ -3429,7 +3430,7 @@ function AppViewModel () {
 
                 // If mouse moves, clear the other timer that closes the
                 // the tooltip
-                clearTimeout(textTimer);
+                clearTimeout(toolTipTimer);
 
                 // Determine time to pass before closing the tooltip
                 // If it is for a hover element, it is faster

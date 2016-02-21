@@ -2257,6 +2257,7 @@ function AppViewModel () {
         });
     };
 
+    // Display the logged in user in console
     self.showUser = function () {
 
         // cache user data
@@ -2265,11 +2266,13 @@ function AppViewModel () {
         console.log(authData.uid + " is currently logged in");
     };
 
+    // Set initial log in status as false
     var isLoggedIn = false;
 
+    // Log new users into Firebase
     self.userLogin = function() {
 
-        /* If the visiter is a new user, get details and write data to Firebase */
+        // If the visiter is a new user, get details and write data to Firebase
         // Log new user in anonymously (tokens last 5 years)
         allData.authAnonymously(function(error, authData) {
             if (error) {
@@ -2278,9 +2281,15 @@ function AppViewModel () {
 
                 // Save the user's favorites and name in the database
                 allData.child("users").child(authData.uid).set({
-                  favorites: []
+
+                    // Could put a prompt here to get and set user's name
+                    // but won't for now
+
+                    // Initially user has no favorites
+                    favorites: []
                 });
 
+                // Set log in status to true
                 isLoggedIn = true;
 
                 // Display which user is logged in the console every minute
@@ -2289,13 +2298,14 @@ function AppViewModel () {
         });
     };
 
-    // Create a callback which logs the current auth state
+    // Create a callback which logs the current authentication state
     self.checkAuthentication = function (authData) {
 
-        // Check user authentication only if local storage is available.
+        // Check user authentication only if local storage is available
+        // FYI - It's only available if local storage is enabled
         if(localStorageEnabled) {
 
-            // When user is already logged in, notify in console and update
+            // If user is already logged in, notify in console and update
             // favorites
             if(authData) {
 
@@ -2306,24 +2316,24 @@ function AppViewModel () {
                 // Display which user is logged in the console every minute
                 var displayUser = setInterval(self.showUser, 60000);
 
+                // Set log in status to true
                 isLoggedIn = true;
 
-            // If user is logged out notify via console and set new user to
-            // true
+            // If user is logged out, notify via console and log user in
             } else {
 
+                console.log("user is logged out");
                 self.userLogin();
             };
 
-        // If local storage isn't available, show location frames and add
-        // their hover effects once all of the location data has been
-        // parsed
+        // If local storage isn't available, show location frames once all of
+        // the location data has been parsed
+        // Leave log in status at false
         } else {
 
             console.log('Firebase log in disabled because local storage unavailable');
 
-            isLoggedIn = false;
-
+            // Show frames once location data has been parsed
             self.onLocationsArrayLoad(self.showLocationFrames);
         };
     };

@@ -1789,7 +1789,6 @@ function AppViewModel () {
                         };
                     };
                 });
-
             } else {
 
                 console.log('zoom listener not loaded');
@@ -1800,13 +1799,13 @@ function AppViewModel () {
     // Bring map markers back into view
     self.repositionMap = function () {
 
-        // Cache DOM elements
+        // Cache map container
         var resetMap = '<div class="reset-map-container"></div>';
 
         // Add the container for the reset button
         $locationGrid.append(resetMap);
 
-        // Cache DOM elements
+        // Cache DOM refs to map container and reset map icon
         var $resetMapContainer = $('.reset-map-container'),
             $resetMapIcon = '<svg class="reset-button" alt="reload location frames and markers button"><use xlink:href="#reset_button"/></svg>';
 
@@ -1817,7 +1816,7 @@ function AppViewModel () {
         $resetButton = $('.reset-button');
 
         // Add event listener
-        // When the button is clicked, recenter the map
+        // When the button is clicked, re-center the map
         $resetButton.on("click", function() {
             moveMap();
         });
@@ -1827,7 +1826,7 @@ function AppViewModel () {
 
             console.log('reposition map');
 
-            // Remove the reset button if already rendered
+            // Remove the reset button
             $resetMapContainer.remove();
 
             // Set a ref to the length of the markers array
@@ -1840,9 +1839,6 @@ function AppViewModel () {
 
             // Set map bounds
             self.setMapBounds();
-
-            // Remove the reset map button
-            $resetMapContainer.remove();
         };
     };
 

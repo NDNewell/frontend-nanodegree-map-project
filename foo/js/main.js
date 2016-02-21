@@ -1692,12 +1692,13 @@ function AppViewModel () {
 
     self.makeMarkerBig = function (marker) {
 
-        // Cache the title of the marker not including the location
+        // Cache the title of the marker not including the location and
+        // the current sprite img location
         var markerName = getMarkerName(marker),
             markerIconOrigin = marker.icon.origin;
 
-        /* If marker wasn't previously activated, make it big for
-        normal and fav icons */
+        // If marker wasn't previously activated, make it big for
+        // normal and fav icons
         if (markerIconOrigin === markerIcon.small.origin) {
 
             console.log('make ' + markerName + "'" + 's marker big');
@@ -1719,7 +1720,8 @@ function AppViewModel () {
 
         markers.forEach(function(marker) {
 
-            // Cache the title of the marker not including the location
+            // Cache the title of the marker not including the location and
+            // the marker's sprite location
             var markerName = getMarkerName(marker),
                 markerIconOrigin = marker.icon.origin;
 
@@ -1765,8 +1767,8 @@ function AppViewModel () {
         };
     };
 
-    /* When a location frame is hovered over, the associated marker and
-    info window is activated */
+    // When a location frame is hovered over, the associated marker and
+    // info window is activated
     self.activateMarker = function(breakName) {
 
         // Iterate through the markers array
@@ -1819,7 +1821,7 @@ function AppViewModel () {
 
         // If the number of locations matches the markers array length
         // and the markers array length is at least greater than zero,
-        // update the location frame of each favorite
+        // update the favorite status of the markers
         if(numLocations === markers.length && markers.length > 0) {
 
             updateMarkers();
@@ -1842,12 +1844,13 @@ function AppViewModel () {
             markers.forEach(function(marker) {
 
                 // Cache the title of the marker not including the location
+                // and save a ref to it's sprite location
                 var markerName = getMarkerName(marker),
                     markerIconOrigin = marker.icon.origin;
 
-                /* If the name matches a user's favorite, change the image */
-                /* Any markers that don't match the user's favs or were never a
-                fav remain unaltered */
+                // If the name matches a user's favorite, change the image
+                // Any markers that don't match the user's favs or were never a
+                // fav remain unaltered
                 if (favorites.indexOf(markerName) > -1) {
                     if(markerIconOrigin === markerIcon.small.origin) {
 
@@ -1897,7 +1900,7 @@ function AppViewModel () {
         if(numMarkersVisible < 1) {
 
             // If the reset button isn't already visible and not in guide view,
-            // display the rest map button
+            // display the reset map button
             if(!$('.reset-map-container').length && !guideView) {
 
                 console.log('no markers visible');
@@ -1984,7 +1987,10 @@ function AppViewModel () {
             // hide them
             } else {
 
-                // If a marker is selected, don't hide it
+                // If a marker is selected, don't hide it. This is because
+                // there may be times when a user may have purposefully panned
+                // away from his or her selection to look at the surrounding
+                // area of the map
                 if(markerIconOrigin === markerIcon.selected.origin || markerIconOrigin === markerIcon.selectedFav.origin) {
                     marker.setVisible(true);
                 } else {
@@ -2002,25 +2008,34 @@ function AppViewModel () {
     // location frames
     self.showLocationFrames = function(favorites) {
 
-        // remove page loader if it is visible
+        // Remove page loader if it is visible
         if($pageLoader.is(":visible")) {
             $pageLoader.remove();
         };
 
-        // Save a ref to all location frames
+        // Save a ref to all location frames currently in the DOM
         var $allLocationFrames = $('.location-frame');
 
-        // If favorites isn't undefined, show locations
+        // If favorites isn't undefined, show locations when favorites array
+        // has loaded
         if(typeof favorites !== 'undefined') {
 
-            if(favorites.length === $('.is-a-favorite').length) {
+            // If the user has no favorites, show the frames immediately
+            if (favorites === null) {
 
                 show();
 
-            } else if (favorites === null) {
+            // If the number of favorites equals the number of location
+            // frames with the fav icon filled in, show frames (this avoids
+            // showing the frames first and then filling in the fav icon as
+            // the user will see the filling in, which ain't purty)
+            } else if (favorites.length === $('.is-a-favorite').length) {
 
                 show();
 
+            // If the number of favorites is not equal to the number of
+            // locatoin frames with the fav icon filled in, keep checking
+            // until the they have the same value
             } else {
 
                 var checkLocFavsLoaded = setInterval(function() {
@@ -2031,14 +2046,12 @@ function AppViewModel () {
 
                         show();
 
-                    } else if (favorites === null) {
-
-                        clearInterval(checkLocFavsLoaded);
-
-                        show();
                     };
                 }, 250);
             };
+
+        // If favorites is undefined (if local storage isn't enabled), show
+        // locations immediately
         } else {
             show();
         };

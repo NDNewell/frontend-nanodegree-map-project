@@ -2798,9 +2798,8 @@ function AppViewModel () {
         // Save references to DOM elements and heights
         var $locationGridHeight = $locationGrid.outerHeight(),
         $navbarHeight = $('#myNavbar').outerHeight(),
-        $windowHeight = $window.height();
-
-        var $newMapHeight = $windowHeight - ($locationGridHeight + $navbarHeight);
+        $windowHeight = $window.height(),
+        $newMapHeight = $windowHeight - ($locationGridHeight + $navbarHeight);
 
         // Adjust the height of the map container
         $mapContainer.css("height", $newMapHeight);
@@ -2830,7 +2829,7 @@ function AppViewModel () {
         // Assign the InfoWindow object the appropriate marker
         infoWindow.open(map, marker);
 
-        // Cache refs to to elements related to the info window
+        // Cache refs to elements related to the info window
         // Use .gm-style-iw to transverse to needed elements
         var $iwOuter = $('.gm-style-iw');
             $iwFrame = $iwOuter.parent(),
@@ -2852,21 +2851,23 @@ function AppViewModel () {
         $iwFrame.children(':nth-child(3)').css("display", "none");
 
         // Since the info window container takes up space despite not being
-        // visible, click the map is not possible
+        // visible, clickiing the map is not possible where the info window
+        // would normally be
         // To remedy this, enable clicking through a DIV to the underlying
         // element(the Google map).
         $iwContainer.css("pointer-events", "none");
 
-        // The above fix doesn't work for Opera and require the event to be
+        // The above fix doesn't work for Opera and requires the event to be
         // forwarded manually
         $iwContainer.on("mousemove", function(e) {
 
-              // Get the info window's immediately following sibling (Google
+              // Get the info window's immediate following sibling (Google
               // map) and trigger its handler
               $(this).next().trigger(e);
         });
 
-        // Change the position of the info window
+        // Change the position of the info window to appear just above the
+        // marker
         $iwContainer.css({
               left: '11px',
               top: '42px'
@@ -2879,8 +2880,8 @@ function AppViewModel () {
         return (map !== null && typeof map !== "undefined");
     };
 
-    /* When screen size is larger than mobile and map is in view, adjust the
-    rollover icons' positioning/size when hovering over a location frame */
+    // When screen size is larger than mobile and map is in view, adjust the
+    // hover icons' positioning/size when hovering over a location frame
     self.toggleHoverClasses = function () {
 
         // Cache refs to selected DOM elements
@@ -2895,11 +2896,9 @@ function AppViewModel () {
             $waveSizeInfo = $('.wave-size-hover'),
             $costInfo = $('.cost-hover');
 
-        /* Whilst hovering over a location add/remove the appropriate classes
-        in order to change the icons' styling */
+        // Whilst hovering over a location add/remove the appropriate classes
+        // in order to change the icons' styling
         if(rollover) {
-
-            console.log('adjust hover icons and info to map view style');
 
             $skillLevelIcon.removeClass("skill-level-hover-default").addClass("skill-level-hover-map");
 
@@ -2921,8 +2920,9 @@ function AppViewModel () {
 
             $costInfo.removeClass("cost-hover-default").addClass("cost-hover-map");
 
-        /* When hovering over a location is finished, add/remove the appropriate classes in order to change the icons' styling back to the
-        default style */
+        // When hovering over a location is finished, add/remove the
+        // appropriate classes in order to change the icons' styling back to
+        // the default style
         } else {
 
             console.log('revert hover icons and info back to default style');
@@ -2949,10 +2949,12 @@ function AppViewModel () {
         };
     };
 
-    /* When the cursor hovers over a location, remove the text and add
-    a gaussian blur. Wait until the locations have been loaded */
+    // Set variable for hover effects
     var rollover;
 
+    // When the cursor hovers over a location, remove the text and add
+    // a gaussian blur.
+    // Display info about each location with the appropriate icons
     self.addHoverEffects = function () {
 
         console.log('enable hover effect');
@@ -2970,14 +2972,14 @@ function AppViewModel () {
                 // Enable rollover effects
                 rollover = true;
 
-                /* Get identifying information from the hovered over
-                locaton frame */
+                // Get identifying information from the hovered over
+                // locaton frame
                 var frameBreakName = e.currentTarget.children[1].textContent;
 
                 console.log('hover over ' + frameBreakName);
 
-                /* If in mapView, activate the location frame's
-                 associated marker and info window */
+                // If in mapView, activate the location frame's
+                // associated marker and info window
                 if(mapView) {
                     activateMarker(frameBreakName);
                 };
@@ -2986,64 +2988,67 @@ function AppViewModel () {
                 self.locationArray.forEach(function(obj) {
 
                     // Filter locations that match the location frame
-                    // Bounce the location frame's associated marker
+                    // When a match is found, display info about the location
+                    // as a rollover
                     if (frameBreakName === obj.breakName) {
                         importInfo(obj);
                     };
                 });
 
-                /* When the mouse is hovering over a location frame
-                show unique information about that location */
+                // When the mouse is hovering over a location frame
+                // show unique information about that location
                 function importInfo(obj) {
 
+                    // Blur the location frame's img and reduce its brightess
+                    // hide all of the location frame's text and icons
                     $img.css({
                         "-webkit-filter" : "blur(4px) brightness(80%)",
                         "filter" : "blur(4px) brightness(80%)"
                     });
-                    $location.hide()
+                    $location.hide();
                     $breakName.hide();
                     $favoriteWrapper.hide();
 
-                    /* Display icon associated with the skill level
-                    needed to surf the break */
+                    // Display icon associated with the skill level
+                    // needed to surf the break
                     var skillLevelIcon = displaySkillIcon(obj.skillLevel);
                     $locationFrame.append(skillLevelIcon);
 
-                    /* Display the icon associated with the type of
-                    break it is (i.e. what kind of surface is beneath
-                    it */
+                    // Display the icon associated with the type of
+                    // break it is (i.e. what kind of surface is beneath
+                    // it
                     var breakIcon = displayBreakIcon(obj.breakDetails);
                     $locationFrame.append(breakIcon);
 
-                    /* Display the icon associated with the direction
-                    the wave breaks */
+                    // Display the icon associated with the direction
+                    // the wave breaks
                     var directionIcon = displayDirectionIcon(obj.waveDirection);
                     $locationFrame.append(directionIcon);
 
-                    /* Display the icon for the best month in which to
-                    surf at the specific break*/
+                    // Display the icon for the best month in which to
+                    // surf at the specific break
                     var bestSeasonIcon = displayBestSeasonIcon(obj.optimalTime);
                     $locationFrame.append(bestSeasonIcon);
 
-                    /* If there is big wave surfing at this break
-                    display big wave icon. If not, display the
-                    suggested swim attire icon for current season */
+                    // If there is big wave surfing at this break
+                    // display big wave icon. If not, display the
+                    // suggested swim attire icon for current season
                     var miscIconOne = displayBigWaveIcon(obj);
                     $locationFrame.append(miscIconOne);
 
-                    /* If the wave is well known display the well
-                    known icon, otherwise display a random hazard
-                    icon */
+                    // If the wave is well known display the well
+                    // known icon, otherwise display a random hazard
+                    // icon
                     var miscIconTwo = displayWellKnownIcon(obj);
                     $locationFrame.append(miscIconTwo);
 
-                    /* Display the budget cost for the location */
+                    // Display the budget cost for the location
                     var costInfo = displayCost(obj.cost);
                     $locationFrame.append(costInfo);
 
-                    /* Check if current location is available, if it is
-                    render the distance to the hovered over location in
-                    the top right corner of the picture */
+                    // Check if current location is available, if it is
+                    // render the distance to the hovered over location in
+                    // the top right corner of the picture
                     if(typeof currentLat !== 'undefined') {
                         var distanceInfo = displayDistance(obj.lat, obj.lng);
                         $locationFrame.append(distanceInfo);
@@ -3058,8 +3063,8 @@ function AppViewModel () {
                     $locationFrame.append(waveSizeInfo);
                 };
 
-                /* If screen is larger than mobile view adjust the icons'
-                styling for the map view if enabled */
+                // If screen is larger than mobile view adjust the icons'
+                // styling for the map view if enabled
                 if(!mobileView && !gridView) {
                     self.toggleHoverClasses();
                 };
@@ -3069,7 +3074,7 @@ function AppViewModel () {
                 self.addToolTips();
             });
 
-            /* Remove all imported info when the mouse stops hovering */
+            // Remove all rollover info when the mouse stops hovering
             $locationFrame.on('mouseleave', function () {
 
                 // Set rollover to false
@@ -3079,16 +3084,16 @@ function AppViewModel () {
                 var $allHoverIcons = $('.rollover-info');
 
                 // Remove the tooltips loaded status so they can be loaded
-                // again during the next hover (any element that has the class
-                // below will not load tooltips)
+                // again during the next hover (FYI any element that has the // class below will not load tooltips)
                 $allHoverIcons.removeClass("tooltip-loaded");
 
-                /* If screen is larger than mobile view adjust the icons'
-                styling back to default if the the map view is enabled */
-                if(!mobileView && !gridView) {
+                // if in map view adjust the icons'styling back to default
+                if(mapView) {
                     self.toggleHoverClasses();
                 };
 
+                // Change the location frame's img back to default seettings
+                // Show the location frame's text and icons
                 $img.css({
                     "-webkit-filter" : "blur(0px) brightness(100%)",
                     "filter" : "blur(0px) brightness(100%)"
@@ -3097,17 +3102,18 @@ function AppViewModel () {
                 $breakName.show();
                 $favoriteWrapper.show();
 
-                /* If gridView is not enabled, deactivate the location frame's
-                associated marker. Make its pin small again only if its
-                info window isn't open. If it's info window were open, that
-                would mean that it is selected, which for the purposes of
-                selection, should stay big. If a marker is selected, it also
-                prevents the locaiton frames from being managed (keeps only
-                one location frame visible) */
+                // If not in grid or guide view, deactivate the location
+                // frame's associated marker.
+                // Make its pin small again only if its info window isn't open.// If it's info window is open, it is selected and should
+                // remain so.
+                // If a marker is selected, it also prevents the location
+                // frames from being managed (keeps only one location frame
+                // visible)
                 if(!guideView && !self.isInfoWindowOpen(infoWindow) && !gridView) {
                     self.makeMarkerSmall();
                 };
 
+                // Remove all hover icons
                 $allHoverIcons.remove();
             });
         });

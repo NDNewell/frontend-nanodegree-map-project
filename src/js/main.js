@@ -2593,7 +2593,15 @@ function AppViewModel () {
         };
     };
 
+    // Cache Google map's element titles that are usually shown in a native
+    // tooltip when hovering over that element
+    var googleElemTitles = ['Report errors in the road map or imagery to Google', 'Zoom in', 'Zoom out', 'Rotate map 90 degrees', 'Show satellite imagery', 'Change map style'];
+
+    // Save refs to each marker's title
+    var markerTitles = [];
+
     // Remove elem titles in order to disable native tooltips from appearing
+    // in Google map
     self.removeTitle = function () {
 
         // Iterate over each available elem with a title
@@ -2605,27 +2613,19 @@ function AppViewModel () {
             // If the elem's title matches a Google elem title, delete it
             if(googleElemTitles.indexOf($this.attr('title')) > -1) {
 
-
                 $this.removeAttr('title');
 
             // If the elem's title matches a marker's title, delete it
             } else if (markerTitles.indexOf($this.attr('title')) > -1) {
 
-                console.log('disable marker tooltip');
+                console.log('disable native marker tooltip');
 
                 $this.removeAttr('title');
             };
         });
     };
 
-    // Cache Google map's element titles that are usually shown in a native
-    // tooltip when hovering over that element
-    var googleElemTitles = ['Report errors in the road map or imagery to Google', 'Zoom in', 'Zoom out', 'Rotate map 90 degrees', 'Show satellite imagery', 'Change map style'];
-
-    // Save refs to each marker's title
-    var markerTitles = [];
-
-    // Remove each Google map elem's title in order to disable its native
+    // Remove each Google map elem's title in order to prevent its native
     // tooltip from appearing
     self.removeGoogleElemTitles = function () {
 
@@ -2666,9 +2666,14 @@ function AppViewModel () {
     };
 
     // Modifiy navbar to sticky navbar upon scrolling down
+    // Save a ref to the navbar and its distance from the top of the screen
     var $navbar = $('#navbar-main'),
         $distance = $navbar.offset().top;
 
+    // When scrolling, if the scroll position is greater than the navbar,
+    // make the navbar 'sticky'.
+    // If/when the scroll position returns to its original position, 'unstick'
+    // it
     $window.scroll(function () {
         if($window.scrollTop() > $distance) {
             $navbar.addClass('navbar-fixed-top');
@@ -2679,7 +2684,8 @@ function AppViewModel () {
         };
     });
 
-    self.loadconditionsLoader = function (id, shape, diameter, density, range, FPS) {
+    // Show an animated progress spinner on initial page load
+    self.canvasLoader = function (id, shape, diameter, density, range, FPS) {
 
         var cl = new CanvasLoader(id);
         cl.setColor('#35ABBB'); // default is '#000000'
@@ -2700,7 +2706,7 @@ function AppViewModel () {
     $pageLoader = $('#pageLoader');
 
     // Load indicator
-    var cl = self.loadconditionsLoader('pageLoader', 'square', 117, 72, 1.1, 60);
+    var cl = self.canvasLoader('pageLoader', 'square', 117, 72, 1.1, 60);
 
     /**
     * Converts :hover CSS to :active CSS on mobile devices.
@@ -3883,7 +3889,7 @@ function AppViewModel () {
                         $conditionsLoader = $('#conditionsLoader');
 
                         // Load indicator
-                        var cl = self.loadconditionsLoader('conditionsLoader', 'spiral', 72, 33, 1, 23);
+                        var cl = self.canvasLoader('conditionsLoader', 'spiral', 72, 33, 1, 23);
 
                         // Pass info to API function and initiate request
                         getMagicSeaweed(obj.spotID, obj.breakName);

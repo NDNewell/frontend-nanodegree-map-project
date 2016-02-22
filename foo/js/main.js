@@ -2122,6 +2122,11 @@ function AppViewModel () {
             self.animateMarker(marker);
         };
 
+        if($searchContainer.is(":visible")) {
+            $searchContainer.hide();
+            $searchSymbol.removeClass("search-selected").addClass("search-default");
+        };
+
         // Manage the view to change the layout for the surf guide
         self.manageView();
     };
@@ -4025,57 +4030,61 @@ function AppViewModel () {
     // Toggle the search container in and out of view
     self.toggleSearch = function () {
 
+        console.log('toggle search');
+
+        // Reset the page upon showing/hiding the search container
+        self.resetPage();
+
         // Make the search container visible or hidden
-        // If in map view, fade the search field in or out
+        // Hide the clear search symbol each time the search container is
+        // hidden
+        // If in map view, fade in/out the search container
         if(mapView) {
-            if($searchContainer.is(":visible")) {
-                $searchContainer.fadeOut(200);
-            } else {
+
+            if($searchContainer.is(":hidden")) {
                 $searchContainer.fadeIn(200);
-            };
-
-        // If not in map view, simply just slide the search field in and out
-        // of view
-        } else {
-            $searchContainer.slideToggle(200);
-        };
-
-        // Delay focusing on the search field until it has fully expanded the
-        // search container is fully visible
-        setTimeout(function() {
-
-            console.log('toggle search');
-
-            // Sometimes the search container is toggled by pressing the
-            // filter favorites button. If so, resetting the page would
-            // remove the favorite location frames generated; therefore,
-            // if it is selected, we don't reset the page.
-            // Also don't reset unless the search container is visible
-            if(!$('.favorite-filter-selected').length && $searchContainer.is(":visible")) {
-
-                // Reset the page
-                self.resetPage();
-            };
-
-            // If the search container is visible, focus on search form and
-            // change class to indicate search is selected
-            if($searchContainer.is(":visible") && !$('.search-selected').length) {
-                $searchForm.focus();
-                $searchSymbol.removeClass("search-default").addClass("search-selected");
-
-            // If search container is not visible, change the class to indicate
-            // that search is not selected.
-            // Reset the page in case any searches were conducted and hide the
-            // clear symbol in the search field
             } else {
-
-                // Remove class to change img's fill back to default
-                $searchSymbol.removeClass("search-selected").addClass("search-default");
-
-                self.resetPage();
+                $searchContainer.fadeOut(200);
                 $clearSymbol.hide();
             };
-        }, 300);
+
+        // If in guide view the guide is closed due to the reset page function
+        // above.
+        // Show the search container for either the grid or map view
+        } else if (guideView) {
+                $searchContainer.show();
+
+        // For grid and mobile views, slide in/out the search container and
+        // hide the clear search symbol each time it is hidden/displayed
+        } else {
+            if($searchContainer.is(":hidden")) {
+                $searchContainer.slideDown(200);
+            } else {
+                $searchContainer.slideUp(200);
+                $clearSymbol.hide();
+            };
+        };
+
+        // If the search container is visible, focus on search form and
+        // change class to indicate search is selected
+        if($('.search-default').length) {
+
+            // Delay focusing on the search field until the search container
+            // is fully visible
+            setTimeout(function() {
+                $searchForm.focus();
+            }, 300);
+
+            // Indicate that the search field is open
+            $searchSymbol.removeClass("search-default").addClass("search-selected");
+
+        // If search container is not visible, change the class to indicate
+        // that search is not selected.
+        } else {
+
+            // Indicate that the search field isn't open
+            $searchSymbol.removeClass("search-selected").addClass("search-default");
+        };
     };
 
     // When the search symbol is clicked, the search field is displayed with

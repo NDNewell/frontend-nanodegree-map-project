@@ -3195,32 +3195,35 @@ function AppViewModel () {
                 self.resetPage();
             };
 
-            // If 'clear search' button is visible, hide it
-            if ($clearSymbol.is(":visible")) {
-                $clearSymbol.hide();
-            };
-
             // If the search container is visible, focus on search form and
             // change class to indicate search is selected
             if($searchContainer.is(":visible") && !$('.search-selected').length) {
                 $searchForm.focus();
                 $searchSymbol.removeClass("search-default").addClass("search-selected");
+
+            // If search container is not visible, change the class to indicate
+            // that search is not selected.
+            // Reset the page in case any searches were conducted and hide the
+            // clear symbol in the search field
             } else {
 
                 // Remove class to change img's fill back to default
                 $searchSymbol.removeClass("search-selected").addClass("search-default");
+
+                self.resetPage();
+                $clearSymbol.hide();
             };
         }, 300);
     };
 
-    /* When the search symbol is clicked, the search field is displayed with
-    sliding animation */
+    // When the search symbol is clicked, the search field is displayed with
+    // sliding animation
     $searchSymbol.on("click", function () {
 
-        /* Sometimes the filters container is toggled by pressing the
-        search button. If the favorites are in view at the time of pressing
-        the search button, the filters container is hidden and the favorite
-        filter symbol is 'deselected' */
+        // Sometimes the filters container is toggled by pressing the
+        // search button. If the favorites are in view at the time of pressing
+        // the search button, the filters container is hidden and the favorite
+        // filter symbol is 'deselected'
         if($('.favorite-filter-selected').length) {
 
             // Hide the filters container
@@ -3229,15 +3232,14 @@ function AppViewModel () {
             console.log('hide filters container and favorites');
 
             // Add remove relevant classes
-            $favFilterSym.removeClass("favorite-filter-selected");
-            $favFilterSym.addClass("favorite-filter-default");
+            $favFilterSym.removeClass("favorite-filter-selected").addClass("favorite-filter-default");
         };
 
-        /* Enable toggling of the search container if the user's scroll position is at the top of the page. If the user's scroll position is
-        below this, only enable toggling of the search container if the search
-        container is not already visible. If the search container is visible,
-        instead of hiding it, the search form is brought into focus so the
-        user can make further searches */
+        // Enable toggling of the search container if the user's scroll
+        // position is at the top of the page. If the user's scroll position is
+        // below this, only enable toggling of the search container if the
+        // search container is not already visible. If the search container is // visible, instead of hiding it, the search form is brought into
+        // focus so the user can make further searches
         if($window.scrollTop() < 56 || $window.scrollTop() >= 56 && $searchContainer.is(":hidden")) {
 
             // Scroll to top of the page
@@ -3251,28 +3253,22 @@ function AppViewModel () {
         };
     });
 
-    /* When a search is made, create a 'clear search' button for clearing
-    searches. Also reset search when search field is clicked */
-    $searchForm.on( "click", function () {
-          self.resetPage();
-    }).on( "focus", function() {
-        if(!$($searchForm).val()){
-          $clearSymbol.toggle();
-        };
-    }).on( "blur", function () {
-        if(!$($searchForm).val()){
-          $clearSymbol.toggle();
+    // When text is entered into the search form, show the clear search symbol
+    $searchForm.on("keydown", function() {
+        $clearSymbol.show();
+
+    // If the search field is blurred and there is no text entered in the form
+    // hide the clear search symbol
+    }).on("blur", function() {
+        if(!$searchForm.val()) {
+            $clearSymbol.hide();
         };
     });
 
-    /* When the 'clear search' button is selected, close any existing text
-    or searches in the search field, close the surf guide if open, show
-    searchable locations, close any open info windows and hide the 'clear
-    search' button */
-    $clearSymbol.on( "click", function() {
-        $clearSymbol.toggle();
+    // If the clear search symbol is clicked, reset the page and hide it
+    $clearSymbol.on("click", function() {
         self.resetPage();
-        $searchForm.focus();
+        $clearSymbol.hide();
     });
 
     // Display only favorites from the locations array

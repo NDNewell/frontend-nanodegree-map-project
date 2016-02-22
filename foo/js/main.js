@@ -3878,8 +3878,9 @@ function AppViewModel () {
         };
     });
 
-    // Convert input to lowercase, remove spaces, remove apostrophes, and
-    // remove commas in order to compare like characters & store in a new var
+    // Convert input text to lowercase, remove spaces, remove apostrophes, and
+    // remove commas in order to compare like characters & store in a new var.
+    // This is used for various funcs throughout the document
     self.formatText = function (text) {
 
       var formattedText = text.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/,/g, "");
@@ -3887,17 +3888,16 @@ function AppViewModel () {
       return formattedText;
     };
 
-    /* self.Query is bound to the input on the View. Because it is an
-     observable variable, it's value will be updated whenever the input on the
-     View is altered*/
+    // self.Query is bound to the input on the View view Knockout. Because it // is an observable variable, it's value will be updated whenever the
+    // input on the View is altered
     self.Query = ko.observable("");
 
-    /* Filter through the location objects and compare each one to the
-    search terms (value of self.Query). If there is a match, the matching
-    object is re-added to the locationGrid (observ. array bound to the View). */
+    // Filter through the location elements and compare each one to the
+    // search terms (value of self.Query). If there is a match, set it to
+    // visible
     self.searchLocations = function () {
 
-        // Cache the current search query
+        // Cache the current formatted search query
         var search = self.formatText(self.Query());
 
         // Cache DOM reference to all location frames
@@ -3909,7 +3909,8 @@ function AppViewModel () {
         // Loop through all of the location frames
         $allLocationFrames.each(function() {
 
-            // Cache the current location frame's reference and text
+            // Cache the current location frame's reference and text (
+            // this includes the break and location name)
             var $locationFrame = $(this),
                 $locationFrameText = self.formatText($locationFrame.text());
 
@@ -3921,29 +3922,31 @@ function AppViewModel () {
             };
         });
 
-        /* Compare each marker's title, which holds the break and location name, to the search terms. If it matches, set the marker as visible.
-        If not, hide it */
+        // Compare each marker's title, which holds the break and location
+        // name, to the search terms. If it matches, set the marker as visible.
+        // If not, hide it
         markers.forEach(function(marker) {
 
-            // Convert marker titles (remove spaces, commas, apostrophes etc.)
+            // Format the marker title and see if the search matches any
+            // elements within the it
             if (self.formatText(marker.title).indexOf(search) > -1) {
 
-              marker.setVisible(true);
+                marker.setVisible(true);
             } else {
-              marker.setVisible(false);
-            }
-
+                marker.setVisible(false);
+            };
         });
 
-        // If the map is visible, set the map bounds
+        // If the map is visible, set the map bounds after a search is made
         if ($map.is(":visible")) {
 
             self.setMapBounds();
         };
 
-        /* On each search new versions of the location frames are added. If the
-        map is visible, the layout must be adjusted */
+        // On each search new versions of the location frames are added. If the
+        // map is visible, the layout must be adjusted
         if($mapContainer.is(":visible")) {
+
             // Update layout
             self.manageLayout();
         };

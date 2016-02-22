@@ -2702,56 +2702,55 @@ function AppViewModel () {
     // Show canvas loader at initial page load
     $('header').append('<div id="pageLoader"></div>');
 
-    // Save global ref to loader
-    $pageLoader = $('#pageLoader');
+    // Save ref to loader
+    var $pageLoader = $('#pageLoader');
 
     // Load indicator
     var cl = self.canvasLoader('pageLoader', 'square', 117, 72, 1.1, 60);
 
-    /**
-    * Converts :hover CSS to :active CSS on mobile devices.
-    * Otherwise, when tapping a button on a mobile device, the button stays in
-    * the :hover state until the button is pressed.
-    *
-    * Inspired by: https://gist.github.com/rcmachado/7303143
-    * @author  Michael Vartan <michael@mvartan.com>
-    * @version 1.0
-    * @date    2014-12-20
-    */
+    // Converts :hover CSS to :active CSS on mobile devices.
+    // Otherwise, when tapping a button on a mobile device, the button stays in
+    // the :hover state until the button is pressed.
+
+    // Inspired by: https://gist.github.com/rcmachado/7303143
+    // @author  Michael Vartan <michael@mvartan.com>
+    // @version 1.0
+    // @date 2014-12-20
+
     // Check if the device supports touch events
     if('ontouchstart' in document.documentElement) {
 
-      console.log('device supports touch events');
+        console.log('device supports touch events');
 
-      // Loop through each stylesheet
-      for(var sheetI = document.styleSheets.length - 1; sheetI >= 0; sheetI--) {
-        var sheet = document.styleSheets[sheetI];
+        // Loop through each stylesheet
+        for(var sheetI = document.styleSheets.length - 1; sheetI >= 0; sheetI--) {
+            var sheet = document.styleSheets[sheetI];
 
-        // Verify if cssRules exists in sheet
-        if(sheet.cssRules) {
+            // Verify if cssRules exists in sheet
+            if(sheet.cssRules) {
 
-          // Loop through each rule in sheet
-          for(var ruleI = sheet.cssRules.length - 1; ruleI >= 0; ruleI--) {
+                // Loop through each rule in sheet
+                for(var ruleI = sheet.cssRules.length - 1; ruleI >= 0; ruleI--) {
 
-            var rule = sheet.cssRules[ruleI];
+                    var rule = sheet.cssRules[ruleI];
 
-            // Verify rule has selector text
-            if(rule.selectorText) {
+                    // Verify rule has selector text
+                    if(rule.selectorText) {
 
-              // Replace hover psuedo-class with active psuedo-class
-              rule.selectorText = rule.selectorText.replace(":hover", ":active");
+                    // Replace hover psuedo-class with active psuedo-class
+                    rule.selectorText = rule.selectorText.replace(":hover", ":active");
+                    };
+                };
             };
-          };
         };
-      };
     };
 
-    /* In screen sizes greater than 767px horizontal scrolling is enabled
-    during map view */
+    // In screen sizes greater than 767px horizontal scrolling is enabled
+    // during map view using a plug in
     self.enableHorizontalScrolling = function () {
 
-        /* Remove any previous event handlers, so multiples of same handler
-        aren't added */
+        // Remove any previous event handlers, so multiples of same handler
+        // aren't added
         $locationGrid.off();
 
         // Create event for when mouse scroll wheel is activated
@@ -2761,11 +2760,10 @@ function AppViewModel () {
         });
     };
 
-    /* When the screen width crosses 768px, alter the layout of the page to
-    accommodate the appearence of a horizontal scroll bar for screen widths
-    >= 768px and reverse these effects when the screen width falls below 768px
-     */
-
+    // When the screen width crosses 768px, alter the layout of the page to
+    // accommodate the appearence of a horizontal scroll bar for screen widths
+    // >= 768px and reverse these effects when the screen width falls below
+    // 768px
     self.manageLayout = function () {
 
         console.log('manage layout');
@@ -2777,8 +2775,8 @@ function AppViewModel () {
             $breakName = $('.break-name'),
             $locationName = $('.location-name');
 
-        /* If the screen width signals a 'mobile' view, alter the layout
-        accordingly*/
+        // If the screen width signals a mobile, grid, or guide view, alter
+        // the layout accordingly
         if(mobileView || gridView || guideView) {
 
             // Set the map to default
@@ -2793,6 +2791,7 @@ function AppViewModel () {
                 $mapContainer.show();
             };
 
+            // Set the default classes for the elems below
             $searchContainer.removeClass("search-container-map").addClass("search-container-default");
 
             $searchForm.removeClass("search-form-map").addClass("search-form-default");
@@ -2811,7 +2810,7 @@ function AppViewModel () {
             // Remove Bootstrap's 'fluid' row
             $locationGrid.removeClass("row-fluid").addClass("row");
 
-            // Re-add the Bootstrap settings
+            // Re-add the Bootstrap div settings
             $locationFrame.addClass("col-xs-12 col-sm-6 col-md-4");
 
             // Change break name style back to default
@@ -2820,17 +2819,17 @@ function AppViewModel () {
             // Change location name style back to default
             $locationName.removeClass("location-name-map").addClass("location-name-default");
 
-            /* Change 'favorite' symbol style back to default *must change
-            via attr in order to change the class of an inline svg */
+            // Change 'favorite' symbol style back to default *must change
+            // via attr in order to change the class of an inline svg
             $favoriteSymbol.attr("class", "favorite favorite-default");
 
-            /* Remove any listeners attached to the location grid (horiz.
-              scroll) */
+            // Remove any listeners attached to the location grid (horiz.
+            // scroll)
             $locationGrid.off();
 
-            /* If the Google map and its locations have loaded, the frame
-            and marker managers aren't disabled, and the surf guide is hidden,
-            set the map bounds */
+            // If the Google map and its locations have loaded, the frame
+            // and marker managers aren't disabled, and the surf guide is
+            // hidden, resize the map and set its bounds
             if(markers.length !== 0 && $map.is(":visible") && !guideView && !resizeInProgress) {
 
                 console.log('map is visible');
@@ -2839,19 +2838,20 @@ function AppViewModel () {
 
                 self.setMapBounds();
 
-            /* If the surf guide is open, reset the map size, then center the map on the selected location's marker */
+            // If the surf guide is open, reset the map size, then center the // map on the selected location's marker
             } else if (guideView && $map.is(":visible")) {
 
                 // Center the map on the selected marker
                 self.setMarkerForGuide();
             };
 
-        /* If the screen width is larger than a 'mobile' view, alter the
-        layout accordingly*/
+        // If the screen width is larger than a 'mobile' view and the map is
+        // visible , alter the layout
         } else {
 
             console.log('update map view layout');
 
+            // Change following elems to map style
             $mapContainer.removeClass("map-container-default").addClass("map-container-map");
 
             $searchContainer.addClass("search-container-map").removeClass("search-container-default");
@@ -2890,9 +2890,11 @@ function AppViewModel () {
     // Check the width of the screen
     self.manageView = function () {
 
-        // Set refs to DOM elems
+        // Set refs to window width
         var $winWidth = window.innerWidth;
 
+        // If the surf guide container is visible and the width is mobile,
+        // set as surf guide/mobile view
         if($('.surf-guide-container').length && $winWidth < 768) {
 
             mapView = false;
@@ -2903,7 +2905,8 @@ function AppViewModel () {
 
             console.log('view is surf guide/mobile');
 
-        // If the screen width is the same size as mobile, set to true
+        // If the surf guide is visible and the screen is greater than mobile
+        // view, set only as surf guide
         } else if($('.surf-guide-container').length && $winWidth >= 768) {
 
             mapView = false;
@@ -2914,7 +2917,7 @@ function AppViewModel () {
 
             console.log('view is surf guide');
 
-        // If the screen width is the same size as mobile, set to true
+        // If the screen width is the same size as mobile, set to mobile view
         } else if($winWidth < 768) {
 
             mapView = false;
@@ -2922,14 +2925,16 @@ function AppViewModel () {
             guideView = false;
 
             mobileView = true;
+
             console.log('view is mobile');
 
-        // If the screen width is larger than a mobile device, set to false
+        // If none of the above, set to grid or map view
         } else {
 
             mobileView = false;
             guideView = false;
 
+                // If map icon is selected, set view to map view
                 if($('.map-selected').length) {
 
                     gridView = false;
@@ -2937,6 +2942,7 @@ function AppViewModel () {
                     mapView = true;
                     console.log('view is map');
 
+                // If map icon isn't selected, set view to grid view
                 } else {
 
                     mapView = false;

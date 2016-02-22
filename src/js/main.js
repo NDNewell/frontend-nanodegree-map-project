@@ -204,7 +204,8 @@ function AppViewModel () {
         $filtersContainer = $('.filters-container'),
         $favFilterSym = $('.favorite-filter-symbol'),
         $clearFavsBtn = $('.clear-favorites-button'),
-        $surfInfoContainer = $('.surf-info-container');
+        $surfInfoContainer = $('.surf-info-container'),
+        $searchSymbol = $('.search-symbol');
 
     // Cache Firebase database references to all, location, and user data
     var allData = new Firebase("https://dazzling-torch-4012.firebaseio.com"),
@@ -3090,8 +3091,57 @@ function AppViewModel () {
         };
     };
 
-    // Set variables to be used in the functions to follow
-    var $searchSymbol = $('.search-symbol');
+    // Load jQuery-UI auto complete plug in for search field
+    // **Note: Not loaded until the search keywords array is loaded
+    self.loadAutoComplete = function () {
+
+        // Add listener to search form to listen for 'enter' key
+        // Normally, jQuery ui's autocomplete plugin will blur the field, but
+        // that's only when an item as been selected from the autocomplete
+        // menu. This fixes that.
+        $searchForm.on("keydown", function(e) {
+            if(e.keyCode === 13) {
+
+                $(this).blur();
+            };
+        });
+
+        // Call the jQuery-UI auto complete widget
+        $searchForm.autocomplete({
+
+            // All keywords come from the search keywords array
+            source: self.searchKeywords,
+
+            // Highlight the pop-up menu item that matches what is currently in
+            // the search input field
+            autoFocus: true,
+
+            // A search must be at least two characters long before the pop-up
+            // window shows
+            minLength: 2,
+
+            // Delay the pop-up window from displaying for (x) milliseconds
+            delay: 0,
+
+            // When a selection has been made, change the ko variable that
+            // represents the search and then activate the search filtering
+            // below
+            select: function (event, ui) {
+
+                console.log('select suggested location');
+
+                // Change the query to the selected location
+                self.Query(ui.item.value);
+
+                // Call the search function to initiate a search with the
+                // selected menu item
+                self.searchLocations();
+
+                // Remove focus from search field after selection is made
+                $(this).blur();
+            }
+        });
+    };
 
     // Check if search keywords have loaded
     // When they are loaded, load the auto complete listener
@@ -3107,56 +3157,6 @@ function AppViewModel () {
                 self.loadAutoComplete();
             };
         }, 500);
-    };
-
-    // Load auto complete listener for search field
-    self.loadAutoComplete = function () {
-
-        // Set blurring of search form to false
-        var blurOnEnter = false;
-
-        /* Call the jQuery-UI auto complete widget.*/
-        $searchForm.autocomplete({
-            /* All keywords come from the above array */
-            source: self.searchKeywords,
-            /* Highlight the pop-up menu item that matches what is currently in
-             the search input field */
-            autoFocus: true,
-            /* A search must be at least two characters long before the pop-up
-            window shows */
-            minLength: 2,
-            // Delay the pop-up window from displaying for (x) milliseconds
-            delay: 0,
-            /* When a selection has been made, change the ko variable that
-            represents the search and then activate the search filtering
-            below */
-            select: function (event, ui) {
-
-                // Allow blurring even after the auto complete menu has been
-                // hidden
-                blurOnEnter = true;
-
-                console.log('select event');
-                self.Query(ui.item.value);
-                self.searchLocations();
-
-                // Remove focus from search field after selection is made
-                $(this).blur();
-            }
-        });
-
-        // Add listener to search form to listen for 'enter' key
-        // If it is pressed after the auto complete menu was shown but then
-        // hidden due to no matches, blur the search field.
-        // Normally, jQuery ui's autocomplete plugin will blur the field, but
-        // that's only when an item as been selected from the autocomplete
-        // menu
-        $searchForm.on("keydown", function(e) {
-            if(e.keyCode === 13 && blurOnEnter) {
-                console.log('enter was pressed, so let us move on');
-                $(this).blur();
-            };
-        });
     };
 
     // Toggle the appearance of the search container

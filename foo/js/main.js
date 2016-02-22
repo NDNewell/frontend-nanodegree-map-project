@@ -3818,17 +3818,23 @@ function AppViewModel () {
         self.manageLayout();
     };
 
-    // Check the width of the window
+    // Check the width of the window on inital page load
     self.manageView();
 
-    // Set variables for resizing
+    // Set variables for resizing the map
     var resizeTimer,
         resizeInProgress;
 
     // Whenever the window is resized, check the view (size of the window)
     // Also, disable the marker and frame managers. Not doing so will result
     // in a blank map and location grid.
-    // Once resizing has stopped, set the map bounds
+    // This is because when resizing the window, the markers are temporarily
+    // off screen, which would trigger the managers to reset the map bounds
+    // based on 'visible' markers. Since the window is only being resized,
+    // disabling the managers and map bounds settin until after the window has
+    // been resized, allows the map to be resized with the original markers
+    // put back into their original positions.
+    // Once resizing has stopped, set the map bounds.
     $window.resize(function() {
 
         // Check the current view and update the page's styling
@@ -3836,7 +3842,7 @@ function AppViewModel () {
 
         console.log('resize window');
 
-        // Only execute if the map is visible
+        // Only execute if the map is visible and not in guide view
         if($map.is(":visible") && !guideView) {
 
             // Disable the frame and marker managers
@@ -3851,11 +3857,13 @@ function AppViewModel () {
 
             // When this timer reaches zero, the map's bounds are set
             // using the visible markers except during guide view
-            // If in guide view, the map will be centered on the selected
-            // marker. This is executed in the toggle layout function.
+            // (*FYI if in guide view, the map will be centered on the selected
+            // marker, which is executed in the toggle layout function)
             resizeTimer = setTimeout(function() {
 
                 // Only execute if the map is in view and not in guide view
+                // Double check it's the correct view just in case the view
+                // has changed
                 if ($map.is(":visible") && !guideView) {
                     google.maps.event.trigger(map, 'resize');
                     self.setMapBounds();

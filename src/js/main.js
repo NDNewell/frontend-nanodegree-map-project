@@ -1260,6 +1260,8 @@ function AppViewModel () {
             self.animateMarker(marker);
         };
 
+        // If the search container is visible when clicking a location frame
+        // hide it and change its status
         if($searchContainer.is(":visible")) {
             $searchContainer.hide();
             $searchSymbol.removeClass("search-selected").addClass("search-default");
@@ -3100,17 +3102,8 @@ function AppViewModel () {
     // **Note: Not loaded until the search keywords array is loaded
     self.loadAutoComplete = function () {
 
-        // Add listener to search form to listen for 'enter' key
-        // Normally, jQuery ui's autocomplete plugin will blur the field, but
-        // that's only when an item as been selected from the autocomplete
-        // menu. This fixes that.
-        $searchForm.on("keydown", function(e) {
-
-            // Blur if 'enter' is pressed
-            if(e.keyCode === 13) {
-                $(this).blur();
-            };
-        });
+        // Set variable for blurring on 'enter' key
+        var blurOnEnter = true;
 
         // Call the jQuery-UI auto complete widget
         $searchForm.autocomplete({
@@ -3136,6 +3129,9 @@ function AppViewModel () {
 
                 console.log('select suggested location');
 
+                // Set blur on 'enter' key to false
+                blurOnEnter = false;
+
                 // Change the query to the selected location
                 self.Query(ui.item.value);
 
@@ -3145,8 +3141,24 @@ function AppViewModel () {
 
                 // Remove focus from search field after selection is made
                 $(this).blur();
+
+                // Set blur on 'enter' key to true
+                blurOnEnter = true;
             }
         });
+
+        // Add listener to search form to listen for 'enter' key
+        // Normally, jQuery ui's autocomplete plugin will blur the field, but
+        // that's only when an item as been selected from the autocomplete
+        // menu. This fixes the problem.
+        $searchForm.on("keydown", function(e) {
+
+            // Blur if 'enter' is pressed
+            if(e.keyCode === 13 && blurOnEnter) {
+                $(this).blur();
+            };
+        });
+
     };
 
     // Check if search keywords have loaded
@@ -3278,6 +3290,7 @@ function AppViewModel () {
     $clearSymbol.on("click", function() {
         self.resetPage();
         $clearSymbol.hide();
+        $searchForm.focus();
     });
 
     // Display only favorites from the locations array

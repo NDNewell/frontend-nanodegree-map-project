@@ -3296,7 +3296,7 @@ function AppViewModel () {
     // Display only favorites from the locations array
     self.filterFavorites = function () {
 
-        // If map is in view do not execute. This is task is already performed
+        // If map is in view do not execute. This task is already performed
         // in the manageFrames function for the map view
         // If not in map view, execute this function
         if($map.is(":hidden")) {
@@ -3314,7 +3314,7 @@ function AppViewModel () {
                 var $locationFrame = $(this),
                     $breakName = $locationFrame.children(":nth-child(2)").text();
 
-                // If a location frame's break name match's once of the user's
+                // If a location frame's break name match's one of the user's
                 // favorites, show it
                 if(userFavorites.indexOf($breakName) > -1) {
 
@@ -3326,11 +3326,11 @@ function AppViewModel () {
         // Close any open info windows
         infoWindow.close();
 
-        // Find last selected marker and make pin small again
+        // Find last selected marker and it small again
         self.makeMarkerSmall();
 
-        /* Iterate through the markers array and update the map markers
-        with any matching locations to the user's favorites */
+        // Iterate through the markers array and update the map markers
+        // with any matching locations to the user's favorites
         markers.forEach(function(marker) {
 
             // Shorten the marker title to just the break name
@@ -3356,8 +3356,8 @@ function AppViewModel () {
     // Bind click event to the 'favorite' icon on the navbar
     $favFilterSym.on( "click", function() {
 
-            /* If favorites are already visible close the filters container
-            and show all locations */
+            // If favorites are already visible close the filters container
+            // and show all locations
             if($('.favorite-filter-selected').length) {
 
                 console.log("show all locations");
@@ -3377,8 +3377,8 @@ function AppViewModel () {
                 // Reset the locations etc.
                 self.resetPage();
 
-            /* If the favorites are not visible, show them only if the user
-            has favorites in the user favorites array */
+            // If the favorites are not visible, show them only if the user
+            // has favorites in the user favorites array
             } else if (!$('.favorite-filter-selected').length && userFavorites.length > 0) {
 
                 console.log("show favorites only");
@@ -3396,15 +3396,16 @@ function AppViewModel () {
                 // Add & remove relevant classes
                 $favFilterSym.removeClass("favorite-filter-default").addClass("favorite-filter-selected");
 
-                /* If the map and search container are visible, adjust the
-                layout after the search container has been toggled. Toggling
-                the layout before the search container has been toggled
-                results in a styling error. Toggling the layout after the
-                search container has completely disappeared, adjusts the
-                layout appropriately */
-                /* Also, filter favorites after the search container
-                has been toggled and before adjusting the layout. Filtering
-                the favorites before results in a flash of unstyled content*/
+                // If the map and search container are visible, adjust the
+                // layout after the search container has been toggled. Toggling
+                // the layout before the search container has been toggled
+                // results in a styling error. Toggling the layout after the
+                // search container has completely disappeared, adjusts the
+                // layout appropriately
+                // Also, filter favorites after the search container
+                // has been toggled and before adjusting the layout. Filtering
+                // the favorites before results in a flash of unstyled
+                // content
                 if($map.is(":visible") && $searchContainer.is(":visible")) {
 
                     // Toggle the layout after the search container is hidden
@@ -3444,15 +3445,16 @@ function AppViewModel () {
 
             // Scroll to the top of the page only if 'map view' not enabled
             if(!$('.map-container-map').length) {
+
                 // Scroll to top of the page
                 document.body.scrollTop = document.documentElement.scrollTop = 0;
             };
     });
 
-    // Bind click event to button
-    /* When button's clicked, hide the filters container, remove/add
-    the necessary classes, delete the user's favorites and reset the
-    page (closes surf guide) */
+    // Bind click event to clear favorites button
+    // When button is clicked, hide the filters container, remove/add
+    // the necessary classes, delete the user's favorites and reset the
+    // page (closes surf guide)
     $clearFavsBtn.on( "click", function () {
 
         // Hide the filters container
@@ -3465,15 +3467,13 @@ function AppViewModel () {
         };
 
         // Add/remove the classes
-        $favFilterSym.removeClass("favorite-filter-selected");
-        $favFilterSym.addClass("favorite-filter-default");
+        $favFilterSym.removeClass("favorite-filter-selected").addClass("favorite-filter-default");
 
         // Clear the user's favorites
         self.removeAllFavorites();
 
         // Close the surf guide and reset the page
         self.resetPage();
-
     });
 
     // When the map close symbol is clicked, hide or show the map

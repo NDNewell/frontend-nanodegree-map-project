@@ -4338,10 +4338,10 @@ function AppViewModel () {
         self.resetPage();
     });
 
-    // When the map close symbol is clicked, hide or show the map
+    // When the map symbol is clicked, hide or show the map
     $mapSymbol.on('click', function(e) {
 
-        // remove page loader if it is visible
+        // Remove page loader if it is visible
         if($pageLoader.is(":visible")) {
             $pageLoader.remove();
         };
@@ -4352,8 +4352,8 @@ function AppViewModel () {
             $locationFrames = $('.location-frame'),
             $numLocations = $('.location-frame:visible').length;
 
-        /* If clicking the button from map view, close the map and show the
-         grid view of the location frames */
+        // If clicking the button from map view, close the map and show the
+        // grid view of the location frames
         if(mapView) {
 
             // Select/deselect the map symbol
@@ -4364,9 +4364,9 @@ function AppViewModel () {
             // Map must be hidden immediately to avoid this
             $map.hide();
 
-            /* Update the layout (do this after toggling the map symbol)
-             because 'manageView' uses it to determine if map view is
-             enabled */
+            // Update the layout (do this after toggling the map symbol)
+            // because 'manageView' uses it to determine if map view is
+            // enabled
             self.manageView();
 
             // After checking view, map container is set back to default
@@ -4380,8 +4380,8 @@ function AppViewModel () {
             self.resetFrames();
             self.resetMarkers();
 
-            /* Close the map container. Once fully closed, make all markers
-            small & close any open info windows */
+            // Close the map container. Once fully closed, make all markers
+            // small & close any open info windows
             $mapContainer.slideToggle(200, function() {
 
                 console.log('close map');
@@ -4393,7 +4393,7 @@ function AppViewModel () {
                 self.makeMarkerSmall();
             });
 
-        /* If clicking the button from grid view, close the grid and show the map view of the locations */
+        // If clicking the button from grid view, close the grid and show the // map view of the locations
         } else if(gridView) {
 
             // Scroll to top of the page
@@ -4407,9 +4407,9 @@ function AppViewModel () {
                 $map.show();
             };
 
-            /* Update the layout (do this after toggling the map symbol)
-             because 'manageView' uses it to determine if map view is
-             enabled */
+            // Update the layout (do this after toggling the map symbol)
+            // because 'manageView' uses it to determine if map view is
+            // enabled
             self.manageView();
 
             console.log('open map');
@@ -4429,14 +4429,14 @@ function AppViewModel () {
             // Resize the map immediately after it begins to fade in
             // Sometimes the window size is toggled while the map is hidden
             // Or the map size may change between different views
-            // This resizes the map to adjust to the windows new dimensions
+            // This resizes the map to adjust to the window's new dimensions
             google.maps.event.trigger(map, 'resize');
 
             // Set the map bounds after map size has been adjusted
             self.setMapBounds();
 
-        /* The guide view toggling of the map handles both opening and closing
-        the map */
+        // The guide view toggling of the map handles both opening and closing
+        // the map
         } else if (guideView && !mobileView) {
 
             // Scroll to top of the page
@@ -4472,14 +4472,14 @@ function AppViewModel () {
                     console.log('close map');};
             });
 
-        /* The mobile view toggling of the map view handles both opening
-        and closing of the map.
-        ** If the user's scroll position is above the
-        bottom of the map container, map toggling is enabled.
-        ** If the user's scroll position is below this, only enable
-        toggling of the map if it's not already visible.
-        ** If it is visible, instead of hiding it, the window is scrolled
-        to the top of the page so the user can make use of the map */
+        // The mobile view toggling of the map view handles both opening
+        // and closing of the map.
+        // ** If the user's scroll position is above the
+        // bottom of the map container, map toggling is enabled.
+        // ** If the user's scroll position is below this, only enable
+        // toggling of the map if it's not already visible.
+        // ** If it is visible, instead of hiding it, the window is scrolled
+        // to the top of the page so the user can make use of the map
         } else if (mobileView && $topOfWindow < $bottomOfMap || $topOfWindow >= $bottomOfMap && $mapContainer.is(":hidden")) {
 
             // Scroll to top of the page
@@ -4491,13 +4491,6 @@ function AppViewModel () {
             // Show the map immediately if it was hidden in map view
             if($map.is(":hidden")) {
                 $map.show();
-            };
-
-            /* Show all location frames if only one is visible.
-               However, ff only one frame is visible due to a search, then do
-               nothing */
-            if($numLocations == 1 && $locationFrames.length > 1) {
-                $locationFrames.show();
             };
 
             // Toggle the map.
@@ -4514,7 +4507,7 @@ function AppViewModel () {
                     // initiated from map controls (+/-)
                     self.addMapZoomListener();
 
-                  // When map is open and surf guide is visible:
+                    // When map is open and surf guide is visible:
                     if(guideView) {
 
                         // Center the map over the selected marker
@@ -4557,8 +4550,8 @@ function AppViewModel () {
 
             console.log('scroll to map');
 
-            /* Scroll to top of the page if the map is already open in
-            mobile view */
+            // Scroll to top of the page if the map is already open in
+            // mobile view
             document.body.scrollTop = document.documentElement.scrollTop = 0;
         };
     });

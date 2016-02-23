@@ -4386,17 +4386,22 @@ function AppViewModel () {
         };
     };
 
+    // Get the title of the surf guide
     self.displayTitle = function (breakName, location) {
         var guideTitle = '<div class="col-xs-12 guide-header">' + '<p class="title">' + '<span id="guide-break-name">' + breakName +'</span>' + ',' + ' ' + location + '</p>' + '</div>';
         return guideTitle;
     };
 
+    // Add the favorite icon to the beginning of the surf guide title
     self.displayFavoriteIcon = function(breakName) {
 
+        // Check if the location is one of the user's favorites
         if(userFavorites.indexOf(breakName) > -1) {
             var favorite = true;
         };
 
+        // If the location is one of the user's favorites, fill it in
+        // If it isn't, don't fill it
         if(favorite) {
             var icon = '<span class="favorite-wrapper-guide is-a-favorite-guide"><svg class="favorite-guide"><use xlink:href="#star"/></svg></span>';
         } else {
@@ -4406,8 +4411,12 @@ function AppViewModel () {
         return icon;
     };
 
+    // Create an icon elem constructor for each of the surf guide's icons
+    // This saves time by not having to rewrite for each guide icon
     self.setUpIcons = function (frameClass, frameTitle, imgClass, img, bgImg, bgImgClass) {
 
+        // If the icon has a background img use an elem with an extra svg frame
+        // Otherwise, construct it with only one svg
         if(bgImg) {
             var icon =
                 '<div class="' + frameClass + '" title="' + frameTitle + '">' +
@@ -4424,8 +4433,13 @@ function AppViewModel () {
         return icon;
     };
 
+    // Get the big wave icon for both the surf guide and location frame hover
+    // effects
     self.displayBigWaveIcon = function (obj, $iconContainer) {
 
+        // Set classes according to type of icon
+        // Each class styles the icon differently (i.e. black for surf guide
+        // and white for the rollover effects)
         if(rollover) {
             var frameClass = "hover-icon-frame rollover-info misc-info-one-hover-default misc-info-one-hover hover-tooltip-only",
                 imgClass = "hover-icon";
@@ -4434,15 +4448,17 @@ function AppViewModel () {
                 imgClass = "big-wave-guide";
         };
 
+        // Both types of icons receive the same title and image
         var frameTitle = "Known for big wave surfing",
             img = "#big_wave";
 
+        // Save the constructed icon elem
         var icon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
-        // If big wave and rollover, then the above icon stays set and is
-        // returned below.
-        // If big wave and not rollover, then the above icon stays set and is
-        // immediately rendered in the surf guide.
+        // If the location is known for big wave surfing and the user is
+        // hovering over the location frame, then the above icon stays set and
+        // is returned below. Otherwise, the above icon is immediately
+        // rendered in the surf guide.
         if (obj.bigWave && !rollover) {
 
             // Add big wave card to surf guide
@@ -4450,11 +4466,12 @@ function AppViewModel () {
 
             return;
 
-        // If not big wave and rollover, the icon is switched out with the
+        // If the location is not known for big wave surfing and the user is
+        // hovering over the location frame, the icon is switched out with the
         // attire icon and returned below.
-        // If not big wave and not rollover, the function is returned as there
-        // is no need to render the suggested attire in the guide (this is
-        // done in the displaySuggestedAttire func)
+        // Otherwise, the function is returned as there is no need to render
+        // the suggested attire in the guide (this is done in the
+        // displaySuggestedAttire function)
         } else if (!obj.bigWave && rollover) {
 
             var icon = self.displaySuggestedAttireIcons(obj.avgWaterTemp);
@@ -4463,12 +4480,16 @@ function AppViewModel () {
 
             return;
         };
-
         return icon;
     };
 
+    // Get the well known icon for both the surf guide and location frame hover
+    // effects
     self.displayWellKnownIcon = function (obj, $iconContainer) {
 
+        // Set classes according to type of icon
+        // Each class styles the icon differently (i.e. black for surf guide
+        // and white for the rollover effects)
         if(rollover) {
                 frameClass = "misc-info-two-hover hover-icon-frame rollover-info misc-info-two-hover-default well-known-hover hover-tooltip-only",
                 imgClass = "hover-icon";
@@ -4477,15 +4498,16 @@ function AppViewModel () {
                 imgClass = "well-known-guide";
         };
 
+        // Both types of icons receive the same title and image
         var frameTitle = "Well known around the world",
             img = "#well_known";
 
+        // Save the constructed icon elem
         var icon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
-        // If well known and rollover, then the above icon stays set and is
-        // returned below.
-        // If well known and not rollover, then the above icon stays set and is
-        // immediately rendered in the surf guide.
+        // If the location is well known and the user is hovering over the
+        // location frame, then the above icon stays set and is returned below.
+        // Otherwise, the above icon is immediately rendered in the surf guide.
         if (obj.wellKnown && !rollover) {
 
             // Add well known card to surf guide
@@ -4493,10 +4515,11 @@ function AppViewModel () {
 
             return;
 
-        // If not well known and rollover, the icon is switched out with the
-        // attire icon and returned below.
-        // If not well known and not rollover, the function is returned as
-        // there is no need to render the suggested attire in the guide (this // is done in the displaySuggestedAttire func)
+        // If the location is not well known and the user is hovering over the
+        // location frame, the icon is switched out with the hazard icon and
+        // returned below. Otherwise, the function is returned as there is no
+        // need to render the hazard icon in the guide 2x (this is done in
+        // the displayHazardIcon function)
         } else if (!obj.wellKnown && rollover) {
 
             var icon = self.displayHazardIcons(obj.hazards, $iconContainer);
@@ -4509,30 +4532,13 @@ function AppViewModel () {
         return icon;
     };
 
+    // Get the skill level icon for both the surf guide and location frame
+    // hover effects
     self.displaySkillIcon = function (obj) {
-        // Set variables for each skill level at zero
-        var beginner = 0;
-        var intermediate = 0;
-        var advanced = 0;
 
-        var skillLevelLength = obj.length;
-
-        for (var i = skillLevelLength; i--;) {
-            switch (obj[i]) {
-                case 'beginner':
-                    beginner++;
-                break;
-
-                case 'intermediate':
-                    intermediate++;
-                break;
-
-                case 'advanced':
-                    advanced++;
-                break
-            }
-        };
-
+        // Set classes according to type of icon
+        // Each class styles the icon differently (i.e. black for surf guide
+        // and white for the rollover effects)
         if(rollover) {
             var frameClass = "hover-icon-frame rollover-info skill-level-hover-default skill-level-hover hover-tooltip-only",
                 imgClass = "hover-icon",
@@ -4543,46 +4549,50 @@ function AppViewModel () {
                 bgImgClass = "skill-level-bg-guide";
         };
 
+        // For styling purposes, create a background image for skill level icon
+        // The bg img serves as the levels that will be filled in with an over-
+        // lay image. This was needed due to the limits of coloring an svg from
+        // an external style sheet via css.
         var bgImg = "#skill_level_all";
 
-        if (beginner === intermediate && beginner === advanced) {
+        // Check the array for any of the skill levels. For each present skill
+        // level in the skill level array, render the appropriate icon
+        if(obj.indexOf("beginner") > -1 && obj.indexOf("intermediate") > -1 && obj.indexOf("advanced") > -1) {
 
             var frameTitle = "Difficulty: All levels",
                 img = "#skill_level_all";
 
             var skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
 
-        } else if (beginner >= intermediate && beginner > advanced) {
-            if(beginner === intermediate) {
+        } else if(obj.indexOf("beginner") > -1 && obj.indexOf("intermediate") > -1 && obj.indexOf("advanced") < 0) {
 
                 var frameTitle = "Difficulty: Beginner to Intermediate",
                     img = "#skill_level_beginner_intermediate";
 
                 var skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
 
-                return skillLevelIcon;
-            } else {
+        } else if(obj.indexOf("beginner") > -1 && obj.indexOf("intermediate") < 0 && obj.indexOf("advanced") < 0) {
 
                 var frameTitle = "Difficulty: Beginner",
                     img = "#skill_level_beginner";
 
                 var skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
-            };
-        } else if (intermediate > beginner && intermediate >= advanced) {
-            if(intermediate === advanced) {
+
+        } else if(obj.indexOf("beginner") < 0 && obj.indexOf("intermediate") > -1 && obj.indexOf("advanced") > -1) {
 
                 var frameTitle = "Difficulty: Intermediate to Advanced",
                     img = "#skill_level_intermediate_advanced";
 
                 var skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
-            } else {
+
+        } else if(obj.indexOf("beginner") < 0 && obj.indexOf("intermediate") > -1 && obj.indexOf("advanced") < 0) {
 
                 var frameTitle = "Difficulty: Intermediate",
                     img = "#skill_level_intermediate";
 
                 var skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
-            };
-        } else {
+
+        } else if(obj.indexOf("beginner") < 0 && obj.indexOf("intermediate") < 0 && obj.indexOf("advanced") > -1) {
 
                 var frameTitle = "Difficulty: Advanced",
                     img = "#skill_level_advanced";

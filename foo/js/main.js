@@ -6109,7 +6109,7 @@ function AppViewModel () {
         return climateIcon;
     };
 
-    // Render the cost info for the surf guide or hover icon
+    // Render the cost info for the surf guide or hover effects
     self.displayCost = function (obj, $iconContainer) {
 
         // If hovering over the location's location frame show only the
@@ -6262,36 +6262,45 @@ function AppViewModel () {
         };
     };
 
+    // Get the current season's avg water temperature
     self.displayCurrentWaterTemp = function (obj) {
 
+        // Get the current season
         var currentSeason = getCurrentSeason();
 
+        // Get avg water temp
         switch(currentSeason) {
-          case 'winter':
-            var waterTemp = obj.winter;
-          break;
+            case 'winter':
+                var waterTemp = obj.winter;
+            break;
 
-          case 'spring':
-            var waterTemp = obj.spring;
-          break
+            case 'spring':
+                var waterTemp = obj.spring;
+            break
 
-          case 'summer':
-            var waterTemp = obj.summer;
-          break;
+            case 'summer':
+                var waterTemp = obj.summer;
+            break;
 
-          case 'autumn':
-            var waterTemp = obj.autumn;
-          break
+            case 'autumn':
+                var waterTemp = obj.autumn;
+            break
         };
 
+        // Create an elem
         var waterTempInfo = '<p class="rollover-info water-temp-hover-default water-temp-hover" title="Average ' + currentSeason + ' water temperature">' + waterTemp + '℉' + '</p>';
 
         return waterTempInfo;
     };
 
+    // Get and display wave size either as text on the location frame during
+    // hovering or in the surf guide within an icon
     self.displayWaveSize = function (obj) {
-        /* Check if the average maximum wave size
-        sometimes goes above the max. If it does, save a plus sign in a variable to add to the min/max wave height */
+
+        // Check if the average maximum wave size
+        // sometimes goes above the max. If it does, save a plus sign in a
+        // variable to add to the min/max wave height
+        // If the wave doesn't go above the max, the plus sign will not appear
         if (obj.aboveMax) {
             var plus = '+';
         } else {
@@ -6299,15 +6308,21 @@ function AppViewModel () {
         };
 
         if(rollover) {
-            /* Cache the average wave height */
+
+            // Display the info in the bottom right corner of the location
+            // frame upon hovering over it
             var waveSizeInfo = '<p class="rollover-info wave-size-hover-default wave-size-hover" title="Average wave size">' + obj.min + "-" + obj.max + "'" +'</p>';
+
         } else {
+
+            // Render the average wave break size as an icon in the surf guide
             var waveSizeInfo = '<div class="wave-size card" title="Average wave size">' + '<svg class="wave-size-guide"><use xlink:href="#wave_range"/></svg>' + '<p>' + obj.min + "-" + obj.max + plus + "ft" + '</p>' + '</div>';
         };
 
         return waveSizeInfo;
     };
 
+    // Obtain the current season based on the current month
     self.getCurrentSeason = function () {
 
         // Get today's date and month
@@ -6315,63 +6330,71 @@ function AppViewModel () {
         var month = today.getMonth();
 
         switch (month) {
-          case 11 :
-          case 0 :
-          case 1 :
-              var currentSeason = 'winter';
-          break;
+            case 11 :
+            case 0 :
+            case 1 :
+                var currentSeason = 'winter';
+            break;
 
-          case 2:
-          case 3:
-          case 4:
-              var currentSeason = 'spring';
-          break;
+            case 2:
+            case 3:
+            case 4:
+                var currentSeason = 'spring';
+            break;
 
-          case 5:
-          case 6:
-          case 7:
-              var currentSeason = 'summer';
-          break;
+            case 5:
+            case 6:
+            case 7:
+                var currentSeason = 'summer';
+            break;
 
-          case 8:
-          case 9:
-          case 10:
-              var currentSeason = 'autumn';
-          break;
+            case 8:
+            case 9:
+            case 10:
+                var currentSeason = 'autumn';
+            break;
         };
 
         return currentSeason;
     };
 
+    // Render the hazard icons either when hovering over a location frame
+    // or within th surf guide
     self.displayHazardIcons = function (obj, $iconContainer) {
 
+        // Save the length of the hazards array
+        var hazardLength = obj.length;
+
         if(rollover) {
-            /* Generate a number between min and max to
-            render a random hazard in case wave is not
-            well known */
-            // Set a random number within a given range
-            var min = 0;
-            var max = obj.length;
 
-            var randomArrayItem = Math.floor((Math.random() * (max - min)) + min);
-
-            var randomHazard = obj[randomArrayItem];
-            var miscInfoTwoIcon = hazards(randomHazard);
+            // Generate a number between in order to select a random hazard
+            // in within the hazard array
+            // The random number will select any of array's index values
+            // Get the hazard icon that matches the random index value
+            var randomArryItem = Math.floor(Math.random() * hazardLength),
+                randomHazard = obj[randomArryItem],
+                miscInfoTwoIcon = hazards(randomHazard);
 
             return miscInfoTwoIcon;
 
         } else {
 
-            var hazardsLength = obj.length;
+            // Loop through the location's hazards and render the appropriate
+            // icons in the surf guide
+            for (var i = hazardLength; i--;) {
 
-            for (var i = hazardsLength; i--;) {
+                // Call the hazards function for each of the locations hazards
+                // rending its icon
                 hazards(obj[i], $iconContainer);
             }
 
         };
 
+        // Get the appropriate hazard icons to render in the surf guide or
+        // display on hovering a location frame
         function hazards (hazard, $iconContainer) {
 
+            // Set the relevant classes for the hover and surf guide icons
             if(rollover) {
                 var frameClass = "misc-info-two-hover hover-icon-frame rollover-info misc-info-two-hover-default hover-tooltip-only",
                     imgClass = "hover-icon misc-info-two-hover-svg";
@@ -6380,171 +6403,154 @@ function AppViewModel () {
                     imgClass = "hazard-guide";
             };
 
+            // Match and return the appropriate hazard icon with the parameter
             switch (hazard) {
 
                 case 'beginners':
 
                     var frameTitle = "Hazard: Beginners",
-                        img = "#hazards_beginners";
-
-                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        img = "#hazards_beginners",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
                 break;
 
                 case 'boats':
 
                     var frameTitle = "Hazard: Boats",
-                        img = "#hazards_boats";
-
-                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        img = "#hazards_boats",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'crocs':
 
                     var frameTitle = "Hazard: Crocodiles",
-                        img = "#hazards_crocs";
-
-                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        img = "#hazards_crocs",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'crowded':
 
                     var frameTitle = "Hazard: Crowded",
-                        img = "#hazards_crowded";
-
-                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        img = "#hazards_crowded",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'dangerous break':
 
                     var frameTitle = "Hazard: Dangerous break",
-                        img = "#hazards_dangerous_break";
-
-                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        img = "#hazards_dangerous_break",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'far from shore':
 
                     var frameTitle = "Hazard: Far from shore",
-                        img = "#hazards_far_from_shore";
-
-                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        img = "#hazards_far_from_shore",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'pollution':
 
                     var frameTitle = "Hazard: Pollution",
-                        img = "#hazards_pollution";
-
-                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        img = "#hazards_pollution",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'rocky bottom':
 
                     var frameTitle = "Hazard: Rocky bottom",
-                        img = "#hazards_rocky_bottom";
-
-                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        img = "#hazards_rocky_bottom",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'sea snakes':
 
                     var frameTitle = "Hazard: Sea snakes",
-                        img = "#hazards_sea_snakes";
-
-                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        img = "#hazards_sea_snakes",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'seals':
 
                     var frameTitle = "Hazard: Seals",
-                        img = "#hazards_seals";
-
-                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        img = "#hazards_seals",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'seaweed':
 
                     var frameTitle = "Hazard: Seaweed",
-                        img = "#hazards_seaweed";
-
-                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        img = "#hazards_seaweed",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'sewage':
 
                     var frameTitle = "Hazard: Sewage",
-                        img = "#hazards_sewage";
-
-                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        img = "#hazards_sewage",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'shallow':
 
                     var frameTitle = "Hazard: Shallow break",
-                        img = "#hazards_shallow";
-
-                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        img = "#hazards_shallow",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'sharks':
 
                     var frameTitle = "Hazard: Sharks",
-                        img = "#hazards_sharks";
-
-                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        img = "#hazards_sharks",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'strong currents':
 
                     var frameTitle = "Hazard: Strong currents",
-                        img = "#hazards_strong_currents";
-
-                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        img = "#hazards_strong_currents",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'strong rips':
 
                     var frameTitle = "Hazard: Strong rips",
-                        img = "#hazards_strong_rips";
-
-                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        img = "#hazards_strong_rips",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'theft':
 
                     var frameTitle = "Hazard: Theft",
-                        img = "#hazards_theft";
-
-                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        img = "#hazards_theft",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'undertow':
 
                     var frameTitle = "Hazard: Strong undertow",
-                        img = "#hazards_undertow";
-
-                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        img = "#hazards_undertow",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'unfriendly':
 
                     var frameTitle = "Hazard: Unfriendly",
-                        img = "#hazards_unfriendly";
-
-                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        img = "#hazards_unfriendly",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
                 case 'urchins':
 
                     var frameTitle = "Hazard: Urchins",
-                        img = "#hazards_urchins";
-
-                    var hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        img = "#hazards_urchins",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
                 break;
 
             }
 
+            // If hovering over a the location's location frame return the icon
+            // Otherwise render it in the surf guide in the icon container
             if(rollover) {
 
                 return hazardIcon;
@@ -6552,7 +6558,6 @@ function AppViewModel () {
 
                 $iconContainer.append(hazardIcon);
             };
-
         };
     };
 

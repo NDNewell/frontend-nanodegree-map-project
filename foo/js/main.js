@@ -5422,44 +5422,38 @@ function AppViewModel () {
         if(obj.indexOf("beginner") > -1 && obj.indexOf("intermediate") > -1 && obj.indexOf("advanced") > -1) {
 
             var frameTitle = "Difficulty: All levels",
-                img = "#skill_level_all";
-
-            var skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
+                img = "#skill_level_all",
+                skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
 
         } else if(obj.indexOf("beginner") > -1 && obj.indexOf("intermediate") > -1 && obj.indexOf("advanced") < 0) {
 
             var frameTitle = "Difficulty: Beginner to Intermediate",
-                img = "#skill_level_beginner_intermediate";
-
-            var skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
+                img = "#skill_level_beginner_intermediate",
+                skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
 
         } else if(obj.indexOf("beginner") > -1 && obj.indexOf("intermediate") < 0 && obj.indexOf("advanced") < 0) {
 
             var frameTitle = "Difficulty: Beginner",
-                img = "#skill_level_beginner";
-
-            var skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
+                img = "#skill_level_beginner",
+                skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
 
         } else if(obj.indexOf("beginner") < 0 && obj.indexOf("intermediate") > -1 && obj.indexOf("advanced") > -1) {
 
             var frameTitle = "Difficulty: Intermediate to Advanced",
-                img = "#skill_level_intermediate_advanced";
-
-            var skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
+                img = "#skill_level_intermediate_advanced",
+                skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
 
         } else if(obj.indexOf("beginner") < 0 && obj.indexOf("intermediate") > -1 && obj.indexOf("advanced") < 0) {
 
             var frameTitle = "Difficulty: Intermediate",
-                img = "#skill_level_intermediate";
-
-            var skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
+                img = "#skill_level_intermediate",
+                skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
 
         } else if(obj.indexOf("beginner") < 0 && obj.indexOf("intermediate") < 0 && obj.indexOf("advanced") > -1) {
 
             var frameTitle = "Difficulty: Advanced",
-                img = "#skill_level_advanced";
-
-            var skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
+                img = "#skill_level_advanced",
+                skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
         };
 
         return skillLevelIcon;
@@ -5486,34 +5480,30 @@ function AppViewModel () {
             case 'left':
 
                 var frameTitle = "Wave breaks left",
-                        img = "#direction_left";
-
-                var directionIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    img = "#direction_left",
+                    directionIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
             break;
 
             case 'right':
 
                 var frameTitle = "Wave breaks right",
-                        img = "#direction_right";
-
-                var directionIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    img = "#direction_right",
+                    directionIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
             break;
 
             case 'left & right':
 
                 var frameTitle = "Wave breaks left & right",
-                        img = "#direction_both";
-
-                var directionIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    img = "#direction_both",
+                    directionIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
             break;
         }
 
         return directionIcon;
     };
 
-    // Get the break type icon for both the surf guide and location frame
-    // hover effects
+
     self.displayBreakIcon = function (obj) {
 
         // Set classes according to type of icon
@@ -5532,33 +5522,29 @@ function AppViewModel () {
             case 'reef':
 
                 var frameTitle = "Reef break",
-                    img = "#break_reef";
-
-                var breakIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    img = "#break_reef",
+                    breakIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
             break;
 
             case 'beach':
 
                 var frameTitle = "Beach break",
-                    img = "#break_beach";
-
-                var breakIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    img = "#break_beach",
+                    breakIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
             break;
 
             case 'point':
 
                 var frameTitle = "Point break",
-                    img = "#break_point";
-
-                var breakIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    img = "#break_point",
+                    breakIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
             break;
 
             case 'river mouth':
 
                 var frameTitle = "Breaks at a river mouth",
-                    img = "#break_river_mouth";
-
-                var breakIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    img = "#break_river_mouth",
+                    breakIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
             break;
         }
 
@@ -5718,69 +5704,65 @@ function AppViewModel () {
         if(obj.indexOf("low") > -1 && obj.indexOf("mid") > -1 && obj.indexOf("high") > -1) {
 
             var frameTitle = "Best Tide: All",
-                img = "#tide_all";
-
-            var tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                img = "#tide_all",
+                tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
         } else if(obj.indexOf("low") > -1 && obj.indexOf("mid") > -1 && obj.indexOf("high") < 0) {
 
             var frameTitle = "Best Tide: Low & Mid",
-                img = "#tide_low_mid";
-
-            var tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                img = "#tide_low_mid",
+                tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
         } else if(obj.indexOf("low") > -1 && obj.indexOf("mid") < 0 && obj.indexOf("high") > -1) {
 
             var frameTitle = "Best Tide: Low & High",
-                img = "#tide_low_high";
-
-            var tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                img = "#tide_low_high",
+                tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
         } else if(obj.indexOf("low") > -1 && obj.indexOf("mid") < 0 && obj.indexOf("high") < 0) {
 
             var frameTitle = "Best Tide: Low",
-                img = "#tide_low";
-
-            var tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                img = "#tide_low",
+                tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
         } else if(obj.indexOf("low") < 0 && obj.indexOf("mid") > -1 && obj.indexOf("high") > -1) {
 
             var frameTitle = "Best Tide: High & Mid",
-                img = "#tide_high_mid";
-
-            var tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                img = "#tide_high_mid",
+                tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
         } else if(obj.indexOf("low") < 0 && obj.indexOf("mid") > -1 && obj.indexOf("high") < 0) {
 
             var frameTitle = "Best Tide: Mid",
-                img = "#tide_mid";
-
-            var tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                img = "#tide_mid",
+                tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
         } else if(obj.indexOf("low") < 0 && obj.indexOf("mid") < 0 && obj.indexOf("high") > -1) {
 
             var frameTitle = "Best Tide: High",
-                img = "#tide_high";
-
-            var tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                img = "#tide_high",
+                tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
         };
 
         return tideIcon;
     };
 
+    // Get the best season icon for both the surf guide and location frame
+    // hover effects
     self.displayBestSeasonIcon = function (obj) {
 
         // Set variables for each season at zero
-        var spring = 0;
-        var summer = 0;
-        var autumn = 0;
-        var winter = 0;
+        var spring = 0,
+            summer = 0,
+            autumn = 0,
+            winter = 0;
 
-        /* Tally the number of months fall into a
-        particular season */
-
+        // Save the length of the array
         var bestSeasonLength = obj.length;
 
+        // Loop through the location's best months for surfing.
+        // For each month found increment the season in which it passes
+        // This will provide data for the location's best season(s) for surfing
         for (var i = bestSeasonLength; i--;) {
             switch (obj[i]) {
                 case ' Dec':
@@ -5807,8 +5789,11 @@ function AppViewModel () {
                     autumn++;
                 break
             }
-        }
+        };
 
+        // Set classes according to type of icon
+        // Each class styles the icon differently (i.e. black for surf guide
+        // and white for the rollover effects)
         if(rollover) {
             var frameClass = "hover-icon-frame rollover-info best-season-hover-default best-season-hover hover-tooltip-only",
                 imgClass = "hover-icon";
@@ -5817,84 +5802,74 @@ function AppViewModel () {
                 imgClass = "best-season-guide";
         };
 
-        /* Filter which seasons are the best for the
-        particular break */
-        /* Display icon associated with best time of
-        year */
+        // Filter the break's best seasons for surfing
+        // Display icon associated with best time of year to surf
+        // The season with the highest value is the best season
+        // Any seasons that are equal in value are also displayed
+        // One, two, or all seasons are possiblities
         if (winter === spring && winter === summer && winter === autumn) {
 
             var frameTitle = "Best Season: All",
-                img = "#season_all";
-
-            var bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                img = "#season_all",
+                bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
         } else if(winter >= spring && winter >= summer && winter >= autumn) {
             if(winter === spring) {
 
                 var frameTitle = "Best Season: Winter & Spring",
-                img = "#season_winter_spring";
-
-                var bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    img = "#season_winter_spring",
+                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
             } else if (winter === summer) {
 
                 var frameTitle = "Best Season: Winter & Summer",
-                img = "#season_winter_summer";
-
-                var bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    img = "#season_winter_summer",
+                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
             } else if (winter === autumn) {
 
                 var frameTitle = "Best Season: Winter & Autumn",
-                img = "#season_winter_autumn";
-
-                var bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    img = "#season_winter_autumn",
+                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
             } else {
 
                 var frameTitle = "Best Season: Winter",
-                img = "#season_winter";
-
-                var bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    img = "#season_winter",
+                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
             };
         } else if (spring >= summer && spring >= autumn && spring > winter) {
             if (spring === summer) {
 
                 var frameTitle = "Best Season: Spring & Summer",
-                img = "#season_spring_summer";
-
-                var bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    img = "#season_spring_summer",
+                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
             } else if (spring === autumn) {
 
                 var frameTitle = "Best Season: Spring & Autumn",
-                img = "#season_spring_autumn";
-
-                var bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    img = "#season_spring_autumn",
+                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
             } else {
 
                 var frameTitle = "Best Season: Spring",
-                img = "#season_spring";
-
-                var bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    img = "#season_spring",
+                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
             };
         } else if (summer >= autumn && summer > winter && summer > spring) {
             if(summer === autumn) {
 
                 var frameTitle = "Best Season: Summer & Autumn",
-                img = "#season_summer_autumn";
-
-                var bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    img = "#season_summer_autumn",
+                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
             } else {
 
                 var frameTitle = "Best Season: Summer",
-                img = "#season_ummer";
-
-                var bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    img = "#season_ummer",
+                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
             };
         } else {
 
                 var frameTitle = "Best Season: Autumn",
-                img = "#season_autumn";
-
-                var bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    img = "#season_autumn",
+                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
         };
 
         return bestSeasonIcon;

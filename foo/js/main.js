@@ -5428,38 +5428,38 @@ function AppViewModel () {
 
         } else if(obj.indexOf("beginner") > -1 && obj.indexOf("intermediate") > -1 && obj.indexOf("advanced") < 0) {
 
-                var frameTitle = "Difficulty: Beginner to Intermediate",
-                    img = "#skill_level_beginner_intermediate";
+            var frameTitle = "Difficulty: Beginner to Intermediate",
+                img = "#skill_level_beginner_intermediate";
 
-                var skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
+            var skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
 
         } else if(obj.indexOf("beginner") > -1 && obj.indexOf("intermediate") < 0 && obj.indexOf("advanced") < 0) {
 
-                var frameTitle = "Difficulty: Beginner",
-                    img = "#skill_level_beginner";
+            var frameTitle = "Difficulty: Beginner",
+                img = "#skill_level_beginner";
 
-                var skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
+            var skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
 
         } else if(obj.indexOf("beginner") < 0 && obj.indexOf("intermediate") > -1 && obj.indexOf("advanced") > -1) {
 
-                var frameTitle = "Difficulty: Intermediate to Advanced",
-                    img = "#skill_level_intermediate_advanced";
+            var frameTitle = "Difficulty: Intermediate to Advanced",
+                img = "#skill_level_intermediate_advanced";
 
-                var skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
+            var skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
 
         } else if(obj.indexOf("beginner") < 0 && obj.indexOf("intermediate") > -1 && obj.indexOf("advanced") < 0) {
 
-                var frameTitle = "Difficulty: Intermediate",
-                    img = "#skill_level_intermediate";
+            var frameTitle = "Difficulty: Intermediate",
+                img = "#skill_level_intermediate";
 
-                var skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
+            var skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
 
         } else if(obj.indexOf("beginner") < 0 && obj.indexOf("intermediate") < 0 && obj.indexOf("advanced") > -1) {
 
-                var frameTitle = "Difficulty: Advanced",
-                    img = "#skill_level_advanced";
+            var frameTitle = "Difficulty: Advanced",
+                img = "#skill_level_advanced";
 
-                var skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
+            var skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
         };
 
         return skillLevelIcon;
@@ -5706,77 +5706,58 @@ function AppViewModel () {
         };
     };
 
+    // Get the tide icon to display the best tide for the surf guide only
     self.displayTideIcon = function (obj) {
 
-        // Set variables for each skill level at zero
-        var low = 0;
-        var mid = 0;
-        var high = 0;
-
-        var tideLength = obj.length;
-        for (var i = tideLength; i--;) {
-            switch (obj[i]) {
-                case 'low':
-                    low++;
-                break;
-
-                case 'mid':
-                    mid++;
-                break;
-
-                case 'high':
-                    high++;
-                break
-            }
-        };
-
-
+        // Set classes
         var frameClass = "tide card",
             imgClass = "tide-guide";
 
-        if (low === mid && low === high) {
+        // Check the array for any of the tide levels. For each tide level pre-
+        // sent in the array, render the appropriate icon
+        if(obj.indexOf("low") > -1 && obj.indexOf("mid") > -1 && obj.indexOf("high") > -1) {
 
             var frameTitle = "Best Tide: All",
                 img = "#tide_all";
 
             var tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
-        } else if (low >= mid && low >= high) {
-            if(low === mid) {
+        } else if(obj.indexOf("low") > -1 && obj.indexOf("mid") > -1 && obj.indexOf("high") < 0) {
 
-                var frameTitle = "Best Tide: Low & Mid",
-                    img = "#tide_low_mid";
+            var frameTitle = "Best Tide: Low & Mid",
+                img = "#tide_low_mid";
 
-                var tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+            var tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
-            } else if (low === high) {
+        } else if(obj.indexOf("low") > -1 && obj.indexOf("mid") < 0 && obj.indexOf("high") > -1) {
 
-                var frameTitle = "Best Tide: Low & High",
-                    img = "#tide_low_high";
+            var frameTitle = "Best Tide: Low & High",
+                img = "#tide_low_high";
 
-                var tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
-            } else {
+            var tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
-                var frameTitle = "Best Tide: Low",
-                    img = "#tide_low";
+        } else if(obj.indexOf("low") > -1 && obj.indexOf("mid") < 0 && obj.indexOf("high") < 0) {
 
-                var tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
-            };
-        } else if (mid > low && mid >= high) {
-            if(mid === high) {
+            var frameTitle = "Best Tide: Low",
+                img = "#tide_low";
 
-                var frameTitle = "Best Tide: High & Mid",
-                    img = "#tide_high_mid";
+            var tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
-                var tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
-            } else {
+        } else if(obj.indexOf("low") < 0 && obj.indexOf("mid") > -1 && obj.indexOf("high") > -1) {
 
-                var frameTitle = "Best Tide: Mid",
-                    img = "#tide_low_mid";
+            var frameTitle = "Best Tide: High & Mid",
+                img = "#tide_high_mid";
 
-                var tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
-            };
-        } else {
+            var tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+
+        } else if(obj.indexOf("low") < 0 && obj.indexOf("mid") > -1 && obj.indexOf("high") < 0) {
+
+            var frameTitle = "Best Tide: Mid",
+                img = "#tide_mid";
+
+            var tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+
+        } else if(obj.indexOf("low") < 0 && obj.indexOf("mid") < 0 && obj.indexOf("high") > -1) {
 
             var frameTitle = "Best Tide: High",
                 img = "#tide_high";

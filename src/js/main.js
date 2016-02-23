@@ -4944,7 +4944,7 @@ function AppViewModel () {
         // Display icon associated with best time of year to surf
         // The season with the highest value is the best season
         // Any seasons that are equal in value are also displayed
-        // One, two, or all seasons are possiblities
+        // One, two, or all seasons are possiblities.
         if (winter === spring && winter === summer && winter === autumn) {
 
             var frameTitle = "Best Season: All",
@@ -4980,6 +4980,7 @@ function AppViewModel () {
                 var frameTitle = "Best Season: Spring & Summer",
                     img = "#season_spring_summer",
                     bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+
             } else if (spring === autumn) {
 
                 var frameTitle = "Best Season: Spring & Autumn",
@@ -5013,54 +5014,62 @@ function AppViewModel () {
         return bestSeasonIcon;
     };
 
-    self.displaySuggestedAttireIcons = function (obj, $iconContainer) {
+    // Get the suggested attire icon for both the surf guide and location frame
+    // hover effects
+    self.displaySuggestedAttireIcons = function (seasons, $iconContainer) {
 
+        // If not hovering over the location frame, get the icon for the
+        // the surf guide
         if(!rollover) {
 
-            var season = 0;
-            /* Loop through the average water temps for each time of year. Designate specific water attire for each time of year */
-            for (var temp in obj) {
+            // Loop through the average each season and save its avg water temp
+            // Designate specific water attire (gear) for each season
+            for (var season in seasons) {
 
-                season++;
-                var gear = determineGear(obj[temp]);
+                // Save the avg temp and suggested gear for the season
+                var temp = seasons[season],
+                    gear = determineGear(temp);
 
+                // Render an icon for each season in the surf guide
                 drawSeasonIcon(gear, season);
-
             };
 
+            // Render the season icon for each season
+            // This displays an image of the season's suggested attire
+            // depending on the season's avg water temp
+            // First, the season img is appended to the container
+            // Next, the suggested gear img is appended
             function drawSeasonIcon(gear, season) {
 
+                // Save a ref to classes commonly shared by all of the icons
                 var imgClass = "suggested-attire-season-guide suggested-attire-guide";
 
-                if(season === 1) {
+                if(season === "spring") {
 
                     var frameClass = "water-temp spring card",
                         frameTitle = "Suggested spring attire",
-                        img = "#water_temp_spring";
-
-                    var icon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        img = "#water_temp_spring",
+                        icon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
                     $iconContainer.append(icon);
                     $('.spring').append(gear);
 
-                } else if (season === 2) {
+                } else if (season === "summer") {
 
                     var frameClass = "water-temp summer card",
                         frameTitle = "Suggested summer attire",
-                        img = "#water_temp_summer";
-
-                    var icon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        img = "#water_temp_summer",
+                        icon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
                     $iconContainer.append(icon);
                     $('.summer').append(gear);
 
-                } else if (season === 3) {
+                } else if (season === "autumn") {
 
                     var frameClass = "water-temp autumn card",
                         frameTitle = "Suggested autumn attire",
-                        img = "#water_temp_autumn";
-
-                    var icon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        img = "#water_temp_autumn",
+                        icon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
                     $iconContainer.append(icon);
                     $('.autumn').append(gear);
@@ -5069,61 +5078,96 @@ function AppViewModel () {
 
                     var frameClass = "water-temp winter card",
                         frameTitle = "Suggested winter attire",
-                        img = "#water_temp_winter";
-
-                    var icon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        img = "#water_temp_winter",
+                        icon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
                     $iconContainer.append(icon);
                     $('.winter').append(gear);
                 };
             };
 
-            // Highlight current season's attire
+            // Determine the current season
             var currentSeason = getCurrentSeason();
 
-            if(currentSeason === 'winter') {
-                $('.winter').addClass("highlight-attire");
-            } else if (currentSeason === 'spring') {
-                $('.spring').addClass("highlight-attire");
-            } else if (currentSeason === 'winter') {
-                $('.summer').addClass("highlight-attire");
-            } else if (currentSeason === 'autumn') {
-                $('.autumn').addClass("highlight-attire");
+            // Highlight current season to indicate to the user
+            // the current season's suggested attire
+            switch(currentSeason) {
+                case 'winter':
+                    $('.winter').addClass("highlight-attire");
+                break;
+
+                case 'spring':
+                    $('.spring').addClass("highlight-attire");
+                break
+
+                case 'summer':
+                    $('.summer').addClass("highlight-attire");
+                break;
+
+                case 'autumn':
+                    $('.autumn').addClass("highlight-attire");
+                break
             };
 
+        // If hovering over the location's location frame display only the
+        // current season's suggested attire image
         } else {
 
+            // Determine the current season
             var currentSeason = getCurrentSeason();
 
-            if(currentSeason === 'winter') {
-                var suggestedAttireIcon = determineGear(obj.winter);
-            } else if (currentSeason === 'spring') {
-                var suggestedAttireIcon = determineGear(obj.spring);
-            } else if (currentSeason === 'winter') {
-                var suggestedAttireIcon = determineGear(obj.summer);
-            } else if (currentSeason === 'autumn') {
-                var suggestedAttireIcon = determineGear(obj.autumn);
+            // Get the suggested attire icon according to the current season
+            // by passing the season's avg temp as a parameter to determine
+            // the gear.
+            switch(currentSeason) {
+                case 'winter':
+                    var suggestedAttireIcon = determineGear(seasons.winter);
+                break;
+
+                case 'spring':
+                    var suggestedAttireIcon = determineGear(seasons.spring);
+                break
+
+                case 'summer':
+                    var suggestedAttireIcon = determineGear(seasons.summer);
+                break;
+
+                case 'autumn':
+                    var suggestedAttireIcon = determineGear(seasons.autumn);
+                break
             };
 
             return suggestedAttireIcon;
         };
 
+        // Based on the current season's avg temp, get relevant attire img
+        // to display when the user hovers over the location's location frame
         function determineGear (temp) {
 
-            // Cache details for the hover icons
+            // Cache classes for the hover icon
             var frameClass = "hover-icon-frame rollover-info misc-info-one-hover-default misc-info-one-hover hover-tooltip-only",
                 imgClass = "hover-icon";
 
-            if(temp > 59) {
-                if(temp > 72) {
 
+            // If the user is hovering over the location frame, construct and
+            // render the icon
+            // If the suggested attire is being collected for rendering in the
+            // surf guide, return only the img
+            // To save processing, set only two conditions first
+            // Determine first if the avg temp is greater/ equal & lower than
+            // 59F
+            if(temp > 59) {
+
+                // Further separate the conditions statement into only three
+                // conditions
+                // If the avg temp is > 59 F, evaluate using the following
+                // three conditions: temp is > 72, > 66, or > 59
+                if(temp > 72) {
                     if(rollover) {
 
-                        var img = "#ro_water_attire_boardies",
-
-                        frameTitle = "It's currently warm enough for boardies =)";
-
-                        var gear = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        var img = "#ro_water_attire_boardies"
+                            frameTitle = "It's currently warm enough for boardies =)",
+                            gear = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
                     } else {
 
@@ -5133,11 +5177,9 @@ function AppViewModel () {
 
                     if(rollover) {
 
-                        var img = "#ro_water_attire_2mm_wetsuit",
-
-                        frameTitle = "A 2mm wetsuit is recommended for this time of year";
-
-                        var gear = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        var img = "#ro_water_attire_2mm_wetsuit"
+                            frameTitle = "A 2mm wetsuit is recommended for this time of year",
+                            gear = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
                     } else {
                         var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide"><use xlink:href="#water_attire_2mm_wetsuit"/></svg>';
@@ -5146,26 +5188,25 @@ function AppViewModel () {
 
                     if(rollover) {
 
-                        var img = "#ro_water_attire_3mm_wetsuit",
-
-                        frameTitle = "A 3mm wetsuit is recommended for this time of year";
-
-                        var gear = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        var img = "#ro_water_attire_3mm_wetsuit"
+                            frameTitle = "A 3mm wetsuit is recommended for this time of year",
+                            gear = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
                     } else {
                         var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide"><use xlink:href="#water_attire_3mm_wetsuit"/></svg>';
                     };
                 };
+
+            // If the avg temp is <= 59 F evaluate using the following
+            // three conditions: temp is > 54, > 48, or <= 48
             } else {
                 if (temp > 54) {
 
                     if(rollover) {
 
                         var img = "#ro_water_attire_4mm_wetsuit",
-
-                        frameTitle = "A 4mm wetsuit and boots are recommended for this time of year";
-
-                        var gear = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                            frameTitle = "A 4mm wetsuit and boots are recommended for this time of year",
+                            gear = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
                     } else {
                         var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide"><use xlink:href="#water_attire_4mm_wetsuit"/></svg>';
@@ -5174,10 +5215,8 @@ function AppViewModel () {
                     if(rollover) {
 
                         var img = "#ro_water_attire_5mm_wetsuit",
-
-                        frameTitle = "A 5mm wetsuit, gloves, and boots are recommended for this time of year";
-
-                        var gear = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                            frameTitle = "A 5mm wetsuit, gloves, and boots are recommended for this time of year",
+                            gear = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
                     } else {
                         var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide"><use xlink:href="#water_attire_5mm_wetsuit"/></svg>';
@@ -5186,10 +5225,8 @@ function AppViewModel () {
                     if(rollover) {
 
                         var img = "#ro_water_attire_6mm_wetsuit",
-
-                        frameTitle = "A 6mm wetsuit, gloves, boots, and a hood are recommended for this time of year";
-
-                        var gear = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                            frameTitle = "A 6mm wetsuit, gloves, boots, and a hood are recommended for this time of year",
+                            gear = self.setUpIcons(frameClass, frameTitle, imgClass, img);
 
                     } else {
                         var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide"><use xlink:href="#water_attire_6mm_wetsuit"/></svg>';
@@ -5365,6 +5402,7 @@ function AppViewModel () {
     };
 
     self.getCurrentSeason = function () {
+
         // Get today's date and month
         var today = new Date();
         var month = today.getMonth();

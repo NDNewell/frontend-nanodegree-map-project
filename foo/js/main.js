@@ -6100,6 +6100,8 @@ function AppViewModel () {
         };
     };
 
+    // Render an icon in the surf guide that shows the Köppen Climate classi-
+    // fication for the region
     self.displayClimateIcon = function (obj) {
 
         var climateIcon = '<div class="climate card " title="Köppen Climate Classification">' + '<p>' + obj  + '</p>' + '</div>';
@@ -6107,43 +6109,53 @@ function AppViewModel () {
         return climateIcon;
     };
 
+    // Render the cost info for the surf guide or hover icon
     self.displayCost = function (obj, $iconContainer) {
 
-      if(rollover) {
+        // If hovering over the location's location frame show only the
+        // budget costs associated with the location in the top left corner
+        // of the frame
+        if(rollover) {
 
-          var costInfo = '<p class="rollover-info cost-hover-default cost-hover" title="Estimated minimum daily budget allowance">' + '$' + obj.budget + '</p>';
+            var costInfo = '<p class="rollover-info cost-hover-default cost-hover" title="Estimated minimum daily budget allowance">' + '$' + obj.budget + '</p>';
 
-      } else {
+        // If rendering the surf guide, render the budget costs (low, mid, high
+        // ) in the icon
+        } else {
 
-          var midRange = Math.floor((obj.highEnd - obj.budget)/2 + obj.budget);
-
-          var costInfo = $iconContainer.append('<div class="cost card "title="Estimated daily budget allowances: Low, Mid, High">' + '<svg class="cost-guide"><use xlink:href="#cost"/></svg>' + '<p>' + obj.budget + '</p>' + '<p>' + midRange + '</p>' + '<p>' + obj.highEnd +'</p>' + '</div>');
-      };
+            var midRange = Math.floor((obj.highEnd - obj.budget)/2 + obj.budget),
+            costInfo = $iconContainer.append('<div class="cost card "title="Estimated daily budget allowances: Low, Mid, High">' + '<svg class="cost-guide"><use xlink:href="#cost"/></svg>' + '<p>' + obj.budget + '</p>' + '<p>' + midRange + '</p>' + '<p>' + obj.highEnd +'</p>' + '</div>');
+        };
 
       return costInfo;
-
     };
 
+    // Render the distance info for the surf guide or hover icon
     self.displayDistance = function (latDest,lngDest) {
 
-        /* Get distance between both locations using
-        the Haversine formula */
-        /* Obtain current location from user */
-        var latOrigin = currentLat;
-        var lngOrigin = currentLng;
+        // Get distance between both locations using
+        // the Haversine formula:
+        // https://stackoverflow.com/questions/27928/calculate-distance-between
+        // -two-latitude-longitude-points-haversine-formula)
+        // Obtain current location from user
+        var latOrigin = currentLat,
+            lngOrigin = currentLng;
 
         // Set the radius of Earth in mi
         var R = 3959;
 
         // Calculate radians diff between both locations
-        var latR = deg2rad(latDest-latOrigin);
-        var lngR = deg2rad(lngDest-lngOrigin);
+        var latR = deg2rad(latDest-latOrigin),
+            lngR = deg2rad(lngDest-lngOrigin);
 
+        // Solve for a
         var a =
           Math.sin(latR/2) * Math.sin(latR/2) +
           Math.cos(deg2rad(latOrigin)) * Math.cos(deg2rad(latDest)) *
           Math.sin(lngR/2) * Math.sin(lngR/2)
           ;
+
+        // Solve for c
         var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 
         // Solve for d
@@ -6152,59 +6164,92 @@ function AppViewModel () {
         // Round distance to nearest integer
         var result = Math.round(d);
 
-        /* If the distance is greater than 200 miles, calculate the
-        average non-stop flight time in hours to the destination using
-        an average cruising speed of 450mph */
+        // If the distance is greater than 200 miles, calculate the
+        // average non-stop flight time in hours to the destination using
+        // an average cruising speed of 450mph
+        // The time to get there will be displayed in hours since it is >
+        // 200 miles away
         if(result > 200) {
+
+            // Calculate the number of hours to reach the destination
             var hours = result/450;
 
             // If the time is below an hour, set the new time at one hour
+            // Not many short flights are less than that!!
             if(hours < 1) {
                 var newTime = 1;
+
+            // If the time is greater than one hour, round the number
             } else {
                 var newTime = Math.round(hours);
             };
 
-            /* If distance is greater than avg distance of a direct flight,
-            add two hours in layover time */
+            // If flight time is greater than avg time of a long distance //
+            // direct flight, but less than 12 hours, add two hours in
+            // connection / layover time
+            // This assumes about 2hrs per layover/connection
             if(newTime > 8 && newTime <= 12) {
-                var layOver = newTime + 2;
-                var flightTime = layOver;
 
-            /* If distance is greater than avg distance of a 1+ connection
-             flight, add four hours in layover time */
+                // Set the new flight time including the extra time
+                var layOver = newTime + 2,
+                    flightTime = layOver;
+
+            // If flight time is greater than avg time of a 1+ connection
+            // flight, add four hours to account for more connection / layover
+            // time
+            // This assumes about 2hrs per layover/connection
             } else if (newTime > 12) {
-                var layOver = newTime + 4;
-                var flightTime = layOver;
+
+                // Set the new flight time including the extra time
+                var layOver = newTime + 4,
+                    flightTime = layOver;
             } else {
+
+                // Set the new flight time including the extra time
                 var flightTime = newTime;
             };
-                var distanceFly = flightTime;
 
+            // Save the flight time
+            var distanceFly = flightTime;
+
+            // Render the distnce info in hours since its location is greater
+            // than 200 miles away
             if(rollover) {
+
                 // Cache distance element with distance
+                // The info will appear in the top right corner of the location
+                // frame when hover over
                 var distance = '<p class="rollover-info distance-hover-default distance-hover" title="Estimated flight duration from your location">' + distanceFly + 'h' + '</p>';
 
                 return distance;
 
             } else {
 
+                // Render the icon in the surf guide
                 var distanceIcon = '<div class="distance card" title="Estimated flight duration from your location"><svg class="distance-guide-plane"><use xlink:href="#distance_plane"/></svg>' + '<p class="distance-guide-hours">' + distanceFly + 'h' +'</p></div>';
 
                 return distanceIcon;
             };
+
+        // If the location is less than 200 miles away, show the distance in
+        // terms of miles to get there
         } else {
 
+            // Simply save the mile to the destination as the distance to drive
             var distanceDrive = result;
 
             if(rollover) {
+
                 // Cache distance element with distance
+                // The info will appear in the top right corner of the location
+                // frame when hover over
                 var distance = '<p class="rollover-info distance-hover-default distance-hover" title="Estimated distance in miles from your location">' + distanceDrive + 'mi' + '</p>';
 
                 return distance;
 
             } else {
 
+                // Render the icon in the surf guide
                 var distanceIcon = '<div class="distance card" title="Estimated (straight line) distance in miles from your location (actual distance via roads will be greater)"><svg class="distance-guide-drive"><use xlink:href="#distance"/></svg>' + '<p class="distance-guide-miles">' + distanceDrive + 'mi' +'</p></div>';
 
                 return distanceIcon;
@@ -6213,9 +6258,9 @@ function AppViewModel () {
 
         // Converts degrees to radians
         function deg2rad(deg) {
-          return deg * (Math.PI/180)
-        }
-    }
+            return deg * (Math.PI/180)
+        };
+    };
 
     self.displayCurrentWaterTemp = function (obj) {
 

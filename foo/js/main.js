@@ -5466,8 +5466,13 @@ function AppViewModel () {
 
     };
 
+    // Get the wave direction icon for both the surf guide and location frame
+    // hover effects
     self.displayDirectionIcon = function (obj) {
 
+        // Set classes according to type of icon
+        // Each class styles the icon differently (i.e. black for surf guide
+        // and white for the rollover effects)
         if(rollover) {
             var frameClass = "hover-icon-frame rollover-info wave-direction-hover-default wave-direction-hover hover-tooltip-only",
                 imgClass = "hover-icon";
@@ -5476,6 +5481,7 @@ function AppViewModel () {
                 imgClass = "wave-direction-guide";
         };
 
+        // Display the appropriate icon for each case
         switch(obj) {
             case 'left':
 
@@ -5506,8 +5512,13 @@ function AppViewModel () {
         return directionIcon;
     };
 
+    // Get the break type icon for both the surf guide and location frame
+    // hover effects
     self.displayBreakIcon = function (obj) {
 
+        // Set classes according to type of icon
+        // Each class styles the icon differently (i.e. black for surf guide
+        // and white for the rollover effects)
         if(rollover) {
             var frameClass = "hover-icon-frame rollover-info break-type-hover-default break-type-hover hover-tooltip-only",
                 imgClass = "hover-icon";
@@ -5516,6 +5527,7 @@ function AppViewModel () {
                 imgClass = "break-type-guide";
         };
 
+        // Display the appropriate icon for each case
         switch(obj) {
             case 'reef':
 
@@ -5553,53 +5565,61 @@ function AppViewModel () {
         return breakIcon;
     };
 
+    // Get the compass icon to display the best wind and swell conditions
+    // for the surf guide only
     self.displayCompassIcon = function (objSwell, objWind, $iconContainer, canvasWidth, canvasHeight) {
 
-        if(objSwell) {
-            var swell = true;
-            buildCompass(objSwell);
-        };
+        // Create the compass icon container
+        $iconContainer.append('<div class="small-compass-guide card " title="Best Swell & Best Wind"><canvas id="compass-small" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas></div>');
 
-        function buildCompass(obj) {
+        // Load the sprite sheet
+        var sprites = new Image();
+        sprites.src = spriteSheet;
 
+        // Save a ref to the canvas and set context
+        var Canvas = document.getElementById('compass-small'),
+            ctx = Canvas.getContext('2d');
 
-            var sprites = new Image();
-            sprites.src = spriteSheet;
+        // Draw the compass img as the background for the icon
+        // (sprites,srcX,srcY,srcW,srcH,destX,destY,destW,destH)
+        ctx.drawImage(sprites, 0, 237, 108, 108, 0, 0, 100, 100);
 
-            if(swell) {
-                swell = false;
-                drawBackground = true;
+        // Save compass img
+        ctx.save();
 
-                $iconContainer.append('<div class="small-compass-guide card " title="Best Swell & Best Wind"><canvas id="compass-small" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas></div>');
+        // Save the swell and wind array passed as parameters in an object
+        var pointers = {"swell" : objSwell, "wind": objWind };
+
+        // Loop through the swell and wind arrays in order to extract the
+        // location's optimal swell and wind conditions
+        for (var array in pointers) {
+
+            // Set the source y coordinate for the currently parsed array
+            if(array === "swell") {
 
                 var srcY = 345;
 
-            } else if (wind) {
-                wind = false;
+            } else {
 
                 var srcY = 453;
             };
 
-            var Canvas = document.getElementById('compass-small');
-            var ctx = Canvas.getContext('2d');
+            // Set the destination x and y coordinates for the icons (the midd-
+            // le of the canvas )
+            var destX = canvasWidth / 2,
+                destY = canvasHeight / 2;
 
-            if(drawBackground) {
-
-                //(sprites,srcX,srcY,srcW,srcH,destX,destY,destW,destH)
-                ctx.drawImage(sprites, 0, 237, 108, 108, 0, 0, 100, 100);
-                ctx.save();
-            };
-
-            var destX = canvasWidth / 2;
-            var destY = canvasHeight / 2;
-
+            // Traverse to the middle of the canvas
             ctx.translate(destX, destY);
 
-            var directions = obj.length;
+            // Save the length of the array
+            var directions = pointers[array].length;
 
+            // Parse the array to determine the direction in degrees based
+            // on the provided cardinal direction
             for (var i = directions; i--;) {
 
-                switch (obj[i]) {
+                switch (pointers[array][i]) {
 
                     case 'N':
                         var direction = 0;
@@ -5666,21 +5686,24 @@ function AppViewModel () {
                     break;
                 }
 
+                // Set the pointer angle
                 var pointerAngle = direction * (Math.PI / 180);
 
+                // Rotate the canvas according to the pointer angle
                 ctx.rotate(pointerAngle);
+
+                // Draw the image using  the following parameters:
+                // (sprites,srcX,srcY,srcW,srcH,destX,destY,destW,destH)
+                // The variables are commonly shared by all imgs
                 ctx.drawImage(sprites, 0, srcY, 108, 108, -destX, -destY, 100, 100);
+
+                // Reset the canvas back to its original position
                 ctx.rotate(-pointerAngle);
             };
 
-            if(drawBackground) {
-                drawBackground = false;
-                ctx.restore();
-            };
+            // Show the background img (compass img)
+            ctx.restore();
         };
-
-        var wind = true;
-        buildCompass(objWind);
     };
 
     self.displayTideIcon = function (obj) {

@@ -4112,7 +4112,7 @@ function AppViewModel () {
                     // Add solid stars to the array equal to number value
                     // retrieved from MSW
                     var solidRatingLength = forecastData.solidRating,
-                        solidStar = '<svg class="rating"><use xlink:href="#star_filled"/></svg>';
+                        solidStar = '<svg class="rating" alt="solid star icon to indicate favorable surf conditions"><use xlink:href="#star_filled"/></svg>';
 
                     for (var i = solidRatingLength; i--;) {
                         rating.push(solidStar);
@@ -4121,7 +4121,7 @@ function AppViewModel () {
                     // Add faded stars to the array equal to number value
                     // retrieved from MSW
                     var fadedRatingLength = forecastData.fadedRating,
-                        fadedStar = '<svg class="rating"><use xlink:href="#star_faded"/></svg>';
+                        fadedStar = '<svg class="rating" alt="faded star icon to indicate reduced favorable surf conditions due to wind"><use xlink:href="#star_faded"/></svg>';
 
                     for (var i = fadedRatingLength; i--;) {
                         rating.push(fadedStar);
@@ -4130,7 +4130,7 @@ function AppViewModel () {
                     // Add empty stars to the array equal 5 minus the total
                     // amount of filled and faded stars
                     var fillEmptyStars = 5 - rating.length,
-                        emptyStar = '<svg class="rating"><use xlink:href="#star_empty"/></svg>';
+                        emptyStar = '<svg class="rating" alt="solid star icon to indicate unfavorable surf conditions"><use xlink:href="#star_empty"/></svg>';
 
                     for (var i = fillEmptyStars; i--;) {
                         rating.push(emptyStar);
@@ -4144,7 +4144,7 @@ function AppViewModel () {
                     // Render containers to hold the compass and live
                     // conditions containers
                     var liveConditionsElem = '<div class="col-xs-12 surf-conditions-container live-surf-conditions"></div>',
-                        compassContainer = '<div class="col-xs-12 col-sm-4 col-md-6 live-surf-conditions live-compass" title="Live wind & swell conditions (swell: blue | wind: white)"><canvas id="compass" width="300" height="300"></canvas></div>';
+                        compassContainer = '<div class="col-xs-12 col-sm-4 col-md-6 live-surf-conditions live-compass" title="Live wind & swell conditions (swell: blue | wind: white)"><canvas id="compass" alt="live compass to show the current wind and swell conditions" width="300" height="300"></canvas></div>';
 
                     // Add compass container
                     $surfGuideHeader.after(compassContainer);
@@ -4175,7 +4175,7 @@ function AppViewModel () {
                     // links to MSW's homepage)
                     var $locationName = $('.title'),
                         liveTemp = '<p class="live-temp live-surf-conditions " title="Live weather conditions">' + temperature + " ℉" + '<img class="live-weather" src="' + weatherImg + '" alt="Symbol for current weather">' + '</p>',
-                        accreditMSW = '<a href="http://magicseaweed.com" target="_blank"><div class="icon icon-msw_powered_by live-surf-conditions msw-banner"></div></a>';
+                        accreditMSW = '<a href="http://magicseaweed.com" target="_blank"><div class="icon icon-msw_powered_by live-surf-conditions msw-banner" alt="banner for magic seaweed"></div></a>';
 
                     // Render MSW banner
                     $locationName.after(accreditMSW);
@@ -4191,7 +4191,7 @@ function AppViewModel () {
 
                     // Create wind elems for live wind conditions
                     var windSpeedInfo = '<p>' + windSpeed + "mph" + '</p>',
-                        windIcon = '<svg  alt="Symbol for wind"><use xlink:href="#wind"/></svg>',
+                        windIcon = '<svg  alt="icon for wind"><use xlink:href="#wind"/></svg>',
                         cardinalDirection = '<p>' + compassDirection + " " + "wind" + '</p>';
 
                     // Render the wind speed, direction, and wind image in the
@@ -4403,9 +4403,9 @@ function AppViewModel () {
         // If the location is one of the user's favorites, fill it in
         // If it isn't, don't fill it
         if(favorite) {
-            var icon = '<span class="favorite-wrapper-guide is-a-favorite-guide"><svg class="favorite-guide"><use xlink:href="#star"/></svg></span>';
+            var icon = '<span class="favorite-wrapper-guide is-a-favorite-guide"><svg class="favorite-guide" alt="filled star icon to indicate that the location is a favorite"><use xlink:href="#star" /></svg></span>';
         } else {
-            var icon = '<span class="favorite-wrapper-guide not-a-favorite-guide"><svg class="favorite-guide"><use xlink:href="#star"/></svg></span>';
+            var icon = '<span class="favorite-wrapper-guide not-a-favorite-guide"><svg class="favorite-guide" alt="empty star icon to indicate that the location is not a favorite"><use xlink:href="#star"/></svg></span>';
         };
 
         return icon;
@@ -4413,7 +4413,7 @@ function AppViewModel () {
 
     // Create an icon elem constructor for each of the surf guide's icons
     // This saves time by not having to rewrite for each guide icon
-    self.setUpIcons = function (frameClass, frameTitle, imgClass, img, bgImg, bgImgClass) {
+    self.setUpIcons = function (frameClass, frameTitle, imgClass, imgAlt, img, bgImg, bgImgClass) {
 
         // If the icon has a background img use an elem with an extra svg frame
         // Otherwise, construct it with only one svg
@@ -4421,12 +4421,12 @@ function AppViewModel () {
             var icon =
                 '<div class="' + frameClass + '" title="' + frameTitle + '">' +
                     '<svg class="' + bgImgClass + '"><use xlink:href="' + bgImg + '"/></svg>' +
-                    '<svg class="' + imgClass + '"><use xlink:href="' + img + '"/></svg>' +
+                    '<svg class="' + imgClass + '" alt="' + imgAlt + '"><use xlink:href="' + img + '"/></svg>' +
                 '</div>';
         } else {
             var icon =
                 '<div class="' + frameClass + '" title="' + frameTitle + '">' +
-                    '<svg class="' + imgClass + '"><use xlink:href="' + img + '"/></svg>' +
+                    '<svg class="' + imgClass + '" alt="' + imgAlt + '"><use xlink:href="' + img + '"/></svg>' +
                 '</div>';
         };
 
@@ -4448,12 +4448,13 @@ function AppViewModel () {
                 imgClass = "big-wave-guide";
         };
 
-        // Both types of icons receive the same title and image
+        // Both types of icons receive the same title, alt text, and image
         var frameTitle = "Known for big wave surfing",
-            img = "#big_wave";
+            img = "#big_wave",
+            imgAlt = "icon that indicates the location is known for big wave surfing";
 
         // Save the constructed icon elem
-        var icon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+        var icon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
         // If the location is known for big wave surfing and the user is
         // hovering over the location frame, then the above icon stays set and
@@ -4500,10 +4501,11 @@ function AppViewModel () {
 
         // Both types of icons receive the same title and image
         var frameTitle = "Well known around the world",
-            img = "#well_known";
+            img = "#well_known",
+            imgAlt = "icon that indicates the location is well known";
 
         // Save the constructed icon elem
-        var icon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+        var icon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
         // If the location is well known and the user is hovering over the
         // location frame, then the above icon stays set and is returned below.
@@ -4561,37 +4563,43 @@ function AppViewModel () {
 
             var frameTitle = "Difficulty: All levels",
                 img = "#skill_level_all",
-                skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
+                imgAlt = "icon that indicates a difficulty level for all skill levels"
+                skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img, bgImg, bgImgClass);
 
         } else if(obj.indexOf("beginner") > -1 && obj.indexOf("intermediate") > -1 && obj.indexOf("advanced") < 0) {
 
             var frameTitle = "Difficulty: Beginner to Intermediate",
                 img = "#skill_level_beginner_intermediate",
-                skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
+                imgAlt = "icon that indicates a difficulty for beginner to intermediate skill levels"
+                skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img, bgImg, bgImgClass);
 
         } else if(obj.indexOf("beginner") > -1 && obj.indexOf("intermediate") < 0 && obj.indexOf("advanced") < 0) {
 
             var frameTitle = "Difficulty: Beginner",
                 img = "#skill_level_beginner",
-                skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
+                imgAlt = "icon that indicates a difficulty for beginner skill levels"
+                skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img, bgImg, bgImgClass);
 
         } else if(obj.indexOf("beginner") < 0 && obj.indexOf("intermediate") > -1 && obj.indexOf("advanced") > -1) {
 
             var frameTitle = "Difficulty: Intermediate to Advanced",
                 img = "#skill_level_intermediate_advanced",
-                skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
+                imgAlt = "icon that indicates a difficulty for intermediate to advanced skill levels"
+                skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img, bgImg, bgImgClass);
 
         } else if(obj.indexOf("beginner") < 0 && obj.indexOf("intermediate") > -1 && obj.indexOf("advanced") < 0) {
 
             var frameTitle = "Difficulty: Intermediate",
                 img = "#skill_level_intermediate",
-                skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
+                imgAlt = "icon that indicates a difficulty for intermediate skill levels"
+                skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img, bgImg, bgImgClass);
 
         } else if(obj.indexOf("beginner") < 0 && obj.indexOf("intermediate") < 0 && obj.indexOf("advanced") > -1) {
 
             var frameTitle = "Difficulty: Advanced",
                 img = "#skill_level_advanced",
-                skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img, bgImg, bgImgClass);
+                imgAlt = "icon that indicates a difficulty for advanced skill levels"
+                skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img, bgImg, bgImgClass);
         };
 
         return skillLevelIcon;
@@ -4619,7 +4627,8 @@ function AppViewModel () {
 
                 var frameTitle = "Wave breaks left",
                     img = "#direction_left",
-                    directionIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    imgAlt = "icon indicating that the wave breaks left"
+                    directionIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
             break;
 
@@ -4627,14 +4636,16 @@ function AppViewModel () {
 
                 var frameTitle = "Wave breaks right",
                     img = "#direction_right",
-                    directionIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    imgAlt = "icon indicating that the wave breaks right"
+                    directionIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
             break;
 
             case 'left & right':
 
                 var frameTitle = "Wave breaks left & right",
                     img = "#direction_both",
-                    directionIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    imgAlt = "icon indicating that the wave breaks both left and right"
+                    directionIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
             break;
         }
 
@@ -4661,28 +4672,32 @@ function AppViewModel () {
 
                 var frameTitle = "Reef break",
                     img = "#break_reef",
-                    breakIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    imgAlt = "icon indicating that the wave breaks over a reef"
+                    breakIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
             break;
 
             case 'beach':
 
                 var frameTitle = "Beach break",
                     img = "#break_beach",
-                    breakIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    imgAlt = "icon indicating that the wave is a beach break"
+                    breakIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
             break;
 
             case 'point':
 
                 var frameTitle = "Point break",
                     img = "#break_point",
-                    breakIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    imgAlt = "icon indicating that the wave breaks over a point"
+                    breakIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
             break;
 
             case 'river mouth':
 
                 var frameTitle = "Breaks at a river mouth",
                     img = "#break_river_mouth",
-                    breakIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    imgAlt = "icon indicating that the wave breaks at a river mouth"
+                    breakIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
             break;
         }
 
@@ -4694,7 +4709,7 @@ function AppViewModel () {
     self.displayCompassIcon = function (objSwell, objWind, $iconContainer, canvasWidth, canvasHeight) {
 
         // Create the compass icon container
-        $iconContainer.append('<div class="small-compass-guide card " title="Best Swell & Best Wind"><canvas id="compass-small" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas></div>');
+        $iconContainer.append('<div class="small-compass-guide card " title="Best Swell & Best Wind"><canvas id="compass-small" width="' + canvasWidth + '" height="' + canvasHeight + '" alt="icon that shows the optimal wind and swell directions"></canvas></div>');
 
         // Load the sprite sheet
         var sprites = new Image();
@@ -4843,43 +4858,50 @@ function AppViewModel () {
 
             var frameTitle = "Best Tide: All",
                 img = "#tide_all",
-                tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    imgAlt = "icon indicating that all tides are favorable"
+                    tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
         } else if(obj.indexOf("low") > -1 && obj.indexOf("mid") > -1 && obj.indexOf("high") < 0) {
 
             var frameTitle = "Best Tide: Low & Mid",
                 img = "#tide_low_mid",
-                tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    imgAlt = "icon indicating that the best tide is low to mid"
+                    tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
         } else if(obj.indexOf("low") > -1 && obj.indexOf("mid") < 0 && obj.indexOf("high") > -1) {
 
             var frameTitle = "Best Tide: Low & High",
                 img = "#tide_low_high",
-                tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    imgAlt = "icon indicating that the best tide is low and hide"
+                    tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
         } else if(obj.indexOf("low") > -1 && obj.indexOf("mid") < 0 && obj.indexOf("high") < 0) {
 
             var frameTitle = "Best Tide: Low",
                 img = "#tide_low",
-                tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    imgAlt = "icon indicating that the best tide is low"
+                    tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
         } else if(obj.indexOf("low") < 0 && obj.indexOf("mid") > -1 && obj.indexOf("high") > -1) {
 
             var frameTitle = "Best Tide: High & Mid",
                 img = "#tide_high_mid",
-                tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    imgAlt = "icon indicating that the best tide is high to mid"
+                    tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
         } else if(obj.indexOf("low") < 0 && obj.indexOf("mid") > -1 && obj.indexOf("high") < 0) {
 
             var frameTitle = "Best Tide: Mid",
                 img = "#tide_mid",
-                tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    imgAlt = "icon indicating that the best tide is mid"
+                    tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
         } else if(obj.indexOf("low") < 0 && obj.indexOf("mid") < 0 && obj.indexOf("high") > -1) {
 
             var frameTitle = "Best Tide: High",
                 img = "#tide_high",
-                tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    imgAlt = "icon indicating the best tide is high"
+                    tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
         };
 
         return tideIcon;
@@ -4949,66 +4971,77 @@ function AppViewModel () {
 
             var frameTitle = "Best Season: All",
                 img = "#season_all",
-                bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    imgAlt = "icon indicating that the waves are good year round"
+                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
         } else if(winter >= spring && winter >= summer && winter >= autumn) {
             if(winter === spring) {
 
                 var frameTitle = "Best Season: Winter & Spring",
                     img = "#season_winter_spring",
-                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    imgAlt = "icon indicating that the best seasons are winter and spring"
+                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
             } else if (winter === summer) {
 
                 var frameTitle = "Best Season: Winter & Summer",
                     img = "#season_winter_summer",
-                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    imgAlt = "icon indicating that the best seasons are winter and summer"
+                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
             } else if (winter === autumn) {
 
                 var frameTitle = "Best Season: Winter & Autumn",
                     img = "#season_winter_autumn",
-                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    imgAlt = "icon indicating that the best seasons are winter and autumn"
+                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
             } else {
 
                 var frameTitle = "Best Season: Winter",
                     img = "#season_winter",
-                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    imgAlt = "icon indicating that the best season is winter"
+                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
             };
         } else if (spring >= summer && spring >= autumn && spring > winter) {
             if (spring === summer) {
 
                 var frameTitle = "Best Season: Spring & Summer",
                     img = "#season_spring_summer",
-                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    imgAlt = "icon indicating that the best seasons are spring and summer"
+                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
             } else if (spring === autumn) {
 
                 var frameTitle = "Best Season: Spring & Autumn",
                     img = "#season_spring_autumn",
-                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    imgAlt = "icon indicating that the best seasons are spring and autumn"
+                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
             } else {
 
                 var frameTitle = "Best Season: Spring",
                     img = "#season_spring",
-                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    imgAlt = "icon indicating that the best season is spring"
+                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
             };
         } else if (summer >= autumn && summer > winter && summer > spring) {
             if(summer === autumn) {
 
                 var frameTitle = "Best Season: Summer & Autumn",
                     img = "#season_summer_autumn",
-                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    imgAlt = "icon indicating that the best seasons are summer and autumn"
+                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
             } else {
 
                 var frameTitle = "Best Season: Summer",
                     img = "#season_ummer",
-                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    imgAlt = "icon indicating that the best season is summer"
+                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
             };
         } else {
 
                 var frameTitle = "Best Season: Autumn",
                     img = "#season_autumn",
-                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                    imgAlt = "icon indicating that the best season is autumn"
+                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
         };
 
         return bestSeasonIcon;
@@ -5049,7 +5082,8 @@ function AppViewModel () {
                     var frameClass = "water-temp spring card",
                         frameTitle = "Suggested spring attire",
                         img = "#water_temp_spring",
-                        icon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        imgAlt = "icon for spring",
+                        icon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
                     $iconContainer.append(icon);
                     $('.spring').append(gear);
@@ -5059,7 +5093,8 @@ function AppViewModel () {
                     var frameClass = "water-temp summer card",
                         frameTitle = "Suggested summer attire",
                         img = "#water_temp_summer",
-                        icon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        imgAlt = "icon for summer",
+                        icon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
                     $iconContainer.append(icon);
                     $('.summer').append(gear);
@@ -5069,7 +5104,8 @@ function AppViewModel () {
                     var frameClass = "water-temp autumn card",
                         frameTitle = "Suggested autumn attire",
                         img = "#water_temp_autumn",
-                        icon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        imgAlt = "icon for autumn",
+                        icon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
                     $iconContainer.append(icon);
                     $('.autumn').append(gear);
@@ -5079,7 +5115,8 @@ function AppViewModel () {
                     var frameClass = "water-temp winter card",
                         frameTitle = "Suggested winter attire",
                         img = "#water_temp_winter",
-                        icon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        imgAlt = "icon for winter",
+                        icon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
                     $iconContainer.append(icon);
                     $('.winter').append(gear);
@@ -5167,11 +5204,12 @@ function AppViewModel () {
 
                         var img = "#ro_water_attire_boardies"
                             frameTitle = "It's currently warm enough for boardies =)",
-                            gear = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                            imgAlt = "icon indicating that it's currently warm enough for boardies",
+                            gear = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
                     } else {
 
-                        var gear = '<svg class="suggested-attire-boardies-guide suggested-attire-guide"><use xlink:href="#water_attire_boardies"/></svg>';
+                        var gear = '<svg class="suggested-attire-boardies-guide suggested-attire-guide" alt="icon indicating that board shorts are recommended for this season"><use xlink:href="#water_attire_boardies"/></svg>';
                     };
                 } else if (temp > 66) {
 
@@ -5179,10 +5217,11 @@ function AppViewModel () {
 
                         var img = "#ro_water_attire_2mm_wetsuit"
                             frameTitle = "A 2mm wetsuit is recommended for this time of year",
-                            gear = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                            imgAlt = "icon indicating that a 2mm wetsuit is recommended for this time of year",
+                            gear = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
                     } else {
-                        var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide"><use xlink:href="#water_attire_2mm_wetsuit"/></svg>';
+                        var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide" alt="icon indicating that a 2mm wetsuit is recommended for this season"><use xlink:href="#water_attire_2mm_wetsuit"/></svg>';
                     };
                 } else {
 
@@ -5190,10 +5229,11 @@ function AppViewModel () {
 
                         var img = "#ro_water_attire_3mm_wetsuit"
                             frameTitle = "A 3mm wetsuit is recommended for this time of year",
-                            gear = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                            imgAlt = "icon indicating that a 3mm wetsuit is recommended for this time of year",
+                            gear = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
                     } else {
-                        var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide"><use xlink:href="#water_attire_3mm_wetsuit"/></svg>';
+                        var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide" alt="icon indicating that a 3mm wetsuit is recommended for this season"><use xlink:href="#water_attire_3mm_wetsuit"/></svg>';
                     };
                 };
 
@@ -5206,30 +5246,33 @@ function AppViewModel () {
 
                         var img = "#ro_water_attire_4mm_wetsuit",
                             frameTitle = "A 4mm wetsuit and boots are recommended for this time of year",
-                            gear = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                            imgAlt = "icon indicating that a 4mm wetsuit and boots are recommended for this time of year",
+                            gear = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
                     } else {
-                        var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide"><use xlink:href="#water_attire_4mm_wetsuit"/></svg>';
+                        var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide" alt="icon indicating that a 4mm wetsuit and boots are recommended for this season"><use xlink:href="#water_attire_4mm_wetsuit"/></svg>';
                     };
                 } else if (temp > 48) {
                     if(rollover) {
 
                         var img = "#ro_water_attire_5mm_wetsuit",
                             frameTitle = "A 5mm wetsuit, gloves, and boots are recommended for this time of year",
-                            gear = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                            imgAlt = "icon indicating that a 5mm wetsuit, gloves, and boots are recommended for this time of year",
+                            gear = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
                     } else {
-                        var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide"><use xlink:href="#water_attire_5mm_wetsuit"/></svg>';
+                        var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide" alt="icon indicating that a 5mm wetsuit, gloves, and boots are recommended for this season"><use xlink:href="#water_attire_5mm_wetsuit"/></svg>';
                     };
                 } else {
                     if(rollover) {
 
                         var img = "#ro_water_attire_6mm_wetsuit",
                             frameTitle = "A 6mm wetsuit, gloves, boots, and a hood are recommended for this time of year",
-                            gear = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                            imgAlt = "icon indicating that a 6mm wetsuit, gloves, boots, and a hood are recommended for this time of year",
+                            gear = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
                     } else {
-                        var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide"><use xlink:href="#water_attire_6mm_wetsuit"/></svg>';
+                        var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide" alt="icon indicating that a 6mm wetsuit, gloves, boots, and a hood are recommended for this season"><use xlink:href="#water_attire_6mm_wetsuit"/></svg>';
                     };
                 };
             };
@@ -5242,7 +5285,7 @@ function AppViewModel () {
     // fication for the region
     self.displayClimateIcon = function (obj) {
 
-        var climateIcon = '<div class="climate card " title="Köppen Climate Classification">' + '<p>' + obj  + '</p>' + '</div>';
+        var climateIcon = '<div class="climate card " title="Köppen Climate Classification" alt="icon indicating the Köppen Climate Classification for this location">' + '<p>' + obj  + '</p>' + '</div>';
 
         return climateIcon;
     };
@@ -5255,14 +5298,14 @@ function AppViewModel () {
         // of the frame
         if(rollover) {
 
-            var costInfo = '<p class="rollover-info cost-hover-default cost-hover" title="Estimated minimum daily budget allowance">' + '$' + obj.budget + '</p>';
+            var costInfo = '<p class="rollover-info cost-hover-default cost-hover" alt="info indicating the average daily budget cost" title="Estimated minimum daily budget allowance">' + '$' + obj.budget + '</p>';
 
         // If rendering the surf guide, render the budget costs (low, mid, high
         // ) in the icon
         } else {
 
             var midRange = Math.floor((obj.highEnd - obj.budget)/2 + obj.budget),
-            costInfo = $iconContainer.append('<div class="cost card "title="Estimated daily budget allowances: Low, Mid, High">' + '<svg class="cost-guide"><use xlink:href="#cost"/></svg>' + '<p>' + obj.budget + '</p>' + '<p>' + midRange + '</p>' + '<p>' + obj.highEnd +'</p>' + '</div>');
+            costInfo = $iconContainer.append('<div class="cost card "title="Estimated daily budget allowances: Low, Mid, High">' + '<svg class="cost-guide" alt="icon indicating the estimated daily budget allowances"><use xlink:href="#cost"/></svg>' + '<p>' + obj.budget + '</p>' + '<p>' + midRange + '</p>' + '<p>' + obj.highEnd +'</p>' + '</div>');
         };
 
       return costInfo;
@@ -5357,14 +5400,14 @@ function AppViewModel () {
                 // Cache distance element with distance
                 // The info will appear in the top right corner of the location
                 // frame when hover over
-                var distance = '<p class="rollover-info distance-hover-default distance-hover" title="Estimated flight duration from your location">' + distanceFly + 'h' + '</p>';
+                var distance = '<p class="rollover-info distance-hover-default distance-hover" alt="info indicating the estimated flying time to the location" title="Estimated flight duration from your location">' + distanceFly + 'h' + '</p>';
 
                 return distance;
 
             } else {
 
                 // Render the icon in the surf guide
-                var distanceIcon = '<div class="distance card" title="Estimated flight duration from your location"><svg class="distance-guide-plane"><use xlink:href="#distance_plane"/></svg>' + '<p class="distance-guide-hours">' + distanceFly + 'h' +'</p></div>';
+                var distanceIcon = '<div class="distance card" title="Estimated flight duration from your location"><svg class="distance-guide-plane" alt="icon indicating the estimated flying time to the location"><use xlink:href="#distance_plane"/></svg>' + '<p class="distance-guide-hours">' + distanceFly + 'h' +'</p></div>';
 
                 return distanceIcon;
             };
@@ -5381,14 +5424,14 @@ function AppViewModel () {
                 // Cache distance element with distance
                 // The info will appear in the top right corner of the location
                 // frame when hover over
-                var distance = '<p class="rollover-info distance-hover-default distance-hover" title="Estimated distance in miles from your location">' + distanceDrive + 'mi' + '</p>';
+                var distance = '<p class="rollover-info distance-hover-default distance-hover" alt="info indicating the estimated driving time to the location" title="Estimated distance in miles from your location">' + distanceDrive + 'mi' + '</p>';
 
                 return distance;
 
             } else {
 
                 // Render the icon in the surf guide
-                var distanceIcon = '<div class="distance card" title="Estimated (straight line) distance in miles from your location (actual distance via roads will be greater)"><svg class="distance-guide-drive"><use xlink:href="#distance"/></svg>' + '<p class="distance-guide-miles">' + distanceDrive + 'mi' +'</p></div>';
+                var distanceIcon = '<div class="distance card" title="Estimated (straight line) distance in miles from your location (actual distance via roads will be greater)"><svg class="distance-guide-drive" alt="icon indicating the estimated driving time to the location"><use xlink:href="#distance"/></svg>' + '<p class="distance-guide-miles">' + distanceDrive + 'mi' +'</p></div>';
 
                 return distanceIcon;
             };
@@ -5426,7 +5469,7 @@ function AppViewModel () {
         };
 
         // Create an elem
-        var waterTempInfo = '<p class="rollover-info water-temp-hover-default water-temp-hover" title="Average ' + currentSeason + ' water temperature">' + waterTemp + '℉' + '</p>';
+        var waterTempInfo = '<p class="rollover-info water-temp-hover-default water-temp-hover" alt="info indicating the average water temperature for this time of year" title="Average ' + currentSeason + ' water temperature">' + waterTemp + '℉' + '</p>';
 
         return waterTempInfo;
     };
@@ -5449,12 +5492,12 @@ function AppViewModel () {
 
             // Display the info in the bottom right corner of the location
             // frame upon hovering over it
-            var waveSizeInfo = '<p class="rollover-info wave-size-hover-default wave-size-hover" title="Average wave size">' + obj.min + "-" + obj.max + "'" +'</p>';
+            var waveSizeInfo = '<p class="rollover-info wave-size-hover-default wave-size-hover" alt="info indicating the average wave size for this location" title="Average wave size">' + obj.min + "-" + obj.max + "'" +'</p>';
 
         } else {
 
             // Render the average wave break size as an icon in the surf guide
-            var waveSizeInfo = '<div class="wave-size card" title="Average wave size">' + '<svg class="wave-size-guide"><use xlink:href="#wave_range"/></svg>' + '<p>' + obj.min + "-" + obj.max + plus + "ft" + '</p>' + '</div>';
+            var waveSizeInfo = '<div class="wave-size card" title="Average wave size">' + '<svg class="wave-size-guide" alt="icon indicating the average wave height"><use xlink:href="#wave_range"/></svg>' + '<p>' + obj.min + "-" + obj.max + plus + "ft" + '</p>' + '</div>';
         };
 
         return waveSizeInfo;
@@ -5548,7 +5591,8 @@ function AppViewModel () {
 
                     var frameTitle = "Hazard: Beginners",
                         img = "#hazards_beginners",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        imgAlt = "icon indicating that beginners are a hazard",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
                 break;
 
@@ -5556,133 +5600,152 @@ function AppViewModel () {
 
                     var frameTitle = "Hazard: Boats",
                         img = "#hazards_boats",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        imgAlt = "icon indicating that boats are a hazard",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
                 case 'crocs':
 
                     var frameTitle = "Hazard: Crocodiles",
                         img = "#hazards_crocs",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        imgAlt = "icon indicating that crocodiles are a hazard",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
                 case 'crowded':
 
                     var frameTitle = "Hazard: Crowded",
                         img = "#hazards_crowded",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        imgAlt = "icon indicating that crowds are a hazard",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
                 case 'dangerous break':
 
                     var frameTitle = "Hazard: Dangerous break",
                         img = "#hazards_dangerous_break",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        imgAlt = "icon indicating that this is a dangerous break",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
                 case 'far from shore':
 
                     var frameTitle = "Hazard: Far from shore",
                         img = "#hazards_far_from_shore",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        imgAlt = "icon indicating that the waves are far from shore",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
                 case 'pollution':
 
                     var frameTitle = "Hazard: Pollution",
                         img = "#hazards_pollution",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        imgAlt = "icon indicating that pollution is a hazard",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
                 case 'rocky bottom':
 
                     var frameTitle = "Hazard: Rocky bottom",
                         img = "#hazards_rocky_bottom",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        imgAlt = "icon indicating that this break has a rocky bottom",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
                 case 'sea snakes':
 
                     var frameTitle = "Hazard: Sea snakes",
                         img = "#hazards_sea_snakes",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        imgAlt = "icon indicating that sea snakes are a hazard",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
                 case 'seals':
 
                     var frameTitle = "Hazard: Seals",
                         img = "#hazards_seals",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        imgAlt = "icon indicating that seals are a hazard",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
                 case 'seaweed':
 
                     var frameTitle = "Hazard: Seaweed",
                         img = "#hazards_seaweed",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        imgAlt = "icon indicating that seaweed is a hazard",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
                 case 'sewage':
 
                     var frameTitle = "Hazard: Sewage",
                         img = "#hazards_sewage",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        imgAlt = "icon indicating that sewage is a hazard",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
                 case 'shallow':
 
                     var frameTitle = "Hazard: Shallow break",
                         img = "#hazards_shallow",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        imgAlt = "icon indicating that the wave breaks over a shallow bottom",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
                 case 'sharks':
 
                     var frameTitle = "Hazard: Sharks",
                         img = "#hazards_sharks",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        imgAlt = "icon indicating that sharks are a hazard",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
                 case 'strong currents':
 
                     var frameTitle = "Hazard: Strong currents",
                         img = "#hazards_strong_currents",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        imgAlt = "icon indicating that the wave has strong currents",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
                 case 'strong rips':
 
                     var frameTitle = "Hazard: Strong rips",
                         img = "#hazards_strong_rips",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        imgAlt = "icon indicating that the wave has strong rips",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
                 case 'theft':
 
                     var frameTitle = "Hazard: Theft",
                         img = "#hazards_theft",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        imgAlt = "icon indicating that theft is a hazard",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
                 case 'undertow':
 
                     var frameTitle = "Hazard: Strong undertow",
                         img = "#hazards_undertow",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        imgAlt = "icon indicating that the break has a strong undertow",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
                 case 'unfriendly':
 
-                    var frameTitle = "Hazard: Unfriendly",
+                    var frameTitle = "Hazard: Localism",
                         img = "#hazards_unfriendly",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        imgAlt = "icon indicating that there is localism at this break",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
                 case 'urchins':
 
                     var frameTitle = "Hazard: Urchins",
                         img = "#hazards_urchins",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, img);
+                        imgAlt = "icon indicating that sea urchins are a hazard",
+                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
             }
@@ -5699,15 +5762,17 @@ function AppViewModel () {
         };
     };
 
+    // Close the surf guide when the close surf guide button is clicked
     self.closeSurfGuide = function () {
 
         console.log('close surf guide');
 
         console.log('close any open info windows');
 
+        // Close any open info windows
         infoWindow.close();
 
-        // Make any big markers small
+        // Make any selected markers small
         self.makeMarkerSmall();
 
         // Remove both surf conditions and surf guide from DOM
@@ -5725,7 +5790,7 @@ function AppViewModel () {
         $locationGrid.show();
 
         // Show any location frames that were visible before the surf guide
-        // was opened
+        // was opened.
         // Set display to 'inline-block' to avoid styling problems arising
         // from a div that wasn't set to inline before being hidden i.e.
         // clicking a location frame in grid view, opening the map, then

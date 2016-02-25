@@ -3,9 +3,13 @@ body {
     font-family: Arial, Verdana;
 }
 
-body, html {
+body,
+html {
     height: 100%;
 }
+
+
+/* Header */
 
 .logo {
     font-size: 1.5em;
@@ -61,35 +65,6 @@ body, html {
     margin-top: 20%;
 }
 
-.data-load-error-container {
-    padding-top: 30%;
-    text-align: center;
-    font: 2em Arial, Verdana;
-}
-
-.data-load-error-container > img:first-child + p {
-    margin-top: 10px;
-}
-
-.no-connection {
-    height: 152px;
-    width: 152px;
-}
-
-.reload-button {
-    height: 40px;
-    width: 200px;
-    background-color: #56c4d1;
-    color: white;
-    font: 0.7em Arial, Verdana;
-}
-
-.reload-button:hover {
-    color: white;
-    background-color: #35abbb;
-    border-color: #ada;
-}
-
 .search-container-default {
     position: relative;
     display: none;
@@ -120,7 +95,10 @@ body, html {
     border-radius: 50px;
 }
 
-.clear-default:hover, .clear-default:active, .clear-map:hover, .clear-map:active {
+.clear-default:hover,
+.clear-default:active,
+.clear-map:hover,
+.clear-map:active {
     cursor:pointer;
     background-color: #333;
     border-color: #333;
@@ -129,6 +107,41 @@ body, html {
 .ui-menu-item {
     font: 1.2em Arial, Verdana;
 }
+
+
+/* Init Data Load Error */
+
+.data-load-error-container {
+    padding-top: 30%;
+    text-align: center;
+    font: 2em Arial, Verdana;
+}
+
+.data-load-error-container > img:first-child + p {
+    margin-top: 10px;
+}
+
+.no-connection {
+    height: 152px;
+    width: 152px;
+}
+
+.reload-button {
+    height: 40px;
+    width: 200px;
+    background-color: #56c4d1;
+    color: white;
+    font: 0.7em Arial, Verdana;
+}
+
+.reload-button:hover {
+    color: white;
+    background-color: #35abbb;
+    border-color: #ada;
+}
+
+
+/* Map section */
 
 .map-container-default {
     display: none;
@@ -157,24 +170,8 @@ body, html {
     user-select: none;
 }
 
-.favorite-default {
-    position: absolute;
-    width: 31.56px;
-    height: 29.528px;
-    left: 6%;
-    top: 8%;
-}
 
-.not-a-favorite {
-    fill-opacity: 0;
-    stroke-opacity: 0;
-}
-
-.is-a-favorite {
-    fill: #ffff1f;
-    stroke: #9d9d9d;
-    stroke-width: 1;
-}
+/* Filters section */
 
 .filters-container {
     display: none;
@@ -202,6 +199,9 @@ body, html {
 .clear-favorites-button-default:focus {
     outline: 0 !important;
 }
+
+
+/* Location List Section */
 
 .location-frame-default {
     position: relative;
@@ -248,6 +248,28 @@ body, html {
     -moz-box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
     box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
 }
+
+.favorite-default {
+    position: absolute;
+    width: 31.56px;
+    height: 29.528px;
+    left: 6%;
+    top: 8%;
+}
+
+.not-a-favorite {
+    fill-opacity: 0;
+    stroke-opacity: 0;
+}
+
+.is-a-favorite {
+    fill: #ffff1f;
+    stroke: #9d9d9d;
+    stroke-width: 1;
+}
+
+
+/* Rollover/hover effects */
 
 .hover-icon-frame {
     position: absolute;
@@ -355,6 +377,9 @@ body, html {
 .wave-size-hover-default {
     left: 17px;
 }
+
+
+/* Surf Info Section (Surf Guide) */
 
 .favorite-guide {
     margin: 0 5px 1px 0;
@@ -586,8 +611,6 @@ body, html {
     color: #d1d1d1;
 }
 
-/** Icons **/
-
 .big-wave-guide,
 .well-known-guide,
 .wave-direction-guide,
@@ -749,6 +772,8 @@ body, html {
 
 @media (max-width: 767px) {
 
+    /* Header */
+
     .logo {
         font-size: 1.29em;
         color: #56c4d1;
@@ -764,25 +789,6 @@ body, html {
 
     .header {
         border-bottom: 0;
-    }
-
-    .data-load-error-container {
-        padding-top: 30%;
-        text-align: center;
-        font: 2em Arial, Verdana;
-    }
-
-    .data-load-error-container > img:first-child + p {
-        margin-top: 10px;
-    }
-
-    .reload-button {
-        height: 70px;
-        width: 90%;
-        background-color: #00b8e6;
-        border-radius: 10px;
-        color: white;
-        font: 1em Arial, Verdana;
     }
 
     .search-container-default {
@@ -813,6 +819,31 @@ body, html {
         padding-bottom: 0;
     }
 
+
+    /* Init Data Load Error */
+
+    .data-load-error-container {
+        padding-top: 30%;
+        text-align: center;
+        font: 2em Arial, Verdana;
+    }
+
+    .data-load-error-container > img:first-child + p {
+        margin-top: 10px;
+    }
+
+    .reload-button {
+        height: 70px;
+        width: 90%;
+        background-color: #00b8e6;
+        border-radius: 10px;
+        color: white;
+        font: 1em Arial, Verdana;
+    }
+
+
+    /* Map Section */
+
     .map-container-default {
         display: none;
         height: 245px;
@@ -834,6 +865,9 @@ body, html {
         font: 1.5em Arial, Verdana;
     }
 
+
+    /* Filters Section */
+
     .filters-container {
         text-align: center;
         padding: 0;
@@ -849,6 +883,32 @@ body, html {
     .clear-favorites-button-default:focus {
         outline: 0 !important;
     }
+
+
+    /* Location List Section */
+
+    .location-frame-default {
+        text-align:center;
+        margin-bottom: 1px;
+        padding: 0;
+        cursor: pointer;
+    }
+
+    .favorite-default {
+        top: 7%;
+        left: 5%;
+    }
+
+    .location-image {
+        display: block;
+        margin: auto;
+        border-radius: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+
+    /* Rollover/hover effects */
 
     .skill-level-hover-default,
     .break-type-hover-default,
@@ -909,6 +969,9 @@ body, html {
     .distance-hover-default {
         right: 2%;
     }
+
+
+    /* Surf Info Section (Surf Guide) */
 
     .break-name-default {
         font-size: 1.8em;
@@ -997,26 +1060,6 @@ body, html {
         margin-top: -6px;
     }
 
-    .location-frame-default {
-        text-align:center;
-        margin-bottom: 1px;
-        padding: 0;
-        cursor: pointer;
-    }
-
-    .favorite-default {
-        top: 7%;
-        left: 5%;
-    }
-
-    .location-image {
-        display: block;
-        margin: auto;
-        border-radius: 0;
-        width: 100%;
-        height: 100%;
-    }
-
     .favorite-guide {
         margin-bottom: -2px;
     }
@@ -1029,9 +1072,14 @@ body, html {
 }
 
 @media (min-width: 560px) and (max-width: 767px) {
+
+    /* Surf Info Section (Surf Guide) */
+
     .col-xs-sm-misc {
         width: 25%;
     }
+
+    /* Location List Section */
 
     .favorite-default {
         top: 7%;
@@ -1046,9 +1094,13 @@ body, html {
     .location-name {
         font-size: 4vw;
     }
+
+
 }
 
 @media (min-width: 768px) {
+
+    /* Header */
 
     .search-container-map {
         position: absolute;
@@ -1120,11 +1172,17 @@ body, html {
         outline: 0 !important;
     }
 
+
+    /* Map Section */
+
     .map-container-map {
         position: absolute;
         height: 100%;
         padding: 0;
     }
+
+
+    /* Location List Section */
 
     .location-grid-map {
         position: fixed;
@@ -1187,6 +1245,48 @@ body, html {
         left: 2.5%;
         top: 3.5%;
     }
+
+    .pulse-frame {
+        z-index: 1;
+        -webkit-animation-name: pulse;
+        animation-name: pulse;
+        -webkit-animation-duration: 350ms;
+        animation-duration: 350ms;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+    }
+
+    @-webkit-keyframes pulse {
+        0% { -webkit-transform: scale(1); }
+        100% { -webkit-transform: scale(1.1); }
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        100% { transform: scale(1.1); }
+    }
+
+    .pulse-frame-reverse {
+        -webkit-animation-name: reverse-pulse;
+        animation-name: reverse-pulse;
+        -webkit-animation-duration: 350ms;
+        animation-duration: 350ms;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+    }
+
+    @-webkit-keyframes reverse-pulse {
+        0% { -webkit-transform: scale(1.1); }
+        100% { -webkit-transform: scale(1); }
+    }
+
+    @keyframes reverse-pulse {
+        0% { transform: scale(1.1); }
+        100% { transform: scale(1); }
+    }
+
+
+    /* Rollover/hover effects */
 
     .skill-level-hover-map,
     .break-type-hover-map,
@@ -1257,44 +1357,8 @@ body, html {
         left: 5px;
     }
 
-    .pulse-frame {
-        z-index: 1;
-        -webkit-animation-name: pulse;
-        animation-name: pulse;
-        -webkit-animation-duration: 350ms;
-        animation-duration: 350ms;
-        -webkit-animation-fill-mode: both;
-        animation-fill-mode: both;
-    }
 
-    @-webkit-keyframes pulse {
-        0% { -webkit-transform: scale(1); }
-        100% { -webkit-transform: scale(1.1); }
-    }
-
-    @keyframes pulse {
-        0% { transform: scale(1); }
-        100% { transform: scale(1.1); }
-    }
-
-    .pulse-frame-reverse {
-        -webkit-animation-name: reverse-pulse;
-        animation-name: reverse-pulse;
-        -webkit-animation-duration: 350ms;
-        animation-duration: 350ms;
-        -webkit-animation-fill-mode: both;
-        animation-fill-mode: both;
-    }
-
-    @-webkit-keyframes reverse-pulse {
-        0% { -webkit-transform: scale(1.1); }
-        100% { -webkit-transform: scale(1); }
-    }
-
-    @keyframes reverse-pulse {
-        0% { transform: scale(1.1); }
-        100% { transform: scale(1); }
-    }
+    /* Surf Info Section (Surf Guide) */
 
     .sm-icon-container {
         width: 422px;

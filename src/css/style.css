@@ -81,7 +81,7 @@ body, html {
     width: 200px;
     background-color: #56c4d1;
     color: white;
-    font: .7em Arial, Verdana;
+    font: 0.7em Arial, Verdana;
 }
 
 .reload-button:hover {
@@ -426,7 +426,7 @@ body, html {
     width: 15%;
     margin: 18px 0 0 42.5%;
     text-align: center;
-    font-size: .6em;
+    font-size: 0.6em;
     border: 2px solid #e8e8e8;
     border-radius: 10px;
 }
@@ -440,7 +440,7 @@ body, html {
     width: 200px;
     background-color: #56c4d1;
     color: white;
-    font: .4em Arial, Verdana;
+    font: 0.4em Arial, Verdana;
 }
 
 .conditions-button:hover {
@@ -540,7 +540,7 @@ body, html {
 
 .surf-conditions-swell > p:first-child + p + p {
     margin-top: -3px;
-    font-size: .8em;
+    font-size: 0.8em;
 }
 
 .surf-conditions-wind {
@@ -557,7 +557,7 @@ body, html {
 }
 
 .surf-conditions-wind > p:first-child + svg + p {
-    font-size: .8em;
+    font-size: 0.8em;
 }
 
 .conditions-close-button {
@@ -858,7 +858,7 @@ body, html {
     .misc-info-two-hover-default {
         height: 20vw;
         width: 20vw;
-        border-width: .8vw;
+        border-width: 0.8vw;
     }
 
     .skill-level-hover-default,
@@ -919,7 +919,7 @@ body, html {
     }
 
     .title {
-        font-size: .7em;
+        font-size: 0.7em;
         margin-top: 15px;
     }
 
@@ -929,7 +929,7 @@ body, html {
         background-color: #56c4d1;
         border-radius: 10px;
         color: white;
-        font: .6em Arial, Verdana;
+        font: 0.6em Arial, Verdana;
     }
 
     .icon-container {
@@ -939,7 +939,7 @@ body, html {
     .live-temp {
         width: 35%;
         margin-left: 33.5%;
-        font-size: .7em;
+        font-size: 0.7em;
     }
 
     .surf-conditions-container {
@@ -963,11 +963,11 @@ body, html {
     }
 
     .surf-conditions-wind > p:first-child + img + p {
-        font-size: .8em;
+        font-size: 0.8em;
     }
 
     .surf-conditions-swell > p:first-child + p + p {
-        font-size: .8em;
+        font-size: 0.8em;
     }
 
     .live-compass {

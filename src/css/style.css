@@ -64,8 +64,7 @@ body, html {
 .data-load-error-container {
     padding-top: 30%;
     text-align: center;
-    font-size: 2em;
-    font-family: Arial, Verdana;
+    font: 2em Arial, Verdana;
 }
 
 .data-load-error-container > img:first-child + p {
@@ -82,8 +81,7 @@ body, html {
     width: 200px;
     background-color: #56c4d1;
     color: white;
-    font-size: .7em;
-    font-family: Arial, Verdana;
+    font: .7em Arial, Verdana;
 }
 
 .reload-button:hover {
@@ -118,9 +116,7 @@ body, html {
     color: white;
     background-color: #e8e8e8;
     padding: 0px 10px 0px 10px;
-    border-style: solid;
-    border-color: #e8e8e8;
-    border-width: 1px;
+    border: 1 px solid #e8e8e8;
     border-radius: 50px;
 }
 
@@ -131,8 +127,7 @@ body, html {
 }
 
 .ui-menu-item {
-    font-family: Arial, Verdana;
-    font-size: 1.2em;
+    font: 1.2em Arial, Verdana;
 }
 
 .map-container-default {
@@ -152,9 +147,8 @@ body, html {
     background: rgba(0,0,0,.7);
     border-radius: 5px;
     padding: 2px 4px;
-    font-size: 1.2em;
     color: #fff;
-    font-family: Arial, Verdana;
+    font: 1.2em Arial, Verdana;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -195,9 +189,8 @@ body, html {
     border: 2px solid;
     border-color: #e8e8e8;
     border-radius: 15px;
-    font-size: 1.2em;
     color: #b3b3b3;
-    font-family: Arial, Verdana;
+    font: 1.2em Arial, Verdana;
 }
 
 .clear-favorites-button-default:hover {
@@ -447,8 +440,7 @@ body, html {
     width: 200px;
     background-color: #56c4d1;
     color: white;
-    font-size: .4em;
-    font-family: Arial, Verdana;
+    font: .4em Arial, Verdana;
 }
 
 .conditions-button:hover {
@@ -471,10 +463,8 @@ body, html {
     width: 100px;
     padding: 0px 0px;
     margin: 1px 1px;
-    border: 2px;
     border-radius: 20px;
-    border-style: solid;
-    border-color: #e8e8e8;
+    border: 2px solid #e8e8e8;
     text-align: center;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -495,8 +485,7 @@ body, html {
 }
 
 .surf-conditions-container {
-    border: solid 2px;
-    border-color: #e8e8e8;
+    border: solid 2px #e8e8e8;
     margin: 0 0 15px 0px;
     padding-bottom: 10px;
     border-radius: 20px;
@@ -513,8 +502,7 @@ body, html {
 .error-container {
     width: 480px;
     margin: auto;
-    border: solid 2px;
-    border-color: #e8e8e8;
+    border: solid 2px #e8e8e8;
     border-radius: 20px;
     margin-bottom: 15px;
     padding: 10px 0 10px 0;
@@ -544,8 +532,7 @@ body, html {
     width: 90%;
     margin-left: 5%;
     padding: 6px 15px 9px;
-    border: solid 1px;
-    border-color: #e8e8e8;
+    border: solid 1px #e8e8e8;
     border-radius: 10px;
     background-color: #e1dfdf;
     color: #35abbb;
@@ -577,7 +564,7 @@ body, html {
     float: left;
     margin: -9px 0 0 -7px;
     padding: 0;
-    border: none;
+    border: 0;
     background: none;
     font-size: 1.8em;
     color: #d1d1d1;
@@ -593,7 +580,7 @@ body, html {
     float: left;
     margin: -2px 0 0 9px;
     padding: 0;
-    border: none;
+    border: 0;
     background: none;
     font-size: 1.8em;
     color: #d1d1d1;
@@ -689,9 +676,7 @@ body, html {
 }
 
 .highlight-attire {
-    border-color: #35abbb;
-    border-style: solid;
-    border-width: 2px;
+    border: 2px solid #35abbb;
 }
 
 .cost > svg:first-child + p {
@@ -739,7 +724,7 @@ body, html {
     z-index: 500;
     margin-top: 12px;
     padding: 0;
-    border: none;
+    border: 0;
     background: none;
     font-size: 1.8em;
     color: #d1d1d1;
@@ -753,10 +738,9 @@ body, html {
     border-radius: 5px;
     padding: 5px 15px;
     z-index: 999;
-    font-size: 1.2em !important;
+    font: 1.2em Arial, Verdana !important;
     color: #fff;
     font-weight: normal !important;
-    font-family: Arial, Verdana !important;
 }
 
 .tooltip-loaded {
@@ -779,14 +763,13 @@ body, html {
     }
 
     .header {
-        border-bottom: none;
+        border-bottom: 0;
     }
 
     .data-load-error-container {
         padding-top: 30%;
         text-align: center;
-        font-size: 2em;
-        font-family: Arial, Verdana;
+        font: 2em Arial, Verdana;
     }
 
     .data-load-error-container > img:first-child + p {
@@ -799,15 +782,12 @@ body, html {
         background-color: #00b8e6;
         border-radius: 10px;
         color: white;
-        font-size: 1em;
-        font-family: Arial, Verdana;
+        font: 1em Arial, Verdana;
     }
 
     .search-container-default {
         padding: 0 15px 0;
-        border-color: #e8e8e8;
-        border-bottom-style: solid;
-        border-bottom-width: 1px;
+        border: 1px solid #e8e8e8;
     }
 
     .search-form {
@@ -816,10 +796,7 @@ body, html {
         margin: 0 auto;
         font-size: 2em;
         padding-top: 12.5px;
-        border-top: none;
-        border-bottom: none;
-        border-left: none;
-        border-right: none;
+        border: 0;
         border-radius: 0px;
         outline: 0;
     }
@@ -851,12 +828,10 @@ body, html {
         height: 100%;
         width: 100%;
         background-color: #ffffff;
-        border: 2px solid;
-        border-color: #e8e8e8;
+        border: 2px solid #e8e8e8;
         border-radius: 0px;
-        font-size: 1.5em;
         color: #b3b3b3;
-        font-family: Arial, Verdana;
+        font: 1.5em Arial, Verdana;
     }
 
     .filters-container {
@@ -954,8 +929,7 @@ body, html {
         background-color: #56c4d1;
         border-radius: 10px;
         color: white;
-        font-size: .6em;
-        font-family: Arial, Verdana;
+        font: .6em Arial, Verdana;
     }
 
     .icon-container {
@@ -971,11 +945,10 @@ body, html {
     .surf-conditions-container {
         margin-bottom: 15px;
         padding-left: 0px;
-        border-top: solid 1px;
-        border-bottom: solid 1px;
-        border-right: none;
-        border-left: none;
-        border-color: #e8e8e8;
+        border-top: solid 1px #e8e8e8;
+        border-bottom: solid 1px #e8e8e8;
+        border-right: 0;
+        border-left: 0;
         border-radius: 0;
     }
 
@@ -1109,9 +1082,7 @@ body, html {
         color: white;
         background-color: #e8e8e8;
         padding: 0px 10px 0px 10px;
-        border-style: solid;
-        border-color: #e8e8e8;
-        border-width: 1px;
+        border: 1px solid #e8e8e8;
         border-radius: 50px;
     }
 
@@ -1133,9 +1104,8 @@ body, html {
         right: 8px;
         background-color: #ffffff;
         border-radius: 3px;
-        font-size: 1em;
         color: #525252;
-        font-family: Arial, Verdana;
+        font: 1em  Arial, Verdana;
         -webkit-box-shadow:0 0 3px rgba(0, 0, 0, 0.5);
         -moz-box-shadow:0 0 3px rgba(0, 0, 0, 0.5);
         box-shadow:0 0 3px rgba(0, 0, 0, 0.5);

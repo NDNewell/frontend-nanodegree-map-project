@@ -1,5 +1,6 @@
 ## Neightborhood Map project
 
+
 ### Instructions
 
 * Open 'https://dazzling-torch-4012.firebaseapp.com/' in any browser.
@@ -7,7 +8,16 @@
 * This repository's url is:
   https://github.com/NDNewell/frontend-nanodegree-map-project
 
+
 ### Features
+
+* By clicking the globe icon, the map is hidden or shown.
+
+* Clicking the star icon, displays/hides the user's favorite locations.
+
+* Clicking the magnifying glass icon enables the user to make a search for a
+  location by break name or break location.
+
 
 #### Grid View (landing page)
 
@@ -17,17 +27,9 @@
 * Clicking a location will open that location's surf guide, providing more info
   about the break.
 
-* Hovering over each location provides a rollover icons that offer a preview of
+* Hovering over each location displays rollover icons that offer a preview of
   what the location has to offer in terms of difficulty, type of break, wave
   direction etc.
-
-* By clicking the globe icon, a Google map (via Google Maps Api) enables
-  search of locations via map.
-
-* Clicking the star icon, hides/displays the user's favorite locations only.
-
-* Clicking the magnifying glass icon enables the user to make a search for a
-  location by break name or break location.
 
 
 #### Map View
@@ -40,23 +42,16 @@
 * Clicking a location will open that location's surf guide, providing more info
   about the break.
 
-* Hovering over each location provides a rollover icons that offer a preview of
+* Hovering over each location provides rollover icons that offer a preview of
   what the location has to offer in terms of difficulty, type of break, wave
   direction etc.
-
-* By clicking the globe icon, the map is hidden and the location frames are
-  presented in a grid format.
-
-* Clicking the star icon, hides/displays the user's favorite locations only.
-
-* Clicking the magnifying glass icon enables the user to make a search for a
-  location by break name or break location.
 
 * Only the location frames whose related markers are visible on the map are
   shown.
 
 * If no map markers are visible, the map can be reset by pressing the reset
   map button.
+
 
 #### Surf Guide
 
@@ -66,17 +61,7 @@
   via Magic Seaweed's surf report api for that particular location.
 
 * In addition to icons that convey specific info about the break, a live
-  compass is rendered in order to display current wind and swell conditions
-
-* By clicking the globe icon, the map is hidden or shown.
-
-* Clicking the star icon, displays/hides the user's favorite locations only.
-
-* Clicking the magnifying glass icon enables the user to make a search for a
-  location by break name or break location.
-
-* Only the location frames whose related markers are visible on the map are
-  shown.
+  compass is rendered in order to display current wind and swell conditions.
 
 
 ###  Author

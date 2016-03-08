@@ -11,7 +11,7 @@
 
 * When getting live conditions, because the api information provided by Magic
   Seaweed is not https, the browser will block the content. In order to fix
-  this, loading unsafe scripts must be enabled.
+  this, loading unsafe scripts or mixed content must be enabled.
 
 ### Instructions
 

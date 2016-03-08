@@ -1,5 +1,14 @@
 ## Neightborhood Map project
 
+### Overview
+
+* Surflist is a web app that enables surfers to find a wave that fits their
+  surfing needs in terms of wave size, difficulty, break type etc. In addition
+  to providing basic info about each location, users can access live forecast
+  data provided by Magic Seaweed. As this is a work in progress, new features
+  will be added on an ongoing basis. Improvements and feature suggestions are
+  most welcome.
+
 
 ### Instructions
 
@@ -67,7 +76,7 @@
 ###  Author
   ------
 
-  Nicholas Newell
+  * Nicholas Newell
 
 
 ###  Resources used
@@ -102,13 +111,13 @@
 ###  Submissions
   -----------
 
-  For bugs, feature requests, patches please contact first elaborating on
-  your ideas/problems. If an agreement is reached, you may proceed by
-  submitting a pull request etc.
+  * For bugs, feature requests, patches please contact first elaborating on
+    your ideas/problems. If an agreement is reached, you may proceed by
+    submitting a pull request etc.
 
 
 ###  Contact
   -------
 
-  Email: rebelexplorer31@gmail.com
-  GitHub: https://github.com/NDNewell
+  * Email: rebelexplorer31@gmail.com
+  * GitHub: https://github.com/NDNewell

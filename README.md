@@ -9,6 +9,9 @@
   will be added on an ongoing basis. Improvements and feature suggestions are
   most welcome.
 
+* When getting live conditions, because the api information provided by Magic
+  Seaweed is not https, the browser will block the content. In order to fix
+  this, loading unsafe scripts must be enabled.
 
 ### Instructions
 

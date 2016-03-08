@@ -1,4 +1,4 @@
-## Neightborhood Map project
+## Neighborhood Map project
 
 ### Overview
 

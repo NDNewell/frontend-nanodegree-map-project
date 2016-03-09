@@ -1434,7 +1434,7 @@ function AppViewModel () {
 
                 console.log('get external svg sprite sheet from local storage');
 
-                // Save locally save external svg sprite sheet
+                // Save locally external svg sprite sheet
                 var data = localStorage.inlineSVGdata;
 
                 // Load sprites into the DOM
@@ -4871,14 +4871,15 @@ function AppViewModel () {
 
                 }, 8000);
 
-                // Load Magic Seaweed API data
-                var msUrl = 'http://magicseaweed.com/api/d2983e394d07724e96404fba11c10485/forecast/?spot_id=' + spotID + '&units=us&fields=timestamp,fadedRating,solidRating,swell.minBreakingHeight,swell.maxBreakingHeight,swell.components.primary.*,wind.*,condition.*';
+                var msURL = 'https://magicseaweed.p.mashape.com/forecast?spot_id=' + spotID + '&units=us&fields=timestamp,fadedRating,solidRating,swell.minBreakingHeight,swell.maxBreakingHeight,swell.components.primary.*,wind.*,condition.*';
 
-                // Make an ajax request for the location's data from MSW
                 $.ajax({
-                    url: msUrl,
-                    dataType: 'jsonp',
-                    success: function(response) {
+                    url: msURL,
+                    datatype: 'json',
+                    beforeSend: function(xhr) {
+                    xhr.setRequestHeader("X-Mashape-Authorization", "IeqgqRG3eLmshPsieyHH4w1HOoYIp1aet5Cjsn7yz0d8OqDJPR");
+                    },
+                    success: function(data) {
 
                         console.log('MSW api request successful');
 
@@ -4891,12 +4892,12 @@ function AppViewModel () {
 
                         // Iterate through forecast objects to get the last
                         // recorded weather data (i.e. within the last 3 hours)
-                        var responseLength = response.length;
+                        var dataLength = data.length;
 
-                        for (var i = responseLength; i--;) {
+                        for (var i = dataLength; i--;) {
 
                             // Save the data element's time
-                            var forecastTime = response[i].timestamp;
+                            var forecastTime = data[i].timestamp;
 
                             // If the element's time is within the past three
                             // hours, save it
@@ -4904,7 +4905,7 @@ function AppViewModel () {
 
                                 // Save forecast for parsing other information
                                 // in a variable
-                                var forecastData = response[i];
+                                var forecastData = data[i];
 
                             // If there is no data available from within the
                             // previous three hours, get the nearest forecast
@@ -4913,7 +4914,7 @@ function AppViewModel () {
 
                                 // Save forecast for parsing other information
                                 // in a variable
-                                var forecastData = response[i];
+                                var forecastData = data[i];
                             };
                         };
 
@@ -5720,50 +5721,50 @@ function AppViewModel () {
 
             var frameTitle = "Best Tide: All",
                 img = "#tide_all",
-                    imgAlt = "icon indicating that all tides are favorable"
-                    tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                imgAlt = "icon indicating that all tides are favorable"
+                tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
         } else if(obj.indexOf("low") > -1 && obj.indexOf("mid") > -1 && obj.indexOf("high") < 0) {
 
             var frameTitle = "Best Tide: Low & Mid",
                 img = "#tide_low_mid",
-                    imgAlt = "icon indicating that the best tide is low to mid"
-                    tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                imgAlt = "icon indicating that the best tide is low to mid"
+                tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
         } else if(obj.indexOf("low") > -1 && obj.indexOf("mid") < 0 && obj.indexOf("high") > -1) {
 
             var frameTitle = "Best Tide: Low & High",
                 img = "#tide_low_high",
-                    imgAlt = "icon indicating that the best tide is low and hide"
-                    tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                imgAlt = "icon indicating that the best tide is low and hide"
+                tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
         } else if(obj.indexOf("low") > -1 && obj.indexOf("mid") < 0 && obj.indexOf("high") < 0) {
 
             var frameTitle = "Best Tide: Low",
                 img = "#tide_low",
-                    imgAlt = "icon indicating that the best tide is low"
-                    tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                imgAlt = "icon indicating that the best tide is low"
+                tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
         } else if(obj.indexOf("low") < 0 && obj.indexOf("mid") > -1 && obj.indexOf("high") > -1) {
 
             var frameTitle = "Best Tide: High & Mid",
                 img = "#tide_high_mid",
-                    imgAlt = "icon indicating that the best tide is high to mid"
-                    tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                imgAlt = "icon indicating that the best tide is high to mid"
+                tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
         } else if(obj.indexOf("low") < 0 && obj.indexOf("mid") > -1 && obj.indexOf("high") < 0) {
 
             var frameTitle = "Best Tide: Mid",
                 img = "#tide_mid",
-                    imgAlt = "icon indicating that the best tide is mid"
-                    tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                imgAlt = "icon indicating that the best tide is mid"
+                tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
         } else if(obj.indexOf("low") < 0 && obj.indexOf("mid") < 0 && obj.indexOf("high") > -1) {
 
             var frameTitle = "Best Tide: High",
                 img = "#tide_high",
-                    imgAlt = "icon indicating the best tide is high"
-                    tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                imgAlt = "icon indicating the best tide is high"
+                tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
         };
 
         return tideIcon;
@@ -5833,8 +5834,8 @@ function AppViewModel () {
 
             var frameTitle = "Best Season: All",
                 img = "#season_all",
-                    imgAlt = "icon indicating that the waves are good year round"
-                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                imgAlt = "icon indicating that the waves are good year round"
+                bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
         } else if(winter >= spring && winter >= summer && winter >= autumn) {
             if(winter === spring) {

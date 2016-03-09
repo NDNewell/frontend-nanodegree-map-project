@@ -1,6 +1,7 @@
-## Neighborhood Map project
+## Neighborhood Map Project
 
 ### Overview
+------------
 
 * Surflist is a web app that enables surfers to find a wave that fits their
   surfing needs in terms of wave size, difficulty, break type etc. In addition
@@ -14,6 +15,7 @@
   this, loading unsafe scripts or mixed content must be enabled.
 
 ### Instructions
+----------------
 
 * Open 'https://dazzling-torch-4012.firebaseapp.com/' in any browser.
 
@@ -22,6 +24,7 @@
 
 
 ### Features
+------------
 
 * By clicking the globe icon, the map is hidden or shown.
 
@@ -77,13 +80,13 @@
 
 
 ###  Author
-  ------
+-----------
 
   * Nicholas Newell
 
 
 ###  Resources used
-  --------------
+-------------------
 
   * Head First JavaScript Programming by O'Reilly
 
@@ -112,7 +115,7 @@
 
 
 ###  Submissions
-  -----------
+----------------
 
   * For bugs, feature requests, patches please contact first elaborating on
     your ideas/problems. If an agreement is reached, you may proceed by
@@ -120,7 +123,7 @@
 
 
 ###  Contact
-  -------
+------------
 
   * Email: rebelexplorer31@gmail.com
   * GitHub: https://github.com/NDNewell

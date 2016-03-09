@@ -1036,7 +1036,7 @@ function initMap() {
 
     // Create an info window object for displaying the break name
     infoWindow = new google.maps.InfoWindow();
-};
+}
 
 // Get current location
 navigator.geolocation.getCurrentPosition(success);
@@ -1047,7 +1047,7 @@ function success(position) {
 
     currentLat = position.coords.latitude;
     currentLng = position.coords.longitude;
-};
+}
 
 function AppViewModel () {
 
@@ -1060,16 +1060,16 @@ function AppViewModel () {
         $mapSection = $('.map-section'),
         $mapContainer = $('.map-container'),
         $map = $('#map'),
+        $searchSymbol = $('.search-symbol'),
         $mapSymbol = $('.map-symbol'),
+        $favFilterSym = $('.favorite-filter-symbol'),
         $locationGrid = $('.location-grid'),
         $searchContainer = $('.search-container'),
         $searchForm = $('.search-form'),
         $clearSymbol = $('.clear'),
         $filtersContainer = $('.filters-container'),
-        $favFilterSym = $('.favorite-filter-symbol'),
         $clearFavsBtn = $('.clear-favorites-button'),
-        $surfInfoContainer = $('.surf-info-container'),
-        $searchSymbol = $('.search-symbol');
+        $surfInfoContainer = $('.surf-info-container');
 
     // Cache Firebase database references to all, location, and user data
     var allData = new Firebase("https://dazzling-torch-4012.firebaseio.com"),
@@ -1082,7 +1082,7 @@ function AppViewModel () {
           console.log("data could not be saved." + error);
         } else {
           console.log("data saved successfully.");
-        };
+        }
     };
 
     var fireBaseReadError = function (errorObject) {
@@ -1148,9 +1148,9 @@ function AppViewModel () {
 
                   // Stop checking if Google maps api is loaded
                   clearInterval(checkGoogle);
-              };
+              }
           }, 500);
-        };
+        }
 
         // Sets up markers and listeners for Google map
         function setUpGoogleMap () {
@@ -1163,7 +1163,7 @@ function AppViewModel () {
 
           // Add map listeners
           self.addMapListeners();
-        };
+        }
 
     }, loadError);
 
@@ -1187,9 +1187,9 @@ function AppViewModel () {
                     clearInterval(interval);
 
                     callback();
-                };
+                }
             }, 250);
-        };
+        }
     };
 
     // This obervable array holds filtered location objects from search
@@ -1228,7 +1228,7 @@ function AppViewModel () {
             avoids having the same location listed multiple times in the pop-up window */
             if(searchKeywords.indexOf(obj.location) < 0) {
                 self.searchKeywords.push(obj.location);
-            };
+            }
         });
     };
 
@@ -1263,7 +1263,7 @@ function AppViewModel () {
                     console.log('user has no favorites');
 
                     // Cache an empty array to replace 'null'
-                    var favorites = [];
+                    favorites = [];
 
                     updateFavs();
                     loadFrames();
@@ -1281,7 +1281,7 @@ function AppViewModel () {
                     updateFavs();
                     loadFrames();
 
-                };
+                }
 
                 // Load location frames
                 function updateFavs () {
@@ -1294,7 +1294,7 @@ function AppViewModel () {
                     /* Update the marker image of any markers that match the
                     user's favorites */
                     self.updateFavMarkers(favorites);
-                };
+                }
 
                 // Load location frames
                 function loadFrames () {
@@ -1308,16 +1308,16 @@ function AppViewModel () {
 
                         // Show frames after locations array has been loaded
                         self.onLocationsArrayLoad(showFrames);
+                    }
 
-                        function showFrames() {
-                            self.showLocationFrames(favorites);
-                        };
-                    };
-                };
+                    function showFrames() {
+                        self.showLocationFrames(favorites);
+                    }
+                }
 
             }, fireBaseReadError);
 
-        };
+        }
     };
 
     // Add a location to the local favorites array and update Firebase version
@@ -1335,7 +1335,7 @@ function AppViewModel () {
 
             self.updateFavsOnFrames();
             self.updateFavMarkers(userFavorites);
-        };
+        }
     };
 
     // Remove a location from the local favorites array and update Firebase
@@ -1351,7 +1351,7 @@ function AppViewModel () {
         userFavorites.forEach(function(keepFav) {
             if(removeFav !== keepFav) {
                 updatedFavs.push(keepFav);
-            };
+            }
         });
 
         // Update the locations from the temporary array above if logged in
@@ -1368,7 +1368,7 @@ function AppViewModel () {
             userFavorites = updatedFavs;
             self.updateFavsOnFrames();
             self.updateFavMarkers(userFavorites);
-        };
+        }
     };
 
     // Delete all locations from the local favorites array and update Firebase
@@ -1389,7 +1389,7 @@ function AppViewModel () {
 
             // Just update the markers if not logged in
             self.updateFavMarkers(userFavorites);
-        };
+        }
     };
 
     // Check if setting data to local storage is enabled
@@ -1445,14 +1445,14 @@ function AppViewModel () {
             } else if (svgVersionCached !== svgVersion || svgVersionCached === null) {
 
                 getSVGData();
-            };
+            }
 
         // If local storage isn't enabled, load the external svg sprite sheet
         // into the DOM from the server without saving it locally
         } else {
 
             getSVGData();
-        };
+        }
 
         // Get the external svg sprite sheet data
         function getSVGData() {
@@ -1479,10 +1479,12 @@ function AppViewModel () {
 
                     // If local storage is available save the external sprite
                     // sheet as well as its current version number.
-                    if(localStorageEnabled) {saveSVGData(data)};
+                    if(localStorageEnabled) {
+                        saveSVGData(data);
+                    }
                 }
             });
-        };
+        }
 
         // Load the external svg sprite sheet into the DOM so that it
         // is an inlined svg sprite sheet
@@ -1490,7 +1492,7 @@ function AppViewModel () {
 
             // After inlining, hide it
             $body.prepend(data).children(":nth-child(1)").hide();
-        };
+        }
 
         // Save the external svg sprite sheet to local storage
         function saveSVGData(data) {
@@ -1499,7 +1501,7 @@ function AppViewModel () {
 
             localStorage.inlineSVGdata = data;
             localStorage.svgVersion = svgVersion;
-        };
+        }
     });
 
     // Prevents back space navigating the page backwards during input/textarea
@@ -1509,7 +1511,7 @@ function AppViewModel () {
     $document.on("keydown", function (e) {
         if (e.which === 8 && !$(e.target).is("input, textarea")) {
             e.preventDefault();
-        };
+        }
     });
 
     // Create array of map markers
@@ -1538,7 +1540,7 @@ function AppViewModel () {
             // Create a marker and set its position. Pass the variables
             // created above as arguments
             self.addMarker(breakName, breakCoordinates, breakLocation, obj);
-        };
+        }
 
         // Display markers found in the markers array on the map
         self.displayMarkers(map);
@@ -1546,7 +1548,7 @@ function AppViewModel () {
         // Set initial map bounds based on location of markers
         if($map.is(":visible")) {
             self.setMapBounds();
-        };
+        }
     };
 
     self.addMarker = function(breakName, breakCoordinates, breakLocation, obj) {
@@ -1583,7 +1585,7 @@ function AppViewModel () {
                 // 14 or above
                 if(map.getZoom() < 14) {
                     map.setZoom(14);
-                };
+                }
             };
         })(marker));
 
@@ -1613,7 +1615,7 @@ function AppViewModel () {
                     // If the surf guide isn't open, hide all location frames
                     // except the one related to the marker
                     self.focusOnFrame(marker);
-                };
+                }
             };
         })(marker, obj));
 
@@ -1641,8 +1643,8 @@ function AppViewModel () {
                     // location frame
                     if($numFramesVisible !== 1) {
                         self.scrollToFrame(marker);
-                    };
-                };
+                    }
+                }
             };
         })());
 
@@ -1656,7 +1658,7 @@ function AppViewModel () {
                 // guide or mobile view
                 if (!guideView && !mobileView) {
                     self.pulseFrame(marker);
-                };
+                }
             };
         })());
 
@@ -1674,7 +1676,7 @@ function AppViewModel () {
 
         for (var i = markersLength; i--;) {
             markers[i].setMap(map);
-        };
+        }
     };
 
     // Get a marker's name (breakName) not including the location
@@ -1715,7 +1717,7 @@ function AppViewModel () {
 
             // Change the marker's image
             marker.setIcon(markerIcon.selectedFav);
-        };
+        }
     };
 
     // Find last selected marker and make pin small again
@@ -1739,7 +1741,7 @@ function AppViewModel () {
                 console.log('make ' + markerName + "'" + 's marker small');
 
                 marker.setIcon(markerIcon.smallFav);
-            };
+            }
         });
     };
 
@@ -1766,8 +1768,8 @@ function AppViewModel () {
             if (breakName === markerName) {
 
                 return marker;
-            };
-        };
+            }
+        }
     };
 
     // When a location frame is hovered over, the associated marker and
@@ -1784,7 +1786,7 @@ function AppViewModel () {
             if (markerName === breakName) {
 
                 self.makeMarkerBig(marker);
-            };
+            }
         });
     };
 
@@ -1804,7 +1806,7 @@ function AppViewModel () {
 
             // Set all relevant markers to visible if the map is visible
             self.filterMarkers(marker);
-        };
+        }
     };
 
     // Change any map markers that match/don't match the user's favorites
@@ -1836,9 +1838,9 @@ function AppViewModel () {
 
                     clearInterval(favsTimer);
                     updateMarkers();
-                };
+                }
             }, 250);
-        };
+        }
 
         function updateMarkers () {
 
@@ -1861,7 +1863,7 @@ function AppViewModel () {
                     } else if (markerIconOrigin === markerIcon.selected.origin) {
 
                         marker.setIcon(markerIcon.selectedFav);
-                    };
+                    }
 
                 // If the name doesn't match, but was a fav, change the img
                 // back
@@ -1871,9 +1873,9 @@ function AppViewModel () {
                 } else if (markerIconOrigin === markerIcon.selectedFav.origin) {
 
                     marker.setIcon(markerIcon.selected);
-                };
+                }
             });
-        };
+        }
     };
 
     // Count the number of visible markers
@@ -1894,8 +1896,8 @@ function AppViewModel () {
 
                 // Iterate the number of visible markers
                 numMarkersVisible++;
-            };
-        };
+            }
+        }
 
         // If no markers are visible (map has been moved to an empty area),
         // display button that centers the map again.
@@ -1910,14 +1912,14 @@ function AppViewModel () {
 
                 // Render reset map button
                 self.repositionMap();
-            };
+            }
 
         // If any map markers are visible (within the map's viewable area),
         // remove the map reset button if previously shown
         } else if ($('.reset-map-container').length) {
 
             $('.reset-map-container').remove();
-        };
+        }
     };
 
     // Show all of the map's markers
@@ -1935,15 +1937,16 @@ function AppViewModel () {
         if ($searchContainer.is(":visible")) {
 
             // Cache the current search query
-            var search = self.formatText(self.Query()),
-                markerTitle = self.formatText(marker.title);
+            var search = self.formatText(self.Query());
+
+            markerTitle = self.formatText(marker.title);
 
             // Compare the search query with the title of the marker
             if (markerTitle.indexOf(search) > -1) {
 
                 // If there is a match, make the marker visible
                 marker.setVisible(true);
-            };
+            }
 
         // If the favorites button is selected, only display the markers
         // that are within the users's favorites
@@ -1954,14 +1957,14 @@ function AppViewModel () {
 
                 // If there is a match, make the marker visible
                 marker.setVisible(true);
-            };
+            }
 
         // If the search container isn't visible, show all markers
         } else {
 
             // Make all markers visible
             marker.setVisible(true);
-        };
+        }
     };
 
     // Update visible markers depending on which ones fall within the current
@@ -1998,9 +2001,9 @@ function AppViewModel () {
                     marker.setVisible(true);
                 } else {
                     marker.setVisible(false);
-                };
-            };
-        };
+                }
+            }
+        }
 
         // Check the number of visible markers
         self.checkVisibleMarkers();
@@ -2014,7 +2017,7 @@ function AppViewModel () {
         // Remove page loader if it is visible
         if($pageLoader.is(":visible")) {
             $pageLoader.remove();
-        };
+        }
 
         // Save a ref to all location frames currently in the DOM
         var $allLocationFrames = $('.location-frame');
@@ -2048,15 +2051,15 @@ function AppViewModel () {
                         clearInterval(checkLocFavsLoaded);
 
                         show();
-                    };
+                    }
                 }, 250);
-            };
+            }
 
         // If favorites is undefined (if local storage isn't enabled), show
         // locations immediately
         } else {
             show();
-        };
+        }
 
         function show () {
 
@@ -2066,7 +2069,7 @@ function AppViewModel () {
 
             // Add the hover effects for each location frame
             self.addHoverEffects();
-        };
+        }
     };
 
     // Iterate through the location frames and fill in the fav icon of any
@@ -2098,8 +2101,8 @@ function AppViewModel () {
                 if($favoriteWrapper.hasClass('is-a-favorite')) {
 
                     $favoriteWrapper.addClass('not-a-favorite').removeClass('is-a-favorite');
-                };
-            };
+                }
+            }
         });
     };
 
@@ -2119,12 +2122,12 @@ function AppViewModel () {
         if($searchContainer.is(":visible")) {
             $searchContainer.hide();
             $searchSymbol.removeClass("search-selected").addClass("search-default");
-        };
+        }
 
         // Hide the filters section if favorites are in view
         if($('.favorite-filter-selected').length) {
             $filtersContainer.toggle();
-        };
+        }
 
         // Hide the location grid
         $locationGrid.hide();
@@ -2136,7 +2139,7 @@ function AppViewModel () {
 
             // Animate the marker
             self.animateMarker(marker);
-        };
+        }
 
         // Manage the view to change the layout for the surf guide
         self.manageView();
@@ -2195,27 +2198,7 @@ function AppViewModel () {
           // Animate the scrolling
           animateRight = requestAnimationFrame(scrollRight);
 
-          // Create a loop that moves the scroll bar from left to right
-          function scrollRight () {
-
-              // Increase the scrollLeft position 200px per loop
-              transitionRight+=scollIncrem;
-
-              // If the scrollLeft position is less than the new position
-              // move the scrollLeft position incrementally closer to it
-              if(transitionRight < newPosition) {
-
-                  $locationsContainer.scrollLeft(transitionRight);
-
-                  // Keep calling the loop until the above if statement is true
-                  animateRight = requestAnimationFrame(scrollRight);
-
-              // If the scrollLeft position is greater/equal to the new
-              // position, stop the loop
-              } else {
-                  stopScrolling();
-              };
-          };
+          scrollRight();
 
         // Scroll left if the new scrollLeft position is less than current
         // position
@@ -2227,28 +2210,52 @@ function AppViewModel () {
           // Animate the scrolling
           animateLeft = requestAnimationFrame(scrollLeft);
 
-          // Create a loop that moves the scroll bar from right to left
-          function scrollLeft () {
+          scrollLeft();
+        }
 
-              // Increase the scrollLeft 200px per loop
-              transitionLeft-=scollIncrem;
+        // Create a loop that moves the scroll bar from left to right
+        function scrollRight () {
 
-              // If the scrollLeft position is greater than the new position
-              // move the scrollLeft position incrementally closer to it
-              if(transitionLeft >  newPosition) {
+            // Increase the scrollLeft position 200px per loop
+            transitionRight+=scollIncrem;
 
-                  $locationsContainer.scrollLeft(transitionLeft);
+            // If the scrollLeft position is less than the new position
+            // move the scrollLeft position incrementally closer to it
+            if(transitionRight < newPosition) {
 
-                  // Keep calling the loop until the above if statement is true
-                  animateLeft = requestAnimationFrame(scrollLeft);
+                $locationsContainer.scrollLeft(transitionRight);
 
-              // If the scrollLeft position is less/equal to the new position,
-              // stop the loop
-              } else {
-                  stopScrolling();
-              };
-          };
-        };
+                // Keep calling the loop until the above if statement is true
+                animateRight = requestAnimationFrame(scrollRight);
+
+            // If the scrollLeft position is greater/equal to the new
+            // position, stop the loop
+            } else {
+                stopScrolling();
+            }
+        }
+
+        // Create a loop that moves the scroll bar from right to left
+        function scrollLeft () {
+
+            // Increase the scrollLeft 200px per loop
+            transitionLeft-=scollIncrem;
+
+            // If the scrollLeft position is greater than the new position
+            // move the scrollLeft position incrementally closer to it
+            if(transitionLeft >  newPosition) {
+
+                $locationsContainer.scrollLeft(transitionLeft);
+
+                // Keep calling the loop until the above if statement is true
+                animateLeft = requestAnimationFrame(scrollLeft);
+
+            // If the scrollLeft position is less/equal to the new position,
+            // stop the loop
+            } else {
+                stopScrolling();
+            }
+        }
 
         // Stop auto scrolling
         function stopScrolling () {
@@ -2263,7 +2270,7 @@ function AppViewModel () {
             $locationsContainer.scrollLeft(newPosition);
             console.log('stop auto scroll');
             console.log('scroll position at: ' + $locationsContainer.scrollLeft());
-        };
+        }
     };
 
     // Animates the location frame of a hovered map marker
@@ -2300,8 +2307,8 @@ function AppViewModel () {
                     } else {
 
                         makeFrameBig($locationFrame);
-                    };
-                };
+                    }
+                }
             });
 
         // If only one location is in view, do nothing unless hovering away
@@ -2320,7 +2327,7 @@ function AppViewModel () {
 
             // Remove the reverse pulse effect
             removePulse($locationFrame);
-        };
+        }
 
         function makeFrameBig ($locationFrame) {
 
@@ -2328,7 +2335,7 @@ function AppViewModel () {
 
             // Add necessary class to animate
             $locationFrame.removeClass("pulse-frame-reverse").addClass("pulse-frame");
-        };
+        }
 
         function makeFrameSmall ($locationFrame) {
 
@@ -2340,7 +2347,7 @@ function AppViewModel () {
             // Remove the reverse pulse effect after its animation
             // finishes
             removePulse($locationFrame);
-        };
+        }
 
         // Remove the reverse pulse effect
         function removePulse ($locationFrame) {
@@ -2351,7 +2358,7 @@ function AppViewModel () {
             var timer = setTimeout (function() {
                 $locationFrame.removeClass("pulse-frame-reverse");
             }, 400);
-        };
+        }
     };
 
     // Set the style on the location frames for map view
@@ -2377,7 +2384,7 @@ function AppViewModel () {
             // If not, keep it hidden
             if($locationFrame.is(":visible")) {
                 $locationFrame.css("display", "inline-block");
-            };
+            }
         });
 
         // Remove the Bootstrap settings
@@ -2416,7 +2423,7 @@ function AppViewModel () {
 
             // Show all relevant location frames
             self.filterFrames(marker);
-        };
+        }
     };
 
     // Show only the frame of the map marker that was clicked on
@@ -2445,7 +2452,7 @@ function AppViewModel () {
                 console.log('show only ' + markerName + "'s location frame");
 
                 $locationFrame.show();
-            };
+            }
         });
     };
 
@@ -2470,7 +2477,7 @@ function AppViewModel () {
 
                 // If there is a match, make the frame visible
                 updateFrames(markerName);
-            };
+            }
 
         // If the favorites filter button is selected, only display
         // the frames of those markers that are within the user's
@@ -2482,7 +2489,7 @@ function AppViewModel () {
 
                 // If there is a match, make the frame visible
                 updateFrames(markerName);
-            };
+            }
 
         // If the search container isn't visible and the favorites
         // filter isn't selected, display all frames
@@ -2490,7 +2497,7 @@ function AppViewModel () {
 
             // Update the visible frames
             updateFrames(markerName);
-        };
+        }
 
         // Display the location frames of those markers found
         // within the map's current boundaries and remove those that do not
@@ -2511,9 +2518,9 @@ function AppViewModel () {
                 if($breakName === markerName) {
 
                     $locationFrame.show();
-                };
+                }
             });
-        };
+        }
     };
 
     // Update visible frames depending on markers visible in the view port
@@ -2537,8 +2544,8 @@ function AppViewModel () {
             // End the function
             if(markerIconOrigin === markerIconSelectedOrigin || markerIconOrigin === markerIconSelectedFavOrigin) {
                 return;
-            };
-        };
+            }
+        }
 
         console.log('manage location frames');
 
@@ -2550,9 +2557,9 @@ function AppViewModel () {
         // Iterate backwards through the markers array, so that their
         // location frames when matched are added back to the location grid
         // in the same order
-        for(var i = markersLength; i--;) {
+        for(var k = markersLength; k--;) {
 
-            var marker = markers[i];
+            var marker = markers[k];
 
             // Get map bounds and determine which markers are within them
             // Display the location frames of only those markers found
@@ -2561,8 +2568,8 @@ function AppViewModel () {
 
                 // Display the frames
                 self.filterFrames(marker);
-            };
-        };
+            }
+        }
     };
 
     // Add event listeners for when the map is idle and when a user clicks
@@ -2581,7 +2588,7 @@ function AppViewModel () {
 
                 self.manageFrames();
                 self.manageMarkers();
-            };
+            }
         });
 
         // When the map is clicked, location frames are made visible.
@@ -2605,7 +2612,7 @@ function AppViewModel () {
 
                 // Update visible frames
                 self.manageFrames();
-            };
+            }
         });
     };
 
@@ -2634,7 +2641,7 @@ function AppViewModel () {
                 // previously opened) remove the old listener
                 if(typeof zoomListener !== 'undefined') {
                     $zoomControls.off('click', zoomListener);
-                };
+                }
 
                 // Attach the zoom listener
                 $zoomControls.on('click', function zoomListener() {
@@ -2664,14 +2671,14 @@ function AppViewModel () {
 
                                 // Center the map on the selected marker
                                 self.centerOnMarker(marker);
-                            };
-                        };
-                    };
+                            }
+                        }
+                    }
                 });
             } else {
 
                 console.log('zoom listener not loaded');
-            };
+            }
         }, 1000);
     };
 
@@ -2714,11 +2721,11 @@ function AppViewModel () {
             // Just reset the markers since after the markers are made visible
             // again, the map bounds are set, which triggers the markers AND
             // frames managers
-            self.resetMarkers()
+            self.resetMarkers();
 
             // Set map bounds
             self.setMapBounds();
-        };
+        }
     };
 
     // Set up marker for the map display in guide view
@@ -2760,7 +2767,7 @@ function AppViewModel () {
 
             // Zoom in on the relevant marker
             map.setZoom(10);
-        };
+        }
     };
 
     // Center the map on a specific marker
@@ -2795,8 +2802,8 @@ function AppViewModel () {
         for (var i = markersLength; i--;) {
             if(markers[i].visible) {
                 bounds.extend(markers[i].getPosition());
-            };
-        };
+            }
+        }
 
         // Fit the map to the bounds calcuated above
         map.fitBounds(bounds);
@@ -2805,7 +2812,7 @@ function AppViewModel () {
         // zoom to lower level
         if(map.getZoom() > 12) {
             map.setZoom(12);
-        };
+        }
     };
 
     // When the map is in view on a screen larger than 767px, the height is
@@ -2826,7 +2833,7 @@ function AppViewModel () {
         if(markers.length !== 0 && $map.is(":visible") && !resizeInProgress) {
             google.maps.event.trigger(map, 'resize');
             self.setMapBounds();
-        };
+        }
     };
 
     // Activate the info window for the selected marker
@@ -2963,7 +2970,7 @@ function AppViewModel () {
             $waveSizeInfo.removeClass("wave-size-hover-map").addClass("wave-size-hover-default");
 
             $costInfo.removeClass("cost-hover-map").addClass("cost-hover-default");
-        };
+        }
     };
 
     // Set variable for hover effects
@@ -2999,7 +3006,7 @@ function AppViewModel () {
                 // associated marker and info window
                 if(mapView) {
                     activateMarker(frameBreakName);
-                };
+                }
 
                 // Iterate through the location array
                 self.locationArray.forEach(function(obj) {
@@ -3009,7 +3016,7 @@ function AppViewModel () {
                     // as a rollover
                     if (frameBreakName === obj.breakName) {
                         importInfo(obj);
-                    };
+                    }
                 });
 
                 // When the mouse is hovering over a location frame
@@ -3069,7 +3076,7 @@ function AppViewModel () {
                     if(typeof currentLat !== 'undefined') {
                         var distanceInfo = displayDistance(obj.lat, obj.lng);
                         $locationFrame.append(distanceInfo);
-                    };
+                    }
 
                     // Display average water temp for current season
                     var waterTempInfo = displayCurrentWaterTemp(obj.avgWaterTemp);
@@ -3078,13 +3085,13 @@ function AppViewModel () {
                     // Display avg wave height for the break
                     var waveSizeInfo = displayWaveSize(obj.avgSize);
                     $locationFrame.append(waveSizeInfo);
-                };
+                }
 
                 // If screen is larger than mobile view adjust the icons'
                 // styling for the map view if enabled
                 if(!mobileView && !gridView) {
                     self.toggleHoverClasses();
-                };
+                }
 
                 console.log('add hover tooltips');
 
@@ -3107,7 +3114,7 @@ function AppViewModel () {
                 // if in map view adjust the icons'styling back to default
                 if(mapView) {
                     self.toggleHoverClasses();
-                };
+                }
 
                 // Change the location frame's img back to default seettings
                 // Show the location frame's text and icons
@@ -3128,7 +3135,7 @@ function AppViewModel () {
                 // visible)
                 if(!guideView && !self.isInfoWindowOpen(infoWindow) && !gridView) {
                     self.makeMarkerSmall();
-                };
+                }
 
                 // Remove all hover icons
                 $allHoverIcons.remove();
@@ -3173,7 +3180,7 @@ function AppViewModel () {
 
                 // Display which user is logged in the console every minute
                 var displayUser = setInterval(self.showUser, 60000);
-            };
+            }
         });
     };
 
@@ -3203,7 +3210,7 @@ function AppViewModel () {
 
                 console.log("user is logged out");
                 self.userLogin();
-            };
+            }
 
         // If local storage isn't available, show location frames once all of
         // the location data has been parsed
@@ -3214,7 +3221,7 @@ function AppViewModel () {
 
             // Show frames once location data has been parsed
             self.onLocationsArrayLoad(self.showLocationFrames);
-        };
+        }
     };
 
     /* Monitor user authentication state, when there is a change check
@@ -3270,7 +3277,7 @@ function AppViewModel () {
                         // Cancel the tool tip timer and remove it
                         clearInterval(toolTipTimer);
                         $('.tooltip-info').remove();
-                    };
+                    }
 
                     // If the toolTipDelay timer is running from a previous
                     // tooltip, cancel it and disable the mousemove listener
@@ -3301,6 +3308,9 @@ function AppViewModel () {
                                 newEventRef = e;
                             });
 
+                            // Define time variable
+                            var time;
+
                             // Determine the time to pass before displaying a
                             // tooltip.
                             // If it is for a hover element (i.e. a rollover
@@ -3310,12 +3320,12 @@ function AppViewModel () {
                             if($element.hasClass("hover-tooltip-only")) {
 
                                 // Set the time variable for hover elements
-                                var time = 3000;
+                                time = 3000;
                             } else {
 
                                 // Set the time variable for all other elements
-                                var time = 2000;
-                            };
+                                time = 2000;
+                            }
 
                             // Delay invoking the tooltip renderer so that the
                             // tooltip does not appear immediately
@@ -3355,11 +3365,12 @@ function AppViewModel () {
 
                                 // Show the element's tooltip
                                 renderToolTips($titleText, eventRef, $element);
-                            };
-                        break
-                    };
+                            }
+
+                        break;
+                    }
                 });
-            };
+            }
         });
 
         // Render the element's tooltip
@@ -3404,10 +3415,10 @@ function AppViewModel () {
                 $tooltip.outerWidth(220);
 
                 // Reset the variables from above with the new width
-                var $tooltipX = $tooltip.offset().left,
-                    $tooltipWidth = $tooltip.outerWidth(),
-                    $tooltipRightCorner = $tooltipX + $tooltipWidth;
-            };
+                $tooltipX = $tooltip.offset().left,
+                $tooltipWidth = $tooltip.outerWidth(),
+                $tooltipRightCorner = $tooltipX + $tooltipWidth;
+            }
 
             // If the tooltip extends off of the screen (which will be the
             // case if the tooltip's width was already adjusted above), move
@@ -3424,7 +3435,7 @@ function AppViewModel () {
 
                 // Move the tooltip to its new position
                 $tooltip.offset({ top: y, left: newX });
-            };
+            }
 
             // Set a global ref to the time for displaying the tooltip
             // When the time runs out, remove the tooltip
@@ -3449,17 +3460,20 @@ function AppViewModel () {
                 // the tooltip
                 clearTimeout(toolTipTimer);
 
+                // Declare time variable
+                var time;
+
                 // Determine time to pass before closing the tooltip
                 // If it is for a hover element, it is faster
                 if($element.hasClass("hover-tooltip-only")) {
 
                     // Set the time variable for hover elements
-                    var time = 0;
+                    time = 0;
                 } else {
 
                     // Set the time variable for all other elements
-                    var time = 500;
-                };
+                    time = 500;
+                }
 
                 // Remove the tooltip
                 $tooltip.fadeOut(time, function () {
@@ -3469,7 +3483,7 @@ function AppViewModel () {
                     $tooltip.remove();
                 });
             });
-        };
+        }
     };
 
     // Cache Google map's element titles that are usually shown in a native
@@ -3500,7 +3514,7 @@ function AppViewModel () {
                 console.log('disable native marker tooltip');
 
                 $this.removeAttr('title');
-            };
+            }
         });
     };
 
@@ -3527,7 +3541,7 @@ function AppViewModel () {
                 if(googleElemTitles.indexOf($this.attr('title')) > -1) {
 
                     // Count the detected elem title
-                    googleTitleNum++
+                    googleTitleNum++;
 
                     // Once all of the Google elem titles have been loaded
                     // remove them
@@ -3538,8 +3552,8 @@ function AppViewModel () {
                         console.log('disable Google tooltips');
 
                         self.removeTitle();
-                    };
-                };
+                    }
+                }
             });
         }, 500);
     };
@@ -3560,7 +3574,7 @@ function AppViewModel () {
         } else {
             $navbar.removeClass('navbar-fixed-top');
             $body.css("padding-top", "0px");
-        };
+        }
     });
 
     // Show an animated progress spinner on initial page load
@@ -3618,11 +3632,11 @@ function AppViewModel () {
 
                     // Replace hover psuedo-class with active psuedo-class
                     rule.selectorText = rule.selectorText.replace(":hover", ":active");
-                    };
-                };
-            };
-        };
-    };
+                    }
+                }
+            }
+        }
+    }
 
     // In screen sizes greater than 767px horizontal scrolling is enabled
     // during map view using a plug in
@@ -3668,7 +3682,7 @@ function AppViewModel () {
             // default display:none
             if($('.map-selected').length) {
                 $mapContainer.show();
-            };
+            }
 
             // Set the default classes for the elems below
             $searchContainer.removeClass("search-container-map").addClass("search-container-default");
@@ -3722,7 +3736,7 @@ function AppViewModel () {
 
                 // Center the map on the selected marker
                 self.setMarkerForGuide();
-            };
+            }
 
         // If the screen width is larger than a 'mobile' view and the map is
         // visible , alter the layout
@@ -3757,7 +3771,7 @@ function AppViewModel () {
 
             // Enable horizontal scrolling
             self.enableHorizontalScrolling();
-        };
+        }
     };
 
     // Set intitial variables for map, grid, guide, and mobile views
@@ -3828,8 +3842,8 @@ function AppViewModel () {
 
                     gridView = true;
                     console.log('view is grid');
-                };
-        };
+                }
+        }
 
         // Change the site's current layout depending on the above's outcome
         self.manageLayout();
@@ -3884,7 +3898,7 @@ function AppViewModel () {
                 if ($map.is(":visible") && !guideView) {
                     google.maps.event.trigger(map, 'resize');
                     self.setMapBounds();
-                };
+                }
 
                 // enable the frame and marker managers
                 resizeInProgress = false;
@@ -3892,7 +3906,7 @@ function AppViewModel () {
                 console.log('enable frame and marker managers');
 
             }, 100);
-        };
+        }
     });
 
     // Convert input text to lowercase, remove spaces, remove apostrophes, and
@@ -3936,7 +3950,7 @@ function AppViewModel () {
             if($locationFrameText.indexOf(search) > -1) {
 
                 $locationFrame.show();
-            };
+            }
         });
 
         // Compare each marker's title, which holds the break and location
@@ -3951,14 +3965,14 @@ function AppViewModel () {
                 marker.setVisible(true);
             } else {
                 marker.setVisible(false);
-            };
+            }
         });
 
         // If the map is visible, set the map bounds after a search is made
         if ($map.is(":visible")) {
 
             self.setMapBounds();
-        };
+        }
 
         // On each search new versions of the location frames are added. If the
         // map is visible, the layout must be adjusted
@@ -3966,7 +3980,7 @@ function AppViewModel () {
 
             // Update layout
             self.manageLayout();
-        };
+        }
     };
 
     // Load jQuery-UI auto complete plug in for search field
@@ -4027,7 +4041,7 @@ function AppViewModel () {
             // Blur if 'enter' is pressed
             if(e.keyCode === 13 && blurOnEnter) {
                 $(this).blur();
-            };
+            }
         });
 
     };
@@ -4044,9 +4058,9 @@ function AppViewModel () {
             if(self.searchKeywords.length > 1) {
                 clearInterval(interval);
                 self.loadAutoComplete();
-            };
+            }
         }, 500);
-    };
+    }
 
     // Toggle the search container in and out of view
     self.toggleSearch = function () {
@@ -4067,7 +4081,7 @@ function AppViewModel () {
             } else {
                 $searchContainer.fadeOut(200);
                 $clearSymbol.hide();
-            };
+            }
 
         // If in guide view the guide is closed due to the reset page function
         // above.
@@ -4083,8 +4097,8 @@ function AppViewModel () {
             } else {
                 $searchContainer.slideUp(200);
                 $clearSymbol.hide();
-            };
-        };
+            }
+        }
 
         // If the search container is visible, focus on search form and
         // change class to indicate search is selected
@@ -4105,7 +4119,7 @@ function AppViewModel () {
 
             // Indicate that the search field isn't open
             $searchSymbol.removeClass("search-selected").addClass("search-default");
-        };
+        }
     };
 
     // When the search symbol is clicked, the search field is displayed with
@@ -4125,7 +4139,7 @@ function AppViewModel () {
 
             // Add remove relevant classes
             $favFilterSym.removeClass("favorite-filter-selected").addClass("favorite-filter-default");
-        };
+        }
 
         // Enable toggling of the search container if the user's scroll
         // position is at the top of the page. If the user's scroll position is
@@ -4142,7 +4156,7 @@ function AppViewModel () {
 
         } else {
             $searchForm.focus();
-        };
+        }
     });
 
     // When text is entered into the search form, show the clear search symbol
@@ -4154,7 +4168,7 @@ function AppViewModel () {
     }).on("blur", function() {
         if(!$searchForm.val()) {
             $clearSymbol.hide();
-        };
+        }
     });
 
     // If the clear search symbol is clicked, reset the page and hide it
@@ -4190,9 +4204,9 @@ function AppViewModel () {
                 if(userFavorites.indexOf($breakName) > -1) {
 
                     $locationFrame.show();
-                };
+                }
             });
-        };
+        }
 
         // Close any open info windows
         infoWindow.close();
@@ -4211,7 +4225,7 @@ function AppViewModel () {
                 marker.setVisible(true);
             } else {
                 marker.setVisible(false);
-            };
+            }
         });
 
         console.log('update map with favorites');
@@ -4221,7 +4235,7 @@ function AppViewModel () {
 
             // Set the map bounds & map position
             self.setMapBounds();
-        };
+        }
     };
 
     // Bind click event to the 'favorite' icon on the navbar
@@ -4240,7 +4254,7 @@ function AppViewModel () {
                     $filtersContainer.fadeOut(200);
                 } else {
                     $filtersContainer.slideUp(200);
-                };
+                }
 
                 // Add & remove relevant classes
                 $favFilterSym.removeClass("favorite-filter-selected").addClass("favorite-filter-default");
@@ -4257,12 +4271,12 @@ function AppViewModel () {
                 // If the search container is visible, hide it
                 if($searchContainer.is(":visible")) {
                     self.toggleSearch();
-                };
+                }
 
                 // If the surf guide is open, close it
                 if(guideView) {
                     self.closeSurfGuide();
-                };
+                }
 
                 // Add & remove relevant classes
                 $favFilterSym.removeClass("favorite-filter-default").addClass("favorite-filter-selected");
@@ -4297,7 +4311,7 @@ function AppViewModel () {
 
                         // Adjust the layout
                         self.manageLayout();
-                };
+                }
 
                 // Show the filters container
                 // If the map is visible, fade in the filters container
@@ -4306,20 +4320,20 @@ function AppViewModel () {
                     $filtersContainer.fadeIn(200);
                 } else {
                     $filtersContainer.slideDown(200);
-                };
+                }
 
             // If the user has no favorites, simply return the function
             } else {
                 console.log('user has no favorites');
-                return
-            };
+                return;
+            }
 
             // Scroll to the top of the page only if 'map view' not enabled
             if(!$('.map-container-map').length) {
 
                 // Scroll to top of the page
                 document.body.scrollTop = document.documentElement.scrollTop = 0;
-            };
+            }
     });
 
     // Bind click event to clear favorites button
@@ -4335,7 +4349,7 @@ function AppViewModel () {
             $filtersContainer.fadeOut(200);
         } else {
             $filtersContainer.slideUp(200);
-        };
+        }
 
         // Add/remove the classes
         $favFilterSym.removeClass("favorite-filter-selected").addClass("favorite-filter-default");
@@ -4353,7 +4367,7 @@ function AppViewModel () {
         // Remove page loader if it is visible
         if($pageLoader.is(":visible")) {
             $pageLoader.remove();
-        };
+        }
 
         // Cache refs to DOM
         var $topOfWindow = $window.scrollTop(),
@@ -4414,7 +4428,7 @@ function AppViewModel () {
             // Show the map immediately if it was hidden in map view
             if($map.is(":hidden")) {
                 $map.show();
-            };
+            }
 
             // Update the layout (do this after toggling the map symbol)
             // because 'manageView' uses it to determine if map view is
@@ -4457,7 +4471,7 @@ function AppViewModel () {
             // Show the map immediately if it was hidden in map view
             if($map.is(":hidden")) {
                 $map.show();
-            };
+            }
 
             // Toggle the map
             $mapContainer.slideToggle(200, function() {
@@ -4478,7 +4492,8 @@ function AppViewModel () {
 
                 } else {
 
-                    console.log('close map');};
+                    console.log('close map');
+                }
             });
 
         // The mobile view toggling of the map view handles both opening
@@ -4500,7 +4515,7 @@ function AppViewModel () {
             // Show the map immediately if it was hidden in map view
             if($map.is(":hidden")) {
                 $map.show();
-            };
+            }
 
             // Toggle the map.
             $mapContainer.slideToggle(200, function() {
@@ -4530,7 +4545,7 @@ function AppViewModel () {
                         // Resize map and set bounds to adapt to window size
                         google.maps.event.trigger(map, 'resize');
                         self.setMapBounds();
-                    };
+                    }
 
                 // When map is closed and surf guide is visible/hidden:
                 } else {
@@ -4552,8 +4567,8 @@ function AppViewModel () {
                         infoWindow.close();
 
                         self.makeMarkerSmall();
-                    };
-                };
+                    }
+                }
             });
         } else {
 
@@ -4562,7 +4577,7 @@ function AppViewModel () {
             // Scroll to top of the page if the map is already open in
             // mobile view
             document.body.scrollTop = document.documentElement.scrollTop = 0;
-        };
+        }
     });
 
     // Reset the the page
@@ -4573,7 +4588,7 @@ function AppViewModel () {
         // If the surf guide is open, close it
         if(guideView) {
             self.closeSurfGuide();
-        };
+        }
 
         // Clear search field
         $searchForm.val("");
@@ -4595,7 +4610,7 @@ function AppViewModel () {
         if($locationGrid.is(":hidden")) {
             // Show the locations
             $locationGrid.show();
-        };
+        }
 
         // On each reset, new versions of the location frames are added, so
         // the view must be checked in case layout needs adjusting
@@ -4611,7 +4626,7 @@ function AppViewModel () {
 
             // Set the map bounds & map position
             self.setMapBounds();
-        };
+        }
     };
 
     // Set variables for wind/swell compasses
@@ -4711,7 +4726,7 @@ function AppViewModel () {
 
             var distanceIcon = displayDistance(obj.lat, obj.lng);
             $iconContainer.append(distanceIcon);
-        };
+        }
 
         // Display an icon for each hazard one might encounter at the break
         displayHazardIcons(obj.hazards, $iconContainer);
@@ -4776,7 +4791,7 @@ function AppViewModel () {
 
                             // Insert container to hold indicator
                             $surfGuideHeader.append('<div id="conditionsLoader"></div>');
-                        };
+                        }
 
                         // Save global ref to conditions loader
                         $conditionsLoader = $('#conditionsLoader');
@@ -4786,7 +4801,7 @@ function AppViewModel () {
 
                         // Pass info to API function and initiate request
                         getMagicSeaweed(obj.spotID, obj.breakName);
-                };
+                }
             });
 
             // When the close surf guide button is clicked the surf guide is
@@ -4798,11 +4813,11 @@ function AppViewModel () {
                     // Show the filters container
                     $filtersContainer.toggle();
                     self.filterFavorites();
-                };
+                }
 
                 self.closeSurfGuide();
             });
-        };
+        }
 
         // If the star in the surf guide is clicked, the location is added/
         // deleted from the user's favorites
@@ -4835,14 +4850,17 @@ function AppViewModel () {
 
                     // Update user favorites
                     addFavorite(breakName);
-                };
+                }
             });
-        };
+        }
 
         // Get api data from magic seaweed
         function getMagicSeaweed (spotID, breakName) {
 
             console.log('get current conditions');
+
+            // Declare variable
+            var forecastData;
 
             // Save the name of the current surf guide
             var $currentSurfGuide = $("#guide-break-name").text();
@@ -4885,10 +4903,10 @@ function AppViewModel () {
 
                         // Get current time & current time plus/minus three
                         // hours
-                        var getTime = Date.now();
-                        var currentTimeSecs = getTime / 1000;
-                        var backThreeHours = currentTimeSecs - 10800;
-                        var forwardThreeHours = currentTimeSecs + 10800;
+                        var getTime = Date.now(),
+                            currentTimeSecs = getTime / 1000,
+                            backThreeHours = currentTimeSecs - 10800,
+                            forwardThreeHours = currentTimeSecs + 10800;
 
                         // Iterate through forecast objects to get the last
                         // recorded weather data (i.e. within the last 3 hours)
@@ -4905,7 +4923,7 @@ function AppViewModel () {
 
                                 // Save forecast for parsing other information
                                 // in a variable
-                                var forecastData = data[i];
+                                forecastData = data[i];
 
                             // If there is no data available from within the
                             // previous three hours, get the nearest forecast
@@ -4914,9 +4932,9 @@ function AppViewModel () {
 
                                 // Save forecast for parsing other information
                                 // in a variable
-                                var forecastData = data[i];
-                            };
-                        };
+                                forecastData = data[i];
+                            }
+                        }
 
                         // Show forecast in the View
                         renderSurfConditions(forecastData);
@@ -4928,7 +4946,7 @@ function AppViewModel () {
                         $conditionsLoader.remove();
                     }
                 });
-            };
+            }
 
             // Display surf conditions in the surf guide
             function renderSurfConditions(forecastData) {
@@ -4940,18 +4958,21 @@ function AppViewModel () {
                 // download isn't injected into another surf guide if the user // changes surf guides during the api request processing
                 if ($currentSurfGuide === breakName && !$('.conditions-error').length) {
 
+                    // Delcare variable
+                    var waveHeight;
+
                     // Save wave break height
                     var minBreakHeight = forecastData.swell.minBreakingHeight,maxBreakHeight = forecastData.swell.maxBreakingHeight;
 
                     // If the min and max are the same, just save the min
                     // height
                     if (minBreakHeight === maxBreakHeight) {
-                        var waveHeight = minBreakHeight;
+                        waveHeight = minBreakHeight;
 
                     // If the min and max are different, save both as a range
                     } else {
-                        var waveHeight = minBreakHeight + ' ' + '-' + ' ' + maxBreakHeight;
-                    };
+                        waveHeight = minBreakHeight + ' ' + '-' + ' ' + maxBreakHeight;
+                    }
 
                     // Get and save swell height, direction, period
                     var swellHeight = forecastData.swell.components.primary.height,
@@ -4967,7 +4988,7 @@ function AppViewModel () {
                     // Get and save current temperature and weather
                     var temperature = forecastData.condition.temperature,
                         weather = forecastData.condition.weather,
-                        weatherImg = 'http://cdnimages.magicseaweed.com/30x30/' + weather + '.png'
+                        weatherImg = 'http://cdnimages.magicseaweed.com/30x30/' + weather + '.png';
 
                     // Create an array to save the surf conditions ratings
                     rating = [];
@@ -4979,25 +5000,25 @@ function AppViewModel () {
 
                     for (var i = solidRatingLength; i--;) {
                         rating.push(solidStar);
-                    };
+                    }
 
                     // Add faded stars to the array equal to number value
                     // retrieved from MSW
                     var fadedRatingLength = forecastData.fadedRating,
                         fadedStar = '<svg class="rating" alt="faded star icon to indicate reduced favorable surf conditions due to wind"><use xlink:href="#star_faded"/></svg>';
 
-                    for (var i = fadedRatingLength; i--;) {
+                    for (var j = fadedRatingLength; j--;) {
                         rating.push(fadedStar);
-                    };
+                    }
 
                     // Add empty stars to the array equal 5 minus the total
                     // amount of filled and faded stars
                     var fillEmptyStars = 5 - rating.length,
                         emptyStar = '<svg class="rating" alt="solid star icon to indicate unfavorable surf conditions"><use xlink:href="#star_empty"/></svg>';
 
-                    for (var i = fillEmptyStars; i--;) {
+                    for (var k = fillEmptyStars; k--;) {
                         rating.push(emptyStar);
-                    };
+                    }
 
                     // Combine the array into one line of stars to form the
                     // overall rating of both the surfing conditions and wave
@@ -5086,65 +5107,6 @@ function AppViewModel () {
                     // Render live swell and wind compass
                     renderLiveCompass();
 
-                    function renderLiveCompass () {
-
-                        // Create and save a reference to the canvas
-                        var Canvas = document.getElementById('compass'),
-                            ctx = Canvas.getContext('2d');
-
-                        // Create a new image source from the css sprite sheet
-                        // and draw the compass once it's loaded
-                        var sprites = new Image();
-                        sprites.src = spriteSheet;
-                        sprites.onload = draw;
-
-                        // Using the direction value (degrees), set the amount
-                        // of rotation needed on the compass before rendering
-                        // the wind/swell icons
-                        var windCompassRotation = windDirection * (Math.PI / 180),
-                            swellCompassRotation = direction * (Math.PI / 180);
-
-                        // Set common sprite sheet cooridinates for both the
-                        // swell and wind icons
-                        var srcW = 308,     // source width
-                            srcH = 308,     // source height
-                            destW = 300,    // destination width
-                            destH = 300;    // destination height
-
-                        // Draw the compass. Icon paramenters are as follows:
-                        // (img,srcX,srcY,srcW,srcH,destX,destY,destW,destH)
-                        function draw() {
-
-                            // Draw the compass icon as a background first and
-                            // then save it
-                            ctx.drawImage(sprites, 0, 1177, srcW, srcH, 0, 0, destW, destH);
-                            ctx.save();
-
-                            // Traverse to the center of the canvas and then
-                            ctx.translate(150, 150);
-
-                            // Rotate it by the degrees specified for the wind
-                            // direction
-                            ctx.rotate(windCompassRotation);
-
-                            // Draw the wind icon
-                            ctx.drawImage(sprites, 0, 561, srcW, srcH, -150, -150, destW, destH);
-
-                            // Rotate the canvas back to its original position
-                            ctx.rotate(-windCompassRotation);
-
-                            // Rotate the canvas by the degrees specified for
-                            // the swell direction
-                            ctx.rotate(swellCompassRotation);
-
-                            // Draw the swell icon
-                            ctx.drawImage(sprites, 0, 869, srcW, srcH, -150, -150, destW, destH);
-
-                            // Show the saved background (compass icon);
-                            ctx.restore();
-                        };
-                    };
-
                     // Add button for closing the surf conditions window
                     $surfConditionsWaves.prepend('<button type="button" class="btn conditions-close-button">✖</button>');
 
@@ -5185,8 +5147,67 @@ function AppViewModel () {
                 } else {
 
                   return;
-                };
-            };
+                }
+
+                function renderLiveCompass () {
+
+                    // Create and save a reference to the canvas
+                    var Canvas = document.getElementById('compass'),
+                        ctx = Canvas.getContext('2d');
+
+                    // Create a new image source from the css sprite sheet
+                    // and draw the compass once it's loaded
+                    var sprites = new Image();
+                    sprites.src = spriteSheet;
+                    sprites.onload = draw;
+
+                    // Using the direction value (degrees), set the amount
+                    // of rotation needed on the compass before rendering
+                    // the wind/swell icons
+                    var windCompassRotation = windDirection * (Math.PI / 180),
+                        swellCompassRotation = direction * (Math.PI / 180);
+
+                    // Set common sprite sheet cooridinates for both the
+                    // swell and wind icons
+                    var srcW = 308,     // source width
+                        srcH = 308,     // source height
+                        destW = 300,    // destination width
+                        destH = 300;    // destination height
+
+                    // Draw the compass. Icon paramenters are as follows:
+                    // (img,srcX,srcY,srcW,srcH,destX,destY,destW,destH)
+                    function draw() {
+
+                        // Draw the compass icon as a background first and
+                        // then save it
+                        ctx.drawImage(sprites, 0, 1177, srcW, srcH, 0, 0, destW, destH);
+                        ctx.save();
+
+                        // Traverse to the center of the canvas and then
+                        ctx.translate(150, 150);
+
+                        // Rotate it by the degrees specified for the wind
+                        // direction
+                        ctx.rotate(windCompassRotation);
+
+                        // Draw the wind icon
+                        ctx.drawImage(sprites, 0, 561, srcW, srcH, -150, -150, destW, destH);
+
+                        // Rotate the canvas back to its original position
+                        ctx.rotate(-windCompassRotation);
+
+                        // Rotate the canvas by the degrees specified for
+                        // the swell direction
+                        ctx.rotate(swellCompassRotation);
+
+                        // Draw the swell icon
+                        ctx.drawImage(sprites, 0, 869, srcW, srcH, -150, -150, destW, destH);
+
+                        // Show the saved background (compass icon);
+                        ctx.restore();
+                    }
+                }
+            }
 
             // If an API request doesn't work or there is not spot ID number
             // provided by magic seaweed for the location, show an error
@@ -5243,10 +5264,10 @@ function AppViewModel () {
 
                 } else {
 
-                    return;;
-                };
-            };
-        };
+                    return;
+                }
+            }
+        }
     };
 
     // Get the title of the surf guide
@@ -5258,18 +5279,24 @@ function AppViewModel () {
     // Add the favorite icon to the beginning of the surf guide title
     self.displayFavoriteIcon = function(breakName) {
 
+        // Declare variable
+        var favorite;
+
         // Check if the location is one of the user's favorites
         if(userFavorites.indexOf(breakName) > -1) {
-            var favorite = true;
-        };
+            favorite = true;
+        }
+
+        // Declare variable
+        var icon;
 
         // If the location is one of the user's favorites, fill it in
         // If it isn't, don't fill it
         if(favorite) {
-            var icon = '<span class="favorite-wrapper-guide is-a-favorite-guide"><svg class="favorite-guide" alt="filled star icon to indicate that the location is a favorite"><use xlink:href="#star" /></svg></span>';
+            icon = '<span class="favorite-wrapper-guide is-a-favorite-guide"><svg class="favorite-guide" alt="filled star icon to indicate that the location is a favorite"><use xlink:href="#star" /></svg></span>';
         } else {
-            var icon = '<span class="favorite-wrapper-guide not-a-favorite-guide"><svg class="favorite-guide" alt="empty star icon to indicate that the location is not a favorite"><use xlink:href="#star"/></svg></span>';
-        };
+            icon = '<span class="favorite-wrapper-guide not-a-favorite-guide"><svg class="favorite-guide" alt="empty star icon to indicate that the location is not a favorite"><use xlink:href="#star"/></svg></span>';
+        }
 
         return icon;
     };
@@ -5278,20 +5305,23 @@ function AppViewModel () {
     // This saves time by not having to rewrite for each guide icon
     self.setUpIcons = function (frameClass, frameTitle, imgClass, imgAlt, img, bgImg, bgImgClass) {
 
+        // Declare variable
+        var icon;
+
         // If the icon has a background img use an elem with an extra svg frame
         // Otherwise, construct it with only one svg
         if(bgImg) {
-            var icon =
+            icon =
                 '<div class="' + frameClass + '" title="' + frameTitle + '">' +
                     '<svg class="' + bgImgClass + '"><use xlink:href="' + bgImg + '"/></svg>' +
                     '<svg class="' + imgClass + '" alt="' + imgAlt + '"><use xlink:href="' + img + '"/></svg>' +
                 '</div>';
         } else {
-            var icon =
+            icon =
                 '<div class="' + frameClass + '" title="' + frameTitle + '">' +
                     '<svg class="' + imgClass + '" alt="' + imgAlt + '"><use xlink:href="' + img + '"/></svg>' +
                 '</div>';
-        };
+        }
 
         return icon;
     };
@@ -5300,16 +5330,20 @@ function AppViewModel () {
     // effects
     self.displayBigWaveIcon = function (obj, $iconContainer) {
 
+        // Declare variables
+        var frameClass,
+            imgClass;
+
         // Set classes according to type of icon
         // Each class styles the icon differently (i.e. black for surf guide
         // and white for the rollover effects)
         if(rollover) {
-            var frameClass = "hover-icon-frame rollover-info misc-info-one-hover-default misc-info-one-hover hover-tooltip-only",
-                imgClass = "hover-icon";
+            frameClass = "hover-icon-frame rollover-info misc-info-one-hover-default misc-info-one-hover hover-tooltip-only",
+            imgClass = "hover-icon";
         } else {
-            var frameClass = "big-wave card",
-                imgClass = "big-wave-guide";
-        };
+            frameClass = "big-wave card",
+            imgClass = "big-wave-guide";
+        }
 
         // Both types of icons receive the same title, alt text, and image
         var frameTitle = "Known for big wave surfing",
@@ -5338,12 +5372,12 @@ function AppViewModel () {
         // displaySuggestedAttire function)
         } else if (!obj.bigWave && rollover) {
 
-            var icon = self.displaySuggestedAttireIcons(obj.avgWaterTemp);
+            icon = self.displaySuggestedAttireIcons(obj.avgWaterTemp);
 
         } else if (!obj.bigWave && !rollover) {
 
             return;
-        };
+        }
         return icon;
     };
 
@@ -5351,16 +5385,20 @@ function AppViewModel () {
     // effects
     self.displayWellKnownIcon = function (obj, $iconContainer) {
 
+        // Declare variables
+        var frameClass,
+            imgClass;
+
         // Set classes according to type of icon
         // Each class styles the icon differently (i.e. black for surf guide
         // and white for the rollover effects)
         if(rollover) {
-                frameClass = "misc-info-two-hover hover-icon-frame rollover-info misc-info-two-hover-default well-known-hover hover-tooltip-only",
-                imgClass = "hover-icon";
+            frameClass = "misc-info-two-hover hover-icon-frame rollover-info misc-info-two-hover-default well-known-hover hover-tooltip-only",
+            imgClass = "hover-icon";
         } else {
-            var frameClass = "well-known card",
-                imgClass = "well-known-guide";
-        };
+            frameClass = "well-known card",
+            imgClass = "well-known-guide";
+        }
 
         // Both types of icons receive the same title and image
         var frameTitle = "Well known around the world",
@@ -5387,12 +5425,12 @@ function AppViewModel () {
         // the displayHazardIcon function)
         } else if (!obj.wellKnown && rollover) {
 
-            var icon = self.displayHazardIcons(obj.hazards, $iconContainer);
+            icon = self.displayHazardIcons(obj.hazards, $iconContainer);
 
         } else if (!obj.wellKnown && !rollover) {
 
             return;
-        };
+        }
 
         return icon;
     };
@@ -5401,18 +5439,27 @@ function AppViewModel () {
     // hover effects
     self.displaySkillIcon = function (obj) {
 
+        // Declare variables
+        var img,
+            imgAlt,
+            frameTitle,
+            skillLevelIcon,
+            frameClass,
+            imgClass,
+            bgImgClass;
+
         // Set classes according to type of icon
         // Each class styles the icon differently (i.e. black for surf guide
         // and white for the rollover effects)
         if(rollover) {
-            var frameClass = "hover-icon-frame rollover-info skill-level-hover-default skill-level-hover hover-tooltip-only",
-                imgClass = "hover-icon",
-                bgImgClass = "hover-icon skill-level-bg-hover";
+            frameClass = "hover-icon-frame rollover-info skill-level-hover-default skill-level-hover hover-tooltip-only";
+            imgClass = "hover-icon";
+            bgImgClass = "hover-icon skill-level-bg-hover";
         } else {
-            var frameClass = "skill-level card",
-                imgClass = "skill-level-guide",
-                bgImgClass = "skill-level-bg-guide";
-        };
+            frameClass = "skill-level card";
+            imgClass = "skill-level-guide";
+            bgImgClass = "skill-level-bg-guide";
+        }
 
         // For styling purposes, create a background image for skill level icon
         // The bg img serves as the levels that will be filled in with an over-
@@ -5424,46 +5471,46 @@ function AppViewModel () {
         // level in the skill level array, render the appropriate icon
         if(obj.indexOf("beginner") > -1 && obj.indexOf("intermediate") > -1 && obj.indexOf("advanced") > -1) {
 
-            var frameTitle = "Difficulty: All levels",
-                img = "#skill_level_all",
-                imgAlt = "icon that indicates a difficulty level for all skill levels"
-                skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img, bgImg, bgImgClass);
+            frameTitle = "Difficulty: All levels";
+            img = "#skill_level_all";
+            imgAlt = "icon that indicates a difficulty level for all skill levels";
+            skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img, bgImg, bgImgClass);
 
         } else if(obj.indexOf("beginner") > -1 && obj.indexOf("intermediate") > -1 && obj.indexOf("advanced") < 0) {
 
-            var frameTitle = "Difficulty: Beginner to Intermediate",
-                img = "#skill_level_beginner_intermediate",
-                imgAlt = "icon that indicates a difficulty for beginner to intermediate skill levels"
-                skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img, bgImg, bgImgClass);
+            frameTitle = "Difficulty: Beginner to Intermediate";
+            img = "#skill_level_beginner_intermediate";
+            imgAlt = "icon that indicates a difficulty for beginner to intermediate skill levels";
+            skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img, bgImg, bgImgClass);
 
         } else if(obj.indexOf("beginner") > -1 && obj.indexOf("intermediate") < 0 && obj.indexOf("advanced") < 0) {
 
-            var frameTitle = "Difficulty: Beginner",
-                img = "#skill_level_beginner",
-                imgAlt = "icon that indicates a difficulty for beginner skill levels"
-                skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img, bgImg, bgImgClass);
+            frameTitle = "Difficulty: Beginner";
+            img = "#skill_level_beginner";
+            imgAlt = "icon that indicates a difficulty for beginner skill levels";
+            skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img, bgImg, bgImgClass);
 
         } else if(obj.indexOf("beginner") < 0 && obj.indexOf("intermediate") > -1 && obj.indexOf("advanced") > -1) {
 
-            var frameTitle = "Difficulty: Intermediate to Advanced",
-                img = "#skill_level_intermediate_advanced",
-                imgAlt = "icon that indicates a difficulty for intermediate to advanced skill levels"
-                skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img, bgImg, bgImgClass);
+            frameTitle = "Difficulty: Intermediate to Advanced";
+            img = "#skill_level_intermediate_advanced";
+            imgAlt = "icon that indicates a difficulty for intermediate to advanced skill levels";
+            skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img, bgImg, bgImgClass);
 
         } else if(obj.indexOf("beginner") < 0 && obj.indexOf("intermediate") > -1 && obj.indexOf("advanced") < 0) {
 
-            var frameTitle = "Difficulty: Intermediate",
-                img = "#skill_level_intermediate",
-                imgAlt = "icon that indicates a difficulty for intermediate skill levels"
-                skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img, bgImg, bgImgClass);
+            frameTitle = "Difficulty: Intermediate";
+            img = "#skill_level_intermediate";
+            imgAlt = "icon that indicates a difficulty for intermediate skill levels";
+            skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img, bgImg, bgImgClass);
 
         } else if(obj.indexOf("beginner") < 0 && obj.indexOf("intermediate") < 0 && obj.indexOf("advanced") > -1) {
 
-            var frameTitle = "Difficulty: Advanced",
-                img = "#skill_level_advanced",
-                imgAlt = "icon that indicates a difficulty for advanced skill levels"
-                skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img, bgImg, bgImgClass);
-        };
+            frameTitle = "Difficulty: Advanced";
+            img = "#skill_level_advanced";
+            imgAlt = "icon that indicates a difficulty for advanced skill levels";
+            skillLevelIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img, bgImg, bgImgClass);
+        }
 
         return skillLevelIcon;
 
@@ -5473,42 +5520,50 @@ function AppViewModel () {
     // hover effects
     self.displayDirectionIcon = function (obj) {
 
+        // Declare variables
+        var img,
+            imgAlt,
+            frameTitle,
+            directionIcon,
+            frameClass,
+            imgClass;
+
         // Set classes according to type of icon
         // Each class styles the icon differently (i.e. black for surf guide
         // and white for the rollover effects)
         if(rollover) {
-            var frameClass = "hover-icon-frame rollover-info wave-direction-hover-default wave-direction-hover hover-tooltip-only",
-                imgClass = "hover-icon";
+            frameClass = "hover-icon-frame rollover-info wave-direction-hover-default wave-direction-hover hover-tooltip-only";
+            imgClass = "hover-icon";
         } else {
-            var frameClass = "direction card",
-                imgClass = "wave-direction-guide";
-        };
+            frameClass = "direction card";
+            imgClass = "wave-direction-guide";
+        }
 
         // Display the appropriate icon for each case
         switch(obj) {
             case 'left':
 
-                var frameTitle = "Wave breaks left",
-                    img = "#direction_left",
-                    imgAlt = "icon indicating that the wave breaks left"
-                    directionIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                frameTitle = "Wave breaks left";
+                img = "#direction_left";
+                imgAlt = "icon indicating that the wave breaks left";
+                directionIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
             break;
 
             case 'right':
 
-                var frameTitle = "Wave breaks right",
-                    img = "#direction_right",
-                    imgAlt = "icon indicating that the wave breaks right"
-                    directionIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                frameTitle = "Wave breaks right";
+                img = "#direction_right";
+                imgAlt = "icon indicating that the wave breaks right";
+                directionIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
             break;
 
             case 'left & right':
 
-                var frameTitle = "Wave breaks left & right",
-                    img = "#direction_both",
-                    imgAlt = "icon indicating that the wave breaks both left and right"
-                    directionIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                frameTitle = "Wave breaks left & right";
+                img = "#direction_both";
+                imgAlt = "icon indicating that the wave breaks both left and right";
+                directionIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
             break;
         }
 
@@ -5518,49 +5573,57 @@ function AppViewModel () {
 
     self.displayBreakIcon = function (obj) {
 
+        // Declare variables
+        var img,
+            imgAlt,
+            frameTitle,
+            breakIcon,
+            frameClass,
+            imgClass;
+
         // Set classes according to type of icon
         // Each class styles the icon differently (i.e. black for surf guide
         // and white for the rollover effects)
         if(rollover) {
-            var frameClass = "hover-icon-frame rollover-info break-type-hover-default break-type-hover hover-tooltip-only",
-                imgClass = "hover-icon";
+            frameClass = "hover-icon-frame rollover-info break-type-hover-default break-type-hover hover-tooltip-only",
+            imgClass = "hover-icon";
         } else {
-            var frameClass = "break card",
-                imgClass = "break-type-guide";
-        };
+            frameClass = "break card",
+            imgClass = "break-type-guide";
+        }
 
         // Display the appropriate icon for each case
         switch(obj) {
             case 'reef':
 
-                var frameTitle = "Reef break",
-                    img = "#break_reef",
-                    imgAlt = "icon indicating that the wave breaks over a reef"
-                    breakIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                frameTitle = "Reef break";
+                img = "#break_reef";
+                imgAlt = "icon indicating that the wave breaks over a reef";
+                breakIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
             break;
 
             case 'beach':
 
-                var frameTitle = "Beach break",
-                    img = "#break_beach",
-                    imgAlt = "icon indicating that the wave is a beach break"
-                    breakIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                frameTitle = "Beach break";
+                img = "#break_beach";
+                imgAlt = "icon indicating that the wave is a beach break";
+                breakIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
             break;
 
             case 'point':
 
-                var frameTitle = "Point break",
-                    img = "#break_point",
-                    imgAlt = "icon indicating that the wave breaks over a point"
-                    breakIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                frameTitle = "Point break";
+                img = "#break_point";
+                imgAlt = "icon indicating that the wave breaks over a point";
+                breakIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
             break;
 
             case 'river mouth':
 
-                var frameTitle = "Breaks at a river mouth",
-                    img = "#break_river_mouth",
-                    imgAlt = "icon indicating that the wave breaks at a river mouth"
-                    breakIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                frameTitle = "Breaks at a river mouth";
+                img = "#break_river_mouth";
+                imgAlt = "icon indicating that the wave breaks at a river mouth";
+                breakIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
             break;
         }
 
@@ -5596,15 +5659,18 @@ function AppViewModel () {
         // location's optimal swell and wind conditions
         for (var array in pointers) {
 
+            // Declare variable
+            var srcY;
+
             // Set the source y coordinate for the currently parsed array
             if(array === "swell") {
 
-                var srcY = 345;
+                srcY = 345;
 
             } else {
 
-                var srcY = 453;
-            };
+                srcY = 453;
+            }
 
             // Set the destination x and y coordinates for the icons (the midd-
             // le of the canvas )
@@ -5617,6 +5683,9 @@ function AppViewModel () {
             // Save the length of the array
             var directions = pointers[array].length;
 
+            // Declare direction variable
+            var direction;
+
             // Parse the array to determine the direction in degrees based
             // on the provided cardinal direction
             for (var i = directions; i--;) {
@@ -5624,67 +5693,67 @@ function AppViewModel () {
                 switch (pointers[array][i]) {
 
                     case 'N':
-                        var direction = 0;
+                        direction = 0;
                     break;
 
                     case 'NNE':
-                        var direction = 22.5;
+                        direction = 22.5;
                     break;
 
                     case 'NE':
-                        var direction = 45;
+                        direction = 45;
                     break;
 
                     case 'ENE':
-                        var direction = 67.5;
+                        direction = 67.5;
                     break;
 
                     case 'E':
-                        var direction = 90;
+                        direction = 90;
                     break;
 
                     case 'ESE':
-                        var direction = 112.5;
+                        direction = 112.5;
                     break;
 
                     case 'SE':
-                        var direction = 135;
+                        direction = 135;
                     break;
 
                     case 'SSE':
-                        var direction = 157.5;
+                        direction = 157.5;
                     break;
 
                     case 'S':
-                        var direction = 180;
+                        direction = 180;
                     break;
 
                     case 'SSW':
-                        var direction = 202.5;
+                        direction = 202.5;
                     break;
 
                     case 'SW':
-                        var direction = 225;
+                        direction = 225;
                     break;
 
                     case 'WSW':
-                        var direction = 247.5;
+                        direction = 247.5;
                     break;
 
                     case 'W':
-                        var direction = 270;
+                        direction = 270;
                     break;
 
                     case 'WNW':
-                        var direction = 292.5;
+                        direction = 292.5;
                     break;
 
                     case 'NW':
-                        var direction = 315;
+                        direction = 315;
                     break;
 
                     case 'NNW':
-                        var direction = 337.5;
+                        direction = 337.5;
                     break;
                 }
 
@@ -5701,15 +5770,21 @@ function AppViewModel () {
 
                 // Reset the canvas back to its original position
                 ctx.rotate(-pointerAngle);
-            };
+            }
 
             // Show the background img (compass img)
             ctx.restore();
-        };
+        }
     };
 
     // Get the tide icon to display the best tide for the surf guide only
     self.displayTideIcon = function (obj) {
+
+        // Declare variables
+        var frameTitle,
+            img,
+            imgAlt,
+            tideIcon;
 
         // Set classes
         var frameClass = "tide card",
@@ -5719,53 +5794,53 @@ function AppViewModel () {
         // sent in the array, render the appropriate icon
         if(obj.indexOf("low") > -1 && obj.indexOf("mid") > -1 && obj.indexOf("high") > -1) {
 
-            var frameTitle = "Best Tide: All",
-                img = "#tide_all",
-                imgAlt = "icon indicating that all tides are favorable"
-                tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+            frameTitle = "Best Tide: All";
+            img = "#tide_all";
+            imgAlt = "icon indicating that all tides are favorable";
+            tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
         } else if(obj.indexOf("low") > -1 && obj.indexOf("mid") > -1 && obj.indexOf("high") < 0) {
 
-            var frameTitle = "Best Tide: Low & Mid",
-                img = "#tide_low_mid",
-                imgAlt = "icon indicating that the best tide is low to mid"
-                tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+            frameTitle = "Best Tide: Low & Mid";
+            img = "#tide_low_mid";
+            imgAlt = "icon indicating that the best tide is low to mid";
+            tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
         } else if(obj.indexOf("low") > -1 && obj.indexOf("mid") < 0 && obj.indexOf("high") > -1) {
 
-            var frameTitle = "Best Tide: Low & High",
-                img = "#tide_low_high",
-                imgAlt = "icon indicating that the best tide is low and hide"
-                tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+            frameTitle = "Best Tide: Low & High";
+            img = "#tide_low_high";
+            imgAlt = "icon indicating that the best tide is low and hide";
+            tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
         } else if(obj.indexOf("low") > -1 && obj.indexOf("mid") < 0 && obj.indexOf("high") < 0) {
 
-            var frameTitle = "Best Tide: Low",
-                img = "#tide_low",
-                imgAlt = "icon indicating that the best tide is low"
-                tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+            frameTitle = "Best Tide: Low";
+            img = "#tide_low";
+            imgAlt = "icon indicating that the best tide is low";
+            tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
         } else if(obj.indexOf("low") < 0 && obj.indexOf("mid") > -1 && obj.indexOf("high") > -1) {
 
-            var frameTitle = "Best Tide: High & Mid",
-                img = "#tide_high_mid",
-                imgAlt = "icon indicating that the best tide is high to mid"
-                tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+            frameTitle = "Best Tide: High & Mid";
+            img = "#tide_high_mid";
+            imgAlt = "icon indicating that the best tide is high to mid";
+            tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
         } else if(obj.indexOf("low") < 0 && obj.indexOf("mid") > -1 && obj.indexOf("high") < 0) {
 
-            var frameTitle = "Best Tide: Mid",
-                img = "#tide_mid",
-                imgAlt = "icon indicating that the best tide is mid"
-                tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+            frameTitle = "Best Tide: Mid";
+            img = "#tide_mid";
+            imgAlt = "icon indicating that the best tide is mid";
+            tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
         } else if(obj.indexOf("low") < 0 && obj.indexOf("mid") < 0 && obj.indexOf("high") > -1) {
 
-            var frameTitle = "Best Tide: High",
-                img = "#tide_high",
-                imgAlt = "icon indicating the best tide is high"
-                tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
-        };
+            frameTitle = "Best Tide: High";
+            img = "#tide_high";
+            imgAlt = "icon indicating the best tide is high";
+            tideIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+        }
 
         return tideIcon;
     };
@@ -5787,43 +5862,57 @@ function AppViewModel () {
         // For each month found increment the season in which it passes
         // This will provide data for the location's best season(s) for surfing
         for (var i = bestSeasonLength; i--;) {
+
             switch (obj[i]) {
+
                 case ' Dec':
                 case ' Jan':
                 case ' Feb':
                     winter++;
+
                 break;
 
                 case ' Mar':
                 case ' Apr':
                 case ' May':
                     spring++;
+
                 break;
 
                 case ' Jun':
                 case ' Jul':
                 case ' Aug':
                     summer++;
-                break
+
+                break;
 
                 case ' Sep':
                 case ' Oct':
                 case ' Nov':
                     autumn++;
-                break
+
+                break;
             }
-        };
+        }
+
+        // Declare variables
+        var frameClass,
+            imgClass,
+            frameTitle,
+            img,
+            imgAlt,
+            bestSeasonIcon;
 
         // Set classes according to type of icon
         // Each class styles the icon differently (i.e. black for surf guide
         // and white for the rollover effects)
         if(rollover) {
-            var frameClass = "hover-icon-frame rollover-info best-season-hover-default best-season-hover hover-tooltip-only",
-                imgClass = "hover-icon";
+            frameClass = "hover-icon-frame rollover-info best-season-hover-default best-season-hover hover-tooltip-only";
+            imgClass = "hover-icon";
         } else {
-            var frameClass = "time card",
-                imgClass = "best-season-guide";
-        };
+            frameClass = "time card";
+            imgClass = "best-season-guide";
+        }
 
         // Filter the break's best seasons for surfing
         // Display icon associated with best time of year to surf
@@ -5832,80 +5921,80 @@ function AppViewModel () {
         // One, two, or all seasons are possiblities.
         if (winter === spring && winter === summer && winter === autumn) {
 
-            var frameTitle = "Best Season: All",
-                img = "#season_all",
-                imgAlt = "icon indicating that the waves are good year round"
-                bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+            frameTitle = "Best Season: All";
+            img = "#season_all";
+            imgAlt = "icon indicating that the waves are good year round";
+            bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
         } else if(winter >= spring && winter >= summer && winter >= autumn) {
             if(winter === spring) {
 
-                var frameTitle = "Best Season: Winter & Spring",
-                    img = "#season_winter_spring",
-                    imgAlt = "icon indicating that the best seasons are winter and spring"
-                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                frameTitle = "Best Season: Winter & Spring";
+                img = "#season_winter_spring";
+                imgAlt = "icon indicating that the best seasons are winter and spring";
+                bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
             } else if (winter === summer) {
 
-                var frameTitle = "Best Season: Winter & Summer",
-                    img = "#season_winter_summer",
-                    imgAlt = "icon indicating that the best seasons are winter and summer"
-                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                frameTitle = "Best Season: Winter & Summer";
+                img = "#season_winter_summer";
+                imgAlt = "icon indicating that the best seasons are winter and summer";
+                bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
             } else if (winter === autumn) {
 
-                var frameTitle = "Best Season: Winter & Autumn",
-                    img = "#season_winter_autumn",
-                    imgAlt = "icon indicating that the best seasons are winter and autumn"
-                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                frameTitle = "Best Season: Winter & Autumn";
+                img = "#season_winter_autumn";
+                imgAlt = "icon indicating that the best seasons are winter and autumn";
+                bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
             } else {
 
-                var frameTitle = "Best Season: Winter",
-                    img = "#season_winter",
-                    imgAlt = "icon indicating that the best season is winter"
-                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
-            };
+                frameTitle = "Best Season: Winter";
+                img = "#season_winter";
+                imgAlt = "icon indicating that the best season is winter";
+                bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+            }
         } else if (spring >= summer && spring >= autumn && spring > winter) {
             if (spring === summer) {
 
-                var frameTitle = "Best Season: Spring & Summer",
-                    img = "#season_spring_summer",
-                    imgAlt = "icon indicating that the best seasons are spring and summer"
-                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                frameTitle = "Best Season: Spring & Summer";
+                img = "#season_spring_summer";
+                imgAlt = "icon indicating that the best seasons are spring and summer";
+                bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
             } else if (spring === autumn) {
 
-                var frameTitle = "Best Season: Spring & Autumn",
-                    img = "#season_spring_autumn",
-                    imgAlt = "icon indicating that the best seasons are spring and autumn"
-                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                frameTitle = "Best Season: Spring & Autumn";
+                img = "#season_spring_autumn";
+                imgAlt = "icon indicating that the best seasons are spring and autumn";
+                bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
             } else {
 
-                var frameTitle = "Best Season: Spring",
-                    img = "#season_spring",
-                    imgAlt = "icon indicating that the best season is spring"
-                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
-            };
+                frameTitle = "Best Season: Spring";
+                img = "#season_spring";
+                imgAlt = "icon indicating that the best season is spring";
+                bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+            }
         } else if (summer >= autumn && summer > winter && summer > spring) {
             if(summer === autumn) {
 
-                var frameTitle = "Best Season: Summer & Autumn",
-                    img = "#season_summer_autumn",
-                    imgAlt = "icon indicating that the best seasons are summer and autumn"
-                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                frameTitle = "Best Season: Summer & Autumn";
+                img = "#season_summer_autumn";
+                imgAlt = "icon indicating that the best seasons are summer and autumn";
+                bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
             } else {
 
-                var frameTitle = "Best Season: Summer",
-                    img = "#season_ummer",
-                    imgAlt = "icon indicating that the best season is summer"
-                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
-            };
+                frameTitle = "Best Season: Summer";
+                img = "#season_ummer";
+                imgAlt = "icon indicating that the best season is summer";
+                bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+            }
         } else {
 
-                var frameTitle = "Best Season: Autumn",
-                    img = "#season_autumn",
-                    imgAlt = "icon indicating that the best season is autumn"
-                    bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
-        };
+                frameTitle = "Best Season: Autumn";
+                img = "#season_autumn";
+                imgAlt = "icon indicating that the best season is autumn";
+                bestSeasonIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+        }
 
         return bestSeasonIcon;
     };
@@ -5914,135 +6003,170 @@ function AppViewModel () {
     // hover effects
     self.displaySuggestedAttireIcons = function (seasons, $iconContainer) {
 
+        // Declare variable
+        var currentSeason;
+
         // If not hovering over the location frame, get the icon for the
         // the surf guide
         if(!rollover) {
+
+            // Declare variable
+            var gear;
 
             // Loop through the average each season and save its avg water temp
             // Designate specific water attire (gear) for each season
             for (var season in seasons) {
 
                 // Save the avg temp and suggested gear for the season
-                var temp = seasons[season],
-                    gear = determineGear(temp);
+                var temp = seasons[season];
+
+                gear = determineGear(temp);
 
                 // Render an icon for each season in the surf guide
                 drawSeasonIcon(gear, season);
-            };
+            }
 
             // Render the season icon for each season
-            // This displays an image of the season's suggested attire
-            // depending on the season's avg water temp
-            // First, the season img is appended to the container
-            // Next, the suggested gear img is appended
-            function drawSeasonIcon(gear, season) {
-
-                // Save a ref to classes commonly shared by all of the icons
-                var imgClass = "suggested-attire-season-guide suggested-attire-guide";
-
-                if(season === "spring") {
-
-                    var frameClass = "water-temp spring card",
-                        frameTitle = "Suggested spring attire",
-                        img = "#water_temp_spring",
-                        imgAlt = "icon for spring",
-                        icon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
-
-                    $iconContainer.append(icon);
-                    $('.spring').append(gear);
-
-                } else if (season === "summer") {
-
-                    var frameClass = "water-temp summer card",
-                        frameTitle = "Suggested summer attire",
-                        img = "#water_temp_summer",
-                        imgAlt = "icon for summer",
-                        icon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
-
-                    $iconContainer.append(icon);
-                    $('.summer').append(gear);
-
-                } else if (season === "autumn") {
-
-                    var frameClass = "water-temp autumn card",
-                        frameTitle = "Suggested autumn attire",
-                        img = "#water_temp_autumn",
-                        imgAlt = "icon for autumn",
-                        icon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
-
-                    $iconContainer.append(icon);
-                    $('.autumn').append(gear);
-
-                } else {
-
-                    var frameClass = "water-temp winter card",
-                        frameTitle = "Suggested winter attire",
-                        img = "#water_temp_winter",
-                        imgAlt = "icon for winter",
-                        icon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
-
-                    $iconContainer.append(icon);
-                    $('.winter').append(gear);
-                };
-            };
+            drawSeasonIcon(gear, season);
 
             // Determine the current season
-            var currentSeason = getCurrentSeason();
+            currentSeason = getCurrentSeason();
 
             // Highlight current season to indicate to the user
             // the current season's suggested attire
             switch(currentSeason) {
+
                 case 'winter':
                     $('.winter').addClass("highlight-attire");
+
                 break;
 
                 case 'spring':
                     $('.spring').addClass("highlight-attire");
-                break
+
+                break;
 
                 case 'summer':
                     $('.summer').addClass("highlight-attire");
+
                 break;
 
                 case 'autumn':
                     $('.autumn').addClass("highlight-attire");
-                break
-            };
+
+                break;
+            }
 
         // If hovering over the location's location frame display only the
         // current season's suggested attire image
         } else {
 
             // Determine the current season
-            var currentSeason = getCurrentSeason();
+            currentSeason = getCurrentSeason();
+
+            // Declare variable
+            var suggestedAttireIcon;
 
             // Get the suggested attire icon according to the current season
             // by passing the season's avg temp as a parameter to determine
             // the gear.
             switch(currentSeason) {
+
                 case 'winter':
-                    var suggestedAttireIcon = determineGear(seasons.winter);
+                    suggestedAttireIcon = determineGear(seasons.winter);
+
                 break;
 
                 case 'spring':
-                    var suggestedAttireIcon = determineGear(seasons.spring);
-                break
+                    suggestedAttireIcon = determineGear(seasons.spring);
+
+                break;
 
                 case 'summer':
-                    var suggestedAttireIcon = determineGear(seasons.summer);
+                    suggestedAttireIcon = determineGear(seasons.summer);
+
                 break;
 
                 case 'autumn':
-                    var suggestedAttireIcon = determineGear(seasons.autumn);
-                break
-            };
+                    suggestedAttireIcon = determineGear(seasons.autumn);
+
+                break;
+            }
 
             return suggestedAttireIcon;
-        };
+        }
+
+        // This displays an image of the season's suggested attire
+        // depending on the season's avg water temp
+        // First, the season img is appended to the container
+        // Next, the suggested gear img is appended
+        function drawSeasonIcon(gear, season) {
+
+            // Delcare variables
+            var frameClass,
+                frameTitle,
+                img,
+                imgAlt,
+                icon;
+
+            // Save a ref to classes commonly shared by all of the icons
+            var imgClass = "suggested-attire-season-guide suggested-attire-guide";
+
+            if(season === "spring") {
+
+                frameClass = "water-temp spring card";
+                frameTitle = "Suggested spring attire";
+                img = "#water_temp_spring";
+                imgAlt = "icon for spring";
+                icon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+
+                $iconContainer.append(icon);
+                $('.spring').append(gear);
+
+            } else if (season === "summer") {
+
+                frameClass = "water-temp summer card";
+                frameTitle = "Suggested summer attire";
+                img = "#water_temp_summer";
+                imgAlt = "icon for summer";
+                icon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+
+                $iconContainer.append(icon);
+                $('.summer').append(gear);
+
+            } else if (season === "autumn") {
+
+                frameClass = "water-temp autumn card";
+                frameTitle = "Suggested autumn attire";
+                img = "#water_temp_autumn";
+                imgAlt = "icon for autumn";
+                icon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+
+                $iconContainer.append(icon);
+                $('.autumn').append(gear);
+
+            } else {
+
+                frameClass = "water-temp winter card";
+                frameTitle = "Suggested winter attire";
+                img = "#water_temp_winter";
+                imgAlt = "icon for winter";
+                icon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+
+                $iconContainer.append(icon);
+                $('.winter').append(gear);
+            }
+        }
 
         // Based on the current season's avg temp, get relevant attire img
         // to display when the user hovers over the location's location frame
         function determineGear (temp) {
+
+            // Declare variables
+            var img,
+                frameTitle,
+                imgAlt,
+                gear;
 
             // Cache classes for the hover icon
             var frameClass = "hover-icon-frame rollover-info misc-info-one-hover-default misc-info-one-hover hover-tooltip-only",
@@ -6065,40 +6189,40 @@ function AppViewModel () {
                 if(temp > 72) {
                     if(rollover) {
 
-                        var img = "#ro_water_attire_boardies"
-                            frameTitle = "It's currently warm enough for boardies =)",
-                            imgAlt = "icon indicating that it's currently warm enough for boardies",
-                            gear = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                        img = "#ro_water_attire_boardies";
+                        frameTitle = "It's currently warm enough for boardies =)";
+                        imgAlt = "icon indicating that it's currently warm enough for boardies";
+                        gear = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
                     } else {
 
-                        var gear = '<svg class="suggested-attire-boardies-guide suggested-attire-guide" alt="icon indicating that board shorts are recommended for this season"><use xlink:href="#water_attire_boardies"/></svg>';
-                    };
+                        gear = '<svg class="suggested-attire-boardies-guide suggested-attire-guide" alt="icon indicating that board shorts are recommended for this season"><use xlink:href="#water_attire_boardies"/></svg>';
+                    }
                 } else if (temp > 66) {
 
                     if(rollover) {
 
-                        var img = "#ro_water_attire_2mm_wetsuit"
-                            frameTitle = "A 2mm wetsuit is recommended for this time of year",
-                            imgAlt = "icon indicating that a 2mm wetsuit is recommended for this time of year",
-                            gear = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                        img = "#ro_water_attire_2mm_wetsuit";
+                        frameTitle = "A 2mm wetsuit is recommended for this time of year";
+                        imgAlt = "icon indicating that a 2mm wetsuit is recommended for this time of year";
+                        gear = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
                     } else {
-                        var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide" alt="icon indicating that a 2mm wetsuit is recommended for this season"><use xlink:href="#water_attire_2mm_wetsuit"/></svg>';
-                    };
+                        gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide" alt="icon indicating that a 2mm wetsuit is recommended for this season"><use xlink:href="#water_attire_2mm_wetsuit"/></svg>';
+                    }
                 } else {
 
                     if(rollover) {
 
-                        var img = "#ro_water_attire_3mm_wetsuit"
-                            frameTitle = "A 3mm wetsuit is recommended for this time of year",
-                            imgAlt = "icon indicating that a 3mm wetsuit is recommended for this time of year",
-                            gear = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                        img = "#ro_water_attire_3mm_wetsuit";
+                        frameTitle = "A 3mm wetsuit is recommended for this time of year";
+                        imgAlt = "icon indicating that a 3mm wetsuit is recommended for this time of year";
+                        gear = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
                     } else {
-                        var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide" alt="icon indicating that a 3mm wetsuit is recommended for this season"><use xlink:href="#water_attire_3mm_wetsuit"/></svg>';
-                    };
-                };
+                        gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide" alt="icon indicating that a 3mm wetsuit is recommended for this season"><use xlink:href="#water_attire_3mm_wetsuit"/></svg>';
+                    }
+                }
 
             // If the avg temp is <= 59 F evaluate using the following
             // three conditions: temp is > 54, > 48, or <= 48
@@ -6107,41 +6231,41 @@ function AppViewModel () {
 
                     if(rollover) {
 
-                        var img = "#ro_water_attire_4mm_wetsuit",
-                            frameTitle = "A 4mm wetsuit and boots are recommended for this time of year",
-                            imgAlt = "icon indicating that a 4mm wetsuit and boots are recommended for this time of year",
-                            gear = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                        img = "#ro_water_attire_4mm_wetsuit";
+                        frameTitle = "A 4mm wetsuit and boots are recommended for this time of year";
+                        imgAlt = "icon indicating that a 4mm wetsuit and boots are recommended for this time of year";
+                        gear = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
                     } else {
-                        var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide" alt="icon indicating that a 4mm wetsuit and boots are recommended for this season"><use xlink:href="#water_attire_4mm_wetsuit"/></svg>';
-                    };
+                        gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide" alt="icon indicating that a 4mm wetsuit and boots are recommended for this season"><use xlink:href="#water_attire_4mm_wetsuit"/></svg>';
+                    }
                 } else if (temp > 48) {
                     if(rollover) {
 
-                        var img = "#ro_water_attire_5mm_wetsuit",
-                            frameTitle = "A 5mm wetsuit, gloves, and boots are recommended for this time of year",
-                            imgAlt = "icon indicating that a 5mm wetsuit, gloves, and boots are recommended for this time of year",
-                            gear = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                        img = "#ro_water_attire_5mm_wetsuit";
+                        frameTitle = "A 5mm wetsuit, gloves, and boots are recommended for this time of year";
+                        imgAlt = "icon indicating that a 5mm wetsuit, gloves, and boots are recommended for this time of year";
+                        gear = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
                     } else {
-                        var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide" alt="icon indicating that a 5mm wetsuit, gloves, and boots are recommended for this season"><use xlink:href="#water_attire_5mm_wetsuit"/></svg>';
-                    };
+                        gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide" alt="icon indicating that a 5mm wetsuit, gloves, and boots are recommended for this season"><use xlink:href="#water_attire_5mm_wetsuit"/></svg>';
+                    }
                 } else {
                     if(rollover) {
 
-                        var img = "#ro_water_attire_6mm_wetsuit",
-                            frameTitle = "A 6mm wetsuit, gloves, boots, and a hood are recommended for this time of year",
-                            imgAlt = "icon indicating that a 6mm wetsuit, gloves, boots, and a hood are recommended for this time of year",
-                            gear = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                        img = "#ro_water_attire_6mm_wetsuit";
+                        frameTitle = "A 6mm wetsuit, gloves, boots, and a hood are recommended for this time of year";
+                        imgAlt = "icon indicating that a 6mm wetsuit, gloves, boots, and a hood are recommended for this time of year";
+                        gear = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
                     } else {
-                        var gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide" alt="icon indicating that a 6mm wetsuit, gloves, boots, and a hood are recommended for this season"><use xlink:href="#water_attire_6mm_wetsuit"/></svg>';
-                    };
-                };
-            };
+                        gear = '<svg class="suggested-attire-wetsuit-guide suggested-attire-guide" alt="icon indicating that a 6mm wetsuit, gloves, boots, and a hood are recommended for this season"><use xlink:href="#water_attire_6mm_wetsuit"/></svg>';
+                    }
+                }
+            }
 
             return gear;
-        };
+        }
     };
 
     // Render an icon in the surf guide that shows the Köppen Climate classi-
@@ -6156,20 +6280,23 @@ function AppViewModel () {
     // Render the cost info for the surf guide or hover effects
     self.displayCost = function (obj, $iconContainer) {
 
+        // Declare variable
+        var costInfo;
+
         // If hovering over the location's location frame show only the
         // budget costs associated with the location in the top left corner
         // of the frame
         if(rollover) {
 
-            var costInfo = '<p class="rollover-info cost-hover-default cost-hover" alt="info indicating the average daily budget cost" title="Estimated minimum daily budget allowance">' + '$' + obj.budget + '</p>';
+            costInfo = '<p class="rollover-info cost-hover-default cost-hover" alt="info indicating the average daily budget cost" title="Estimated minimum daily budget allowance">' + '$' + obj.budget + '</p>';
 
         // If rendering the surf guide, render the budget costs (low, mid, high
         // ) in the icon
         } else {
 
-            var midRange = Math.floor((obj.highEnd - obj.budget)/2 + obj.budget),
+            var midRange = Math.floor((obj.highEnd - obj.budget)/2 + obj.budget);
             costInfo = $iconContainer.append('<div class="cost card "title="Estimated daily budget allowances: Low, Mid, High">' + '<svg class="cost-guide" alt="icon indicating the estimated daily budget allowances"><use xlink:href="#cost"/></svg>' + '<p>' + obj.budget + '</p>' + '<p>' + midRange + '</p>' + '<p>' + obj.highEnd +'</p>' + '</div>');
-        };
+        }
 
       return costInfo;
     };
@@ -6208,6 +6335,13 @@ function AppViewModel () {
         // Round distance to nearest integer
         var result = Math.round(d);
 
+        // Declare variables
+        var newTime,
+            layOver,
+            flightTime,
+            distance,
+            distanceIcon;
+
         // If the distance is greater than 200 miles, calculate the
         // average non-stop flight time in hours to the destination using
         // an average cruising speed of 450mph
@@ -6221,12 +6355,12 @@ function AppViewModel () {
             // If the time is below an hour, set the new time at one hour
             // Not many short flights are less than that!!
             if(hours < 1) {
-                var newTime = 1;
+                newTime = 1;
 
             // If the time is greater than one hour, round the number
             } else {
-                var newTime = Math.round(hours);
-            };
+                newTime = Math.round(hours);
+            }
 
             // If flight time is greater than avg time of a long distance //
             // direct flight, but less than 12 hours, add two hours in
@@ -6235,8 +6369,8 @@ function AppViewModel () {
             if(newTime > 8 && newTime <= 12) {
 
                 // Set the new flight time including the extra time
-                var layOver = newTime + 2,
-                    flightTime = layOver;
+                layOver = newTime + 2;
+                flightTime = layOver;
 
             // If flight time is greater than avg time of a 1+ connection
             // flight, add four hours to account for more connection / layover
@@ -6245,13 +6379,13 @@ function AppViewModel () {
             } else if (newTime > 12) {
 
                 // Set the new flight time including the extra time
-                var layOver = newTime + 4,
-                    flightTime = layOver;
+                layOver = newTime + 4;
+                flightTime = layOver;
             } else {
 
                 // Set the new flight time including the extra time
-                var flightTime = newTime;
-            };
+                lightTime = newTime;
+            }
 
             // Save the flight time
             var distanceFly = flightTime;
@@ -6263,17 +6397,17 @@ function AppViewModel () {
                 // Cache distance element with distance
                 // The info will appear in the top right corner of the location
                 // frame when hover over
-                var distance = '<p class="rollover-info distance-hover-default distance-hover" alt="info indicating the estimated flying time to the location" title="Estimated flight duration from your location">' + distanceFly + 'h' + '</p>';
+                distance = '<p class="rollover-info distance-hover-default distance-hover" alt="info indicating the estimated flying time to the location" title="Estimated flight duration from your location">' + distanceFly + 'h' + '</p>';
 
                 return distance;
 
             } else {
 
                 // Render the icon in the surf guide
-                var distanceIcon = '<div class="distance card" title="Estimated flight duration from your location"><svg class="distance-guide-plane" alt="icon indicating the estimated flying time to the location"><use xlink:href="#distance_plane"/></svg>' + '<p class="distance-guide-hours">' + distanceFly + 'h' +'</p></div>';
+                distanceIcon = '<div class="distance card" title="Estimated flight duration from your location"><svg class="distance-guide-plane" alt="icon indicating the estimated flying time to the location"><use xlink:href="#distance_plane"/></svg>' + '<p class="distance-guide-hours">' + distanceFly + 'h' +'</p></div>';
 
                 return distanceIcon;
-            };
+            }
 
         // If the location is less than 200 miles away, show the distance in
         // terms of miles to get there
@@ -6287,49 +6421,57 @@ function AppViewModel () {
                 // Cache distance element with distance
                 // The info will appear in the top right corner of the location
                 // frame when hover over
-                var distance = '<p class="rollover-info distance-hover-default distance-hover" alt="info indicating the estimated driving time to the location" title="Estimated distance in miles from your location">' + distanceDrive + 'mi' + '</p>';
+                distance = '<p class="rollover-info distance-hover-default distance-hover" alt="info indicating the estimated driving time to the location" title="Estimated distance in miles from your location">' + distanceDrive + 'mi' + '</p>';
 
                 return distance;
 
             } else {
 
                 // Render the icon in the surf guide
-                var distanceIcon = '<div class="distance card" title="Estimated (straight line) distance in miles from your location (actual distance via roads will be greater)"><svg class="distance-guide-drive" alt="icon indicating the estimated driving time to the location"><use xlink:href="#distance"/></svg>' + '<p class="distance-guide-miles">' + distanceDrive + 'mi' +'</p></div>';
+                distanceIcon = '<div class="distance card" title="Estimated (straight line) distance in miles from your location (actual distance via roads will be greater)"><svg class="distance-guide-drive" alt="icon indicating the estimated driving time to the location"><use xlink:href="#distance"/></svg>' + '<p class="distance-guide-miles">' + distanceDrive + 'mi' +'</p></div>';
 
                 return distanceIcon;
-            };
-        };
+            }
+        }
 
         // Converts degrees to radians
         function deg2rad(deg) {
-            return deg * (Math.PI/180)
-        };
+            return deg * (Math.PI/180);
+        }
     };
 
     // Get the current season's avg water temperature
     self.displayCurrentWaterTemp = function (obj) {
+
+        // Declare variable
+        var waterTemp;
 
         // Get the current season
         var currentSeason = getCurrentSeason();
 
         // Get avg water temp
         switch(currentSeason) {
+
             case 'winter':
-                var waterTemp = obj.winter;
+                waterTemp = obj.winter;
+
             break;
 
             case 'spring':
-                var waterTemp = obj.spring;
-            break
+                waterTemp = obj.spring;
+
+            break;
 
             case 'summer':
-                var waterTemp = obj.summer;
+                waterTemp = obj.summer;
+
             break;
 
             case 'autumn':
-                var waterTemp = obj.autumn;
-            break
-        };
+                waterTemp = obj.autumn;
+
+            break;
+        }
 
         // Create an elem
         var waterTempInfo = '<p class="rollover-info water-temp-hover-default water-temp-hover" alt="info indicating the average water temperature for this time of year" title="Average ' + currentSeason + ' water temperature">' + waterTemp + '℉' + '</p>';
@@ -6341,27 +6483,31 @@ function AppViewModel () {
     // hovering or in the surf guide within an icon
     self.displayWaveSize = function (obj) {
 
+        // Declare variables
+        var plus,
+            waveSizeInfo;
+
         // Check if the average maximum wave size
         // sometimes goes above the max. If it does, save a plus sign in a
         // variable to add to the min/max wave height
         // If the wave doesn't go above the max, the plus sign will not appear
         if (obj.aboveMax) {
-            var plus = '+';
+            plus = '+';
         } else {
-            var plus = '';
-        };
+            plus = '';
+        }
 
         if(rollover) {
 
             // Display the info in the bottom right corner of the location
             // frame upon hovering over it
-            var waveSizeInfo = '<p class="rollover-info wave-size-hover-default wave-size-hover" alt="info indicating the average wave size for this location" title="Average wave size">' + obj.min + "-" + obj.max + "'" +'</p>';
+            waveSizeInfo = '<p class="rollover-info wave-size-hover-default wave-size-hover" alt="info indicating the average wave size for this location" title="Average wave size">' + obj.min + "-" + obj.max + "'" +'</p>';
 
         } else {
 
             // Render the average wave break size as an icon in the surf guide
-            var waveSizeInfo = '<div class="wave-size card" title="Average wave size">' + '<svg class="wave-size-guide" alt="icon indicating the average wave height"><use xlink:href="#wave_range"/></svg>' + '<p>' + obj.min + "-" + obj.max + plus + "ft" + '</p>' + '</div>';
-        };
+            waveSizeInfo = '<div class="wave-size card" title="Average wave size">' + '<svg class="wave-size-guide" alt="icon indicating the average wave height"><use xlink:href="#wave_range"/></svg>' + '<p>' + obj.min + "-" + obj.max + plus + "ft" + '</p>' + '</div>';
+        }
 
         return waveSizeInfo;
     };
@@ -6369,35 +6515,43 @@ function AppViewModel () {
     // Obtain the current season based on the current month
     self.getCurrentSeason = function () {
 
+        // Declare variable
+        var currentSeason;
+
         // Get today's date and month
         var today = new Date();
         var month = today.getMonth();
 
         switch (month) {
-            case 11 :
-            case 0 :
-            case 1 :
-                var currentSeason = 'winter';
+
+            case 11:
+            case 0:
+            case 1:
+                currentSeason = 'winter';
+
             break;
 
             case 2:
             case 3:
             case 4:
-                var currentSeason = 'spring';
+                currentSeason = 'spring';
+
             break;
 
             case 5:
             case 6:
             case 7:
-                var currentSeason = 'summer';
+                currentSeason = 'summer';
+
             break;
 
             case 8:
             case 9:
             case 10:
-                var currentSeason = 'autumn';
+                currentSeason = 'autumn';
+
             break;
-        };
+        }
 
         return currentSeason;
     };
@@ -6432,183 +6586,192 @@ function AppViewModel () {
                 hazards(obj[i], $iconContainer);
             }
 
-        };
+        }
 
         // Get the appropriate hazard icons to render in the surf guide or
         // display on hovering a location frame
         function hazards (hazard, $iconContainer) {
 
+            // Declare variables
+            var frameClass,
+                imgClass,
+                frameTitle,
+                img,
+                imgAlt,
+                hazardIcon;
+
+
             // Set the relevant classes for the hover and surf guide icons
             if(rollover) {
-                var frameClass = "misc-info-two-hover hover-icon-frame rollover-info misc-info-two-hover-default hover-tooltip-only",
-                    imgClass = "hover-icon misc-info-two-hover-svg";
+                frameClass = "misc-info-two-hover hover-icon-frame rollover-info misc-info-two-hover-default hover-tooltip-only";
+                imgClass = "hover-icon misc-info-two-hover-svg";
             } else {
-                var frameClass = "hazard card",
-                    imgClass = "hazard-guide";
-            };
+                frameClass = "hazard card";
+                imgClass = "hazard-guide";
+            }
 
             // Match and return the appropriate hazard icon with the parameter
             switch (hazard) {
 
                 case 'beginners':
 
-                    var frameTitle = "Hazard: Beginners",
-                        img = "#hazards_beginners",
-                        imgAlt = "icon indicating that beginners are a hazard",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                    frameTitle = "Hazard: Beginners";
+                    img = "#hazards_beginners";
+                    imgAlt = "icon indicating that beginners are a hazard";
+                    hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
 
                 break;
 
                 case 'boats':
 
-                    var frameTitle = "Hazard: Boats",
-                        img = "#hazards_boats",
-                        imgAlt = "icon indicating that boats are a hazard",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                    frameTitle = "Hazard: Boats";
+                    img = "#hazards_boats";
+                    imgAlt = "icon indicating that boats are a hazard";
+                    hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
                 case 'crocs':
 
-                    var frameTitle = "Hazard: Crocodiles",
-                        img = "#hazards_crocs",
-                        imgAlt = "icon indicating that crocodiles are a hazard",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                    frameTitle = "Hazard: Crocodiles";
+                    img = "#hazards_crocs";
+                    imgAlt = "icon indicating that crocodiles are a hazard";
+                    hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
                 case 'crowded':
 
-                    var frameTitle = "Hazard: Crowded",
-                        img = "#hazards_crowded",
-                        imgAlt = "icon indicating that crowds are a hazard",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                    frameTitle = "Hazard: Crowded";
+                    img = "#hazards_crowded";
+                    imgAlt = "icon indicating that crowds are a hazard";
+                    hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
                 case 'dangerous break':
 
-                    var frameTitle = "Hazard: Dangerous break",
-                        img = "#hazards_dangerous_break",
-                        imgAlt = "icon indicating that this is a dangerous break",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                    frameTitle = "Hazard: Dangerous break";
+                    img = "#hazards_dangerous_break";
+                    imgAlt = "icon indicating that this is a dangerous break";
+                    hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
                 case 'far from shore':
 
-                    var frameTitle = "Hazard: Far from shore",
-                        img = "#hazards_far_from_shore",
-                        imgAlt = "icon indicating that the waves are far from shore",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                    frameTitle = "Hazard: Far from shore";
+                    img = "#hazards_far_from_shore";
+                    imgAlt = "icon indicating that the waves are far from shore";
+                    hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
                 case 'pollution':
 
-                    var frameTitle = "Hazard: Pollution",
-                        img = "#hazards_pollution",
-                        imgAlt = "icon indicating that pollution is a hazard",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                    frameTitle = "Hazard: Pollution";
+                    img = "#hazards_pollution";
+                    imgAlt = "icon indicating that pollution is a hazard";
+                    hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
                 case 'rocky bottom':
 
-                    var frameTitle = "Hazard: Rocky bottom",
-                        img = "#hazards_rocky_bottom",
-                        imgAlt = "icon indicating that this break has a rocky bottom",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                    frameTitle = "Hazard: Rocky bottom";
+                    img = "#hazards_rocky_bottom";
+                    imgAlt = "icon indicating that this break has a rocky bottom";
+                    hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
                 case 'sea snakes':
 
-                    var frameTitle = "Hazard: Sea snakes",
-                        img = "#hazards_sea_snakes",
-                        imgAlt = "icon indicating that sea snakes are a hazard",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                    frameTitle = "Hazard: Sea snakes";
+                    img = "#hazards_sea_snakes";
+                    imgAlt = "icon indicating that sea snakes are a hazard";
+                    hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
                 case 'seals':
 
-                    var frameTitle = "Hazard: Seals",
-                        img = "#hazards_seals",
-                        imgAlt = "icon indicating that seals are a hazard",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                    frameTitle = "Hazard: Seals";
+                    img = "#hazards_seals";
+                    imgAlt = "icon indicating that seals are a hazard";
+                    hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
                 case 'seaweed':
 
-                    var frameTitle = "Hazard: Seaweed",
-                        img = "#hazards_seaweed",
-                        imgAlt = "icon indicating that seaweed is a hazard",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                    frameTitle = "Hazard: Seaweed";
+                    img = "#hazards_seaweed";
+                    imgAlt = "icon indicating that seaweed is a hazard";
+                    hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
                 case 'sewage':
 
-                    var frameTitle = "Hazard: Sewage",
-                        img = "#hazards_sewage",
-                        imgAlt = "icon indicating that sewage is a hazard",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                    frameTitle = "Hazard: Sewage";
+                    img = "#hazards_sewage";
+                    imgAlt = "icon indicating that sewage is a hazard";
+                    hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
                 case 'shallow':
 
-                    var frameTitle = "Hazard: Shallow break",
-                        img = "#hazards_shallow",
-                        imgAlt = "icon indicating that the wave breaks over a shallow bottom",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                    frameTitle = "Hazard: Shallow break";
+                    img = "#hazards_shallow";
+                    imgAlt = "icon indicating that the wave breaks over a shallow bottom";
+                    hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
                 case 'sharks':
 
-                    var frameTitle = "Hazard: Sharks",
-                        img = "#hazards_sharks",
-                        imgAlt = "icon indicating that sharks are a hazard",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                    frameTitle = "Hazard: Sharks";
+                    img = "#hazards_sharks";
+                    imgAlt = "icon indicating that sharks are a hazard";
+                    hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
                 case 'strong currents':
 
-                    var frameTitle = "Hazard: Strong currents",
-                        img = "#hazards_strong_currents",
-                        imgAlt = "icon indicating that the wave has strong currents",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                    frameTitle = "Hazard: Strong currents";
+                    img = "#hazards_strong_currents";
+                    imgAlt = "icon indicating that the wave has strong currents";
+                    hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
                 case 'strong rips':
 
-                    var frameTitle = "Hazard: Strong rips",
-                        img = "#hazards_strong_rips",
-                        imgAlt = "icon indicating that the wave has strong rips",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                    frameTitle = "Hazard: Strong rips";
+                    img = "#hazards_strong_rips";
+                    imgAlt = "icon indicating that the wave has strong rips";
+                    hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
                 case 'theft':
 
-                    var frameTitle = "Hazard: Theft",
-                        img = "#hazards_theft",
-                        imgAlt = "icon indicating that theft is a hazard",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                    frameTitle = "Hazard: Theft";
+                    img = "#hazards_theft";
+                    imgAlt = "icon indicating that theft is a hazard";
+                    hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
                 case 'undertow':
 
-                    var frameTitle = "Hazard: Strong undertow",
-                        img = "#hazards_undertow",
-                        imgAlt = "icon indicating that the break has a strong undertow",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                    frameTitle = "Hazard: Strong undertow";
+                    img = "#hazards_undertow";
+                    imgAlt = "icon indicating that the break has a strong undertow";
+                    hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
                 case 'unfriendly':
 
-                    var frameTitle = "Hazard: Localism",
-                        img = "#hazards_unfriendly",
-                        imgAlt = "icon indicating that there is localism at this break",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                    frameTitle = "Hazard: Localism";
+                    img = "#hazards_unfriendly";
+                    imgAlt = "icon indicating that there is localism at this break";
+                    hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
                 case 'urchins':
 
-                    var frameTitle = "Hazard: Urchins",
-                        img = "#hazards_urchins",
-                        imgAlt = "icon indicating that sea urchins are a hazard",
-                        hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
+                    frameTitle = "Hazard: Urchins";
+                    img = "#hazards_urchins";
+                    imgAlt = "icon indicating that sea urchins are a hazard";
+                    hazardIcon = self.setUpIcons(frameClass, frameTitle, imgClass, imgAlt, img);
                 break;
 
             }
@@ -6621,8 +6784,8 @@ function AppViewModel () {
             } else {
 
                 $iconContainer.append(hazardIcon);
-            };
-        };
+            }
+        }
     };
 
     // Close the surf guide when the close surf guide button is clicked
@@ -6647,7 +6810,7 @@ function AppViewModel () {
         // If the map is hidden, reset the relevant location frames
         if($map.is(":hidden")) {
             self.resetFrames();
-        };
+        }
 
         // Show the location grid again
         $locationGrid.show();
@@ -6663,6 +6826,6 @@ function AppViewModel () {
         // Scroll to the top of the page
         document.body.scrollTop = document.documentElement.scrollTop = 0;
     };
-};
+}
 
-ko.applyBindings(new AppViewModel);
+ko.applyBindings(new AppViewModel());

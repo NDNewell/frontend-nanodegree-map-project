@@ -186,14 +186,14 @@ html {
     border: 2px solid;
     border-color: #e8e8e8;
     border-radius: 15px;
-    color: #b3b;
+    color: #b3b3b3;
     font: 1.2em Arial, Verdana;
 }
 
 .clear-favorites-button-default:hover {
     color: white;
-    background-color: #b3b;
-    border-color: #b3b;
+    background-color: #b3b3b3;
+    border-color: #b3b3b3;
 }
 
 .clear-favorites-button-default:focus {
@@ -862,7 +862,7 @@ html {
         background-color: #fff;
         border: 2px solid #e8e8e8;
         border-radius: 0;
-        color: #b3b;
+        color: #b3b3b3;
         font: 1.5em Arial, Verdana;
     }
 
@@ -877,8 +877,8 @@ html {
 
     .clear-favorites-button-default:hover {
         color: white;
-        background-color: #b3b;
-        border-color: #b3b;
+        background-color: #b3b3b3;
+        border-color: #b3b3b3;
     }
 
     .clear-favorites-button-default:focus {

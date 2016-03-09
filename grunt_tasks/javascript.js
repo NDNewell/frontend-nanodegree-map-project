@@ -1,5 +1,15 @@
 module.exports = function (grunt, config) {
     grunt.config.merge({
+        jshint: {
+            ignore_warning: {
+                options: {
+                    '-W030': true, // Ignores error: "Expected an assignment or
+                                   // function call and instead saw an
+                                   // expression"
+                },
+                src: ['src/js/main.js']
+            }
+        },
         concat: {
             options: {
                 separator: ';\n',
@@ -42,6 +52,7 @@ module.exports = function (grunt, config) {
                 tasks: [
                     'concat',
                     'uglify'
+                    //'jshint'
                 ]
             }
         }

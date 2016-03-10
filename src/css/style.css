@@ -77,9 +77,12 @@ html {
     float: right;
     margin: -7px -15px 0 0;
     padding: 7.5px 1px 7.5px 5px;
-    outline: 0;
     border: 1px solid #ccc;
     border-radius: 15px;
+}
+
+.search-form-default:focus {
+    outline: 0;
 }
 
 .clear-default {
@@ -402,13 +405,13 @@ html {
 .not-a-favorite-guide {
     fill: #fff;
     stroke: #9d9d9d;
-    stroke-width: 1.25;}
+    stroke-width: 1.25;
 }
 
 .not-a-favorite-guide:hover {
     fill: #ffff1f;
     stroke: #9d9d9d;
-    stroke-width: 1.25;}
+    stroke-width: 1.25;
 }
 
 .reset-map-container {
@@ -688,14 +691,14 @@ html {
 .wave-size > svg:first-child + p {
     font-size: 1.5em;
     font-weight: bolder;
-    font-color: #333;
+    color: #333;
     margin-top: -85px;
 }
 
 .climate p {
     font-size: 2.7em;
     font-weight: bolder;
-    font-color: #333;
+    color: #333;
     margin-top: 20px;
 }
 
@@ -706,21 +709,21 @@ html {
 .cost > svg:first-child + p {
     font-size: 1em;
     font-weight: bolder;
-    font-color: #333;
+    color: #333;
     margin: -89px 0 10px -11px;
 }
 
 .cost > svg:first-child + p + p{
     font-size: 1em;
     font-weight: bolder;
-    font-color: #333;
+    color: #333;
     margin: -7.5px 0 10px 12px;
 }
 
 .cost > svg:first-child + p + p + p {
     font-size: 1em;
     font-weight: bolder;
-    font-color: #333;
+    color: #333;
     margin: -6.5px 0 10px 40px;
 }
 
@@ -731,14 +734,14 @@ html {
 .distance-guide-hours {
     font-size: 1.8em;
     font-weight: bolder;
-    font-color: #333;
+    color: #333;
     margin: -33px 30px 0 0;
 }
 
 .distance-guide-miles {
     font-size: 1.2em;
     font-weight: bolder;
-    font-color: #333;
+    color: #333;
     margin: -87px 0 0 40px;
 }
 
@@ -1142,6 +1145,7 @@ html {
     input[type=text] {
         width: 200px;
         -webkit-transition: ease-in-out, width .35s ease-in-out;
+        -moz-transition: ease-in-out, width .35s ease-in-out;
         transition: ease-in-out,width .35s ease-in-out;
     }
 
@@ -1250,16 +1254,26 @@ html {
     .pulse-frame {
         z-index: 1;
         -webkit-animation-name: pulse;
+        -moz-animation-name: pulse;
         animation-name: pulse;
+
         -webkit-animation-duration: 350ms;
+        -moz-animation-duration: 350ms;
         animation-duration: 350ms;
+
         -webkit-animation-fill-mode: both;
+        -moz-animation-fill-mode: both;
         animation-fill-mode: both;
     }
 
     @-webkit-keyframes pulse {
         0% { -webkit-transform: scale(1); }
         100% { -webkit-transform: scale(1.1); }
+    }
+
+    @-moz-keyframes pulse {
+        0% { -moz-transform: scale(1); }
+        100% { -moz-transform: scale(1.1); }
     }
 
     @keyframes pulse {
@@ -1269,16 +1283,26 @@ html {
 
     .pulse-frame-reverse {
         -webkit-animation-name: reverse-pulse;
+        -moz-animation-name: reverse-pulse;
         animation-name: reverse-pulse;
+
         -webkit-animation-duration: 350ms;
+        -moz-animation-duration: 350ms;
         animation-duration: 350ms;
+
         -webkit-animation-fill-mode: both;
+        -moz-animation-fill-mode: both;
         animation-fill-mode: both;
     }
 
     @-webkit-keyframes reverse-pulse {
         0% { -webkit-transform: scale(1.1); }
         100% { -webkit-transform: scale(1); }
+    }
+
+    @-moz-keyframes reverse-pulse {
+        0% { -moz-transform: scale(1.1); }
+        100% { -moz-transform: scale(1); }
     }
 
     @keyframes reverse-pulse {

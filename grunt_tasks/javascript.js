@@ -51,8 +51,8 @@ module.exports = function (grunt, config) {
                 ],
                 tasks: [
                     'concat',
-                    'uglify'
-                    //'jshint'
+                    'uglify',
+                    'jshint'
                 ]
             }
         }

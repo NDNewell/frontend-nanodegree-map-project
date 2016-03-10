@@ -18,17 +18,18 @@ module.exports = function(grunt) {
     // Register tasks
 
     grunt.registerTask('default', [
-        //'jshint',
+        'jshint',
         'concat',
         'uglify',
         'processhtml',
+        'validation',
         'htmlmin',
-        //'svgstore',
-        //'svgmin',
+        'svgstore',
+        'svgmin',
         'sprity',
         'cssmin',
-        //'responsive_images',
-        //'imageoptim',
+        'responsive_images',
+        'imageoptim',
         'watch'
     ]);
 };

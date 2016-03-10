@@ -3,3 +3,5 @@
 Thumbs.db
 data
 node_modules
+validation-report.json
+validation-status.json

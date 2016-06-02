@@ -1071,22 +1071,26 @@ function AppViewModel () {
         $clearFavsBtn = $('.clear-favorites-button'),
         $surfInfoContainer = $('.surf-info-container');
 
-    // Initialize Firebase
-    var config = {
-        apiKey: "AIzaSyCfguLjpbIGbhNbGs0ZlA-w_wERpasWWRw",
-        authDomain: "dazzling-torch-4012.firebaseapp.com",
-        databaseURL: "https://dazzling-torch-4012.firebaseio.com",
-        storageBucket: "dazzling-torch-4012.appspot.com"
+    // Check if setting data to local storage is enabled
+    self.checkLocalStorage = function () {
+
+        try {
+
+            window.localStorage.test = 'test';
+            window.localStorage.removeItem('test');
+
+            return true;
+
+        } catch (e) {
+
+            console.log('local storage disabled (' + e + ')');
+
+            return false;
+        }
     };
 
-    firebase.initializeApp(config);
-
-    var database = firebase.database();
-
-    // Cache Firebase database references to all, location, and user data
-   // var allData = new Firebase("https://dazzling-torch-4012.firebaseio.com"),
-    //    locationData = new Firebase("https://dazzling-torch-4012.firebaseio.com/locationData"),
-    //    users = new Firebase('https://dazzling-torch-4012.firebaseio.com/users');
+    // Save the status of local storage availability
+    var localStorageEnabled = self.checkLocalStorage();
 
     // Create write/read error messages to be used as callbacks
     var fireBaseWriteError = function(error) {
@@ -1129,22 +1133,78 @@ function AppViewModel () {
         fireBaseReadError(errorObject);
     };
 
-    // Get the location data
-    database.ref('locationData').on("value", function(snapshot) {
+    var database;
 
-        // Save the location data snapshot
-        var data = snapshot.val();
+    if(localStorageEnabled) {
 
-        console.log('get location data successful');
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyCfguLjpbIGbhNbGs0ZlA-w_wERpasWWRw",
+            authDomain: "dazzling-torch-4012.firebaseapp.com",
+            databaseURL: "https://dazzling-torch-4012.firebaseio.com",
+            storageBucket: "dazzling-torch-4012.appspot.com"
+        };
 
-        // Invoke function to parse the location data
-        self.parseLocationData(data);
+        firebase.initializeApp(config);
+
+        database = firebase.database();
+
+        // Get the location data from Firebase's realtime database
+        database.ref('locationData').on("value", function(snapshot) {
+
+            // Save the location data snapshot
+            var data = snapshot.val();
+
+            console.log('get location data successful');
+
+            // Invoke function to parse the location data
+            self.parseLocationData(data);
+
+            self.setUpGoogleMap(data);
+
+        }, loadError);
+
+    } else {
+
+        /*var dataTimeout = setTimeout (function() {
+
+            console.log('get location data unsuccessful');
+            loadError();
+
+        }, 8000);*/
+
+        // Cache api request URL for location data
+        var databaseURL = 'https://dazzling-torch-4012.firebaseio.com/locationData.json';
+
+        // Load location data from Firebase API using ajax request
+        console.log('get location data via ajax request');
+
+        $.ajax({
+            url: databaseURL,
+            dataType: 'jsonp',
+            success: function(data) {
+
+                console.log('get location data successful');
+
+                // Invoke function to parse the location data
+                self.parseLocationData(data);
+
+                self.setUpGoogleMap(data);
+
+                // Disable error message
+                //clearTimeout(dataTimeout);
+            },
+            //error: loadError
+        });
+    }
+
+    self.setUpGoogleMap = function (data) {
 
         // Make sure Google maps api has loaded
         if (typeof google === 'object' && typeof google.maps === 'object') {
 
           // When loaded, set up Google map
-          setUpGoogleMap();
+          constructMap();
 
         // If it hasn't loaded, keep checking until it is
         // When it is loaded, generate map markers
@@ -1156,7 +1216,7 @@ function AppViewModel () {
               if(typeof google === 'object' && typeof google.maps === 'object') {
 
                   // When loaded, set up Google map
-                  setUpGoogleMap();
+                  constructMap();
 
                   // Stop checking if Google maps api is loaded
                   clearInterval(checkGoogle);
@@ -1165,7 +1225,7 @@ function AppViewModel () {
         }
 
         // Sets up markers and listeners for Google map
-        function setUpGoogleMap () {
+        function constructMap () {
 
           console.log('Google maps api loaded');
           console.log('generate map markers');
@@ -1176,8 +1236,7 @@ function AppViewModel () {
           // Add map listeners
           self.addMapListeners();
         }
-
-    }, loadError);
+    };
 
     // This array holds the location objects that have been parsed from
     // Firebase
@@ -1404,27 +1463,6 @@ function AppViewModel () {
         }
     };
 
-    // Check if setting data to local storage is enabled
-    self.checkLocalStorage = function () {
-
-        try {
-
-            window.localStorage.test = 'test';
-            window.localStorage.removeItem('test');
-
-            return true;
-
-        } catch (e) {
-
-            console.log('local storage disabled (' + e + ')');
-
-            return false;
-        }
-    };
-
-    // Save the status of local storage availability
-    var localStorageEnabled = self.checkLocalStorage();
-
     // Load the external sprite sheet into the DOM either from local storage
     // or from the server
     $window.load(function () {
@@ -1526,8 +1564,9 @@ function AppViewModel () {
         }
     });
 
-    // Create array of map markers
-    var markers = [];
+    // Create array of map markers and marker titles
+    var markers = [],
+    markerTitles = [];
 
     self.generateMarkers = function(locationData) {
 
@@ -3198,14 +3237,14 @@ function AppViewModel () {
         });
     };
 
-    // Monitor user authentication state, when there is a change check
-    // which user is logged in / logged out
-    // Create a callback which logs the current authentication state
-    firebase.auth().onAuthStateChanged(function(user) {
+    // Check user authentication only if local storage is available
+    // FYI - It's only available if local storage is enabled
+    if(localStorageEnabled) {
 
-        // Check user authentication only if local storage is available
-        // FYI - It's only available if local storage is enabled
-        if(localStorageEnabled) {
+        // Monitor user authentication state, when there is a change check
+        // which user is logged in / logged out
+        // Create a callback which logs the current authentication state
+        firebase.auth().onAuthStateChanged(function(user) {
 
             // If user is already logged in, notify in console and update
             // favorites
@@ -3227,18 +3266,19 @@ function AppViewModel () {
                 console.log("user is logged out");
                 self.userLogin();
             }
+        });
 
-        // If local storage isn't available, show location frames once all of
-        // the location data has been parsed
-        // Leave log in status at false
-        } else {
+    // If local storage isn't available, show location frames once all of
+    // the location data has been parsed
+    // Leave log in status at false
+    } else {
 
-            console.log('Firebase log in disabled because local storage unavailable');
+        console.log('Firebase log in disabled because local storage unavailable');
 
-            // Show frames once location data has been parsed
-            self.onLocationsArrayLoad(self.showLocationFrames);
-        }
-    });
+        // Show frames once location data has been parsed
+        self.onLocationsArrayLoad(self.showLocationFrames);
+    }
+
 
     // Add tooltips for those icons that have a title attribute
     // When the element is clicked or hovered over a tooltip is displayed
@@ -3501,9 +3541,6 @@ function AppViewModel () {
     // Cache Google map's element titles that are usually shown in a native
     // tooltip when hovering over that element
     var googleElemTitles = ['Report errors in the road map or imagery to Google', 'Zoom in', 'Zoom out', 'Rotate map 90 degrees', 'Show satellite imagery', 'Change map style'];
-
-    // Save refs to each marker's title
-    var markerTitles = [];
 
     // Remove elem titles in order to disable native tooltips from appearing
     // in Google map

@@ -1,0 +1,2355 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '--save-dev',
+1 verbose cli   'load-grunt-tasks' ]
+2 info using npm@2.14.12
+3 info using node@v4.2.6
+4 verbose install initial load of /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/package.json
+5 verbose installManyTop reading scoped package data from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/grunt/package.json
+6 verbose installManyTop reading scoped package data from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/grunt-contrib-concat/package.json
+7 verbose installManyTop reading scoped package data from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/grunt-contrib-cssmin/package.json
+8 verbose installManyTop reading scoped package data from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/grunt-contrib-htmlmin/package.json
+9 verbose installManyTop reading scoped package data from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/grunt-contrib-jshint/package.json
+10 verbose installManyTop reading scoped package data from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/grunt-contrib-uglify/package.json
+11 verbose installManyTop reading scoped package data from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/grunt-contrib-watch/package.json
+12 verbose installManyTop reading scoped package data from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/grunt-imageoptim/package.json
+13 verbose installManyTop reading scoped package data from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/grunt-processhtml/package.json
+14 verbose installManyTop reading scoped package data from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/grunt-responsive-images/package.json
+15 verbose installManyTop reading scoped package data from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/grunt-sprity/package.json
+16 verbose installManyTop reading scoped package data from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/grunt-svgmin/package.json
+17 verbose installManyTop reading scoped package data from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/grunt-svgstore/package.json
+18 verbose installManyTop reading scoped package data from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/grunt-w3c-html-validation/package.json
+19 verbose installManyTop reading scoped package data from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/package.json
+20 info package.json grunt-contrib-concat@0.5.1 No license field.
+21 info package.json grunt-contrib-watch@0.6.1 No license field.
+22 info package.json grunt-contrib-htmlmin@0.4.0 No license field.
+23 info package.json grunt-svgmin@3.1.2 No license field.
+24 info package.json grunt-sprity@1.0.0 No license field.
+25 info package.json grunt-imageoptim@1.4.1 No license field.
+26 info package.json grunt-processhtml@0.3.13 No license field.
+27 info package.json grunt-responsive-images@0.1.7 No license field.
+28 info package.json grunt-svgstore@0.5.0 No license field.
+29 info package.json grunt-w3c-html-validation@0.1.8 No license field.
+30 verbose readDependencies loading dependencies from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/package.json
+31 verbose install load-grunt-tasks is installed as 3.5.0
+32 silly cache add args [ 'load-grunt-tasks', null ]
+33 verbose cache add spec load-grunt-tasks
+34 silly cache add parsed spec Result {
+34 silly cache add   raw: 'load-grunt-tasks',
+34 silly cache add   scope: null,
+34 silly cache add   name: 'load-grunt-tasks',
+34 silly cache add   rawSpec: '',
+34 silly cache add   spec: 'latest',
+34 silly cache add   type: 'tag' }
+35 silly addNamed load-grunt-tasks@latest
+36 verbose addNamed "latest" is being treated as a dist-tag for load-grunt-tasks
+37 info addNameTag [ 'load-grunt-tasks', 'latest' ]
+38 silly mapToRegistry name load-grunt-tasks
+39 silly mapToRegistry using default registry
+40 silly mapToRegistry registry https://registry.npmjs.org/
+41 silly mapToRegistry uri https://registry.npmjs.org/load-grunt-tasks
+42 verbose addNameTag registry:https://registry.npmjs.org/load-grunt-tasks not in flight; fetching
+43 verbose request uri https://registry.npmjs.org/load-grunt-tasks
+44 verbose request no auth needed
+45 info attempt registry request try #1 at 4:59:33 PM
+46 verbose request id 40d16ca91fd44989
+47 verbose etag "62CQ4LNGQCFGLRC9M4HQB7WYX"
+48 http request GET https://registry.npmjs.org/load-grunt-tasks
+49 http 304 https://registry.npmjs.org/load-grunt-tasks
+50 verbose headers { date: 'Thu, 02 Jun 2016 15:59:33 GMT',
+50 verbose headers   via: '1.1 varnish',
+50 verbose headers   'cache-control': 'max-age=300',
+50 verbose headers   etag: '"62CQ4LNGQCFGLRC9M4HQB7WYX"',
+50 verbose headers   age: '8',
+50 verbose headers   connection: 'keep-alive',
+50 verbose headers   'x-served-by': 'cache-lhr6328-LHR',
+50 verbose headers   'x-cache': 'HIT',
+50 verbose headers   'x-cache-hits': '1',
+50 verbose headers   'x-timer': 'S1464883173.418978,VS0,VE0',
+50 verbose headers   vary: 'Accept-Encoding' }
+51 silly get cb [ 304,
+51 silly get   { date: 'Thu, 02 Jun 2016 15:59:33 GMT',
+51 silly get     via: '1.1 varnish',
+51 silly get     'cache-control': 'max-age=300',
+51 silly get     etag: '"62CQ4LNGQCFGLRC9M4HQB7WYX"',
+51 silly get     age: '8',
+51 silly get     connection: 'keep-alive',
+51 silly get     'x-served-by': 'cache-lhr6328-LHR',
+51 silly get     'x-cache': 'HIT',
+51 silly get     'x-cache-hits': '1',
+51 silly get     'x-timer': 'S1464883173.418978,VS0,VE0',
+51 silly get     vary: 'Accept-Encoding' } ]
+52 verbose etag https://registry.npmjs.org/load-grunt-tasks from cache
+53 verbose get saving load-grunt-tasks to /Users/NDNewell/.npm/registry.npmjs.org/load-grunt-tasks/.cache.json
+54 silly addNameTag next cb for load-grunt-tasks with tag latest
+55 silly addNamed load-grunt-tasks@3.5.0
+56 verbose addNamed "3.5.0" is a plain semver version for load-grunt-tasks
+57 silly cache afterAdd load-grunt-tasks@3.5.0
+58 verbose afterAdd /Users/NDNewell/.npm/load-grunt-tasks/3.5.0/package/package.json not in flight; writing
+59 verbose afterAdd /Users/NDNewell/.npm/load-grunt-tasks/3.5.0/package/package.json written
+60 silly install resolved [ { name: 'load-grunt-tasks',
+60 silly install resolved     version: '3.5.0',
+60 silly install resolved     description: 'Load multiple grunt tasks using globbing patterns',
+60 silly install resolved     keywords:
+60 silly install resolved      [ 'dependencies',
+60 silly install resolved        'glob',
+60 silly install resolved        'grunt',
+60 silly install resolved        'load',
+60 silly install resolved        'match',
+60 silly install resolved        'matchdep',
+60 silly install resolved        'pattern',
+60 silly install resolved        'require',
+60 silly install resolved        'tasks' ],
+60 silly install resolved     license: 'MIT',
+60 silly install resolved     author:
+60 silly install resolved      { name: 'Sindre Sorhus',
+60 silly install resolved        email: 'sindresorhus@gmail.com',
+60 silly install resolved        url: 'sindresorhus.com' },
+60 silly install resolved     files: [ 'index.js' ],
+60 silly install resolved     repository:
+60 silly install resolved      { type: 'git',
+60 silly install resolved        url: 'git+https://github.com/sindresorhus/load-grunt-tasks.git' },
+60 silly install resolved     scripts: { test: 'xo && grunt' },
+60 silly install resolved     engines: { node: '>=0.10.0' },
+60 silly install resolved     dependencies:
+60 silly install resolved      { arrify: '^1.0.0',
+60 silly install resolved        multimatch: '^2.0.0',
+60 silly install resolved        'pkg-up': '^1.0.0',
+60 silly install resolved        'resolve-pkg': '^0.1.0' },
+60 silly install resolved     devDependencies:
+60 silly install resolved      { grunt: '^1.0.1',
+60 silly install resolved        'grunt-cli': '^1.2.0',
+60 silly install resolved        'grunt-svgmin': '^3.1.0',
+60 silly install resolved        xo: '*' },
+60 silly install resolved     peerDependencies: { grunt: '>=0.4.0' },
+60 silly install resolved     gitHead: 'fbc916194ee91161ab94b5985dc2f9ea636eac6b',
+60 silly install resolved     bugs: { url: 'https://github.com/sindresorhus/load-grunt-tasks/issues' },
+60 silly install resolved     homepage: 'https://github.com/sindresorhus/load-grunt-tasks#readme',
+60 silly install resolved     _id: 'load-grunt-tasks@3.5.0',
+60 silly install resolved     _shasum: '56e310751b58617826a62a9afcced0e4a00c8430',
+60 silly install resolved     _from: 'load-grunt-tasks@latest',
+60 silly install resolved     _npmVersion: '3.8.5',
+60 silly install resolved     _nodeVersion: '4.3.0',
+60 silly install resolved     _npmUser: { name: 'sindresorhus', email: 'sindresorhus@gmail.com' },
+60 silly install resolved     dist:
+60 silly install resolved      { shasum: '56e310751b58617826a62a9afcced0e4a00c8430',
+60 silly install resolved        tarball: 'https://registry.npmjs.org/load-grunt-tasks/-/load-grunt-tasks-3.5.0.tgz' },
+60 silly install resolved     maintainers: [ [Object] ],
+60 silly install resolved     _npmOperationalInternal:
+60 silly install resolved      { host: 'packages-12-west.internal.npmjs.com',
+60 silly install resolved        tmp: 'tmp/load-grunt-tasks-3.5.0.tgz_1460104558429_0.1356081587728113' },
+60 silly install resolved     directories: {},
+60 silly install resolved     _resolved: 'https://registry.npmjs.org/load-grunt-tasks/-/load-grunt-tasks-3.5.0.tgz',
+60 silly install resolved     readme: 'ERROR: No README data found!' } ]
+61 info install load-grunt-tasks@3.5.0 into /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project
+62 info installOne load-grunt-tasks@3.5.0
+63 verbose installOne of load-grunt-tasks to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project not in flight; installing
+64 verbose lock using /Users/NDNewell/.npm/_locks/load-grunt-tasks-753f11e4aeaa9fb7.lock for /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks
+65 silly install write writing load-grunt-tasks 3.5.0 to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks
+66 verbose unbuild node_modules/load-grunt-tasks
+67 info preuninstall load-grunt-tasks@3.5.0
+68 info uninstall load-grunt-tasks@3.5.0
+69 verbose unbuild rmStuff load-grunt-tasks@3.5.0 from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules
+70 info postuninstall load-grunt-tasks@3.5.0
+71 silly gentlyRm /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks is being purged from base /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project
+72 verbose gentlyRm don't care about contents; nuking /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks
+73 silly vacuum-fs purging /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks
+74 silly vacuum-fs quitting because other entries in /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules
+75 verbose tar unpack /Users/NDNewell/.npm/load-grunt-tasks/3.5.0/package.tgz
+76 verbose tar unpacking to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks
+77 silly gentlyRm /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks is being purged
+78 verbose gentlyRm don't care about contents; nuking /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks
+79 silly gunzTarPerm modes [ '755', '644' ]
+80 silly gunzTarPerm extractEntry package.json
+81 silly gunzTarPerm extractEntry index.js
+82 silly gunzTarPerm extractEntry license
+83 silly gunzTarPerm extractEntry readme.md
+84 verbose write writing to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/package.json
+85 info preinstall load-grunt-tasks@3.5.0
+86 verbose readDependencies loading dependencies from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/package.json
+87 silly prepareForInstallMany adding arrify@^1.0.0 from load-grunt-tasks dependencies
+88 silly prepareForInstallMany adding multimatch@^2.0.0 from load-grunt-tasks dependencies
+89 silly prepareForInstallMany adding pkg-up@^1.0.0 from load-grunt-tasks dependencies
+90 silly prepareForInstallMany adding resolve-pkg@^0.1.0 from load-grunt-tasks dependencies
+91 verbose readDependencies loading dependencies from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/package.json
+92 silly cache add args [ 'multimatch@^2.0.0', null ]
+93 verbose cache add spec multimatch@^2.0.0
+94 silly cache add parsed spec Result {
+94 silly cache add   raw: 'multimatch@^2.0.0',
+94 silly cache add   scope: null,
+94 silly cache add   name: 'multimatch',
+94 silly cache add   rawSpec: '^2.0.0',
+94 silly cache add   spec: '>=2.0.0 <3.0.0',
+94 silly cache add   type: 'range' }
+95 silly addNamed multimatch@>=2.0.0 <3.0.0
+96 verbose addNamed ">=2.0.0 <3.0.0" is a valid semver range for multimatch
+97 silly addNameRange { name: 'multimatch', range: '>=2.0.0 <3.0.0', hasData: false }
+98 silly mapToRegistry name multimatch
+99 silly mapToRegistry using default registry
+100 silly mapToRegistry registry https://registry.npmjs.org/
+101 silly mapToRegistry uri https://registry.npmjs.org/multimatch
+102 verbose addNameRange registry:https://registry.npmjs.org/multimatch not in flight; fetching
+103 silly cache add args [ 'pkg-up@^1.0.0', null ]
+104 verbose cache add spec pkg-up@^1.0.0
+105 silly cache add parsed spec Result {
+105 silly cache add   raw: 'pkg-up@^1.0.0',
+105 silly cache add   scope: null,
+105 silly cache add   name: 'pkg-up',
+105 silly cache add   rawSpec: '^1.0.0',
+105 silly cache add   spec: '>=1.0.0 <2.0.0',
+105 silly cache add   type: 'range' }
+106 silly addNamed pkg-up@>=1.0.0 <2.0.0
+107 verbose addNamed ">=1.0.0 <2.0.0" is a valid semver range for pkg-up
+108 silly addNameRange { name: 'pkg-up', range: '>=1.0.0 <2.0.0', hasData: false }
+109 silly mapToRegistry name pkg-up
+110 silly mapToRegistry using default registry
+111 silly mapToRegistry registry https://registry.npmjs.org/
+112 silly mapToRegistry uri https://registry.npmjs.org/pkg-up
+113 verbose addNameRange registry:https://registry.npmjs.org/pkg-up not in flight; fetching
+114 silly cache add args [ 'resolve-pkg@^0.1.0', null ]
+115 verbose cache add spec resolve-pkg@^0.1.0
+116 silly cache add parsed spec Result {
+116 silly cache add   raw: 'resolve-pkg@^0.1.0',
+116 silly cache add   scope: null,
+116 silly cache add   name: 'resolve-pkg',
+116 silly cache add   rawSpec: '^0.1.0',
+116 silly cache add   spec: '>=0.1.0 <0.2.0',
+116 silly cache add   type: 'range' }
+117 silly addNamed resolve-pkg@>=0.1.0 <0.2.0
+118 verbose addNamed ">=0.1.0 <0.2.0" is a valid semver range for resolve-pkg
+119 silly addNameRange { name: 'resolve-pkg', range: '>=0.1.0 <0.2.0', hasData: false }
+120 silly mapToRegistry name resolve-pkg
+121 silly mapToRegistry using default registry
+122 silly mapToRegistry registry https://registry.npmjs.org/
+123 silly mapToRegistry uri https://registry.npmjs.org/resolve-pkg
+124 verbose addNameRange registry:https://registry.npmjs.org/resolve-pkg not in flight; fetching
+125 silly cache add args [ 'arrify@^1.0.0', null ]
+126 verbose cache add spec arrify@^1.0.0
+127 silly cache add parsed spec Result {
+127 silly cache add   raw: 'arrify@^1.0.0',
+127 silly cache add   scope: null,
+127 silly cache add   name: 'arrify',
+127 silly cache add   rawSpec: '^1.0.0',
+127 silly cache add   spec: '>=1.0.0 <2.0.0',
+127 silly cache add   type: 'range' }
+128 silly addNamed arrify@>=1.0.0 <2.0.0
+129 verbose addNamed ">=1.0.0 <2.0.0" is a valid semver range for arrify
+130 silly addNameRange { name: 'arrify', range: '>=1.0.0 <2.0.0', hasData: false }
+131 silly mapToRegistry name arrify
+132 silly mapToRegistry using default registry
+133 silly mapToRegistry registry https://registry.npmjs.org/
+134 silly mapToRegistry uri https://registry.npmjs.org/arrify
+135 verbose addNameRange registry:https://registry.npmjs.org/arrify not in flight; fetching
+136 verbose request uri https://registry.npmjs.org/multimatch
+137 verbose request no auth needed
+138 info attempt registry request try #1 at 4:59:34 PM
+139 verbose etag "AY873KSMZB2RE45UPHRNLZVM3"
+140 http request GET https://registry.npmjs.org/multimatch
+141 verbose request uri https://registry.npmjs.org/resolve-pkg
+142 verbose request no auth needed
+143 info attempt registry request try #1 at 4:59:34 PM
+144 verbose etag "ACQ48OYI81CMPHR46MP56FBIT"
+145 http request GET https://registry.npmjs.org/resolve-pkg
+146 verbose request uri https://registry.npmjs.org/arrify
+147 verbose request no auth needed
+148 info attempt registry request try #1 at 4:59:34 PM
+149 verbose etag "EUGFAKW89GG1TRUKS22W9VP8U"
+150 http request GET https://registry.npmjs.org/arrify
+151 verbose request uri https://registry.npmjs.org/pkg-up
+152 verbose request no auth needed
+153 info attempt registry request try #1 at 4:59:34 PM
+154 verbose etag "C6L244GVSVPB0XVJMENOSV57J"
+155 http request GET https://registry.npmjs.org/pkg-up
+156 http 304 https://registry.npmjs.org/multimatch
+157 verbose headers { date: 'Thu, 02 Jun 2016 15:59:33 GMT',
+157 verbose headers   via: '1.1 varnish',
+157 verbose headers   'cache-control': 'max-age=300',
+157 verbose headers   etag: '"AY873KSMZB2RE45UPHRNLZVM3"',
+157 verbose headers   age: '70',
+157 verbose headers   connection: 'keep-alive',
+157 verbose headers   'x-served-by': 'cache-lhr6331-LHR',
+157 verbose headers   'x-cache': 'HIT',
+157 verbose headers   'x-cache-hits': '3',
+157 verbose headers   'x-timer': 'S1464883173.684188,VS0,VE0',
+157 verbose headers   vary: 'Accept-Encoding' }
+158 silly get cb [ 304,
+158 silly get   { date: 'Thu, 02 Jun 2016 15:59:33 GMT',
+158 silly get     via: '1.1 varnish',
+158 silly get     'cache-control': 'max-age=300',
+158 silly get     etag: '"AY873KSMZB2RE45UPHRNLZVM3"',
+158 silly get     age: '70',
+158 silly get     connection: 'keep-alive',
+158 silly get     'x-served-by': 'cache-lhr6331-LHR',
+158 silly get     'x-cache': 'HIT',
+158 silly get     'x-cache-hits': '3',
+158 silly get     'x-timer': 'S1464883173.684188,VS0,VE0',
+158 silly get     vary: 'Accept-Encoding' } ]
+159 verbose etag https://registry.npmjs.org/multimatch from cache
+160 verbose get saving multimatch to /Users/NDNewell/.npm/registry.npmjs.org/multimatch/.cache.json
+161 http 304 https://registry.npmjs.org/pkg-up
+162 verbose headers { date: 'Thu, 02 Jun 2016 15:59:33 GMT',
+162 verbose headers   via: '1.1 varnish',
+162 verbose headers   'cache-control': 'max-age=300',
+162 verbose headers   etag: '"C6L244GVSVPB0XVJMENOSV57J"',
+162 verbose headers   age: '179',
+162 verbose headers   connection: 'keep-alive',
+162 verbose headers   'x-served-by': 'cache-lhr6342-LHR',
+162 verbose headers   'x-cache': 'HIT',
+162 verbose headers   'x-cache-hits': '2',
+162 verbose headers   'x-timer': 'S1464883173.686909,VS0,VE0',
+162 verbose headers   vary: 'Accept-Encoding' }
+163 silly get cb [ 304,
+163 silly get   { date: 'Thu, 02 Jun 2016 15:59:33 GMT',
+163 silly get     via: '1.1 varnish',
+163 silly get     'cache-control': 'max-age=300',
+163 silly get     etag: '"C6L244GVSVPB0XVJMENOSV57J"',
+163 silly get     age: '179',
+163 silly get     connection: 'keep-alive',
+163 silly get     'x-served-by': 'cache-lhr6342-LHR',
+163 silly get     'x-cache': 'HIT',
+163 silly get     'x-cache-hits': '2',
+163 silly get     'x-timer': 'S1464883173.686909,VS0,VE0',
+163 silly get     vary: 'Accept-Encoding' } ]
+164 verbose etag https://registry.npmjs.org/pkg-up from cache
+165 verbose get saving pkg-up to /Users/NDNewell/.npm/registry.npmjs.org/pkg-up/.cache.json
+166 http 200 https://registry.npmjs.org/resolve-pkg
+167 verbose headers { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+167 verbose headers   etag: '"4BKGE3HIH15FKKP48TAA239MG"',
+167 verbose headers   'content-type': 'application/json',
+167 verbose headers   'content-encoding': 'gzip',
+167 verbose headers   'cache-control': 'max-age=300',
+167 verbose headers   'content-length': '1513',
+167 verbose headers   'accept-ranges': 'bytes',
+167 verbose headers   date: 'Thu, 02 Jun 2016 15:59:33 GMT',
+167 verbose headers   via: '1.1 varnish',
+167 verbose headers   age: '69',
+167 verbose headers   connection: 'keep-alive',
+167 verbose headers   'x-served-by': 'cache-lhr6332-LHR',
+167 verbose headers   'x-cache': 'HIT',
+167 verbose headers   'x-cache-hits': '1',
+167 verbose headers   'x-timer': 'S1464883173.680365,VS0,VE0',
+167 verbose headers   vary: 'Accept-Encoding' }
+168 silly get cb [ 200,
+168 silly get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+168 silly get     etag: '"4BKGE3HIH15FKKP48TAA239MG"',
+168 silly get     'content-type': 'application/json',
+168 silly get     'content-encoding': 'gzip',
+168 silly get     'cache-control': 'max-age=300',
+168 silly get     'content-length': '1513',
+168 silly get     'accept-ranges': 'bytes',
+168 silly get     date: 'Thu, 02 Jun 2016 15:59:33 GMT',
+168 silly get     via: '1.1 varnish',
+168 silly get     age: '69',
+168 silly get     connection: 'keep-alive',
+168 silly get     'x-served-by': 'cache-lhr6332-LHR',
+168 silly get     'x-cache': 'HIT',
+168 silly get     'x-cache-hits': '1',
+168 silly get     'x-timer': 'S1464883173.680365,VS0,VE0',
+168 silly get     vary: 'Accept-Encoding' } ]
+169 verbose get saving resolve-pkg to /Users/NDNewell/.npm/registry.npmjs.org/resolve-pkg/.cache.json
+170 silly addNameRange number 2 { name: 'multimatch', range: '>=2.0.0 <3.0.0', hasData: true }
+171 silly addNameRange versions [ 'multimatch',
+171 silly addNameRange   [ '0.1.0', '0.2.0', '0.3.0', '1.0.0', '1.0.1', '2.0.0', '2.1.0' ] ]
+172 silly addNamed multimatch@2.1.0
+173 verbose addNamed "2.1.0" is a plain semver version for multimatch
+174 silly addNameRange number 2 { name: 'pkg-up', range: '>=1.0.0 <2.0.0', hasData: true }
+175 silly addNameRange versions [ 'pkg-up', [ '1.0.0' ] ]
+176 silly addNamed pkg-up@1.0.0
+177 verbose addNamed "1.0.0" is a plain semver version for pkg-up
+178 silly addNameRange number 2 { name: 'resolve-pkg', range: '>=0.1.0 <0.2.0', hasData: true }
+179 silly addNameRange versions [ 'resolve-pkg', [ '0.1.0' ] ]
+180 silly addNamed resolve-pkg@0.1.0
+181 verbose addNamed "0.1.0" is a plain semver version for resolve-pkg
+182 silly cache afterAdd pkg-up@1.0.0
+183 verbose afterAdd /Users/NDNewell/.npm/pkg-up/1.0.0/package/package.json not in flight; writing
+184 silly cache afterAdd multimatch@2.1.0
+185 verbose afterAdd /Users/NDNewell/.npm/multimatch/2.1.0/package/package.json not in flight; writing
+186 verbose afterAdd /Users/NDNewell/.npm/pkg-up/1.0.0/package/package.json written
+187 verbose afterAdd /Users/NDNewell/.npm/multimatch/2.1.0/package/package.json written
+188 silly cache afterAdd resolve-pkg@0.1.0
+189 verbose afterAdd /Users/NDNewell/.npm/resolve-pkg/0.1.0/package/package.json not in flight; writing
+190 verbose afterAdd /Users/NDNewell/.npm/resolve-pkg/0.1.0/package/package.json written
+191 http 200 https://registry.npmjs.org/arrify
+192 verbose headers { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+192 verbose headers   etag: '"3J93RCP24YBGFKQGU35XFOGSG"',
+192 verbose headers   'content-type': 'application/json',
+192 verbose headers   'content-encoding': 'gzip',
+192 verbose headers   'cache-control': 'max-age=300',
+192 verbose headers   'content-length': '1166',
+192 verbose headers   'accept-ranges': 'bytes',
+192 verbose headers   date: 'Thu, 02 Jun 2016 15:59:33 GMT',
+192 verbose headers   via: '1.1 varnish',
+192 verbose headers   age: '102',
+192 verbose headers   connection: 'keep-alive',
+192 verbose headers   'x-served-by': 'cache-lhr6339-LHR',
+192 verbose headers   'x-cache': 'HIT',
+192 verbose headers   'x-cache-hits': '2',
+192 verbose headers   'x-timer': 'S1464883173.912415,VS0,VE0',
+192 verbose headers   vary: 'Accept-Encoding' }
+193 silly get cb [ 200,
+193 silly get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+193 silly get     etag: '"3J93RCP24YBGFKQGU35XFOGSG"',
+193 silly get     'content-type': 'application/json',
+193 silly get     'content-encoding': 'gzip',
+193 silly get     'cache-control': 'max-age=300',
+193 silly get     'content-length': '1166',
+193 silly get     'accept-ranges': 'bytes',
+193 silly get     date: 'Thu, 02 Jun 2016 15:59:33 GMT',
+193 silly get     via: '1.1 varnish',
+193 silly get     age: '102',
+193 silly get     connection: 'keep-alive',
+193 silly get     'x-served-by': 'cache-lhr6339-LHR',
+193 silly get     'x-cache': 'HIT',
+193 silly get     'x-cache-hits': '2',
+193 silly get     'x-timer': 'S1464883173.912415,VS0,VE0',
+193 silly get     vary: 'Accept-Encoding' } ]
+194 verbose get saving arrify to /Users/NDNewell/.npm/registry.npmjs.org/arrify/.cache.json
+195 silly addNameRange number 2 { name: 'arrify', range: '>=1.0.0 <2.0.0', hasData: true }
+196 silly addNameRange versions [ 'arrify', [ '1.0.0', '1.0.1' ] ]
+197 silly addNamed arrify@1.0.1
+198 verbose addNamed "1.0.1" is a plain semver version for arrify
+199 silly cache afterAdd arrify@1.0.1
+200 verbose afterAdd /Users/NDNewell/.npm/arrify/1.0.1/package/package.json not in flight; writing
+201 verbose afterAdd /Users/NDNewell/.npm/arrify/1.0.1/package/package.json written
+202 silly install resolved [ { name: 'pkg-up',
+202 silly install resolved     version: '1.0.0',
+202 silly install resolved     description: 'Find the closest package.json file',
+202 silly install resolved     license: 'MIT',
+202 silly install resolved     repository:
+202 silly install resolved      { type: 'git',
+202 silly install resolved        url: 'git+https://github.com/sindresorhus/pkg-up.git' },
+202 silly install resolved     author:
+202 silly install resolved      { name: 'Sindre Sorhus',
+202 silly install resolved        email: 'sindresorhus@gmail.com',
+202 silly install resolved        url: 'sindresorhus.com' },
+202 silly install resolved     engines: { node: '>=0.10.0' },
+202 silly install resolved     scripts: { test: 'xo && ava' },
+202 silly install resolved     files: [ 'index.js' ],
+202 silly install resolved     keywords:
+202 silly install resolved      [ 'pkg',
+202 silly install resolved        'package',
+202 silly install resolved        'file',
+202 silly install resolved        'find',
+202 silly install resolved        'up',
+202 silly install resolved        'find-up',
+202 silly install resolved        'findup',
+202 silly install resolved        'look-up',
+202 silly install resolved        'look',
+202 silly install resolved        'file',
+202 silly install resolved        'search',
+202 silly install resolved        'match',
+202 silly install resolved        'package',
+202 silly install resolved        'resolve',
+202 silly install resolved        'parent',
+202 silly install resolved        'parents',
+202 silly install resolved        'folder',
+202 silly install resolved        'directory',
+202 silly install resolved        'dir',
+202 silly install resolved        'walk',
+202 silly install resolved        'walking',
+202 silly install resolved        'path' ],
+202 silly install resolved     dependencies: { 'find-up': '^1.0.0' },
+202 silly install resolved     devDependencies: { ava: '*', xo: '*' },
+202 silly install resolved     gitHead: 'fdbaf6200f31e1e4878c4fc8298966804554cfc4',
+202 silly install resolved     bugs: { url: 'https://github.com/sindresorhus/pkg-up/issues' },
+202 silly install resolved     homepage: 'https://github.com/sindresorhus/pkg-up#readme',
+202 silly install resolved     _id: 'pkg-up@1.0.0',
+202 silly install resolved     _shasum: '3e08fb461525c4421624a33b9f7e6d0af5b05a26',
+202 silly install resolved     _from: 'pkg-up@>=1.0.0 <2.0.0',
+202 silly install resolved     _npmVersion: '2.14.3',
+202 silly install resolved     _nodeVersion: '4.1.0',
+202 silly install resolved     _npmUser: { name: 'sindresorhus', email: 'sindresorhus@gmail.com' },
+202 silly install resolved     dist:
+202 silly install resolved      { shasum: '3e08fb461525c4421624a33b9f7e6d0af5b05a26',
+202 silly install resolved        tarball: 'https://registry.npmjs.org/pkg-up/-/pkg-up-1.0.0.tgz' },
+202 silly install resolved     maintainers: [ [Object] ],
+202 silly install resolved     directories: {},
+202 silly install resolved     _resolved: 'https://registry.npmjs.org/pkg-up/-/pkg-up-1.0.0.tgz',
+202 silly install resolved     readme: 'ERROR: No README data found!' },
+202 silly install resolved   { name: 'multimatch',
+202 silly install resolved     version: '2.1.0',
+202 silly install resolved     description: 'Extends minimatch.match() with support for multiple patterns',
+202 silly install resolved     license: 'MIT',
+202 silly install resolved     repository:
+202 silly install resolved      { type: 'git',
+202 silly install resolved        url: 'git+https://github.com/sindresorhus/multimatch.git' },
+202 silly install resolved     author:
+202 silly install resolved      { name: 'Sindre Sorhus',
+202 silly install resolved        email: 'sindresorhus@gmail.com',
+202 silly install resolved        url: 'http://sindresorhus.com' },
+202 silly install resolved     maintainers: [ [Object] ],
+202 silly install resolved     engines: { node: '>=0.10.0' },
+202 silly install resolved     scripts: { test: 'mocha' },
+202 silly install resolved     files: [ 'index.js' ],
+202 silly install resolved     keywords:
+202 silly install resolved      [ 'expand',
+202 silly install resolved        'find',
+202 silly install resolved        'glob',
+202 silly install resolved        'globbing',
+202 silly install resolved        'globs',
+202 silly install resolved        'match',
+202 silly install resolved        'matcher',
+202 silly install resolved        'minimatch',
+202 silly install resolved        'pattern',
+202 silly install resolved        'patterns',
+202 silly install resolved        'wildcard' ],
+202 silly install resolved     dependencies:
+202 silly install resolved      { 'array-differ': '^1.0.0',
+202 silly install resolved        'array-union': '^1.0.1',
+202 silly install resolved        arrify: '^1.0.0',
+202 silly install resolved        minimatch: '^3.0.0' },
+202 silly install resolved     devDependencies: { chai: '^3.4.1', mocha: '*' },
+202 silly install resolved     gitHead: '5b56d1689ef475975682a514b8e1f863794af419',
+202 silly install resolved     bugs: { url: 'https://github.com/sindresorhus/multimatch/issues' },
+202 silly install resolved     homepage: 'https://github.com/sindresorhus/multimatch',
+202 silly install resolved     _id: 'multimatch@2.1.0',
+202 silly install resolved     _shasum: '9c7906a22fb4c02919e2f5f75161b4cdbd4b2a2b',
+202 silly install resolved     _from: 'multimatch@>=2.0.0 <3.0.0',
+202 silly install resolved     _npmVersion: '2.14.7',
+202 silly install resolved     _nodeVersion: '4.2.1',
+202 silly install resolved     _npmUser: { name: 'sindresorhus', email: 'sindresorhus@gmail.com' },
+202 silly install resolved     dist:
+202 silly install resolved      { shasum: '9c7906a22fb4c02919e2f5f75161b4cdbd4b2a2b',
+202 silly install resolved        tarball: 'https://registry.npmjs.org/multimatch/-/multimatch-2.1.0.tgz' },
+202 silly install resolved     directories: {},
+202 silly install resolved     _resolved: 'https://registry.npmjs.org/multimatch/-/multimatch-2.1.0.tgz',
+202 silly install resolved     readme: 'ERROR: No README data found!' },
+202 silly install resolved   { name: 'resolve-pkg',
+202 silly install resolved     version: '0.1.0',
+202 silly install resolved     description: 'Resolve the path of a package regardless of it having an entry',
+202 silly install resolved     license: 'MIT',
+202 silly install resolved     repository:
+202 silly install resolved      { type: 'git',
+202 silly install resolved        url: 'git+https://github.com/sindresorhus/resolve-pkg.git' },
+202 silly install resolved     author:
+202 silly install resolved      { name: 'Sindre Sorhus',
+202 silly install resolved        email: 'sindresorhus@gmail.com',
+202 silly install resolved        url: 'sindresorhus.com' },
+202 silly install resolved     engines: { node: '>=0.10.0' },
+202 silly install resolved     scripts: { test: 'xo && ava' },
+202 silly install resolved     files: [ 'index.js' ],
+202 silly install resolved     keywords:
+202 silly install resolved      [ 'require',
+202 silly install resolved        'resolve',
+202 silly install resolved        'path',
+202 silly install resolved        'module',
+202 silly install resolved        'from',
+202 silly install resolved        'like',
+202 silly install resolved        'path',
+202 silly install resolved        'cwd',
+202 silly install resolved        'current',
+202 silly install resolved        'working',
+202 silly install resolved        'directory',
+202 silly install resolved        'grunt',
+202 silly install resolved        'main',
+202 silly install resolved        'entry',
+202 silly install resolved        'point' ],
+202 silly install resolved     dependencies: { 'resolve-from': '^2.0.0' },
+202 silly install resolved     devDependencies: { ava: '*', 'grunt-svgmin': '3.1.0', xo: '*' },
+202 silly install resolved     gitHead: 'b23eb5e6f61eb684345edd4c33f00dcde9f10bc8',
+202 silly install resolved     bugs: { url: 'https://github.com/sindresorhus/resolve-pkg/issues' },
+202 silly install resolved     homepage: 'https://github.com/sindresorhus/resolve-pkg',
+202 silly install resolved     _id: 'resolve-pkg@0.1.0',
+202 silly install resolved     _shasum: '02cc993410e2936962bd97166a1b077da9725531',
+202 silly install resolved     _from: 'resolve-pkg@>=0.1.0 <0.2.0',
+202 silly install resolved     _npmVersion: '2.14.7',
+202 silly install resolved     _nodeVersion: '4.2.1',
+202 silly install resolved     _npmUser: { name: 'sindresorhus', email: 'sindresorhus@gmail.com' },
+202 silly install resolved     dist:
+202 silly install resolved      { shasum: '02cc993410e2936962bd97166a1b077da9725531',
+202 silly install resolved        tarball: 'https://registry.npmjs.org/resolve-pkg/-/resolve-pkg-0.1.0.tgz' },
+202 silly install resolved     maintainers: [ [Object] ],
+202 silly install resolved     directories: {},
+202 silly install resolved     _resolved: 'https://registry.npmjs.org/resolve-pkg/-/resolve-pkg-0.1.0.tgz',
+202 silly install resolved     readme: 'ERROR: No README data found!' },
+202 silly install resolved   { name: 'arrify',
+202 silly install resolved     version: '1.0.1',
+202 silly install resolved     description: 'Convert a value to an array',
+202 silly install resolved     license: 'MIT',
+202 silly install resolved     repository:
+202 silly install resolved      { type: 'git',
+202 silly install resolved        url: 'git+https://github.com/sindresorhus/arrify.git' },
+202 silly install resolved     author:
+202 silly install resolved      { name: 'Sindre Sorhus',
+202 silly install resolved        email: 'sindresorhus@gmail.com',
+202 silly install resolved        url: 'sindresorhus.com' },
+202 silly install resolved     engines: { node: '>=0.10.0' },
+202 silly install resolved     scripts: { test: 'xo && ava' },
+202 silly install resolved     files: [ 'index.js' ],
+202 silly install resolved     keywords: [ 'array', 'arr', 'arrify', 'arrayify', 'convert', 'value' ],
+202 silly install resolved     devDependencies: { ava: '*', xo: '*' },
+202 silly install resolved     gitHead: '087edee1a58d5adaac6cae5a107886121ef43783',
+202 silly install resolved     bugs: { url: 'https://github.com/sindresorhus/arrify/issues' },
+202 silly install resolved     homepage: 'https://github.com/sindresorhus/arrify#readme',
+202 silly install resolved     _id: 'arrify@1.0.1',
+202 silly install resolved     _shasum: '898508da2226f380df904728456849c1501a4b0d',
+202 silly install resolved     _from: 'arrify@>=1.0.0 <2.0.0',
+202 silly install resolved     _npmVersion: '3.5.2',
+202 silly install resolved     _nodeVersion: '4.2.1',
+202 silly install resolved     _npmUser: { name: 'sindresorhus', email: 'sindresorhus@gmail.com' },
+202 silly install resolved     dist:
+202 silly install resolved      { shasum: '898508da2226f380df904728456849c1501a4b0d',
+202 silly install resolved        tarball: 'http://registry.npmjs.org/arrify/-/arrify-1.0.1.tgz' },
+202 silly install resolved     maintainers: [ [Object] ],
+202 silly install resolved     directories: {},
+202 silly install resolved     _resolved: 'https://registry.npmjs.org/arrify/-/arrify-1.0.1.tgz',
+202 silly install resolved     readme: 'ERROR: No README data found!' } ]
+203 info install pkg-up@1.0.0 into /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks
+204 info install multimatch@2.1.0 into /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks
+205 info install resolve-pkg@0.1.0 into /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks
+206 info install arrify@1.0.1 into /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks
+207 info installOne pkg-up@1.0.0
+208 verbose installOne of pkg-up to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks not in flight; installing
+209 info installOne multimatch@2.1.0
+210 verbose installOne of multimatch to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks not in flight; installing
+211 info installOne resolve-pkg@0.1.0
+212 verbose installOne of resolve-pkg to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks not in flight; installing
+213 info installOne arrify@1.0.1
+214 verbose installOne of arrify to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks not in flight; installing
+215 verbose lock using /Users/NDNewell/.npm/_locks/pkg-up-7fca66b11f04a860.lock for /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up
+216 silly install write writing pkg-up 1.0.0 to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up
+217 verbose lock using /Users/NDNewell/.npm/_locks/resolve-pkg-d513dbe523590d46.lock for /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/resolve-pkg
+218 verbose lock using /Users/NDNewell/.npm/_locks/multimatch-f0b6ad96293bbc00.lock for /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch
+219 verbose lock using /Users/NDNewell/.npm/_locks/arrify-29e019f955083ed6.lock for /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/arrify
+220 silly install write writing resolve-pkg 0.1.0 to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/resolve-pkg
+221 silly install write writing multimatch 2.1.0 to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch
+222 silly install write writing arrify 1.0.1 to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/arrify
+223 verbose unbuild node_modules/load-grunt-tasks/node_modules/pkg-up
+224 verbose unbuild node_modules/load-grunt-tasks/node_modules/resolve-pkg
+225 verbose unbuild node_modules/load-grunt-tasks/node_modules/multimatch
+226 verbose unbuild node_modules/load-grunt-tasks/node_modules/arrify
+227 silly gentlyRm /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up is being purged from base /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project
+228 verbose gentlyRm don't care about contents; nuking /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up
+229 verbose tar unpack /Users/NDNewell/.npm/pkg-up/1.0.0/package.tgz
+230 verbose tar unpacking to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up
+231 silly gentlyRm /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up is being purged
+232 verbose gentlyRm don't care about contents; nuking /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up
+233 silly gentlyRm /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/resolve-pkg is being purged from base /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project
+234 verbose gentlyRm don't care about contents; nuking /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/resolve-pkg
+235 silly gentlyRm /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch is being purged from base /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project
+236 verbose gentlyRm don't care about contents; nuking /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch
+237 silly gentlyRm /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/arrify is being purged from base /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project
+238 verbose gentlyRm don't care about contents; nuking /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/arrify
+239 silly gunzTarPerm modes [ '755', '644' ]
+240 verbose tar unpack /Users/NDNewell/.npm/resolve-pkg/0.1.0/package.tgz
+241 verbose tar unpacking to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/resolve-pkg
+242 silly gentlyRm /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/resolve-pkg is being purged
+243 verbose gentlyRm don't care about contents; nuking /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/resolve-pkg
+244 verbose tar unpack /Users/NDNewell/.npm/multimatch/2.1.0/package.tgz
+245 verbose tar unpacking to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch
+246 silly gentlyRm /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch is being purged
+247 verbose gentlyRm don't care about contents; nuking /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch
+248 verbose tar unpack /Users/NDNewell/.npm/arrify/1.0.1/package.tgz
+249 verbose tar unpacking to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/arrify
+250 silly gentlyRm /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/arrify is being purged
+251 verbose gentlyRm don't care about contents; nuking /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/arrify
+252 silly gunzTarPerm modes [ '755', '644' ]
+253 silly gunzTarPerm modes [ '755', '644' ]
+254 silly gunzTarPerm modes [ '755', '644' ]
+255 silly gunzTarPerm extractEntry package.json
+256 silly gunzTarPerm extractEntry package.json
+257 silly gunzTarPerm extractEntry package.json
+258 silly gunzTarPerm extractEntry package.json
+259 silly gunzTarPerm extractEntry index.js
+260 silly gunzTarPerm extractEntry license
+261 silly gunzTarPerm extractEntry index.js
+262 silly gunzTarPerm extractEntry license
+263 silly gunzTarPerm extractEntry index.js
+264 silly gunzTarPerm extractEntry license
+265 silly gunzTarPerm extractEntry index.js
+266 silly gunzTarPerm modified mode [ 'index.js', 436, 420 ]
+267 silly gunzTarPerm extractEntry license
+268 silly gunzTarPerm extractEntry readme.md
+269 silly gunzTarPerm extractEntry readme.md
+270 silly gunzTarPerm extractEntry readme.md
+271 silly gunzTarPerm extractEntry readme.md
+272 verbose write writing to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/arrify/package.json
+273 verbose write writing to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/resolve-pkg/package.json
+274 verbose write writing to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/package.json
+275 verbose write writing to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/package.json
+276 info preinstall arrify@1.0.1
+277 info preinstall pkg-up@1.0.0
+278 info preinstall multimatch@2.1.0
+279 info preinstall resolve-pkg@0.1.0
+280 verbose readDependencies loading dependencies from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/arrify/package.json
+281 verbose readDependencies loading dependencies from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/package.json
+282 verbose readDependencies loading dependencies from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/resolve-pkg/package.json
+283 verbose readDependencies loading dependencies from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/package.json
+284 verbose readDependencies loading dependencies from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/arrify/package.json
+285 silly prepareForInstallMany adding find-up@^1.0.0 from pkg-up dependencies
+286 verbose readDependencies loading dependencies from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/package.json
+287 silly prepareForInstallMany adding resolve-from@^2.0.0 from resolve-pkg dependencies
+288 verbose readDependencies loading dependencies from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/resolve-pkg/package.json
+289 silly prepareForInstallMany adding array-differ@^1.0.0 from multimatch dependencies
+290 silly prepareForInstallMany adding array-union@^1.0.1 from multimatch dependencies
+291 silly prepareForInstallMany adding minimatch@^3.0.0 from multimatch dependencies
+292 verbose readDependencies loading dependencies from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/package.json
+293 silly install resolved []
+294 verbose about to build /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/arrify
+295 info build /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/arrify
+296 silly cache add args [ 'find-up@^1.0.0', null ]
+297 verbose cache add spec find-up@^1.0.0
+298 silly cache add args [ 'resolve-from@^2.0.0', null ]
+299 verbose cache add spec resolve-from@^2.0.0
+300 silly cache add args [ 'array-differ@^1.0.0', null ]
+301 verbose cache add spec array-differ@^1.0.0
+302 silly cache add args [ 'array-union@^1.0.1', null ]
+303 verbose cache add spec array-union@^1.0.1
+304 silly cache add parsed spec Result {
+304 silly cache add   raw: 'find-up@^1.0.0',
+304 silly cache add   scope: null,
+304 silly cache add   name: 'find-up',
+304 silly cache add   rawSpec: '^1.0.0',
+304 silly cache add   spec: '>=1.0.0 <2.0.0',
+304 silly cache add   type: 'range' }
+305 silly addNamed find-up@>=1.0.0 <2.0.0
+306 verbose addNamed ">=1.0.0 <2.0.0" is a valid semver range for find-up
+307 silly addNameRange { name: 'find-up', range: '>=1.0.0 <2.0.0', hasData: false }
+308 silly mapToRegistry name find-up
+309 silly mapToRegistry using default registry
+310 silly mapToRegistry registry https://registry.npmjs.org/
+311 silly mapToRegistry uri https://registry.npmjs.org/find-up
+312 verbose addNameRange registry:https://registry.npmjs.org/find-up not in flight; fetching
+313 silly cache add parsed spec Result {
+313 silly cache add   raw: 'resolve-from@^2.0.0',
+313 silly cache add   scope: null,
+313 silly cache add   name: 'resolve-from',
+313 silly cache add   rawSpec: '^2.0.0',
+313 silly cache add   spec: '>=2.0.0 <3.0.0',
+313 silly cache add   type: 'range' }
+314 silly addNamed resolve-from@>=2.0.0 <3.0.0
+315 verbose addNamed ">=2.0.0 <3.0.0" is a valid semver range for resolve-from
+316 silly addNameRange { name: 'resolve-from', range: '>=2.0.0 <3.0.0', hasData: false }
+317 silly mapToRegistry name resolve-from
+318 silly mapToRegistry using default registry
+319 silly mapToRegistry registry https://registry.npmjs.org/
+320 silly mapToRegistry uri https://registry.npmjs.org/resolve-from
+321 verbose addNameRange registry:https://registry.npmjs.org/resolve-from not in flight; fetching
+322 silly cache add parsed spec Result {
+322 silly cache add   raw: 'array-differ@^1.0.0',
+322 silly cache add   scope: null,
+322 silly cache add   name: 'array-differ',
+322 silly cache add   rawSpec: '^1.0.0',
+322 silly cache add   spec: '>=1.0.0 <2.0.0',
+322 silly cache add   type: 'range' }
+323 silly addNamed array-differ@>=1.0.0 <2.0.0
+324 verbose addNamed ">=1.0.0 <2.0.0" is a valid semver range for array-differ
+325 silly addNameRange { name: 'array-differ', range: '>=1.0.0 <2.0.0', hasData: false }
+326 silly mapToRegistry name array-differ
+327 silly mapToRegistry using default registry
+328 silly mapToRegistry registry https://registry.npmjs.org/
+329 silly mapToRegistry uri https://registry.npmjs.org/array-differ
+330 verbose addNameRange registry:https://registry.npmjs.org/array-differ not in flight; fetching
+331 silly cache add parsed spec Result {
+331 silly cache add   raw: 'array-union@^1.0.1',
+331 silly cache add   scope: null,
+331 silly cache add   name: 'array-union',
+331 silly cache add   rawSpec: '^1.0.1',
+331 silly cache add   spec: '>=1.0.1 <2.0.0',
+331 silly cache add   type: 'range' }
+332 silly addNamed array-union@>=1.0.1 <2.0.0
+333 verbose addNamed ">=1.0.1 <2.0.0" is a valid semver range for array-union
+334 silly addNameRange { name: 'array-union', range: '>=1.0.1 <2.0.0', hasData: false }
+335 silly mapToRegistry name array-union
+336 silly mapToRegistry using default registry
+337 silly mapToRegistry registry https://registry.npmjs.org/
+338 silly mapToRegistry uri https://registry.npmjs.org/array-union
+339 verbose addNameRange registry:https://registry.npmjs.org/array-union not in flight; fetching
+340 silly cache add args [ 'minimatch@^3.0.0', null ]
+341 verbose cache add spec minimatch@^3.0.0
+342 silly cache add parsed spec Result {
+342 silly cache add   raw: 'minimatch@^3.0.0',
+342 silly cache add   scope: null,
+342 silly cache add   name: 'minimatch',
+342 silly cache add   rawSpec: '^3.0.0',
+342 silly cache add   spec: '>=3.0.0 <4.0.0',
+342 silly cache add   type: 'range' }
+343 silly addNamed minimatch@>=3.0.0 <4.0.0
+344 verbose addNamed ">=3.0.0 <4.0.0" is a valid semver range for minimatch
+345 silly addNameRange { name: 'minimatch', range: '>=3.0.0 <4.0.0', hasData: false }
+346 silly mapToRegistry name minimatch
+347 silly mapToRegistry using default registry
+348 silly mapToRegistry registry https://registry.npmjs.org/
+349 silly mapToRegistry uri https://registry.npmjs.org/minimatch
+350 verbose addNameRange registry:https://registry.npmjs.org/minimatch not in flight; fetching
+351 info linkStuff arrify@1.0.1
+352 silly linkStuff arrify@1.0.1 has /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules as its parent node_modules
+353 verbose request uri https://registry.npmjs.org/find-up
+354 verbose request no auth needed
+355 info attempt registry request try #1 at 4:59:34 PM
+356 verbose etag "2EA0LQJK9PCP3RYJZVH4T65YI"
+357 http request GET https://registry.npmjs.org/find-up
+358 verbose request uri https://registry.npmjs.org/resolve-from
+359 verbose request no auth needed
+360 info attempt registry request try #1 at 4:59:34 PM
+361 verbose etag "1VG6ZO81SA4UJHBLCUA606P33"
+362 http request GET https://registry.npmjs.org/resolve-from
+363 verbose request uri https://registry.npmjs.org/array-differ
+364 verbose request no auth needed
+365 info attempt registry request try #1 at 4:59:34 PM
+366 verbose etag "3E67ZEX4V9K3BT7RTCGMEV3FP"
+367 http request GET https://registry.npmjs.org/array-differ
+368 verbose request uri https://registry.npmjs.org/minimatch
+369 verbose request no auth needed
+370 info attempt registry request try #1 at 4:59:34 PM
+371 verbose etag "78KV3LAIGK70DO4BT3WW2Q5DO"
+372 http request GET https://registry.npmjs.org/minimatch
+373 verbose request uri https://registry.npmjs.org/array-union
+374 verbose request no auth needed
+375 info attempt registry request try #1 at 4:59:34 PM
+376 verbose etag "9MEGTYZ9JVG7CILOBLZQPR6IL"
+377 http request GET https://registry.npmjs.org/array-union
+378 verbose linkBins arrify@1.0.1
+379 verbose linkMans arrify@1.0.1
+380 verbose rebuildBundles arrify@1.0.1
+381 info install arrify@1.0.1
+382 info postinstall arrify@1.0.1
+383 verbose unlock done using /Users/NDNewell/.npm/_locks/arrify-29e019f955083ed6.lock for /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/arrify
+384 http 304 https://registry.npmjs.org/find-up
+385 verbose headers { date: 'Thu, 02 Jun 2016 15:59:34 GMT',
+385 verbose headers   via: '1.1 varnish',
+385 verbose headers   'cache-control': 'max-age=300',
+385 verbose headers   etag: '"2EA0LQJK9PCP3RYJZVH4T65YI"',
+385 verbose headers   age: '217',
+385 verbose headers   connection: 'keep-alive',
+385 verbose headers   'x-served-by': 'cache-lhr6326-LHR',
+385 verbose headers   'x-cache': 'HIT',
+385 verbose headers   'x-cache-hits': '6',
+385 verbose headers   'x-timer': 'S1464883174.040453,VS0,VE0',
+385 verbose headers   vary: 'Accept-Encoding' }
+386 silly get cb [ 304,
+386 silly get   { date: 'Thu, 02 Jun 2016 15:59:34 GMT',
+386 silly get     via: '1.1 varnish',
+386 silly get     'cache-control': 'max-age=300',
+386 silly get     etag: '"2EA0LQJK9PCP3RYJZVH4T65YI"',
+386 silly get     age: '217',
+386 silly get     connection: 'keep-alive',
+386 silly get     'x-served-by': 'cache-lhr6326-LHR',
+386 silly get     'x-cache': 'HIT',
+386 silly get     'x-cache-hits': '6',
+386 silly get     'x-timer': 'S1464883174.040453,VS0,VE0',
+386 silly get     vary: 'Accept-Encoding' } ]
+387 verbose etag https://registry.npmjs.org/find-up from cache
+388 verbose get saving find-up to /Users/NDNewell/.npm/registry.npmjs.org/find-up/.cache.json
+389 http 200 https://registry.npmjs.org/resolve-from
+390 verbose headers { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+390 verbose headers   etag: '"7LPY3BGP24WX6AP50Z3OIGUMS"',
+390 verbose headers   'content-type': 'application/json',
+390 verbose headers   'content-encoding': 'gzip',
+390 verbose headers   'cache-control': 'max-age=300',
+390 verbose headers   'content-length': '1545',
+390 verbose headers   'accept-ranges': 'bytes',
+390 verbose headers   date: 'Thu, 02 Jun 2016 15:59:34 GMT',
+390 verbose headers   via: '1.1 varnish',
+390 verbose headers   age: '89',
+390 verbose headers   connection: 'keep-alive',
+390 verbose headers   'x-served-by': 'cache-lhr6335-LHR',
+390 verbose headers   'x-cache': 'HIT',
+390 verbose headers   'x-cache-hits': '1',
+390 verbose headers   'x-timer': 'S1464883174.042505,VS0,VE0',
+390 verbose headers   vary: 'Accept-Encoding' }
+391 silly get cb [ 200,
+391 silly get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+391 silly get     etag: '"7LPY3BGP24WX6AP50Z3OIGUMS"',
+391 silly get     'content-type': 'application/json',
+391 silly get     'content-encoding': 'gzip',
+391 silly get     'cache-control': 'max-age=300',
+391 silly get     'content-length': '1545',
+391 silly get     'accept-ranges': 'bytes',
+391 silly get     date: 'Thu, 02 Jun 2016 15:59:34 GMT',
+391 silly get     via: '1.1 varnish',
+391 silly get     age: '89',
+391 silly get     connection: 'keep-alive',
+391 silly get     'x-served-by': 'cache-lhr6335-LHR',
+391 silly get     'x-cache': 'HIT',
+391 silly get     'x-cache-hits': '1',
+391 silly get     'x-timer': 'S1464883174.042505,VS0,VE0',
+391 silly get     vary: 'Accept-Encoding' } ]
+392 verbose get saving resolve-from to /Users/NDNewell/.npm/registry.npmjs.org/resolve-from/.cache.json
+393 silly addNameRange number 2 { name: 'find-up', range: '>=1.0.0 <2.0.0', hasData: true }
+394 silly addNameRange versions [ 'find-up', [ '1.0.0', '1.1.0', '1.1.1', '1.1.2' ] ]
+395 silly addNamed find-up@1.1.2
+396 verbose addNamed "1.1.2" is a plain semver version for find-up
+397 silly addNameRange number 2 { name: 'resolve-from', range: '>=2.0.0 <3.0.0', hasData: true }
+398 silly addNameRange versions [ 'resolve-from', [ '1.0.0', '1.0.1', '2.0.0' ] ]
+399 silly addNamed resolve-from@2.0.0
+400 verbose addNamed "2.0.0" is a plain semver version for resolve-from
+401 silly cache afterAdd find-up@1.1.2
+402 verbose afterAdd /Users/NDNewell/.npm/find-up/1.1.2/package/package.json not in flight; writing
+403 verbose afterAdd /Users/NDNewell/.npm/find-up/1.1.2/package/package.json written
+404 silly install resolved [ { name: 'find-up',
+404 silly install resolved     version: '1.1.2',
+404 silly install resolved     description: 'Find a file by walking up parent directories',
+404 silly install resolved     license: 'MIT',
+404 silly install resolved     repository:
+404 silly install resolved      { type: 'git',
+404 silly install resolved        url: 'git+https://github.com/sindresorhus/find-up.git' },
+404 silly install resolved     author:
+404 silly install resolved      { name: 'Sindre Sorhus',
+404 silly install resolved        email: 'sindresorhus@gmail.com',
+404 silly install resolved        url: 'sindresorhus.com' },
+404 silly install resolved     engines: { node: '>=0.10.0' },
+404 silly install resolved     scripts: { test: 'xo && ava' },
+404 silly install resolved     files: [ 'index.js' ],
+404 silly install resolved     keywords:
+404 silly install resolved      [ 'find',
+404 silly install resolved        'up',
+404 silly install resolved        'find-up',
+404 silly install resolved        'findup',
+404 silly install resolved        'look-up',
+404 silly install resolved        'look',
+404 silly install resolved        'file',
+404 silly install resolved        'search',
+404 silly install resolved        'match',
+404 silly install resolved        'package',
+404 silly install resolved        'resolve',
+404 silly install resolved        'parent',
+404 silly install resolved        'parents',
+404 silly install resolved        'folder',
+404 silly install resolved        'directory',
+404 silly install resolved        'dir',
+404 silly install resolved        'walk',
+404 silly install resolved        'walking',
+404 silly install resolved        'path' ],
+404 silly install resolved     dependencies: { 'path-exists': '^2.0.0', 'pinkie-promise': '^2.0.0' },
+404 silly install resolved     devDependencies: { ava: '*', tempfile: '^1.1.1', xo: '*' },
+404 silly install resolved     gitHead: 'f2d7c1ff74fbac82b2cff038e311ef4b075d9184',
+404 silly install resolved     bugs: { url: 'https://github.com/sindresorhus/find-up/issues' },
+404 silly install resolved     homepage: 'https://github.com/sindresorhus/find-up',
+404 silly install resolved     _id: 'find-up@1.1.2',
+404 silly install resolved     _shasum: '6b2e9822b1a2ce0a60ab64d610eccad53cb24d0f',
+404 silly install resolved     _from: 'find-up@>=1.0.0 <2.0.0',
+404 silly install resolved     _npmVersion: '2.14.12',
+404 silly install resolved     _nodeVersion: '4.3.0',
+404 silly install resolved     _npmUser: { name: 'sindresorhus', email: 'sindresorhus@gmail.com' },
+404 silly install resolved     dist:
+404 silly install resolved      { shasum: '6b2e9822b1a2ce0a60ab64d610eccad53cb24d0f',
+404 silly install resolved        tarball: 'https://registry.npmjs.org/find-up/-/find-up-1.1.2.tgz' },
+404 silly install resolved     maintainers: [ [Object] ],
+404 silly install resolved     _npmOperationalInternal:
+404 silly install resolved      { host: 'packages-12-west.internal.npmjs.com',
+404 silly install resolved        tmp: 'tmp/find-up-1.1.2.tgz_1457199955637_0.3445317060686648' },
+404 silly install resolved     directories: {},
+404 silly install resolved     _resolved: 'https://registry.npmjs.org/find-up/-/find-up-1.1.2.tgz',
+404 silly install resolved     readme: 'ERROR: No README data found!' } ]
+405 info install find-up@1.1.2 into /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up
+406 info installOne find-up@1.1.2
+407 verbose installOne of find-up to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up not in flight; installing
+408 verbose lock using /Users/NDNewell/.npm/_locks/find-up-92a7c20fac74eb26.lock for /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up
+409 silly install write writing find-up 1.1.2 to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up
+410 http 304 https://registry.npmjs.org/minimatch
+411 verbose headers { date: 'Thu, 02 Jun 2016 15:59:34 GMT',
+411 verbose headers   via: '1.1 varnish',
+411 verbose headers   'cache-control': 'max-age=300',
+411 verbose headers   etag: '"78KV3LAIGK70DO4BT3WW2Q5DO"',
+411 verbose headers   age: '271',
+411 verbose headers   connection: 'keep-alive',
+411 verbose headers   'x-served-by': 'cache-lhr6325-LHR',
+411 verbose headers   'x-cache': 'HIT',
+411 verbose headers   'x-cache-hits': '32',
+411 verbose headers   'x-timer': 'S1464883174.063313,VS0,VE0',
+411 verbose headers   vary: 'Accept-Encoding' }
+412 silly get cb [ 304,
+412 silly get   { date: 'Thu, 02 Jun 2016 15:59:34 GMT',
+412 silly get     via: '1.1 varnish',
+412 silly get     'cache-control': 'max-age=300',
+412 silly get     etag: '"78KV3LAIGK70DO4BT3WW2Q5DO"',
+412 silly get     age: '271',
+412 silly get     connection: 'keep-alive',
+412 silly get     'x-served-by': 'cache-lhr6325-LHR',
+412 silly get     'x-cache': 'HIT',
+412 silly get     'x-cache-hits': '32',
+412 silly get     'x-timer': 'S1464883174.063313,VS0,VE0',
+412 silly get     vary: 'Accept-Encoding' } ]
+413 verbose etag https://registry.npmjs.org/minimatch from cache
+414 verbose get saving minimatch to /Users/NDNewell/.npm/registry.npmjs.org/minimatch/.cache.json
+415 verbose unbuild node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up
+416 silly cache afterAdd resolve-from@2.0.0
+417 verbose afterAdd /Users/NDNewell/.npm/resolve-from/2.0.0/package/package.json not in flight; writing
+418 http 304 https://registry.npmjs.org/array-differ
+419 verbose headers { date: 'Thu, 02 Jun 2016 15:59:34 GMT',
+419 verbose headers   via: '1.1 varnish',
+419 verbose headers   'cache-control': 'max-age=300',
+419 verbose headers   etag: '"3E67ZEX4V9K3BT7RTCGMEV3FP"',
+419 verbose headers   age: '271',
+419 verbose headers   connection: 'keep-alive',
+419 verbose headers   'x-served-by': 'cache-lhr6343-LHR',
+419 verbose headers   'x-cache': 'HIT',
+419 verbose headers   'x-cache-hits': '5',
+419 verbose headers   'x-timer': 'S1464883174.065738,VS0,VE0',
+419 verbose headers   vary: 'Accept-Encoding' }
+420 silly get cb [ 304,
+420 silly get   { date: 'Thu, 02 Jun 2016 15:59:34 GMT',
+420 silly get     via: '1.1 varnish',
+420 silly get     'cache-control': 'max-age=300',
+420 silly get     etag: '"3E67ZEX4V9K3BT7RTCGMEV3FP"',
+420 silly get     age: '271',
+420 silly get     connection: 'keep-alive',
+420 silly get     'x-served-by': 'cache-lhr6343-LHR',
+420 silly get     'x-cache': 'HIT',
+420 silly get     'x-cache-hits': '5',
+420 silly get     'x-timer': 'S1464883174.065738,VS0,VE0',
+420 silly get     vary: 'Accept-Encoding' } ]
+421 verbose etag https://registry.npmjs.org/array-differ from cache
+422 verbose get saving array-differ to /Users/NDNewell/.npm/registry.npmjs.org/array-differ/.cache.json
+423 silly gentlyRm /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up is being purged from base /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project
+424 verbose gentlyRm don't care about contents; nuking /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up
+425 http 304 https://registry.npmjs.org/array-union
+426 verbose headers { date: 'Thu, 02 Jun 2016 15:59:34 GMT',
+426 verbose headers   via: '1.1 varnish',
+426 verbose headers   'cache-control': 'max-age=300',
+426 verbose headers   etag: '"9MEGTYZ9JVG7CILOBLZQPR6IL"',
+426 verbose headers   age: '196',
+426 verbose headers   connection: 'keep-alive',
+426 verbose headers   'x-served-by': 'cache-lhr6337-LHR',
+426 verbose headers   'x-cache': 'HIT',
+426 verbose headers   'x-cache-hits': '7',
+426 verbose headers   'x-timer': 'S1464883174.067727,VS0,VE0',
+426 verbose headers   vary: 'Accept-Encoding' }
+427 silly get cb [ 304,
+427 silly get   { date: 'Thu, 02 Jun 2016 15:59:34 GMT',
+427 silly get     via: '1.1 varnish',
+427 silly get     'cache-control': 'max-age=300',
+427 silly get     etag: '"9MEGTYZ9JVG7CILOBLZQPR6IL"',
+427 silly get     age: '196',
+427 silly get     connection: 'keep-alive',
+427 silly get     'x-served-by': 'cache-lhr6337-LHR',
+427 silly get     'x-cache': 'HIT',
+427 silly get     'x-cache-hits': '7',
+427 silly get     'x-timer': 'S1464883174.067727,VS0,VE0',
+427 silly get     vary: 'Accept-Encoding' } ]
+428 verbose etag https://registry.npmjs.org/array-union from cache
+429 verbose get saving array-union to /Users/NDNewell/.npm/registry.npmjs.org/array-union/.cache.json
+430 verbose tar unpack /Users/NDNewell/.npm/find-up/1.1.2/package.tgz
+431 verbose tar unpacking to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up
+432 silly gentlyRm /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up is being purged
+433 verbose gentlyRm don't care about contents; nuking /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up
+434 silly gunzTarPerm modes [ '755', '644' ]
+435 verbose afterAdd /Users/NDNewell/.npm/resolve-from/2.0.0/package/package.json written
+436 silly install resolved [ { name: 'resolve-from',
+436 silly install resolved     version: '2.0.0',
+436 silly install resolved     description: 'Resolve the path of a module like require.resolve() but from a given path',
+436 silly install resolved     license: 'MIT',
+436 silly install resolved     repository:
+436 silly install resolved      { type: 'git',
+436 silly install resolved        url: 'git+https://github.com/sindresorhus/resolve-from.git' },
+436 silly install resolved     author:
+436 silly install resolved      { name: 'Sindre Sorhus',
+436 silly install resolved        email: 'sindresorhus@gmail.com',
+436 silly install resolved        url: 'sindresorhus.com' },
+436 silly install resolved     engines: { node: '>=0.10.0' },
+436 silly install resolved     scripts: { test: 'xo && ava' },
+436 silly install resolved     files: [ 'index.js' ],
+436 silly install resolved     keywords: [ 'require', 'resolve', 'path', 'module', 'from', 'like', 'path' ],
+436 silly install resolved     devDependencies: { ava: '*', xo: '*' },
+436 silly install resolved     gitHead: '583e0f8df06e1bc4d1c96d8d4f2484c745f522c3',
+436 silly install resolved     bugs: { url: 'https://github.com/sindresorhus/resolve-from/issues' },
+436 silly install resolved     homepage: 'https://github.com/sindresorhus/resolve-from',
+436 silly install resolved     _id: 'resolve-from@2.0.0',
+436 silly install resolved     _shasum: '9480ab20e94ffa1d9e80a804c7ea147611966b57',
+436 silly install resolved     _from: 'resolve-from@>=2.0.0 <3.0.0',
+436 silly install resolved     _npmVersion: '2.14.7',
+436 silly install resolved     _nodeVersion: '4.2.1',
+436 silly install resolved     _npmUser: { name: 'sindresorhus', email: 'sindresorhus@gmail.com' },
+436 silly install resolved     dist:
+436 silly install resolved      { shasum: '9480ab20e94ffa1d9e80a804c7ea147611966b57',
+436 silly install resolved        tarball: 'http://registry.npmjs.org/resolve-from/-/resolve-from-2.0.0.tgz' },
+436 silly install resolved     maintainers: [ [Object] ],
+436 silly install resolved     directories: {},
+436 silly install resolved     _resolved: 'https://registry.npmjs.org/resolve-from/-/resolve-from-2.0.0.tgz',
+436 silly install resolved     readme: 'ERROR: No README data found!' } ]
+437 info install resolve-from@2.0.0 into /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/resolve-pkg
+438 info installOne resolve-from@2.0.0
+439 verbose installOne of resolve-from to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/resolve-pkg not in flight; installing
+440 verbose lock using /Users/NDNewell/.npm/_locks/resolve-from-dbdd792cd00a5eff.lock for /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/resolve-pkg/node_modules/resolve-from
+441 silly gunzTarPerm extractEntry package.json
+442 silly addNameRange number 2 { name: 'minimatch', range: '>=3.0.0 <4.0.0', hasData: true }
+443 silly addNameRange versions [ 'minimatch',
+443 silly addNameRange   [ '0.0.1',
+443 silly addNameRange     '0.0.2',
+443 silly addNameRange     '0.0.4',
+443 silly addNameRange     '0.0.5',
+443 silly addNameRange     '0.1.1',
+443 silly addNameRange     '0.1.2',
+443 silly addNameRange     '0.1.3',
+443 silly addNameRange     '0.1.4',
+443 silly addNameRange     '0.1.5',
+443 silly addNameRange     '0.2.0',
+443 silly addNameRange     '0.2.2',
+443 silly addNameRange     '0.2.3',
+443 silly addNameRange     '0.2.4',
+443 silly addNameRange     '0.2.5',
+443 silly addNameRange     '0.2.6',
+443 silly addNameRange     '0.2.7',
+443 silly addNameRange     '0.2.8',
+443 silly addNameRange     '0.2.9',
+443 silly addNameRange     '0.2.10',
+443 silly addNameRange     '0.2.11',
+443 silly addNameRange     '0.2.12',
+443 silly addNameRange     '0.2.13',
+443 silly addNameRange     '0.2.14',
+443 silly addNameRange     '0.3.0',
+443 silly addNameRange     '0.4.0',
+443 silly addNameRange     '1.0.0',
+443 silly addNameRange     '2.0.0',
+443 silly addNameRange     '2.0.1',
+443 silly addNameRange     '2.0.2',
+443 silly addNameRange     '2.0.3',
+443 silly addNameRange     '2.0.4',
+443 silly addNameRange     '2.0.5',
+443 silly addNameRange     '2.0.6',
+443 silly addNameRange     '2.0.7',
+443 silly addNameRange     '2.0.8',
+443 silly addNameRange     '2.0.9',
+443 silly addNameRange     '2.0.10',
+443 silly addNameRange     '3.0.0' ] ]
+444 silly addNamed minimatch@3.0.0
+445 verbose addNamed "3.0.0" is a plain semver version for minimatch
+446 silly addNameRange number 2 { name: 'array-differ', range: '>=1.0.0 <2.0.0', hasData: true }
+447 silly addNameRange versions [ 'array-differ',
+447 silly addNameRange   [ '0.1.0', '1.0.0', '2.0.0', '2.0.1', '2.0.2', '2.0.3' ] ]
+448 silly addNamed array-differ@1.0.0
+449 verbose addNamed "1.0.0" is a plain semver version for array-differ
+450 silly install write writing resolve-from 2.0.0 to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/resolve-pkg/node_modules/resolve-from
+451 silly addNameRange number 2 { name: 'array-union', range: '>=1.0.1 <2.0.0', hasData: true }
+452 silly addNameRange versions [ 'array-union', [ '0.1.0', '1.0.0', '1.0.1' ] ]
+453 silly addNamed array-union@1.0.1
+454 verbose addNamed "1.0.1" is a plain semver version for array-union
+455 silly gunzTarPerm extractEntry index.js
+456 silly gunzTarPerm extractEntry license
+457 verbose unbuild node_modules/load-grunt-tasks/node_modules/resolve-pkg/node_modules/resolve-from
+458 silly gentlyRm /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/resolve-pkg/node_modules/resolve-from is being purged from base /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project
+459 verbose gentlyRm don't care about contents; nuking /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/resolve-pkg/node_modules/resolve-from
+460 verbose tar unpack /Users/NDNewell/.npm/resolve-from/2.0.0/package.tgz
+461 verbose tar unpacking to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/resolve-pkg/node_modules/resolve-from
+462 silly gentlyRm /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/resolve-pkg/node_modules/resolve-from is being purged
+463 verbose gentlyRm don't care about contents; nuking /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/resolve-pkg/node_modules/resolve-from
+464 silly cache afterAdd array-union@1.0.1
+465 verbose afterAdd /Users/NDNewell/.npm/array-union/1.0.1/package/package.json not in flight; writing
+466 silly cache afterAdd minimatch@3.0.0
+467 verbose afterAdd /Users/NDNewell/.npm/minimatch/3.0.0/package/package.json not in flight; writing
+468 silly cache afterAdd array-differ@1.0.0
+469 verbose afterAdd /Users/NDNewell/.npm/array-differ/1.0.0/package/package.json not in flight; writing
+470 silly gunzTarPerm modes [ '755', '644' ]
+471 verbose afterAdd /Users/NDNewell/.npm/array-union/1.0.1/package/package.json written
+472 silly gunzTarPerm extractEntry readme.md
+473 verbose afterAdd /Users/NDNewell/.npm/minimatch/3.0.0/package/package.json written
+474 verbose afterAdd /Users/NDNewell/.npm/array-differ/1.0.0/package/package.json written
+475 silly install resolved [ { name: 'array-union',
+475 silly install resolved     version: '1.0.1',
+475 silly install resolved     description: 'Create an array of unique values, in order, from the input arrays',
+475 silly install resolved     license: 'MIT',
+475 silly install resolved     repository:
+475 silly install resolved      { type: 'git',
+475 silly install resolved        url: 'git+https://github.com/sindresorhus/array-union.git' },
+475 silly install resolved     author:
+475 silly install resolved      { name: 'Sindre Sorhus',
+475 silly install resolved        email: 'sindresorhus@gmail.com',
+475 silly install resolved        url: 'http://sindresorhus.com' },
+475 silly install resolved     engines: { node: '>=0.10.0' },
+475 silly install resolved     scripts: { test: 'mocha' },
+475 silly install resolved     files: [ 'index.js' ],
+475 silly install resolved     keywords:
+475 silly install resolved      [ 'array',
+475 silly install resolved        'arr',
+475 silly install resolved        'set',
+475 silly install resolved        'uniq',
+475 silly install resolved        'unique',
+475 silly install resolved        'duplicate',
+475 silly install resolved        'remove',
+475 silly install resolved        'union',
+475 silly install resolved        'combine',
+475 silly install resolved        'merge' ],
+475 silly install resolved     dependencies: { 'array-uniq': '^1.0.1' },
+475 silly install resolved     devDependencies: { mocha: '*' },
+475 silly install resolved     gitHead: 'd0e72cc6fbff57273032e45050c51ff44c8e137c',
+475 silly install resolved     bugs: { url: 'https://github.com/sindresorhus/array-union/issues' },
+475 silly install resolved     homepage: 'https://github.com/sindresorhus/array-union',
+475 silly install resolved     _id: 'array-union@1.0.1',
+475 silly install resolved     _shasum: '4d410fc8395cb247637124bade9e3f547d5d55f2',
+475 silly install resolved     _from: 'array-union@>=1.0.1 <2.0.0',
+475 silly install resolved     _npmVersion: '2.1.5',
+475 silly install resolved     _nodeVersion: '0.10.32',
+475 silly install resolved     _npmUser: { name: 'sindresorhus', email: 'sindresorhus@gmail.com' },
+475 silly install resolved     maintainers: [ [Object] ],
+475 silly install resolved     dist:
+475 silly install resolved      { shasum: '4d410fc8395cb247637124bade9e3f547d5d55f2',
+475 silly install resolved        tarball: 'http://registry.npmjs.org/array-union/-/array-union-1.0.1.tgz' },
+475 silly install resolved     directories: {},
+475 silly install resolved     _resolved: 'https://registry.npmjs.org/array-union/-/array-union-1.0.1.tgz',
+475 silly install resolved     readme: 'ERROR: No README data found!' },
+475 silly install resolved   { author:
+475 silly install resolved      { name: 'Isaac Z. Schlueter',
+475 silly install resolved        email: 'i@izs.me',
+475 silly install resolved        url: 'http://blog.izs.me' },
+475 silly install resolved     name: 'minimatch',
+475 silly install resolved     description: 'a glob matcher in javascript',
+475 silly install resolved     version: '3.0.0',
+475 silly install resolved     repository: { type: 'git', url: 'git://github.com/isaacs/minimatch.git' },
+475 silly install resolved     main: 'minimatch.js',
+475 silly install resolved     scripts:
+475 silly install resolved      { posttest: 'standard minimatch.js test/*.js',
+475 silly install resolved        test: 'tap test/*.js' },
+475 silly install resolved     engines: { node: '*' },
+475 silly install resolved     dependencies: { 'brace-expansion': '^1.0.0' },
+475 silly install resolved     devDependencies: { standard: '^3.7.2', tap: '^1.2.0' },
+475 silly install resolved     license: 'ISC',
+475 silly install resolved     files: [ 'minimatch.js' ],
+475 silly install resolved     gitHead: '270dbea567f0af6918cb18103e98c612aa717a20',
+475 silly install resolved     bugs: { url: 'https://github.com/isaacs/minimatch/issues' },
+475 silly install resolved     homepage: 'https://github.com/isaacs/minimatch#readme',
+475 silly install resolved     _id: 'minimatch@3.0.0',
+475 silly install resolved     _shasum: '5236157a51e4f004c177fb3c527ff7dd78f0ef83',
+475 silly install resolved     _from: 'minimatch@>=3.0.0 <4.0.0',
+475 silly install resolved     _npmVersion: '3.3.2',
+475 silly install resolved     _nodeVersion: '4.0.0',
+475 silly install resolved     _npmUser: { name: 'isaacs', email: 'isaacs@npmjs.com' },
+475 silly install resolved     dist:
+475 silly install resolved      { shasum: '5236157a51e4f004c177fb3c527ff7dd78f0ef83',
+475 silly install resolved        tarball: 'http://registry.npmjs.org/minimatch/-/minimatch-3.0.0.tgz' },
+475 silly install resolved     maintainers: [ [Object] ],
+475 silly install resolved     directories: {},
+475 silly install resolved     _resolved: 'https://registry.npmjs.org/minimatch/-/minimatch-3.0.0.tgz',
+475 silly install resolved     readme: 'ERROR: No README data found!' },
+475 silly install resolved   { name: 'array-differ',
+475 silly install resolved     version: '1.0.0',
+475 silly install resolved     description: 'Create an array with values that are present in the first input array but not additional ones',
+475 silly install resolved     license: 'MIT',
+475 silly install resolved     repository:
+475 silly install resolved      { type: 'git',
+475 silly install resolved        url: 'git://github.com/sindresorhus/array-differ.git' },
+475 silly install resolved     author:
+475 silly install resolved      { name: 'Sindre Sorhus',
+475 silly install resolved        email: 'sindresorhus@gmail.com',
+475 silly install resolved        url: 'http://sindresorhus.com' },
+475 silly install resolved     engines: { node: '>=0.10.0' },
+475 silly install resolved     scripts: { test: 'mocha' },
+475 silly install resolved     files: [ 'index.js' ],
+475 silly install resolved     keywords: [ 'array', 'difference', 'diff', 'differ', 'filter', 'exclude' ],
+475 silly install resolved     devDependencies: { mocha: '*' },
+475 silly install resolved     gitHead: 'e91802976c4710eef8dea2090d48e48525cf41b1',
+475 silly install resolved     bugs: { url: 'https://github.com/sindresorhus/array-differ/issues' },
+475 silly install resolved     homepage: 'https://github.com/sindresorhus/array-differ',
+475 silly install resolved     _id: 'array-differ@1.0.0',
+475 silly install resolved     _shasum: 'eff52e3758249d33be402b8bb8e564bb2b5d4031',
+475 silly install resolved     _from: 'array-differ@>=1.0.0 <2.0.0',
+475 silly install resolved     _npmVersion: '1.4.14',
+475 silly install resolved     _npmUser: { name: 'sindresorhus', email: 'sindresorhus@gmail.com' },
+475 silly install resolved     maintainers: [ [Object] ],
+475 silly install resolved     dist:
+475 silly install resolved      { shasum: 'eff52e3758249d33be402b8bb8e564bb2b5d4031',
+475 silly install resolved        tarball: 'https://registry.npmjs.org/array-differ/-/array-differ-1.0.0.tgz' },
+475 silly install resolved     directories: {},
+475 silly install resolved     _resolved: 'https://registry.npmjs.org/array-differ/-/array-differ-1.0.0.tgz',
+475 silly install resolved     readme: 'ERROR: No README data found!' } ]
+476 info install array-union@1.0.1 into /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch
+477 info install minimatch@3.0.0 into /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch
+478 info install array-differ@1.0.0 into /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch
+479 info installOne array-union@1.0.1
+480 verbose installOne of array-union to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch not in flight; installing
+481 info installOne minimatch@3.0.0
+482 verbose installOne of minimatch to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch not in flight; installing
+483 info installOne array-differ@1.0.0
+484 verbose installOne of array-differ to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch not in flight; installing
+485 verbose lock using /Users/NDNewell/.npm/_locks/array-union-52e5f5f44a75ac1c.lock for /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-union
+486 verbose lock using /Users/NDNewell/.npm/_locks/minimatch-ceadaf15fb2b79eb.lock for /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch
+487 verbose lock using /Users/NDNewell/.npm/_locks/array-differ-0844deaaa45d4721.lock for /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-differ
+488 silly install write writing array-union 1.0.1 to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-union
+489 silly install write writing minimatch 3.0.0 to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch
+490 silly install write writing array-differ 1.0.0 to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-differ
+491 silly gunzTarPerm extractEntry package.json
+492 verbose unbuild node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-union
+493 verbose unbuild node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch
+494 verbose unbuild node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-differ
+495 silly gunzTarPerm extractEntry index.js
+496 silly gunzTarPerm extractEntry license
+497 silly gentlyRm /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-union is being purged from base /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project
+498 verbose gentlyRm don't care about contents; nuking /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-union
+499 silly gentlyRm /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch is being purged from base /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project
+500 verbose gentlyRm don't care about contents; nuking /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch
+501 silly gentlyRm /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-differ is being purged from base /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project
+502 verbose gentlyRm don't care about contents; nuking /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-differ
+503 verbose tar unpack /Users/NDNewell/.npm/array-union/1.0.1/package.tgz
+504 verbose tar unpacking to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-union
+505 silly gentlyRm /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-union is being purged
+506 verbose gentlyRm don't care about contents; nuking /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-union
+507 verbose tar unpack /Users/NDNewell/.npm/minimatch/3.0.0/package.tgz
+508 verbose tar unpacking to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch
+509 silly gentlyRm /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch is being purged
+510 verbose gentlyRm don't care about contents; nuking /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch
+511 verbose tar unpack /Users/NDNewell/.npm/array-differ/1.0.0/package.tgz
+512 verbose tar unpacking to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-differ
+513 silly gentlyRm /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-differ is being purged
+514 verbose gentlyRm don't care about contents; nuking /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-differ
+515 silly gunzTarPerm modes [ '755', '644' ]
+516 silly gunzTarPerm modes [ '755', '644' ]
+517 silly gunzTarPerm modes [ '755', '644' ]
+518 silly gunzTarPerm extractEntry readme.md
+519 silly gunzTarPerm extractEntry package.json
+520 silly gunzTarPerm extractEntry package.json
+521 silly gunzTarPerm extractEntry package.json
+522 silly gunzTarPerm extractEntry README.md
+523 silly gunzTarPerm extractEntry LICENSE
+524 silly gunzTarPerm extractEntry index.js
+525 silly gunzTarPerm extractEntry readme.md
+526 silly gunzTarPerm extractEntry index.js
+527 silly gunzTarPerm extractEntry readme.md
+528 verbose write writing to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/package.json
+529 silly gunzTarPerm extractEntry minimatch.js
+530 info preinstall find-up@1.1.2
+531 verbose readDependencies loading dependencies from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/package.json
+532 silly prepareForInstallMany adding path-exists@^2.0.0 from find-up dependencies
+533 silly prepareForInstallMany adding pinkie-promise@^2.0.0 from find-up dependencies
+534 verbose readDependencies loading dependencies from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/package.json
+535 verbose write writing to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/resolve-pkg/node_modules/resolve-from/package.json
+536 silly cache add args [ 'path-exists@^2.0.0', null ]
+537 verbose cache add spec path-exists@^2.0.0
+538 silly cache add args [ 'pinkie-promise@^2.0.0', null ]
+539 verbose cache add spec pinkie-promise@^2.0.0
+540 silly cache add parsed spec Result {
+540 silly cache add   raw: 'path-exists@^2.0.0',
+540 silly cache add   scope: null,
+540 silly cache add   name: 'path-exists',
+540 silly cache add   rawSpec: '^2.0.0',
+540 silly cache add   spec: '>=2.0.0 <3.0.0',
+540 silly cache add   type: 'range' }
+541 silly addNamed path-exists@>=2.0.0 <3.0.0
+542 verbose addNamed ">=2.0.0 <3.0.0" is a valid semver range for path-exists
+543 silly addNameRange { name: 'path-exists', range: '>=2.0.0 <3.0.0', hasData: false }
+544 silly mapToRegistry name path-exists
+545 silly mapToRegistry using default registry
+546 silly mapToRegistry registry https://registry.npmjs.org/
+547 silly mapToRegistry uri https://registry.npmjs.org/path-exists
+548 verbose addNameRange registry:https://registry.npmjs.org/path-exists not in flight; fetching
+549 silly cache add parsed spec Result {
+549 silly cache add   raw: 'pinkie-promise@^2.0.0',
+549 silly cache add   scope: null,
+549 silly cache add   name: 'pinkie-promise',
+549 silly cache add   rawSpec: '^2.0.0',
+549 silly cache add   spec: '>=2.0.0 <3.0.0',
+549 silly cache add   type: 'range' }
+550 silly addNamed pinkie-promise@>=2.0.0 <3.0.0
+551 verbose addNamed ">=2.0.0 <3.0.0" is a valid semver range for pinkie-promise
+552 silly addNameRange { name: 'pinkie-promise',
+552 silly addNameRange   range: '>=2.0.0 <3.0.0',
+552 silly addNameRange   hasData: false }
+553 silly mapToRegistry name pinkie-promise
+554 silly mapToRegistry using default registry
+555 silly mapToRegistry registry https://registry.npmjs.org/
+556 silly mapToRegistry uri https://registry.npmjs.org/pinkie-promise
+557 verbose addNameRange registry:https://registry.npmjs.org/pinkie-promise not in flight; fetching
+558 verbose write writing to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-differ/package.json
+559 verbose write writing to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-union/package.json
+560 info preinstall resolve-from@2.0.0
+561 verbose readDependencies loading dependencies from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/resolve-pkg/node_modules/resolve-from/package.json
+562 info preinstall array-differ@1.0.0
+563 info preinstall array-union@1.0.1
+564 verbose readDependencies loading dependencies from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-differ/package.json
+565 verbose readDependencies loading dependencies from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-union/package.json
+566 verbose request uri https://registry.npmjs.org/pinkie-promise
+567 verbose request no auth needed
+568 info attempt registry request try #1 at 4:59:34 PM
+569 verbose etag "9Y8V37D2OD3IRDJ4IMB7G5U81"
+570 http request GET https://registry.npmjs.org/pinkie-promise
+571 verbose request uri https://registry.npmjs.org/path-exists
+572 verbose request no auth needed
+573 info attempt registry request try #1 at 4:59:34 PM
+574 verbose etag "31PM8JK1337HQXK7IGK7UTR3K"
+575 http request GET https://registry.npmjs.org/path-exists
+576 verbose readDependencies loading dependencies from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/resolve-pkg/node_modules/resolve-from/package.json
+577 verbose readDependencies loading dependencies from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-differ/package.json
+578 silly prepareForInstallMany adding array-uniq@^1.0.1 from array-union dependencies
+579 verbose readDependencies loading dependencies from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-union/package.json
+580 silly install resolved []
+581 verbose about to build /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/resolve-pkg/node_modules/resolve-from
+582 info build /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/resolve-pkg/node_modules/resolve-from
+583 verbose write writing to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/package.json
+584 silly install resolved []
+585 verbose about to build /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-differ
+586 info build /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-differ
+587 info linkStuff resolve-from@2.0.0
+588 silly linkStuff resolve-from@2.0.0 has /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/resolve-pkg/node_modules as its parent node_modules
+589 silly cache add args [ 'array-uniq@^1.0.1', null ]
+590 verbose cache add spec array-uniq@^1.0.1
+591 silly cache add parsed spec Result {
+591 silly cache add   raw: 'array-uniq@^1.0.1',
+591 silly cache add   scope: null,
+591 silly cache add   name: 'array-uniq',
+591 silly cache add   rawSpec: '^1.0.1',
+591 silly cache add   spec: '>=1.0.1 <2.0.0',
+591 silly cache add   type: 'range' }
+592 silly addNamed array-uniq@>=1.0.1 <2.0.0
+593 verbose addNamed ">=1.0.1 <2.0.0" is a valid semver range for array-uniq
+594 silly addNameRange { name: 'array-uniq', range: '>=1.0.1 <2.0.0', hasData: false }
+595 silly mapToRegistry name array-uniq
+596 silly mapToRegistry using default registry
+597 silly mapToRegistry registry https://registry.npmjs.org/
+598 silly mapToRegistry uri https://registry.npmjs.org/array-uniq
+599 verbose addNameRange registry:https://registry.npmjs.org/array-uniq not in flight; fetching
+600 info preinstall minimatch@3.0.0
+601 verbose readDependencies loading dependencies from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/package.json
+602 info linkStuff array-differ@1.0.0
+603 silly linkStuff array-differ@1.0.0 has /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules as its parent node_modules
+604 silly prepareForInstallMany adding brace-expansion@^1.0.0 from minimatch dependencies
+605 verbose readDependencies loading dependencies from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/package.json
+606 verbose request uri https://registry.npmjs.org/array-uniq
+607 verbose request no auth needed
+608 info attempt registry request try #1 at 4:59:34 PM
+609 verbose etag "ASN5528177FJPH3YHWJJ6NVQF"
+610 http request GET https://registry.npmjs.org/array-uniq
+611 verbose linkBins resolve-from@2.0.0
+612 verbose linkMans resolve-from@2.0.0
+613 verbose rebuildBundles resolve-from@2.0.0
+614 info install resolve-from@2.0.0
+615 info postinstall resolve-from@2.0.0
+616 verbose linkBins array-differ@1.0.0
+617 verbose linkMans array-differ@1.0.0
+618 verbose rebuildBundles array-differ@1.0.0
+619 silly cache add args [ 'brace-expansion@^1.0.0', null ]
+620 verbose cache add spec brace-expansion@^1.0.0
+621 silly cache add parsed spec Result {
+621 silly cache add   raw: 'brace-expansion@^1.0.0',
+621 silly cache add   scope: null,
+621 silly cache add   name: 'brace-expansion',
+621 silly cache add   rawSpec: '^1.0.0',
+621 silly cache add   spec: '>=1.0.0 <2.0.0',
+621 silly cache add   type: 'range' }
+622 silly addNamed brace-expansion@>=1.0.0 <2.0.0
+623 verbose addNamed ">=1.0.0 <2.0.0" is a valid semver range for brace-expansion
+624 silly addNameRange { name: 'brace-expansion',
+624 silly addNameRange   range: '>=1.0.0 <2.0.0',
+624 silly addNameRange   hasData: false }
+625 silly mapToRegistry name brace-expansion
+626 silly mapToRegistry using default registry
+627 silly mapToRegistry registry https://registry.npmjs.org/
+628 silly mapToRegistry uri https://registry.npmjs.org/brace-expansion
+629 verbose addNameRange registry:https://registry.npmjs.org/brace-expansion not in flight; fetching
+630 info install array-differ@1.0.0
+631 verbose unlock done using /Users/NDNewell/.npm/_locks/resolve-from-dbdd792cd00a5eff.lock for /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/resolve-pkg/node_modules/resolve-from
+632 verbose about to build /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/resolve-pkg
+633 info build /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/resolve-pkg
+634 info postinstall array-differ@1.0.0
+635 verbose unlock done using /Users/NDNewell/.npm/_locks/array-differ-0844deaaa45d4721.lock for /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-differ
+636 info linkStuff resolve-pkg@0.1.0
+637 silly linkStuff resolve-pkg@0.1.0 has /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules as its parent node_modules
+638 verbose request uri https://registry.npmjs.org/brace-expansion
+639 verbose request no auth needed
+640 info attempt registry request try #1 at 4:59:34 PM
+641 verbose etag "F22AVJEDKFN6WYZJP0YTDTUOQ"
+642 http request GET https://registry.npmjs.org/brace-expansion
+643 verbose linkBins resolve-pkg@0.1.0
+644 verbose linkMans resolve-pkg@0.1.0
+645 verbose rebuildBundles resolve-pkg@0.1.0
+646 verbose rebuildBundles [ 'resolve-from' ]
+647 info install resolve-pkg@0.1.0
+648 info postinstall resolve-pkg@0.1.0
+649 verbose unlock done using /Users/NDNewell/.npm/_locks/resolve-pkg-d513dbe523590d46.lock for /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/resolve-pkg
+650 http 304 https://registry.npmjs.org/pinkie-promise
+651 verbose headers { date: 'Thu, 02 Jun 2016 15:59:34 GMT',
+651 verbose headers   via: '1.1 varnish',
+651 verbose headers   'cache-control': 'max-age=300',
+651 verbose headers   etag: '"9Y8V37D2OD3IRDJ4IMB7G5U81"',
+651 verbose headers   age: '9',
+651 verbose headers   connection: 'keep-alive',
+651 verbose headers   'x-served-by': 'cache-lhr6320-LHR',
+651 verbose headers   'x-cache': 'HIT',
+651 verbose headers   'x-cache-hits': '1',
+651 verbose headers   'x-timer': 'S1464883174.186874,VS0,VE0',
+651 verbose headers   vary: 'Accept-Encoding' }
+652 silly get cb [ 304,
+652 silly get   { date: 'Thu, 02 Jun 2016 15:59:34 GMT',
+652 silly get     via: '1.1 varnish',
+652 silly get     'cache-control': 'max-age=300',
+652 silly get     etag: '"9Y8V37D2OD3IRDJ4IMB7G5U81"',
+652 silly get     age: '9',
+652 silly get     connection: 'keep-alive',
+652 silly get     'x-served-by': 'cache-lhr6320-LHR',
+652 silly get     'x-cache': 'HIT',
+652 silly get     'x-cache-hits': '1',
+652 silly get     'x-timer': 'S1464883174.186874,VS0,VE0',
+652 silly get     vary: 'Accept-Encoding' } ]
+653 verbose etag https://registry.npmjs.org/pinkie-promise from cache
+654 verbose get saving pinkie-promise to /Users/NDNewell/.npm/registry.npmjs.org/pinkie-promise/.cache.json
+655 http 304 https://registry.npmjs.org/path-exists
+656 verbose headers { date: 'Thu, 02 Jun 2016 15:59:34 GMT',
+656 verbose headers   via: '1.1 varnish',
+656 verbose headers   'cache-control': 'max-age=300',
+656 verbose headers   etag: '"31PM8JK1337HQXK7IGK7UTR3K"',
+656 verbose headers   age: '141',
+656 verbose headers   connection: 'keep-alive',
+656 verbose headers   'x-served-by': 'cache-lhr6336-LHR',
+656 verbose headers   'x-cache': 'HIT',
+656 verbose headers   'x-cache-hits': '5',
+656 verbose headers   'x-timer': 'S1464883174.189674,VS0,VE0',
+656 verbose headers   vary: 'Accept-Encoding' }
+657 silly get cb [ 304,
+657 silly get   { date: 'Thu, 02 Jun 2016 15:59:34 GMT',
+657 silly get     via: '1.1 varnish',
+657 silly get     'cache-control': 'max-age=300',
+657 silly get     etag: '"31PM8JK1337HQXK7IGK7UTR3K"',
+657 silly get     age: '141',
+657 silly get     connection: 'keep-alive',
+657 silly get     'x-served-by': 'cache-lhr6336-LHR',
+657 silly get     'x-cache': 'HIT',
+657 silly get     'x-cache-hits': '5',
+657 silly get     'x-timer': 'S1464883174.189674,VS0,VE0',
+657 silly get     vary: 'Accept-Encoding' } ]
+658 verbose etag https://registry.npmjs.org/path-exists from cache
+659 verbose get saving path-exists to /Users/NDNewell/.npm/registry.npmjs.org/path-exists/.cache.json
+660 silly addNameRange number 2 { name: 'path-exists', range: '>=2.0.0 <3.0.0', hasData: true }
+661 silly addNameRange versions [ 'path-exists', [ '1.0.0', '2.0.0', '2.1.0', '3.0.0' ] ]
+662 silly addNamed path-exists@2.1.0
+663 verbose addNamed "2.1.0" is a plain semver version for path-exists
+664 silly addNameRange number 2 { name: 'pinkie-promise',
+664 silly addNameRange   range: '>=2.0.0 <3.0.0',
+664 silly addNameRange   hasData: true }
+665 silly addNameRange versions [ 'pinkie-promise', [ '1.0.0', '2.0.0', '2.0.1' ] ]
+666 silly addNamed pinkie-promise@2.0.1
+667 verbose addNamed "2.0.1" is a plain semver version for pinkie-promise
+668 silly cache afterAdd path-exists@2.1.0
+669 verbose afterAdd /Users/NDNewell/.npm/path-exists/2.1.0/package/package.json not in flight; writing
+670 silly cache afterAdd pinkie-promise@2.0.1
+671 verbose afterAdd /Users/NDNewell/.npm/pinkie-promise/2.0.1/package/package.json not in flight; writing
+672 verbose afterAdd /Users/NDNewell/.npm/path-exists/2.1.0/package/package.json written
+673 verbose afterAdd /Users/NDNewell/.npm/pinkie-promise/2.0.1/package/package.json written
+674 silly install resolved [ { name: 'path-exists',
+674 silly install resolved     version: '2.1.0',
+674 silly install resolved     description: 'Check if a path exists',
+674 silly install resolved     license: 'MIT',
+674 silly install resolved     repository:
+674 silly install resolved      { type: 'git',
+674 silly install resolved        url: 'git+https://github.com/sindresorhus/path-exists.git' },
+674 silly install resolved     author:
+674 silly install resolved      { name: 'Sindre Sorhus',
+674 silly install resolved        email: 'sindresorhus@gmail.com',
+674 silly install resolved        url: 'sindresorhus.com' },
+674 silly install resolved     engines: { node: '>=0.10.0' },
+674 silly install resolved     scripts: { test: 'xo && ava' },
+674 silly install resolved     files: [ 'index.js' ],
+674 silly install resolved     keywords:
+674 silly install resolved      [ 'path',
+674 silly install resolved        'exists',
+674 silly install resolved        'exist',
+674 silly install resolved        'file',
+674 silly install resolved        'filepath',
+674 silly install resolved        'fs',
+674 silly install resolved        'filesystem',
+674 silly install resolved        'file-system',
+674 silly install resolved        'access',
+674 silly install resolved        'stat' ],
+674 silly install resolved     dependencies: { 'pinkie-promise': '^2.0.0' },
+674 silly install resolved     devDependencies: { ava: '*', xo: '*' },
+674 silly install resolved     gitHead: '3af423661e78466764f87c5712263c5d7a1ce5b7',
+674 silly install resolved     bugs: { url: 'https://github.com/sindresorhus/path-exists/issues' },
+674 silly install resolved     homepage: 'https://github.com/sindresorhus/path-exists',
+674 silly install resolved     _id: 'path-exists@2.1.0',
+674 silly install resolved     _shasum: '0feb6c64f0fc518d9a754dd5efb62c7022761f4b',
+674 silly install resolved     _from: 'path-exists@>=2.0.0 <3.0.0',
+674 silly install resolved     _npmVersion: '2.14.7',
+674 silly install resolved     _nodeVersion: '4.2.1',
+674 silly install resolved     _npmUser: { name: 'sindresorhus', email: 'sindresorhus@gmail.com' },
+674 silly install resolved     dist:
+674 silly install resolved      { shasum: '0feb6c64f0fc518d9a754dd5efb62c7022761f4b',
+674 silly install resolved        tarball: 'http://registry.npmjs.org/path-exists/-/path-exists-2.1.0.tgz' },
+674 silly install resolved     maintainers: [ [Object] ],
+674 silly install resolved     directories: {},
+674 silly install resolved     _resolved: 'https://registry.npmjs.org/path-exists/-/path-exists-2.1.0.tgz',
+674 silly install resolved     readme: 'ERROR: No README data found!' },
+674 silly install resolved   { name: 'pinkie-promise',
+674 silly install resolved     version: '2.0.1',
+674 silly install resolved     description: 'ES2015 Promise ponyfill',
+674 silly install resolved     license: 'MIT',
+674 silly install resolved     repository:
+674 silly install resolved      { type: 'git',
+674 silly install resolved        url: 'git+https://github.com/floatdrop/pinkie-promise.git' },
+674 silly install resolved     author:
+674 silly install resolved      { name: 'Vsevolod Strukchinsky',
+674 silly install resolved        email: 'floatdrop@gmail.com',
+674 silly install resolved        url: 'github.com/floatdrop' },
+674 silly install resolved     engines: { node: '>=0.10.0' },
+674 silly install resolved     scripts: { test: 'mocha' },
+674 silly install resolved     files: [ 'index.js' ],
+674 silly install resolved     keywords: [ 'promise', 'promises', 'es2015', 'es6', 'polyfill', 'ponyfill' ],
+674 silly install resolved     dependencies: { pinkie: '^2.0.0' },
+674 silly install resolved     devDependencies: { mocha: '*' },
+674 silly install resolved     gitHead: '4a936c09c34ad591a25db93f1216d242de0d6184',
+674 silly install resolved     bugs: { url: 'https://github.com/floatdrop/pinkie-promise/issues' },
+674 silly install resolved     homepage: 'https://github.com/floatdrop/pinkie-promise',
+674 silly install resolved     _id: 'pinkie-promise@2.0.1',
+674 silly install resolved     _shasum: '2135d6dfa7a358c069ac9b178776288228450ffa',
+674 silly install resolved     _from: 'pinkie-promise@>=2.0.0 <3.0.0',
+674 silly install resolved     _npmVersion: '2.14.20',
+674 silly install resolved     _nodeVersion: '4.4.1',
+674 silly install resolved     _npmUser: { name: 'floatdrop', email: 'floatdrop@gmail.com' },
+674 silly install resolved     dist:
+674 silly install resolved      { shasum: '2135d6dfa7a358c069ac9b178776288228450ffa',
+674 silly install resolved        tarball: 'https://registry.npmjs.org/pinkie-promise/-/pinkie-promise-2.0.1.tgz' },
+674 silly install resolved     maintainers: [ [Object] ],
+674 silly install resolved     _npmOperationalInternal:
+674 silly install resolved      { host: 'packages-16-east.internal.npmjs.com',
+674 silly install resolved        tmp: 'tmp/pinkie-promise-2.0.1.tgz_1460309839126_0.3422858319245279' },
+674 silly install resolved     directories: {},
+674 silly install resolved     _resolved: 'https://registry.npmjs.org/pinkie-promise/-/pinkie-promise-2.0.1.tgz',
+674 silly install resolved     readme: 'ERROR: No README data found!' } ]
+675 info install path-exists@2.1.0 into /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up
+676 info install pinkie-promise@2.0.1 into /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up
+677 info installOne path-exists@2.1.0
+678 verbose installOne of path-exists to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up not in flight; installing
+679 info installOne pinkie-promise@2.0.1
+680 verbose installOne of pinkie-promise to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up not in flight; installing
+681 verbose lock using /Users/NDNewell/.npm/_locks/path-exists-ef698cd73b967c5f.lock for /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/path-exists
+682 silly install write writing path-exists 2.1.0 to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/path-exists
+683 verbose lock using /Users/NDNewell/.npm/_locks/pinkie-promise-b16577f60136f49a.lock for /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/pinkie-promise
+684 silly install write writing pinkie-promise 2.0.1 to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/pinkie-promise
+685 verbose unbuild node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/path-exists
+686 verbose unbuild node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/pinkie-promise
+687 silly gentlyRm /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/path-exists is being purged from base /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project
+688 verbose gentlyRm don't care about contents; nuking /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/path-exists
+689 verbose tar unpack /Users/NDNewell/.npm/path-exists/2.1.0/package.tgz
+690 verbose tar unpacking to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/path-exists
+691 silly gentlyRm /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/path-exists is being purged
+692 verbose gentlyRm don't care about contents; nuking /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/path-exists
+693 silly gentlyRm /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/pinkie-promise is being purged from base /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project
+694 verbose gentlyRm don't care about contents; nuking /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/pinkie-promise
+695 silly gunzTarPerm modes [ '755', '644' ]
+696 verbose tar unpack /Users/NDNewell/.npm/pinkie-promise/2.0.1/package.tgz
+697 verbose tar unpacking to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/pinkie-promise
+698 silly gentlyRm /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/pinkie-promise is being purged
+699 verbose gentlyRm don't care about contents; nuking /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/pinkie-promise
+700 silly gunzTarPerm modes [ '755', '644' ]
+701 http 304 https://registry.npmjs.org/array-uniq
+702 verbose headers { date: 'Thu, 02 Jun 2016 15:59:34 GMT',
+702 verbose headers   via: '1.1 varnish',
+702 verbose headers   'cache-control': 'max-age=300',
+702 verbose headers   etag: '"ASN5528177FJPH3YHWJJ6NVQF"',
+702 verbose headers   age: '21',
+702 verbose headers   connection: 'keep-alive',
+702 verbose headers   'x-served-by': 'cache-lhr6321-LHR',
+702 verbose headers   'x-cache': 'HIT',
+702 verbose headers   'x-cache-hits': '2',
+702 verbose headers   'x-timer': 'S1464883174.210737,VS0,VE0',
+702 verbose headers   vary: 'Accept-Encoding' }
+703 silly get cb [ 304,
+703 silly get   { date: 'Thu, 02 Jun 2016 15:59:34 GMT',
+703 silly get     via: '1.1 varnish',
+703 silly get     'cache-control': 'max-age=300',
+703 silly get     etag: '"ASN5528177FJPH3YHWJJ6NVQF"',
+703 silly get     age: '21',
+703 silly get     connection: 'keep-alive',
+703 silly get     'x-served-by': 'cache-lhr6321-LHR',
+703 silly get     'x-cache': 'HIT',
+703 silly get     'x-cache-hits': '2',
+703 silly get     'x-timer': 'S1464883174.210737,VS0,VE0',
+703 silly get     vary: 'Accept-Encoding' } ]
+704 verbose etag https://registry.npmjs.org/array-uniq from cache
+705 verbose get saving array-uniq to /Users/NDNewell/.npm/registry.npmjs.org/array-uniq/.cache.json
+706 silly gunzTarPerm extractEntry package.json
+707 silly gunzTarPerm extractEntry package.json
+708 silly gunzTarPerm extractEntry index.js
+709 silly gunzTarPerm extractEntry license
+710 silly gunzTarPerm extractEntry index.js
+711 silly gunzTarPerm extractEntry license
+712 silly addNameRange number 2 { name: 'array-uniq', range: '>=1.0.1 <2.0.0', hasData: true }
+713 silly addNameRange versions [ 'array-uniq',
+713 silly addNameRange   [ '0.1.0', '0.1.1', '1.0.0', '1.0.1', '1.0.2' ] ]
+714 silly addNamed array-uniq@1.0.2
+715 verbose addNamed "1.0.2" is a plain semver version for array-uniq
+716 silly cache afterAdd array-uniq@1.0.2
+717 verbose afterAdd /Users/NDNewell/.npm/array-uniq/1.0.2/package/package.json not in flight; writing
+718 silly gunzTarPerm extractEntry readme.md
+719 silly gunzTarPerm extractEntry readme.md
+720 verbose afterAdd /Users/NDNewell/.npm/array-uniq/1.0.2/package/package.json written
+721 silly install resolved [ { name: 'array-uniq',
+721 silly install resolved     version: '1.0.2',
+721 silly install resolved     description: 'Create an array without duplicates',
+721 silly install resolved     license: 'MIT',
+721 silly install resolved     repository:
+721 silly install resolved      { type: 'git',
+721 silly install resolved        url: 'git+https://github.com/sindresorhus/array-uniq.git' },
+721 silly install resolved     author:
+721 silly install resolved      { name: 'Sindre Sorhus',
+721 silly install resolved        email: 'sindresorhus@gmail.com',
+721 silly install resolved        url: 'http://sindresorhus.com' },
+721 silly install resolved     engines: { node: '>=0.10.0' },
+721 silly install resolved     scripts: { test: 'mocha' },
+721 silly install resolved     files: [ 'index.js' ],
+721 silly install resolved     keywords:
+721 silly install resolved      [ 'array',
+721 silly install resolved        'arr',
+721 silly install resolved        'set',
+721 silly install resolved        'uniq',
+721 silly install resolved        'unique',
+721 silly install resolved        'es6',
+721 silly install resolved        'duplicate',
+721 silly install resolved        'remove' ],
+721 silly install resolved     devDependencies: { 'es6-set': '^0.1.0', mocha: '*', 'require-uncached': '^1.0.2' },
+721 silly install resolved     gitHead: 'd5e311f37692dfd25ec216490df10632ce5f69f3',
+721 silly install resolved     bugs: { url: 'https://github.com/sindresorhus/array-uniq/issues' },
+721 silly install resolved     homepage: 'https://github.com/sindresorhus/array-uniq',
+721 silly install resolved     _id: 'array-uniq@1.0.2',
+721 silly install resolved     _shasum: '5fcc373920775723cfd64d65c64bef53bf9eba6d',
+721 silly install resolved     _from: 'array-uniq@>=1.0.1 <2.0.0',
+721 silly install resolved     _npmVersion: '2.1.5',
+721 silly install resolved     _nodeVersion: '0.10.32',
+721 silly install resolved     _npmUser: { name: 'sindresorhus', email: 'sindresorhus@gmail.com' },
+721 silly install resolved     maintainers: [ [Object] ],
+721 silly install resolved     dist:
+721 silly install resolved      { shasum: '5fcc373920775723cfd64d65c64bef53bf9eba6d',
+721 silly install resolved        tarball: 'http://registry.npmjs.org/array-uniq/-/array-uniq-1.0.2.tgz' },
+721 silly install resolved     directories: {},
+721 silly install resolved     _resolved: 'https://registry.npmjs.org/array-uniq/-/array-uniq-1.0.2.tgz',
+721 silly install resolved     readme: 'ERROR: No README data found!' } ]
+722 info install array-uniq@1.0.2 into /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-union
+723 info installOne array-uniq@1.0.2
+724 verbose installOne of array-uniq to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-union not in flight; installing
+725 verbose lock using /Users/NDNewell/.npm/_locks/array-uniq-912011dd18522a3e.lock for /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-union/node_modules/array-uniq
+726 silly install write writing array-uniq 1.0.2 to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-union/node_modules/array-uniq
+727 verbose unbuild node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-union/node_modules/array-uniq
+728 silly gentlyRm /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-union/node_modules/array-uniq is being purged from base /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project
+729 verbose gentlyRm don't care about contents; nuking /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-union/node_modules/array-uniq
+730 verbose tar unpack /Users/NDNewell/.npm/array-uniq/1.0.2/package.tgz
+731 verbose tar unpacking to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-union/node_modules/array-uniq
+732 silly gentlyRm /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-union/node_modules/array-uniq is being purged
+733 verbose gentlyRm don't care about contents; nuking /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-union/node_modules/array-uniq
+734 silly gunzTarPerm modes [ '755', '644' ]
+735 http 304 https://registry.npmjs.org/brace-expansion
+736 verbose headers { date: 'Thu, 02 Jun 2016 15:59:34 GMT',
+736 verbose headers   via: '1.1 varnish',
+736 verbose headers   'cache-control': 'max-age=300',
+736 verbose headers   etag: '"F22AVJEDKFN6WYZJP0YTDTUOQ"',
+736 verbose headers   age: '52',
+736 verbose headers   connection: 'keep-alive',
+736 verbose headers   'x-served-by': 'cache-lhr6344-LHR',
+736 verbose headers   'x-cache': 'HIT',
+736 verbose headers   'x-cache-hits': '5',
+736 verbose headers   'x-timer': 'S1464883174.227783,VS0,VE0',
+736 verbose headers   vary: 'Accept-Encoding' }
+737 silly get cb [ 304,
+737 silly get   { date: 'Thu, 02 Jun 2016 15:59:34 GMT',
+737 silly get     via: '1.1 varnish',
+737 silly get     'cache-control': 'max-age=300',
+737 silly get     etag: '"F22AVJEDKFN6WYZJP0YTDTUOQ"',
+737 silly get     age: '52',
+737 silly get     connection: 'keep-alive',
+737 silly get     'x-served-by': 'cache-lhr6344-LHR',
+737 silly get     'x-cache': 'HIT',
+737 silly get     'x-cache-hits': '5',
+737 silly get     'x-timer': 'S1464883174.227783,VS0,VE0',
+737 silly get     vary: 'Accept-Encoding' } ]
+738 verbose etag https://registry.npmjs.org/brace-expansion from cache
+739 verbose get saving brace-expansion to /Users/NDNewell/.npm/registry.npmjs.org/brace-expansion/.cache.json
+740 silly gunzTarPerm extractEntry package.json
+741 silly addNameRange number 2 { name: 'brace-expansion',
+741 silly addNameRange   range: '>=1.0.0 <2.0.0',
+741 silly addNameRange   hasData: true }
+742 silly addNameRange versions [ 'brace-expansion',
+742 silly addNameRange   [ '0.0.0',
+742 silly addNameRange     '1.0.0',
+742 silly addNameRange     '1.0.1',
+742 silly addNameRange     '1.1.0',
+742 silly addNameRange     '1.1.1',
+742 silly addNameRange     '1.1.2',
+742 silly addNameRange     '1.1.3',
+742 silly addNameRange     '1.1.4' ] ]
+743 silly addNamed brace-expansion@1.1.4
+744 verbose addNamed "1.1.4" is a plain semver version for brace-expansion
+745 silly gunzTarPerm extractEntry index.js
+746 silly gunzTarPerm extractEntry readme.md
+747 verbose write writing to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/pinkie-promise/package.json
+748 verbose write writing to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/path-exists/package.json
+749 silly cache afterAdd brace-expansion@1.1.4
+750 verbose afterAdd /Users/NDNewell/.npm/brace-expansion/1.1.4/package/package.json not in flight; writing
+751 info preinstall pinkie-promise@2.0.1
+752 info preinstall path-exists@2.1.0
+753 verbose readDependencies loading dependencies from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/pinkie-promise/package.json
+754 verbose readDependencies loading dependencies from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/path-exists/package.json
+755 verbose afterAdd /Users/NDNewell/.npm/brace-expansion/1.1.4/package/package.json written
+756 silly install resolved [ { name: 'brace-expansion',
+756 silly install resolved     description: 'Brace expansion as known from sh/bash',
+756 silly install resolved     version: '1.1.4',
+756 silly install resolved     repository:
+756 silly install resolved      { type: 'git',
+756 silly install resolved        url: 'git://github.com/juliangruber/brace-expansion.git' },
+756 silly install resolved     homepage: 'https://github.com/juliangruber/brace-expansion',
+756 silly install resolved     main: 'index.js',
+756 silly install resolved     scripts: { test: 'tape test/*.js', gentest: 'bash test/generate.sh' },
+756 silly install resolved     dependencies: { 'balanced-match': '^0.4.1', 'concat-map': '0.0.1' },
+756 silly install resolved     devDependencies: { tape: '4.5.1' },
+756 silly install resolved     keywords: [],
+756 silly install resolved     author:
+756 silly install resolved      { name: 'Julian Gruber',
+756 silly install resolved        email: 'mail@juliangruber.com',
+756 silly install resolved        url: 'http://juliangruber.com' },
+756 silly install resolved     license: 'MIT',
+756 silly install resolved     testling: { files: 'test/*.js', browsers: [Object] },
+756 silly install resolved     gitHead: '1660b75d0bf03b022e7888b576cd5a4080692c1d',
+756 silly install resolved     bugs: { url: 'https://github.com/juliangruber/brace-expansion/issues' },
+756 silly install resolved     _id: 'brace-expansion@1.1.4',
+756 silly install resolved     _shasum: '464a204c77f482c085c2a36c456bbfbafb67a127',
+756 silly install resolved     _from: 'brace-expansion@>=1.0.0 <2.0.0',
+756 silly install resolved     _npmVersion: '3.8.6',
+756 silly install resolved     _nodeVersion: '6.0.0',
+756 silly install resolved     _npmUser: { name: 'juliangruber', email: 'julian@juliangruber.com' },
+756 silly install resolved     dist:
+756 silly install resolved      { shasum: '464a204c77f482c085c2a36c456bbfbafb67a127',
+756 silly install resolved        tarball: 'https://registry.npmjs.org/brace-expansion/-/brace-expansion-1.1.4.tgz' },
+756 silly install resolved     maintainers: [ [Object], [Object] ],
+756 silly install resolved     _npmOperationalInternal:
+756 silly install resolved      { host: 'packages-12-west.internal.npmjs.com',
+756 silly install resolved        tmp: 'tmp/brace-expansion-1.1.4.tgz_1462130058897_0.14984136167913675' },
+756 silly install resolved     directories: {},
+756 silly install resolved     _resolved: 'https://registry.npmjs.org/brace-expansion/-/brace-expansion-1.1.4.tgz',
+756 silly install resolved     readme: 'ERROR: No README data found!' } ]
+757 info install brace-expansion@1.1.4 into /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch
+758 info installOne brace-expansion@1.1.4
+759 verbose installOne of brace-expansion to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch not in flight; installing
+760 silly prepareForInstallMany adding pinkie@^2.0.0 from pinkie-promise dependencies
+761 verbose readDependencies loading dependencies from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/pinkie-promise/package.json
+762 verbose lock using /Users/NDNewell/.npm/_locks/brace-expansion-d1599bfa181450cd.lock for /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion
+763 verbose readDependencies loading dependencies from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/path-exists/package.json
+764 silly install write writing brace-expansion 1.1.4 to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion
+765 verbose unbuild node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion
+766 silly install resolved []
+767 verbose about to build /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/path-exists
+768 info build /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/path-exists
+769 silly cache add args [ 'pinkie@^2.0.0', null ]
+770 verbose cache add spec pinkie@^2.0.0
+771 silly cache add parsed spec Result {
+771 silly cache add   raw: 'pinkie@^2.0.0',
+771 silly cache add   scope: null,
+771 silly cache add   name: 'pinkie',
+771 silly cache add   rawSpec: '^2.0.0',
+771 silly cache add   spec: '>=2.0.0 <3.0.0',
+771 silly cache add   type: 'range' }
+772 silly addNamed pinkie@>=2.0.0 <3.0.0
+773 verbose addNamed ">=2.0.0 <3.0.0" is a valid semver range for pinkie
+774 silly addNameRange { name: 'pinkie', range: '>=2.0.0 <3.0.0', hasData: false }
+775 silly mapToRegistry name pinkie
+776 silly mapToRegistry using default registry
+777 silly mapToRegistry registry https://registry.npmjs.org/
+778 silly mapToRegistry uri https://registry.npmjs.org/pinkie
+779 verbose addNameRange registry:https://registry.npmjs.org/pinkie not in flight; fetching
+780 silly gentlyRm /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion is being purged from base /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project
+781 verbose gentlyRm don't care about contents; nuking /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion
+782 verbose tar unpack /Users/NDNewell/.npm/brace-expansion/1.1.4/package.tgz
+783 verbose tar unpacking to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion
+784 silly gentlyRm /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion is being purged
+785 verbose gentlyRm don't care about contents; nuking /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion
+786 silly gunzTarPerm modes [ '755', '644' ]
+787 info linkStuff path-exists@2.1.0
+788 silly linkStuff path-exists@2.1.0 has /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules as its parent node_modules
+789 verbose request uri https://registry.npmjs.org/pinkie
+790 verbose request no auth needed
+791 info attempt registry request try #1 at 4:59:34 PM
+792 verbose etag "2EAH4SQLIV7XAKF3Y2EREXIMG"
+793 http request GET https://registry.npmjs.org/pinkie
+794 silly gunzTarPerm extractEntry package.json
+795 verbose write writing to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-union/node_modules/array-uniq/package.json
+796 silly gunzTarPerm extractEntry .npmignore
+797 silly gunzTarPerm extractEntry README.md
+798 verbose linkBins path-exists@2.1.0
+799 verbose linkMans path-exists@2.1.0
+800 verbose rebuildBundles path-exists@2.1.0
+801 info preinstall array-uniq@1.0.2
+802 info install path-exists@2.1.0
+803 verbose readDependencies loading dependencies from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-union/node_modules/array-uniq/package.json
+804 info postinstall path-exists@2.1.0
+805 verbose unlock done using /Users/NDNewell/.npm/_locks/path-exists-ef698cd73b967c5f.lock for /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/path-exists
+806 silly gunzTarPerm extractEntry example.js
+807 silly gunzTarPerm extractEntry index.js
+808 verbose readDependencies loading dependencies from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-union/node_modules/array-uniq/package.json
+809 silly install resolved []
+810 verbose about to build /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-union/node_modules/array-uniq
+811 info build /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-union/node_modules/array-uniq
+812 info linkStuff array-uniq@1.0.2
+813 silly linkStuff array-uniq@1.0.2 has /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-union/node_modules as its parent node_modules
+814 verbose linkBins array-uniq@1.0.2
+815 verbose linkMans array-uniq@1.0.2
+816 verbose rebuildBundles array-uniq@1.0.2
+817 info install array-uniq@1.0.2
+818 info postinstall array-uniq@1.0.2
+819 verbose unlock done using /Users/NDNewell/.npm/_locks/array-uniq-912011dd18522a3e.lock for /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-union/node_modules/array-uniq
+820 verbose about to build /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-union
+821 info build /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-union
+822 info linkStuff array-union@1.0.1
+823 silly linkStuff array-union@1.0.1 has /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules as its parent node_modules
+824 verbose linkBins array-union@1.0.1
+825 verbose linkMans array-union@1.0.1
+826 verbose rebuildBundles array-union@1.0.1
+827 verbose rebuildBundles [ 'array-uniq' ]
+828 info install array-union@1.0.1
+829 verbose write writing to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion/package.json
+830 info postinstall array-union@1.0.1
+831 verbose unlock done using /Users/NDNewell/.npm/_locks/array-union-52e5f5f44a75ac1c.lock for /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/array-union
+832 info preinstall brace-expansion@1.1.4
+833 verbose readDependencies loading dependencies from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion/package.json
+834 silly prepareForInstallMany adding balanced-match@^0.4.1 from brace-expansion dependencies
+835 silly prepareForInstallMany adding concat-map@0.0.1 from brace-expansion dependencies
+836 verbose readDependencies loading dependencies from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion/package.json
+837 silly cache add args [ 'balanced-match@^0.4.1', null ]
+838 verbose cache add spec balanced-match@^0.4.1
+839 silly cache add args [ 'concat-map@0.0.1', null ]
+840 verbose cache add spec concat-map@0.0.1
+841 silly cache add parsed spec Result {
+841 silly cache add   raw: 'balanced-match@^0.4.1',
+841 silly cache add   scope: null,
+841 silly cache add   name: 'balanced-match',
+841 silly cache add   rawSpec: '^0.4.1',
+841 silly cache add   spec: '>=0.4.1 <0.5.0',
+841 silly cache add   type: 'range' }
+842 silly addNamed balanced-match@>=0.4.1 <0.5.0
+843 verbose addNamed ">=0.4.1 <0.5.0" is a valid semver range for balanced-match
+844 silly addNameRange { name: 'balanced-match',
+844 silly addNameRange   range: '>=0.4.1 <0.5.0',
+844 silly addNameRange   hasData: false }
+845 silly mapToRegistry name balanced-match
+846 silly mapToRegistry using default registry
+847 silly mapToRegistry registry https://registry.npmjs.org/
+848 silly mapToRegistry uri https://registry.npmjs.org/balanced-match
+849 verbose addNameRange registry:https://registry.npmjs.org/balanced-match not in flight; fetching
+850 silly cache add parsed spec Result {
+850 silly cache add   raw: 'concat-map@0.0.1',
+850 silly cache add   scope: null,
+850 silly cache add   name: 'concat-map',
+850 silly cache add   rawSpec: '0.0.1',
+850 silly cache add   spec: '0.0.1',
+850 silly cache add   type: 'version' }
+851 silly addNamed concat-map@0.0.1
+852 verbose addNamed "0.0.1" is a plain semver version for concat-map
+853 silly mapToRegistry name concat-map
+854 silly mapToRegistry using default registry
+855 silly mapToRegistry registry https://registry.npmjs.org/
+856 silly mapToRegistry uri https://registry.npmjs.org/concat-map
+857 verbose addNameVersion registry:https://registry.npmjs.org/concat-map not in flight; fetching
+858 verbose request uri https://registry.npmjs.org/concat-map
+859 verbose request no auth needed
+860 info attempt registry request try #1 at 4:59:34 PM
+861 verbose etag "66LI2B4AH1989LYDFSL4P944A"
+862 http request GET https://registry.npmjs.org/concat-map
+863 verbose request uri https://registry.npmjs.org/balanced-match
+864 verbose request no auth needed
+865 info attempt registry request try #1 at 4:59:34 PM
+866 verbose etag "UFN8HWPFCH7RDC14XWMW6XB6"
+867 http request GET https://registry.npmjs.org/balanced-match
+868 http 304 https://registry.npmjs.org/pinkie
+869 verbose headers { date: 'Thu, 02 Jun 2016 15:59:34 GMT',
+869 verbose headers   via: '1.1 varnish',
+869 verbose headers   'cache-control': 'max-age=300',
+869 verbose headers   etag: '"2EAH4SQLIV7XAKF3Y2EREXIMG"',
+869 verbose headers   age: '78',
+869 verbose headers   connection: 'keep-alive',
+869 verbose headers   'x-served-by': 'cache-lhr6324-LHR',
+869 verbose headers   'x-cache': 'HIT',
+869 verbose headers   'x-cache-hits': '6',
+869 verbose headers   'x-timer': 'S1464883174.300858,VS0,VE0',
+869 verbose headers   vary: 'Accept-Encoding' }
+870 silly get cb [ 304,
+870 silly get   { date: 'Thu, 02 Jun 2016 15:59:34 GMT',
+870 silly get     via: '1.1 varnish',
+870 silly get     'cache-control': 'max-age=300',
+870 silly get     etag: '"2EAH4SQLIV7XAKF3Y2EREXIMG"',
+870 silly get     age: '78',
+870 silly get     connection: 'keep-alive',
+870 silly get     'x-served-by': 'cache-lhr6324-LHR',
+870 silly get     'x-cache': 'HIT',
+870 silly get     'x-cache-hits': '6',
+870 silly get     'x-timer': 'S1464883174.300858,VS0,VE0',
+870 silly get     vary: 'Accept-Encoding' } ]
+871 verbose etag https://registry.npmjs.org/pinkie from cache
+872 verbose get saving pinkie to /Users/NDNewell/.npm/registry.npmjs.org/pinkie/.cache.json
+873 silly addNameRange number 2 { name: 'pinkie', range: '>=2.0.0 <3.0.0', hasData: true }
+874 silly addNameRange versions [ 'pinkie',
+874 silly addNameRange   [ '0.0.0',
+874 silly addNameRange     '0.0.1',
+874 silly addNameRange     '0.0.2',
+874 silly addNameRange     '1.0.0',
+874 silly addNameRange     '2.0.0',
+874 silly addNameRange     '2.0.1',
+874 silly addNameRange     '2.0.2',
+874 silly addNameRange     '2.0.3',
+874 silly addNameRange     '2.0.4' ] ]
+875 silly addNamed pinkie@2.0.4
+876 verbose addNamed "2.0.4" is a plain semver version for pinkie
+877 silly cache afterAdd pinkie@2.0.4
+878 verbose afterAdd /Users/NDNewell/.npm/pinkie/2.0.4/package/package.json not in flight; writing
+879 verbose afterAdd /Users/NDNewell/.npm/pinkie/2.0.4/package/package.json written
+880 silly install resolved [ { name: 'pinkie',
+880 silly install resolved     version: '2.0.4',
+880 silly install resolved     description: 'Itty bitty little widdle twinkie pinkie ES2015 Promise implementation',
+880 silly install resolved     license: 'MIT',
+880 silly install resolved     repository:
+880 silly install resolved      { type: 'git',
+880 silly install resolved        url: 'git+https://github.com/floatdrop/pinkie.git' },
+880 silly install resolved     author:
+880 silly install resolved      { name: 'Vsevolod Strukchinsky',
+880 silly install resolved        email: 'floatdrop@gmail.com',
+880 silly install resolved        url: 'github.com/floatdrop' },
+880 silly install resolved     engines: { node: '>=0.10.0' },
+880 silly install resolved     scripts:
+880 silly install resolved      { test: 'xo && nyc mocha',
+880 silly install resolved        coverage: 'nyc report --reporter=text-lcov | coveralls' },
+880 silly install resolved     files: [ 'index.js' ],
+880 silly install resolved     keywords: [ 'promise', 'promises', 'es2015', 'es6' ],
+880 silly install resolved     devDependencies:
+880 silly install resolved      { 'core-assert': '^0.1.1',
+880 silly install resolved        coveralls: '^2.11.4',
+880 silly install resolved        mocha: '*',
+880 silly install resolved        nyc: '^3.2.2',
+880 silly install resolved        'promises-aplus-tests': '*',
+880 silly install resolved        xo: '^0.10.1' },
+880 silly install resolved     gitHead: '8d4a92447a5c62bff9f89756caeb4c9c8770579b',
+880 silly install resolved     bugs: { url: 'https://github.com/floatdrop/pinkie/issues' },
+880 silly install resolved     homepage: 'https://github.com/floatdrop/pinkie',
+880 silly install resolved     _id: 'pinkie@2.0.4',
+880 silly install resolved     _shasum: '72556b80cfa0d48a974e80e77248e80ed4f7f870',
+880 silly install resolved     _from: 'pinkie@>=2.0.0 <3.0.0',
+880 silly install resolved     _npmVersion: '2.14.12',
+880 silly install resolved     _nodeVersion: '4.2.4',
+880 silly install resolved     _npmUser: { name: 'floatdrop', email: 'floatdrop@gmail.com' },
+880 silly install resolved     dist:
+880 silly install resolved      { shasum: '72556b80cfa0d48a974e80e77248e80ed4f7f870',
+880 silly install resolved        tarball: 'http://registry.npmjs.org/pinkie/-/pinkie-2.0.4.tgz' },
+880 silly install resolved     maintainers: [ [Object] ],
+880 silly install resolved     directories: {},
+880 silly install resolved     _resolved: 'https://registry.npmjs.org/pinkie/-/pinkie-2.0.4.tgz',
+880 silly install resolved     readme: 'ERROR: No README data found!' } ]
+881 info install pinkie@2.0.4 into /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/pinkie-promise
+882 info installOne pinkie@2.0.4
+883 verbose installOne of pinkie to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/pinkie-promise not in flight; installing
+884 verbose lock using /Users/NDNewell/.npm/_locks/pinkie-63e796a4e87fee15.lock for /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/pinkie-promise/node_modules/pinkie
+885 silly install write writing pinkie 2.0.4 to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/pinkie-promise/node_modules/pinkie
+886 verbose unbuild node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/pinkie-promise/node_modules/pinkie
+887 silly gentlyRm /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/pinkie-promise/node_modules/pinkie is being purged from base /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project
+888 verbose gentlyRm don't care about contents; nuking /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/pinkie-promise/node_modules/pinkie
+889 verbose tar unpack /Users/NDNewell/.npm/pinkie/2.0.4/package.tgz
+890 verbose tar unpacking to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/pinkie-promise/node_modules/pinkie
+891 silly gentlyRm /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/pinkie-promise/node_modules/pinkie is being purged
+892 verbose gentlyRm don't care about contents; nuking /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/pinkie-promise/node_modules/pinkie
+893 silly gunzTarPerm modes [ '755', '644' ]
+894 silly gunzTarPerm extractEntry package.json
+895 silly gunzTarPerm extractEntry index.js
+896 silly gunzTarPerm extractEntry license
+897 silly gunzTarPerm extractEntry readme.md
+898 verbose write writing to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/pinkie-promise/node_modules/pinkie/package.json
+899 info preinstall pinkie@2.0.4
+900 verbose readDependencies loading dependencies from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/pinkie-promise/node_modules/pinkie/package.json
+901 verbose readDependencies loading dependencies from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/pinkie-promise/node_modules/pinkie/package.json
+902 silly install resolved []
+903 verbose about to build /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/pinkie-promise/node_modules/pinkie
+904 info build /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/pinkie-promise/node_modules/pinkie
+905 info linkStuff pinkie@2.0.4
+906 silly linkStuff pinkie@2.0.4 has /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/pinkie-promise/node_modules as its parent node_modules
+907 verbose linkBins pinkie@2.0.4
+908 verbose linkMans pinkie@2.0.4
+909 verbose rebuildBundles pinkie@2.0.4
+910 info install pinkie@2.0.4
+911 info postinstall pinkie@2.0.4
+912 verbose unlock done using /Users/NDNewell/.npm/_locks/pinkie-63e796a4e87fee15.lock for /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/pinkie-promise/node_modules/pinkie
+913 verbose about to build /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/pinkie-promise
+914 info build /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/pinkie-promise
+915 info linkStuff pinkie-promise@2.0.1
+916 silly linkStuff pinkie-promise@2.0.1 has /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules as its parent node_modules
+917 verbose linkBins pinkie-promise@2.0.1
+918 verbose linkMans pinkie-promise@2.0.1
+919 verbose rebuildBundles pinkie-promise@2.0.1
+920 verbose rebuildBundles [ 'pinkie' ]
+921 info install pinkie-promise@2.0.1
+922 http 304 https://registry.npmjs.org/concat-map
+923 verbose headers { date: 'Thu, 02 Jun 2016 15:59:34 GMT',
+923 verbose headers   via: '1.1 varnish',
+923 verbose headers   'cache-control': 'max-age=300',
+923 verbose headers   etag: '"66LI2B4AH1989LYDFSL4P944A"',
+923 verbose headers   age: '202',
+923 verbose headers   connection: 'keep-alive',
+923 verbose headers   'x-served-by': 'cache-lhr6337-LHR',
+923 verbose headers   'x-cache': 'HIT',
+923 verbose headers   'x-cache-hits': '11',
+923 verbose headers   'x-timer': 'S1464883174.343633,VS0,VE0',
+923 verbose headers   vary: 'Accept-Encoding' }
+924 silly get cb [ 304,
+924 silly get   { date: 'Thu, 02 Jun 2016 15:59:34 GMT',
+924 silly get     via: '1.1 varnish',
+924 silly get     'cache-control': 'max-age=300',
+924 silly get     etag: '"66LI2B4AH1989LYDFSL4P944A"',
+924 silly get     age: '202',
+924 silly get     connection: 'keep-alive',
+924 silly get     'x-served-by': 'cache-lhr6337-LHR',
+924 silly get     'x-cache': 'HIT',
+924 silly get     'x-cache-hits': '11',
+924 silly get     'x-timer': 'S1464883174.343633,VS0,VE0',
+924 silly get     vary: 'Accept-Encoding' } ]
+925 verbose etag https://registry.npmjs.org/concat-map from cache
+926 verbose get saving concat-map to /Users/NDNewell/.npm/registry.npmjs.org/concat-map/.cache.json
+927 info postinstall pinkie-promise@2.0.1
+928 verbose unlock done using /Users/NDNewell/.npm/_locks/pinkie-promise-b16577f60136f49a.lock for /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up/node_modules/pinkie-promise
+929 verbose about to build /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up
+930 info build /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up
+931 info linkStuff find-up@1.1.2
+932 silly linkStuff find-up@1.1.2 has /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules as its parent node_modules
+933 http 304 https://registry.npmjs.org/balanced-match
+934 verbose headers { date: 'Thu, 02 Jun 2016 15:59:34 GMT',
+934 verbose headers   via: '1.1 varnish',
+934 verbose headers   'cache-control': 'max-age=300',
+934 verbose headers   etag: '"UFN8HWPFCH7RDC14XWMW6XB6"',
+934 verbose headers   age: '174',
+934 verbose headers   connection: 'keep-alive',
+934 verbose headers   'x-served-by': 'cache-lhr6340-LHR',
+934 verbose headers   'x-cache': 'HIT',
+934 verbose headers   'x-cache-hits': '14',
+934 verbose headers   'x-timer': 'S1464883174.345960,VS0,VE0',
+934 verbose headers   vary: 'Accept-Encoding' }
+935 silly get cb [ 304,
+935 silly get   { date: 'Thu, 02 Jun 2016 15:59:34 GMT',
+935 silly get     via: '1.1 varnish',
+935 silly get     'cache-control': 'max-age=300',
+935 silly get     etag: '"UFN8HWPFCH7RDC14XWMW6XB6"',
+935 silly get     age: '174',
+935 silly get     connection: 'keep-alive',
+935 silly get     'x-served-by': 'cache-lhr6340-LHR',
+935 silly get     'x-cache': 'HIT',
+935 silly get     'x-cache-hits': '14',
+935 silly get     'x-timer': 'S1464883174.345960,VS0,VE0',
+935 silly get     vary: 'Accept-Encoding' } ]
+936 verbose etag https://registry.npmjs.org/balanced-match from cache
+937 verbose get saving balanced-match to /Users/NDNewell/.npm/registry.npmjs.org/balanced-match/.cache.json
+938 silly cache afterAdd concat-map@0.0.1
+939 verbose afterAdd /Users/NDNewell/.npm/concat-map/0.0.1/package/package.json not in flight; writing
+940 verbose linkBins find-up@1.1.2
+941 verbose linkMans find-up@1.1.2
+942 verbose rebuildBundles find-up@1.1.2
+943 verbose rebuildBundles [ 'path-exists', 'pinkie-promise' ]
+944 info install find-up@1.1.2
+945 silly addNameRange number 2 { name: 'balanced-match',
+945 silly addNameRange   range: '>=0.4.1 <0.5.0',
+945 silly addNameRange   hasData: true }
+946 silly addNameRange versions [ 'balanced-match',
+946 silly addNameRange   [ '0.0.0',
+946 silly addNameRange     '0.0.1',
+946 silly addNameRange     '0.1.0',
+946 silly addNameRange     '0.2.0',
+946 silly addNameRange     '0.2.1',
+946 silly addNameRange     '0.3.0',
+946 silly addNameRange     '0.4.0',
+946 silly addNameRange     '0.4.1' ] ]
+947 silly addNamed balanced-match@0.4.1
+948 verbose addNamed "0.4.1" is a plain semver version for balanced-match
+949 verbose afterAdd /Users/NDNewell/.npm/concat-map/0.0.1/package/package.json written
+950 info postinstall find-up@1.1.2
+951 verbose unlock done using /Users/NDNewell/.npm/_locks/find-up-92a7c20fac74eb26.lock for /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up/node_modules/find-up
+952 verbose about to build /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up
+953 info build /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up
+954 silly cache afterAdd balanced-match@0.4.1
+955 verbose afterAdd /Users/NDNewell/.npm/balanced-match/0.4.1/package/package.json not in flight; writing
+956 info linkStuff pkg-up@1.0.0
+957 silly linkStuff pkg-up@1.0.0 has /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules as its parent node_modules
+958 verbose afterAdd /Users/NDNewell/.npm/balanced-match/0.4.1/package/package.json written
+959 silly install resolved [ { name: 'concat-map',
+959 silly install resolved     description: 'concatenative mapdashery',
+959 silly install resolved     version: '0.0.1',
+959 silly install resolved     repository:
+959 silly install resolved      { type: 'git',
+959 silly install resolved        url: 'git://github.com/substack/node-concat-map.git' },
+959 silly install resolved     main: 'index.js',
+959 silly install resolved     keywords: [ 'concat', 'concatMap', 'map', 'functional', 'higher-order' ],
+959 silly install resolved     directories: { example: 'example', test: 'test' },
+959 silly install resolved     scripts: { test: 'tape test/*.js' },
+959 silly install resolved     devDependencies: { tape: '~2.4.0' },
+959 silly install resolved     license: 'MIT',
+959 silly install resolved     author:
+959 silly install resolved      { name: 'James Halliday',
+959 silly install resolved        email: 'mail@substack.net',
+959 silly install resolved        url: 'http://substack.net' },
+959 silly install resolved     testling: { files: 'test/*.js', browsers: [Object] },
+959 silly install resolved     bugs: { url: 'https://github.com/substack/node-concat-map/issues' },
+959 silly install resolved     homepage: 'https://github.com/substack/node-concat-map',
+959 silly install resolved     _id: 'concat-map@0.0.1',
+959 silly install resolved     dist:
+959 silly install resolved      { shasum: 'd8a96bd77fd68df7793a73036a3ba0d5405d477b',
+959 silly install resolved        tarball: 'http://registry.npmjs.org/concat-map/-/concat-map-0.0.1.tgz' },
+959 silly install resolved     _from: 'concat-map@0.0.1',
+959 silly install resolved     _npmVersion: '1.3.21',
+959 silly install resolved     _npmUser: { name: 'substack', email: 'mail@substack.net' },
+959 silly install resolved     maintainers: [ [Object] ],
+959 silly install resolved     _shasum: 'd8a96bd77fd68df7793a73036a3ba0d5405d477b',
+959 silly install resolved     _resolved: 'https://registry.npmjs.org/concat-map/-/concat-map-0.0.1.tgz',
+959 silly install resolved     readme: 'ERROR: No README data found!' },
+959 silly install resolved   { name: 'balanced-match',
+959 silly install resolved     description: 'Match balanced character pairs, like "{" and "}"',
+959 silly install resolved     version: '0.4.1',
+959 silly install resolved     repository:
+959 silly install resolved      { type: 'git',
+959 silly install resolved        url: 'git://github.com/juliangruber/balanced-match.git' },
+959 silly install resolved     homepage: 'https://github.com/juliangruber/balanced-match',
+959 silly install resolved     main: 'index.js',
+959 silly install resolved     scripts: { test: 'make test' },
+959 silly install resolved     dependencies: {},
+959 silly install resolved     devDependencies: { tape: '~4.5.0' },
+959 silly install resolved     keywords: [ 'match', 'regexp', 'test', 'balanced', 'parse' ],
+959 silly install resolved     author:
+959 silly install resolved      { name: 'Julian Gruber',
+959 silly install resolved        email: 'mail@juliangruber.com',
+959 silly install resolved        url: 'http://juliangruber.com' },
+959 silly install resolved     license: 'MIT',
+959 silly install resolved     testling: { files: 'test/*.js', browsers: [Object] },
+959 silly install resolved     gitHead: '7004b289baaaab6a832f4901735e29d37cc2a863',
+959 silly install resolved     bugs: { url: 'https://github.com/juliangruber/balanced-match/issues' },
+959 silly install resolved     _id: 'balanced-match@0.4.1',
+959 silly install resolved     _shasum: '19053e2e0748eadb379da6c09d455cf5e1039335',
+959 silly install resolved     _from: 'balanced-match@>=0.4.1 <0.5.0',
+959 silly install resolved     _npmVersion: '3.8.6',
+959 silly install resolved     _nodeVersion: '6.0.0',
+959 silly install resolved     _npmUser: { name: 'juliangruber', email: 'julian@juliangruber.com' },
+959 silly install resolved     dist:
+959 silly install resolved      { shasum: '19053e2e0748eadb379da6c09d455cf5e1039335',
+959 silly install resolved        tarball: 'https://registry.npmjs.org/balanced-match/-/balanced-match-0.4.1.tgz' },
+959 silly install resolved     maintainers: [ [Object] ],
+959 silly install resolved     _npmOperationalInternal:
+959 silly install resolved      { host: 'packages-12-west.internal.npmjs.com',
+959 silly install resolved        tmp: 'tmp/balanced-match-0.4.1.tgz_1462129663650_0.39764496590942144' },
+959 silly install resolved     directories: {},
+959 silly install resolved     _resolved: 'https://registry.npmjs.org/balanced-match/-/balanced-match-0.4.1.tgz',
+959 silly install resolved     readme: 'ERROR: No README data found!' } ]
+960 info install concat-map@0.0.1 into /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion
+961 info install balanced-match@0.4.1 into /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion
+962 info installOne concat-map@0.0.1
+963 verbose installOne of concat-map to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion not in flight; installing
+964 info installOne balanced-match@0.4.1
+965 verbose installOne of balanced-match to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion not in flight; installing
+966 verbose lock using /Users/NDNewell/.npm/_locks/concat-map-c0bfa5598f27f9cb.lock for /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion/node_modules/concat-map
+967 verbose lock using /Users/NDNewell/.npm/_locks/balanced-match-74b525b04159c208.lock for /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion/node_modules/balanced-match
+968 silly install write writing concat-map 0.0.1 to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion/node_modules/concat-map
+969 silly install write writing balanced-match 0.4.1 to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion/node_modules/balanced-match
+970 verbose linkBins pkg-up@1.0.0
+971 verbose linkMans pkg-up@1.0.0
+972 verbose rebuildBundles pkg-up@1.0.0
+973 verbose rebuildBundles [ 'find-up' ]
+974 info install pkg-up@1.0.0
+975 verbose unbuild node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion/node_modules/concat-map
+976 verbose unbuild node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion/node_modules/balanced-match
+977 info postinstall pkg-up@1.0.0
+978 silly gentlyRm /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion/node_modules/concat-map is being purged from base /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project
+979 verbose gentlyRm don't care about contents; nuking /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion/node_modules/concat-map
+980 silly gentlyRm /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion/node_modules/balanced-match is being purged from base /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project
+981 verbose gentlyRm don't care about contents; nuking /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion/node_modules/balanced-match
+982 verbose tar unpack /Users/NDNewell/.npm/concat-map/0.0.1/package.tgz
+983 verbose tar unpacking to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion/node_modules/concat-map
+984 silly gentlyRm /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion/node_modules/concat-map is being purged
+985 verbose gentlyRm don't care about contents; nuking /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion/node_modules/concat-map
+986 verbose tar unpack /Users/NDNewell/.npm/balanced-match/0.4.1/package.tgz
+987 verbose tar unpacking to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion/node_modules/balanced-match
+988 silly gentlyRm /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion/node_modules/balanced-match is being purged
+989 verbose gentlyRm don't care about contents; nuking /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion/node_modules/balanced-match
+990 silly gunzTarPerm modes [ '755', '644' ]
+991 silly gunzTarPerm modes [ '755', '644' ]
+992 verbose unlock done using /Users/NDNewell/.npm/_locks/pkg-up-7fca66b11f04a860.lock for /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/pkg-up
+993 silly gunzTarPerm extractEntry package.json
+994 silly gunzTarPerm extractEntry package.json
+995 silly gunzTarPerm extractEntry .npmignore
+996 silly gunzTarPerm extractEntry README.md
+997 silly gunzTarPerm extractEntry LICENSE
+998 silly gunzTarPerm extractEntry index.js
+999 silly gunzTarPerm extractEntry .travis.yml
+1000 silly gunzTarPerm extractEntry README.markdown
+1001 silly gunzTarPerm extractEntry index.js
+1002 silly gunzTarPerm extractEntry LICENSE.md
+1003 silly gunzTarPerm extractEntry example/map.js
+1004 silly gunzTarPerm extractEntry test/map.js
+1005 verbose write writing to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion/node_modules/balanced-match/package.json
+1006 info preinstall balanced-match@0.4.1
+1007 verbose readDependencies loading dependencies from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion/node_modules/balanced-match/package.json
+1008 verbose readDependencies loading dependencies from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion/node_modules/balanced-match/package.json
+1009 silly install resolved []
+1010 verbose about to build /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion/node_modules/balanced-match
+1011 info build /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion/node_modules/balanced-match
+1012 verbose write writing to /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion/node_modules/concat-map/package.json
+1013 info linkStuff balanced-match@0.4.1
+1014 silly linkStuff balanced-match@0.4.1 has /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion/node_modules as its parent node_modules
+1015 info preinstall concat-map@0.0.1
+1016 verbose readDependencies loading dependencies from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion/node_modules/concat-map/package.json
+1017 verbose linkBins balanced-match@0.4.1
+1018 verbose linkMans balanced-match@0.4.1
+1019 verbose rebuildBundles balanced-match@0.4.1
+1020 verbose readDependencies loading dependencies from /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion/node_modules/concat-map/package.json
+1021 info install balanced-match@0.4.1
+1022 info postinstall balanced-match@0.4.1
+1023 verbose unlock done using /Users/NDNewell/.npm/_locks/balanced-match-74b525b04159c208.lock for /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion/node_modules/balanced-match
+1024 silly install resolved []
+1025 verbose about to build /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion/node_modules/concat-map
+1026 info build /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion/node_modules/concat-map
+1027 info linkStuff concat-map@0.0.1
+1028 silly linkStuff concat-map@0.0.1 has /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion/node_modules as its parent node_modules
+1029 verbose linkBins concat-map@0.0.1
+1030 verbose linkMans concat-map@0.0.1
+1031 verbose rebuildBundles concat-map@0.0.1
+1032 info install concat-map@0.0.1
+1033 info postinstall concat-map@0.0.1
+1034 verbose unlock done using /Users/NDNewell/.npm/_locks/concat-map-c0bfa5598f27f9cb.lock for /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion/node_modules/concat-map
+1035 verbose about to build /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion
+1036 info build /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion
+1037 info linkStuff brace-expansion@1.1.4
+1038 silly linkStuff brace-expansion@1.1.4 has /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules as its parent node_modules
+1039 verbose linkBins brace-expansion@1.1.4
+1040 verbose linkMans brace-expansion@1.1.4
+1041 verbose rebuildBundles brace-expansion@1.1.4
+1042 verbose rebuildBundles [ 'balanced-match', 'concat-map' ]
+1043 info install brace-expansion@1.1.4
+1044 info postinstall brace-expansion@1.1.4
+1045 verbose unlock done using /Users/NDNewell/.npm/_locks/brace-expansion-d1599bfa181450cd.lock for /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch/node_modules/brace-expansion
+1046 verbose about to build /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch
+1047 info build /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch
+1048 info linkStuff minimatch@3.0.0
+1049 silly linkStuff minimatch@3.0.0 has /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules as its parent node_modules
+1050 verbose linkBins minimatch@3.0.0
+1051 verbose linkMans minimatch@3.0.0
+1052 verbose rebuildBundles minimatch@3.0.0
+1053 verbose rebuildBundles [ 'brace-expansion' ]
+1054 info install minimatch@3.0.0
+1055 info postinstall minimatch@3.0.0
+1056 verbose unlock done using /Users/NDNewell/.npm/_locks/minimatch-ceadaf15fb2b79eb.lock for /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch/node_modules/minimatch
+1057 verbose about to build /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch
+1058 info build /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch
+1059 info linkStuff multimatch@2.1.0
+1060 silly linkStuff multimatch@2.1.0 has /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules as its parent node_modules
+1061 verbose linkBins multimatch@2.1.0
+1062 verbose linkMans multimatch@2.1.0
+1063 verbose rebuildBundles multimatch@2.1.0
+1064 verbose rebuildBundles [ 'array-differ', 'array-union', 'minimatch' ]
+1065 info install multimatch@2.1.0
+1066 info postinstall multimatch@2.1.0
+1067 verbose unlock done using /Users/NDNewell/.npm/_locks/multimatch-f0b6ad96293bbc00.lock for /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks/node_modules/multimatch
+1068 verbose about to build /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks
+1069 info build /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks
+1070 info linkStuff load-grunt-tasks@3.5.0
+1071 silly linkStuff load-grunt-tasks@3.5.0 has /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules as its parent node_modules
+1072 verbose linkBins load-grunt-tasks@3.5.0
+1073 verbose linkMans load-grunt-tasks@3.5.0
+1074 verbose rebuildBundles load-grunt-tasks@3.5.0
+1075 verbose rebuildBundles [ 'arrify', 'multimatch', 'pkg-up', 'resolve-pkg' ]
+1076 info install load-grunt-tasks@3.5.0
+1077 info postinstall load-grunt-tasks@3.5.0
+1078 verbose unlock done using /Users/NDNewell/.npm/_locks/load-grunt-tasks-753f11e4aeaa9fb7.lock for /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/load-grunt-tasks
+1079 verbose validateInstall loading /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/package.json for validation
+1080 warn unmet dependency /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/grunt-responsive-images requires grunt@'~0.4.1' but will load
+1080 warn unmet dependency /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project/node_modules/grunt,
+1080 warn unmet dependency which is version 1.0.1
+1081 verbose stack Error: The package grunt@1.0.1 does not satisfy its siblings' peerDependencies requirements!
+1081 verbose stack     at /usr/local/lib/node_modules/npm/lib/install.js:125:32
+1081 verbose stack     at /usr/local/lib/node_modules/npm/lib/install.js:268:7
+1081 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:142:5
+1081 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+1081 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+1081 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+1081 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+1081 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+1081 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+1081 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+1082 verbose cwd /Users/NDNewell/Documents/nano/Projects/frontend-nanodegree-map-project
+1083 error Darwin 14.5.0
+1084 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "install" "--save-dev" "load-grunt-tasks"
+1085 error node v4.2.6
+1086 error npm  v2.14.12
+1087 error code EPEERINVALID
+1088 error peerinvalid The package grunt@1.0.1 does not satisfy its siblings' peerDependencies requirements!
+1089 verbose exit [ 1, true ]

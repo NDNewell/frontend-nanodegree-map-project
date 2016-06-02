@@ -2297,9 +2297,9 @@ function AppViewModel () {
     self.showUser = function () {
 
         // cache user data
-        var authData = allData.getAuth();
+        var user = firebase.auth().currentUser.uid;
 
-        console.log(authData.uid + " is currently logged in");
+        console.log(user + " is currently logged in");
     };
 
     // Set initial log in status as false

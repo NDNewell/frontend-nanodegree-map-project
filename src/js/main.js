@@ -389,16 +389,16 @@ function AppViewModel () {
     // Set initial loading of location frames to true
     var initLoad = true;
 
-    self.getFavorites = function (authData) {
+    self.getFavorites = function (user) {
 
-        // If there are no users logged in, authData will be null
-        if(authData === null) {
+        // If there are no users logged in, user will be null
+        if(user === null) {
             console.log('cannot find favorites because there are no logged in users');
 
         } else {
 
             /* Get the user's favorites */
-            users.child(authData.uid).child("favorites").on("value", function(snapshot) {
+            database.ref("users").child(user.uid).child("favorites").on("value", function(snapshot) {
 
                 // Save the Firebase snapshot of the user's favorites
                 var favorites = snapshot.val();
@@ -966,7 +966,7 @@ function AppViewModel () {
         var numLocations = 0;
 
         // Count the number of locations in data
-        locationData.on("value", function(snapshot) {
+        database.ref('locationData').on("value", function(snapshot) {
             var data = snapshot.val();
 
             data.forEach(function(obj) {

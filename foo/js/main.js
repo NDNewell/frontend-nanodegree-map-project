@@ -1092,7 +1092,8 @@ function AppViewModel () {
     // Save the status of local storage availability
     var localStorageEnabled = self.checkLocalStorage();
 
-    // Create write/read error messages to be used as callbacks
+    // Create write/read error messages to be used as callbacks for Firebase
+    // related errors
     var fireBaseWriteError = function(error) {
         if (error) {
           console.log("data could not be saved." + error);
@@ -1133,8 +1134,11 @@ function AppViewModel () {
         fireBaseReadError(errorObject);
     };
 
+    // Create variable to hold location data
     var database;
 
+    // Check if local storage is enabled
+    // If so, initialize Firebase realtime database
     if(localStorageEnabled) {
 
         // Initialize Firebase
@@ -1147,6 +1151,7 @@ function AppViewModel () {
 
         firebase.initializeApp(config);
 
+        // Save the database in a variable
         database = firebase.database();
 
         // Get the location data from Firebase's realtime database
@@ -1160,25 +1165,34 @@ function AppViewModel () {
             // Invoke function to parse the location data
             self.parseLocationData(data);
 
+            // Set up Google map
             self.setUpGoogleMap(data);
 
         }, loadError);
 
+    // If local storage isn't enabled, Firebase would normally throw an error
+    // and the locations wouldn't be loaded because they are normally
+    // retrieved from FB's realtime database (which depends on local storage).
+    // To mitigate against this, if it is detected that local storage isn't
+    // available, location data is retreived from FB via its API with an
+    // ajax request.
     } else {
 
-        /*var dataTimeout = setTimeout (function() {
+        // Save a reference to error msg and callback if the api request
+        // times out
+        var dataTimeout = setTimeout (function() {
 
             console.log('get location data unsuccessful');
             loadError();
 
-        }, 8000);*/
+        }, 8000);
 
         // Cache api request URL for location data
         var databaseURL = 'https://dazzling-torch-4012.firebaseio.com/locationData.json';
 
-        // Load location data from Firebase API using ajax request
         console.log('get location data via ajax request');
 
+        // Load location data from Firebase API using ajax request
         $.ajax({
             url: databaseURL,
             dataType: 'jsonp',
@@ -1189,39 +1203,42 @@ function AppViewModel () {
                 // Invoke function to parse the location data
                 self.parseLocationData(data);
 
+                // Set up Google map
                 self.setUpGoogleMap(data);
 
-                // Disable error message
-                //clearTimeout(dataTimeout);
+                // Disable ajax timeout error
+                clearTimeout(dataTimeout);
             },
-            //error: loadError
+            error: loadError
         });
     }
 
+    // Set up the Google map which displays all locations from database on
+    // a map with markers
     self.setUpGoogleMap = function (data) {
 
         // Make sure Google maps api has loaded
         if (typeof google === 'object' && typeof google.maps === 'object') {
 
-          // When loaded, set up Google map
-          constructMap();
+            // When loaded, set up Google map
+            constructMap();
 
         // If it hasn't loaded, keep checking until it is
         // When it is loaded, generate map markers
         } else {
 
-          var checkGoogle = setInterval(function() {
+            var checkGoogle = setInterval(function() {
 
-              // Check if Google maps api has loaded
-              if(typeof google === 'object' && typeof google.maps === 'object') {
+                // Check if Google maps api has loaded
+                if(typeof google === 'object' && typeof google.maps === 'object') {
 
-                  // When loaded, set up Google map
-                  constructMap();
+                    // When loaded, set up Google map
+                    constructMap();
 
-                  // Stop checking if Google maps api is loaded
-                  clearInterval(checkGoogle);
-              }
-          }, 500);
+                    // Stop checking if Google maps api is loaded
+                    clearInterval(checkGoogle);
+                }
+            }, 500);
         }
 
         // Sets up markers and listeners for Google map

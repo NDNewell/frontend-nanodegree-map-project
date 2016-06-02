@@ -1,28 +1,39 @@
 {
-  "firebase": "dazzling-torch-4012",
-  "public": "dist",
-  "ignore": [
-    "firebase.json",
-    "**/.*",
-    "**/node_modules/**"
-  ],
-  "headers": [ {
-      "source" : "img/**/*.@(jpg|jpeg|png|svg)",
-      "headers" : [ {
-          "key" : "Cache-Control",
-          "value" : "max-age=7776000"
-      } ]
-  }, {
-      "source" : "js/*.js",
-      "headers" : [ {
-          "key" : "Cache-Control",
-          "value" : "max-age=5184000"
-      } ]
-  }, {
-      "source" : "css/*.css",
-      "headers" : [ {
-          "key" : "Cache-Control",
-          "value" : "max-age=5184000"
-      } ]
-  } ]
+  "hosting": {
+    "public": "dist",
+    "headers": [
+      {
+        "source": "img/**/*.@(jpg|jpeg|png|svg)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=7776000"
+          }
+        ]
+      },
+      {
+        "source": "js/*.js",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=5184000"
+          }
+        ]
+      },
+      {
+        "source": "css/*.css",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=5184000"
+          }
+        ]
+      }
+    ],
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
 }

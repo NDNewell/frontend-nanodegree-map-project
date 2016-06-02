@@ -1054,7 +1054,7 @@ function AppViewModel () {
     this.self = this;
 
     // Cache common DOM refs
-    var $document = $(document);
+    var $document = $(document),
         $window = $(window),
         $body = $('body'),
         $mapSection = $('.map-section'),
@@ -1071,10 +1071,22 @@ function AppViewModel () {
         $clearFavsBtn = $('.clear-favorites-button'),
         $surfInfoContainer = $('.surf-info-container');
 
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyCfguLjpbIGbhNbGs0ZlA-w_wERpasWWRw",
+        authDomain: "dazzling-torch-4012.firebaseapp.com",
+        databaseURL: "https://dazzling-torch-4012.firebaseio.com",
+        storageBucket: "dazzling-torch-4012.appspot.com"
+    };
+
+    firebase.initializeApp(config);
+
+    var database = firebase.database();
+
     // Cache Firebase database references to all, location, and user data
-    var allData = new Firebase("https://dazzling-torch-4012.firebaseio.com"),
-        locationData = new Firebase("https://dazzling-torch-4012.firebaseio.com/locationData"),
-        users = new Firebase('https://dazzling-torch-4012.firebaseio.com/users');
+   // var allData = new Firebase("https://dazzling-torch-4012.firebaseio.com"),
+    //    locationData = new Firebase("https://dazzling-torch-4012.firebaseio.com/locationData"),
+    //    users = new Firebase('https://dazzling-torch-4012.firebaseio.com/users');
 
     // Create write/read error messages to be used as callbacks
     var fireBaseWriteError = function(error) {
@@ -1118,7 +1130,7 @@ function AppViewModel () {
     };
 
     // Get the location data
-    locationData.on("value", function(snapshot) {
+    database.ref('locationData').on("value", function(snapshot) {
 
         // Save the location data snapshot
         var data = snapshot.val();
@@ -3160,13 +3172,15 @@ function AppViewModel () {
 
         // If the visiter is a new user, get details and write data to Firebase
         // Log new user in anonymously (tokens last 5 years)
-        allData.authAnonymously(function(error, authData) {
+
+        firebase.auth().signInAnonymously().catch(function(error) {
+
             if (error) {
                 console.log("login Failed!", error);
             } else {
 
                 // Save the user's favorites and name in the database
-                allData.child("users").child(authData.uid).set({
+                database.ref("users").child(user.uid).set({
 
                     // Could put a prompt here to get and set user's name
                     // but won't for now
@@ -3184,8 +3198,10 @@ function AppViewModel () {
         });
     };
 
+    // Monitor user authentication state, when there is a change check
+    // which user is logged in / logged out
     // Create a callback which logs the current authentication state
-    self.checkAuthentication = function (authData) {
+    firebase.auth().onAuthStateChanged(function(user) {
 
         // Check user authentication only if local storage is available
         // FYI - It's only available if local storage is enabled
@@ -3193,11 +3209,11 @@ function AppViewModel () {
 
             // If user is already logged in, notify in console and update
             // favorites
-            if(authData) {
+            if(user) {
 
-                console.log("user " + authData.uid + " is logged in with " + authData.provider);
+                console.log("user " + user.uid + " is logged in");
 
-                self.getFavorites(authData);
+                self.getFavorites(user);
 
                 // Display which user is logged in the console every minute
                 var displayUser = setInterval(self.showUser, 60000);
@@ -3222,11 +3238,7 @@ function AppViewModel () {
             // Show frames once location data has been parsed
             self.onLocationsArrayLoad(self.showLocationFrames);
         }
-    };
-
-    /* Monitor user authentication state, when there is a change check
-       which user is logged in / logged out */
-    allData.onAuth(self.checkAuthentication);
+    });
 
     // Add tooltips for those icons that have a title attribute
     // When the element is clicked or hovered over a tooltip is displayed

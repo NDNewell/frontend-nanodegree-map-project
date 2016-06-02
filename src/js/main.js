@@ -480,7 +480,7 @@ function AppViewModel () {
         if(isLoggedIn) {
 
             // Update Firebase if logged in
-            users.child(allData.getAuth().uid).update({"favorites":userFavorites}, fireBaseWriteError);
+            database.ref('users').child(firebase.auth().currentUser.uid).update({"favorites":userFavorites}, fireBaseWriteError);
         } else {
 
             self.updateFavsOnFrames();
@@ -510,7 +510,7 @@ function AppViewModel () {
             // Update Firebase
             // When Firebase updates, the local favorites array will be
             // replaced
-            users.child(allData.getAuth().uid).update({"favorites":updatedFavs}, fireBaseWriteError);
+            database.ref('users').child(firebase.auth().currentUser.uid).update({"favorites":updatedFavs}, fireBaseWriteError);
 
         // If not logged in replace userFavorites with the updateFavs array
         // and update favorites on frames and markers
@@ -534,7 +534,7 @@ function AppViewModel () {
         if(isLoggedIn) {
 
             // Update Firebase if logged in
-            users.child(allData.getAuth().uid).update({"favorites":userFavorites}, fireBaseWriteError);
+            database.ref('users').child(firebase.auth().currentUser.uid).update({"favorites":userFavorites}, fireBaseWriteError);
         } else {
 
             // Just update the markers if not logged in

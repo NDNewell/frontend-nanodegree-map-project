@@ -671,7 +671,7 @@ function AppViewModel () {
             // Use an ajax request to obtain the contents of the external
             // svg sprite sheet, and load it into the DOM
             $.ajax({
-                url: 'img/svg/svg_sprites_v1.svg',
+                url: 'img/svg/svg_sprites.svg',
                 dataType: "html",
                 success: function(data) {
 
